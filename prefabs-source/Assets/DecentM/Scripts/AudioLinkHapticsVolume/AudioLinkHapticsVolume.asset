@@ -179,7 +179,7 @@ MonoBehaviour:
       Data: 12|UnityEngine.HeaderAttribute, UnityEngine.CoreModule
     - Name: header
       Entry: 1
-      Data: Haptics settings (all values range from 0 to 1)
+      Data: Haptics settings (values range from 0 to 1)
     - Name: 
       Entry: 8
       Data: 
