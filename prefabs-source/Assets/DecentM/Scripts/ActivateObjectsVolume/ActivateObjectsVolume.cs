@@ -2,10 +2,15 @@
 using UdonSharp;
 using UnityEngine;
 using VRC.SDKBase;
-using System;
+using DecentM;
 
+[UdonBehaviourSyncMode(BehaviourSyncMode.Manual)]
 public class ActivateObjectsVolume : UdonSharpBehaviour
 {
+    [Header("References")]
+    [Tooltip("The Permissions object from LibDecentM")]
+    public Permissions permissions;
+
     [Header("Settings")]
     [Tooltip("A list of GameObjects to toggle. They will always have the same state")]
     public GameObject[] targets;
@@ -13,40 +18,10 @@ public class ActivateObjectsVolume : UdonSharpBehaviour
     public bool global = false;
     [Tooltip("If checked, the list will function as a whitelist, otherwise it will function as a blacklist")]
     public bool isWhitelist = false;
-    [Tooltip("A list of player names who can (or cannot) use this trigger")]
-    public string[] players = new string[0];
-
-    private bool IsPlayerAllowed(VRCPlayerApi player)
-    {
-        bool isAllowed = !this.isWhitelist;
-
-        if (this.isWhitelist)
-        {
-            for (int i = 0; i < this.players.Length; i++)
-            {
-                string whitelistedPlayer = this.players[i];
-
-                if (player.displayName == whitelistedPlayer)
-                {
-                    isAllowed = true;
-                }
-            }
-        }
-        else
-        {
-            for (int i = 0; i < this.players.Length; i++)
-            {
-                string whitelistedPlayer = this.players[i];
-
-                if (player.displayName == whitelistedPlayer)
-                {
-                    isAllowed = false;
-                }
-            }
-        }
-
-        return isAllowed;
-    }
+    [Tooltip("If checked, only the instance master can use this trigger, and the player list will be ignored")]
+    public bool masterOnly = false;
+    [Tooltip("A list of players who can (or cannot) use this trigger")]
+    public PlayerList playerList;
 
     public override void OnPlayerTriggerEnter(VRCPlayerApi player)
     {
@@ -62,7 +37,7 @@ public class ActivateObjectsVolume : UdonSharpBehaviour
             return;
         }
 
-        bool isAllowed = this.IsPlayerAllowed(player);
+        bool isAllowed = this.permissions.IsPlayerAllowed(player, this.masterOnly, this.isWhitelist, this.playerList ? this.playerList.players : new string[0]);
 
         if (!isAllowed)
         {
@@ -89,7 +64,7 @@ public class ActivateObjectsVolume : UdonSharpBehaviour
             return;
         }
 
-        bool isAllowed = this.IsPlayerAllowed(player);
+        bool isAllowed = this.permissions.IsPlayerAllowed(player, this.masterOnly, this.isWhitelist, this.playerList ? this.playerList.players : new string[0]);
 
         if (!isAllowed)
         {
