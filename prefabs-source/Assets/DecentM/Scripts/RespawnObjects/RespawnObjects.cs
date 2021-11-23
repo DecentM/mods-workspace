@@ -2,7 +2,6 @@
 using UdonSharp;
 using UnityEngine;
 using VRC.SDKBase;
-using VRC.Udon;
 using DecentM;
 
 [UdonBehaviourSyncMode(BehaviourSyncMode.Manual)]
@@ -13,13 +12,13 @@ public class RespawnObjects : UdonSharpBehaviour
     [Tooltip("An object that represents each respawn location. Set it to an empty game object if you don't want to visibly mark the respawn location.")]
     public GameObject respawnMarker;
 
-    [Header("References")]
-    [Tooltip("The Permissions object from LibDecentM")]
-    public Permissions permissions;
-
     [Header("Settings")]
     [Tooltip("If true, the trigger will enable/disable targets when other players enter/exit it")]
     public bool global = false;
+
+    [Header("LibDecentM")]
+    [Tooltip("The Permissions object from LibDecentM")]
+    public Permissions permissions;
     [Tooltip("If checked, the list will function as a whitelist, otherwise it will function as a blacklist")]
     public bool isWhitelist = false;
     [Tooltip("If checked, only the instance master can use this trigger, and the player list will be ignored")]

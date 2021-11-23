@@ -5,18 +5,16 @@ using VRC.SDKBase;
 using DecentM;
 
 [UdonBehaviourSyncMode(BehaviourSyncMode.Manual)]
-public class ToggleObjects : UdonSharpBehaviour
+public class PlayParticleSystems : UdonSharpBehaviour
 {
+    [Tooltip("A list of ParticleSystems to play")]
+    public ParticleSystem[] targets;
+    [Tooltip("The default state of the AudioSources. If checked they will start playing when this UdonBehaviour starts.")]
+    public bool defaultState = false;
+
     [Header("Settings")]
     [Tooltip("If true, the trigger will enable/disable targets when other players enter/exit it")]
     public bool global = false;
- 
-    [Space]
-    [Tooltip("The initial state of all of the targets - This will be applied when this UdonBehaviour starts")]
-    public bool defaultState = false;
-    [Space]
-    [Tooltip("A list of GameObjects to toggle. They will always have the same state")]
-    public GameObject[] targets;
 
     [Header("LibDecentM")]
     [Tooltip("The Permissions object from LibDecentM")]
@@ -28,13 +26,22 @@ public class ToggleObjects : UdonSharpBehaviour
     [Tooltip("A list of players who can (or cannot) use this trigger")]
     public PlayerList playerList;
 
-    void Start()
+    private void Start()
     {
-        // Reset all targets to the default state
-        this.SetActiveAll(this.defaultState);
+        for (int i = 0; i < this.targets.Length; i++)
+        {
+            if (this.defaultState == true)
+            {
+                this.targets[i].Play();
+            }
+            else
+            {
+                this.targets[i].Stop();
+            }
+        }
     }
 
-    public override void Interact ()
+    public override void Interact()
     {
         VRCPlayerApi player = Networking.LocalPlayer;
         bool isAllowed = this.permissions.IsPlayerAllowed(player, this.masterOnly, this.isWhitelist, this.playerList ? this.playerList.players : new string[0]);
@@ -44,12 +51,13 @@ public class ToggleObjects : UdonSharpBehaviour
             return;
         }
 
-        if (this.global)
+        if (this.targets[0].isPlaying)
         {
-            SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "Toggle");
-        } else
+            this.BroadcastStop();
+        }
+        else
         {
-            this.Toggle();
+            this.BroadcastPlay();
         }
     }
 
@@ -62,47 +70,55 @@ public class ToggleObjects : UdonSharpBehaviour
             return;
         }
 
-        bool isActive = this.targets[0].activeSelf;
+        bool isActive = this.targets[0].isPlaying;
 
         if (isActive)
         {
-            SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "ToggleOn");
-        } else
+            SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "Play");
+        }
+        else
         {
-            SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "ToggleOff");
+            SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "Stop");
         }
     }
 
-    public void Toggle ()
+    private void BroadcastPlay()
     {
-        // All targets should be the same at this point, so use the first one as the source of truth
-        // This way we don't need to store an internal variable
-        bool isActive = this.targets[0].activeSelf;
-
-        if (isActive)
+        if (this.global)
         {
-            this.ToggleOff();
-        } else
+            SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "Play");
+        }
+        else
         {
-            this.ToggleOn();
+            this.Play();
         }
     }
 
-    public void ToggleOn()
+    private void BroadcastStop()
     {
-        this.SetActiveAll(true);
+        if (this.global)
+        {
+            SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "Stop");
+        }
+        else
+        {
+            this.Stop();
+        }
     }
 
-    public void ToggleOff()
-    {
-        this.SetActiveAll(false);
-    }
-
-    private void SetActiveAll(bool value)
+    public void Play()
     {
         for (int i = 0; i < this.targets.Length; i++)
         {
-            this.targets[i].SetActive(value);
+            this.targets[i].Play();
+        }
+    }
+
+    public void Stop()
+    {
+        for (int i = 0; i < this.targets.Length; i++)
+        {
+            this.targets[i].Stop();
         }
     }
 }

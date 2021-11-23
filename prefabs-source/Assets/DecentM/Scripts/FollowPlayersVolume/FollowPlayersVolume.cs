@@ -2,6 +2,7 @@
 using UdonSharp;
 using UnityEngine;
 using VRC.SDKBase;
+using DecentM;
 
 [UdonBehaviourSyncMode(BehaviourSyncMode.Manual)]
 public class FollowPlayersVolume : UdonSharpBehaviour
@@ -17,7 +18,17 @@ public class FollowPlayersVolume : UdonSharpBehaviour
     public bool global = true;
     [Tooltip("The link object will be spawned under the player's feet, and then offset by this vector.")]
     public Vector3 linkOffset = new Vector3(0, 0, 0);
-    
+
+    [Header("LibDecentM")]
+    [Tooltip("The Permissions object from LibDecentM")]
+    public Permissions permissions;
+    [Tooltip("If checked, the list will function as a whitelist, otherwise it will function as a blacklist")]
+    public bool isWhitelist = false;
+    [Tooltip("If checked, only the instance master can use this trigger, and the player list will be ignored")]
+    public bool masterOnly = false;
+    [Tooltip("A list of players who can (or cannot) use this trigger")]
+    public PlayerList playerList;
+
     private VRCPlayerApi[] followingPlayers;
     private GameObject[] followingLinks;
 
@@ -48,8 +59,6 @@ public class FollowPlayersVolume : UdonSharpBehaviour
 
     private void FollowPlayer (VRCPlayerApi player)
     {
-        Debug.Log($"Following {player.displayName}");
-
         // Insert the player into the first empty index
         // This has the side effect of not pushing players when the array length has reached
         // the limit from this.trackLimit, since that's used for the length of the array
@@ -58,7 +67,6 @@ public class FollowPlayersVolume : UdonSharpBehaviour
             if (this.followingPlayers[i] == null)
             {
                 this.followingPlayers[i] = player;
-                Debug.Log($"Pushed {player.displayName} on index {i}");
 
                 GameObject playerLink = this.SpawnLinkClone();
                 this.followingLinks[i] = playerLink;
@@ -69,17 +77,12 @@ public class FollowPlayersVolume : UdonSharpBehaviour
 
     private void UnfollowPlayer (VRCPlayerApi player)
     {
-        Debug.Log($"Unfollowing {player.displayName}");
-
-        int i;
-
         // Remove the player from the array by setting its index to null
-        for (i = 0; i < this.followingPlayers.Length; i++)
+        for (int i = 0; i < this.followingPlayers.Length; i++)
         {
             if (this.followingPlayers[i] == player)
             {
                 this.followingPlayers[i] = null;
-                Debug.Log($"Removed {player.displayName} from index {i}");
 
                 Destroy(this.followingLinks[i]);
                 this.followingLinks[i] = null;
@@ -133,6 +136,13 @@ public class FollowPlayersVolume : UdonSharpBehaviour
     {
         // We don't do anything if we're already following someone or the player isn't valid
         if (!player.IsValid() || this.IsFollowingPlayer(player))
+        {
+            return;
+        }
+
+        bool isAllowed = this.permissions.IsPlayerAllowed(player, this.masterOnly, this.isWhitelist, this.playerList ? this.playerList.players : new string[0]);
+
+        if (!isAllowed)
         {
             return;
         }

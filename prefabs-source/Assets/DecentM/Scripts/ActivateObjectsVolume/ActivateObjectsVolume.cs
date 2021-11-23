@@ -7,15 +7,15 @@ using DecentM;
 [UdonBehaviourSyncMode(BehaviourSyncMode.Manual)]
 public class ActivateObjectsVolume : UdonSharpBehaviour
 {
-    [Header("References")]
-    [Tooltip("The Permissions object from LibDecentM")]
-    public Permissions permissions;
-
     [Header("Settings")]
     [Tooltip("A list of GameObjects to toggle. They will always have the same state")]
     public GameObject[] targets;
     [Tooltip("If true, the trigger will enable/disable targets when other players enter/exit it")]
     public bool global = false;
+
+    [Header("LibDecentM")]
+    [Tooltip("The Permissions object from LibDecentM")]
+    public Permissions permissions;
     [Tooltip("If checked, the list will function as a whitelist, otherwise it will function as a blacklist")]
     public bool isWhitelist = false;
     [Tooltip("If checked, only the instance master can use this trigger, and the player list will be ignored")]
