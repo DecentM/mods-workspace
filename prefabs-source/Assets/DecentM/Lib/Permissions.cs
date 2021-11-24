@@ -32,7 +32,7 @@ namespace DecentM
             return result;
         }
 
-        public bool IsPlayerAllowed(VRCPlayerApi player, bool masterOnly, bool isWhitelist, string[] players)
+        public bool IsPlayerAllowed(VRCPlayerApi player, bool masterOnly, bool isWhitelist, PlayerList playerList)
         {
             if (!player.IsValid())
             {
@@ -45,6 +45,7 @@ namespace DecentM
             }
 
             bool isAllowed = !isWhitelist;
+            string[] players = playerList ? playerList.players : new string[0];
 
             if (isWhitelist)
             {

@@ -2,16 +2,19 @@
 using UdonSharp;
 using UnityEngine;
 using VRC.SDKBase;
+using VRC.Udon;
 using DecentM;
 
 [UdonBehaviourSyncMode(BehaviourSyncMode.Manual)]
-public class ActivateObjectsVolume : UdonSharpBehaviour
+public class UdonBehaviourToggler : UdonSharpBehaviour
 {
+    [Header("References")]
+    [Tooltip("The UdonBehaviour to toggle")]
+    public UdonBehaviour udonBehaviour;
+
     [Header("Settings")]
-    [Tooltip("A list of GameObjects to toggle. They will always have the same state")]
-    public GameObject[] targets;
-    [Tooltip("If true, the trigger will enable/disable targets when other players enter/exit it")]
-    public bool global = false;
+    [Tooltip("If checked, the behaviour will be toggled for everyone")]
+    public bool global;
 
     [Header("LibDecentM")]
     [Tooltip("The LibDecentM object")]
@@ -32,14 +35,8 @@ public class ActivateObjectsVolume : UdonSharpBehaviour
 
     public override void OnPlayerTriggerEnter(VRCPlayerApi player)
     {
+        // We don't do anything if we're already following someone or the player isn't valid
         if (!player.IsValid())
-        {
-            return;
-        }
-
-        VRCPlayerApi localPlayer = Networking.LocalPlayer;
-
-        if (player != localPlayer && !this.global)
         {
             return;
         }
@@ -51,36 +48,40 @@ public class ActivateObjectsVolume : UdonSharpBehaviour
             return;
         }
 
-        for (int i = 0; i < this.targets.Length; i++)
+        if (this.global)
         {
-            this.targets[i].SetActive(true);
+            SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, nameof(this.ToggleOn));
+        } else
+        {
+            this.ToggleOn();
         }
     }
 
     public override void OnPlayerTriggerExit(VRCPlayerApi player)
     {
+        // No reason to unfollow a player if we're not already following them
         if (!player.IsValid())
         {
             return;
         }
 
-        VRCPlayerApi localPlayer = Networking.LocalPlayer;
-
-        if (player != localPlayer && !this.global)
+        if (this.global)
         {
-            return;
+            SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, nameof(this.ToggleOff));
         }
-
-        bool isAllowed = this.lib.permissions.IsPlayerAllowed(player, this.masterOnly, this.isWhitelist, this.playerList);
-
-        if (!isAllowed)
+        else
         {
-            return;
+            this.ToggleOff();
         }
+    }
 
-        for (int i = 0; i < this.targets.Length; i++)
-        {
-            this.targets[i].SetActive(false);
-        }
+    public void ToggleOn()
+    {
+        this.udonBehaviour.enabled = true;
+    }
+
+    public void ToggleOff()
+    {
+        this.udonBehaviour.enabled = false;
     }
 }

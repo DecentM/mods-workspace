@@ -25,7 +25,7 @@ MonoBehaviour:
     SerializedFormat: 2
     SerializedBytes: 
     ReferencedUnityObjects:
-    - {fileID: 11500000, guid: cd6e1ca0e10de4843a75fe5b10fa5877, type: 3}
+    - {fileID: 11500000, guid: cadcd88ad94ca56408adbacfabc06bf8, type: 3}
     - {fileID: 11500000, guid: ee04c1bf163b0994fbc4deeda73d6563, type: 3}
     SerializedBytesString: 
     Prefab: {fileID: 0}
@@ -290,7 +290,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: permissions
+      Data: lib
     - Name: $v
       Entry: 7
       Data: 19|UdonSharp.Compiler.FieldDefinition, UdonSharp.Editor
@@ -302,7 +302,7 @@ MonoBehaviour:
       Data: 21|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
-      Data: DecentM.Permissions, Assembly-CSharp
+      Data: DecentM.LibDecentM, Assembly-CSharp
     - Name: 
       Entry: 8
       Data: 
@@ -317,10 +317,10 @@ MonoBehaviour:
       Data: VRCUdonUdonBehaviour
     - Name: symbolOriginalName
       Entry: 1
-      Data: permissions
+      Data: lib
     - Name: symbolUniqueName
       Entry: 1
-      Data: permissions
+      Data: lib
     - Name: symbolDefaultValue
       Entry: 6
       Data: 
@@ -347,7 +347,7 @@ MonoBehaviour:
       Data: 24|UnityEngine.TooltipAttribute, UnityEngine.CoreModule
     - Name: tooltip
       Entry: 1
-      Data: The Permissions object from LibDecentM
+      Data: The LibDecentM object
     - Name: 
       Entry: 8
       Data: 

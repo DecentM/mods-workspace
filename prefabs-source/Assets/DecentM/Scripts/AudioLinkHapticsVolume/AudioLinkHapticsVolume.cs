@@ -2,7 +2,6 @@
 using UdonSharp;
 using UnityEngine;
 using VRC.SDKBase;
-using VRC.Udon;
 using VRCAudioLink;
 
 [UdonBehaviourSyncMode(BehaviourSyncMode.Manual)]
@@ -39,8 +38,6 @@ public class AudioLinkHapticsVolume : UdonSharpBehaviour
     [Tooltip("Defines how much influence band 3 has in the vibration speed")]
     public float band3Frequency = .5f;
 
-    private bool isActive = false;
-
     private void DoHaptics(VRC_Pickup.PickupHand hand, float bandValue, float threshold, float amplitude, float frequency)
     {
         if (bandValue > threshold)
@@ -52,11 +49,6 @@ public class AudioLinkHapticsVolume : UdonSharpBehaviour
 
     private void Update()
     {
-        if (!this.isActive)
-        {
-            return;
-        }
-
         Material alMat = this.audioLink.audioMaterial;
 
         // The _Samples** float arrays contain the AudioLink output.
@@ -70,6 +62,21 @@ public class AudioLinkHapticsVolume : UdonSharpBehaviour
         float[] samples1L = alMat.GetFloatArray("_Samples1L");
         float[] samples2L = alMat.GetFloatArray("_Samples2L");
         float[] samples3L = alMat.GetFloatArray("_Samples3L");
+
+        // If for some reason, AudioLink didn't write its float arrays, we bail here to avoid crashing
+        if (
+            samples0R == null
+            || samples1R == null
+            || samples2R == null
+            || samples3R == null
+            || samples0L == null
+            || samples1L == null
+            || samples2L == null
+            || samples3L == null
+           )
+        {
+            return;
+        }
 
         float band0R = samples0R[0] * this.audioLink.bass * this.audioLink.gain;
         float band1R = samples1R[0] * this.audioLink.bass * this.audioLink.gain;
@@ -90,25 +97,5 @@ public class AudioLinkHapticsVolume : UdonSharpBehaviour
         this.DoHaptics(VRC_Pickup.PickupHand.Right, band1R, this.audioLink.threshold1, this.band1Amplitude, this.band1Frequency);
         this.DoHaptics(VRC_Pickup.PickupHand.Right, band2R, this.audioLink.threshold2, this.band2Amplitude, this.band2Frequency);
         this.DoHaptics(VRC_Pickup.PickupHand.Right, band3R, this.audioLink.threshold3, this.band3Amplitude, this.band3Frequency);
-    }
-
-    public override void OnPlayerTriggerEnter(VRCPlayerApi player)
-    {
-        if (!player.isLocal)
-        {
-            return;
-        }
-
-        this.isActive = true;
-    }
-
-    public override void OnPlayerTriggerExit(VRCPlayerApi player)
-    {
-        if (!player.isLocal)
-        {
-            return;
-        }
-
-        this.isActive = false;
     }
 }

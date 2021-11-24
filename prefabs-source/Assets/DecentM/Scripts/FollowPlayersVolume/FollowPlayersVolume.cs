@@ -20,8 +20,8 @@ public class FollowPlayersVolume : UdonSharpBehaviour
     public Vector3 linkOffset = new Vector3(0, 0, 0);
 
     [Header("LibDecentM")]
-    [Tooltip("The Permissions object from LibDecentM")]
-    public Permissions permissions;
+    [Tooltip("The LibDecentM object")]
+    public LibDecentM lib;
     [Tooltip("If checked, the list will function as a whitelist, otherwise it will function as a blacklist")]
     public bool isWhitelist = false;
     [Tooltip("If checked, only the instance master can use this trigger, and the player list will be ignored")]
@@ -94,6 +94,23 @@ public class FollowPlayersVolume : UdonSharpBehaviour
 
     private void Start()
     {
+        // Show the mesh renderer if we're in debug mode
+        MeshRenderer mesh = this.GetComponent<MeshRenderer>();
+
+        if (mesh == null)
+        {
+            return;
+        }
+
+        if (this.lib.debugging.isDebugging)
+        {
+            mesh.enabled = true;
+        }
+        else
+        {
+            mesh.enabled = false;
+        }
+
         // Initialise the array of currently followed players to the limit we're configured with
         this.followingPlayers = new VRCPlayerApi[this.trackLimit];
         this.followingLinks = new GameObject[this.trackLimit];
@@ -140,7 +157,7 @@ public class FollowPlayersVolume : UdonSharpBehaviour
             return;
         }
 
-        bool isAllowed = this.permissions.IsPlayerAllowed(player, this.masterOnly, this.isWhitelist, this.playerList ? this.playerList.players : new string[0]);
+        bool isAllowed = this.lib.permissions.IsPlayerAllowed(player, this.masterOnly, this.isWhitelist, this.playerList);
 
         if (!isAllowed)
         {
