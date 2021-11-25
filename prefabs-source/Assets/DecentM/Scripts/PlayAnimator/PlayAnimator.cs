@@ -2,19 +2,25 @@
 using UdonSharp;
 using UnityEngine;
 using VRC.SDKBase;
+using VRC.Udon;
 using DecentM;
 
 [UdonBehaviourSyncMode(BehaviourSyncMode.Manual)]
-public class PlayAudioSources : UdonSharpBehaviour
+public class PlayAnimator : UdonSharpBehaviour
 {
-    [Tooltip("A list of AudioSources to play")]
-    public AudioSource[] targets;
-    [Tooltip("The default state of the AudioSources. If checked they will start playing when this UdonBehaviour starts.")]
-    public bool defaultState = false;
-
     [Header("Settings")]
+    [Tooltip("A list of Animators to control")]
+    public Animator[] targets;
+    [Tooltip("Which animation to target in the controller")]
+    public int layerIndex = 0;
+    [Tooltip("The default state of the Animators. If checked they will start playing when this UdonBehaviour starts.")]
+    public bool defaultState = false;
     [Tooltip("If true, the state will be synced to everyone")]
     public bool global = false;
+    [Tooltip("Float between 0 and 1 - We will offset the animation by this much to count for network latency\nDoes nothing when `global` is unchecked")]
+    public float latencyOffset = 0.01f;
+    [Tooltip("If checked, the animation will be toggled on/off.\nIf unchecked, the animation will be played each time the button is pressed.")]
+    public bool isToggle = false;
 
     [Header("LibDecentM")]
     [Tooltip("The LibDecentM object")]
@@ -30,14 +36,29 @@ public class PlayAudioSources : UdonSharpBehaviour
     {
         for (int i = 0; i < this.targets.Length; i++)
         {
+            Animator target = this.targets[i];
+
             if (this.defaultState == true)
             {
-                this.targets[i].Play();
-            } else
+                this.PlayTarget(target);
+            }
+            else
             {
-                this.targets[i].Stop();
+                this.StopTarget(target);
             }
         }
+    }
+
+    private void PlayTarget(Animator animator)
+    {
+        animator.enabled = true;
+        int hash = animator.GetCurrentAnimatorStateInfo(this.layerIndex).fullPathHash;
+        animator.Play(hash, this.layerIndex, this.latencyOffset);
+    }
+
+    private void StopTarget(Animator animator)
+    {
+        animator.enabled = false;
     }
 
     public override void Interact()
@@ -45,15 +66,16 @@ public class PlayAudioSources : UdonSharpBehaviour
         VRCPlayerApi player = Networking.LocalPlayer;
         bool isAllowed = this.lib.permissions.IsPlayerAllowed(player, this.masterOnly, this.isWhitelist, this.playerList);
 
-        if (!isAllowed)
+        if (!isAllowed || this.targets[0] == null)
         {
             return;
         }
 
-        if (this.targets[0].isPlaying)
+        if (this.targets[0].enabled && this.isToggle)
         {
             this.BroadcastStop();
-        } else
+        }
+        else
         {
             this.BroadcastPlay();
         }
@@ -87,7 +109,7 @@ public class PlayAudioSources : UdonSharpBehaviour
     {
         for (int i = 0; i < this.targets.Length; i++)
         {
-            this.targets[i].Play();
+            this.PlayTarget(targets[i]);
         }
     }
 
@@ -95,7 +117,7 @@ public class PlayAudioSources : UdonSharpBehaviour
     {
         for (int i = 0; i < this.targets.Length; i++)
         {
-            this.targets[i].Stop();
+            this.StopTarget(targets[i]);
         }
     }
 }

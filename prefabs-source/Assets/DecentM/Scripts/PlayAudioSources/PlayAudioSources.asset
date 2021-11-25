@@ -247,8 +247,7 @@ MonoBehaviour:
       Data: 16|UnityEngine.TooltipAttribute, UnityEngine.CoreModule
     - Name: tooltip
       Entry: 1
-      Data: If true, the trigger will enable/disable targets when other players enter/exit
-        it
+      Data: If true, the state will be synced to everyone
     - Name: 
       Entry: 8
       Data: 
