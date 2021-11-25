@@ -79,6 +79,12 @@ public class UdonBehaviourRecovery : UdonSharpBehaviour
     {
         Component component = this.childComponents[i];
 
+        // Prevent crashing due to weird invalid components
+        if (component == null)
+        {
+            return;
+        }
+
         // Skip over non-UdonBehaviours
         if (component.GetType() != typeof(UdonBehaviour))
         {

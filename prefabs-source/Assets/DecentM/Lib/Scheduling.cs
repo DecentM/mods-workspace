@@ -10,12 +10,18 @@ namespace DecentM
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class Scheduling : UdonSharpBehaviour
     {
+        [Header("Settings")]
+        [Tooltip("If checked, disabled UdonBehaviours will be auto-unsubscribed from events")]
+        public bool cleanupInactive = false;
+
         public readonly string OnSecondPassedEvent = "OnSecondPassed";
 
         private int clock = 0;
         private float fixedUpdateRate;
 
-        private Component[] secondSubscribers = new Component[0];
+        [Header("Internals")]
+        [Tooltip("The list of components that are currently receiving events")]
+        public Component[] secondSubscribers = new Component[0];
 
         private void Start()
         {
@@ -46,15 +52,17 @@ namespace DecentM
         public void OffEverySecond(UdonBehaviour behaviour)
         {
             Component[] newSecondSubscribers = new Component[this.secondSubscribers.Length - 1];
-            
+
+            int j = 0;
+
             // Copy all subscribers from the current list into the new one, except for the one given.
             // This will effectively remove the subscriber from the list.
-            for (int i = 0; i < this.secondSubscribers.Length;)
+            for (int i = 0; i < this.secondSubscribers.Length; i++)
             {
                 if (this.secondSubscribers[i] != behaviour)
                 {
-                    newSecondSubscribers[i] = this.secondSubscribers[i];
-                    i++;
+                    newSecondSubscribers[j] = this.secondSubscribers[i];
+                    j++;
                 }
             }
 
@@ -69,12 +77,10 @@ namespace DecentM
             {
                 UdonBehaviour subscriber = (UdonBehaviour) this.secondSubscribers[i];
 
-                Debug.Log($"subscriber.SendCustomEvent() - {subscriber.name}");
-
                 if (subscriber.enabled && subscriber.gameObject.activeSelf)
                 {
                     subscriber.SendCustomEvent(this.OnSecondPassedEvent);
-                } else
+                } else if (this.cleanupInactive == true)
                 {
                     // Automatically unsubscribe a subscriber if it has been deactivated
                     this.OffEverySecond(subscriber);

@@ -25,20 +25,15 @@ public class TargetCycler : UdonSharpBehaviour
     public LibDecentM lib;
 
     private int secondsPassed = 0;
-
-    private int _chosenIndex = 0;
-    private int chosenIndex
-    {
-        get => _chosenIndex;
-        set
-        {
-            this._chosenIndex = value;
-            this.UpdatePosition();
-        }
-    }
+    private int chosenIndex = 0;
 
     private void UpdatePosition()
     {
+        if (this.targets == null)
+        {
+            return;
+        }
+
         GameObject target = this.targets[this.chosenIndex];
 
         this.link.transform.SetPositionAndRotation(target.transform.position, target.transform.rotation);
@@ -73,13 +68,15 @@ public class TargetCycler : UdonSharpBehaviour
         {
             this.chosenIndex++;
         }
+
+        this.UpdatePosition();
     }
 
     private void BroadcastReset()
     {
         // If we're global, the master alone calls everyone's reset function.
         // If we're local, everyone calls their own reset function.
-        if (this.global && Networking.LocalPlayer.isMaster)
+        if (this.global && Networking.LocalPlayer != null && Networking.LocalPlayer.isMaster)
         {
             SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, nameof(this.Reset));
         } else if (!this.global)
@@ -91,5 +88,6 @@ public class TargetCycler : UdonSharpBehaviour
     public void Reset()
     {
         this.chosenIndex = 0;
+        this.UpdatePosition();
     }
 }

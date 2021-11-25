@@ -31,6 +31,9 @@ public class UdonBehaviourToggler : UdonSharpBehaviour
         MeshRenderer mesh = this.GetComponent<MeshRenderer>();
 
         this.lib.debugging.ApplyToMeshRenderer(mesh);
+
+        // Disable the UdonBehaviour by default
+        this.udonBehaviour.enabled = false;
     }
 
     public override void OnPlayerTriggerEnter(VRCPlayerApi player)
