@@ -55,7 +55,7 @@ public class AnimatorSync : UdonSharpBehaviour
         this.lastFiredHandshake = info.normalizedTime;
 
         this.handshakeFiredThisLoop = true;
-        SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "OnHandshake");
+        SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, nameof(this.OnHandshake));
     }
 
     private void FixedUpdate()

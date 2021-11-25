@@ -5,18 +5,21 @@ using VRC.SDKBase;
 using DecentM;
 
 [UdonBehaviourSyncMode(BehaviourSyncMode.Manual)]
-public class ToggleObjects : UdonSharpBehaviour
+public class BooleanAnimatorController : UdonSharpBehaviour
 {
     [Header("Settings")]
-    [Tooltip("If true, the trigger will enable/disable targets when other players enter/exit it")]
-    public bool global = false;
- 
+    [Tooltip("The Animator to control")]
+    public Animator animator;
+    [Tooltip("Which animation to target in the controller")]
+    public int layerIndex = 0;
+    [Tooltip("The name of the parameter to toggle")]
+    public string parameterName = "";
+
     [Space]
-    [Tooltip("The initial state of all of the targets - This will be applied when this UdonBehaviour starts")]
+    [Tooltip("The default state of the Animators. If checked they will start playing when this UdonBehaviour starts.")]
     public bool defaultState = false;
-    [Space]
-    [Tooltip("A list of GameObjects to toggle. They will always have the same state")]
-    public GameObject[] targets;
+    [Tooltip("If true, the state will be synced to everyone")]
+    public bool global = false;
 
     [Header("LibDecentM")]
     [Tooltip("The LibDecentM object")]
@@ -31,10 +34,10 @@ public class ToggleObjects : UdonSharpBehaviour
     void Start()
     {
         // Reset all targets to the default state
-        this.SetActiveAll(this.defaultState);
+        this.SetActive(this.defaultState);
     }
 
-    public override void Interact ()
+    public override void Interact()
     {
         VRCPlayerApi player = Networking.LocalPlayer;
         bool isAllowed = this.lib.permissions.IsPlayerAllowed(player, this.masterOnly, this.isWhitelist, this.playerList);
@@ -47,7 +50,8 @@ public class ToggleObjects : UdonSharpBehaviour
         if (this.global)
         {
             SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, nameof(this.Toggle));
-        } else
+        }
+        else
         {
             this.Toggle();
         }
@@ -62,7 +66,7 @@ public class ToggleObjects : UdonSharpBehaviour
             return;
         }
 
-        bool isActive = this.targets[0].activeSelf;
+        bool isActive = this.animator.GetBool(this.parameterName);
 
         // Skip sending a network update if the current state is the default one, to save on network resources
         if (isActive == this.defaultState)
@@ -73,22 +77,24 @@ public class ToggleObjects : UdonSharpBehaviour
         if (isActive)
         {
             SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, nameof(this.ToggleOn));
-        } else
+        }
+        else
         {
             SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, nameof(this.ToggleOff));
         }
     }
 
-    public void Toggle ()
+    public void Toggle()
     {
         // All targets should be the same at this point, so use the first one as the source of truth
         // This way we don't need to store an internal variable
-        bool isActive = this.targets[0].activeSelf;
+        bool isActive = this.animator.GetBool(this.parameterName);
 
         if (isActive)
         {
             this.ToggleOff();
-        } else
+        }
+        else
         {
             this.ToggleOn();
         }
@@ -96,19 +102,16 @@ public class ToggleObjects : UdonSharpBehaviour
 
     public void ToggleOn()
     {
-        this.SetActiveAll(true);
+        this.SetActive(true);
     }
 
     public void ToggleOff()
     {
-        this.SetActiveAll(false);
+        this.SetActive(false);
     }
 
-    private void SetActiveAll(bool value)
+    private void SetActive(bool value)
     {
-        for (int i = 0; i < this.targets.Length; i++)
-        {
-            this.targets[i].SetActive(value);
-        }
+        this.animator.SetBool(this.parameterName, value);
     }
 }

@@ -85,7 +85,7 @@ public class PlayAnimator : UdonSharpBehaviour
     {
         if (this.global)
         {
-            SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "Play");
+            SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, nameof(this.Play));
         }
         else
         {
@@ -97,7 +97,7 @@ public class PlayAnimator : UdonSharpBehaviour
     {
         if (this.global)
         {
-            SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "Stop");
+            SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, nameof(this.Stop));
         }
         else
         {
