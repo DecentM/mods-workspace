@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace DecentM
 {
+    [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class Debugging : UdonSharpBehaviour
     {
         [Header("Settings")]
