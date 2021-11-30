@@ -16,12 +16,13 @@ namespace DecentM
 
         public readonly string OnSecondPassedEvent = "OnSecondPassed";
 
-        private int clock = 0;
-        private float fixedUpdateRate;
-
         [Header("Internals")]
         [Tooltip("The list of components that are currently receiving events")]
         public Component[] secondSubscribers = new Component[0];
+        [Tooltip("The current state of the internal clock used to count time")]
+        public int clock = 0;
+        [Tooltip("Calculated from Unity's value, this shows how many times FixedUpdate events are sent per second")]
+        public float fixedUpdateRate;
 
         private void Start()
         {
