@@ -92,7 +92,8 @@ GameObject:
   - component: {fileID: 835471945607254016}
   - component: {fileID: 835471945607254017}
   - component: {fileID: 835471945607254022}
-  m_Layer: 5
+  - component: {fileID: 5174484423255623980}
+  m_Layer: 0
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -182,6 +183,18 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &5174484423255623980
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 835471945607254020}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1533785930, guid: 661092b4961be7145bfbe56e1e62337b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &835471945629256753
 GameObject:
   m_ObjectHideFlags: 0
@@ -193,7 +206,7 @@ GameObject:
   - component: {fileID: 835471945629256752}
   - component: {fileID: 835471945629256754}
   - component: {fileID: 835471945629256755}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Description
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -310,7 +323,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -1945.2242, y: -931.62775, z: -1946.6986, w: -728.3017}
+  m_margin: {x: -1860.5204, y: -931.62775, z: -1847.322, w: -728.3017}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -327,7 +340,7 @@ GameObject:
   - component: {fileID: 835471946106733060}
   - component: {fileID: 835471946106733062}
   - component: {fileID: 835471946106733063}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Title
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -444,7 +457,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -1945.2242, y: -216.4899, z: -1946.6986, w: -193.38338}
+  m_margin: {x: -1846.1675, y: -216.4899, z: -1852.3376, w: -193.38338}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -461,7 +474,7 @@ GameObject:
   - component: {fileID: 1855138782169136008}
   - component: {fileID: 580286885297287701}
   - component: {fileID: 7966899805855570632}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: SettingsTitle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -626,7 +639,7 @@ GameObject:
   - component: {fileID: 3505530726909402171}
   - component: {fileID: 1388482846588218749}
   - component: {fileID: 6815742615252183329}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: MissingSettings
   m_TagString: Untagged
   m_Icon: {fileID: 0}
