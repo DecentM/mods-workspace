@@ -72,7 +72,6 @@ namespace DecentM
 
         private void BroadcastSecondPassed()
         {
-            Debug.Log("BroadcastSecondPassed()");
             // Tell subscribers that a second has passed
             for (int i = 0; i < this.secondSubscribers.Length; i++)
             {

@@ -9,7 +9,7 @@ using DecentM;
 public class CustomEvent : UdonSharpBehaviour
 {
     [Tooltip("The UdonBehaviour to send the custom event to")]
-    public UdonBehaviour target;
+    public Component[] targets;
 
     [Header("Settings")]
     [Tooltip("The name of the event to send / public function name to call")]
@@ -32,7 +32,7 @@ public class CustomEvent : UdonSharpBehaviour
         VRCPlayerApi player = Networking.LocalPlayer;
         bool isAllowed = this.lib.permissions.IsPlayerAllowed(player, this.masterOnly, this.isWhitelist, this.playerList);
 
-        if (!isAllowed || this.eventName == null || this.target == null)
+        if (!isAllowed || this.eventName == null || this.targets == null || this.targets.Length == 0)
         {
             return;
         }
@@ -49,11 +49,33 @@ public class CustomEvent : UdonSharpBehaviour
 
     private void SendGlobal()
     {
-        this.target.SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, this.eventName);
+        for (int i = 0; i < this.targets.Length; i++)
+        {
+            // Skip over non-UdonBehaviours
+            if (this.targets[i].GetType() != typeof(UdonBehaviour))
+            {
+                return;
+            }
+
+            UdonBehaviour behaviour = (UdonBehaviour) this.targets[i];
+
+            behaviour.SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, this.eventName);
+        }
     }
 
     private void SendLocal()
     {
-        this.target.SendCustomEvent(this.eventName);
+        for (int i = 0; i < this.targets.Length; i++)
+        {
+            // Skip over non-UdonBehaviours
+            if (this.targets[i].GetType() != typeof(UdonBehaviour))
+            {
+                return;
+            }
+
+            UdonBehaviour behaviour = (UdonBehaviour) this.targets[i];
+
+            behaviour.SendCustomEvent(this.eventName);
+        }
     }
 }
