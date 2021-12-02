@@ -34,7 +34,7 @@ namespace DecentM
 
         public bool IsPlayerAllowed(VRCPlayerApi player, bool masterOnly, bool isWhitelist, PlayerList playerList)
         {
-            if (!player.IsValid())
+            if (player == null || !player.IsValid())
             {
                 return false;
             }

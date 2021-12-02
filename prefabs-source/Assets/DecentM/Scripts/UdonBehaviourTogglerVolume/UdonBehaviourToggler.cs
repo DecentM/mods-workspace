@@ -14,7 +14,7 @@ public class UdonBehaviourToggler : UdonSharpBehaviour
 
     [Header("Settings")]
     [Tooltip("If checked, the behaviour will be toggled for everyone")]
-    public bool global;
+    public bool global = false;
 
     [Header("LibDecentM")]
     [Tooltip("The LibDecentM object")]
@@ -38,12 +38,6 @@ public class UdonBehaviourToggler : UdonSharpBehaviour
 
     public override void OnPlayerTriggerEnter(VRCPlayerApi player)
     {
-        // We don't do anything if we're already following someone or the player isn't valid
-        if (!player.IsValid())
-        {
-            return;
-        }
-
         bool isAllowed = this.lib.permissions.IsPlayerAllowed(player, this.masterOnly, this.isWhitelist, this.playerList);
 
         if (!isAllowed)
@@ -62,8 +56,9 @@ public class UdonBehaviourToggler : UdonSharpBehaviour
 
     public override void OnPlayerTriggerExit(VRCPlayerApi player)
     {
-        // No reason to unfollow a player if we're not already following them
-        if (!player.IsValid())
+        bool isAllowed = this.lib.permissions.IsPlayerAllowed(player, this.masterOnly, this.isWhitelist, this.playerList);
+
+        if (!isAllowed)
         {
             return;
         }

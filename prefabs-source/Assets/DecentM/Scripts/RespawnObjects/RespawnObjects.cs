@@ -15,6 +15,8 @@ public class RespawnObjects : UdonSharpBehaviour
     [Header("Settings")]
     [Tooltip("If true, the trigger will enable/disable targets when other players enter/exit it")]
     public bool global = false;
+    [Tooltip("How long to wait until the markers reset after the master respawns the objects. Set it larger if the spawn locations drift after the instance master leaves.")]
+    public float respawnMarkerSetDelay = 1f;
 
     [Header("LibDecentM")]
     [Tooltip("The LibDecentM object")]
@@ -31,22 +33,36 @@ public class RespawnObjects : UdonSharpBehaviour
 
     void Start()
     {
-        if (!Networking.LocalPlayer.isMaster)
-        {
-            return;
-        }
-
         this.markers = new GameObject[this.targets.Length];
+        this.respawnMarker.SetActive(false);
 
+        this.MarkTargets();
+    }
+
+    private void MarkTargets()
+    {
         // Clone the respawn marker to each object's starting location
         for (int i = 0; i < this.targets.Length; i++)
         {
             GameObject marker = VRCInstantiate(this.respawnMarker);
             GameObject target = this.targets[i];
 
+            marker.SetActive(true);
             marker.transform.SetPositionAndRotation(target.transform.position, target.transform.rotation);
             this.markers[i] = marker;
         }
+    }
+
+    public void MasterRespawnTargets()
+    {
+        // The master needs to be the one to actually respawn objects, as they are the one with the correct markers.
+        if (!Networking.LocalPlayer.isMaster)
+        {
+            return;
+        }
+
+        this.ClaimOwnershipTargets();
+        this.DoRespawn();
     }
 
     public override void Interact()
@@ -61,15 +77,25 @@ public class RespawnObjects : UdonSharpBehaviour
 
         if (this.global)
         {
-            SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "Respawn");
+            SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, nameof(this.MasterRespawnTargets));
         }
         else
         {
-            this.Respawn();
+            this.DoRespawn();
         }
     }
 
-    public void Respawn()
+    private void ClaimOwnershipTargets()
+    {
+        for (int i = 0; i < this.targets.Length; i++)
+        {
+            GameObject target = this.targets[i];
+
+            Networking.SetOwner(Networking.LocalPlayer, target);
+        }
+    }
+
+    private void DoRespawn()
     {
         for (int i = 0; i < this.markers.Length; i++)
         {
