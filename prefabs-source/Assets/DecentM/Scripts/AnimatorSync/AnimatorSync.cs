@@ -63,7 +63,7 @@ public class AnimatorSync : UdonSharpBehaviour
         VRCPlayerApi localPlayer = Networking.LocalPlayer;
 
         // Only the master needs to check the state of the animation, as it's the source of truth
-        if (!localPlayer.isMaster)
+        if (localPlayer == null || !localPlayer.IsValid() || !localPlayer.isMaster)
         {
             return;
         }
