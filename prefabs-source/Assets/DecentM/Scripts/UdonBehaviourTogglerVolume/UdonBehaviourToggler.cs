@@ -45,10 +45,7 @@ public class UdonBehaviourToggler : UdonSharpBehaviour
             return;
         }
 
-        if (this.global)
-        {
-            SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, nameof(this.ToggleOn));
-        } else
+        if (this.global || (!this.global && player.isLocal))
         {
             this.ToggleOn();
         }
@@ -63,11 +60,7 @@ public class UdonBehaviourToggler : UdonSharpBehaviour
             return;
         }
 
-        if (this.global)
-        {
-            SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, nameof(this.ToggleOff));
-        }
-        else
+        if (this.global || (!this.global && player.isLocal))
         {
             this.ToggleOff();
         }
