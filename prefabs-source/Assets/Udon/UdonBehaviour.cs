@@ -343,6 +343,11 @@ namespace VRC.Udon
                 RegisterEventProxy<OnAnimatorMoveProxy>();
             }
 
+            if (_program.EntryPoints.HasExportedSymbol("_onAudioFilterRead"))
+            {
+                RegisterEventProxy<OnAudioFilterReadProxy>();
+            }
+
             RegisterUpdate();
 
             _eventTable.Clear();
@@ -546,7 +551,7 @@ namespace VRC.Udon
             RunEvent("_onAnimatorMove");
         }
 
-        public void OnAudioFilterRead(float[] data, int channels)
+        internal void ProxyOnAudioFilterRead(float[] data, int channels)
         {
             RunEvent("_onAudioFilterRead", ("data", data), ("channels", channels));
         }
@@ -1444,6 +1449,12 @@ namespace VRC.Udon
         public override void SendCustomEventDelayedFrames(string eventName, int delayFrames, EventTiming eventTiming = EventTiming.Update)
         {
             UdonManager.Instance.ScheduleDelayedEvent(this, eventName, delayFrames, eventTiming);
+        }
+        
+        public override string InteractionText
+        {
+            get => interactText;
+            set => interactText = value;
         }
 
         #endregion

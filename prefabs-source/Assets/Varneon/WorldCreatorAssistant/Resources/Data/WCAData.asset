@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: WCAData
   m_EditorClassIdentifier: 
   AreVRCLayersSetup: 1
-  InstalledVRCSDKVersion: 0.0
-  LatestVRCSDKVersion: 
-  IsVRCSDKUpdateAvailable: 0
+  InstalledVRCSDKVersion: 2021.11.8
+  LatestVRCSDKVersion: 2021.11.24
+  IsVRCSDKUpdateAvailable: 1
   CommunityTools:
   - Name: VRWorldToolkit
     Author: oneVR
@@ -868,9 +868,9 @@ MonoBehaviour:
   - Name: USharpVideo
     Author: MerlinVR
     Description: A basic video player made for VRChat using Udon and UdonSharp
-    Imported: 0
+    Imported: 1
     Downloaded: 0
-    ImportedVersion: 0.0.0
+    ImportedVersion: 1.0.0
     DownloadedVersion: 0.0.0
     CurrentVersion: 0.0.0
     UpdateAvailable: 0
@@ -903,7 +903,7 @@ MonoBehaviour:
   - Name: vrc-udon-audio-link
     Author: llealloo
     Description: Audio reactive prefabs for VRChat
-    Imported: 0
+    Imported: 1
     Downloaded: 0
     ImportedVersion: 0.0.0
     DownloadedVersion: 0.0.0

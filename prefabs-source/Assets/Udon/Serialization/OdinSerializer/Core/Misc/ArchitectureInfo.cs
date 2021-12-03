@@ -16,6 +16,7 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
+#pragma warning disable 618 // VRC
 namespace VRC.Udon.Serialization.OdinSerializer
 {
     using System;
@@ -92,7 +93,7 @@ namespace VRC.Udon.Serialization.OdinSerializer
                 fixed (byte* test = testArray)
                 {
                     // Even if test is weirdly aligned in the stack, trying four differently aligned 
-                            // reads will definitely have an unaligned read or two in there.
+                    // reads will definitely have an unaligned read or two in there.
 
                     // If all of these reads work, we are safe. We do it this way instead of just having one read,
                     // because as far as I have been able to determine, there are no guarantees about the alignment 

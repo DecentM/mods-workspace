@@ -16,6 +16,7 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
+#pragma warning disable 618 // VRC
 #if UNITY_EDITOR
 
 namespace VRC.Udon.Serialization.OdinSerializer.Utilities.Editor
