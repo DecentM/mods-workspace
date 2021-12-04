@@ -13,7 +13,7 @@ public class BadActor : UdonSharpBehaviour
 
     private void Start()
     {
-        this.lib.scheduling.OnEverySecond((UdonBehaviour)GetComponent(typeof(UdonBehaviour)));
+        this.lib.scheduling.OnEverySecond((UdonBehaviour) GetComponent(typeof(UdonBehaviour)));
     }
 
     public void OnSecondPassed()
