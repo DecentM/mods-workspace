@@ -1,8 +1,6 @@
 ﻿
 using UdonSharp;
 using UnityEngine;
-using VRC.SDKBase;
-using VRC.Udon;
 
 [UdonBehaviourSyncMode(BehaviourSyncMode.Continuous)]
 public class PlayerAspectRatio : UdonSharpBehaviour
@@ -10,6 +8,8 @@ public class PlayerAspectRatio : UdonSharpBehaviour
     [Header("Settings")]
     [Tooltip("Sets the base scale of the video screen")]
     public float scale = 7.5f;
+    [Tooltip("Horizontally flips the video screen")]
+    public bool flip = false;
 
     [Header("References")]
     [Tooltip("The video screen from USharpVideo")]
@@ -100,6 +100,6 @@ public class PlayerAspectRatio : UdonSharpBehaviour
 
         this.videoScreenRenderer.transform.localScale = new Vector3(realW, realH, 1);
         // "_TargetAspectRatio" is the name of the AR parameter in the USharpVideo Standard Video Emission shader
-        this.videoScreenRenderer.sharedMaterial.SetFloat("_TargetAspectRatio", realW / realH);
+        this.videoScreenRenderer.sharedMaterial.SetFloat("_TargetAspectRatio", (realW / realH) * (this.flip ? 1 : -1));
     }
 }
