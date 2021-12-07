@@ -12,6 +12,7 @@ public class SliderVariableSync : UdonSharpBehaviour
     public UdonBehaviour behaviour;
     public TextMeshProUGUI textMesh;
     public string variableName;
+    public string eventName;
 
     private Slider slider;
 
@@ -27,5 +28,9 @@ public class SliderVariableSync : UdonSharpBehaviour
         float value = this.slider.value;
         this.behaviour.SetProgramVariable(this.variableName, value);
         this.textMesh.text = $"{this.variableName}: {value.ToString("0.00")}";
+        if (this.eventName != null)
+        {
+            this.behaviour.SendCustomEvent(this.eventName);
+        }
     }
 }
