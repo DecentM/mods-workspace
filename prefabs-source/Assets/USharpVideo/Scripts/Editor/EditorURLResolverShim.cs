@@ -29,7 +29,9 @@ namespace UdonSharp.Video.Internal
             string[] splitPath = Application.persistentDataPath.Split('/', '\\');
             youtubeDLPath = string.Join("\\", splitPath.Take(splitPath.Length - 2)) + "\\VRChat\\VRChat\\Tools\\youtube-dl.exe";
             //youtubeDLPath = "D:/Merlin/Desktop/youtube-dl.exe";
-            
+            youtubeDLPath = "D:\\bin\\yt-dlp.exe";
+
+
             if (!File.Exists(youtubeDLPath))
             {
                 Debug.LogWarning("[USharpVideo YTDL] Unable to find VRC YouTube-dl installation, URLs will not be resolved.");
