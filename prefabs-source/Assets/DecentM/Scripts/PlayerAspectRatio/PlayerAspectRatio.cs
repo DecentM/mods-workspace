@@ -7,9 +7,7 @@ public class PlayerAspectRatio : UdonSharpBehaviour
 {
     [Header("Settings")]
     [Tooltip("Sets the base scale of the video screen")]
-    public float scale = 7.5f;
-    [Tooltip("Horizontally flips the video screen")]
-    public bool flip = false;
+    public float scale = 2f;
 
     [Header("References")]
     [Tooltip("The video screen from USharpVideo")]
@@ -93,13 +91,11 @@ public class PlayerAspectRatio : UdonSharpBehaviour
 
     private void Resize(float w, float h)
     {
-        // Scale the width and height to a uniform level, then raise by a number the user sets to
-        // let them scale the screen as we took over the videoscreen transform scale.
-        float realW = w / (w + h) * this.scale;
-        float realH = h / (w + h) * this.scale;
+        // We're only adjusting the width of the screen, so the user can set the height by setting the scale variable.
+        float finalW = w / h;
 
-        this.videoScreenRenderer.transform.localScale = new Vector3(realW, realH, 1);
+        this.videoScreenRenderer.transform.localScale = new Vector3(finalW * this.scale, 1 * this.scale, 1);
         // "_TargetAspectRatio" is the name of the AR parameter in the USharpVideo Standard Video Emission shader
-        this.videoScreenRenderer.sharedMaterial.SetFloat("_TargetAspectRatio", (realW / realH) * (this.flip ? 1 : -1));
+        this.videoScreenRenderer.sharedMaterial.SetFloat("_TargetAspectRatio", w / h);
     }
 }

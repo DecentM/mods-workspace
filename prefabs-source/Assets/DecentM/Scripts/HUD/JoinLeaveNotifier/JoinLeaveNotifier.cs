@@ -6,7 +6,7 @@ using VRC.SDKBase;
 using VRC.Udon;
 
 [UdonBehaviourSyncMode(BehaviourSyncMode.Manual)]
-public class HudHandler : UdonSharpBehaviour
+public class JoinLeaveNotifier : UdonSharpBehaviour
 {
     [Header("Notification Settings")]
     [Tooltip("If checked, join notifications will be shown")]
@@ -24,12 +24,6 @@ public class HudHandler : UdonSharpBehaviour
     public Text usernameSlot;
     public Text actionSlot;
     public Animator animator;
-
-    private void LateUpdate()
-    {
-        VRCPlayerApi.TrackingData trackingData = Networking.LocalPlayer.GetTrackingData(VRCPlayerApi.TrackingDataType.Head);
-        this.transform.SetPositionAndRotation(trackingData.position, trackingData.rotation);
-    }
 
     public void SetLeave()
     {
