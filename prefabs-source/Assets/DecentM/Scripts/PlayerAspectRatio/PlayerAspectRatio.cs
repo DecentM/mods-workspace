@@ -10,6 +10,8 @@ public class PlayerAspectRatio : UdonSharpBehaviour
     public float scale = 2f;
     [Tooltip("Sets the resize directional mode. 0 - centered, 1 - horizontal, 2 - vertical")]
     public int directionalMode = 0;
+    [Tooltip("Apply this aspect ratio at startup. Example: 16:9")]
+    public string defaultAspectRatio;
 
     [Header("References")]
     [Tooltip("The video screen from USharpVideo")]
@@ -62,7 +64,14 @@ public class PlayerAspectRatio : UdonSharpBehaviour
         MeshFilter meshFilter = this.videoScreenRenderer.GetComponent<MeshFilter>();
         meshFilter.mesh = this.oneByOneMesh;
 
-        this.Resize(this.width, this.height);
+        // If the user set a default aspect ratio, set that instead. If not, set from numeric defaults.
+        if (this.defaultAspectRatio == null)
+        {
+            this.Resize(this.width, this.height);
+        } else
+        {
+            this.UpdateFromString(this.defaultAspectRatio);
+        }
     }
 
     public void UpdateFromStringArg()
