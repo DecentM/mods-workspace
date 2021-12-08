@@ -8,8 +8,8 @@ public class PlayerAspectRatio : UdonSharpBehaviour
     [Header("Settings")]
     [Tooltip("Sets the base scale of the video screen")]
     public float scale = 2f;
-    [Tooltip("If true, the height os the video screen will change instead of its width.")]
-    public bool portraitMode = false;
+    [Tooltip("Sets the resize directional mode. 0 - centered, 1 - horizontal, 2 - vertical")]
+    public int directionalMode = 0;
 
     [Header("References")]
     [Tooltip("The video screen from USharpVideo")]
@@ -93,12 +93,25 @@ public class PlayerAspectRatio : UdonSharpBehaviour
 
     private void Resize(float w, float h)
     {
-        if (this.portraitMode)
+        switch (this.directionalMode)
         {
-            this.videoScreenRenderer.transform.localScale = new Vector3(1 * this.scale, h / w * this.scale, 1);
-        } else
-        {
-            this.videoScreenRenderer.transform.localScale = new Vector3(w / h * this.scale, 1 * this.scale, 1);
+            // 0 - centered
+            case 0:
+                float realW = w / (w + h) * this.scale;
+                float realH = h / (w + h) * this.scale;
+
+                this.videoScreenRenderer.transform.localScale = new Vector3(realW * this.scale, realH * this.scale, 1);
+                break;
+
+            // 1 - horizontal
+            case 1:
+                this.videoScreenRenderer.transform.localScale = new Vector3(w / h * this.scale, 1 * this.scale, 1);
+                break;
+
+            // 2 - vertical
+            case 2:
+                this.videoScreenRenderer.transform.localScale = new Vector3(1 * this.scale, h / w * this.scale, 1);
+                break;
         }
 
         // "_TargetAspectRatio" is the name of the AR parameter in the USharpVideo Standard Video Emission shader
