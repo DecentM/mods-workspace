@@ -8,24 +8,15 @@ using System;
 [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
 public class SRTParser : UdonSharpBehaviour
 {
-    public TextAsset srtFile;
     public LibDecentM lib;
 
-    private void Start()
+    public object[][] ParseToInstructions(string text)
     {
-        object[][] tokens = this.Lex(this.srtFile.text);
+        object[][] tokens = this.Lex(text);
         object[][] nodes = this.Parse(tokens);
         object[][] subtitles = this.TransformToSubtitles(nodes);
-        object[][] instructions = this.TransformToInstructions(subtitles);
 
-        Debug.Log($"Created {nodes.Length} nodes");
-        Debug.Log($"Created {subtitles.Length} subtitles");
-        Debug.Log($"Created {instructions.Length} instructions");
-
-        for (int i = 0; i < instructions.Length; i++)
-        {
-            Debug.Log($"Instruction {instructions[i][0]} at {instructions[i][1]} value {instructions[i][2]}");
-        }
+        return this.TransformToInstructions(subtitles);
     }
 
     private object[] CreateToken(int type, object value)
@@ -293,12 +284,17 @@ public class SRTParser : UdonSharpBehaviour
         // hours:minutes:seconds,milliseconds
         string[] parts = timestamp.Split(',');
         string time = parts[0];
-        int millis = int.Parse(parts[1]);
+        int millis = 0;
+        int.TryParse(parts[1], out millis);
 
         string[] timeParts = time.Split(':');
-        int hours = int.Parse(timeParts[0]);
-        int minutes = int.Parse(timeParts[1]);
-        int seconds = int.Parse(timeParts[2]);
+        int hours = 0;
+        int minutes = 0;
+        int seconds = 0;
+
+        int.TryParse(timeParts[0], out hours);
+        int.TryParse(timeParts[1], out minutes);
+        int.TryParse(timeParts[2], out seconds);
 
         // Add values to get the value in millis
         return millis + (seconds * 1000) + (minutes * 60 * 1000) + (hours * 60 * 60 * 1000);
@@ -327,10 +323,23 @@ public class SRTParser : UdonSharpBehaviour
                     continue;
                 }
 
-                object[] node = this.CreateNode(1, tokenValue);
+                int tCursor = cursor;
+                object[] tCurrent = tokens[tCursor];
+                string indexValue = "";
+
+                // Go until we see a newline
+                while ((int) tCurrent[0] != 7)
+                {
+                    indexValue = $"{indexValue}{tCurrent[1]}";
+
+                    tCursor++;
+                    tCurrent = tokens[tCursor];
+                }
+
+                object[] node = this.CreateNode(1, indexValue);
                 nodes = this.lib.arrayTools.PushObjectArrayToJagged(nodes, node);
 
-                cursor++;
+                cursor = tCursor;
                 // Move to expecting a start timestamp
                 mode = 2;
                 continue;
@@ -436,6 +445,12 @@ public class SRTParser : UdonSharpBehaviour
 
                 while (consecutiveNewlines < 2)
                 {
+                    if (tCursor >= tokens.Length)
+                    {
+                        // We've reached the end of the file
+                        break;
+                    }
+
                     object[] tCurrent = tokens[tCursor];
 
                     // If we've seen two consecutive newlines, it's the end of the text contents part,
@@ -539,6 +554,7 @@ public class SRTParser : UdonSharpBehaviour
         /** Index map
          * 0 - type
          * 1 - timestamp
+         * 2 - value
          **/
 
         /**
