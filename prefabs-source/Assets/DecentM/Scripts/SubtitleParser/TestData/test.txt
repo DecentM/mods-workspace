@@ -1,0 +1,16 @@
+﻿1
+00:00:00,000 --> 00:00:05,000
+This is a test - first
+
+2
+00:00:05,000 --> 00:00:07,000
+Now we're on the second one
+
+3
+00:00:08,000 --> 00:00:10,000
+We just had a gap of one second
+
+4
+00:00:10,300 --> 00:00:12,000
+Another gap of .33 seconds passed
+

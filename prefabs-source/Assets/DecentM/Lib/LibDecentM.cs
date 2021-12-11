@@ -11,5 +11,6 @@ namespace DecentM
         public Permissions permissions;
         public Debugging debugging;
         public Scheduling scheduling;
+        public Tools.ArrayTools arrayTools;
     }
 }
