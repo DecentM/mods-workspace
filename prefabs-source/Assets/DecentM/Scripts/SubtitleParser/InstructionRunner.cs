@@ -10,44 +10,68 @@ using TMPro;
 [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
 public class InstructionRunner : UdonSharpBehaviour
 {
-    public TextAsset srtFile;
+    // TODO: make this private, and use udon from a central manager object to set srtFile
+    public TextAsset _srtFile;
+
+    public TextAsset srtFile
+    {
+        get {
+            return this._srtFile;
+        }
+
+        set
+        {
+            this._srtFile = value;
+            this.Reset();
+        }
+    }
+
     public SRTParser parser;
     public float precision = 0.1f;
     public TextMeshProUGUI text;
+    public TextMeshProUGUI debug;
     public USharpVideoPlayer player;
 
     private bool initialised = false;
+    private float fixedUpdateRate;
 
     private void Start()
     {
+        this.fixedUpdateRate = 1 / Time.fixedDeltaTime;
         this.instructions = this.parser.ParseToInstructions(this.srtFile.text);
         this.initialised = true;
     }
 
     private int clock = 0;
+    private bool running = true;
 
     private void FixedUpdate()
     {
-        if (!this.initialised)
+        if (!this.initialised || !this.running)
         {
             return;
         }
 
-        clock++;
-        if (clock > 1 / Time.fixedDeltaTime / precision)
+        this.clock++;
+        if (this.clock >= (this.fixedUpdateRate / 10))
         {
-            clock = 0;
-            this.Run();
+            this.TickInstruction();
+            this.clock = 0;
         }
+    }
+
+    private void Reset()
+    {
+        this.clock = 0;
+        this.running = true;
+        this.instructionIndex = 0;
     }
 
     private object[][] instructions;
     private int instructionIndex = 0;
 
-    private void Run()
+    private void TickInstruction()
     {
-        Debug.Log("Run()");
-
         /** Index map
          * 0 - type
          * 1 - timestamp
@@ -60,17 +84,32 @@ public class InstructionRunner : UdonSharpBehaviour
          * 1 - RenderText
          * 2 - Clear
          **/
-
-        int timeMillis = Mathf.RoundToInt(this.player.GetVideoManager().GetTime() / 1000);
-        object[] instruction = this.instructions[this.instructionIndex];
-
-        if (instruction == null)
+        
+        // We've reached the end of the instructions, stop processing more
+        if (instructionIndex >= this.instructions.Length)
         {
+            this.running = false;
             return;
         }
 
-        if ((int)instruction[1] < timeMillis)
+        int timeMillis = Mathf.RoundToInt(this.player.GetVideoManager().GetTime() * 1000);
+        object[] instruction = this.instructions[this.instructionIndex];
+
+        this.debug.text = $"index {this.instructionIndex}\n" +
+            $"system type {instruction}\n" +
+            $"type {instruction[0]}\n" +
+            $"timestamp {instruction[1]}\n" +
+            $"current time {timeMillis}";
+
+        if (instruction == null)
         {
+            this.debug.text = "Instruction is null";
+            return;
+        }
+
+        if ((int) instruction[1] < timeMillis)
+        {
+            this.debug.text = (int) instruction[0] == 1 ? "Writing text" : "Clearing canvas";
             this.ExecuteInstruction((int) instruction[0], (string) instruction[2]);
             this.instructionIndex++;
         }

@@ -586,8 +586,8 @@ public class SRTParser : UdonSharpBehaviour
             object[] startInstruction = this.CreateInstruction(1, start, text);
             instructions = this.lib.arrayTools.PushObjectArrayToJagged(instructions, startInstruction);
 
-            // Skip creating a clear instruction when the next subtitle starts at the same time as the current one ends
-            if (i < subtitles.Length - 2 && (int) subtitles[i + 1][1] == end)
+            // Skip creating a clear instruction when we're at the last instruction, or the next subtitle starts at the same time as the current one ends
+            if (i < subtitles.Length - 2 && (int) subtitles[i + 1][1] - end < 333)
             {
                 continue;
             }
