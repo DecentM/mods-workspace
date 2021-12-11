@@ -72,7 +72,7 @@ Material:
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 0
     - _SrcBlend: 1
-    - _TargetAspectRatio: 2
+    - _TargetAspectRatio: 1.7777778
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:

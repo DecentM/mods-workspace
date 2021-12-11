@@ -10,9 +10,9 @@ namespace DecentM.Tools
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class ArrayTools : UdonSharpBehaviour
     {
-        public Type[] Push<Type>(Type[] array, Type item)
+        public object[][] PushObjectArrayToJagged(object[][] array, object[] item)
         {
-            Type[] result = new Type[array.Length + 1];
+            object[][] result = new object[array.Length + 1][];
 
             Array.Copy(array, result, array.Length);
 

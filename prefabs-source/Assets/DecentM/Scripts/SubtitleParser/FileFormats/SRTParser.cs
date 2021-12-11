@@ -1,5 +1,4 @@
-﻿
-using UdonSharp;
+﻿using UdonSharp;
 using UnityEngine;
 using VRC.SDKBase;
 using VRC.Udon;
@@ -11,6 +10,23 @@ public class SRTParser : UdonSharpBehaviour
 {
     public TextAsset srtFile;
     public LibDecentM lib;
+
+    private void Start()
+    {
+        object[][] tokens = this.Lex(this.srtFile.text);
+        object[][] nodes = this.Parse(tokens);
+        object[][] subtitles = this.TransformToSubtitles(nodes);
+        object[][] instructions = this.TransformToInstructions(subtitles);
+
+        Debug.Log($"Created {nodes.Length} nodes");
+        Debug.Log($"Created {subtitles.Length} subtitles");
+        Debug.Log($"Created {instructions.Length} instructions");
+
+        for (int i = 0; i < instructions.Length; i++)
+        {
+            Debug.Log($"Instruction {instructions[i][0]} at {instructions[i][1]} value {instructions[i][2]}");
+        }
+    }
 
     private object[] CreateToken(int type, object value)
     {
@@ -26,15 +42,14 @@ public class SRTParser : UdonSharpBehaviour
          * part of the subtitles text
          * 
          * Token types:
-         * 0 - unknown / lexing error
-         * 1 - char
-         * 2 - number (a number from 0-9)
-         * 3 - hyphen (-)
-         * 4 - sideways caret (>)
-         * 5 - colon (:)
-         * 6 - comma (,)
+         * 0 - unknown
+         * 1 - char (any ascii character) TextType
+         * 2 - number (a number from 0-9) TextType
+         * 3 - hyphen (-) TextType
+         * 4 - sideways caret (>) TextType
+         * 5 - colon (:) TextType
+         * 6 - comma (,) TextType
          * 7 - newline (/n or /r/n)
-         * 8 - space
          **/
 
         token[0] = type;
@@ -47,7 +62,7 @@ public class SRTParser : UdonSharpBehaviour
     {
         int cursor = 0;
         object[][] tokens = new object[0][];
-        
+
         while (cursor < text.Length)
         {
             char current = text[cursor];
@@ -57,7 +72,7 @@ public class SRTParser : UdonSharpBehaviour
             {
                 object[] token = this.CreateToken(3, "-");
 
-                tokens = this.lib.arrayTools.Push(tokens, token);
+                tokens = this.lib.arrayTools.PushObjectArrayToJagged(tokens, token);
 
                 cursor++;
                 continue;
@@ -68,7 +83,7 @@ public class SRTParser : UdonSharpBehaviour
             {
                 object[] token = this.CreateToken(4, ">");
 
-                tokens = this.lib.arrayTools.Push(tokens, token);
+                tokens = this.lib.arrayTools.PushObjectArrayToJagged(tokens, token);
 
                 cursor++;
                 continue;
@@ -79,7 +94,7 @@ public class SRTParser : UdonSharpBehaviour
             {
                 object[] token = this.CreateToken(2, 0);
 
-                tokens = this.lib.arrayTools.Push(tokens, token);
+                tokens = this.lib.arrayTools.PushObjectArrayToJagged(tokens, token);
 
                 cursor++;
                 continue;
@@ -89,7 +104,7 @@ public class SRTParser : UdonSharpBehaviour
             {
                 object[] token = this.CreateToken(2, 1);
 
-                tokens = this.lib.arrayTools.Push(tokens, token);
+                tokens = this.lib.arrayTools.PushObjectArrayToJagged(tokens, token);
 
                 cursor++;
                 continue;
@@ -99,7 +114,7 @@ public class SRTParser : UdonSharpBehaviour
             {
                 object[] token = this.CreateToken(2, 2);
 
-                tokens = this.lib.arrayTools.Push(tokens, token);
+                tokens = this.lib.arrayTools.PushObjectArrayToJagged(tokens, token);
 
                 cursor++;
                 continue;
@@ -109,7 +124,7 @@ public class SRTParser : UdonSharpBehaviour
             {
                 object[] token = this.CreateToken(2, 3);
 
-                tokens = this.lib.arrayTools.Push(tokens, token);
+                tokens = this.lib.arrayTools.PushObjectArrayToJagged(tokens, token);
 
                 cursor++;
                 continue;
@@ -119,7 +134,7 @@ public class SRTParser : UdonSharpBehaviour
             {
                 object[] token = this.CreateToken(2, 4);
 
-                tokens = this.lib.arrayTools.Push(tokens, token);
+                tokens = this.lib.arrayTools.PushObjectArrayToJagged(tokens, token);
 
                 cursor++;
                 continue;
@@ -129,7 +144,7 @@ public class SRTParser : UdonSharpBehaviour
             {
                 object[] token = this.CreateToken(2, 5);
 
-                tokens = this.lib.arrayTools.Push(tokens, token);
+                tokens = this.lib.arrayTools.PushObjectArrayToJagged(tokens, token);
 
                 cursor++;
                 continue;
@@ -139,7 +154,7 @@ public class SRTParser : UdonSharpBehaviour
             {
                 object[] token = this.CreateToken(2, 6);
 
-                tokens = this.lib.arrayTools.Push(tokens, token);
+                tokens = this.lib.arrayTools.PushObjectArrayToJagged(tokens, token);
 
                 cursor++;
                 continue;
@@ -149,7 +164,7 @@ public class SRTParser : UdonSharpBehaviour
             {
                 object[] token = this.CreateToken(2, 7);
 
-                tokens = this.lib.arrayTools.Push(tokens, token);
+                tokens = this.lib.arrayTools.PushObjectArrayToJagged(tokens, token);
 
                 cursor++;
                 continue;
@@ -159,7 +174,7 @@ public class SRTParser : UdonSharpBehaviour
             {
                 object[] token = this.CreateToken(2, 8);
 
-                tokens = this.lib.arrayTools.Push(tokens, token);
+                tokens = this.lib.arrayTools.PushObjectArrayToJagged(tokens, token);
 
                 cursor++;
                 continue;
@@ -169,7 +184,7 @@ public class SRTParser : UdonSharpBehaviour
             {
                 object[] token = this.CreateToken(2, 9);
 
-                tokens = this.lib.arrayTools.Push(tokens, token);
+                tokens = this.lib.arrayTools.PushObjectArrayToJagged(tokens, token);
 
                 cursor++;
                 continue;
@@ -179,7 +194,7 @@ public class SRTParser : UdonSharpBehaviour
             {
                 object[] token = this.CreateToken(5, ":");
 
-                tokens = this.lib.arrayTools.Push(tokens, token);
+                tokens = this.lib.arrayTools.PushObjectArrayToJagged(tokens, token);
 
                 cursor++;
                 continue;
@@ -189,7 +204,7 @@ public class SRTParser : UdonSharpBehaviour
             {
                 object[] token = this.CreateToken(6, ",");
 
-                tokens = this.lib.arrayTools.Push(tokens, token);
+                tokens = this.lib.arrayTools.PushObjectArrayToJagged(tokens, token);
 
                 cursor++;
                 continue;
@@ -199,7 +214,7 @@ public class SRTParser : UdonSharpBehaviour
             {
                 object[] token = this.CreateToken(7, "\n");
 
-                tokens = this.lib.arrayTools.Push(tokens, token);
+                tokens = this.lib.arrayTools.PushObjectArrayToJagged(tokens, token);
 
                 cursor++;
                 continue;
@@ -216,7 +231,7 @@ public class SRTParser : UdonSharpBehaviour
             {
                 object[] token = this.CreateToken(8, " ");
 
-                tokens = this.lib.arrayTools.Push(tokens, token);
+                tokens = this.lib.arrayTools.PushObjectArrayToJagged(tokens, token);
 
                 cursor++;
                 continue;
@@ -226,7 +241,7 @@ public class SRTParser : UdonSharpBehaviour
             // the subtitle text
             object[] charToken = this.CreateToken(1, current);
 
-            tokens = this.lib.arrayTools.Push(tokens, charToken);
+            tokens = this.lib.arrayTools.PushObjectArrayToJagged(tokens, charToken);
 
             cursor++;
             continue;
@@ -252,7 +267,6 @@ public class SRTParser : UdonSharpBehaviour
          * 3 - TimestampArrow
          * 4 - TimestampEnd
          * 5 - TextContents
-         * 6 - ScreenEnd
          **/
 
         node[0] = kind;
@@ -267,8 +281,8 @@ public class SRTParser : UdonSharpBehaviour
         object[] tCurrent = tokens[tCursor];
         string timestamp = "";
 
-        // Keep going until we see a space
-        while ((int)tCurrent[0] != 8)
+        // Keep going until we see a space or newline
+        while ((int)tCurrent[0] != 8 && (int)tCurrent[0] != 7)
         {
             tCursor++;
             tCurrent = tokens[tCursor];
@@ -287,7 +301,7 @@ public class SRTParser : UdonSharpBehaviour
         int seconds = int.Parse(timeParts[2]);
 
         // Add values to get the value in millis
-        return millis + (seconds + 1000) + (minutes + 60 * 1000) + (hours + 60 * 60 * 1000);
+        return millis + (seconds * 1000) + (minutes * 60 * 1000) + (hours * 60 * 60 * 1000);
     }
 
     public object[][] Parse(object[][] tokens)
@@ -313,14 +327,12 @@ public class SRTParser : UdonSharpBehaviour
                     continue;
                 }
 
-                // If the current token is not a number, go down until we find one
-                // token type 2 == int
                 object[] node = this.CreateNode(1, tokenValue);
-                nodes = this.lib.arrayTools.Push(nodes, node);
+                nodes = this.lib.arrayTools.PushObjectArrayToJagged(nodes, node);
 
                 cursor++;
                 // Move to expecting a start timestamp
-                mode++;
+                mode = 2;
                 continue;
             }
 
@@ -339,12 +351,12 @@ public class SRTParser : UdonSharpBehaviour
 
                 // node kind 2 == TimestampStart
                 object[] node = this.CreateNode(2, timestampMillis);
-                nodes = this.lib.arrayTools.Push(nodes, node);
+                nodes = this.lib.arrayTools.PushObjectArrayToJagged(nodes, node);
 
                 // Skip the timestamp + a space
                 cursor = cursor + 12;
                 // Move to expecting the arrow
-                mode++;
+                mode = 3;
                 continue;
             }
 
@@ -373,13 +385,13 @@ public class SRTParser : UdonSharpBehaviour
                 if (body == "-->")
                 {
                     // node kind 3 == TimestampArrow
-                    object[] node = this.CreateNode(3, tokenValue);
-                    nodes = this.lib.arrayTools.Push(nodes, node);
+                    object[] node = this.CreateNode(3, body);
+                    nodes = this.lib.arrayTools.PushObjectArrayToJagged(nodes, node);
 
-                    cursor = cursor + tCursor;
+                    cursor = tCursor;
 
                     // Move to expecting the second timestamp
-                    mode++;
+                    mode = 4;
                 }
                 continue;
             }
@@ -399,12 +411,12 @@ public class SRTParser : UdonSharpBehaviour
 
                 // node kind 4 == TimestampEnd
                 object[] node = this.CreateNode(4, timestampMillis);
-                nodes = this.lib.arrayTools.Push(nodes, node);
+                nodes = this.lib.arrayTools.PushObjectArrayToJagged(nodes, node);
 
                 // Skip the timestamp + a space
                 cursor = cursor + 12;
                 // Move to expecting the arrow
-                mode++;
+                mode = 5;
                 continue;
             }
 
@@ -412,42 +424,162 @@ public class SRTParser : UdonSharpBehaviour
             if (mode == 5)
             {
                 int tCursor = cursor;
-                bool prevCharIsNewline = false;
+                int consecutiveNewlines = 0;
                 string textContents = "";
 
-                while (true)
+                // Skip the first newline
+                if (tokenType == 7)
+                {
+                    cursor++;
+                    continue;
+                }
+
+                while (consecutiveNewlines < 2)
                 {
                     object[] tCurrent = tokens[tCursor];
 
                     // If we've seen two consecutive newlines, it's the end of the text contents part,
                     // and we need to return to expecting the next subtitle screen
                     // tokenType 7 == newline
-                    if (tokenType == 7)
+                    if ((int) tCurrent[0] == 7)
                     {
-                        if (prevCharIsNewline)
-                        {
-                            break;
-                        }
-
-                        textContents = $"{textContents}{(string)tokenValue}";
-                        prevCharIsNewline = true;
+                        consecutiveNewlines++;
+                        textContents = $"{textContents}{tCurrent[1]}";
                     }
                     else
                     {
-                        textContents = $"{textContents}{(string)tokenValue}";
-                        prevCharIsNewline = false;
+                        consecutiveNewlines = 0;
+                        textContents = $"{textContents}{tCurrent[1]}";
                     }
+
+                    tCursor++;
                 }
 
                 object[] node = this.CreateNode(5, textContents);
-                nodes = this.lib.arrayTools.Push(nodes, node);
+                nodes = this.lib.arrayTools.PushObjectArrayToJagged(nodes, node);
 
                 cursor = tCursor;
+                // Go back to expecting the next section's index
                 mode = 1;
                 continue;
             }
         }
 
         return nodes;
+    }
+
+    private object[] CreateSubtitle(int index, int timestampStart, int timestampEnd, string text)
+    {
+        object[] node = new object[4];
+
+        /** Index map
+         * 0 - index
+         * 1 - timestampStart
+         * 2 - timestampEnd
+         * 3 - text
+         **/
+
+        node[0] = index;
+        node[1] = timestampStart;
+        node[2] = timestampEnd;
+        node[3] = text;
+
+        return node;
+    }
+
+    private object[][] TransformToSubtitles(object[][] ast)
+    {
+        object[][] subtitles = new object[0][];
+
+        int index = 0;
+        int timestampStart = 0;
+        int timestampEnd = 0;
+        string text = "";
+
+        for (int i = 0; i < ast.Length; i++)
+        {
+            object[] node = ast[i];
+            int kind = (int)node[0];
+
+            // 1 == index
+            if (kind == 1)
+            {
+                index = (int)node[1];
+            }
+
+            // 2 == timestampStart
+            if (kind == 2)
+            {
+                timestampStart = (int)node[1];
+            }
+
+            // 4 == timestampEnd
+            if (kind == 4)
+            {
+                timestampEnd = (int)node[1];
+            }
+
+            // 5 == text
+            if (kind == 5)
+            {
+                text = (string)node[1];
+
+                object[] subtitle = this.CreateSubtitle(index, timestampStart, timestampEnd, text);
+                subtitles = this.lib.arrayTools.PushObjectArrayToJagged(subtitles, subtitle);
+            }
+        }
+
+        return subtitles;
+    }
+
+    private object[] CreateInstruction(int type, int timestamp, string value)
+    {
+        object[] node = new object[3];
+
+        /** Index map
+         * 0 - type
+         * 1 - timestamp
+         **/
+
+        /**
+         * Types:
+         * 0 - unknown / transform error
+         * 1 - RenderText
+         * 2 - Clear
+         **/
+
+        node[0] = type;
+        node[1] = timestamp;
+        node[2] = value;
+
+        return node;
+    }
+
+    public object[][] TransformToInstructions(object[][] subtitles)
+    {
+        object[][] instructions = new object[0][];
+
+        for (int i = 0; i < subtitles.Length; i++)
+        {
+            object[] subtitle = subtitles[i];
+            int index = (int)subtitle[0];
+            int start = (int)subtitle[1];
+            int end = (int)subtitle[2];
+            string text = (string)subtitle[3];
+
+            object[] startInstruction = this.CreateInstruction(1, start, text);
+            instructions = this.lib.arrayTools.PushObjectArrayToJagged(instructions, startInstruction);
+
+            // Skip creating a clear instruction when the next subtitle starts at the same time as the current one ends
+            if (i < subtitles.Length - 2 && (int) subtitles[i + 1][1] == end)
+            {
+                continue;
+            }
+
+            object[] endInstruction = this.CreateInstruction(2, end, "");
+            instructions = this.lib.arrayTools.PushObjectArrayToJagged(instructions, endInstruction);
+        }
+
+        return instructions;
     }
 }
