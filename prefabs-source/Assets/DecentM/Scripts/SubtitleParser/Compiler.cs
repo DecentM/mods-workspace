@@ -18,10 +18,11 @@ namespace DecentM.Subtitles
         private string targetPath = "Assets/DecentM/Assets/CompiledSubtitleInstructions";
         private string sourcePath = "Assets/DecentM/Assets/Subtitles";
 
-        public void Compile()
+        public List<TextAsset> Compile()
         {
             DirectoryInfo info = new DirectoryInfo(this.sourcePath);
             FileInfo[] fileInfos = info.GetFiles();
+            List<TextAsset> assets = new List<TextAsset>();
 
             // Go through all the files in the directory and parse them using a parser based on its file extension
             for (int i = 0; i < fileInfos.Length; i++)
@@ -36,10 +37,18 @@ namespace DecentM.Subtitles
                         instructions = this.srtParser.Parse(reader.ReadToEnd());
                         break;
 
+                    case ".ass":
+                    case ".usf":
+                    case ".vtt":
+                    case ".stl":
+                    case ".sub":
+                    case ".ssa":
+                    case ".ttxt":
+                        throw new NotImplementedException($"Subtitle format {fileInfo.Extension} is not supported. Use a different file, or convert your subtitles to a supported format.");
+
                     default:
                         reader.Close();
                         break;
-                        // throw new NotImplementedException($"Subtitle format {fileInfo.Extension} is not supported. Use a different file, or convert your subtitles to a supported format.");
                 }
 
                 reader.Close();
@@ -50,15 +59,22 @@ namespace DecentM.Subtitles
                     continue;
                 }
 
-                StreamWriter writer = new StreamWriter(Path.Combine(this.targetPath, $"{fileInfo.Name}.txt"));
+                string text = "";
 
                 instructions.ForEach(delegate (Instruction instruction)
                 {
-                    writer.WriteLine(instruction.ToString());
+                    // writer.WriteLine(instruction.ToString());
+                    text += instruction.ToString();
+                    text += '\n';
                 });
 
-                writer.Close();
+                TextAsset asset = new TextAsset(text);
+                AssetDatabase.CreateAsset(asset, Path.Combine(this.targetPath, $"{fileInfo.Name}.asset"));
+
+                assets.Add(asset);
             }
+
+            return assets;
         }
     }
 }

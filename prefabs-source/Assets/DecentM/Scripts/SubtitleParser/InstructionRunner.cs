@@ -12,9 +12,9 @@ using DecentM;
 public class InstructionRunner : UdonSharpBehaviour
 {
     public LibDecentM lib;
+    public float subtitleOffset = 0;
 
-    // TODO: make this private, and use udon from a central manager object to set srtFile
-    public TextAsset _instructionsFile;
+    private TextAsset _instructionsFile;
 
     public TextAsset instructionsFile
     {
@@ -186,13 +186,13 @@ public class InstructionRunner : UdonSharpBehaviour
          **/
 
         // We've reached the end of the instructions, stop processing more
-        if (instructionIndex >= this.instructions.Length)
+        if (this.instructionIndex >= this.instructions.Length)
         {
             this.running = false;
             return;
         }
 
-        int timeMillis = Mathf.RoundToInt(this.player.GetVideoManager().GetTime() * 1000);
+        int timeMillis = Mathf.RoundToInt(this.player.GetVideoManager().GetTime() * 1000) + Mathf.RoundToInt(this.subtitleOffset);
         object[] instruction = this.instructions[this.instructionIndex];
 
         if (instruction == null)
@@ -210,22 +210,38 @@ public class InstructionRunner : UdonSharpBehaviour
             $"diff: {diff}\n" +
             $"seeking: {this.seekDirection}";
 
+        // if we're behind, start seeking forward
         if (diff > 10000)
         {
             this.seekDirection = 1;
+        // if we're ahead, start seeking backward
         } else if (diff < -10000)
         {
             this.seekDirection = -1;
+        // stop seeking if we're about right
         } else if (this.seekDirection != 0)
         {
+            this.text.text = "";
             this.seekDirection = 0;
         }
 
-        instructionIndex = instructionIndex + seekDirection;
+        this.instructionIndex = this.instructionIndex + this.seekDirection;
 
+        // If we're seeking, we make a progress report to the player
+        //if (this.seekDirection != 0)
+        //{
+        //    this.text.text = $"Seeking... ({(diff < 0 ? diff * -1 : diff)})";
+        //}
+
+        // If the timestamp of the current instruction is in the past, it means we should be displaying it
         if ((int) instruction[1] < timeMillis)
         {
-            this.ExecuteInstruction((int) instruction[0], (string) instruction[2]);
+            // Prevent writing to the screen while seeking
+            if (this.seekDirection == 0)
+            {
+                this.ExecuteInstruction((int)instruction[0], (string)instruction[2]);
+            }
+
             this.instructionIndex++;
         }
     }

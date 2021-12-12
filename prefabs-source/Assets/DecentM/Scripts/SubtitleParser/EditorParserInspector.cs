@@ -2,22 +2,33 @@
 using UnityEngine;
 using UnityEditor;
 using DecentM.Subtitles;
+using System.Diagnostics;
+using System.Collections.Generic;
+using VRC.Udon;
 
-[CustomEditor(typeof(InstructionRunner))]
+[CustomEditor(typeof(SubtitleManager))]
 public class EditorParserInspector : Editor
 {
     private Compiler compiler = new Compiler();
 
     public override void OnInspectorGUI()
     {
-        DrawDefaultInspector();
+        EditorGUILayout.HelpBox("Subtitle files need to be converted into a machine readable format, so that performance remains high.\nAfter adding, removing, or editing subtitles, press this button below to regenerate subtitle files.", MessageType.Info);
 
-        EditorGUILayout.HelpBox("This is a help box", MessageType.Info);
-
-        if (GUILayout.Button("Test"))
+        if (GUILayout.Button("Rebuild subtitle library"))
         {
-            Debug.Log("I pressed the dang button");
-            this.compiler.Compile();
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
+            List<TextAsset> assets = this.compiler.Compile();
+            sw.Stop();
+            UnityEngine.Debug.Log($"Subtitle library rebuilt in {sw.Elapsed}");
+
+            SubtitleManager manager = Selection.activeGameObject.GetComponent<SubtitleManager>();
+            manager.instructionsFiles = assets.ToArray();
         }
+
+        EditorGUILayout.Separator();
+
+        DrawDefaultInspector();
     }
 }
