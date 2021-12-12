@@ -27,7 +27,7 @@ namespace DecentM.Subtitles
 
         public override string ToString()
         {
-            return $"{this.type} {this.timestamp} {this.value.Replace("\n", "\\n")}";
+            return $"{(int)this.type} {this.timestamp} {this.value.Replace('\n', 'ª')}";
         }
     }
 }

@@ -225,7 +225,8 @@ namespace DecentM.Subtitles.Srt
                         cursor++;
                         continue;
                     }
-
+                    
+                    // Two consecutive newlines mean the end of the current screen
                     while (consecutiveNewlines < 2)
                     {
                         if (tCursor >= tokens.Count)
