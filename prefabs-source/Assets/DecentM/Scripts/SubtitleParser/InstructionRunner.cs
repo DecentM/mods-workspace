@@ -11,22 +11,20 @@ using TMPro;
 public class InstructionRunner : UdonSharpBehaviour
 {
     // TODO: make this private, and use udon from a central manager object to set srtFile
-    public TextAsset _srtFile;
+    public TextAsset _instructionsFile;
 
-    public TextAsset srtFile
+    public TextAsset instructionsFile
     {
         get {
-            return this._srtFile;
+            return this._instructionsFile;
         }
 
         set
         {
-            this._srtFile = value;
+            this._instructionsFile = value;
             this.Reset();
         }
     }
-
-    public SRTParser parser;
     public float precision = 0.1f;
     public TextMeshProUGUI text;
     public TextMeshProUGUI debug;
@@ -38,12 +36,30 @@ public class InstructionRunner : UdonSharpBehaviour
     private void Start()
     {
         this.fixedUpdateRate = 1 / Time.fixedDeltaTime;
-        this.instructions = this.parser.ParseToInstructions(this.srtFile.text);
         this.initialised = true;
+        this.Reset();
     }
 
     private int clock = 0;
     private bool running = true;
+
+    private void Reset()
+    {
+        this.clock = 0;
+        this.running = true;
+        this.instructionIndex = 0;
+        this.instructions = new object[0][];
+    }
+
+    private ReadInstructions()
+    {
+        string[] lines = this.instructionsFile.text.Split('\n');
+
+        for (int i = 0; i < lines.Length; i++)
+        {
+            string[] instructionParts = lines[i].Split(null, 3);
+        }
+    }
 
     private void FixedUpdate()
     {
@@ -58,13 +74,6 @@ public class InstructionRunner : UdonSharpBehaviour
             this.TickInstruction();
             this.clock = 0;
         }
-    }
-
-    private void Reset()
-    {
-        this.clock = 0;
-        this.running = true;
-        this.instructionIndex = 0;
     }
 
     private object[][] instructions;
