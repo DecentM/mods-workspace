@@ -108,8 +108,6 @@ public class InstructionRunner : UdonSharpBehaviour
         }
     }
 
-    private bool isSeeking = false;
-
     private void FixedUpdate()
     {
         if (!this.initialised || !this.running)
@@ -117,14 +115,9 @@ public class InstructionRunner : UdonSharpBehaviour
             return;
         }
 
-        if (this.isSeeking)
-        {
-            this.TickInstruction();
-            return;
-        }
-
         this.clock++;
-        if (this.clock >= (this.fixedUpdateRate / 10))
+        bool seeking = this.seekDirection != 0;
+        if (seeking || this.clock >= (this.fixedUpdateRate / 10))
         {
             this.TickInstruction();
             this.clock = 0;
@@ -133,6 +126,49 @@ public class InstructionRunner : UdonSharpBehaviour
 
     private object[][] instructions = new object[0][];
     private int instructionIndex = 0;
+
+    private int SearchForInstructionIndex(int timestamp, int startIndex)
+    {
+        int cursor = startIndex;
+        object[] currentInstruction = this.instructions[cursor];
+        int currentTimestamp = (int)currentInstruction[1];
+        int diff = timestamp - currentTimestamp;
+        int loop = 0;
+
+        if (diff < 0)
+        {
+            diff = diff * -1;
+        }
+
+        // Binary search for an instruction **behind** the needed one by about 10 seconds.
+        // Accuracy of 10 seconds, because the default behaviour is that
+        // the instructions tick forward quickly if their timestamps are in the past.
+        while (diff > -5000 && loop < 10)
+        {
+            // If we're smaller that the needed timestamp, we search forward.
+            if (currentTimestamp < timestamp - 5000)
+            {
+                cursor = cursor + ((this.instructions.Length - cursor) / 2);
+            } else if (currentTimestamp > timestamp) // We search backwards
+            {
+                cursor = cursor / 2;
+            }
+
+            currentInstruction = this.instructions[cursor];
+            currentTimestamp = (int)currentInstruction[1];
+
+            diff = timestamp - currentTimestamp;
+
+            loop++;
+        }
+
+        Debug.Log($"Found index at {cursor} with offset {currentTimestamp - timestamp}");
+
+        return cursor;
+    }
+
+    // -1, 0, or 1
+    private int seekDirection = 0;
 
     private void TickInstruction()
     {
@@ -159,39 +195,36 @@ public class InstructionRunner : UdonSharpBehaviour
         int timeMillis = Mathf.RoundToInt(this.player.GetVideoManager().GetTime() * 1000);
         object[] instruction = this.instructions[this.instructionIndex];
 
-        this.debug.text = $"index {this.instructionIndex}\n" +
-            $"system type {instruction}\n" +
-            $"type {instruction[0]}\n" +
-            $"timestamp {instruction[1]}\n" +
-            $"current time {timeMillis}";
-
         if (instruction == null)
         {
-            this.debug.text = "Instruction is null";
             return;
         }
 
-        if (timeMillis - (int) instruction[1] > 10000 && this.instructionIndex < this.instructions.Length - 1)
+        int diff = timeMillis - (int)instruction[1];
+
+        this.debug.text = $"index {this.instructionIndex}\n" +
+            $"system type {instruction}\n" +
+            $"type {((int)instruction[0] == 1 ? "write" : "clear")}\n" +
+            $"timestamp {instruction[1]}\n" +
+            $"current time {timeMillis}\n" +
+            $"diff: {diff}\n" +
+            $"seeking: {this.seekDirection}";
+
+        if (diff > 10000)
         {
-            this.isSeeking = true;
-            this.debug.text = $"Seeking forward\n{timeMillis - (int)instruction[1]}";
-            this.instructionIndex++;
-            return;
-        }
-
-        if ((int)instruction[1] - timeMillis > 10000 && this.instructionIndex > 0)
+            this.seekDirection = 1;
+        } else if (diff < -10000)
         {
-            this.isSeeking = true;
-            this.debug.text = $"Seeking backwards\n{(int)instruction[1] - timeMillis}";
-            this.instructionIndex--;
-            return;
+            this.seekDirection = -1;
+        } else if (this.seekDirection != 0)
+        {
+            this.seekDirection = 0;
         }
 
-        this.isSeeking = false;
+        instructionIndex = instructionIndex + seekDirection;
 
         if ((int) instruction[1] < timeMillis)
         {
-            this.debug.text = (int) instruction[0] == 1 ? "Writing text" : "Clearing canvas";
             this.ExecuteInstruction((int) instruction[0], (string) instruction[2]);
             this.instructionIndex++;
         }
