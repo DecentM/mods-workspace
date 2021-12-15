@@ -1,4 +1,5 @@
 ﻿
+#if UNITY_EDITOR
 using UnityEngine;
 using UnityEditor;
 using DecentM.Subtitles;
@@ -32,3 +33,4 @@ public class EditorParserInspector : Editor
         DrawDefaultInspector();
     }
 }
+#endif

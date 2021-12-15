@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using System.IO;
@@ -69,7 +68,9 @@ namespace DecentM.Subtitles
                 });
 
                 TextAsset asset = new TextAsset(text);
+#if UNITY_EDITOR
                 AssetDatabase.CreateAsset(asset, Path.Combine(this.targetPath, $"{fileInfo.Name}.asset"));
+#endif
 
                 assets.Add(asset);
             }
