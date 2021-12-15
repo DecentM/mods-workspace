@@ -4,10 +4,26 @@ using UnityEngine;
 using VRC.SDKBase;
 using VRC.Udon;
 
+[UdonBehaviourSyncMode(BehaviourSyncMode.Continuous)]
 public class SubtitleManager : UdonSharpBehaviour
 {
     public InstructionRunner runner;
-    public int defaultIndex = 0;
+
+    [UdonSynced, FieldChangeCallback(nameof(index))]
+    private int _index = 0;
+    public int index
+    {
+        get
+        {
+            return this._index;
+        }
+
+        set
+        {
+            this._index = value;
+            this.UpdateInstructions();
+        }
+    }
 
     public TextAsset[] instructionsFiles;
 
@@ -15,9 +31,14 @@ public class SubtitleManager : UdonSharpBehaviour
     {
         if (this.instructionsFiles == null || this.instructionsFiles.Length == 0)
         {
+            Debug.LogError("No instructions files were set. You must set at least one parsed .srt file TextAsset.");
+            this.enabled = false;
             return;
         }
+    }
 
-        this.runner.instructionsFile = this.instructionsFiles[this.defaultIndex];
+    private void UpdateInstructions()
+    {
+        this.runner.instructionsFile = this.instructionsFiles[this.index];
     }
 }

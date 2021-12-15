@@ -186,7 +186,7 @@ public class InstructionRunner : UdonSharpBehaviour
          **/
 
         // We've reached the end of the instructions, stop processing more
-        if (this.instructionIndex >= this.instructions.Length)
+        if (this.instructionsFile == null || this.instructions == null || this.instructionIndex >= this.instructions.Length)
         {
             this.running = false;
             return;
@@ -225,7 +225,7 @@ public class InstructionRunner : UdonSharpBehaviour
             this.seekDirection = 0;
         }
 
-        this.instructionIndex = this.instructionIndex + this.seekDirection;
+        this.instructionIndex = Mathf.Max(this.instructionIndex + this.seekDirection, 0);
 
         // If we're seeking, we make a progress report to the player
         //if (this.seekDirection != 0)

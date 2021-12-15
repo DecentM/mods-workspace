@@ -1,22 +1,30 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 namespace DecentM.Subtitles.Srt
 {
     public class Transformer
     {
-        public List<Instruction> ToInstructions(AstParser.Ast ast)
+        public List<SubtitleScreen> ToSubtitleScreens(AstParser.Ast ast)
         {
-            List<Instruction> instructions = new List<Instruction>();
+            List<SubtitleScreen> screens = new List<SubtitleScreen>();
 
             int index = 0;
             int timestampStart = 0;
             int timestampEnd = 0;
             string text = "";
 
-            ast.nodes.ForEach(delegate (AstParser.Node node)
+            for (int i = 0; i < ast.nodes.Count; i++)
             {
+                AstParser.Node node = ast.nodes.ElementAtOrDefault(i);
+
+                if (object.Equals(node, null))
+                {
+                    continue;
+                }
+
                 if (node.kind == AstParser.NodeKind.ScreenIndex)
                 {
                     int.TryParse((string)node.value, out index);
@@ -36,14 +44,20 @@ namespace DecentM.Subtitles.Srt
                 {
                     text = (string)node.value;
 
-                    Instruction startInstruction = new Instruction(InstructionType.RenderText, timestampStart, text);
-                    Instruction endInstruction = new Instruction(InstructionType.Clear, timestampEnd, "");
-                    instructions.Add(startInstruction);
-                    instructions.Add(endInstruction);
-                }
-            });
+                    SubtitleScreen screen = new SubtitleScreen(index, timestampStart, timestampEnd, text);
 
-            return instructions;
+                    screens.Add(screen);
+                }
+            }
+
+            return screens;
+        }
+
+        public List<Instruction> ToInstructions(AstParser.Ast ast)
+        {
+            List<SubtitleScreen> screens = this.ToSubtitleScreens(ast);
+
+            return Instruction.FromScreens(screens);
         }
     }
 }
