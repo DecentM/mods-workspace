@@ -8,18 +8,11 @@ using DecentM;
 [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
 public class BadActor : UdonSharpBehaviour
 {
-    public LibDecentM lib;
     private GameObject nonExist;
+    private Vector3 rotateBy = new Vector3(0, 2, 0);
 
-    private void Start()
+    private void FixedUpdate()
     {
-        this.lib.scheduling.OnEverySecond((UdonBehaviour) GetComponent(typeof(UdonBehaviour)));
-    }
-
-    public void OnSecondPassed()
-    {
-        Vector3 rotateBy = new Vector3(0, 18, 0);
-
         this.gameObject.transform.Rotate(rotateBy);
     }
 

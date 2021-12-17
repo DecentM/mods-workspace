@@ -1,4 +1,5 @@
-﻿using UnityEditor;
+﻿#if UNITY_EDITOR
+using UnityEditor;
 using UnityEngine;
 
 [CustomEditor(typeof(PerformanceGovernor))]
@@ -30,3 +31,4 @@ public class PerformanceGovernorInspector : Editor
         DrawDefaultInspector();
     }
 }
+#endif
