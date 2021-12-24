@@ -1,9 +1,5 @@
 ﻿using System.Collections.Generic;
-using UnityEngine;
-using UnityEditor;
-using System.IO;
 using System;
-using System.Linq;
 
 namespace DecentM.Subtitles
 {
@@ -22,84 +18,49 @@ namespace DecentM.Subtitles
         {
             return filetype == Srt;
         }
+
+        public static string[] SupportedFormats = { Srt };
     }
 
     public class Compiler
     {
         private Srt.Parser srtParser = new Srt.Parser();
-        private string targetPath = "Assets/DecentM/Assets/CompiledSubtitleInstructions";
-        private string sourcePath = "Assets/DecentM/Assets/Subtitles";
 
-        public List<TextAsset> Compile()
+        public string Compile(string source, string fileType)
         {
-            DirectoryInfo info = new DirectoryInfo(this.sourcePath);
+            List<Instruction> instructions = new List<Instruction>();
 
-            FileInfo[] fileInfos = info.GetFiles().Where(file => FileTypes.IsSupported(file.Extension)).ToArray();
-            List<TextAsset> assets = new List<TextAsset>();
-
-            // Go through all the files in the directory and parse them using a parser based on its file extension
-            for (int i = 0; i < fileInfos.Length; i++)
+            if (!FileTypes.IsSupported(fileType))
             {
-                FileInfo fileInfo = fileInfos[i];
-
-#if UNITY_EDITOR
-                EditorUtility.DisplayProgressBar($"Processing subtitles... ({i}/{fileInfos.Length})", fileInfo.Name, (float)i / fileInfos.Length);
-#endif
-
-                StreamReader reader = new StreamReader(fileInfo.FullName);
-                List<Instruction> instructions = new List<Instruction>();
-
-                switch (fileInfo.Extension)
-                {
-                    case FileTypes.Srt:
-                        instructions = this.srtParser.Parse(reader.ReadToEnd());
-                        break;
-
-                    case FileTypes.Ass:
-                    case FileTypes.Usf:
-                    case FileTypes.Vtt:
-                    case FileTypes.Stl:
-                    case FileTypes.Sub:
-                    case FileTypes.Ssa:
-                    case FileTypes.Ttxt:
-                        reader.Close();
-                        throw new NotImplementedException($"Subtitle format {fileInfo.Extension} is not supported. Use a different file, or convert your subtitles to a supported format.");
-
-                    default:
-                        reader.Close();
-                        break;
-                }
-
-                reader.Close();
-
-                // Don't write to a file if its source was ignored
-                if (instructions.Count == 0)
-                {
-                    continue;
-                }
-
-                string text = "";
-
-                instructions.ForEach(delegate (Instruction instruction)
-                {
-                    // writer.WriteLine(instruction.ToString());
-                    text += instruction.ToString();
-                    text += '\n';
-                });
-
-                TextAsset asset = new TextAsset(text);
-#if UNITY_EDITOR
-                AssetDatabase.CreateAsset(asset, Path.Combine(this.targetPath, $"{fileInfo.Name}.asset"));
-#endif
-
-                assets.Add(asset);
+                throw new NotImplementedException($"Subtitle format {fileType} is not supported. Use a different file, or convert your subtitles to a supported format: {String.Join(", ", FileTypes.SupportedFormats)}");
             }
 
-#if UNITY_EDITOR
-            EditorUtility.ClearProgressBar();
-#endif
+            switch (fileType)
+            {
+                case FileTypes.Srt:
+                    instructions = this.srtParser.Parse(source);
+                    break;
 
-            return assets;
+                case FileTypes.Ass:
+                case FileTypes.Usf:
+                case FileTypes.Vtt:
+                case FileTypes.Stl:
+                case FileTypes.Sub:
+                case FileTypes.Ssa:
+                case FileTypes.Ttxt:
+                default:
+                    break;
+            }
+
+            string output = "";
+
+            instructions.ForEach(delegate (Instruction instruction)
+            {
+                output += instruction.ToString();
+                output += '\n';
+            });
+
+            return output;
         }
     }
 }

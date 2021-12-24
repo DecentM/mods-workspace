@@ -1,8 +1,4 @@
-﻿using UdonSharp;
-using UnityEngine;
-using VRC.SDKBase;
-using VRC.Udon;
-using DecentM;
+﻿using DecentM;
 using System;
 using System.Collections.Generic;
 using System.Linq;

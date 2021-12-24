@@ -538,7 +538,7 @@ MonoBehaviour:
     jsonData: '{"uid":"2a6e641e-ea07-4263-aff9-3bb495baee52","layout":{"serializedVersion":"2","x":1019.9999389648438,"y":93.00003051757813,"width":593.0,"height":283.0},"containedElements":["76ad91ed-c484-4eab-8138-3180690b59dc","d8ef28c1-b818-4e02-8585-35483b81d21b","966fa2e2-6b62-4fa3-b314-28fd61987e9b"],"title":"Reset
       Temp Enter Point","layer":0,"elementTypeColor":{"r":0.0,"g":0.0,"b":0.0,"a":0.0}}'
   viewTransform:
-    position: {x: 1205, y: 55}
-    scale: 0.65751624
+    position: {x: 900, y: 0.000003874302}
+    scale: 0.32690176
   version: 1.0.0
   showAssembly: 0

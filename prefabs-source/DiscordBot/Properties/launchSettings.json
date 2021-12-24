@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "DiscordBot": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "SENTRY_DSN": "***REMOVED***",
+        "DISCORD_TOKEN": "***REMOVED***"
+      }
+    }
+  }
+}

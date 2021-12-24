@@ -10,7 +10,7 @@ using VRC.Udon;
 [CustomEditor(typeof(SubtitleManager))]
 public class EditorParserInspector : Editor
 {
-    private Compiler compiler = new Compiler();
+    private UnityImporter importer = new UnityImporter();
 
     public override void OnInspectorGUI()
     {
@@ -20,7 +20,7 @@ public class EditorParserInspector : Editor
         {
             Stopwatch sw = new Stopwatch();
             sw.Start();
-            List<TextAsset> assets = this.compiler.Compile();
+            List<TextAsset> assets = this.importer.ImportAll();
             sw.Stop();
             UnityEngine.Debug.Log($"Subtitle library rebuilt in {sw.Elapsed}");
 
