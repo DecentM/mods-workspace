@@ -1,5 +1,6 @@
 ﻿using Discord;
 using Discord.WebSocket;
+using Discord.Commands;
 using DecentM.Subtitles;
 using System.Text;
 using System.IO;
@@ -15,6 +16,11 @@ namespace DecentM.Subtitles.DiscordBot
         public static Emoji cross = new Emoji("❌");
         public static Emoji info = new Emoji("➡️");
         public static Emoji warning = new Emoji("⚠️");
+    }
+
+    public class Commands
+    {
+        public static SlashCommandBuilder HelpCommand = new SlashCommandBuilder().WithName("help").WithDescription("Information about how to use me");
     }
 
     public class Program
@@ -43,6 +49,8 @@ namespace DecentM.Subtitles.DiscordBot
             {
                 this.client.Log += this.Log;
                 this.client.MessageReceived += this.OnMessage;
+                this.client.Ready += this.OnClientReady;
+                this.client.SlashCommandExecuted += this.OnSlashCommand;
 
                 await this.client.LoginAsync(TokenType.Bot, this.botConfig.DiscordToken);
                 await this.client.StartAsync();
@@ -56,6 +64,44 @@ namespace DecentM.Subtitles.DiscordBot
             Console.WriteLine(msg.ToString());
 
             return Task.CompletedTask;
+        }
+
+        private async Task OnSlashCommand(SocketSlashCommand command)
+        {
+            switch (command.Data.Name)
+            {
+                case "help":
+                    await this.HelpCommand(command);
+                    break;
+
+                default:
+                    await command.RespondAsync($"I don't know a {command.Data.Name} command");
+                    break;
+            }
+        }
+
+        private async Task HelpCommand(SocketSlashCommand command)
+        {
+            await command.RespondAsync(
+                "Send me a subtitle file by pressing the + icon in your message field! Then download my response, and paste its contents into the subtitle input field in the `Cinema In a Space Bottle` world!\n" +
+                "Tips:\n" +
+                "- You can convert subtitles to .srt format here: <https://subtitletools.com/convert-to-srt-online>\n" +
+                "- If the output I give you contains weird characters, make sure your subtitles are UTF-8 encoded: <https://subtitletools.com/convert-text-files-to-utf8-online>\n"
+            );
+        }
+
+        public async Task OnClientReady()
+        {
+            try
+            {
+                await this.client.CreateGlobalApplicationCommandAsync(Commands.HelpCommand.Build());
+            }
+            catch (Exception ex)
+            {
+                SentrySdk.CaptureException(ex);
+
+                Console.Error.WriteLine(ex.ToString());
+            }
         }
 
         private async Task OnMessage(SocketMessage msg)
@@ -94,7 +140,7 @@ namespace DecentM.Subtitles.DiscordBot
             if (msg.Attachments.Count == 0)
             {
                 await msg.AddReactionAsync(EmojiIcon.cross);
-                await msg.Channel.SendMessageAsync("Please send me a subtitle file! I'll parse it and send you what you need to paste in VRChat.");
+                await msg.Channel.SendMessageAsync("Please send me a subtitle file! I'll parse it and send you what you need to paste in VRChat. Type `/help` for help.");
                 typingState.Dispose();
                 SentrySdk.CaptureTransaction(transaction);
                 return;
@@ -104,7 +150,7 @@ namespace DecentM.Subtitles.DiscordBot
             if (msg.Attachments.Count != 1)
             {
                 await msg.AddReactionAsync(EmojiIcon.cross);
-                await msg.Channel.SendMessageAsync("Only one file is accepted at a time.");
+                await msg.Channel.SendMessageAsync("I can only accept one file at a time.");
                 typingState.Dispose();
                 SentrySdk.CaptureTransaction(transaction);
                 return;
@@ -112,10 +158,9 @@ namespace DecentM.Subtitles.DiscordBot
 
             Discord.Attachment srt = msg.Attachments.ElementAt(0);
 
-            string file = await this.http.GetStringAsync(srt.Url);
-
             try
             {
+                string file = await this.http.GetStringAsync(srt.Url);
                 string output = this.compiler.Compile(file, Path.GetExtension(srt.Filename));
 
                 MemoryStream stream = new MemoryStream(Encoding.UTF8.GetBytes(output));
