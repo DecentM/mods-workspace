@@ -17,11 +17,6 @@ namespace DecentM.Subtitles.DiscordBot
         public static Emoji warning = new Emoji("⚠️");
     }
 
-    public class CustomButton
-    {
-        public const string ReportError = "report-error";
-    }
-
     public class Program
     {
         private BotConfig botConfig = new ConfigurationBuilder<BotConfig>()
