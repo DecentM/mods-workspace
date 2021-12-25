@@ -29,12 +29,22 @@ namespace DecentM.Subtitles
                 EditorUtility.DisplayProgressBar($"Processing subtitles... ({i}/{fileInfos.Length})", fileInfo.Name, (float)i / fileInfos.Length);
 
                 StreamReader reader = new StreamReader(fileInfo.FullName);
-                string text = this.compiler.Compile(reader.ReadToEnd(), fileInfo.Extension);
 
-                TextAsset asset = new TextAsset(text);
-                AssetDatabase.CreateAsset(asset, Path.Combine(this.targetPath, $"{fileInfo.Name}.asset"));
+                try
+                {
+                    string text = this.compiler.Compile(reader.ReadToEnd(), fileInfo.Extension);
 
-                assets.Add(asset);
+                    TextAsset asset = new TextAsset(text);
+                    AssetDatabase.CreateAsset(asset, Path.Combine(this.targetPath, $"{fileInfo.Name}.asset"));
+
+                    assets.Add(asset);
+                } catch (Exception ex)
+                {
+                    if (!EditorUtility.DisplayDialog("Compilation error", $"This subtitle file has an error:\n{ex.Message}", "Continue", "Abort"))
+                    {
+                        break;
+                    };
+                }
             }
 
             EditorUtility.ClearProgressBar();

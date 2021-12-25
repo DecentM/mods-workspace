@@ -1,5 +1,6 @@
-﻿using System.Collections.Generic;
-using System;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace DecentM.Subtitles
 {
@@ -16,7 +17,7 @@ namespace DecentM.Subtitles
 
         public static bool IsSupported(string filetype)
         {
-            return filetype == Srt;
+            return FileTypes.SupportedFormats.Any(f => f == filetype);
         }
 
         public static string[] SupportedFormats = { Srt };
@@ -24,21 +25,56 @@ namespace DecentM.Subtitles
 
     public class Compiler
     {
+        private Srt.Lexer srtLexer = new Srt.Lexer();
         private Srt.Parser srtParser = new Srt.Parser();
+        private Srt.Transformer srtTransformer = new Srt.Transformer();
 
-        public string Compile(string source, string fileType)
+        public struct CompilationResultError
         {
+            public string value = "";
+
+            public CompilationResultError(string value = "")
+            {
+                this.value = value;
+            }
+        }
+
+        public struct CompilationResult
+        {
+            public string output = "";
+            public List<CompilationResultError> errors = new List<CompilationResultError>();
+        }
+
+        public CompilationResult Compile(string source, string fileType)
+        {
+            CompilationResult result = new CompilationResult();
             List<Instruction> instructions = new List<Instruction>();
 
             if (!FileTypes.IsSupported(fileType))
             {
-                throw new NotImplementedException($"Subtitle format {fileType} is not supported. Use a different file, or convert your subtitles to a supported format: {String.Join(", ", FileTypes.SupportedFormats)}");
+                throw new NotImplementedException($"File type {fileType} is not supported. Use a different file, or convert your subtitles to a supported format: {String.Join(", ", FileTypes.SupportedFormats)}");
             }
 
             switch (fileType)
             {
                 case FileTypes.Srt:
-                    instructions = this.srtParser.Parse(source);
+                    List<Srt.Lexer.Token> tokens = this.srtLexer.Lex(source);
+                    Srt.Parser.Ast ast = this.srtParser.Parse(tokens);
+                    List<Srt.Parser.Node> errors = Srt.Parser.GetUnknowns(ast);
+
+                    // Add all errors to the result struct so they can be displayed to the user
+                    if (errors.Count != 0)
+                    {
+                        errors.ForEach(error =>
+                        {
+                            if (error.value != null)
+                            {
+                                result.errors.Add(new CompilationResultError(((string)error.value)));
+                            }
+                        });
+                    }
+
+                    instructions = this.srtTransformer.ToInstructions(ast);
                     break;
 
                 case FileTypes.Ass:
@@ -52,15 +88,15 @@ namespace DecentM.Subtitles
                     break;
             }
 
-            string output = "";
+            result.output = "";
 
             instructions.ForEach(delegate (Instruction instruction)
             {
-                output += instruction.ToString();
-                output += '\n';
+                result.output += instruction.ToString();
+                result.output += '\n';
             });
 
-            return output;
+            return result;
         }
     }
 }

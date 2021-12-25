@@ -14,8 +14,10 @@ namespace DecentM.Subtitles.DiscordBot
     {
         public static Emoji clock2 = new Emoji("🕑");
         public static Emoji cross = new Emoji("❌");
-        public static Emoji info = new Emoji("➡️");
+        public static Emoji rightArrow = new Emoji("➡️");
         public static Emoji warning = new Emoji("⚠️");
+        public static Emoji error = new Emoji("❗");
+        public static Emoji tick = new Emoji("🏁");
     }
 
     public class Commands
@@ -74,8 +76,9 @@ namespace DecentM.Subtitles.DiscordBot
                     await this.HelpCommand(command);
                     break;
 
+                // We should only hit this default branch if we have a programming error as commands are created at startup
                 default:
-                    await command.RespondAsync($"I don't know a {command.Data.Name} command");
+                    await command.RespondAsync($"I don't know a {command.Data.Name} command. This is an issue with me.");
                     break;
             }
         }
@@ -116,7 +119,7 @@ namespace DecentM.Subtitles.DiscordBot
             // Reject messages that mention us but aren't DMs
             if (msg.MentionedUsers.Any(u => u.Id == this.client.CurrentUser.Id) && msg.Channel.GetType() != typeof(Discord.WebSocket.SocketDMChannel))
             {
-                await msg.AddReactionAsync(EmojiIcon.info);
+                await msg.AddReactionAsync(EmojiIcon.rightArrow);
                 await msg.Channel.SendMessageAsync("Please DM me to prevent clogging this channel!");
                 return;
             }
@@ -156,23 +159,65 @@ namespace DecentM.Subtitles.DiscordBot
                 return;
             }
 
-            Discord.Attachment srt = msg.Attachments.ElementAt(0);
+            Discord.Attachment attachment = msg.Attachments.ElementAt(0);
+
+            // Nearing this size, the time it takes to compile starts going over a few seconds, so we limit to 256kb to keep performance up
+            // and prevent people from stalling the bot with huge files. Subtitle files are 99% of the time are small anyway.
+            if (attachment.Size > 256000)
+            {
+                await msg.AddReactionAsync(EmojiIcon.cross);
+                await msg.Channel.SendMessageAsync("This file is too large, please only send me files smaller than 256kb!");
+                typingState.Dispose();
+                SentrySdk.CaptureTransaction(transaction);
+                return;
+            }
 
             try
             {
-                string file = await this.http.GetStringAsync(srt.Url);
-                string output = this.compiler.Compile(file, Path.GetExtension(srt.Filename));
+                // Download the attachment from Discord servers
+                string file = await this.http.GetStringAsync(attachment.Url);
+                Compiler.CompilationResult result = this.compiler.Compile(file, Path.GetExtension(attachment.Filename));
 
-                MemoryStream stream = new MemoryStream(Encoding.UTF8.GetBytes(output));
+                // In theory this will never happen as the output is an empty string by default
+                if (result.output == null)
+                {
+                    throw new Exception("The compilation result is null. This is an issue with me not being able to process your file.");
+                }
 
-                await msg.Channel.SendFileAsync(stream, $"{srt.Filename}.txt", $"Download this, then paste the entire contents of this file into the input field!");
+                // Let the user know about non-fatal errors
+                if (result.errors.Count != 0)
+                {
+                    await msg.AddReactionAsync(EmojiIcon.warning);
+                    await msg.Channel.SendMessageAsync($"I ran into {result.errors.Count} {(result.errors.Count == 1 ? "error" : "errors")} while processing your file. Some subtitles may be missing, or the whole file might be unusable.");
+
+                    string errorLog = result.errors.Aggregate("", (current, error) =>
+                    {
+                        return $"{current}{(string)error.value.ReplaceLineEndings("\\n")}\n";
+                    });
+
+                    MemoryStream errorStream = new MemoryStream(Encoding.UTF8.GetBytes(errorLog));
+
+                    await msg.Channel.SendFileAsync(errorStream, $"space-bottle-error-log_{attachment.Filename}.txt", "See this file for errors.");
+                }
+
+                // If the result is empty, the file probably has an extension that doesn't match its contents
+                if (result.output.Length == 0)
+                {
+                    throw new Exception("Empty parsing result. Check the file format and its contents.");
+                }
+
+                // We passed all checks, send the result to the user
+                MemoryStream stream = new MemoryStream(Encoding.UTF8.GetBytes(result.output));
+
+                await msg.AddReactionAsync(EmojiIcon.tick);
+                await msg.Channel.SendFileAsync(stream, $"{attachment.Filename}.txt", $"Download this, then paste the entire contents of this file into the input field!");
             }
             catch (Exception ex)
             {
                 SentrySdk.CaptureException(ex);
 
-                await msg.AddReactionAsync(EmojiIcon.warning);
-                await msg.Channel.SendMessageAsync($"I ran into an error while transforming your file. Try again with a different one.\n> {ex.Message}");
+                await msg.AddReactionAsync(EmojiIcon.error);
+                await msg.Channel.SendMessageAsync($"I ran into an error while transforming your file that caused me to abort. Try again with a different one.\n> {ex.Message}");
 
                 Console.Error.WriteLine(ex.ToString());
             }

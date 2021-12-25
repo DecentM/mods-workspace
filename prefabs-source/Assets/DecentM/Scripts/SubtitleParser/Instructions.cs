@@ -44,6 +44,7 @@ namespace DecentM.Subtitles
                 SubtitleScreen screen = screens.ElementAtOrDefault(i);
                 SubtitleScreen nextScreen = screens.ElementAtOrDefault(i + 1);
 
+                // If the current screen is somehow null, we just skip it
                 if (object.Equals(screen, null))
                 {
                     continue;
@@ -52,6 +53,7 @@ namespace DecentM.Subtitles
                 SubtitleScreenInstructions screenInstructions = screen.ToInstructions();
                 instructions.Add(screenInstructions.start);
 
+                // If this is the last screen, we need to write the last clear instruction.
                 if (object.Equals(nextScreen, null))
                 {
                     instructions.Add(screenInstructions.end);
@@ -72,6 +74,7 @@ namespace DecentM.Subtitles
         }
     }
 
+    // Intermediate struct used while converting screens to instructions
     public struct SubtitleScreenInstructions
     {
         public SubtitleScreenInstructions(SubtitleScreen screen)
@@ -84,6 +87,8 @@ namespace DecentM.Subtitles
         public Instruction end;
     }
 
+    // A screen is an instance of subtitle text displayed. It contains all information
+    // needed to render a section of subtitles
     public struct SubtitleScreen
     {
         public SubtitleScreen(int index, int startTimestamp, int endTimestamp, string text)

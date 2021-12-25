@@ -6,7 +6,7 @@ namespace DecentM.Subtitles.Srt
 {
     public class Transformer
     {
-        public List<SubtitleScreen> ToSubtitleScreens(AstParser.Ast ast)
+        public List<SubtitleScreen> ToSubtitleScreens(Parser.Ast ast)
         {
             List<SubtitleScreen> screens = new List<SubtitleScreen>();
 
@@ -17,29 +17,29 @@ namespace DecentM.Subtitles.Srt
 
             for (int i = 0; i < ast.nodes.Count; i++)
             {
-                AstParser.Node node = ast.nodes.ElementAtOrDefault(i);
+                Parser.Node node = ast.nodes.ElementAtOrDefault(i);
 
                 if (object.Equals(node, null))
                 {
                     continue;
                 }
 
-                if (node.kind == AstParser.NodeKind.ScreenIndex)
+                if (node.kind == Parser.NodeKind.ScreenIndex)
                 {
                     int.TryParse((string)node.value, out index);
                 }
 
-                if (node.kind == AstParser.NodeKind.TimestampStart)
+                if (node.kind == Parser.NodeKind.TimestampStart)
                 {
                     timestampStart = (int)node.value;
                 }
 
-                if (node.kind == AstParser.NodeKind.TimestampEnd)
+                if (node.kind == Parser.NodeKind.TimestampEnd)
                 {
                     timestampEnd = (int)node.value;
                 }
 
-                if (node.kind == AstParser.NodeKind.TextContents)
+                if (node.kind == Parser.NodeKind.TextContents)
                 {
                     text = (string)node.value;
 
@@ -52,7 +52,7 @@ namespace DecentM.Subtitles.Srt
             return screens;
         }
 
-        public List<Instruction> ToInstructions(AstParser.Ast ast)
+        public List<Instruction> ToInstructions(Parser.Ast ast)
         {
             List<SubtitleScreen> screens = this.ToSubtitleScreens(ast);
 
