@@ -115,6 +115,8 @@ namespace DecentM.Subtitles.Srt
 
             while (cursor < tokens.Count)
             {
+                // Console.WriteLine($"Parsing... cursor: {cursor}, mode: {mode}");
+
                 Lexer.Token current = tokens.ElementAt(cursor);
 
                 // If we're expecting ScreenIndex
@@ -133,7 +135,7 @@ namespace DecentM.Subtitles.Srt
                     string indexValue = "";
 
                     // Go until we see a newline
-                    while (tCurrent.type != Lexer.TokenType.Newline)
+                    while (tCursor < tokens.Count && tCurrent.type != Lexer.TokenType.Newline)
                     {
                         indexValue = $"{indexValue}{tCurrent.value}";
 
@@ -146,8 +148,15 @@ namespace DecentM.Subtitles.Srt
                         }
                     }
 
-                    Node node = new Node(NodeKind.ScreenIndex, indexValue);
-                    nodes.Add(node);
+                    if (indexValue == "")
+                    {
+                        Node unknownNode = new Node(NodeKind.Unknown, $"Cannot parse screen index in token {tCursor} because the parsed value is empty");
+                        nodes.Add(unknownNode);
+                    } else
+                    {
+                        Node node = new Node(NodeKind.ScreenIndex, indexValue);
+                        nodes.Add(node);
+                    }
 
                     cursor = tCursor;
                     // Move to expecting a start timestamp
@@ -317,8 +326,15 @@ namespace DecentM.Subtitles.Srt
                         tCursor++;
                     }
 
-                    Node node = new Node(NodeKind.TextContents, textContents);
-                    nodes.Add(node);
+                    if (textContents == "")
+                    {
+                        Node unknownNode = new Node(NodeKind.Unknown, $"Cannot parse text contents in token {tCursor} because the parsed value is empty");
+                        nodes.Add(unknownNode);
+                    } else
+                    {
+                        Node node = new Node(NodeKind.TextContents, textContents);
+                        nodes.Add(node);
+                    }
 
                     cursor = tCursor;
                     // Go back to expecting the next section's index
