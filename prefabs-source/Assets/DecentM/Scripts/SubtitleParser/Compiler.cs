@@ -31,7 +31,7 @@ namespace DecentM.Subtitles
 
         public struct CompilationResultError
         {
-            public string value = "";
+            public string value;
 
             public CompilationResultError(string value = "")
             {
@@ -41,13 +41,19 @@ namespace DecentM.Subtitles
 
         public struct CompilationResult
         {
-            public string output = "";
-            public List<CompilationResultError> errors = new List<CompilationResultError>();
+            public string output;
+            public List<CompilationResultError> errors;
+
+            public CompilationResult(List<CompilationResultError> errors, string output = "")
+            {
+                this.output = output;
+                this.errors = errors;
+            }
         }
 
         public CompilationResult Compile(string source, string fileType)
         {
-            CompilationResult result = new CompilationResult();
+            CompilationResult result = new CompilationResult(new List<CompilationResultError>(), "");
             List<Instruction> instructions = new List<Instruction>();
 
             if (!FileTypes.IsSupported(fileType))

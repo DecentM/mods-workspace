@@ -32,9 +32,14 @@ namespace DecentM.Subtitles
 
                 try
                 {
-                    string text = this.compiler.Compile(reader.ReadToEnd(), fileInfo.Extension);
+                    Compiler.CompilationResult result = this.compiler.Compile(reader.ReadToEnd(), fileInfo.Extension);
 
-                    TextAsset asset = new TextAsset(text);
+                    if (result.errors.Count != 0)
+                    {
+                        throw new Exception($"Encountered {result.errors.Count} errors while parsing subtitles.");
+                    }
+
+                    TextAsset asset = new TextAsset(result.output);
                     AssetDatabase.CreateAsset(asset, Path.Combine(this.targetPath, $"{fileInfo.Name}.asset"));
 
                     assets.Add(asset);

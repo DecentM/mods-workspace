@@ -6,15 +6,57 @@ using VRC.Udon;
 using UNet;
 using UnityEngine.UI;
 using TMPro;
+using System;
 
+[UdonBehaviourSyncMode(BehaviourSyncMode.Manual)]
 public class StringSync : UdonSharpBehaviour
 {
+    // This equals to hard limit + 2
+    public int worldCapacity = 34;
+
     public NetworkInterface network;
     public InputField input;
     public TextMeshProUGUI debug;
 
     public ByteBufferWriter writer;
     public ByteBufferReader reader;
+
+    private const int MaxMessageSize = 500;
+
+    // The synced text is split up into chunks of 500 long strings, but we mask that with
+    // this getter and setter
+    public string syncedText
+    {
+        get { return string.Join("", this.sendSource); }
+        set {
+            int i = 0;
+
+            while (i < value.Length)
+            {
+                string[] newSendSource = new string[this.sendSource.Length + 1];
+                Array.Copy(this.sendSource, newSendSource, this.sendSource.Length);
+                newSendSource[newSendSource.Length - 1] = value.Substring(i, Math.Min(MaxMessageSize, value.Length - i));
+                this.sendSource = newSendSource;
+
+                i = i + MaxMessageSize;
+            }
+        }
+    }
+
+    public string[] sendSource;
+    private string receiveBuffer = "";
+
+    private int[] syncProgresses;
+
+    // Commands that start with Client are client->master
+    private const string ClientRequestResync = "Resync";
+    private const string ClientRequestIndex = "Index";
+
+    // Commands that start with Master are master->client
+    private const string MasterSendsIndex = "IndexR";
+
+    private int messageLock = -1;
+    private bool isClientSyncing = false;
 
     void Start()
     {
@@ -28,6 +70,8 @@ public class StringSync : UdonSharpBehaviour
         this.debug.text = "";
 
         this.network.AddEventsListener(this);
+
+        // this.syncProgresses = new int[this.worldCapacity];
     }
 
     private void DebugLog(string msg)
@@ -63,13 +107,24 @@ public class StringSync : UdonSharpBehaviour
     public void OnUNetPrepareSend()
     {
         // this.DebugLog("OnUNetPrepareSend()");
+        if (!this.isClientSyncing || messageLock != -1)
+        {
+            return;
+        }
+
+        this.messageLock = this.RequestIndexSync(this.sendSource.Length);
     }
 
     private int OnUNetSendComplete_messageId;
-    private int OnUNetSendComplete_succeed;
+    private bool OnUNetSendComplete_succeed;
     public void OnUNetSendComplete()
     {
         this.DebugLog($"OnUNetSendComplete({OnUNetSendComplete_messageId}, {OnUNetSendComplete_succeed})");
+
+        if (OnUNetSendComplete_messageId == this.messageLock)
+        {
+            this.messageLock = -1;
+        }
     }
 
     private int OnUNetReceived_sender;
@@ -81,21 +136,118 @@ public class StringSync : UdonSharpBehaviour
     {
         this.DebugLog($"OnUNetReceived({OnUNetReceived_sender}, {OnUNetReceived_dataBuffer.ToString()}, {OnUNetReceived_dataIndex}, {OnUNetReceived_dataLength}, {OnUNetReceived_id})");
 
-        this.DebugLog($"Received buffer with length {OnUNetReceived_dataLength}");
         string value = this.reader.ReadUTF8String(OnUNetReceived_dataLength, OnUNetReceived_dataBuffer, OnUNetReceived_dataIndex);
-        this.input.text = value;
+        string command = value.Split(null, 2)[0];
+        string arguments = value.Split(null, 2)[1];
+
+        // Network messages are strings, where the command and its arguments are separated by a space
+        switch (command) {
+            // This player requested that we (re)start syncing the string to them from the beginning
+            // master receives this
+            //case ClientRequestResync:
+            //    this.syncProgresses[OnUNetReceived_sender] = 0;
+            //    break;
+            // master receives this
+            case ClientRequestIndex:
+                int requestedIndex = 0;
+                int.TryParse(arguments, out requestedIndex);
+                this.SendIndexToPlayer(requestedIndex, OnUNetReceived_sender);
+                break;
+            case MasterSendsIndex:
+                string argIndex = arguments.Split(null, 2)[0];
+                string argContent = arguments.Split(null, 2)[1];
+
+                int receivedIndex = 0;
+                int.TryParse(argIndex, out receivedIndex);
+
+                // If the local version of the array hasn't grown to this size yet, we need to expand it
+                if (sendSource.Length <= receivedIndex)
+                {
+                    string[] newSendSource = new string[receivedIndex + 1];
+                    Array.Copy(this.sendSource, newSendSource, this.sendSource.Length);
+                }
+
+                this.sendSource[receivedIndex] = argContent;
+                this.UpdateOutput();
+                break;
+            default:
+                this.receiveBuffer += value;
+                break;
+        }
+    }
+
+    private void UpdateOutput()
+    {
+        this.input.text = this.syncedText;
     }
 
     public void OnInteract()
     {
         this.DebugLog("OnInteract()");
-        string value = this.input.text;
-        int length = this.writer.GetUTF8StringSize(value);
-        this.DebugLog($"Creating buffer with length {length}");
-        byte[] buffer = new byte[length + 1];
-        int messageLength = this.writer.WriteVarUTF8String(value, buffer, 0);
+        if (!Networking.LocalPlayer.isMaster)
+        {
+            this.DebugLog("Not master, not sending sync command to everyone");
+            return;
+        }
 
-        this.DebugLog("Syncing UTF-8 string");
-        this.network.SendAll(false, buffer, messageLength);
+        this.syncedText = this.input.text;
+
+        // OnInteract is triggered when the master presses the Sync button. That means we need to discard all sync state and
+        // start over.
+        this.SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, nameof(this.RequestResync));
+    }
+
+    public void RequestResync()
+    {
+        this.DebugLog("RequestResync()");
+
+        if (Networking.LocalPlayer.isMaster)
+        {
+            this.DebugLog("Master, not sending sync request to self");
+            return;
+        }
+
+        this.isClientSyncing = true;
+
+        this.SendCommandMaster(ClientRequestResync, "");
+    }
+
+    private int RequestIndexSync(int index)
+    {
+        this.DebugLog($"RequestIndexSync({index})");
+        return this.SendCommandMaster(ClientRequestIndex, index.ToString());
+    }
+
+    private int SendIndexToPlayer(int index, int player)
+    {
+        this.DebugLog($"SendIndexToPlayer({index}, {player})");
+        return this.SendCommandTarget(MasterSendsIndex, $"{index.ToString()} {this.sendSource[index]}", player);
+    }
+
+    private int SendCommandAll(string command, string arguments)
+    {
+        string message = $"{command} {arguments}";
+        int length = this.writer.GetUTF8StringSize(message);
+        byte[] buffer = new byte[length + 1];
+        this.writer.WriteVarUTF8String(message, buffer, 0);
+        return this.network.SendAll(false, buffer, length);
+    }
+
+    private int SendCommandTarget(string command, string arguments, int player)
+    {
+        string message = $"{command} {arguments}";
+        int length = this.writer.GetUTF8StringSize(message);
+        byte[] buffer = new byte[length + 1];
+        this.writer.WriteVarUTF8String(message, buffer, 0);
+        return this.network.SendTarget(false, buffer, length, player);
+    }
+
+    private int SendCommandMaster(string command, string arguments)
+    {
+        string message = $"{command} {arguments}";
+        int length = this.writer.GetUTF8StringSize(message);
+        byte[] buffer = new byte[length + 1];
+        this.writer.WriteVarUTF8String(message, buffer, 0);
+        return this.network.SendMaster(false, buffer, length);
     }
 }

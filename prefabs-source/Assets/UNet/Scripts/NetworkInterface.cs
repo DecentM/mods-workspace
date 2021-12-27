@@ -5,8 +5,7 @@ namespace UNet
 {
 	public class NetworkInterface : UdonSharpBehaviour
 	{
-        // 24kb
-		public const int MAX_MESSAGE_SIZE = 24000;
+		public const int MAX_MESSAGE_SIZE = 512;
 
 		public NetworkManager manager;
 
