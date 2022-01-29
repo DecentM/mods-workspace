@@ -41,7 +41,7 @@ public class PerformanceGovernor : UdonSharpBehaviour
 
     [Header("References")]
     [Tooltip("A list of UdonBehaviours that handle events (by turning laggy objects off for example)")]
-    public Component[] behaviours;
+    public UdonSharpBehaviour[] behaviours;
 
     [Header("LibDecentM")]
     [Tooltip("The LibDecentM object from the world")]
@@ -54,6 +54,39 @@ public class PerformanceGovernor : UdonSharpBehaviour
     private void Start()
     {
         this.updateRate = 1 / Time.fixedDeltaTime;
+    }
+
+    public int Subscribe(UdonSharpBehaviour behaviour)
+    {
+        UdonSharpBehaviour[] tmp = new UdonSharpBehaviour[this.behaviours.Length + 1];
+        this.behaviours.CopyTo(tmp, 0);
+
+        tmp[tmp.Length - 1] = behaviour;
+        this.behaviours = tmp;
+
+        // return the index so that it's possible to unsubscribe
+        return this.behaviours.Length - 1;
+    }
+
+    public void Unsubscribe(int index)
+    {
+        UdonSharpBehaviour[] result = new UdonSharpBehaviour[this.behaviours.Length - 1];
+
+        int i = 0;
+
+        foreach (UdonSharpBehaviour item in this.behaviours)
+        {
+            // Ignore the requested index
+            if (i == index)
+            {
+                i++;
+                continue;
+            }
+
+            result[i] = item;
+
+            i++;
+        }
     }
 
     private void FixedUpdate()
