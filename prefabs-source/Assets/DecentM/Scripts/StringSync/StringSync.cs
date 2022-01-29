@@ -23,30 +23,27 @@ public class StringSync : UdonSharpBehaviour
 
     private const int MaxMessageSize = 500;
 
+    public string[] _syncedText;
+
     // The synced text is split up into chunks of 500 long strings, but we mask that with
     // this getter and setter
     public string syncedText
     {
-        get { return string.Join("", this.sendSource); }
+        get { return string.Join("", this._syncedText); }
         set {
             int i = 0;
 
             while (i < value.Length)
             {
-                string[] newSendSource = new string[this.sendSource.Length + 1];
-                Array.Copy(this.sendSource, newSendSource, this.sendSource.Length);
+                string[] newSendSource = new string[this._syncedText.Length + 1];
+                Array.Copy(this._syncedText, newSendSource, this._syncedText.Length);
                 newSendSource[newSendSource.Length - 1] = value.Substring(i, Math.Min(MaxMessageSize, value.Length - i));
-                this.sendSource = newSendSource;
+                this._syncedText = newSendSource;
 
                 i = i + MaxMessageSize;
             }
         }
     }
-
-    public string[] sendSource;
-    private string receiveBuffer = "";
-
-    private int[] syncProgresses;
 
     // Commands that start with Client are client->master
     private const string ClientRequestResync = "Resync";
@@ -84,6 +81,11 @@ public class StringSync : UdonSharpBehaviour
         this.debug.text += $"{msg}\n";
     }
 
+    private void ResetSyncedText()
+    {
+        this._syncedText = new string[0];
+    }
+
     public void OnUNetInit()
     {
         this.DebugLog("OnUNetInit()");
@@ -112,7 +114,9 @@ public class StringSync : UdonSharpBehaviour
             return;
         }
 
-        this.messageLock = this.RequestIndexSync(this.sendSource.Length);
+        this.DebugLog($"Requesting index {this._syncedText.Length} from master");
+        this.messageLock = this.RequestIndexSync(this._syncedText.Length);
+        this.DebugLog($"messageLock is now {this.messageLock}");
     }
 
     private int OnUNetSendComplete_messageId;
@@ -161,17 +165,17 @@ public class StringSync : UdonSharpBehaviour
                 int.TryParse(argIndex, out receivedIndex);
 
                 // If the local version of the array hasn't grown to this size yet, we need to expand it
-                if (sendSource.Length <= receivedIndex)
+                if (_syncedText.Length <= receivedIndex)
                 {
                     string[] newSendSource = new string[receivedIndex + 1];
-                    Array.Copy(this.sendSource, newSendSource, this.sendSource.Length);
+                    Array.Copy(this._syncedText, newSendSource, this._syncedText.Length);
                 }
 
-                this.sendSource[receivedIndex] = argContent;
+                this._syncedText[receivedIndex] = argContent;
                 this.UpdateOutput();
                 break;
             default:
-                this.receiveBuffer += value;
+                // Ignore messages we don't recognise
                 break;
         }
     }
@@ -192,6 +196,8 @@ public class StringSync : UdonSharpBehaviour
 
         this.syncedText = this.input.text;
 
+        this.DebugLog($"About to sync {this._syncedText.Length} segment(s)");
+
         // OnInteract is triggered when the master presses the Sync button. That means we need to discard all sync state and
         // start over.
         this.SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, nameof(this.RequestResync));
@@ -199,17 +205,15 @@ public class StringSync : UdonSharpBehaviour
 
     public void RequestResync()
     {
-        this.DebugLog("RequestResync()");
-
         if (Networking.LocalPlayer.isMaster)
         {
             this.DebugLog("Master, not sending sync request to self");
             return;
         }
 
+        this.DebugLog($"Client requesting resync");
+        this.ResetSyncedText();
         this.isClientSyncing = true;
-
-        this.SendCommandMaster(ClientRequestResync, "");
     }
 
     private int RequestIndexSync(int index)
@@ -221,7 +225,7 @@ public class StringSync : UdonSharpBehaviour
     private int SendIndexToPlayer(int index, int player)
     {
         this.DebugLog($"SendIndexToPlayer({index}, {player})");
-        return this.SendCommandTarget(MasterSendsIndex, $"{index.ToString()} {this.sendSource[index]}", player);
+        return this.SendCommandTarget(MasterSendsIndex, $"{index.ToString()} {this._syncedText[index]}", player);
     }
 
     private int SendCommandAll(string command, string arguments)
