@@ -25,8 +25,11 @@ public class ManualCamera : UdonSharpBehaviour
 
     private void LateUpdate()
     {
+        if (this.targetFps <= 0) return;
+
         this.elapsed += Time.unscaledDeltaTime;
-        if (this.elapsed > 1 / this.targetFps)
+
+        if (this.elapsed > 1f / this.targetFps)
         {
             this.elapsed = 0;
             this.camera.Render();

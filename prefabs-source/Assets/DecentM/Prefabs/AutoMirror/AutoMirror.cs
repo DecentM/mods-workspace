@@ -10,7 +10,6 @@ public class AutoMirror : UdonSharpBehaviour
 {
     public LibDecentM lib;
     public ActivateObjectsVolume trigger;
-    public PerformanceGovernor performanceGovernor;
 
     public int updatesPerSecond = 3;
     public int maxDistance = 5;
@@ -39,7 +38,7 @@ public class AutoMirror : UdonSharpBehaviour
         this.trigger.global = false;
 
         this.DisableAllMirrors();
-        this.performanceGovernor.Subscribe(this);
+        this.lib.performanceGovernor.Subscribe(this);
     }
 
     private int clock = 0;

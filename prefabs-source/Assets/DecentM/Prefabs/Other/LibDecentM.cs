@@ -12,5 +12,6 @@ namespace DecentM
         public Debugging debugging;
         public Scheduling scheduling;
         public Tools.ArrayTools arrayTools;
+        public PerformanceGovernor performanceGovernor;
     }
 }

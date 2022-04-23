@@ -4371,6 +4371,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 8180451729461490153}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &518753932 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8295703945185298429, guid: 8c1f201f848804f42aa401d0647f8902,
+    type: 3}
+  m_PrefabInstance: {fileID: 922598174}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45115577ef41a5b4ca741ed302693907, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &521670721
 GameObject:
   m_ObjectHideFlags: 0
@@ -7971,6 +7983,11 @@ PrefabInstance:
       propertyPath: audioData2D
       value: 
       objectReference: {fileID: 2800000, guid: b07c8466531ac5e4e852f3e276e4baca, type: 3}
+    - target: {fileID: -8670614897374043086, guid: 8c1f201f848804f42aa401d0647f8902,
+        type: 3}
+      propertyPath: audioSource
+      value: 
+      objectReference: {fileID: 2094432016}
     - target: {fileID: -8670614897374043086, guid: 8c1f201f848804f42aa401d0647f8902,
         type: 3}
       propertyPath: audioMaterial
@@ -14023,6 +14040,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1840602453046355934, guid: 385ac04e8d2b6f84ea93cb8392fad970,
         type: 3}
+    - target: {fileID: 3758740235918919075, guid: 385ac04e8d2b6f84ea93cb8392fad970,
+        type: 3}
+      propertyPath: audioLink
+      value: 
+      objectReference: {fileID: 518753932}
     - target: {fileID: 3758740235918919075, guid: 385ac04e8d2b6f84ea93cb8392fad970,
         type: 3}
       propertyPath: serializationData.Prefab
@@ -20785,10 +20807,20 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 892193811015657854, guid: 63e21a61ea630c6419dfb6b85673009e,
         type: 3}
+      propertyPath: targetFps
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 892193811015657854, guid: 63e21a61ea630c6419dfb6b85673009e,
+        type: 3}
       propertyPath: serializationData.Prefab
       value: 
       objectReference: {fileID: 892193811015657854, guid: 63e21a61ea630c6419dfb6b85673009e,
         type: 3}
+    - target: {fileID: 4117066292873914658, guid: 63e21a61ea630c6419dfb6b85673009e,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4117066292873914658, guid: 63e21a61ea630c6419dfb6b85673009e,
         type: 3}
       propertyPath: m_TargetTexture

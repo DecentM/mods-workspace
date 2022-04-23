@@ -63,6 +63,7 @@ MonoBehaviour:
   debugging: {fileID: 7852651556807293467}
   scheduling: {fileID: -1918728033929414842}
   arrayTools: {fileID: 1775435962391028651}
+  performanceGovernor: {fileID: 652977292509065124}
 --- !u!114 &3951998860852578821
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -315,7 +316,7 @@ MonoBehaviour:
   eventNameMedium: OnPerformanceMedium
   eventNameLow: OnPerformanceLow
   behaviours: []
-  lib: {fileID: 0}
+  lib: {fileID: 1411215395824985105}
   debug: {fileID: 0}
 --- !u!114 &5042946210549420651
 MonoBehaviour:
