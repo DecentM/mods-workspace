@@ -23,7 +23,7 @@ namespace DecentM.Chat
     }
 
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
-    public class ChatEvents : PubsubHost<ChatEvent>
+    public sealed class ChatEvents : PubsubHost<ChatEvent>
     {
         #region Messages
 

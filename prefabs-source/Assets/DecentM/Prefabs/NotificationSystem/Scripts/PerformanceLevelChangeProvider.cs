@@ -17,7 +17,7 @@ namespace DecentM.Notifications.Providers
         public Sprite iconMed;
         public Sprite iconLow;
 
-        protected override void OnPubsubEvent(PerformanceGovernorEvent name)
+        protected override void OnPubsubEvent(object name, object[] data)
         {
             switch (name)
             {

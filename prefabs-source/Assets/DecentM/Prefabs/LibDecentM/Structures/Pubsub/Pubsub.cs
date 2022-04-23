@@ -9,9 +9,7 @@ namespace DecentM.Pubsub
 
         public int Subscribe(PubsubSubscriber<Messages> behaviour)
         {
-            bool initialised = this.subscribers != null;
-
-            if (initialised)
+            if (this.subscribers != null)
             {
                 PubsubSubscriber<Messages>[] tmp = new PubsubSubscriber<Messages>[this.subscribers.Length + 1];
                 Array.Copy(this.subscribers, 0, tmp, 0, this.subscribers.Length);
@@ -88,7 +86,7 @@ namespace DecentM.Pubsub
             behaviour.SendCustomEvent($"OnPubsubEvent");
         }
 
-        protected void BroadcastEvent(Messages eventName, object[] data)
+        protected void BroadcastEvent(Messages eventName, params object[] data)
         {
             if (this.subscribers == null) return;
 
@@ -96,38 +94,6 @@ namespace DecentM.Pubsub
             {
                 this.QueuePush(eventName, data, subscriber);
             }
-        }
-
-        // Holy shit I created a monster
-        // I hope there's a better way of doing this and I just don't know about it
-        protected void BroadcastEvent(Messages eventName, object arg1, object arg2, object arg3, object arg4, object arg5)
-        {
-            this.BroadcastEvent(eventName, new object[] { arg1, arg2, arg3, arg4, arg5 });
-        }
-
-        protected void BroadcastEvent(Messages eventName, object arg1, object arg2, object arg3, object arg4)
-        {
-            this.BroadcastEvent(eventName, new object[] { arg1, arg2, arg3, arg4 });
-        }
-
-        protected void BroadcastEvent(Messages eventName, object arg1, object arg2, object arg3)
-        {
-            this.BroadcastEvent(eventName, new object[] { arg1, arg2, arg3 });
-        }
-
-        protected void BroadcastEvent(Messages eventName, object arg1, object arg2)
-        {
-            this.BroadcastEvent(eventName, new object[] { arg1, arg2 });
-        }
-
-        protected void BroadcastEvent(Messages eventName, object arg1)
-        {
-            this.BroadcastEvent(eventName, new object[] { arg1 });
-        }
-
-        protected void BroadcastEvent(Messages eventName)
-        {
-            this.BroadcastEvent(eventName, null);
         }
     }
 }

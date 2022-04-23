@@ -15,7 +15,7 @@ namespace DecentM.Notifications.Providers
         public Toggle toggle;
         public Sprite icon;
 
-        protected override void OnPubsubEvent(ChatEvent name, object[] data)
+        protected override void OnPubsubEvent(object name, object[] data)
         {
             switch (name)
             {

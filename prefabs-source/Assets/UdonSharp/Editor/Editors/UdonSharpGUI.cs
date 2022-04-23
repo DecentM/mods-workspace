@@ -768,9 +768,17 @@ namespace UdonSharpEditor
             {
                 return EditorGUILayout.Vector2Field(fieldLabel, (Vector2?)value ?? default);
             }
+            else if (type == typeof(Vector2Int))
+            {
+                return EditorGUILayout.Vector2IntField(fieldLabel, (Vector2Int?)value ?? default);
+            }
             else if (type == typeof(Vector3))
             {
                 return EditorGUILayout.Vector3Field(fieldLabel, (Vector3?)value ?? default);
+            }
+            else if (type == typeof(Vector3Int))
+            {
+                return EditorGUILayout.Vector3IntField(fieldLabel, (Vector3Int?)value ?? default);
             }
             else if (type == typeof(Vector4))
             {
@@ -975,7 +983,7 @@ namespace UdonSharpEditor
                     if (fieldProp.propertyPath == "m_Script")
                         continue;
 
-                    EditorGUILayout.PropertyField(fieldProp);
+                    EditorGUILayout.PropertyField(fieldProp, true);
 
                 } while (fieldProp.NextVisible(false));
             }

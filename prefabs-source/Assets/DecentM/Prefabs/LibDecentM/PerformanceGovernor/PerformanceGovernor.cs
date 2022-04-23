@@ -28,9 +28,9 @@ namespace DecentM
         private PerformanceGovernorMode currentMode = PerformanceGovernorMode.High;
 
         // Hidden in inspector, because our custom inspector already draws a UI for these.
-        [HideInInspector]
+        // [HideInInspector]
         public int high = 60;
-        [HideInInspector]
+        // [HideInInspector]
         public int low = 30;
 
         [Header("Settings")]
