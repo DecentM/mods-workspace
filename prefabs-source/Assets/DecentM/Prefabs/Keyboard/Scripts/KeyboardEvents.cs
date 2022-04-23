@@ -6,6 +6,45 @@ using VRC.Udon;
 
 namespace DecentM.Keyboard
 {
+    public enum KeyboardEvent
+    {
+        // Basics
+        OnKeyPressDown,
+        OnKeyPressUp,
+        OnSymbolEntry,
+        OnBackspace,
+
+        // Modifier key changes
+        OnShiftStateChange,
+        OnCtrlStateChange,
+        OnAltGrStateChange,
+
+        // Commands
+        OnCommandClear,
+        OnCommandClipboardCut,
+        OnCommandClipboardPaste,
+        OnCommandClipboardCopy,
+        OnCommandUndo,
+        OnCommandRedo,
+        OnCommandQuit,
+        OnCommandCloseTab,
+        OnCommandRefresh,
+        OnCommandOpen,
+        OnCommandPrint,
+        OnCommandSelectAll,
+        OnCommandSave,
+        OnCommandDuplicate,
+        OnCommandSearch,
+        OnCommandHistory,
+        OnCommandNew,
+        OnCommandMap,
+        OnCommandQuickAction,
+        OnCommandNext,
+
+        // Plugins
+        OnInputSubmit,
+    }
+
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class KeyboardEvents : UdonSharpBehaviour
     {
@@ -50,7 +89,7 @@ namespace DecentM.Keyboard
             return true;
         }
 
-        private void BroadcastEvent(string eventName, object[] data)
+        private void BroadcastEvent(KeyboardEvent eventName, object[] data)
         {
             foreach (UdonSharpBehaviour subscriber in this.subscribers)
             {
@@ -64,27 +103,27 @@ namespace DecentM.Keyboard
 
         public void OnKeyPressDown(KeyboardKey key)
         {
-            this.BroadcastEvent(nameof(OnKeyPressDown), new object[] { key });
+            this.BroadcastEvent(KeyboardEvent.OnKeyPressDown, new object[] { key });
         }
 
         public void OnKeyPressUp(KeyboardKey key)
         {
-            this.BroadcastEvent(nameof(OnKeyPressUp), new object[] { key });
+            this.BroadcastEvent(KeyboardEvent.OnKeyPressUp, new object[] { key });
         }
 
         public void OnSymbolEntry()
         {
-            this.BroadcastEvent(nameof(OnSymbolEntry), new object[0]);
+            this.BroadcastEvent(KeyboardEvent.OnSymbolEntry, new object[0]);
         }
 
         public void OnSymbolEntry(string symbol)
         {
-            this.BroadcastEvent(nameof(OnSymbolEntry), new object[] { symbol });
+            this.BroadcastEvent(KeyboardEvent.OnSymbolEntry, new object[] { symbol });
         }
 
         public void OnBackspace()
         {
-            this.BroadcastEvent(nameof(OnBackspace), new object[0]);
+            this.BroadcastEvent(KeyboardEvent.OnBackspace, new object[0]);
         }
 
         #endregion
@@ -93,17 +132,17 @@ namespace DecentM.Keyboard
 
         public void OnShiftStateChange(bool state, KeyboardLayout layout)
         {
-            this.BroadcastEvent(nameof(OnShiftStateChange), new object[] { state, layout });
+            this.BroadcastEvent(KeyboardEvent.OnShiftStateChange, new object[] { state, layout });
         }
 
         public void OnCtrlStateChange(bool state, KeyboardLayout layout)
         {
-            this.BroadcastEvent(nameof(OnCtrlStateChange), new object[] { state, layout });
+            this.BroadcastEvent(KeyboardEvent.OnCtrlStateChange, new object[] { state, layout });
         }
 
         public void OnAltGrStateChange(bool state, KeyboardLayout layout)
         {
-            this.BroadcastEvent(nameof(OnAltGrStateChange), new object[] { state, layout });
+            this.BroadcastEvent(KeyboardEvent.OnAltGrStateChange, new object[] { state, layout });
         }
 
         #endregion
@@ -112,102 +151,102 @@ namespace DecentM.Keyboard
 
         public void OnCommandClear()
         {
-            this.BroadcastEvent(nameof(OnCommandClear), new object[0]);
+            this.BroadcastEvent(KeyboardEvent.OnCommandClear, new object[0]);
         }
 
         public void OnCommandClipboardCut()
         {
-            this.BroadcastEvent(nameof(OnCommandClipboardCut), new object[0]);
+            this.BroadcastEvent(KeyboardEvent.OnCommandClipboardCut, new object[0]);
         }
 
         public void OnCommandClipboardPaste()
         {
-            this.BroadcastEvent(nameof(OnCommandClipboardPaste), new object[0]);
+            this.BroadcastEvent(KeyboardEvent.OnCommandClipboardPaste, new object[0]);
         }
 
         public void OnCommandClipboardCopy()
         {
-            this.BroadcastEvent(nameof(OnCommandClipboardCopy), new object[0]);
+            this.BroadcastEvent(KeyboardEvent.OnCommandClipboardCopy, new object[0]);
         }
 
         public void OnCommandUndo()
         {
-            this.BroadcastEvent(nameof(OnCommandUndo), new object[0]);
+            this.BroadcastEvent(KeyboardEvent.OnCommandUndo, new object[0]);
         }
 
         public void OnCommandRedo()
         {
-            this.BroadcastEvent(nameof(OnCommandRedo), new object[0]);
+            this.BroadcastEvent(KeyboardEvent.OnCommandRedo, new object[0]);
         }
 
         public void OnCommandQuit()
         {
-            this.BroadcastEvent(nameof(OnCommandQuit), new object[0]);
+            this.BroadcastEvent(KeyboardEvent.OnCommandQuit, new object[0]);
         }
 
         public void OnCommandCloseTab()
         {
-            this.BroadcastEvent(nameof(OnCommandCloseTab), new object[0]);
+            this.BroadcastEvent(KeyboardEvent.OnCommandCloseTab, new object[0]);
         }
 
         public void OnCommandRefresh()
         {
-            this.BroadcastEvent(nameof(OnCommandRefresh), new object[0]);
+            this.BroadcastEvent(KeyboardEvent.OnCommandRefresh, new object[0]);
         }
 
         public void OnCommandOpen()
         {
-            this.BroadcastEvent(nameof(OnCommandOpen), new object[0]);
+            this.BroadcastEvent(KeyboardEvent.OnCommandOpen, new object[0]);
         }
 
         public void OnCommandPrint()
         {
-            this.BroadcastEvent(nameof(OnCommandPrint), new object[0]);
+            this.BroadcastEvent(KeyboardEvent.OnCommandPrint, new object[0]);
         }
 
         public void OnCommandSelectAll()
         {
-            this.BroadcastEvent(nameof(OnCommandSelectAll), new object[0]);
+            this.BroadcastEvent(KeyboardEvent.OnCommandSelectAll, new object[0]);
         }
 
         public void OnCommandSave()
         {
-            this.BroadcastEvent(nameof(OnCommandSave), new object[0]);
+            this.BroadcastEvent(KeyboardEvent.OnCommandSave, new object[0]);
         }
 
         public void OnCommandDuplicate()
         {
-            this.BroadcastEvent(nameof(OnCommandDuplicate), new object[0]);
+            this.BroadcastEvent(KeyboardEvent.OnCommandDuplicate, new object[0]);
         }
 
         public void OnCommandSearch()
         {
-            this.BroadcastEvent(nameof(OnCommandSearch), new object[0]);
+            this.BroadcastEvent(KeyboardEvent.OnCommandSearch, new object[0]);
         }
 
         public void OnCommandHistory()
         {
-            this.BroadcastEvent(nameof(OnCommandHistory), new object[0]);
+            this.BroadcastEvent(KeyboardEvent.OnCommandHistory, new object[0]);
         }
 
         public void OnCommandNew()
         {
-            this.BroadcastEvent(nameof(OnCommandNew), new object[0]);
+            this.BroadcastEvent(KeyboardEvent.OnCommandNew, new object[0]);
         }
 
         public void OnCommandMap()
         {
-            this.BroadcastEvent(nameof(OnCommandMap), new object[0]);
+            this.BroadcastEvent(KeyboardEvent.OnCommandMap, new object[0]);
         }
 
         public void OnCommandQuickAction()
         {
-            this.BroadcastEvent(nameof(OnCommandQuickAction), new object[0]);
+            this.BroadcastEvent(KeyboardEvent.OnCommandQuickAction, new object[0]);
         }
 
         public void OnCommandNext()
         {
-            this.BroadcastEvent(nameof(OnCommandNext), new object[0]);
+            this.BroadcastEvent(KeyboardEvent.OnCommandNext, new object[0]);
         }
 
         #endregion
@@ -216,7 +255,7 @@ namespace DecentM.Keyboard
 
         public void OnInputSubmit(string input)
         {
-            this.BroadcastEvent(nameof(OnInputSubmit), new object[] { input });
+            this.BroadcastEvent(KeyboardEvent.OnInputSubmit, new object[] { input });
         }
 
         #endregion

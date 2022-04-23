@@ -4,53 +4,42 @@ using VRC.SDKBase;
 using VRC.Udon;
 using UnityEngine.UI;
 using DecentM.Chat;
+using DecentM.Pubsub;
 
-[UdonBehaviourSyncMode(BehaviourSyncMode.None)]
-public class ChatMentionsProvider : UdonSharpBehaviour
+namespace DecentM.Notifications.Providers
 {
-    public NotificationSystem notifications;
-    public Toggle toggle;
-    public Sprite icon;
-
-    [Space]
-    public ChatEvents events; 
-
-    void Start()
+    [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
+    public sealed class ChatMentionsProvider : PubsubSubscriber<ChatEvent>
     {
-        this.events.Subscribe(this);
-    }
+        public NotificationSystem notifications;
+        public Toggle toggle;
+        public Sprite icon;
 
-    private string OnChatEvent_name;
-    private object OnChatEvent_data;
-    public void OnChatEvent()
-    {
-        this.HandleChatEvent(OnChatEvent_name, OnChatEvent_data);
-    }
-
-    private void HandleChatEvent(string name, object data)
-    {
-        switch (name)
+        protected override void OnPubsubEvent(ChatEvent name, object[] data)
         {
-            case nameof(this.events.OnMessageAdded):
-                this.HandleMessageAdded((ChatMessage) data);
-                break;
-            default:
-                break;
+            switch (name)
+            {
+                case ChatEvent.OnMessageAdded:
+                    this.HandleMessageAdded((ChatMessage)data[0]);
+                    break;
+                default:
+                    break;
+            }
         }
-    }
 
-    private void HandleMessageAdded(ChatMessage message)
-    {
-        if (!this.toggle.isOn || message == null) return;
-
-        VRCPlayerApi sender = VRCPlayerApi.GetPlayerById(message.senderId);
-
-        if (sender == null || !sender.IsValid()) return;
-        if (sender == Networking.LocalPlayer) return;
-
-        if (message.message.ToLower().Contains(Networking.LocalPlayer.displayName.ToLower()))
+        private void HandleMessageAdded(ChatMessage message)
         {
-            this.notifications.SendNotification(this.icon, $"{sender.displayName}\n{message.message}");
+            if (!this.toggle.isOn || message == null) return;
+
+            VRCPlayerApi sender = VRCPlayerApi.GetPlayerById(message.senderId);
+
+            if (sender == null || !sender.IsValid()) return;
+            if (sender == Networking.LocalPlayer) return;
+
+            if (message.message.ToLower().Contains(Networking.LocalPlayer.displayName.ToLower()))
+            {
+                this.notifications.SendNotification(this.icon, $"{sender.displayName}\n{message.message}");
+            }
         }
     }
 }

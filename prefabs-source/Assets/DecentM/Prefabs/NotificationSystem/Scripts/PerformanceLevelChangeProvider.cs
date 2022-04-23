@@ -4,38 +4,53 @@ using UnityEngine;
 using VRC.SDKBase;
 using VRC.Udon;
 using UnityEngine.UI;
+using DecentM.Pubsub;
 
-public class PerformanceLevelChangeProvider : UdonSharpBehaviour
+namespace DecentM.Notifications.Providers
 {
-    public NotificationSystem notifications;
-    public Toggle toggle;
-
-    public PerformanceGovernor performance;
-
-    public Sprite iconHigh;
-    public Sprite iconMed;
-    public Sprite iconLow;
-
-    private void Start()
+    public class PerformanceLevelChangeProvider : PubsubSubscriber<PerformanceGovernorEvent>
     {
-        this.performance.Subscribe(this);
-    }
+        public NotificationSystem notifications;
+        public Toggle toggle;
 
-    public void OnPerformanceHigh()
-    {
-        if (!this.toggle.isOn) return;
-        this.notifications.SendNotification(this.iconHigh, "Performance mode changed to High");
-    }
+        public Sprite iconHigh;
+        public Sprite iconMed;
+        public Sprite iconLow;
 
-    public void OnPerformanceMedium()
-    {
-        if (!this.toggle.isOn) return;
-        this.notifications.SendNotification(this.iconMed, "Performance mode changed to Medium");
-    }
+        protected override void OnPubsubEvent(PerformanceGovernorEvent name)
+        {
+            switch (name)
+            {
+                case PerformanceGovernorEvent.OnPerformanceLow:
+                    this.OnPerformanceLow();
+                    return;
 
-    public void OnPerformanceLow()
-    {
-        if (!this.toggle.isOn) return;
-        this.notifications.SendNotification(this.iconLow, "Performance mode changed to Low");
+                case PerformanceGovernorEvent.OnPerformanceMedium:
+                    this.OnPerformanceMedium();
+                    return;
+
+                case PerformanceGovernorEvent.OnPerformanceHigh:
+                    this.OnPerformanceHigh();
+                    return;
+            }
+        }
+
+        private void OnPerformanceHigh()
+        {
+            if (!this.toggle.isOn) return;
+            this.notifications.SendNotification(this.iconHigh, "Performance mode changed to High");
+        }
+
+        private void OnPerformanceMedium()
+        {
+            if (!this.toggle.isOn) return;
+            this.notifications.SendNotification(this.iconMed, "Performance mode changed to Medium");
+        }
+
+        private void OnPerformanceLow()
+        {
+            if (!this.toggle.isOn) return;
+            this.notifications.SendNotification(this.iconLow, "Performance mode changed to Low");
+        }
     }
 }

@@ -1,21 +1,13 @@
 ﻿using UdonSharp;
-using UnityEngine;
-using VRC.SDKBase;
-using VRC.Udon;
 using DecentM.Keyboard;
+using DecentM.Pubsub;
 
 namespace DecentM.Chat.Connectors
 {
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
-    public class ConnectorKeyboard : UdonSharpBehaviour
+    public sealed class ConnectorKeyboard : PubsubSubscriber<KeyboardEvent>
     {
         public ChatSystem system;
-        public KeyboardEvents events;
-
-        void Start()
-        {
-            this.events.Subscribe(this);
-        }
 
         private void HandleSymbolEntry()
         {
@@ -27,18 +19,16 @@ namespace DecentM.Chat.Connectors
             this.system.OnSendMessage(0, message);
         }
 
-        private string OnKeyboardEvent_name;
-        private object[] OnKeyboardEvent_data;
-        public void OnKeyboardEvent()
+        protected override void OnPubsubEvent(KeyboardEvent name, object[] data)
         {
-            switch (OnKeyboardEvent_name)
+            switch (name)
             {
-                case nameof(this.events.OnSymbolEntry):
+                case KeyboardEvent.OnSymbolEntry:
                     this.HandleSymbolEntry();
                     break;
 
-                case nameof(this.events.OnInputSubmit):
-                    this.HandleSubmit((string)OnKeyboardEvent_data[0]);
+                case KeyboardEvent.OnInputSubmit:
+                    this.HandleSubmit((string)data[0]);
                     break;
 
                 default:

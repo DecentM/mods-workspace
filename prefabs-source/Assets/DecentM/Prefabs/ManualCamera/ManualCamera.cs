@@ -21,7 +21,7 @@ public class ManualCamera : UdonSharpBehaviour
     }
 
     public int targetFps = 30;
-    private float elapsed;
+    private float elapsed = 0;
 
     private void LateUpdate()
     {

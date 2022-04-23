@@ -2852,7 +2852,12 @@ PrefabInstance:
     - target: {fileID: 835471946106733063, guid: 9e50312592884ef4eaf41d0ab45d23da,
         type: 3}
       propertyPath: m_text
-      value: AutoMirror
+      value: ChatSystem + Keyboard
+      objectReference: {fileID: 0}
+    - target: {fileID: 835471946106733063, guid: 9e50312592884ef4eaf41d0ab45d23da,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 308.15
       objectReference: {fileID: 0}
     - target: {fileID: 883758683339135178, guid: 9e50312592884ef4eaf41d0ab45d23da,
         type: 3}
@@ -16975,7 +16980,7 @@ PrefabInstance:
     - target: {fileID: 6263122782754207347, guid: a0598aa21af57744898c97ed24c53770,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -0.00045967102
+      value: -0.00084495544
       objectReference: {fileID: 0}
     - target: {fileID: 6263122783558884633, guid: a0598aa21af57744898c97ed24c53770,
         type: 3}
@@ -16985,7 +16990,7 @@ PrefabInstance:
     - target: {fileID: 6263122783558884633, guid: a0598aa21af57744898c97ed24c53770,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0.00032138824
+      value: -0.00093364716
       objectReference: {fileID: 0}
     - target: {fileID: 6794618857745757026, guid: a0598aa21af57744898c97ed24c53770,
         type: 3}

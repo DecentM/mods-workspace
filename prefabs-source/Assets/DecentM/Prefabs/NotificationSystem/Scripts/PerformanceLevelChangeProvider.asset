@@ -21,7 +21,7 @@ MonoBehaviour:
   compiledVersion: 2
   behaviourSyncMode: 0
   hasInteractEvent: 0
-  scriptID: -4844511120373233158
+  scriptID: 107034550663691970
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
@@ -176,7 +176,7 @@ MonoBehaviour:
       Data: 10|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
-      Data: PerformanceGovernor, Assembly-CSharp
+      Data: DecentM.PerformanceGovernor, Assembly-CSharp
     - Name: 
       Entry: 8
       Data: 
