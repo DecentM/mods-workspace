@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: WCAData
   m_EditorClassIdentifier: 
   AreVRCLayersSetup: 1
-  InstalledVRCSDKVersion: 2021.11.8
+  InstalledVRCSDKVersion: 2022.4.20
   LatestVRCSDKVersion: 2021.11.24
   IsVRCSDKUpdateAvailable: 1
   CommunityTools:
@@ -28,7 +28,7 @@ MonoBehaviour:
     UpdateAvailable: 0
     LatestCached: 1
     VersionFileMissing: 0
-    LastRefreshed: 132820525764198097
+    LastRefreshed: 132951933864256294
     RequiresUdonSharp: 0
     SDK3Only: 0
     Directories:
@@ -44,7 +44,7 @@ MonoBehaviour:
     UpdateAvailable: 0
     LatestCached: 1
     VersionFileMissing: 0
-    LastRefreshed: 132820525775318083
+    LastRefreshed: 132951933866236298
     RequiresUdonSharp: 0
     SDK3Only: 0
     Directories:
@@ -58,11 +58,11 @@ MonoBehaviour:
     Downloaded: 1
     ImportedVersion: 0.0.0
     DownloadedVersion: 1.1.2
-    CurrentVersion: 0.0.0
+    CurrentVersion: 1.1.2
     UpdateAvailable: 0
     LatestCached: 1
     VersionFileMissing: 0
-    LastRefreshed: 0
+    LastRefreshed: 132951933868386303
     RequiresUdonSharp: 0
     SDK3Only: 0
     Directories:
@@ -78,7 +78,7 @@ MonoBehaviour:
     UpdateAvailable: 0
     LatestCached: 1
     VersionFileMissing: 0
-    LastRefreshed: 132820525798398089
+    LastRefreshed: 132951933870396305
     RequiresUdonSharp: 0
     SDK3Only: 1
     Directories:
@@ -95,7 +95,7 @@ MonoBehaviour:
     UpdateAvailable: 0
     LatestCached: 1
     VersionFileMissing: 0
-    LastRefreshed: 132820525914398346
+    LastRefreshed: 132951933872336310
     RequiresUdonSharp: 1
     SDK3Only: 1
     Directories:
@@ -856,11 +856,11 @@ MonoBehaviour:
     Downloaded: 1
     ImportedVersion: 0.0.0
     DownloadedVersion: 0.1.1
-    CurrentVersion: 0.0.0
+    CurrentVersion: 0.1.1
     UpdateAvailable: 0
     LatestCached: 1
     VersionFileMissing: 0
-    LastRefreshed: 0
+    LastRefreshed: 132951935421978891
     RequiresUdonSharp: 1
     SDK3Only: 1
     Directories:
@@ -872,11 +872,11 @@ MonoBehaviour:
     Downloaded: 0
     ImportedVersion: 1.0.0
     DownloadedVersion: 0.0.0
-    CurrentVersion: 0.0.0
+    CurrentVersion: 1.0.0
     UpdateAvailable: 0
     LatestCached: 0
     VersionFileMissing: 0
-    LastRefreshed: 0
+    LastRefreshed: 132951935424268890
     RequiresUdonSharp: 1
     SDK3Only: 1
     Directories:
@@ -891,11 +891,11 @@ MonoBehaviour:
     Downloaded: 0
     ImportedVersion: 0.0.0
     DownloadedVersion: 0.0.0
-    CurrentVersion: 0.0.0
+    CurrentVersion: 1.5.1
     UpdateAvailable: 0
     LatestCached: 0
     VersionFileMissing: 0
-    LastRefreshed: 0
+    LastRefreshed: 132951935428478888
     RequiresUdonSharp: 1
     SDK3Only: 1
     Directories:
@@ -904,14 +904,14 @@ MonoBehaviour:
     Author: llealloo
     Description: Audio reactive prefabs for VRChat
     Imported: 1
-    Downloaded: 0
+    Downloaded: 1
     ImportedVersion: 0.0.0
-    DownloadedVersion: 0.0.0
-    CurrentVersion: 0.0.0
+    DownloadedVersion: 0.2.7
+    CurrentVersion: 0.2.7
     UpdateAvailable: 0
-    LatestCached: 0
-    VersionFileMissing: 0
-    LastRefreshed: 0
+    LatestCached: 1
+    VersionFileMissing: 1
+    LastRefreshed: 132951935430548890
     RequiresUdonSharp: 1
     SDK3Only: 1
     Directories:
