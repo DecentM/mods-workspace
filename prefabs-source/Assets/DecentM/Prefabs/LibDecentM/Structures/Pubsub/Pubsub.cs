@@ -3,22 +3,22 @@ using UdonSharp;
 
 namespace DecentM.Pubsub
 {
-    public abstract class PubsubHost<Messages> : UdonSharpBehaviour
+    public abstract class PubsubHost : UdonSharpBehaviour
     {
-        private PubsubSubscriber<Messages>[] subscribers;
+        private PubsubSubscriber[] subscribers;
 
-        public int Subscribe(PubsubSubscriber<Messages> behaviour)
+        public int Subscribe(PubsubSubscriber behaviour)
         {
             if (this.subscribers != null)
             {
-                PubsubSubscriber<Messages>[] tmp = new PubsubSubscriber<Messages>[this.subscribers.Length + 1];
+                PubsubSubscriber[] tmp = new PubsubSubscriber[this.subscribers.Length + 1];
                 Array.Copy(this.subscribers, 0, tmp, 0, this.subscribers.Length);
                 tmp[tmp.Length - 1] = behaviour;
                 this.subscribers = tmp;
             }
             else
             {
-                PubsubSubscriber<Messages>[] tmp = new PubsubSubscriber<Messages>[1];
+                PubsubSubscriber[] tmp = new PubsubSubscriber[1];
                 tmp[0] = behaviour;
                 this.subscribers = tmp;
             }
@@ -30,7 +30,7 @@ namespace DecentM.Pubsub
         {
             if (this.subscribers == null || this.subscribers.Length == 0 || index < 0 || index >= this.subscribers.Length) return false;
 
-            PubsubSubscriber<Messages>[] tmp = new PubsubSubscriber<Messages>[subscribers.Length + 1];
+            PubsubSubscriber[] tmp = new PubsubSubscriber[subscribers.Length + 1];
             Array.Copy(this.subscribers, 0, tmp, 0, index);
             Array.Copy(this.subscribers, index + 1, tmp, index, this.subscribers.Length - 1 - index);
             this.subscribers = tmp;
@@ -64,7 +64,7 @@ namespace DecentM.Pubsub
             object[] result = this.queue[0];
 
             object[][] tmp = new object[this.queue.Length - 1][];
-            Array.Copy(this.queue, 1, tmp, 0, this.queue.Length);
+            Array.Copy(this.queue, 1, tmp, 0, this.queue.Length - 1);
             this.queue = tmp;
 
             return result;
@@ -86,7 +86,7 @@ namespace DecentM.Pubsub
             behaviour.SendCustomEvent($"OnPubsubEvent");
         }
 
-        protected void BroadcastEvent(Messages eventName, params object[] data)
+        protected void BroadcastEvent(object eventName, params object[] data)
         {
             if (this.subscribers == null) return;
 

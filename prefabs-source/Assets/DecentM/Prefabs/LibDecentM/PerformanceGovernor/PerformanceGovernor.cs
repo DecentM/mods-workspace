@@ -23,7 +23,7 @@ namespace DecentM
     }
 
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
-    public class PerformanceGovernor : PubsubHost<PerformanceGovernorEvent>
+    public class PerformanceGovernor : PubsubHost
     {
         private PerformanceGovernorMode currentMode = PerformanceGovernorMode.High;
 

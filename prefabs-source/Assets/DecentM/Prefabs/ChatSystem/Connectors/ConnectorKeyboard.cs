@@ -5,7 +5,7 @@ using DecentM.Pubsub;
 namespace DecentM.Chat.Connectors
 {
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
-    public sealed class ConnectorKeyboard : PubsubSubscriber<KeyboardEvent>
+    public sealed class ConnectorKeyboard : PubsubSubscriber
     {
         public ChatSystem system;
 

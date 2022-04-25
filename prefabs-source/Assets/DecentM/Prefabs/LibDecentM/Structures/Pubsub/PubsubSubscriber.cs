@@ -3,10 +3,15 @@ using UdonSharp;
 
 namespace DecentM.Pubsub
 {
-    public abstract class PubsubSubscriber<Messages> : UdonSharpBehaviour
+    public abstract class PubsubSubscriber : UdonSharpBehaviour
     {
-        public PubsubHost<Messages>[] pubsubHosts;
+        public PubsubHost[] pubsubHosts;
         private int[] subscriptions;
+
+        virtual protected void _Start()
+        {
+            return;
+        }
 
         private void Start()
         {
@@ -25,6 +30,7 @@ namespace DecentM.Pubsub
             }
 
             this.SubscribeAll();
+            this._Start();
         }
 
         private void SubscribeAll()

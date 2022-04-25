@@ -8,7 +8,7 @@ using DecentM.Pubsub;
 
 namespace DecentM.Notifications.Providers
 {
-    public class PerformanceLevelChangeProvider : PubsubSubscriber<PerformanceGovernorEvent>
+    public class PerformanceLevelChangeProvider : PubsubSubscriber
     {
         public NotificationSystem notifications;
         public Toggle toggle;

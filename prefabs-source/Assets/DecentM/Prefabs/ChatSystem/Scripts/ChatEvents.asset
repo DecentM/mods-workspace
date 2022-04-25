@@ -62,7 +62,7 @@ MonoBehaviour:
       Data: 3|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
-      Data: UdonSharp.UdonSharpBehaviour[], UdonSharp.Runtime
+      Data: DecentM.Pubsub.PubsubSubscriber[], Assembly-CSharp
     - Name: 
       Entry: 8
       Data: 

@@ -9,7 +9,7 @@ using DecentM.Pubsub;
 namespace DecentM.Notifications.Providers
 {
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
-    public sealed class ChatMentionsProvider : PubsubSubscriber<ChatEvent>
+    public sealed class ChatMentionsProvider : PubsubSubscriber
     {
         public NotificationSystem notifications;
         public Toggle toggle;

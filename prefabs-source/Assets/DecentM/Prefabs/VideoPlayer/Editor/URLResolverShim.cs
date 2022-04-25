@@ -1,4 +1,5 @@
-﻿
+﻿// This single file is licensed under the MIT license, see the end of the file for details
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ using VRC.SDK3.Components.Video;
 using VRC.SDK3.Video.Components;
 using VRC.SDKBase;
 
-namespace UdonSharp.Video.Internal
+namespace DecentM.VideoPlayer
 {
     /// <summary>
     /// Allows people to put in links to YouTube videos and other supported video services and have links just work
@@ -26,19 +27,17 @@ namespace UdonSharp.Video.Internal
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
         static void SetupURLResolveCallback()
         {
-            string[] splitPath = Application.persistentDataPath.Split('/', '\\');
-            youtubeDLPath = string.Join("\\", splitPath.Take(splitPath.Length - 2)) + "\\VRChat\\VRChat\\Tools\\youtube-dl.exe";
-            //youtubeDLPath = "D:/Merlin/Desktop/youtube-dl.exe";
-            youtubeDLPath = "D:\\bin\\yt-dlp.exe";
-
+            string[] splitPath = Application.dataPath.Split('/', '\\');
+            youtubeDLPath = $"{String.Join("\\", splitPath)}\\DecentM\\Prefabs\\VideoPlayer\\Editor\\Bin\\yt-dlp.exe";
 
             if (!File.Exists(youtubeDLPath))
             {
-                Debug.LogWarning("[USharpVideo YTDL] Unable to find VRC YouTube-dl installation, URLs will not be resolved.");
+                Debug.LogWarning("[DecentM.VideoPlayer YTDL] Unable to find yt-dlp, URLs will not be resolved. Did you move the root folder after importing it?");
+                Debug.LogWarning($"[DecentM.VideoPlayer YTDL] File missing from {youtubeDLPath}");
                 return;
             }
 
-            VRCUnityVideoPlayer.StartResolveURLCoroutine = ResolveURLCallback;
+            VRCUnityVideoPlayer.StartResolveURLCoroutine += ResolveURLCallback;
             EditorApplication.playModeStateChanged += PlayModeChanged;
         }
 
@@ -72,14 +71,6 @@ namespace UdonSharp.Video.Internal
 
         static void ResolveURLCallback(VRCUrl url, int resolution, UnityEngine.Object videoPlayer, Action<string> urlResolvedCallback, Action<VideoError> errorCallback)
         {
-            // Broken for some unknown reason, when multiple rate limits fire off, only fires the first callback.
-            //if ((System.DateTime.UtcNow - lastRequestTime).TotalSeconds < 5.0)
-            //{
-            //    Debug.LogWarning("Rate limited " + videoPlayer, videoPlayer);
-            //    errorCallback(VideoError.RateLimited);
-            //    return;
-            //}
-
             lastRequestTime = System.DateTime.UtcNow;
 
             System.Diagnostics.Process ytdlProcess = new System.Diagnostics.Process();
@@ -91,7 +82,8 @@ namespace UdonSharp.Video.Internal
             ytdlProcess.StartInfo.FileName = youtubeDLPath;
             ytdlProcess.StartInfo.Arguments = $"--no-check-certificate --no-cache-dir --rm-cache-dir -f \"mp4[height<=?{resolution}]/best[height<=?{resolution}]\" --get-url \"{url}\"";
 
-            Debug.Log($"[<color=#9C6994>USharpVideo YTDL</color>] Attempting to resolve URL '{url}'");
+            Debug.Log($"{ytdlProcess.StartInfo.FileName} {ytdlProcess.StartInfo.Arguments}");
+            Debug.Log($"[<color=#9C6994>DecentM.VideoPlayer YTDL</color>] Attempting to resolve URL '{url}'");
 
             ytdlProcess.Start();
             runningYTDLProcesses.Add(ytdlProcess);
@@ -112,12 +104,38 @@ namespace UdonSharp.Video.Internal
 
             // If a URL fails to resolve, YTDL will send error to stderror and nothing will be output to stdout
             if (string.IsNullOrEmpty(resolvedURL))
+            {
                 errorCallback(VideoError.InvalidURL);
+            }
             else
             {
-                Debug.Log($"[<color=#9C6994>USharpVideo YTDL</color>] Successfully resolved URL '{originalUrl}' to '{resolvedURL}'");
+                Debug.Log($"[<color=#9C6994>DecentM.VideoPlayer YTDL</color>] Succesfully resolved URL '{originalUrl}' to '{resolvedURL}'");
                 urlResolvedCallback(resolvedURL);
             }
         }
     }
 }
+
+/**
+ * MIT License
+ *
+ * Copyright (c) 2020 Merlin
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */

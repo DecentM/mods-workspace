@@ -7,7 +7,7 @@ using DecentM.Pubsub;
 namespace DecentM
 {
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
-    public sealed class AutoMirror : PubsubSubscriber<PerformanceGovernorEvent>
+    public sealed class AutoMirror : PubsubSubscriber
     {
         public LibDecentM lib;
         public ActivateObjectsVolume trigger;
@@ -19,14 +19,13 @@ namespace DecentM
 
         public VRC_MirrorReflection[] mirrors;
 
-        /* private void Start()
+        protected override void _Start()
         {
             this.trigger.lib = this.lib;
             this.trigger.global = false;
 
             this.DisableAllMirrors();
-            this.lib.performanceGovernor.Subscribe(this);
-        } */
+        }
 
         private int clock = 0;
         private void FixedUpdate()
