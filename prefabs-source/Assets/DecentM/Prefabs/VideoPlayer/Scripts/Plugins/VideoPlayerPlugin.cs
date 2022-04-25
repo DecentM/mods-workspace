@@ -29,6 +29,7 @@ namespace DecentM.VideoPlayer.Plugins
         protected virtual void OnLoadReady(float duration) { }
         protected virtual void OnLoadError(VideoError videoError) { }
         protected virtual void OnUnload() { }
+        protected virtual void OnLoadRequested(VRCUrl url) { }
 
         protected virtual void OnAutoRetry(int attempt) { }
         protected virtual void OnAutoRetrySwitchPlayer() { }
@@ -40,6 +41,13 @@ namespace DecentM.VideoPlayer.Plugins
             switch (name)
             {
                 #region Core
+
+                case VideoPlayerEvent.OnLoadRequested:
+                    {
+                        VRCUrl url = (VRCUrl)data[0];
+                        this.OnLoadRequested(url);
+                        return;
+                    }
 
                 case VideoPlayerEvent.OnLoadBegin:
                     {

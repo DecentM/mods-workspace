@@ -17,6 +17,11 @@ namespace DecentM.VideoPlayer.Plugins
             this.animator.SetBool("Loading", true);
         }
 
+        protected override void OnLoadRequested(VRCUrl url)
+        {
+            this.animator.SetBool("Loading", true);
+        }
+
         protected override void OnLoadBegin()
         {
             this.animator.SetBool("Loading", true);

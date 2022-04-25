@@ -28,7 +28,7 @@ namespace DecentM.VideoPlayer.Plugins
         protected override void OnPlaybackEnd() { this.Log(nameof(OnPlaybackEnd)); }
         protected override void OnLoadReady(float duration) { this.Log(nameof(OnLoadReady), duration.ToString()); }
         protected override void OnLoadBegin() { this.Log(nameof(OnLoadBegin)); }
-        protected override void OnLoadBegin(VRCUrl url) { this.Log(nameof(OnLoadBegin), url.ToString()); }
+        protected override void OnLoadBegin(VRCUrl url) { this.Log(nameof(OnLoadBegin), "(with URL)"); }
         protected override void OnLoadError(VideoError videoError) { this.Log(nameof(OnLoadError), videoError.ToString()); }
         protected override void OnProgress(float timestamp, float duration) { this.Log(nameof(OnProgress), timestamp.ToString(), duration.ToString()); }
         protected override void OnUnload() { this.Log(nameof(OnUnload)); }
@@ -43,5 +43,6 @@ namespace DecentM.VideoPlayer.Plugins
         protected override void OnMutedChange(bool muted, float volume) { this.Log(nameof(OnMutedChange), muted.ToString(), volume.ToString()); }
         protected override void OnFpsChange(int fps) { this.Log(nameof(OnFpsChange), fps.ToString()); }
         protected override void OnScreenResolutionChange(Renderer screen, float width, float height) { this.Log(nameof(OnScreenResolutionChange), screen.name, width.ToString(), height.ToString()); }
+        protected override void OnLoadRequested(VRCUrl url) { this.Log(nameof(OnLoadRequested), "(with URL)"); }
     }
 }

@@ -168,6 +168,7 @@ namespace DecentM.VideoPlayer
         [PublicAPI]
         public void LoadVideo(VRCUrl url)
         {
+            this.events.OnLoadRequested(url);
             this.currentUrl = url;
             this.currentPlayerHandler.LoadVideo(url);
         }
@@ -214,6 +215,7 @@ namespace DecentM.VideoPlayer
                 speaker.volume = volume;
             }
 
+            this.currentVolume = volume;
             this.events.OnVolumeChange(volume, this.currentMuted);
 
             return true;

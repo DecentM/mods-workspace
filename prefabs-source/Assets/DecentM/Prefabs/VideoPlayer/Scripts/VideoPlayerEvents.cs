@@ -26,6 +26,7 @@ namespace DecentM.VideoPlayer
         OnLoadReady,
         OnLoadError,
         OnUnload,
+        OnLoadRequested,
 
         OnAutoRetry,
         OnAutoRetrySwitchPlayer,
@@ -91,6 +92,11 @@ namespace DecentM.VideoPlayer
         public void OnLoadBegin(VRCUrl url)
         {
             this.BroadcastEvent(VideoPlayerEvent.OnLoadBegin, url);
+        }
+
+        public void OnLoadRequested(VRCUrl url)
+        {
+            this.BroadcastEvent(VideoPlayerEvent.OnLoadRequested, url);
         }
 
         public void OnLoadReady(float duration)

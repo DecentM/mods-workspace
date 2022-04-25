@@ -22,6 +22,7 @@ namespace DecentM.VideoPlayer.Plugins
         [Space]
         public TextMeshProUGUI status;
         public VRCUrlInputField urlInput;
+        public Button enterButton;
 
         [Space]
         public Image brightnessImage;
@@ -55,12 +56,10 @@ namespace DecentM.VideoPlayer.Plugins
 
         private string GetProgressIndicator(float timestamp, float duration)
         {
-            return $"{this.HumanReadableTimestamp(timestamp)} / {this.HumanReadableTimestamp(duration)}";
-        }
+            if (float.IsInfinity(timestamp)) return "Live";
+            if (float.IsInfinity(duration)) return $"{this.HumanReadableTimestamp(timestamp)} (Live)";
 
-        private string GetProgressIndicator()
-        {
-            return this.GetProgressIndicator(this.system.GetTime(), this.system.GetDuration());
+            return $"{this.HumanReadableTimestamp(timestamp)} / {this.HumanReadableTimestamp(duration)}";
         }
 
         #region Outputs
@@ -68,7 +67,7 @@ namespace DecentM.VideoPlayer.Plugins
         protected override void OnProgress(float timestamp, float duration)
         {
             this.status.text = this.GetProgressIndicator(timestamp, duration);
-            this.progress.SetValueWithoutNotify(Mathf.Max(timestamp / duration, 0.001f));
+            if (!float.IsInfinity(timestamp) && !float.IsInfinity(duration)) this.progress.SetValueWithoutNotify(Mathf.Max(timestamp / duration, 0.001f));
         }
 
         protected override void OnAutoRetry(int attempt)
@@ -105,8 +104,9 @@ namespace DecentM.VideoPlayer.Plugins
             this.pauseButton.interactable = false;
             this.stopButton.interactable = true;
             this.urlInput.gameObject.SetActive(false);
+            this.enterButton.gameObject.SetActive(false);
             this.status.gameObject.SetActive(true);
-            this.progress.gameObject.SetActive(true);
+            this.progress.gameObject.SetActive(!float.IsInfinity(duration));
         }
 
         protected override void OnLoadError(VideoError videoError)
@@ -158,7 +158,6 @@ namespace DecentM.VideoPlayer.Plugins
         protected override void OnMutedChange(bool muted, float volume)
         {
             this.volumeSlider.interactable = !muted;
-
             this.volumeImage.sprite = this.GetVolumeSprite(volume, muted);
         }
 
@@ -170,6 +169,7 @@ namespace DecentM.VideoPlayer.Plugins
             this.pauseButton.interactable = false;
             this.stopButton.interactable = true;
             this.urlInput.gameObject.SetActive(false);
+            this.enterButton.gameObject.SetActive(false);
             this.status.gameObject.SetActive(true);
             this.progress.gameObject.SetActive(false);
         }
@@ -182,8 +182,9 @@ namespace DecentM.VideoPlayer.Plugins
             this.pauseButton.interactable = true;
             this.stopButton.interactable = true;
             this.urlInput.gameObject.SetActive(false);
+            this.enterButton.gameObject.SetActive(false);
             this.status.gameObject.SetActive(true);
-            this.progress.gameObject.SetActive(true);
+            this.progress.gameObject.SetActive(!float.IsInfinity(this.system.GetDuration()));
         }
 
         protected override void OnPlaybackStop(float timestamp)
@@ -194,6 +195,7 @@ namespace DecentM.VideoPlayer.Plugins
             this.pauseButton.interactable = false;
             this.stopButton.interactable = true;
             this.urlInput.gameObject.SetActive(false);
+            this.enterButton.gameObject.SetActive(false);
             this.status.gameObject.SetActive(true);
             this.progress.gameObject.SetActive(true);
         }
@@ -206,6 +208,7 @@ namespace DecentM.VideoPlayer.Plugins
             this.pauseButton.interactable = false;
             this.stopButton.interactable = false;
             this.urlInput.gameObject.SetActive(true);
+            this.enterButton.gameObject.SetActive(true);
             this.status.gameObject.SetActive(false);
             this.progress.gameObject.SetActive(false);
 
