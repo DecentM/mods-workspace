@@ -3518,7 +3518,7 @@ MonoBehaviour:
   _udonSharpBackingUdonBehaviour: {fileID: 353534384}
   looping: 1
   urls:
-  - url: https://www.youtube.com/watch?v=fIrrHUaXpAE
+  - url: https://www.youtube.com/watch?v=exaXMG2umpE
 --- !u!1 &354522645
 GameObject:
   m_ObjectHideFlags: 0
@@ -18027,7 +18027,7 @@ PrefabInstance:
     - target: {fileID: 6263122782754207347, guid: a0598aa21af57744898c97ed24c53770,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 12.999956
+      value: 0.00015830994
       objectReference: {fileID: 0}
     - target: {fileID: 6263122783558884633, guid: a0598aa21af57744898c97ed24c53770,
         type: 3}
@@ -18037,7 +18037,7 @@ PrefabInstance:
     - target: {fileID: 6263122783558884633, guid: a0598aa21af57744898c97ed24c53770,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 14.191579
+      value: -0.000060081482
       objectReference: {fileID: 0}
     - target: {fileID: 6794618857745757026, guid: a0598aa21af57744898c97ed24c53770,
         type: 3}
@@ -30600,8 +30600,13 @@ MonoBehaviour:
   playerHandlers:
   - {fileID: 4126593573402145564}
   - {fileID: 4126593574066380040}
-  speakers: []
-  screens: []
+  speakers:
+  - {fileID: 4126593573913639286}
+  screens:
+  - {fileID: 6265090398340422880}
+  fps: 30
+  minFps: 1
+  maxFps: 144
 --- !u!4 &4126593572484124199
 Transform:
   m_ObjectHideFlags: 0
@@ -31007,7 +31012,7 @@ AudioSource:
   Spatialize: 0
   SpatializePostEffects: 0
   Priority: 128
-  DopplerLevel: 1
+  DopplerLevel: 0
   MinDistance: 490
   MaxDistance: 500
   Pan2D: 0
@@ -31074,7 +31079,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
+      value: 0
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -31746,6 +31751,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 702aeeb3e68812a40b690d9afbd2d5c3, type: 3}
+--- !u!23 &6265090398340422880 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 8680439627225952609, guid: 702aeeb3e68812a40b690d9afbd2d5c3,
+    type: 3}
+  m_PrefabInstance: {fileID: 6265090398340422879}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6265090398340422882 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7510932177016130062, guid: 702aeeb3e68812a40b690d9afbd2d5c3,

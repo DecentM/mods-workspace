@@ -15,15 +15,16 @@ namespace DecentM.VideoPlayer.Plugins
         protected virtual void OnBrightnessChange(float alpha) { }
         protected virtual void OnVolumeChange(float volume) { }
         protected virtual void OnMutedChange(bool muted) { }
+        protected virtual void OnFpsChange(int fps) { }
 
         protected virtual void OnPlaybackStart(float timestamp) { }
         protected virtual void OnPlaybackStop(float timestamp) { }
         protected virtual void OnPlaybackEnd() { }
-        protected virtual void OnProgress(float timestamp) { }
+        protected virtual void OnProgress(float timestamp, float duration) { }
 
         protected virtual void OnLoadBegin(VRCUrl url) { }
         protected virtual void OnLoadBegin() { }
-        protected virtual void OnLoadReady() { }
+        protected virtual void OnLoadReady(float duration) { }
         protected virtual void OnLoadError(VideoError videoError) { }
         protected virtual void OnUnload() { }
 
@@ -66,9 +67,17 @@ namespace DecentM.VideoPlayer.Plugins
                         return;
                     }
 
+                case VideoPlayerEvent.OnFpsChange:
+                    {
+                        int fps = (int)data[0];
+                        this.OnFpsChange(fps);
+                        return;
+                    }
+
                 case VideoPlayerEvent.OnLoadReady:
                     {
-                        this.OnLoadReady();
+                        float duration = (float)data[0];
+                        this.OnLoadReady(duration);
                         return;
                     }
 
@@ -102,7 +111,8 @@ namespace DecentM.VideoPlayer.Plugins
                 case VideoPlayerEvent.OnProgress:
                     {
                         float timestamp = (float)data[0];
-                        this.OnProgress(timestamp);
+                        float duration = (float)data[1];
+                        this.OnProgress(timestamp, duration);
                         return;
                     }
 

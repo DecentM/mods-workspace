@@ -66,7 +66,7 @@ namespace DecentM.VideoPlayer.Plugins
             this.SendCustomEventDelayedSeconds(nameof(AttemptRetry), 5.1f);
         }
 
-        protected override void OnLoadReady()
+        protected override void OnLoadReady(float duration)
         {
             // Reset the failure count after a video loads successfully
             this.failures = 0;

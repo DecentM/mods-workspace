@@ -14,6 +14,10 @@ namespace DecentM.VideoPlayer
         public AudioSource[] speakers;
         public Renderer[] screens;
 
+        public int fps = 30;
+        public int minFps = 1;
+        public int maxFps = 144;
+
         private int currentPlayerHandlerIndex = 0;
 
         private BasePlayerHandler currentPlayerHandler
@@ -31,6 +35,43 @@ namespace DecentM.VideoPlayer
             this.DisableAllPlayers();
             this.EnablePlayer(0);
             this.events.OnVideoPlayerInit();
+        }
+
+        private float elapsed = 0;
+
+        private void LateUpdate()
+        {
+            elapsed += Time.unscaledDeltaTime;
+
+            if (elapsed < 1 / this.fps || !this.IsPlaying()) return;
+
+            Texture videoPlayerTex = this.GetVideoTexture();
+
+            foreach (Renderer screen in this.screens)
+            {
+                screen.material.SetTexture("_MainTex", videoPlayerTex);
+                screen.material.SetInt("_IsAVPro", System.Convert.ToInt32(this.currentPlayerHandler.type == VideoPlayerHandlerType.AVPro));
+                screen.material.SetFloat("_TargetAspectRatio", 1f * videoPlayerTex.width / videoPlayerTex.height);
+            }
+        }
+
+        [PublicAPI]
+        public int GetFps()
+        {
+            return this.fps;
+        }
+
+        [PublicAPI]
+        public void SetFps(int fps)
+        {
+            this.fps = Mathf.Clamp(fps, this.minFps, this.maxFps);
+            this.events.OnFpsChange(fps);
+        }
+
+        [PublicAPI]
+        public Texture GetVideoTexture()
+        {
+            return this.currentPlayerHandler.GetScreenTexture();
         }
 
         private void DisablePlayer(BasePlayerHandler player)
@@ -92,6 +133,12 @@ namespace DecentM.VideoPlayer
             this.EnablePlayer(this.currentPlayerHandler);
 
             return true;
+        }
+
+        [PublicAPI]
+        public bool IsPlaying()
+        {
+            return this.currentPlayerHandler.IsPlaying();
         }
 
         [PublicAPI]

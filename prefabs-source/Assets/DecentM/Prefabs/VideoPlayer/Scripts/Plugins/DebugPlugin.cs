@@ -26,11 +26,11 @@ namespace DecentM.VideoPlayer.Plugins
 
         protected override void OnVideoPlayerInit() { this.Log(nameof(OnVideoPlayerInit)); }
         protected override void OnPlaybackEnd() { this.Log(nameof(OnPlaybackEnd)); }
-        protected override void OnLoadReady() { this.Log(nameof(OnLoadReady)); }
+        protected override void OnLoadReady(float duration) { this.Log(nameof(OnLoadReady), duration.ToString()); }
         protected override void OnLoadBegin() { this.Log(nameof(OnLoadBegin)); }
         protected override void OnLoadBegin(VRCUrl url) { this.Log(nameof(OnLoadBegin), url.ToString()); }
         protected override void OnLoadError(VideoError videoError) { this.Log(nameof(OnLoadError), videoError.ToString()); }
-        protected override void OnProgress(float timestamp) { this.Log(nameof(OnProgress), timestamp.ToString()); }
+        protected override void OnProgress(float timestamp, float duration) { this.Log(nameof(OnProgress), timestamp.ToString(), duration.ToString()); }
         protected override void OnUnload() { this.Log(nameof(OnUnload)); }
         protected override void OnPlaybackStart(float timestamp) { this.Log(nameof(OnPlaybackStart), timestamp.ToString()); }
         protected override void OnPlaybackStop(float timestamp) { this.Log(nameof(OnPlaybackStop), timestamp.ToString()); }

@@ -22,7 +22,9 @@ namespace DecentM.VideoPlayer
         public BaseVRCVideoPlayer player;
         public VideoPlayerEvents events;
 
-        public MeshRenderer screen;
+        public Renderer screen;
+
+        private MaterialPropertyBlock fetchBlock;
 
         void Start()
         {
@@ -32,6 +34,8 @@ namespace DecentM.VideoPlayer
                 this.enabled = false;
                 return;
             }
+
+            this.fetchBlock = new MaterialPropertyBlock();
         }
 
         public float progressReportIntervalSeconds = 1;
@@ -40,7 +44,7 @@ namespace DecentM.VideoPlayer
 
         private void FixedUpdate()
         {
-            if (!this.player.IsPlaying) return;
+            if (!this.player.IsPlaying || float.IsInfinity(this.player.GetDuration())) return;
 
             this.clock += Time.fixedDeltaTime;
 
@@ -123,6 +127,23 @@ namespace DecentM.VideoPlayer
         public void UnloadVideo()
         {
             this.player.Stop();
+        }
+
+        public bool IsPlaying()
+        {
+            return this.player.IsPlaying;
+        }
+
+        public Texture GetScreenTexture()
+        {
+            if (this.type == VideoPlayerHandlerType.Unity)
+            {
+                this.screen.GetPropertyBlock(this.fetchBlock);
+
+                return this.fetchBlock.GetTexture("_MainTex");
+            }
+
+            return this.screen.material.GetTexture("_MainTex");
         }
     }
 }

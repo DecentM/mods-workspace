@@ -28,7 +28,7 @@ namespace DecentM.VideoPlayer.Plugins
             this.system.LoadVideo(this.nextUrl);
         }
 
-        protected override void OnLoadReady()
+        protected override void OnLoadReady(float duration)
         {
             if (this.system.GetCurrentUrl() != this.nextUrl) return;
 

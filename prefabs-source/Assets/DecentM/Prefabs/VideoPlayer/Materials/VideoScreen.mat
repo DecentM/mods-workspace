@@ -11,7 +11,7 @@ Material:
   m_Shader: {fileID: 4800000, guid: 412ea878efbed224d97338aed34a773c, type: 3}
   m_ShaderKeywords: _GLOSSYREFLECTIONS_OFF _SPECULARHIGHLIGHTS_OFF
   m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
+  m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
   stringTagMap: {}
@@ -88,7 +88,7 @@ Material:
     - _SoftParticlesNearFadeDistance: 0
     - _SpecularHighlights: 0
     - _SrcBlend: 1
-    - _TargetAspectRatio: 1.7777777
+    - _TargetAspectRatio: 1.7777778
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:

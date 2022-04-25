@@ -123,7 +123,7 @@ public class PlayerAspectRatio : UdonSharpBehaviour
                 break;
         }
 
-        // "_TargetAspectRatio" is the name of the AR parameter in the USharpVideo Standard Video Emission shader
+        // "_TargetAspectRatio" is the name of the aspect ratio parameter in the USharpVideo Standard Video Emission shader
         this.videoScreenRenderer.sharedMaterial.SetFloat("_TargetAspectRatio", w / h);
     }
 }

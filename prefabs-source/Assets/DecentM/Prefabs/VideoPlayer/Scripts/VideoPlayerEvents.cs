@@ -14,6 +14,7 @@ namespace DecentM.VideoPlayer
         OnBrightnessChange,
         OnVolumeChange,
         OnMutedChange,
+        OnFpsChange,
 
         OnPlaybackStart,
         OnPlaybackStop,
@@ -55,6 +56,11 @@ namespace DecentM.VideoPlayer
             this.BroadcastEvent(VideoPlayerEvent.OnMutedChange, muted);
         }
 
+        public void OnFpsChange(int fps)
+        {
+            this.BroadcastEvent(VideoPlayerEvent.OnFpsChange, fps);
+        }
+
         public void OnPlaybackStart(float timestamp)
         {
             this.BroadcastEvent(VideoPlayerEvent.OnPlaybackStart, timestamp);
@@ -82,7 +88,7 @@ namespace DecentM.VideoPlayer
 
         public void OnLoadReady(float duration)
         {
-            this.BroadcastEvent(VideoPlayerEvent.OnLoadReady);
+            this.BroadcastEvent(VideoPlayerEvent.OnLoadReady, duration);
         }
 
         public void OnUnload()
