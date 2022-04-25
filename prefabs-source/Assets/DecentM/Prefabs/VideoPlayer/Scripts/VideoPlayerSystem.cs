@@ -11,6 +11,8 @@ namespace DecentM.VideoPlayer
     {
         public VideoPlayerEvents events;
         public BasePlayerHandler[] playerHandlers;
+        public AudioSource[] speakers;
+        public Renderer[] screens;
 
         private int currentPlayerHandlerIndex = 0;
 
@@ -145,9 +147,46 @@ namespace DecentM.VideoPlayer
         }
 
         [PublicAPI]
-        public void SetBrightness(float alpha)
+        public bool SetBrightness(float alpha)
         {
-            this.currentPlayerHandler.SetBrightness(alpha);
+            if (alpha < 0 || alpha > 1) return false;
+
+            foreach (Renderer screen in this.screens)
+            {
+                screen.material.SetColor("_Color", new Color(1, 1, 1, alpha));
+            }
+
+            this.events.OnBrightnessChange(alpha);
+
+            return true;
+        }
+
+        private float currentVolume = 1;
+
+        [PublicAPI]
+        public bool SetVolume(float volume)
+        {
+            if (volume < 0 || volume > 1) return false;
+
+            foreach (AudioSource speaker in this.speakers)
+            {
+                speaker.volume = volume;
+            }
+
+            this.events.OnVolumeChange(volume);
+
+            return true;
+        }
+
+        [PublicAPI]
+        public void SetMuted(bool muted)
+        {
+            foreach (AudioSource speaker in this.speakers)
+            {
+                speaker.volume = muted ? 0 : this.currentVolume;
+            }
+
+            this.events.OnMutedChange(muted);
         }
     }
 }

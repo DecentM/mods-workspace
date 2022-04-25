@@ -12,6 +12,8 @@ namespace DecentM.VideoPlayer
     {
         OnVideoPlayerInit,
         OnBrightnessChange,
+        OnVolumeChange,
+        OnMutedChange,
 
         OnPlaybackStart,
         OnPlaybackStop,
@@ -41,6 +43,16 @@ namespace DecentM.VideoPlayer
         public void OnBrightnessChange(float alpha)
         {
             this.BroadcastEvent(VideoPlayerEvent.OnBrightnessChange, alpha);
+        }
+
+        public void OnVolumeChange(float volume)
+        {
+            this.BroadcastEvent(VideoPlayerEvent.OnVolumeChange, volume);
+        }
+
+        public void OnMutedChange(bool muted)
+        {
+            this.BroadcastEvent(VideoPlayerEvent.OnMutedChange, muted);
         }
 
         public void OnPlaybackStart(float timestamp)

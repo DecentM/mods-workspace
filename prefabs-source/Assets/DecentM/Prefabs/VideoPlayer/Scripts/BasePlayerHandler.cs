@@ -34,17 +34,17 @@ namespace DecentM.VideoPlayer
             }
         }
 
-        public float syncIntervalSeconds = 5;
+        public float progressReportIntervalSeconds = 1;
 
-        private int clock = 0;
+        private float clock = 0;
 
         private void FixedUpdate()
         {
             if (!this.player.IsPlaying) return;
 
-            this.clock++;
+            this.clock += Time.fixedDeltaTime;
 
-            if (this.clock > this.syncIntervalSeconds / Time.fixedDeltaTime)
+            if (this.clock > this.progressReportIntervalSeconds)
             {
                 this.HandleProgress();
                 this.clock = 0;
@@ -123,13 +123,6 @@ namespace DecentM.VideoPlayer
         public void UnloadVideo()
         {
             this.player.Stop();
-        }
-
-        public void SetBrightness(float alpha)
-        {
-            if (alpha < 0 || alpha > 1) return;
-
-            this.screen.material.SetColor("_Color", new Color(1, 1, 1, alpha));
         }
     }
 }
