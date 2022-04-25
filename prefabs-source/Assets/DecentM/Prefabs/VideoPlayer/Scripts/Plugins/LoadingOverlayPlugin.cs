@@ -41,5 +41,10 @@ namespace DecentM.VideoPlayer.Plugins
         {
             this.animator.SetBool("Loading", false);
         }
+
+        protected override void OnUnload()
+        {
+            this.animator.SetBool("Loading", false);
+        }
     }
 }
