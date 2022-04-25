@@ -47,14 +47,14 @@ namespace DecentM.VideoPlayer
             this.BroadcastEvent(VideoPlayerEvent.OnBrightnessChange, alpha);
         }
 
-        public void OnVolumeChange(float volume)
+        public void OnVolumeChange(float volume, bool muted)
         {
-            this.BroadcastEvent(VideoPlayerEvent.OnVolumeChange, volume);
+            this.BroadcastEvent(VideoPlayerEvent.OnVolumeChange, volume, muted);
         }
 
-        public void OnMutedChange(bool muted)
+        public void OnMutedChange(bool muted, float volume)
         {
-            this.BroadcastEvent(VideoPlayerEvent.OnMutedChange, muted);
+            this.BroadcastEvent(VideoPlayerEvent.OnMutedChange, muted, volume);
         }
 
         public void OnFpsChange(int fps)

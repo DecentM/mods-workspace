@@ -14,8 +14,8 @@ namespace DecentM.VideoPlayer.Plugins
 
         protected virtual void OnVideoPlayerInit() { }
         protected virtual void OnBrightnessChange(float alpha) { }
-        protected virtual void OnVolumeChange(float volume) { }
-        protected virtual void OnMutedChange(bool muted) { }
+        protected virtual void OnVolumeChange(float volume, bool muted) { }
+        protected virtual void OnMutedChange(bool muted, float volume) { }
         protected virtual void OnFpsChange(int fps) { }
         protected virtual void OnScreenResolutionChange(Renderer screen, float width, float height) { }
 
@@ -58,14 +58,16 @@ namespace DecentM.VideoPlayer.Plugins
                 case VideoPlayerEvent.OnVolumeChange:
                     {
                         float volume = (float)data[0];
-                        this.OnVolumeChange(volume);
+                        bool muted = (bool)data[1];
+                        this.OnVolumeChange(volume, muted);
                         return;
                     }
 
                 case VideoPlayerEvent.OnMutedChange:
                     {
                         bool muted = (bool)data[0];
-                        this.OnMutedChange(muted);
+                        float volume = (float)data[1];
+                        this.OnMutedChange(muted, volume);
                         return;
                     }
 

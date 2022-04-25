@@ -202,10 +202,18 @@ namespace DecentM.VideoPlayer
                 speaker.volume = volume;
             }
 
-            this.events.OnVolumeChange(volume);
+            this.events.OnVolumeChange(volume, this.currentMuted);
 
             return true;
         }
+
+        [PublicAPI]
+        public float GetVolume()
+        {
+            return this.currentVolume;
+        }
+
+        private bool currentMuted = false;
 
         [PublicAPI]
         public void SetMuted(bool muted)
@@ -215,7 +223,14 @@ namespace DecentM.VideoPlayer
                 speaker.volume = muted ? 0 : this.currentVolume;
             }
 
-            this.events.OnMutedChange(muted);
+            this.currentMuted = muted;
+            this.events.OnMutedChange(muted, this.currentVolume);
+        }
+
+        [PublicAPI]
+        public bool GetMuted()
+        {
+            return this.currentMuted;
         }
     }
 }
