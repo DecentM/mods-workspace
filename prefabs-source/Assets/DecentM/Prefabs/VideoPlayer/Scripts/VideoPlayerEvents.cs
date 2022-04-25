@@ -15,6 +15,7 @@ namespace DecentM.VideoPlayer
         OnVolumeChange,
         OnMutedChange,
         OnFpsChange,
+        OnScreenResolutionChange,
 
         OnPlaybackStart,
         OnPlaybackStop,
@@ -59,6 +60,11 @@ namespace DecentM.VideoPlayer
         public void OnFpsChange(int fps)
         {
             this.BroadcastEvent(VideoPlayerEvent.OnFpsChange, fps);
+        }
+
+        public void OnScreenResolutionChange(Renderer screen, float width, float height)
+        {
+            this.BroadcastEvent(VideoPlayerEvent.OnScreenResolutionChange, screen, width, height);
         }
 
         public void OnPlaybackStart(float timestamp)

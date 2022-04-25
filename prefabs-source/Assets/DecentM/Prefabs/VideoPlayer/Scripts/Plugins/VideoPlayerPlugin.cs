@@ -1,5 +1,6 @@
 ﻿using UdonSharp;
 using DecentM.Pubsub;
+using UnityEngine;
 using VRC.SDKBase;
 using VRC.SDK3.Components.Video;
 
@@ -16,6 +17,7 @@ namespace DecentM.VideoPlayer.Plugins
         protected virtual void OnVolumeChange(float volume) { }
         protected virtual void OnMutedChange(bool muted) { }
         protected virtual void OnFpsChange(int fps) { }
+        protected virtual void OnScreenResolutionChange(Renderer screen, float width, float height) { }
 
         protected virtual void OnPlaybackStart(float timestamp) { }
         protected virtual void OnPlaybackStop(float timestamp) { }
@@ -71,6 +73,15 @@ namespace DecentM.VideoPlayer.Plugins
                     {
                         int fps = (int)data[0];
                         this.OnFpsChange(fps);
+                        return;
+                    }
+
+                case VideoPlayerEvent.OnScreenResolutionChange:
+                    {
+                        Renderer screen = (Renderer)data[0];
+                        float width = (float)data[1];
+                        float height = (float)data[2];
+                        this.OnScreenResolutionChange(screen, width, height);
                         return;
                     }
 

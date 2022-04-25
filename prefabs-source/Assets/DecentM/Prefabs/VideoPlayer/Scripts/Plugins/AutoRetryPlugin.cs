@@ -32,7 +32,6 @@ namespace DecentM.VideoPlayer.Plugins
 
         public void AttemptRetry()
         {
-            this.events.OnAutoRetry(this.failures);
             this.system.LoadVideo(this.system.GetCurrentUrl());
             this.waitingForLoad = true;
         }
@@ -63,6 +62,7 @@ namespace DecentM.VideoPlayer.Plugins
             }
 
             // Schedule a retry after the rate limit expires
+            this.events.OnAutoRetry(this.failures);
             this.SendCustomEventDelayedSeconds(nameof(AttemptRetry), 5.1f);
         }
 

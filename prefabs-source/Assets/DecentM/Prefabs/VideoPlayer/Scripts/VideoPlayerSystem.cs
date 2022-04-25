@@ -20,7 +20,7 @@ namespace DecentM.VideoPlayer
 
         private int currentPlayerHandlerIndex = 0;
 
-        private BasePlayerHandler currentPlayerHandler
+        public BasePlayerHandler currentPlayerHandler
         {
             get { return this.playerHandlers[currentPlayerHandlerIndex]; }
         }
@@ -35,24 +35,6 @@ namespace DecentM.VideoPlayer
             this.DisableAllPlayers();
             this.EnablePlayer(0);
             this.events.OnVideoPlayerInit();
-        }
-
-        private float elapsed = 0;
-
-        private void LateUpdate()
-        {
-            elapsed += Time.unscaledDeltaTime;
-
-            if (elapsed < 1 / this.fps || !this.IsPlaying()) return;
-
-            Texture videoPlayerTex = this.GetVideoTexture();
-
-            foreach (Renderer screen in this.screens)
-            {
-                screen.material.SetTexture("_MainTex", videoPlayerTex);
-                screen.material.SetInt("_IsAVPro", System.Convert.ToInt32(this.currentPlayerHandler.type == VideoPlayerHandlerType.AVPro));
-                screen.material.SetFloat("_TargetAspectRatio", 1f * videoPlayerTex.width / videoPlayerTex.height);
-            }
         }
 
         [PublicAPI]
