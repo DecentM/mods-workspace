@@ -82,7 +82,12 @@ namespace DecentM.VideoPlayer.Plugins
 
         protected override void OnAutoRetryLoadTimeout()
         {
-            this.status.text = "Load timeout, retrying in 10 seconds...";
+            this.status.text = "Load timeout, retrying in 5 seconds...";
+        }
+
+        protected override void OnLoadRequested(VRCUrl url)
+        {
+            this.status.text = "Waiting for video player...";
         }
 
         protected override void OnLoadBegin()
@@ -217,7 +222,13 @@ namespace DecentM.VideoPlayer.Plugins
 
         protected override void OnScreenResolutionChange(Renderer screen, float width, float height)
         {
-            this.info.text = $"{height}p";
+            if (width / height != 1920f / 1080f)
+            {
+                this.info.text = $"{width}x{height}";
+            } else
+            {
+                this.info.text = $"{height}p";
+            }
         }
 
         #endregion

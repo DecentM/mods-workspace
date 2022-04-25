@@ -44,7 +44,7 @@ namespace DecentM.VideoPlayer
 
         private void FixedUpdate()
         {
-            if (!this.player.IsPlaying || float.IsInfinity(this.player.GetDuration())) return;
+            if (this.player == null || !this.player.IsPlaying || float.IsInfinity(this.player.GetDuration())) return;
 
             this.clock += Time.fixedDeltaTime;
 
