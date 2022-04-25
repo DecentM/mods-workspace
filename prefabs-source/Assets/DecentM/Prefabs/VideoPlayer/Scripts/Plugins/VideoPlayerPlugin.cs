@@ -33,6 +33,7 @@ namespace DecentM.VideoPlayer.Plugins
         protected virtual void OnAutoRetry(int attempt) { }
         protected virtual void OnAutoRetrySwitchPlayer() { }
         protected virtual void OnAutoRetryLoadTimeout() { }
+        protected virtual void OnAutoRetryAbort() { }
 
         protected sealed override void OnPubsubEvent(object name, object[] data)
         {
@@ -164,7 +165,13 @@ namespace DecentM.VideoPlayer.Plugins
                         return;
                     }
 
-                #endregion
+                case VideoPlayerEvent.OnAutoRetryAbort:
+                    {
+                        this.OnAutoRetryAbort();
+                        return;
+                    }
+
+                    #endregion
             }
         }
     }

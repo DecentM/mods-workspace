@@ -1,6 +1,7 @@
 ﻿using System;
 using UdonSharp;
 using UnityEngine;
+using VRC.SDK3.Components;
 using VRC.SDK3.Components.Video;
 using VRC.SDKBase;
 using VRC.Udon;
@@ -13,12 +14,16 @@ namespace DecentM.VideoPlayer.Plugins
     {
         public Slider progress;
 
+        [Space]
         public Button playButton;
         public Button pauseButton;
         public Button stopButton;
 
+        [Space]
         public TextMeshProUGUI status;
+        public VRCUrlInputField urlInput;
 
+        [Space]
         public Image brightnessImage;
         public Slider brightnessSlider;
         public Image volumeImage;
@@ -33,7 +38,11 @@ namespace DecentM.VideoPlayer.Plugins
         public Sprite brightnessMediumIcon;
         public Sprite brightnessHighIcon;
 
+        [Space]
         public TextMeshProUGUI info;
+
+        [Space]
+        public VRCUrl emptyUrl;
 
         private string HumanReadableTimestamp(float timestamp)
         {
@@ -44,10 +53,22 @@ namespace DecentM.VideoPlayer.Plugins
             return string.Format("{0:D2}:{1:D2}", t.Minutes, t.Seconds);
         }
 
+        private string GetProgressIndicator(float timestamp, float duration)
+        {
+            return $"{this.HumanReadableTimestamp(timestamp)} / {this.HumanReadableTimestamp(duration)}";
+        }
+
+        private string GetProgressIndicator()
+        {
+            return this.GetProgressIndicator(this.system.GetTime(), this.system.GetDuration());
+        }
+
+        #region Outputs
+
         protected override void OnProgress(float timestamp, float duration)
         {
-            this.status.text = $"{this.HumanReadableTimestamp(timestamp)} / {this.HumanReadableTimestamp(duration)}";
-            this.progress.SetValueWithoutNotify(timestamp / duration);
+            this.status.text = this.GetProgressIndicator(timestamp, duration);
+            this.progress.SetValueWithoutNotify(Mathf.Max(timestamp / duration, 0.001f));
         }
 
         protected override void OnAutoRetry(int attempt)
@@ -73,11 +94,19 @@ namespace DecentM.VideoPlayer.Plugins
         protected override void OnLoadBegin(VRCUrl url)
         {
             this.status.text = "Loading...";
+            this.urlInput.SetUrl(url);
         }
 
         protected override void OnLoadReady(float duration)
         {
-            this.status.text = "Loaded";
+            this.status.text = "Loaded, press play to begin";
+
+            this.playButton.interactable = true;
+            this.pauseButton.interactable = false;
+            this.stopButton.interactable = true;
+            this.urlInput.gameObject.SetActive(false);
+            this.status.gameObject.SetActive(true);
+            this.progress.gameObject.SetActive(true);
         }
 
         protected override void OnLoadError(VideoError videoError)
@@ -128,6 +157,8 @@ namespace DecentM.VideoPlayer.Plugins
 
         protected override void OnMutedChange(bool muted, float volume)
         {
+            this.volumeSlider.interactable = !muted;
+
             this.volumeImage.sprite = this.GetVolumeSprite(volume, muted);
         }
 
@@ -135,41 +166,101 @@ namespace DecentM.VideoPlayer.Plugins
         {
             this.status.text = "Playback ended";
 
-            this.playButton.gameObject.SetActive(true);
-            this.pauseButton.gameObject.SetActive(false);
-            this.stopButton.gameObject.SetActive(false);
+            this.playButton.interactable = true;
+            this.pauseButton.interactable = false;
+            this.stopButton.interactable = true;
+            this.urlInput.gameObject.SetActive(false);
+            this.status.gameObject.SetActive(true);
+            this.progress.gameObject.SetActive(false);
         }
 
         protected override void OnPlaybackStart(float timestamp)
         {
             this.status.text = "Playing...";
 
-            this.playButton.gameObject.SetActive(false);
-            this.pauseButton.gameObject.SetActive(true);
-            this.stopButton.gameObject.SetActive(true);
+            this.playButton.interactable = false;
+            this.pauseButton.interactable = true;
+            this.stopButton.interactable = true;
+            this.urlInput.gameObject.SetActive(false);
+            this.status.gameObject.SetActive(true);
+            this.progress.gameObject.SetActive(true);
         }
 
         protected override void OnPlaybackStop(float timestamp)
         {
-            this.status.text = "Paused";
+            this.status.text = $"Paused - {this.GetProgressIndicator(timestamp, this.system.GetDuration())}";
 
-            this.playButton.gameObject.SetActive(true);
-            this.pauseButton.gameObject.SetActive(false);
-            this.stopButton.gameObject.SetActive(true);
+            this.playButton.interactable = true;
+            this.pauseButton.interactable = false;
+            this.stopButton.interactable = true;
+            this.urlInput.gameObject.SetActive(false);
+            this.status.gameObject.SetActive(true);
+            this.progress.gameObject.SetActive(true);
         }
 
         protected override void OnUnload()
         {
             this.status.text = "Stopped";
 
-            this.playButton.gameObject.SetActive(false);
-            this.pauseButton.gameObject.SetActive(false);
-            this.stopButton.gameObject.SetActive(false);
+            this.playButton.interactable = false;
+            this.pauseButton.interactable = false;
+            this.stopButton.interactable = false;
+            this.urlInput.gameObject.SetActive(true);
+            this.status.gameObject.SetActive(false);
+            this.progress.gameObject.SetActive(false);
+
+            this.urlInput.SetUrl(this.emptyUrl);
         }
 
         protected override void OnScreenResolutionChange(Renderer screen, float width, float height)
         {
             this.info.text = $"{height}p";
         }
+
+        #endregion
+
+        #region Inputs
+
+        public void OnPlayButton()
+        {
+            this.system.StartPlayback();
+        }
+
+        public void OnPauseButton()
+        {
+            this.system.PausePlayback();
+        }
+
+        public void OnStopButton()
+        {
+            this.system.UnloadVideo();
+        }
+
+        public void OnBrightnessSlider()
+        {
+            this.system.SetBrightness(this.brightnessSlider.value);
+        }
+
+        public void OnVolumeSlider()
+        {
+            this.system.SetVolume(this.volumeSlider.value);
+        }
+
+        public void OnMuteButton()
+        {
+            this.system.SetMuted(!this.system.GetMuted());
+        }
+
+        public void OnProgressSlider()
+        {
+            this.system.Seek(this.progress.value * this.system.GetDuration());
+        }
+
+        public void OnUrlInput()
+        {
+            this.system.LoadVideo(this.urlInput.GetUrl());
+        }
+
+        #endregion
     }
 }

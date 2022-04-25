@@ -12,7 +12,7 @@ namespace DecentM.VideoPlayer.Plugins
     {
         public Texture2D idleTexture;
 
-        protected override void OnLoadReady(float duration)
+        protected override void OnPlaybackStart(float duration)
         {
             Texture videoTexture = this.system.GetVideoTexture();
 

@@ -22,7 +22,7 @@ namespace DecentM.VideoPlayer.Plugins
             this.events.OnScreenResolutionChange(screen, width, height);
         }
 
-        protected override void OnLoadReady(float duration)
+        protected override void OnPlaybackStart(float duration)
         {
             Texture videoTexture = this.system.GetVideoTexture();
 

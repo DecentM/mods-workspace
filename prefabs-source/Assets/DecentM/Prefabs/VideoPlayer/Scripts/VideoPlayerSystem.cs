@@ -34,6 +34,12 @@ namespace DecentM.VideoPlayer
         {
             this.DisableAllPlayers();
             this.EnablePlayer(0);
+            this.SetFps(this.fps);
+            this.SetMuted(false);
+            this.SetVolume(1);
+            this.SetBrightness(1);
+            this.PausePlayback();
+            this.Seek(0);
             this.events.OnVideoPlayerInit();
         }
 
@@ -139,18 +145,22 @@ namespace DecentM.VideoPlayer
         public void Seek(float timestamp)
         {
             this.currentPlayerHandler.Seek(timestamp);
+            this.events.OnProgress(timestamp, this.GetDuration());
         }
 
         [PublicAPI]
         public void PausePlayback(float timestamp)
         {
             this.currentPlayerHandler.PausePlayback();
+            this.currentPlayerHandler.Seek(timestamp);
+            this.events.OnPlaybackStop(timestamp);
         }
 
         [PublicAPI]
         public void PausePlayback()
         {
             this.currentPlayerHandler.PausePlayback();
+            this.events.OnPlaybackStop(this.currentPlayerHandler.GetTime());
         }
 
         private VRCUrl currentUrl;
@@ -167,6 +177,8 @@ namespace DecentM.VideoPlayer
         {
             this.currentUrl = null;
             this.currentPlayerHandler.UnloadVideo();
+            this.events.OnUnload();
+            this.Seek(0);
         }
 
         [PublicAPI]
@@ -182,7 +194,7 @@ namespace DecentM.VideoPlayer
 
             foreach (Renderer screen in this.screens)
             {
-                screen.material.SetColor("_Color", new Color(1, 1, 1, alpha));
+                screen.material.SetColor("_Color", new Color(alpha, alpha, alpha));
             }
 
             this.events.OnBrightnessChange(alpha);
@@ -231,6 +243,18 @@ namespace DecentM.VideoPlayer
         public bool GetMuted()
         {
             return this.currentMuted;
+        }
+
+        [PublicAPI]
+        public float GetDuration()
+        {
+            return this.currentPlayerHandler.GetDuration();
+        }
+
+        [PublicAPI]
+        public float GetTime()
+        {
+            return this.currentPlayerHandler.GetTime();
         }
     }
 }

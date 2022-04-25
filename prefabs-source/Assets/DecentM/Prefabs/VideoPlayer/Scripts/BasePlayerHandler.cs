@@ -145,5 +145,15 @@ namespace DecentM.VideoPlayer
 
             return this.screen.material.GetTexture("_MainTex");
         }
+
+        public float GetDuration()
+        {
+            return this.player.GetDuration();
+        }
+
+        public float GetTime()
+        {
+            return this.player.GetTime();
+        }
     }
 }

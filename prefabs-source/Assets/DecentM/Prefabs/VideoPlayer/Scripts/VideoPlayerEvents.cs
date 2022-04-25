@@ -30,6 +30,7 @@ namespace DecentM.VideoPlayer
         OnAutoRetry,
         OnAutoRetrySwitchPlayer,
         OnAutoRetryLoadTimeout,
+        OnAutoRetryAbort,
     }
 
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
@@ -124,6 +125,11 @@ namespace DecentM.VideoPlayer
         public void OnAutoRetryLoadTimeout()
         {
             this.BroadcastEvent(VideoPlayerEvent.OnAutoRetryLoadTimeout);
+        }
+
+        public void OnAutoRetryAbort()
+        {
+            this.BroadcastEvent(VideoPlayerEvent.OnAutoRetryAbort);
         }
 
         #endregion

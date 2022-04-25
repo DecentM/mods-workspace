@@ -32,7 +32,14 @@ namespace DecentM.VideoPlayer.Plugins
 
         public void AttemptRetry()
         {
-            this.system.LoadVideo(this.system.GetCurrentUrl());
+            VRCUrl url = this.system.GetCurrentUrl();
+            if (url == null)
+            {
+                this.events.OnAutoRetryAbort();
+                return;
+            }
+
+            this.system.LoadVideo(url);
             this.waitingForLoad = true;
         }
 

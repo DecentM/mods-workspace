@@ -16,8 +16,7 @@ namespace DecentM.VideoPlayer.Plugins
         protected override void OnVideoPlayerInit()
         {
             this.nextUrl = this.playlist.GetCurrentUrl();
-            
-            string a = this.nextUrl == null ? string.Empty : this.nextUrl.ToString();
+            if (nextUrl == null) return;
 
             this.system.LoadVideo(this.nextUrl);
         }
@@ -25,6 +24,8 @@ namespace DecentM.VideoPlayer.Plugins
         protected override void OnPlaybackEnd()
         {
             this.nextUrl = this.playlist.Next();
+            if (nextUrl == null) return;
+
             this.system.LoadVideo(this.nextUrl);
         }
 
