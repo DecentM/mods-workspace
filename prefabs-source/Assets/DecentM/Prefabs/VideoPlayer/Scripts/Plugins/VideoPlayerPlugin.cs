@@ -12,6 +12,7 @@ namespace DecentM.VideoPlayer.Plugins
         public VideoPlayerEvents events;
 
         protected virtual void OnVideoPlayerInit() { }
+        protected virtual void OnBrightnessChange(float alpha) { }
 
         protected virtual void OnPlaybackStart(float timestamp) { }
         protected virtual void OnPlaybackStop(float timestamp) { }
@@ -39,6 +40,13 @@ namespace DecentM.VideoPlayer.Plugins
                         VRCUrl url = (VRCUrl)data[0];
                         if (url == null) this.OnLoadBegin();
                         else this.OnLoadBegin(url);
+                        return;
+                    }
+
+                case VideoPlayerEvent.OnBrightnessChange:
+                    {
+                        float alpha = (float)data[0];
+                        this.OnBrightnessChange(alpha);
                         return;
                     }
 

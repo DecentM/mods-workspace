@@ -11,6 +11,7 @@ namespace DecentM.VideoPlayer
     public enum VideoPlayerEvent
     {
         OnVideoPlayerInit,
+        OnBrightnessChange,
 
         OnPlaybackStart,
         OnPlaybackStop,
@@ -35,6 +36,11 @@ namespace DecentM.VideoPlayer
         public void OnVideoPlayerInit()
         {
             this.BroadcastEvent(VideoPlayerEvent.OnVideoPlayerInit);
+        }
+
+        public void OnBrightnessChange(float alpha)
+        {
+            this.BroadcastEvent(VideoPlayerEvent.OnBrightnessChange, alpha);
         }
 
         public void OnPlaybackStart(float timestamp)

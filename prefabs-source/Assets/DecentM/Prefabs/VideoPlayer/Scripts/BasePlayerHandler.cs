@@ -124,5 +124,12 @@ namespace DecentM.VideoPlayer
         {
             this.player.Stop();
         }
+
+        public void SetBrightness(float alpha)
+        {
+            if (alpha < 0 || alpha > 1) return;
+
+            this.screen.material.SetColor("_Color", new Color(1, 1, 1, alpha));
+        }
     }
 }

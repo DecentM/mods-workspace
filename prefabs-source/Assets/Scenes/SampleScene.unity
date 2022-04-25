@@ -10164,7 +10164,7 @@ GameObject:
   - component: {fileID: 1059268341}
   - component: {fileID: 1059268340}
   m_Layer: 0
-  m_Name: PlaylistPlayerPlugin
+  m_Name: PlaylistPlayer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -18027,7 +18027,7 @@ PrefabInstance:
     - target: {fileID: 6263122782754207347, guid: a0598aa21af57744898c97ed24c53770,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0.00068855286
+      value: 13.001463
       objectReference: {fileID: 0}
     - target: {fileID: 6263122783558884633, guid: a0598aa21af57744898c97ed24c53770,
         type: 3}
@@ -18037,7 +18037,7 @@ PrefabInstance:
     - target: {fileID: 6263122783558884633, guid: a0598aa21af57744898c97ed24c53770,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -0.00013256073
+      value: 14.189916
       objectReference: {fileID: 0}
     - target: {fileID: 6794618857745757026, guid: a0598aa21af57744898c97ed24c53770,
         type: 3}
@@ -30600,7 +30600,6 @@ MonoBehaviour:
   playerHandlers:
   - {fileID: 4126593573402145564}
   - {fileID: 4126593574066380040}
-  screenMaterial: {fileID: 2100000, guid: 0b045fec2d99c7e4cb7059b63aa665fc, type: 2}
 --- !u!4 &4126593572484124199
 Transform:
   m_ObjectHideFlags: 0

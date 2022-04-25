@@ -143,5 +143,11 @@ namespace DecentM.VideoPlayer
         {
             return this.currentUrl;
         }
+
+        [PublicAPI]
+        public void SetBrightness(float alpha)
+        {
+            this.currentPlayerHandler.SetBrightness(alpha);
+        }
     }
 }
