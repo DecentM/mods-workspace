@@ -25,52 +25,59 @@ namespace DecentM.VideoPlayer.Plugins
         public AudioClip remotePlayerLoaded;
         public AudioClip videoUnloaded;
 
+        private void PlaySound(AudioClip clip)
+        {
+            if (this.system.IsPlaying()) return;
+
+            this.audioSource.PlayOneShot(clip);
+        }
+
         protected override void OnAutoRetry(int attempt)
         {
-            this.audioSource.PlayOneShot(this.autoRetry);
+            this.PlaySound(this.autoRetry);
         }
 
         protected override void OnAutoRetryAbort()
         {
-            this.audioSource.PlayOneShot(this.autoRetryAbort);
+            this.PlaySound(this.autoRetryAbort);
         }
 
         protected override void OnLoadReady(float duration)
         {
-            this.audioSource.PlayOneShot(this.loadReady);
+            this.PlaySound(this.loadReady);
         }
 
         protected override void OnOwnershipChanged(int previousOwnerId, VRCPlayerApi nextOwner)
         {
             if (previousOwnerId == Networking.LocalPlayer.playerId && nextOwner != Networking.LocalPlayer)
             {
-                this.audioSource.PlayOneShot(this.ownershipLost);
+                this.PlaySound(this.ownershipLost);
             }
 
             if (previousOwnerId != Networking.LocalPlayer.playerId && nextOwner == Networking.LocalPlayer)
             {
-                this.audioSource.PlayOneShot(this.ownershipGained);
+                this.PlaySound(this.ownershipGained);
             }
         }
 
         protected override void OnOwnershipSecurityChanged(bool locked)
         {
-            this.audioSource.PlayOneShot(locked ? this.ownershipLocked : this.ownershipUnlocked);
+            this.PlaySound(locked ? this.ownershipLocked : this.ownershipUnlocked);
         }
 
         protected override void OnPlaybackEnd()
         {
-            this.audioSource.PlayOneShot(this.playbackEnded);
+            this.PlaySound(this.playbackEnded);
         }
 
         protected override void OnRemotePlayerLoaded(int[] loadedPlayers)
         {
-            this.audioSource.PlayOneShot(this.remotePlayerLoaded);
+            this.PlaySound(this.remotePlayerLoaded);
         }
 
         protected override void OnUnload()
         {
-            this.audioSource.PlayOneShot(this.videoUnloaded);
+            this.PlaySound(this.videoUnloaded);
         }
     }
 }

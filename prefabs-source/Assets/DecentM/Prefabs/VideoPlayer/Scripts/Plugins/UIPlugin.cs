@@ -82,6 +82,11 @@ namespace DecentM.VideoPlayer.Plugins
             this.status.text = $"Retrying (attempt {attempt + 1})...";
         }
 
+        protected override void OnAutoRetryAbort()
+        {
+            this.isLoading = false;
+        }
+
         protected override void OnAutoRetrySwitchPlayer()
         {
             this.status.text = "Trying with a different player...";
@@ -94,7 +99,9 @@ namespace DecentM.VideoPlayer.Plugins
 
         protected override void OnLoadRequested(VRCUrl url)
         {
+            this.isLoading = true;
             this.status.text = "Waiting for video player...";
+            this.RenderScreen(0);
         }
 
         protected override void OnLoadBegin()
@@ -117,6 +124,20 @@ namespace DecentM.VideoPlayer.Plugins
 
             this.urlInput.gameObject.SetActive(this.selfOwned);
             this.enterButton.gameObject.SetActive(this.selfOwned);
+
+            this.status.gameObject.SetActive(false);
+            this.progress.gameObject.SetActive(false);
+        }
+
+        private void LoadingScreen(float duration)
+        {
+            this.playButton.interactable = this.selfOwned;
+            this.pauseButton.interactable = false;
+            this.stopButton.interactable = this.selfOwned;
+            this.progress.interactable = false;
+
+            this.urlInput.gameObject.SetActive(false);
+            this.enterButton.gameObject.SetActive(false);
 
             this.status.gameObject.SetActive(true);
             this.progress.gameObject.SetActive(false);
@@ -150,11 +171,19 @@ namespace DecentM.VideoPlayer.Plugins
             this.progress.gameObject.SetActive(!float.IsInfinity(duration));
         }
 
+        private bool isLoading = false;
+
         private void RenderScreen(float duration)
         {
             if (this.system.IsPlaying())
             {
                 this.PlayingScreen(duration);
+                return;
+            }
+
+            if (this.isLoading)
+            {
+                this.LoadingScreen(duration);
                 return;
             }
 
@@ -169,6 +198,7 @@ namespace DecentM.VideoPlayer.Plugins
 
         protected override void OnLoadReady(float duration)
         {
+            this.isLoading = false;
             this.status.text = this.selfOwned ? "Loaded, press play to begin" : "Loaded, waiting for owner to start";
             this.RenderScreen(duration);
         }
@@ -245,6 +275,7 @@ namespace DecentM.VideoPlayer.Plugins
 
         protected override void OnUnload()
         {
+            this.isLoading = false;
             this.status.text = "Stopped";
             this.RenderScreen(this.system.GetDuration());
             this.urlInput.SetUrl(this.emptyUrl);
