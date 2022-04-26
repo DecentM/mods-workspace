@@ -87,9 +87,9 @@ namespace DecentM.VideoPlayer.Plugins
             this.status.text = "Trying with a different player...";
         }
 
-        protected override void OnAutoRetryLoadTimeout()
+        protected override void OnAutoRetryLoadTimeout(int timeout)
         {
-            this.status.text = "Load timeout, retrying in 5 seconds...";
+            this.status.text = $"Load timeout after {timeout} seconds, retrying...";
         }
 
         protected override void OnLoadRequested(VRCUrl url)

@@ -36,7 +36,7 @@ namespace DecentM.VideoPlayer.Plugins
 
         protected virtual void OnAutoRetry(int attempt) { }
         protected virtual void OnAutoRetrySwitchPlayer() { }
-        protected virtual void OnAutoRetryLoadTimeout() { }
+        protected virtual void OnAutoRetryLoadTimeout(int timeout) { }
         protected virtual void OnAutoRetryAbort() { }
 
         protected virtual void OnOwnershipChanged(int previousOwnerId, VRCPlayerApi nextOwner) { }
@@ -185,7 +185,8 @@ namespace DecentM.VideoPlayer.Plugins
 
                 case VideoPlayerEvent.OnAutoRetryLoadTimeout:
                     {
-                        this.OnAutoRetryLoadTimeout();
+                        int timeout = (int)data[0];
+                        this.OnAutoRetryLoadTimeout(timeout);
                         return;
                     }
 

@@ -37,7 +37,7 @@ namespace DecentM.VideoPlayer.Plugins
         protected override void OnPlaybackStart(float timestamp) { this.Log(nameof(OnPlaybackStart), timestamp.ToString()); }
         protected override void OnPlaybackStop(float timestamp) { this.Log(nameof(OnPlaybackStop), timestamp.ToString()); }
         protected override void OnAutoRetry(int attempt) { this.Log(nameof(OnAutoRetry), attempt.ToString()); }
-        protected override void OnAutoRetryLoadTimeout() { this.Log(nameof(OnAutoRetryLoadTimeout)); }
+        protected override void OnAutoRetryLoadTimeout(int failures) { this.Log(nameof(OnAutoRetryLoadTimeout), failures.ToString()); }
         protected override void OnAutoRetrySwitchPlayer() { this.Log(nameof(OnAutoRetrySwitchPlayer)); }
         protected override void OnAutoRetryAbort() { this.Log(nameof(OnAutoRetryAbort)); }
         protected override void OnBrightnessChange(float alpha) { this.Log(nameof(OnBrightnessChange), alpha.ToString()); }

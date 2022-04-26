@@ -22,11 +22,11 @@ namespace DecentM.VideoPlayer.Plugins
             if (!this.waitingForLoad) return;
 
             this.timeoutClock += Time.fixedDeltaTime;
-            if (this.timeoutClock > this.videoLoadTimeout)
+            if (this.timeoutClock > this.videoLoadTimeout + ((this.failures + 1) * 5))
             {
                 this.timeoutClock = 0;
                 this.OnLoadError(VideoError.Unknown);
-                this.events.OnAutoRetryLoadTimeout();
+                this.events.OnAutoRetryLoadTimeout((this.failures + 1) * 5);
             }
         }
 
@@ -41,6 +41,11 @@ namespace DecentM.VideoPlayer.Plugins
             }
 
             this.system.LoadVideo(url);
+        }
+
+        protected override void OnLoadRequested(VRCUrl url)
+        {
+            this.timeoutClock = 0;
             this.waitingForLoad = true;
         }
 

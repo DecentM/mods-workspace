@@ -142,9 +142,9 @@ namespace DecentM.VideoPlayer
             this.BroadcastEvent(VideoPlayerEvent.OnAutoRetrySwitchPlayer);
         }
 
-        public void OnAutoRetryLoadTimeout()
+        public void OnAutoRetryLoadTimeout(int timeout)
         {
-            this.BroadcastEvent(VideoPlayerEvent.OnAutoRetryLoadTimeout);
+            this.BroadcastEvent(VideoPlayerEvent.OnAutoRetryLoadTimeout, timeout);
         }
 
         public void OnAutoRetryAbort()
