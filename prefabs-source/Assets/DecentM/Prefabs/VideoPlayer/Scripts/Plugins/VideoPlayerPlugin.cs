@@ -43,6 +43,8 @@ namespace DecentM.VideoPlayer.Plugins
         protected virtual void OnOwnershipSecurityChanged(bool locked) { }
         protected virtual void OnOwnershipRequested() { }
 
+        protected virtual void OnRemotePlayerLoaded(int[] loadedPlayers) { }
+
         protected sealed override void OnPubsubEvent(object name, object[] data)
         {
             switch (name)
@@ -217,6 +219,13 @@ namespace DecentM.VideoPlayer.Plugins
                 case VideoPlayerEvent.OnScreenTextureChange:
                     {
                         this.OnScreenTextureChange();
+                        return;
+                    }
+
+                case VideoPlayerEvent.OnRemotePlayerLoaded:
+                    {
+                        int[] loadedPlayers = (int[])data[0];
+                        this.OnRemotePlayerLoaded(loadedPlayers);
                         return;
                     }
 

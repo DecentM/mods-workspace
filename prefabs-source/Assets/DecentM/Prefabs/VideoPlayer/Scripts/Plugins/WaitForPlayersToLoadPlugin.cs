@@ -90,11 +90,11 @@ namespace DecentM.VideoPlayer.Plugins
             this.ownerId = nextOwner.playerId;
         }
 
-        private int loadedCount = 0;
+        private int[] loadedPlayers = new int[0];
 
         protected override void OnLoadRequested(VRCUrl url)
         {
-            this.loadedCount = 0;
+            this.loadedPlayers = new int[0];
         }
 
         // Only the current owner runs this, because the others are sending info to the owner
@@ -103,11 +103,14 @@ namespace DecentM.VideoPlayer.Plugins
         {
             if (Networking.LocalPlayer.playerId != this.ownerId) return;
 
-            this.loadedCount++;
+            int[] tmp = new int[this.loadedPlayers.Length + 1];
+            Array.Copy(this.loadedPlayers, tmp, this.loadedPlayers.Length);
+            tmp[tmp.Length - 1] = senderId;
+            this.loadedPlayers = tmp;
 
-            this.events.OnDebugLog($"{this.loadedCount} players loaded.");
+            this.events.OnRemotePlayerLoaded(this.loadedPlayers);
 
-            if (this.loadedCount >= VRCPlayerApi.GetPlayerCount() - 1)
+            if (this.loadedPlayers.Length >= VRCPlayerApi.GetPlayerCount() - 1)
             {
                 this.system.StartPlayback();
             }

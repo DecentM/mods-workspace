@@ -39,6 +39,8 @@ namespace DecentM.VideoPlayer
         OnOwnershipChanged,
         OnOwnershipSecurityChanged,
         OnOwnershipRequested,
+
+        OnRemotePlayerLoaded,
     }
 
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
@@ -176,6 +178,15 @@ namespace DecentM.VideoPlayer
         public void OnScreenTextureChange()
         {
             this.BroadcastEvent(VideoPlayerEvent.OnScreenTextureChange);
+        }
+
+        #endregion
+
+        #region Wait for players plugin
+
+        public void OnRemotePlayerLoaded(int[] loadedPlayers)
+        {
+            this.BroadcastEvent(VideoPlayerEvent.OnRemotePlayerLoaded, loadedPlayers);
         }
 
         #endregion

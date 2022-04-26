@@ -108,10 +108,19 @@ namespace DecentM.VideoPlayer.Plugins
             this.urlInput.SetUrl(url);
         }
 
-        protected override void OnLoadReady(float duration)
+        private void StoppedScreen(float duration)
         {
-            this.status.text = "Loaded, press play to begin";
+            this.playButton.interactable = true;
+            this.pauseButton.interactable = false;
+            this.stopButton.interactable = false;
+            this.urlInput.gameObject.SetActive(true);
+            this.enterButton.gameObject.SetActive(true);
+            this.status.gameObject.SetActive(true);
+            this.progress.gameObject.SetActive(false);
+        }
 
+        private void PausedScreen(float duration)
+        {
             this.playButton.interactable = true;
             this.pauseButton.interactable = false;
             this.stopButton.interactable = true;
@@ -119,6 +128,23 @@ namespace DecentM.VideoPlayer.Plugins
             this.enterButton.gameObject.SetActive(false);
             this.status.gameObject.SetActive(true);
             this.progress.gameObject.SetActive(!float.IsInfinity(duration));
+        }
+
+        private void PlayingScreen(float duration)
+        {
+            this.playButton.interactable = false;
+            this.pauseButton.interactable = true;
+            this.stopButton.interactable = true;
+            this.urlInput.gameObject.SetActive(false);
+            this.enterButton.gameObject.SetActive(false);
+            this.status.gameObject.SetActive(true);
+            this.progress.gameObject.SetActive(!float.IsInfinity(duration));
+        }
+
+        protected override void OnLoadReady(float duration)
+        {
+            this.status.text = "Loaded, press play to begin";
+            this.PausedScreen(duration);
         }
 
         protected override void OnLoadError(VideoError videoError)
@@ -176,54 +202,25 @@ namespace DecentM.VideoPlayer.Plugins
         protected override void OnPlaybackEnd()
         {
             this.status.text = "Playback ended";
-
-            this.playButton.interactable = true;
-            this.pauseButton.interactable = false;
-            this.stopButton.interactable = true;
-            this.urlInput.gameObject.SetActive(false);
-            this.enterButton.gameObject.SetActive(false);
-            this.status.gameObject.SetActive(true);
-            this.progress.gameObject.SetActive(false);
+            this.StoppedScreen(this.system.GetDuration());
         }
 
         protected override void OnPlaybackStart(float timestamp)
         {
             this.status.text = "Playing...";
-
-            this.playButton.interactable = false;
-            this.pauseButton.interactable = true;
-            this.stopButton.interactable = true;
-            this.urlInput.gameObject.SetActive(false);
-            this.enterButton.gameObject.SetActive(false);
-            this.status.gameObject.SetActive(true);
-            this.progress.gameObject.SetActive(!float.IsInfinity(this.system.GetDuration()));
+            this.PlayingScreen(this.system.GetDuration());
         }
 
         protected override void OnPlaybackStop(float timestamp)
         {
             this.status.text = $"Paused - {this.GetProgressIndicator(timestamp, this.system.GetDuration())}";
-
-            this.playButton.interactable = true;
-            this.pauseButton.interactable = false;
-            this.stopButton.interactable = true;
-            this.urlInput.gameObject.SetActive(false);
-            this.enterButton.gameObject.SetActive(false);
-            this.status.gameObject.SetActive(true);
-            this.progress.gameObject.SetActive(true);
+            this.PausedScreen(this.system.GetDuration());
         }
 
         protected override void OnUnload()
         {
             this.status.text = "Stopped";
-
-            this.playButton.interactable = false;
-            this.pauseButton.interactable = false;
-            this.stopButton.interactable = false;
-            this.urlInput.gameObject.SetActive(true);
-            this.enterButton.gameObject.SetActive(true);
-            this.status.gameObject.SetActive(false);
-            this.progress.gameObject.SetActive(false);
-
+            this.StoppedScreen(this.system.GetDuration());
             this.urlInput.SetUrl(this.emptyUrl);
         }
 
@@ -260,6 +257,55 @@ namespace DecentM.VideoPlayer.Plugins
             this.ownershipLocked = locked;
             
             this.ownershipButton.image.sprite = locked ? this.lockIcon : this.unlockIcon;
+        }
+
+        private VRCPlayerApi[] GetUnloadedPlayers(int[] loadedPlayers)
+        {
+            VRCPlayerApi[] allPlayers = new VRCPlayerApi[64];
+            VRCPlayerApi[] unloadedPlayers = new VRCPlayerApi[0];
+
+            VRCPlayerApi.GetPlayers(allPlayers);
+
+            foreach (VRCPlayerApi player in allPlayers)
+            {
+                if (player == null || !player.IsValid()) continue;
+
+                bool found = false;
+
+                // We always consider the local player as loaded
+                if (player != Networking.LocalPlayer)
+                {
+                    foreach (int loadedPlayer in loadedPlayers)
+                    {
+                        if (loadedPlayer == player.playerId)
+                        {
+                            found = true;
+                            break;
+                        }
+                    }
+                }
+
+                if (!found)
+                {
+                    VRCPlayerApi[] tmp = new VRCPlayerApi[unloadedPlayers.Length + 1];
+                    Array.Copy(unloadedPlayers, tmp, unloadedPlayers.Length);
+                    tmp[tmp.Length - 1] = player;
+                    unloadedPlayers = tmp;
+                }
+            }
+
+            return unloadedPlayers;
+        }
+
+        protected override void OnRemotePlayerLoaded(int[] loadedPlayers)
+        {
+            VRCPlayerApi[] unloadedPlayers = this.GetUnloadedPlayers(loadedPlayers);
+
+            // int total = VRCPlayerApi.GetPlayerCount();
+            // int waitingForCount = total - loadedPlayers.Length - 1;
+
+            if (unloadedPlayers.Length == 1) this.status.text = $"Waiting for {unloadedPlayers[0]}";
+            else this.status.text = $"Waiting for {unloadedPlayers.Length} players to load";
         }
 
         #endregion
