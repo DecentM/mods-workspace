@@ -100,6 +100,7 @@ namespace DecentM.VideoPlayer.Plugins
             this.SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, nameof(this.SyncUnload));
 
             this._url = null;
+            this._isPlaying = false;
             this.RequestSerialization();
         }
 

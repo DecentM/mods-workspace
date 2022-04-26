@@ -304,7 +304,7 @@ namespace DecentM.VideoPlayer.Plugins
             // int total = VRCPlayerApi.GetPlayerCount();
             // int waitingForCount = total - loadedPlayers.Length - 1;
 
-            if (unloadedPlayers.Length == 1) this.status.text = $"Waiting for {unloadedPlayers[0]}";
+            if (unloadedPlayers.Length == 1) this.status.text = $"Waiting for {unloadedPlayers[0].displayName}";
             else this.status.text = $"Waiting for {unloadedPlayers.Length} players to load";
         }
 
