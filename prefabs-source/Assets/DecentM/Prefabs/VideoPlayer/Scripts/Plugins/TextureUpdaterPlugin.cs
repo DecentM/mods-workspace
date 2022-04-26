@@ -12,14 +12,27 @@ namespace DecentM.VideoPlayer.Plugins
     {
         public Texture2D idleTexture;
 
+        public Material unityPlayerMaterial;
+        public Material avproPlayerMaterial;
+
+        private void UpdateMaterial(bool isAVPro)
+        {
+            foreach (Renderer screen in this.system.screens)
+            {
+                screen.material = isAVPro ? this.avproPlayerMaterial : this.unityPlayerMaterial;
+            }
+        }
+
         protected override void OnPlaybackStart(float duration)
         {
+            this.UpdateMaterial(this.system.currentPlayerHandler.type == VideoPlayerHandlerType.AVPro);
+
             Texture videoTexture = this.system.GetVideoTexture();
 
             foreach (Renderer screen in this.system.screens)
             {
                 screen.material.SetTexture("_MainTex", videoTexture);
-                screen.material.SetInt("_IsAVPro", System.Convert.ToInt32(this.system.currentPlayerHandler.type == VideoPlayerHandlerType.AVPro));
+                screen.material.SetTexture("_EmissionMap", videoTexture);
             }
 
             this.events.OnScreenTextureChange();
@@ -27,10 +40,12 @@ namespace DecentM.VideoPlayer.Plugins
 
         private void ShowIdleTexture()
         {
+            this.UpdateMaterial(false);
+
             foreach (Renderer screen in this.system.screens)
             {
                 screen.material.SetTexture("_MainTex", idleTexture);
-                screen.material.SetInt("_IsAVPro", 0);
+                screen.material.SetTexture("_EmissionMap", idleTexture);
             }
 
             this.events.OnScreenTextureChange();

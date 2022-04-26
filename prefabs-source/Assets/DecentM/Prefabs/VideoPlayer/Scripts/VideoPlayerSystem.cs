@@ -209,7 +209,7 @@ namespace DecentM.VideoPlayer
 
             foreach (Renderer screen in this.screens)
             {
-                screen.material.SetColor("_Color", new Color(alpha, alpha, alpha));
+                screen.material.SetColor("_EmissionColor", new Color(alpha, alpha, alpha));
             }
 
             this.events.OnBrightnessChange(alpha);
