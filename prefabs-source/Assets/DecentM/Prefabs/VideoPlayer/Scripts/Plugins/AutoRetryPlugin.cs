@@ -59,8 +59,12 @@ namespace DecentM.VideoPlayer.Plugins
                 case VideoError.RateLimited: break;
                 case VideoError.PlayerError: break;
                 // Don't retry for errors that are unlikely to be temporary
-                case VideoError.InvalidURL: return;
-                case VideoError.AccessDenied: return;
+                case VideoError.InvalidURL:
+                case VideoError.AccessDenied:
+                    this.timeoutClock = 0;
+                    this.failures = 0;
+                    this.waitingForLoad = false;
+                    return;
             }
 
             this.waitingForLoad = false;

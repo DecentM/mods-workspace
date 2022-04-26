@@ -25,6 +25,7 @@ namespace DecentM.VideoPlayer
         OnPlaybackEnd,
         OnProgress,
 
+        OnUrlValidationFailed,
         OnLoadBegin,
         OnLoadReady,
         OnLoadError,
@@ -96,6 +97,11 @@ namespace DecentM.VideoPlayer
         public void OnProgress(float timestamp, float duration)
         {
             this.BroadcastEvent(VideoPlayerEvent.OnProgress, timestamp, duration);
+        }
+
+        public void OnUrlValidationFailed(VRCUrl url)
+        {
+            this.BroadcastEvent(VideoPlayerEvent.OnUrlValidationFailed, url);
         }
 
         public void OnPlaybackEnd()

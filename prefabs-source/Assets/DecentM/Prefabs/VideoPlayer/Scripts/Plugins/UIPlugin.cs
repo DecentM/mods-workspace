@@ -115,6 +115,16 @@ namespace DecentM.VideoPlayer.Plugins
             this.urlInput.SetUrl(url);
         }
 
+        protected override void OnVideoPlayerInit()
+        {
+            this.RenderScreen(0);
+        }
+
+        protected override void OnUrlValidationFailed(VRCUrl url)
+        {
+            this.urlInput.SetUrl(this.emptyUrl);
+        }
+
         private void StoppedScreen(float duration)
         {
             this.playButton.interactable = this.selfOwned;

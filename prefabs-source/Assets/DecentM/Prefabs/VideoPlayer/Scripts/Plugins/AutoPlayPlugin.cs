@@ -9,7 +9,7 @@ using UNet;
 
 namespace DecentM.VideoPlayer.Plugins
 {
-    public class WaitForPlayersToLoadPlugin : VideoPlayerPlugin
+    public class AutoPlayPlugin : VideoPlayerPlugin
     {
         public bool autoplayOnLoad = true;
 

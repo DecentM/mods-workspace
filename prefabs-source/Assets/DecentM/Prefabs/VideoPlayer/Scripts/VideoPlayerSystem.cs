@@ -168,9 +168,24 @@ namespace DecentM.VideoPlayer
 
         private VRCUrl currentUrl;
 
+        private bool ValidateUrl(string url)
+        {
+            if (url == null || url == "") return false;
+            if (url.StartsWith("http://") || url.StartsWith("https://") || url.StartsWith("localhost")) return true;
+            if (url.Split('/').Length >= 2) return true;
+
+            return false;
+        }
+
         [PublicAPI]
         public void LoadVideo(VRCUrl url)
         {
+            if (!this.ValidateUrl(url.ToString()))
+            {
+                this.events.OnUrlValidationFailed(url);
+                return;
+            }
+
             this.events.OnLoadRequested(url);
             this.currentUrl = url;
             this.currentPlayerHandler.LoadVideo(url);

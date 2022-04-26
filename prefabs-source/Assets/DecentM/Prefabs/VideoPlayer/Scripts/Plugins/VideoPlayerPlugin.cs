@@ -26,6 +26,7 @@ namespace DecentM.VideoPlayer.Plugins
         protected virtual void OnPlaybackStop(float timestamp) { }
         protected virtual void OnPlaybackEnd() { }
         protected virtual void OnProgress(float timestamp, float duration) { }
+        protected virtual void OnUrlValidationFailed(VRCUrl url) { }
 
         protected virtual void OnLoadBegin(VRCUrl url) { }
         protected virtual void OnLoadBegin() { }
@@ -151,6 +152,13 @@ namespace DecentM.VideoPlayer.Plugins
                         float timestamp = (float)data[0];
                         float duration = (float)data[1];
                         this.OnProgress(timestamp, duration);
+                        return;
+                    }
+
+                case VideoPlayerEvent.OnUrlValidationFailed:
+                    {
+                        VRCUrl url = (VRCUrl)data[0];
+                        this.OnUrlValidationFailed(url);
                         return;
                     }
 
