@@ -42,6 +42,8 @@ namespace DecentM.VideoPlayer
         OnOwnershipRequested,
 
         OnRemotePlayerLoaded,
+
+        OnUIVisibilityChange,
     }
 
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
@@ -193,6 +195,15 @@ namespace DecentM.VideoPlayer
         public void OnRemotePlayerLoaded(int[] loadedPlayers)
         {
             this.BroadcastEvent(VideoPlayerEvent.OnRemotePlayerLoaded, loadedPlayers);
+        }
+
+        #endregion
+
+        #region UI plugin
+
+        public void OnUIVisibilityChange(bool visible)
+        {
+            this.BroadcastEvent(VideoPlayerEvent.OnUIVisibilityChange, visible);
         }
 
         #endregion

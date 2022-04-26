@@ -52,5 +52,6 @@ namespace DecentM.VideoPlayer.Plugins
         protected override void OnScreenTextureChange() { this.Log(nameof(OnScreenTextureChange)); }
         protected override void OnRemotePlayerLoaded(int[] loadedPlayers) { this.Log(nameof(OnRemotePlayerLoaded), loadedPlayers.Length.ToString()); }
         protected override void OnUrlValidationFailed(VRCUrl url) { this.Log(nameof(OnUrlValidationFailed), "(with URL)"); }
+        protected override void OnUIVisibilityChange(bool visible) { this.Log(nameof(OnUIVisibilityChange), visible.ToString()); }
     }
 }

@@ -46,6 +46,8 @@ namespace DecentM.VideoPlayer.Plugins
 
         protected virtual void OnRemotePlayerLoaded(int[] loadedPlayers) { }
 
+        protected virtual void OnUIVisibilityChange(bool visible) { }
+
         protected sealed override void OnPubsubEvent(object name, object[] data)
         {
             switch (name)
@@ -235,6 +237,13 @@ namespace DecentM.VideoPlayer.Plugins
                     {
                         int[] loadedPlayers = (int[])data[0];
                         this.OnRemotePlayerLoaded(loadedPlayers);
+                        return;
+                    }
+
+                case VideoPlayerEvent.OnUIVisibilityChange:
+                    {
+                        bool visible = (bool)data[0];
+                        this.OnUIVisibilityChange(visible);
                         return;
                     }
 

@@ -12,6 +12,14 @@ namespace DecentM.VideoPlayer.Plugins
 {
     public sealed class UIPlugin : VideoPlayerPlugin
     {
+        [Space]
+        public LayerMask raycastLayerMask;
+        public float raycastIntervalSeconds = 0.5f;
+        public float raycastMaxDistance = 2f;
+        public Animator animator;
+        public GameObject raycastTarget;
+
+        [Space]
         public Slider progress;
 
         [Space]
@@ -68,6 +76,71 @@ namespace DecentM.VideoPlayer.Plugins
 
             return $"{this.HumanReadableTimestamp(timestamp)} / {this.HumanReadableTimestamp(duration)}";
         }
+
+        #region Focus handling
+
+        private float elapsed = 0;
+
+        private RaycastHit hitInfo;
+
+        private bool CheckDesktopHit()
+        {
+            if (Networking.LocalPlayer.IsUserInVR()) return false;
+
+            VRCPlayerApi.TrackingData head = Networking.LocalPlayer.GetTrackingData(VRCPlayerApi.TrackingDataType.Head);
+
+            return Physics.Raycast(head.position, head.rotation * Vector3.forward, out hitInfo, this.raycastMaxDistance, this.raycastLayerMask);
+        }
+
+        private bool CheckVRHit()
+        {
+            if (!Networking.LocalPlayer.IsUserInVR()) return false;
+
+            VRCPlayerApi.TrackingData rightHand = Networking.LocalPlayer.GetTrackingData(VRCPlayerApi.TrackingDataType.RightHand);
+            VRCPlayerApi.TrackingData leftHand = Networking.LocalPlayer.GetTrackingData(VRCPlayerApi.TrackingDataType.LeftHand);
+
+            RaycastHit rightHitInfo;
+            RaycastHit leftHitInfo;
+
+            bool rightHit = Physics.Raycast(rightHand.position, rightHand.rotation * Vector3.forward, out rightHitInfo, this.raycastMaxDistance, this.raycastLayerMask);
+            bool leftHit = Physics.Raycast(leftHand.position, leftHand.rotation * Vector3.forward, out leftHitInfo, this.raycastMaxDistance, this.raycastLayerMask);
+
+            if (rightHit)
+            {
+                this.hitInfo = rightHitInfo;
+                return true;
+            }
+
+            if (leftHit)
+            {
+                this.hitInfo = leftHitInfo;
+                return true;
+            }
+
+            return false;
+        }
+
+        private void FixedUpdate()
+        {
+            this.elapsed += Time.fixedUnscaledDeltaTime;
+            if (this.elapsed < this.raycastIntervalSeconds) return;
+            this.elapsed = 0;
+
+            if (Networking.LocalPlayer == null || !Networking.LocalPlayer.IsValid()) return;
+
+            bool desktopHit = this.CheckDesktopHit();
+            bool vrHit = this.CheckVRHit();
+            
+            bool uiShown = (desktopHit || vrHit) && hitInfo.transform.gameObject == this.raycastTarget;
+            bool shown = this.animator.GetBool("ShowControls");
+
+            if (uiShown == shown) return;
+
+            this.animator.SetBool("ShowControls", uiShown);
+            this.events.OnUIVisibilityChange(uiShown);
+        }
+
+        #endregion
 
         #region Outputs
 
