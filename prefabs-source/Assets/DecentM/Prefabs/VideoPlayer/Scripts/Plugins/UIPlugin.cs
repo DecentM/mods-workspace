@@ -302,7 +302,7 @@ namespace DecentM.VideoPlayer.Plugins
             }
         }
 
-        private bool selfOwned = false;
+        private bool selfOwned = true;
 
         protected override void OnOwnershipChanged(int previousOwnerId, VRCPlayerApi nextOwner)
         {
