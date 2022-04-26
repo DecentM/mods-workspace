@@ -50,5 +50,6 @@ namespace DecentM.VideoPlayer.Plugins
         protected override void OnOwnershipRequested() { this.Log(nameof(OnOwnershipRequested)); }
         protected override void OnOwnershipSecurityChanged(bool locked) { this.Log(nameof(OnOwnershipSecurityChanged), locked.ToString()); }
         protected override void OnScreenTextureChange() { this.Log(nameof(OnScreenTextureChange)); }
+        protected override void OnRemotePlayerLoaded(int[] loadedPlayers) { this.Log(nameof(OnRemotePlayerLoaded), loadedPlayers.Length.ToString()); }
     }
 }

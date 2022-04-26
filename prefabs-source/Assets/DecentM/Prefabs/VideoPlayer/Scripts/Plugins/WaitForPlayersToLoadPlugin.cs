@@ -11,6 +11,8 @@ namespace DecentM.VideoPlayer.Plugins
 {
     public class WaitForPlayersToLoadPlugin : VideoPlayerPlugin
     {
+        public bool autoplayOnLoad = true;
+
         public NetworkInterface unet;
         public ByteBufferReader reader;
         public ByteBufferWriter writer;
@@ -76,6 +78,8 @@ namespace DecentM.VideoPlayer.Plugins
         // Everyone except the owner does this, because then owner already knows when it finishes loading
         protected override void OnLoadReady(float duration)
         {
+            if (VRCPlayerApi.GetPlayerCount() == 1 && this.autoplayOnLoad) this.system.StartPlayback();
+
             if (Networking.LocalPlayer.playerId == this.ownerId) return;
 
             this.SendCommandTarget(true, VideoLoadedCommand, this.ownerId, "");
@@ -110,7 +114,7 @@ namespace DecentM.VideoPlayer.Plugins
 
             this.events.OnRemotePlayerLoaded(this.loadedPlayers);
 
-            if (this.loadedPlayers.Length >= VRCPlayerApi.GetPlayerCount() - 1)
+            if (this.loadedPlayers.Length >= VRCPlayerApi.GetPlayerCount() - 1 && this.autoplayOnLoad)
             {
                 this.system.StartPlayback();
             }

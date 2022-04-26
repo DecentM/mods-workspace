@@ -25361,6 +25361,7 @@ MonoBehaviour:
   - {fileID: 4126593572874703668}
   system: {fileID: 4126593572484124197}
   events: {fileID: 4126593572874703668}
+  autoplayOnLoad: 1
   unet: {fileID: 543980873}
   reader: {fileID: 319325321}
   writer: {fileID: 319325323}
