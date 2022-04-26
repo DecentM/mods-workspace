@@ -15,6 +15,9 @@ namespace DecentM.VideoPlayer
         public Renderer[] screens;
 
         public int fps = 30;
+        public bool muted = false;
+        public float volume = 1.0f;
+        public float brightness = 1.0f;
         public int minFps = 1;
         public int maxFps = 144;
 
@@ -35,9 +38,9 @@ namespace DecentM.VideoPlayer
             this.DisableAllPlayers();
             this.EnablePlayer(0);
             this.SetFps(this.fps);
-            this.SetMuted(false);
-            this.SetVolume(1);
-            this.SetBrightness(1);
+            this.SetMuted(this.muted);
+            this.SetVolume(this.volume);
+            this.SetBrightness(this.brightness);
             this.PausePlayback();
             this.Seek(0);
             this.events.OnVideoPlayerInit();
@@ -189,6 +192,17 @@ namespace DecentM.VideoPlayer
         }
 
         [PublicAPI]
+        public float GetBrightness()
+        {
+            if (this.screens.Length == 0) return 1f;
+
+            Renderer screen = this.screens[0];
+            Color color = screen.material.GetColor("_Color");
+
+            return (color.r + color.g + color.b) / 3;
+        }
+
+        [PublicAPI]
         public bool SetBrightness(float alpha)
         {
             if (alpha < 0 || alpha > 1) return false;
@@ -203,8 +217,6 @@ namespace DecentM.VideoPlayer
             return true;
         }
 
-        private float currentVolume = 1;
-
         [PublicAPI]
         public bool SetVolume(float volume)
         {
@@ -215,8 +227,8 @@ namespace DecentM.VideoPlayer
                 speaker.volume = volume;
             }
 
-            this.currentVolume = volume;
-            this.events.OnVolumeChange(volume, this.currentMuted);
+            this.volume = volume;
+            this.events.OnVolumeChange(volume, this.muted);
 
             return true;
         }
@@ -224,27 +236,25 @@ namespace DecentM.VideoPlayer
         [PublicAPI]
         public float GetVolume()
         {
-            return this.currentVolume;
+            return this.volume;
         }
-
-        private bool currentMuted = false;
 
         [PublicAPI]
         public void SetMuted(bool muted)
         {
             foreach (AudioSource speaker in this.speakers)
             {
-                speaker.volume = muted ? 0 : this.currentVolume;
+                speaker.volume = muted ? 0 : this.volume;
             }
 
-            this.currentMuted = muted;
-            this.events.OnMutedChange(muted, this.currentVolume);
+            this.muted = muted;
+            this.events.OnMutedChange(muted, this.volume);
         }
 
         [PublicAPI]
         public bool GetMuted()
         {
-            return this.currentMuted;
+            return this.muted;
         }
 
         [PublicAPI]

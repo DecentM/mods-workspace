@@ -14,7 +14,7 @@ namespace DecentM.VideoPlayer.Plugins
 
         string[] logs = new string[40];
 
-        private void Log(params string[] messages)
+        public void Log(params string[] messages)
         {
             string[] tmp = new string[logs.Length];
             Array.Copy(logs, 1, tmp, 0, this.logs.Length - 1);
@@ -24,6 +24,8 @@ namespace DecentM.VideoPlayer.Plugins
             this.gui.text = String.Join("\n", this.logs);
         }
 
+        protected override void _Start() { this.Log(nameof(_Start)); }
+        protected override void OnDebugLog(string message) { this.Log(message); }
         protected override void OnVideoPlayerInit() { this.Log(nameof(OnVideoPlayerInit)); }
         protected override void OnPlaybackEnd() { this.Log(nameof(OnPlaybackEnd)); }
         protected override void OnLoadReady(float duration) { this.Log(nameof(OnLoadReady), duration.ToString()); }
@@ -44,5 +46,9 @@ namespace DecentM.VideoPlayer.Plugins
         protected override void OnFpsChange(int fps) { this.Log(nameof(OnFpsChange), fps.ToString()); }
         protected override void OnScreenResolutionChange(Renderer screen, float width, float height) { this.Log(nameof(OnScreenResolutionChange), screen.name, width.ToString(), height.ToString()); }
         protected override void OnLoadRequested(VRCUrl url) { this.Log(nameof(OnLoadRequested), "(with URL)"); }
+        protected override void OnOwnershipChanged(int previousOwnerId, VRCPlayerApi nextOwner) { this.Log(nameof(OnOwnershipChanged), previousOwnerId.ToString(), nextOwner.playerId.ToString()); }
+        protected override void OnOwnershipRequested() { this.Log(nameof(OnOwnershipRequested)); }
+        protected override void OnOwnershipSecurityChanged(bool locked) { this.Log(nameof(OnOwnershipSecurityChanged), locked.ToString()); }
+        protected override void OnScreenTextureChange() { this.Log(nameof(OnScreenTextureChange)); }
     }
 }

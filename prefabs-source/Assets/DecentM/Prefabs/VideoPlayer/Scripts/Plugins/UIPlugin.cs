@@ -43,6 +43,13 @@ namespace DecentM.VideoPlayer.Plugins
         public TextMeshProUGUI info;
 
         [Space]
+        public Button ownershipButton;
+        public TextMeshProUGUI ownershipLabel;
+        public Sprite lockIcon;
+        public Sprite unlockIcon;
+        public Sprite ownershipTransferIcon;
+
+        [Space]
         public VRCUrl emptyUrl;
 
         private string HumanReadableTimestamp(float timestamp)
@@ -231,6 +238,30 @@ namespace DecentM.VideoPlayer.Plugins
             }
         }
 
+        private bool selfOwned = false;
+
+        protected override void OnOwnershipChanged(int previousOwnerId, VRCPlayerApi nextOwner)
+        {
+            if (nextOwner == null || !nextOwner.IsValid()) return;
+
+            if (nextOwner != Networking.LocalPlayer) this.ownershipButton.image.sprite = this.ownershipTransferIcon;
+            else if (this.ownershipLocked) this.ownershipButton.image.sprite = this.lockIcon;
+            else this.ownershipButton.image.sprite = this.unlockIcon;
+
+            this.selfOwned = nextOwner == Networking.LocalPlayer;
+
+            this.ownershipLabel.text = nextOwner.displayName;
+        }
+
+        private bool ownershipLocked = false;
+
+        protected override void OnOwnershipSecurityChanged(bool locked)
+        {
+            this.ownershipLocked = locked;
+            
+            this.ownershipButton.image.sprite = locked ? this.lockIcon : this.unlockIcon;
+        }
+
         #endregion
 
         #region Inputs
@@ -252,11 +283,21 @@ namespace DecentM.VideoPlayer.Plugins
 
         public void OnBrightnessSlider()
         {
+            float brightness = this.system.GetBrightness();
+
+            // Ignore duplicate values
+            if (this.brightnessSlider.value == brightness) return;
+
             this.system.SetBrightness(this.brightnessSlider.value);
         }
 
         public void OnVolumeSlider()
         {
+            float volume = this.system.GetVolume();
+
+            // Ignore duplicate values
+            if (this.volumeSlider.value == volume) return;
+
             this.system.SetVolume(this.volumeSlider.value);
         }
 
@@ -273,6 +314,17 @@ namespace DecentM.VideoPlayer.Plugins
         public void OnUrlInput()
         {
             this.system.LoadVideo(this.urlInput.GetUrl());
+        }
+
+        public void OnOwnershipButton()
+        {
+            if (selfOwned)
+            {
+                this.events.OnOwnershipSecurityChanged(!this.ownershipLocked);
+            } else
+            {
+                this.events.OnOwnershipRequested();
+            }
         }
 
         #endregion

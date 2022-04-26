@@ -10,12 +10,15 @@ namespace DecentM.VideoPlayer
 {
     public enum VideoPlayerEvent
     {
+        OnDebugLog,
+
         OnVideoPlayerInit,
         OnBrightnessChange,
         OnVolumeChange,
         OnMutedChange,
         OnFpsChange,
         OnScreenResolutionChange,
+        OnScreenTextureChange,
 
         OnPlaybackStart,
         OnPlaybackStop,
@@ -32,12 +35,21 @@ namespace DecentM.VideoPlayer
         OnAutoRetrySwitchPlayer,
         OnAutoRetryLoadTimeout,
         OnAutoRetryAbort,
+
+        OnOwnershipChanged,
+        OnOwnershipSecurityChanged,
+        OnOwnershipRequested,
     }
 
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public sealed class VideoPlayerEvents : PubsubHost
     {
         #region Core
+
+        public void OnDebugLog(string message)
+        {
+            this.BroadcastEvent(VideoPlayerEvent.OnDebugLog, message);
+        }
 
         public void OnVideoPlayerInit()
         {
@@ -136,6 +148,34 @@ namespace DecentM.VideoPlayer
         public void OnAutoRetryAbort()
         {
             this.BroadcastEvent(VideoPlayerEvent.OnAutoRetryAbort);
+        }
+
+        #endregion
+
+        #region Global Sync plugin
+
+        public void OnOwnershipChanged(int previousOwnerId, VRCPlayerApi nextOwner)
+        {
+            this.BroadcastEvent(VideoPlayerEvent.OnOwnershipChanged, previousOwnerId, nextOwner);
+        }
+
+        public void OnOwnershipSecurityChanged(bool locked)
+        {
+            this.BroadcastEvent(VideoPlayerEvent.OnOwnershipSecurityChanged, locked);
+        }
+
+        public void OnOwnershipRequested()
+        {
+            this.BroadcastEvent(VideoPlayerEvent.OnOwnershipRequested);
+        }
+
+        #endregion
+
+        #region Texture Updater plugin
+
+        public void OnScreenTextureChange()
+        {
+            this.BroadcastEvent(VideoPlayerEvent.OnScreenTextureChange);
         }
 
         #endregion

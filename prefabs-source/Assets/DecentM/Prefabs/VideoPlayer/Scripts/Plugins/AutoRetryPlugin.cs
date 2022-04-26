@@ -36,6 +36,7 @@ namespace DecentM.VideoPlayer.Plugins
             if (url == null)
             {
                 this.events.OnAutoRetryAbort();
+                this.system.UnloadVideo();
                 return;
             }
 

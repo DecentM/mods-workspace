@@ -11,29 +11,20 @@ namespace DecentM.VideoPlayer.Plugins
     {
         public VideoPlaylist playlist;
 
-        private VRCUrl nextUrl;
-
         protected override void OnVideoPlayerInit()
         {
-            this.nextUrl = this.playlist.GetCurrentUrl();
+            VRCUrl nextUrl = this.playlist.GetCurrentUrl();
             if (nextUrl == null) return;
 
-            this.system.LoadVideo(this.nextUrl);
+            this.system.LoadVideo(nextUrl);
         }
 
         protected override void OnPlaybackEnd()
         {
-            this.nextUrl = this.playlist.Next();
+            VRCUrl nextUrl = this.playlist.Next();
             if (nextUrl == null) return;
 
-            this.system.LoadVideo(this.nextUrl);
-        }
-
-        protected override void OnLoadReady(float duration)
-        {
-            if (this.system.GetCurrentUrl() != this.nextUrl) return;
-
-            this.system.StartPlayback();
+            this.system.LoadVideo(nextUrl);
         }
     }
 }

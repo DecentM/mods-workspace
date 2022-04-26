@@ -12,12 +12,15 @@ namespace DecentM.VideoPlayer.Plugins
         public VideoPlayerSystem system;
         public VideoPlayerEvents events;
 
+        protected virtual void OnDebugLog(string message) { }
+
         protected virtual void OnVideoPlayerInit() { }
         protected virtual void OnBrightnessChange(float alpha) { }
         protected virtual void OnVolumeChange(float volume, bool muted) { }
         protected virtual void OnMutedChange(bool muted, float volume) { }
         protected virtual void OnFpsChange(int fps) { }
         protected virtual void OnScreenResolutionChange(Renderer screen, float width, float height) { }
+        protected virtual void OnScreenTextureChange() { }
 
         protected virtual void OnPlaybackStart(float timestamp) { }
         protected virtual void OnPlaybackStop(float timestamp) { }
@@ -36,11 +39,22 @@ namespace DecentM.VideoPlayer.Plugins
         protected virtual void OnAutoRetryLoadTimeout() { }
         protected virtual void OnAutoRetryAbort() { }
 
+        protected virtual void OnOwnershipChanged(int previousOwnerId, VRCPlayerApi nextOwner) { }
+        protected virtual void OnOwnershipSecurityChanged(bool locked) { }
+        protected virtual void OnOwnershipRequested() { }
+
         protected sealed override void OnPubsubEvent(object name, object[] data)
         {
             switch (name)
             {
                 #region Core
+
+                case VideoPlayerEvent.OnDebugLog:
+                    {
+                        string message = (string)data[0];
+                        this.OnDebugLog(message);
+                        return;
+                    }
 
                 case VideoPlayerEvent.OnLoadRequested:
                     {
@@ -178,6 +192,36 @@ namespace DecentM.VideoPlayer.Plugins
                         this.OnAutoRetryAbort();
                         return;
                     }
+
+                case VideoPlayerEvent.OnOwnershipChanged:
+                    {
+                        int previousOwnerId = (int)data[0];
+                        VRCPlayerApi nextOwner = (VRCPlayerApi)data[1];
+                        this.OnOwnershipChanged(previousOwnerId, nextOwner);
+                        return;
+                    }
+
+                case VideoPlayerEvent.OnOwnershipSecurityChanged:
+                    {
+                        bool locked = (bool)data[0];
+                        this.OnOwnershipSecurityChanged(locked);
+                        return;
+                    }
+
+                case VideoPlayerEvent.OnOwnershipRequested:
+                    {
+                        this.OnOwnershipRequested();
+                        return;
+                    }
+
+                case VideoPlayerEvent.OnScreenTextureChange:
+                    {
+                        this.OnScreenTextureChange();
+                        return;
+                    }
+
+                default:
+                    break;
 
                     #endregion
             }

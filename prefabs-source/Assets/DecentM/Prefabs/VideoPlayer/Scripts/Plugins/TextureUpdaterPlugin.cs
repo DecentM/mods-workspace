@@ -21,6 +21,8 @@ namespace DecentM.VideoPlayer.Plugins
                 screen.material.SetTexture("_MainTex", videoTexture);
                 screen.material.SetInt("_IsAVPro", System.Convert.ToInt32(this.system.currentPlayerHandler.type == VideoPlayerHandlerType.AVPro));
             }
+
+            this.events.OnScreenTextureChange();
         }
 
         private void ShowIdleTexture()
@@ -30,6 +32,8 @@ namespace DecentM.VideoPlayer.Plugins
                 screen.material.SetTexture("_MainTex", idleTexture);
                 screen.material.SetInt("_IsAVPro", 0);
             }
+
+            this.events.OnScreenTextureChange();
         }
 
         protected override void OnVideoPlayerInit()
