@@ -110,22 +110,28 @@ namespace DecentM.VideoPlayer.Plugins
 
         private void StoppedScreen(float duration)
         {
-            this.playButton.interactable = true;
+            this.playButton.interactable = this.selfOwned;
             this.pauseButton.interactable = false;
             this.stopButton.interactable = false;
-            this.urlInput.gameObject.SetActive(true);
-            this.enterButton.gameObject.SetActive(true);
+            this.progress.interactable = this.selfOwned;
+
+            this.urlInput.gameObject.SetActive(this.selfOwned);
+            this.enterButton.gameObject.SetActive(this.selfOwned);
+
             this.status.gameObject.SetActive(true);
             this.progress.gameObject.SetActive(false);
         }
 
         private void PausedScreen(float duration)
         {
-            this.playButton.interactable = true;
+            this.playButton.interactable = this.selfOwned;
             this.pauseButton.interactable = false;
-            this.stopButton.interactable = true;
+            this.stopButton.interactable = this.selfOwned;
+            this.progress.interactable = this.selfOwned;
+
             this.urlInput.gameObject.SetActive(false);
             this.enterButton.gameObject.SetActive(false);
+
             this.status.gameObject.SetActive(true);
             this.progress.gameObject.SetActive(!float.IsInfinity(duration));
         }
@@ -133,18 +139,38 @@ namespace DecentM.VideoPlayer.Plugins
         private void PlayingScreen(float duration)
         {
             this.playButton.interactable = false;
-            this.pauseButton.interactable = true;
-            this.stopButton.interactable = true;
+            this.pauseButton.interactable = this.selfOwned;
+            this.stopButton.interactable = this.selfOwned;
+            this.progress.interactable = this.selfOwned;
+
             this.urlInput.gameObject.SetActive(false);
             this.enterButton.gameObject.SetActive(false);
+
             this.status.gameObject.SetActive(true);
             this.progress.gameObject.SetActive(!float.IsInfinity(duration));
         }
 
+        private void RenderScreen(float duration)
+        {
+            if (this.system.IsPlaying())
+            {
+                this.PlayingScreen(duration);
+                return;
+            }
+
+            if (this.system.GetCurrentUrl() == null)
+            {
+                this.StoppedScreen(duration);
+                return;
+            }
+
+            this.PausedScreen(duration);
+        }
+
         protected override void OnLoadReady(float duration)
         {
-            this.status.text = "Loaded, press play to begin";
-            this.PausedScreen(duration);
+            this.status.text = this.selfOwned ? "Loaded, press play to begin" : "Loaded, waiting for owner to start";
+            this.RenderScreen(duration);
         }
 
         protected override void OnLoadError(VideoError videoError)
@@ -202,31 +228,31 @@ namespace DecentM.VideoPlayer.Plugins
         protected override void OnPlaybackEnd()
         {
             this.status.text = "Playback ended";
-            this.StoppedScreen(this.system.GetDuration());
+            this.RenderScreen(this.system.GetDuration());
         }
 
         protected override void OnPlaybackStart(float timestamp)
         {
             this.status.text = "Playing...";
-            this.PlayingScreen(this.system.GetDuration());
+            this.RenderScreen(this.system.GetDuration());
         }
 
         protected override void OnPlaybackStop(float timestamp)
         {
             this.status.text = $"Paused - {this.GetProgressIndicator(timestamp, this.system.GetDuration())}";
-            this.PausedScreen(this.system.GetDuration());
+            this.RenderScreen(this.system.GetDuration());
         }
 
         protected override void OnUnload()
         {
             this.status.text = "Stopped";
-            this.StoppedScreen(this.system.GetDuration());
+            this.RenderScreen(this.system.GetDuration());
             this.urlInput.SetUrl(this.emptyUrl);
         }
 
         protected override void OnScreenResolutionChange(Renderer screen, float width, float height)
         {
-            if (width / height != 1920f / 1080f)
+            if (width / height != 16f / 9f)
             {
                 this.info.text = $"{width}x{height}";
             } else
@@ -248,6 +274,8 @@ namespace DecentM.VideoPlayer.Plugins
             this.selfOwned = nextOwner == Networking.LocalPlayer;
 
             this.ownershipLabel.text = nextOwner.displayName;
+
+            this.RenderScreen(this.system.GetDuration());
         }
 
         private bool ownershipLocked = false;
@@ -301,11 +329,8 @@ namespace DecentM.VideoPlayer.Plugins
         {
             VRCPlayerApi[] unloadedPlayers = this.GetUnloadedPlayers(loadedPlayers);
 
-            // int total = VRCPlayerApi.GetPlayerCount();
-            // int waitingForCount = total - loadedPlayers.Length - 1;
-
-            if (unloadedPlayers.Length == 1) this.status.text = $"Waiting for {unloadedPlayers[0].displayName}";
-            else this.status.text = $"Waiting for {unloadedPlayers.Length} players to load";
+            if (unloadedPlayers.Length == 1) this.status.text = $"Waiting for {unloadedPlayers[0].displayName}...";
+            else this.status.text = $"Waiting for {unloadedPlayers.Length} players...";
         }
 
         #endregion
