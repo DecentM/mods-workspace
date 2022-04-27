@@ -3,6 +3,7 @@ using UdonSharp;
 
 namespace DecentM.Pubsub
 {
+    [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public abstract class PubsubHost : UdonSharpBehaviour
     {
         private PubsubSubscriber[] subscribers;
