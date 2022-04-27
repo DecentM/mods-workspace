@@ -27,6 +27,8 @@ namespace DecentM.Metrics.Plugins
 
         private void FixedUpdate()
         {
+            if (Networking.LocalPlayer == null || !Networking.LocalPlayer.IsValid()) return;
+
             this.elapsed += Time.fixedUnscaledDeltaTime;
             if (this.elapsed <= this.reportingIntervalSeconds) return;
             this.elapsed = 0;

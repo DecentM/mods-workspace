@@ -9,26 +9,20 @@ namespace DecentM.Metrics
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class URLStore : UdonSharpBehaviour
     {
-        public VRCUrl[] playerCountUrls;
-        public VRCUrl respawnUrl;
-        public VRCUrl heartbeatUrl;
+        // item structure:
+        // 0 - object[] { Metric metric, string value }
+        // 1 - VRCUrl url
+        public object[][] urls;
+
+        public VRCUrl[] debugUrls;
 
         public VRCUrl GetPlayerCountUrl(int count)
         {
-            if (count < 0 || count >= playerCountUrls.Length) return null;
-
-            return playerCountUrls[count];
+            return null;
         }
 
         public VRCUrl GetMetricUrl(Metric metric)
         {
-            switch (metric)
-            {
-                case Metric.Respawn: return respawnUrl;
-                case Metric.Heartbeat: return heartbeatUrl;
-                case Metric.PlayerCount: return this.GetPlayerCountUrl(VRCPlayerApi.GetPlayerCount());
-            }
-
             return null;
         }
     }
