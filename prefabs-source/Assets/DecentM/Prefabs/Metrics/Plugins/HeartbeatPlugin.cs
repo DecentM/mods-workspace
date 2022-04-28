@@ -19,12 +19,12 @@ namespace DecentM.Metrics.Plugins
     {
         public int reportingIntervalSeconds = 60;
 
-        private float elapsed = 0;
-        private bool initialised = false;
+        public float elapsed = 0;
+        public bool initialised = false;
 
         private void DoHeartbeat()
         {
-            VRCUrl url = this.urlStore.GetHeartbeatUrl(Networking.LocalPlayer.isMaster, Networking.LocalPlayer.IsUserInVR(), false, 1, "index");
+            VRCUrl url = this.urlStore.GetHeartbeatUrl(Networking.LocalPlayer.isMaster, Networking.LocalPlayer.IsUserInVR(), false, 1, VrPlatform.Index);
             if (url == null) return;
 
             this.system.RecordMetric(url, Metric.Heartbeat);

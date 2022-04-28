@@ -235,9 +235,7 @@ namespace DecentM.Metrics
             if (currentItem == null) return;
 
             this.locked = false;
-            VRCUrl url = (VRCUrl)currentItem[0];
             int attempts = (int)currentItem[1];
-            Metric metric = (Metric)currentItem[2];
 
             // Delivery failed, need to retry
 

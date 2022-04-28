@@ -3,6 +3,7 @@ using UdonSharp;
 using UnityEngine;
 using VRC.SDKBase;
 using VRC.Udon;
+using DecentM.Metrics.Plugins;
 
 namespace DecentM.Metrics
 {
@@ -71,7 +72,7 @@ namespace DecentM.Metrics
             );
         }
 
-        public VRCUrl GetHeartbeatUrl(bool isMaster, bool isVr, bool isFbt, int timezone, string vrPlatform)
+        public VRCUrl GetHeartbeatUrl(bool isMaster, bool isVr, bool isFbt, int timezone, VrPlatform vrPlatform)
         {
             return this.GetMetricUrl(Metric.Heartbeat, new object[][]
                 {
