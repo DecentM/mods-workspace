@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+using UnityEditor;
+
 namespace DecentM.Metrics
 {
     public class InstanceIdGenerator

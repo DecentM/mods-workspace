@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEditor;
 using System.Collections.Generic;
 using UdonSharp;
 using DecentM.EditorTools;
 using VRC.SDKBase;
 using DecentM.Metrics.Plugins;
+using VRC.SDKBase.Editor.BuildPipeline;
 
 namespace DecentM.Metrics
 {
@@ -114,15 +116,11 @@ namespace DecentM.Metrics
     }
 
     [CustomEditor(typeof(MetricsUI))]
-    public class MetricsUIInspector : DEditor
+    public class MetricsUIInspector : DEditor, IVRCSDKBuildRequestedCallback
     {
         MetricsUI ui;
         URLStore urlStore;
         InstancePlugin instancePlugin;
-
-        private string metricsServerBaseUrl = "http://localhost:3000";
-        private int worldCapacity = 64;
-        private int instanceCapacity = 64;
 
         private Dictionary<Metric, List<MetricValue>> GenerateMatrix()
         {
@@ -140,7 +138,7 @@ namespace DecentM.Metrics
 
             List<MetricValue> instanceValues = new List<MetricValue>();
             instanceValues.Add(new StringMetricValue("instanceId", instancePlugin.instanceIds));
-            instanceValues.Add(new IntRangeMetricValue("playerCount", 1, this.worldCapacity));
+            instanceValues.Add(new IntRangeMetricValue("playerCount", 1, this.ui.worldCapacity));
             matrix.Add(Metric.Instance, instanceValues);
 
             /*
@@ -153,7 +151,7 @@ namespace DecentM.Metrics
 
         private void FillInstanceIds()
         {
-            List<string> instanceIds = InstanceIdGenerator.GenerateInstanceIds(this.instanceCapacity, 4);
+            List<string> instanceIds = InstanceIdGenerator.GenerateInstanceIds(this.ui.instanceCapacity, 4);
             this.instancePlugin.instanceIds = instanceIds.ToArray();
         }
 
@@ -163,28 +161,77 @@ namespace DecentM.Metrics
             this.urlStore = this.ui.GetComponentInChildren<URLStore>();
             this.instancePlugin = this.ui.GetComponentInChildren<InstancePlugin>();
 
-            this.metricsServerBaseUrl = EditorGUILayout.TextField("Metrics server base URL:", this.metricsServerBaseUrl);
-            this.worldCapacity = EditorGUILayout.IntField("World capacity", this.worldCapacity);
-            this.instanceCapacity = EditorGUILayout.IntField("Instance capacity", this.instanceCapacity);
+            this.ui.metricsServerBaseUrl = EditorGUILayout.TextField("Metrics server base URL:", this.ui.metricsServerBaseUrl);
+            this.ui.worldCapacity = EditorGUILayout.IntField("World capacity", this.ui.worldCapacity);
+            this.ui.instanceCapacity = EditorGUILayout.IntField("Instance capacity", this.ui.instanceCapacity);
 
             if (this.urlStore != null && this.Button("Save"))
             {
+                this.UpdateWorldVersion();
                 this.SaveUrls();
             }
         }
 
+        public int callbackOrder => 7;
+
+        private void UpdateWorldVersion()
+        {
+            this.ui.worldVersion = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds().ToString();
+        }
+
+        public bool OnBuildRequested(VRCSDKRequestedBuildType requestedBuildType)
+        {
+            if (requestedBuildType != VRCSDKRequestedBuildType.Scene) return true;
+
+            Scene scene = SceneManager.GetActiveScene();
+
+            foreach (GameObject root in scene.GetRootGameObjects())
+            {
+                this.ui = root.GetComponentInChildren<MetricsUI>();
+                if (this.ui != null) break;
+            }
+
+            foreach (GameObject root in scene.GetRootGameObjects())
+            {
+                this.urlStore = root.GetComponentInChildren<URLStore>();
+                if (this.urlStore != null) break;
+            }
+
+            foreach (GameObject root in scene.GetRootGameObjects())
+            {
+                this.instancePlugin = root.GetComponentInChildren<InstancePlugin>();
+                if (this.instancePlugin != null) break;
+            }
+
+            if (this.ui == null)
+            {
+                Debug.LogError("[DecentM.Metrics] Could not find metrics object in your scene - did you place the prefab in your world?");
+                return false;
+            }
+
+            this.UpdateWorldVersion();
+
+            if (this.urlStore == null)
+            {
+                Debug.LogError("[DecentM.Metrics] Could not find a URL store object in your scene - did you place the metrics prefab in your world?");
+                return false;
+            }
+
+            this.SaveUrls();
+
+            return true;
+        }
+
         private VRCUrl MakeUrl(string metricName, Dictionary<string, string> metricData)
         {
-            string query = "?";
+            string query = $"?worldVersion={this.ui.worldVersion}";
 
             foreach (KeyValuePair<string, string> kvp in metricData)
             {
-                query += $"{kvp.Key}={kvp.Value}&";
+                query += $"&{kvp.Key}={kvp.Value}";
             }
 
-            if (query == "?") return new VRCUrl($"{this.metricsServerBaseUrl}/api/v1/metrics/ingest/{metricName}");
-
-            return new VRCUrl($"{this.metricsServerBaseUrl}/api/v1/metrics/ingest/{metricName}{query}");
+            return new VRCUrl($"{this.ui.metricsServerBaseUrl}/api/v1/metrics/ingest/{metricName}{query}");
         }
 
         private int progress = 0;
@@ -278,7 +325,7 @@ namespace DecentM.Metrics
                         vrcParams.Add(new object[] { value.name, value.value });
                     }
 
-                    object[] data = new object[] { kvp.Key, vrcParams.ToArray() };
+                    object[] data = new object[] { (int)kvp.Key, vrcParams.ToArray() };
                     object[] item = new object[] { data, this.MakeUrl(kvp.Key.ToString(), urlParams) };
 
                     urls.Add(item);
