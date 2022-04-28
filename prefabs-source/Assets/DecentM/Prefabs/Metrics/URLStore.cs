@@ -72,15 +72,13 @@ namespace DecentM.Metrics
             );
         }
 
-        public VRCUrl GetHeartbeatUrl(bool isMaster, bool isVr, bool isFbt, int timezone, VrPlatform vrPlatform)
+        public VRCUrl GetHeartbeatUrl(bool isMaster, bool isVr, int timezone)
         {
             return this.GetMetricUrl(Metric.Heartbeat, new object[][]
                 {
                     new object[] { "isMaster", isMaster.ToString() },
                     new object[] { "isVr", isVr.ToString() },
-                    new object[] { "isFbt", isFbt.ToString() },
                     new object[] { "timezone", timezone.ToString() },
-                    new object[] { "vrPlatform", vrPlatform },
                 }
             );
         }

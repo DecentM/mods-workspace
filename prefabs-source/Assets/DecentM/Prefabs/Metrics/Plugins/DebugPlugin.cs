@@ -31,7 +31,7 @@ namespace DecentM.Metrics.Plugins
                 int attempts = (int)queueItem[1];
                 Metric metric = (Metric)queueItem[2];
 
-                result += $"url: {url.ToString()}, attempts: {attempts.ToString()}, metric: {metric.ToString()}\n";
+                result += $"{url.ToString()}, attempts: {attempts.ToString()}, metric: {metric.ToString()}\n";
             }
 
             this.queueGui.text = result;

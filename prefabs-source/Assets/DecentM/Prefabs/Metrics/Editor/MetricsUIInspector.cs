@@ -62,7 +62,7 @@ namespace DecentM.Metrics
 
         public override string[] GetPossibleValues()
         {
-            return new string[] { "true", "false" };
+            return new string[] { true.ToString(), false.ToString() };
         }
     }
 
@@ -129,15 +129,7 @@ namespace DecentM.Metrics
             List<MetricValue> heartbeatValues = new List<MetricValue>();
             heartbeatValues.Add(new BoolMetricValue("isMaster"));
             heartbeatValues.Add(new BoolMetricValue("isVr"));
-            heartbeatValues.Add(new BoolMetricValue("isFbt"));
             heartbeatValues.Add(new IntRangeMetricValue("timezone", -11, 12));
-            heartbeatValues.Add(new StringMetricValue("vrPlatform", new string[] {
-                VrPlatform.Other.ToString(),
-                VrPlatform.Index.ToString(),
-                VrPlatform.Vive.ToString(),
-                VrPlatform.QuestLink.ToString(),
-                VrPlatform.QuestStandalone.ToString(),
-            }));
             matrix.Add(Metric.Heartbeat, heartbeatValues);
 
             List<MetricValue> respawnValues = new List<MetricValue>();
