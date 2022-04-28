@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using UdonSharp;
 using DecentM.EditorTools;
 using VRC.SDKBase;
+using DecentM.Metrics.Plugins;
 
 namespace DecentM.Metrics
 {
@@ -37,6 +38,19 @@ namespace DecentM.Metrics
 
         public string name;
         public string value;
+    }
+
+    public class NullMetricValue : MetricValue
+    {
+        public NullMetricValue()
+        {
+            this.name = "";
+        }
+
+        public override string[] GetPossibleValues()
+        {
+            return new string[] { "" };
+        }
     }
 
     public class BoolMetricValue : MetricValue
@@ -112,16 +126,32 @@ namespace DecentM.Metrics
         {
             Dictionary<Metric, List<MetricValue>> matrix = new Dictionary<Metric, List<MetricValue>>();
 
-            matrix.Clear();
+            List<MetricValue> heartbeatValues = new List<MetricValue>();
+            heartbeatValues.Add(new BoolMetricValue("isMaster"));
+            heartbeatValues.Add(new BoolMetricValue("isVr"));
+            heartbeatValues.Add(new BoolMetricValue("isFbt"));
+            heartbeatValues.Add(new IntRangeMetricValue("timezone", -11, 12));
+            heartbeatValues.Add(new StringMetricValue("vrPlatform", new string[] {
+                VrPlatform.Other.ToString(),
+                VrPlatform.Index.ToString(),
+                VrPlatform.Vive.ToString(),
+                VrPlatform.QuestLink.ToString(),
+                VrPlatform.QuestStandalone.ToString(),
+            }));
+            matrix.Add(Metric.Heartbeat, heartbeatValues);
 
-            List<MetricValue> metricPossibleValues = new List<MetricValue>();
-            metricPossibleValues.Add(new BoolMetricValue("isMaster"));
-            metricPossibleValues.Add(new BoolMetricValue("isVr"));
-            metricPossibleValues.Add(new BoolMetricValue("isFbt"));
-            metricPossibleValues.Add(new IntRangeMetricValue("timezone", -11, 12));
-            metricPossibleValues.Add(new StringMetricValue("vrPlatform", new string[] { "index", "vive", "oculus", "quest-standalone" }));
+            List<MetricValue> respawnValues = new List<MetricValue>();
+            respawnValues.Add(new NullMetricValue());
+            matrix.Add(Metric.Respawn, respawnValues);
 
-            matrix.Add(Metric.Heartbeat, metricPossibleValues);
+            List<MetricValue> playerCountValues = new List<MetricValue>();
+            playerCountValues.Add(new IntRangeMetricValue("count", 0, 64));
+            matrix.Add(Metric.PlayerCount, playerCountValues);
+
+            /*
+            List<MetricValue> Values = new List<MetricValue>();
+            matrix.Add(Metric., Values);
+            */
 
             return matrix;
         }
@@ -140,7 +170,6 @@ namespace DecentM.Metrics
             }
         }
 
-
         private VRCUrl MakeUrl(string metricName, Dictionary<string, string> metricData)
         {
             string query = "?";
@@ -149,6 +178,8 @@ namespace DecentM.Metrics
             {
                 query += $"{kvp.Key}={kvp.Value}&";
             }
+
+            if (query == "?") return new VRCUrl($"{this.metricsServerBaseUrl}/api/v1/metrics/ingest/{metricName}");
 
             return new VRCUrl($"{this.metricsServerBaseUrl}/api/v1/metrics/ingest/{metricName}{query}");
         }
@@ -205,6 +236,7 @@ namespace DecentM.Metrics
                 foreach (MetricValue value in pair.Value)
                 {
                     List<ResolvedMetricValue> resolvedValues = ResolvedMetricValue.FromMetricValue(value);
+
                     this.total *= resolvedValues.Count;
                     input.Add(resolvedValues);
                 }
@@ -225,7 +257,7 @@ namespace DecentM.Metrics
 
                     foreach (ResolvedMetricValue value in resolvedValues)
                     {
-                        urlParams.Add(value.name, value.value);
+                        if (value.name != "" && value.value != "") urlParams.Add(value.name, value.value);
                     }
 
                     List<object[]> vrcParams = new List<object[]>();
@@ -235,10 +267,8 @@ namespace DecentM.Metrics
                         vrcParams.Add(new object[] { value.name, value.value });
                     }
 
-                    object[] data = new object[] { kvp.Key.ToString(), vrcParams.ToArray() };
+                    object[] data = new object[] { kvp.Key, vrcParams.ToArray() };
                     object[] item = new object[] { data, this.MakeUrl(kvp.Key.ToString(), urlParams) };
-
-                    Debug.Log(this.MakeUrl(kvp.Key.ToString(), urlParams));
 
                     urls.Add(item);
                 }

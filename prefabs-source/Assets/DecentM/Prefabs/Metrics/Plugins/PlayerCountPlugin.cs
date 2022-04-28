@@ -25,10 +25,10 @@ namespace DecentM.Metrics.Plugins
             if (this.elapsed <= this.reportingIntervalSeconds) return;
             this.elapsed = 0;
 
-            VRCUrl url = this.urlStore.GetMetricUrl(Metric.PlayerCount);
-            if (url == null) return;
+            // VRCUrl url = this.urlStore.GetMetricUrl(Metric.PlayerCount);
+            // if (url == null) return;
 
-            this.system.RecordMetric(url, Metric.PlayerCount);
+            //this.system.RecordMetric(url, Metric.PlayerCount);
         }
     }
 }

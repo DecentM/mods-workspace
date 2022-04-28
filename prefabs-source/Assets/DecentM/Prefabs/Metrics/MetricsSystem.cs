@@ -95,15 +95,16 @@ namespace DecentM.Metrics
 
         private void Start()
         {
-            this.SendCustomEventDelayedSeconds(nameof(BroadcastInit), 5.2f);
+            this.SendCustomEventDelayedSeconds(nameof(BroadcastInit), 10f);
         }
 
         public void BroadcastInit()
         {
             this.events.OnMetricsSystemInit();
+            this.locked = false;
         }
 
-        private bool locked = false;
+        private bool locked = true;
         private float elapsed = 0;
         public float queueProcessIntervalMin = 5.2f;
         public float queueProcessIntervalMax = 8.5f;

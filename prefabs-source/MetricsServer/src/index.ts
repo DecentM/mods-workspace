@@ -18,7 +18,7 @@ const main = async () => {
     await res.status(200).send()
   })
 
-  server.get<{Params: MetricsParamsWithValue}>('/api/v1/metrics/ingest/:name/:value?', async (req, res) => {
+  server.get<{Params: MetricsParamsWithValue}>('/api/v1/metrics/ingest/:name', async (req, res) => {
     await res.header('Content-Type', 'video/mp4').send(blankVideo)
 
     if (!req.headers['user-agent'].includes('NSPlayer')) return
@@ -26,7 +26,7 @@ const main = async () => {
     log.info(
       {
         name: req.params.name,
-        value: req.params.value ?? null,
+        query: req.query,
       },
       'metric received',
     )
