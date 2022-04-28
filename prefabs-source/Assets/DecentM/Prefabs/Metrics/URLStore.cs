@@ -9,12 +9,14 @@ namespace DecentM.Metrics
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class URLStore : UdonSharpBehaviour
     {
+        // parameter structure
+        // 0 - name
+        // 1 - value
+
         // item structure:
-        // 0 - object[] { Metric metric, string value }
+        // 0 - object[] { Metric metric, object[][] {} parameters }
         // 1 - VRCUrl url
         public object[][] urls;
-
-        public VRCUrl[] debugUrls;
 
         public VRCUrl GetPlayerCountUrl(int count)
         {

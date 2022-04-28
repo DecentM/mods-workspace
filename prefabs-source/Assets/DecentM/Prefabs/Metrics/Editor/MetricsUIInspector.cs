@@ -23,6 +23,18 @@ namespace DecentM.Metrics
             this.value = value;
         }
 
+        public static List<ResolvedMetricValue> FromMetricValue(MetricValue metricValue)
+        {
+            List<ResolvedMetricValue> result = new List<ResolvedMetricValue>();
+            
+            foreach (string value in metricValue.GetPossibleValues())
+            {
+                result.Add(new ResolvedMetricValue(metricValue.name, value));
+            }
+
+            return result;
+        }
+
         public string name;
         public string value;
     }
@@ -152,7 +164,7 @@ namespace DecentM.Metrics
                 if (index == sources.Count - 1)
                 {
                     this.progress++;
-                    EditorUtility.DisplayProgressBar($"Generating combinations... ({progress}/{this.total})", "Skipping...", (float)progress / this.total);
+                    EditorUtility.DisplayProgressBar($"Generating combinations...", $"{progress}/{this.total}", (float)progress / this.total);
 
                     var finalChain = new T[chain.Length];
                     chain.CopyTo(finalChain, 0);
@@ -181,27 +193,58 @@ namespace DecentM.Metrics
         private void SaveUrls()
         {
             Dictionary<Metric, List<MetricValue>> matrix = this.GenerateMatrix();
-
-            this.total = 1;
+            Dictionary<Metric, List<ResolvedMetricValue[]>> namedCombinations = new Dictionary<Metric, List<ResolvedMetricValue[]>>();
 
             foreach (KeyValuePair<Metric, List<MetricValue>> pair in matrix)
             {
-                List<List<string>> input = new List<List<string>>();
+                this.progress = 0;
+                this.total = 1;
+
+                List<List<ResolvedMetricValue>> input = new List<List<ResolvedMetricValue>>();
 
                 foreach (MetricValue value in pair.Value)
                 {
-                    string[] possibleValues = value.GetPossibleValues();
-                    this.total *= possibleValues.Length;
-                    input.Add(possibleValues.ToList());
+                    List<ResolvedMetricValue> resolvedValues = ResolvedMetricValue.FromMetricValue(value);
+                    this.total *= resolvedValues.Count;
+                    input.Add(resolvedValues);
                 }
 
-                List<string[]> result = this.GetCombinations(input.ToArray());
+                List<ResolvedMetricValue[]> result = this.GetCombinations(input.ToArray());
+                namedCombinations.Add(pair.Key, result);
+            }
 
-                foreach (string[] strings in result)
+            // Done generating combinations, now we need to transform it to the format vrc needs
+
+            List<object[]> urls = new List<object[]>();
+
+            foreach (KeyValuePair<Metric, List<ResolvedMetricValue[]>> kvp in namedCombinations)
+            {
+                foreach (ResolvedMetricValue[] resolvedValues in kvp.Value)
                 {
-                    Debug.Log(string.Join(", ", strings));
+                    Dictionary<string, string> urlParams = new Dictionary<string, string>();
+
+                    foreach (ResolvedMetricValue value in resolvedValues)
+                    {
+                        urlParams.Add(value.name, value.value);
+                    }
+
+                    List<object[]> vrcParams = new List<object[]>();
+
+                    foreach (ResolvedMetricValue value in resolvedValues)
+                    {
+                        vrcParams.Add(new object[] { value.name, value.value });
+                    }
+
+                    object[] data = new object[] { kvp.Key.ToString(), vrcParams.ToArray() };
+                    object[] item = new object[] { data, this.MakeUrl(kvp.Key.ToString(), urlParams) };
+
+                    Debug.Log(this.MakeUrl(kvp.Key.ToString(), urlParams));
+
+                    urls.Add(item);
                 }
             }
+
+            this.urlStore.urls = urls.ToArray();
         }
     }
 }
