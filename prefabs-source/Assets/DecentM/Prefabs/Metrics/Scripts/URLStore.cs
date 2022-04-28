@@ -97,5 +97,13 @@ namespace DecentM.Metrics
         {
             return this.GetMetricUrl(Metric.Respawn);
         }
+
+        public VRCUrl GetInteractionUrl(string name)
+        {
+            return this.GetMetricUrl(Metric.Interaction, new object[][]
+            {
+                new object[] { "name", name },
+            });
+        }
     }
 }
