@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
@@ -8,47 +9,82 @@ using VRC.SDKBase;
 
 namespace DecentM.Metrics
 {
-    public class MetricValues
+    public abstract class MetricValue
     {
-        public MetricValues(string name, string[] values)
-        {
-            this.Name = name;
-            this.Values = values;
-        }
-
-        public MetricValues(string name)
-        {
-            this.Name = name;
-            this.Values = new string[] { "true", "false" };
-        }
-
-        public MetricValues(string name, int min, int max)
-        {
-            this.Name = name;
-            this.Values = new string[max - min];
-
-            for (int i = 0; i < this.Values.Length; i++)
-            {
-                this.Values[i] = $"{min + i}";
-            }
-        }
-
-        public string Name;
-        public string[] Values;
+        public abstract string[] GetPossibleValues();
+        public string name;
     }
 
-    public struct MetricValue
+    public class ResolvedMetricValue
     {
-        public MetricValue(Metric metric, string name, string value)
+        public ResolvedMetricValue(string name, string value)
         {
-            this.metric = metric;
             this.name = name;
             this.value = value;
         }
 
-        public Metric metric;
         public string name;
         public string value;
+    }
+
+    public class BoolMetricValue : MetricValue
+    {
+        public BoolMetricValue(string name)
+        {
+            this.name = name;
+        }
+
+        public override string[] GetPossibleValues()
+        {
+            return new string[] { "true", "false" };
+        }
+    }
+
+    public class IntRangeMetricValue : MetricValue
+    {
+        public IntRangeMetricValue(string name, int min, int max)
+        {
+            this.name = name;
+            this.min = min;
+            this.max = max;
+        }
+
+        private int min;
+        private int max;
+
+        public override string[] GetPossibleValues()
+        {
+            string[] result = new string[this.max - this.min + 1];
+
+            for (int i = 0; i < result.Length; i++)
+            {
+                result[i] = $"{min + i}";
+            }
+
+            return result;
+        }
+    }
+
+    public class StringMetricValue : MetricValue
+    {
+        public StringMetricValue(string name, string[] values)
+        {
+            this.name = name;
+            this.values = values;
+        }
+
+        public StringMetricValue(string name, string value)
+        {
+            this.name = name;
+            this.values = new string[] { value };
+        }
+
+        private string[] values;
+
+        public override string[] GetPossibleValues()
+        {
+            return this.values;
+        }
     }
 
     [CustomEditor(typeof(MetricsUI))]
@@ -60,18 +96,18 @@ namespace DecentM.Metrics
         private string metricsServerBaseUrl = "http://localhost:3000";
         private int worldCapacity = 64;
 
-        private Dictionary<Metric, List<MetricValues>> GenerateMatrix()
+        private Dictionary<Metric, List<MetricValue>> GenerateMatrix()
         {
-            Dictionary<Metric, List<MetricValues>> matrix = new Dictionary<Metric, List<MetricValues>>();
+            Dictionary<Metric, List<MetricValue>> matrix = new Dictionary<Metric, List<MetricValue>>();
 
             matrix.Clear();
 
-            List<MetricValues> metricPossibleValues = new List<MetricValues>();
-            metricPossibleValues.Add(new MetricValues("isMaster"));
-            metricPossibleValues.Add(new MetricValues("isVr"));
-            metricPossibleValues.Add(new MetricValues("isFbt"));
-            // metricPossibleValues.Add(new MetricValues("timezone", -11, 12));
-            metricPossibleValues.Add(new MetricValues("vrPlatform", new string[] { "index", "vive", "oculus", "quest-standalone" }));
+            List<MetricValue> metricPossibleValues = new List<MetricValue>();
+            metricPossibleValues.Add(new BoolMetricValue("isMaster"));
+            metricPossibleValues.Add(new BoolMetricValue("isVr"));
+            metricPossibleValues.Add(new BoolMetricValue("isFbt"));
+            metricPossibleValues.Add(new IntRangeMetricValue("timezone", -11, 12));
+            metricPossibleValues.Add(new StringMetricValue("vrPlatform", new string[] { "index", "vive", "oculus", "quest-standalone" }));
 
             matrix.Add(Metric.Heartbeat, metricPossibleValues);
 
@@ -92,6 +128,7 @@ namespace DecentM.Metrics
             }
         }
 
+
         private VRCUrl MakeUrl(string metricName, Dictionary<string, string> metricData)
         {
             string query = "?";
@@ -104,143 +141,67 @@ namespace DecentM.Metrics
             return new VRCUrl($"{this.metricsServerBaseUrl}/api/v1/metrics/ingest/{metricName}{query}");
         }
 
-        private List<List<string>> CreateCombinations(int startIndex, List<string> pair, List<string> initialArray)
-        {
-            List<List<string>> combinations = new List<List<string>>();
-            for (int i = startIndex; i < initialArray.Count; i++)
-            {
-                List<string> value = pair.GetRange(0, pair.Count);
-                value.Add(initialArray[i]);
-                combinations.Add(value);
-                combinations.AddRange(this.CreateCombinations(i + 1, value, initialArray));
-            }
+        private int progress = 0;
+        private int total = 0;
 
-            return combinations;
+        private void GetCombinationsRec<T>(IList<IEnumerable<T>> sources, T[] chain, int index, ICollection<T[]> combinations)
+        {
+            foreach (var element in sources[index])
+            {
+                chain[index] = element;
+                if (index == sources.Count - 1)
+                {
+                    this.progress++;
+                    EditorUtility.DisplayProgressBar($"Generating combinations... ({progress}/{this.total})", "Skipping...", (float)progress / this.total);
+
+                    var finalChain = new T[chain.Length];
+                    chain.CopyTo(finalChain, 0);
+                    combinations.Add(finalChain);
+                }
+                else
+                {
+                    this.GetCombinationsRec(sources: sources, chain: chain, index: index + 1, combinations: combinations);
+                }
+            }
         }
 
-        private int progress = 0;
-        private int total = 1;
-
-        private List<List<MetricValue>> CreateCombinations(int startIndex, List<MetricValue> pair, List<MetricValue> initialArray, int depth)
+        public List<T[]> GetCombinations<T>(IEnumerable<T>[] enumerables)
         {
-            List<List<MetricValue>> combinations = new List<List<MetricValue>>();
-            for (int i = startIndex; i < initialArray.Count; i++)
+            var combinations = new List<T[]>(enumerables.Length);
+            if (enumerables.Length > 0)
             {
-                List<MetricValue> value = pair.GetRange(0, pair.Count);
-                value.Add(initialArray[i]);
-                combinations.Add(value);
-                combinations.AddRange(this.CreateCombinations(i + 1, value, initialArray, depth + 1));
-
-                this.progress++;
-                EditorUtility.DisplayProgressBar($"Creating combinations... ({this.progress}/{this.total})", "", 1f * this.progress / this.total);
+                var chain = new T[enumerables.Length];
+                this.GetCombinationsRec(sources: enumerables, chain: chain, index: 0, combinations: combinations);
             }
 
-            if (depth == 0) EditorUtility.ClearProgressBar();
-
+            EditorUtility.ClearProgressBar();
             return combinations;
         }
 
         private void SaveUrls()
         {
-            Dictionary<Metric, List<MetricValues>> matrix = this.GenerateMatrix();
-            Dictionary<Metric, List<List<MetricValue>>> namedCombinations = new Dictionary<Metric, List<List<MetricValue>>>();
+            Dictionary<Metric, List<MetricValue>> matrix = this.GenerateMatrix();
 
-            foreach (Metric metric in matrix.Keys)
+            this.total = 1;
+
+            foreach (KeyValuePair<Metric, List<MetricValue>> pair in matrix)
             {
-                List<MetricValue> expandedValues = new List<MetricValue>();
+                List<List<string>> input = new List<List<string>>();
 
-                List<MetricValues> values;
-                bool success = matrix.TryGetValue(metric, out values);
-                if (!success) continue;
-
-                foreach (MetricValues possibleValue in values)
+                foreach (MetricValue value in pair.Value)
                 {
-                    foreach (string metricValue in possibleValue.Values)
-                    {
-                        MetricValue value = new MetricValue(metric, possibleValue.Name, metricValue);
-                        expandedValues.Add(value);
-                    }
+                    string[] possibleValues = value.GetPossibleValues();
+                    this.total *= possibleValues.Length;
+                    input.Add(possibleValues.ToList());
                 }
 
-                List<List<MetricValue>> combinations = this.CreateCombinations(0, new List<MetricValue>(), expandedValues, 0);
-                namedCombinations.Add(metric, combinations);
-            }
+                List<string[]> result = this.GetCombinations(input.ToArray());
 
-            foreach (KeyValuePair<Metric, List<List<MetricValue>>> kvp in namedCombinations)
-            {
-                Debug.Log($"{kvp.Key}, {kvp.Value.Count}");
-                foreach (List<MetricValue> combination in kvp.Value)
+                foreach (string[] strings in result)
                 {
-                    Debug.Log($"{string.Join(", ", combination.ToArray())}");
-                    this.total += combination.Count * kvp.Value.Count;
+                    Debug.Log(string.Join(", ", strings));
                 }
             }
-
-            /* foreach (Metric metric in this.matrix.Keys)
-            {
-                List<MetricValues> values;
-                bool success = this.matrix.TryGetValue(metric, out values);
-                if (!success) continue;
-
-                foreach (MetricValues possibleValue in values)
-                {
-                    foreach (string metricValue in possibleValue.Values)
-                    {
-                        VRCUrl url = this.MakeUrl(possibleValue.Name, metricValue);
-                        object[] item = new object[] { new object[] { metric, metricValue }, url };
-                        urls.Add(item);
-                        Debug.Log(url.ToString());
-                    }
-                }
-            } */
-
-            // List<object[]> urls = new List<object[]>();
-            List<VRCUrl> urls = new List<VRCUrl>();
-
-            foreach (KeyValuePair<Metric, List<List<MetricValue>>> kvp in namedCombinations)
-            {
-                // Generate a URL for each combination
-                foreach (List<MetricValue> combination in kvp.Value)
-                {
-                    Dictionary<string, string> urlValues = new Dictionary<string, string>();
-
-                    foreach (MetricValue metricValue in combination)
-                    {
-                        Debug.Log($"{metricValue.name}, {metricValue.value}");
-                        // urlValues.Add(metricValue.name, metricValue.value);
-                    }
-
-                    object[] item = new object[]
-                    {
-                        // TODO: Add the metric data in here so it can be searched for later
-                        new object[] { kvp.Key },
-                        this.MakeUrl(kvp.Key.ToString(), urlValues)
-                    };
-
-                    urls.Add(this.MakeUrl(kvp.Key.ToString(), urlValues));
-                }
-            }
-
-            Debug.Log($"Generated {urls.Count} urls");
-
-            this.urlStore.debugUrls = urls.ToArray();
-
-            /* foreach (object[] item in urls)
-            {
-                Debug.Log(item[1].ToString());
-            } */
-
-            // this.urlStore.respawnUrl = this.MakeUrl("respawn");
-            // this.urlStore.heartbeatUrl = this.MakeUrl("heartbeat");
-
-            /* VRCUrl[] playerCountUrls = new VRCUrl[this.worldCapacity + 1];
-
-            for (int i = 0; i < playerCountUrls.Length; i++)
-            {
-                playerCountUrls[i] = this.MakeUrl("player-count", i.ToString());
-            } */
-
-            // this.urlStore.playerCountUrls = playerCountUrls;
         }
     }
 }
