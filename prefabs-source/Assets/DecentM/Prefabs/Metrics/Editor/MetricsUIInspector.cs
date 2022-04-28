@@ -118,9 +118,11 @@ namespace DecentM.Metrics
     {
         MetricsUI ui;
         URLStore urlStore;
+        InstancePlugin instancePlugin;
 
         private string metricsServerBaseUrl = "http://localhost:3000";
         private int worldCapacity = 64;
+        private int instanceCapacity = 64;
 
         private Dictionary<Metric, List<MetricValue>> GenerateMatrix()
         {
@@ -136,9 +138,10 @@ namespace DecentM.Metrics
             respawnValues.Add(new NullMetricValue());
             matrix.Add(Metric.Respawn, respawnValues);
 
-            List<MetricValue> playerCountValues = new List<MetricValue>();
-            playerCountValues.Add(new IntRangeMetricValue("count", 1, this.worldCapacity));
-            matrix.Add(Metric.PlayerCount, playerCountValues);
+            List<MetricValue> instanceValues = new List<MetricValue>();
+            instanceValues.Add(new StringMetricValue("instanceId", instancePlugin.instanceIds));
+            instanceValues.Add(new IntRangeMetricValue("playerCount", 1, this.worldCapacity));
+            matrix.Add(Metric.Instance, instanceValues);
 
             /*
             List<MetricValue> Values = new List<MetricValue>();
@@ -148,13 +151,21 @@ namespace DecentM.Metrics
             return matrix;
         }
 
+        private void FillInstanceIds()
+        {
+            List<string> instanceIds = InstanceIdGenerator.GenerateInstanceIds(this.instanceCapacity, 4);
+            this.instancePlugin.instanceIds = instanceIds.ToArray();
+        }
+
         public override void OnInspectorGUI()
         {
             this.ui = (MetricsUI)target;
             this.urlStore = this.ui.GetComponentInChildren<URLStore>();
+            this.instancePlugin = this.ui.GetComponentInChildren<InstancePlugin>();
 
             this.metricsServerBaseUrl = EditorGUILayout.TextField("Metrics server base URL:", this.metricsServerBaseUrl);
             this.worldCapacity = EditorGUILayout.IntField("World capacity", this.worldCapacity);
+            this.instanceCapacity = EditorGUILayout.IntField("Instance capacity", this.instanceCapacity);
 
             if (this.urlStore != null && this.Button("Save"))
             {
@@ -217,6 +228,8 @@ namespace DecentM.Metrics
 
         private void SaveUrls()
         {
+            this.FillInstanceIds();
+
             Dictionary<Metric, List<MetricValue>> matrix = this.GenerateMatrix();
             Dictionary<Metric, List<ResolvedMetricValue[]>> namedCombinations = new Dictionary<Metric, List<ResolvedMetricValue[]>>();
 

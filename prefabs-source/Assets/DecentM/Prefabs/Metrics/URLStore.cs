@@ -83,10 +83,11 @@ namespace DecentM.Metrics
             );
         }
 
-        public VRCUrl GetPlayerCountUrl(int playerCount)
+        public VRCUrl GetInstanceUrl(string instanceId, int playerCount)
         {
-            return this.GetMetricUrl(Metric.PlayerCount, new object[][]
+            return this.GetMetricUrl(Metric.Instance, new object[][]
                 {
+                    new object[] { "instanceId", instanceId },
                     new object[] { "playerCount", playerCount.ToString() },
                 }
             );

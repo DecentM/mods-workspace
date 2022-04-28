@@ -13,7 +13,7 @@ namespace DecentM.Metrics
     {
         Heartbeat,
         Respawn,
-        PlayerCount,
+        Instance,
 
         TriggerEntered,
         TriggerExited,
