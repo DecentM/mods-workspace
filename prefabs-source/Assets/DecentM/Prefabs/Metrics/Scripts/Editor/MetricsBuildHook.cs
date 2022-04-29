@@ -1,10 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using VRC.SDKBase.Editor.BuildPipeline;
 using DecentM.Metrics;
-using DecentM.Metrics.Plugins;
 
 public class MetricsBuildHook : IVRCSDKBuildRequestedCallback
 {
@@ -23,6 +20,8 @@ public class MetricsBuildHook : IVRCSDKBuildRequestedCallback
 
             MetricsUrlGenerator.SaveUrls(ui, urlStore);
         }
+
+        IndividualTrackingPluginTroubleshooter.RelinkRequirements();
 
         return true;
     }

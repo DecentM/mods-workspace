@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-
-using UnityEditor;
-
-using VRC.SDKBase;
-
+﻿using UnityEditor;
 using DecentM.EditorTools;
-using DecentM.Metrics.Plugins;
 
 namespace DecentM.Metrics
 {
@@ -25,6 +18,10 @@ namespace DecentM.Metrics
             this.ui.worldCapacity = EditorGUILayout.IntField("World capacity", this.ui.worldCapacity);
             this.ui.instanceCapacity = EditorGUILayout.IntField("Instance capacity", this.ui.instanceCapacity);
 
+            EditorGUI.BeginDisabledGroup(true);
+            EditorGUILayout.TextField("World version", this.ui.worldVersion);
+            EditorGUI.EndDisabledGroup();
+
             if (this.urlStore != null && this.Button("Clear URLs"))
             {
                 MetricsUrlGenerator.ClearUrls(this.urlStore);
@@ -37,8 +34,7 @@ namespace DecentM.Metrics
 
             if (this.Button("Relink plugins"))
             {
-                InteractionsPluginManager.RelinkRequirements();
-                TriggerVolumePluginManager.RelinkRequirements();
+                IndividualTrackingPluginTroubleshooter.RelinkRequirements();
             }
         }
     }

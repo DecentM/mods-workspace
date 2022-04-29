@@ -6,10 +6,8 @@ using VRC.Udon;
 
 namespace DecentM.Metrics.Plugins
 {
-    public class InteractionsPlugin : MetricsPlugin
+    public class InteractionsPlugin : IndividualTrackingPlugin
     {
-        public string metricName = "";
-
         private bool locked = false;
 
         private void DoReport()

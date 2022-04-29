@@ -1,9 +1,6 @@
 ﻿
 using UdonSharp;
-using UnityEngine;
 using VRC.SDKBase;
-using VRC.Udon;
-using DecentM.Metrics.Plugins;
 
 namespace DecentM.Metrics
 {
@@ -109,6 +106,24 @@ namespace DecentM.Metrics
         public VRCUrl GetTriggerUrl(string name, bool state)
         {
             return this.GetMetricUrl(Metric.Trigger, new object[][]
+            {
+                new object[] { "name", name },
+                new object[] { "state", state.ToString() },
+            });
+        }
+
+        public VRCUrl GetStationUrl(string name, bool state)
+        {
+            return this.GetMetricUrl(Metric.Station, new object[][]
+            {
+                new object[] { "name", name },
+                new object[] { "state", state.ToString() },
+            });
+        }
+
+        public VRCUrl GetPickupUrl(string name, bool state)
+        {
+            return this.GetMetricUrl(Metric.Pickup, new object[][]
             {
                 new object[] { "name", name },
                 new object[] { "state", state.ToString() },

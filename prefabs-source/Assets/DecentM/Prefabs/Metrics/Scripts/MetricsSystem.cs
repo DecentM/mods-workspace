@@ -1,9 +1,8 @@
 ﻿using System;
 using UnityEngine;
-using JetBrains.Annotations;
 using UdonSharp;
+
 using VRC.SDKBase;
-using VRC.Udon;
 using VRC.SDK3.Video.Components;
 using VRC.SDK3.Components.Video;
 
@@ -18,6 +17,7 @@ namespace DecentM.Metrics
         Trigger,
         Station,
         Interaction,
+        Pickup,
     }
 
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]

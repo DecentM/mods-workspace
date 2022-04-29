@@ -1,6 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using System.Collections.Generic;
+using DecentM.Metrics.Plugins;
 
 namespace DecentM.Metrics
 {
@@ -141,13 +140,23 @@ namespace DecentM.Metrics
             matrix.Add(Metric.Instance, instanceValues);
 
             List<MetricValue> interactionValues = new List<MetricValue>();
-            interactionValues.Add(new StringMetricValue("name", InteractionsPluginManager.CollectInteractionNames().ToArray()));
+            interactionValues.Add(new StringMetricValue("name", IndividualTrackingPluginManager<InteractionsPlugin>.CollectInteractionNames().ToArray()));
             matrix.Add(Metric.Interaction, interactionValues);
 
             List<MetricValue> triggerValues = new List<MetricValue>();
-            triggerValues.Add(new StringMetricValue("name", TriggerVolumePluginManager.CollectInteractionNames().ToArray()));
+            triggerValues.Add(new StringMetricValue("name", IndividualTrackingPluginManager<TriggerVolumePlugin>.CollectInteractionNames().ToArray()));
             triggerValues.Add(new BoolMetricValue("state"));
             matrix.Add(Metric.Trigger, triggerValues);
+
+            List<MetricValue> stationValues = new List<MetricValue>();
+            stationValues.Add(new StringMetricValue("name", IndividualTrackingPluginManager<StationPlugin>.CollectInteractionNames().ToArray()));
+            stationValues.Add(new BoolMetricValue("state"));
+            matrix.Add(Metric.Station, stationValues);
+
+            List<MetricValue> pickupValues = new List<MetricValue>();
+            pickupValues.Add(new StringMetricValue("name", IndividualTrackingPluginManager<PickupPlugin>.CollectInteractionNames().ToArray()));
+            pickupValues.Add(new BoolMetricValue("state"));
+            matrix.Add(Metric.Pickup, pickupValues);
 
             /*
             List<MetricValue> Values = new List<MetricValue>();

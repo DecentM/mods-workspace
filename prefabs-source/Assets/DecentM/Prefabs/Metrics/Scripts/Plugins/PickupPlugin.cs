@@ -2,17 +2,17 @@
 
 namespace DecentM.Metrics.Plugins
 {
-    public class TriggerVolumePlugin : IndividualTrackingPlugin
+    public class PickupPlugin : IndividualTrackingPlugin
     {
         private bool locked = true;
         private bool reportedState = false;
 
         private void DoReport(bool state)
         {
-            VRCUrl url = this.urlStore.GetTriggerUrl(this.metricName, state);
+            VRCUrl url = this.urlStore.GetPickupUrl(this.metricName, state);
             if (url == null) return;
 
-            this.system.RecordMetric(url, Metric.Trigger);
+            this.system.RecordMetric(url, Metric.Pickup);
             this.reportedState = state;
 
             // Only set the lock after exiting the trigger, as we'd rather miss reporting a second entry than miss
@@ -34,17 +34,15 @@ namespace DecentM.Metrics.Plugins
             this.locked = false;
         }
 
-        public override void OnPlayerTriggerEnter(VRCPlayerApi player)
+        public override void OnPickup()
         {
-            if (player == null || !player.IsValid() || player != Networking.LocalPlayer) return;
             if (this.locked || this.reportedState) return;
 
             this.DoReport(true);
         }
 
-        public override void OnPlayerTriggerExit(VRCPlayerApi player)
+        public override void OnDrop()
         {
-            if (player == null || !player.IsValid() || player != Networking.LocalPlayer) return;
             if (this.locked || !this.reportedState) return;
 
             this.DoReport(false);
