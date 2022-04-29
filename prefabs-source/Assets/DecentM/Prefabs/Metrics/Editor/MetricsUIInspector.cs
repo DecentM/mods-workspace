@@ -25,9 +25,20 @@ namespace DecentM.Metrics
             this.ui.worldCapacity = EditorGUILayout.IntField("World capacity", this.ui.worldCapacity);
             this.ui.instanceCapacity = EditorGUILayout.IntField("Instance capacity", this.ui.instanceCapacity);
 
-            if (this.urlStore != null && this.Button("Save"))
+            if (this.urlStore != null && this.Button("Clear URLs"))
+            {
+                MetricsUrlGenerator.ClearUrls(this.urlStore);
+            }
+
+            if (this.urlStore != null && this.Button("Bake URLs"))
             {
                 MetricsUrlGenerator.SaveUrls(this.ui, this.urlStore);
+            }
+
+            if (this.Button("Relink plugins"))
+            {
+                InteractionsPluginManager.RelinkRequirements();
+                TriggerVolumePluginManager.RelinkRequirements();
             }
         }
     }

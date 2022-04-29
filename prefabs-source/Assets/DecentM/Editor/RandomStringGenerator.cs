@@ -2,15 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-using UnityEditor;
-
-namespace DecentM.Metrics
+namespace DecentM.EditorTools
 {
-    public class InstanceIdGenerator
+    public class RandomStringGenerator
     {
         private static string alphabet = "abcdefghijklmnopqrstuvwxyz1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-        public static string GenerateInstanceId(int length)
+        public static string GenerateRandomString(int length)
         {
             string result = "";
 
@@ -22,7 +20,7 @@ namespace DecentM.Metrics
             return result;
         }
 
-        public static List<string> GenerateInstanceIds(int count, int length)
+        public static List<string> GenerateRandomStrings(int count, int length)
         {
             List<string> result = new List<string>();
 
@@ -33,7 +31,7 @@ namespace DecentM.Metrics
                 // Just in case we get a duplicate, keep generating new ids until we get a unique one
                 while (instanceId == "" || result.Contains(instanceId))
                 {
-                    instanceId = GenerateInstanceId(length);
+                    instanceId = GenerateRandomString(length);
                 }
 
                 result.Add(instanceId);

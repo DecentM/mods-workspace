@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 using VRC.SDKBase;
 using DecentM.EditorTools;
 
@@ -15,15 +16,22 @@ namespace DecentM.Metrics
 
             foreach (KeyValuePair<string, string> kvp in metricData)
             {
-                query += $"&{kvp.Key}={kvp.Value}";
+                query += $"&{kvp.Key}={Uri.EscapeDataString(kvp.Value)}";
             }
 
             return new VRCUrl($"{ui.metricsServerBaseUrl}/api/v1/metrics/ingest/{metricName}{query}");
         }
 
+        public static void ClearUrls(URLStore urlStore)
+        {
+            if (urlStore == null) return;
+
+            urlStore.urls = new object[][] { };
+        }
+
         public static void SaveUrls(MetricsUI ui, URLStore urlStore)
         {
-            List<string> instanceIds = InstanceIdGenerator.GenerateInstanceIds(ui.instanceCapacity, 4);
+            List<string> instanceIds = RandomStringGenerator.GenerateRandomStrings(ui.instanceCapacity, 4);
             UIManager.SetWorldVersion(DateTimeOffset.UtcNow.ToUnixTimeMilliseconds().ToString());
             InstancePluginManager.SetInstanceIds(instanceIds);
 

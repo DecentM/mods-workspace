@@ -105,5 +105,14 @@ namespace DecentM.Metrics
                 new object[] { "name", name },
             });
         }
+
+        public VRCUrl GetTriggerUrl(string name, bool state)
+        {
+            return this.GetMetricUrl(Metric.Trigger, new object[][]
+            {
+                new object[] { "name", name },
+                new object[] { "state", state.ToString() },
+            });
+        }
     }
 }

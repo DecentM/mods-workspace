@@ -15,11 +15,8 @@ namespace DecentM.Metrics
         Respawn,
         Instance,
 
-        TriggerEntered,
-        TriggerExited,
-        StationEntered,
-        StationExited,
-
+        Trigger,
+        Station,
         Interaction,
     }
 

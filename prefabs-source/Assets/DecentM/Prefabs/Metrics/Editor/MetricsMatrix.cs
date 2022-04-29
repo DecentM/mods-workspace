@@ -140,8 +140,18 @@ namespace DecentM.Metrics
             instanceValues.Add(new IntRangeMetricValue("playerCount", 1, input.worldCapacity));
             matrix.Add(Metric.Instance, instanceValues);
 
+            List<MetricValue> interactionValues = new List<MetricValue>();
+            interactionValues.Add(new StringMetricValue("name", InteractionsPluginManager.CollectInteractionNames().ToArray()));
+            matrix.Add(Metric.Interaction, interactionValues);
+
+            List<MetricValue> triggerValues = new List<MetricValue>();
+            triggerValues.Add(new StringMetricValue("name", TriggerVolumePluginManager.CollectInteractionNames().ToArray()));
+            triggerValues.Add(new BoolMetricValue("state"));
+            matrix.Add(Metric.Trigger, triggerValues);
+
             /*
             List<MetricValue> Values = new List<MetricValue>();
+            Values.Add(new NullMetricValue());
             matrix.Add(Metric., Values);
             */
 
