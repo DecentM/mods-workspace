@@ -27,6 +27,7 @@ const main = async () => {
       {
         name: req.params.name,
         query: req.query,
+        ip: req.ip,
       },
       'metric received',
     )
