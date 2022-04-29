@@ -21,8 +21,6 @@ public class MetricsBuildHook : IVRCSDKBuildRequestedCallback
             MetricsUrlGenerator.SaveUrls(ui, urlStore);
         }
 
-        IndividualTrackingPluginTroubleshooter.RelinkRequirements();
-
         return true;
     }
 }

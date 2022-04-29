@@ -33,11 +33,6 @@ namespace DecentM.Metrics
             {
                 MetricsUrlGenerator.SaveUrls(this.ui, this.urlStore);
             }
-
-            if (this.Button("Relink plugins"))
-            {
-                IndividualTrackingPluginTroubleshooter.RelinkRequirements();
-            }
         }
     }
 }

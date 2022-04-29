@@ -34,7 +34,7 @@ namespace DecentM.EditorTools
         public List<T[]> GetCombinations(IEnumerable<T>[] enumerables, int total)
         {
             this.progress = 0;
-            this.total = total;
+            this.total = Mathf.Max(total, 1);
 
             var combinations = new List<T[]>(enumerables.Length);
             if (enumerables.Length > 0)
