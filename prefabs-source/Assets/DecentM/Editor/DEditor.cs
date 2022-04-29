@@ -59,6 +59,15 @@ namespace DecentM.EditorTools
             EditorGUI.LabelField(position, $" {label}");
         }
 
+        public static void SavePrefabModifications(UnityEngine.Object @object)
+        {
+            if (PrefabUtility.IsPartOfAnyPrefab(@object))
+            {
+                PrefabUtility.RecordPrefabInstancePropertyModifications(@object);
+                EditorUtility.SetDirty(@object);
+            }
+        }
+
         protected object TabBar(List<EnumerableOption> tabs, object current)
         {
             EditorGUILayout.Space();

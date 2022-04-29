@@ -1,4 +1,6 @@
 ﻿using UnityEditor;
+using UdonSharp;
+using UdonSharpEditor;
 using DecentM.EditorTools;
 
 namespace DecentM.Metrics
@@ -6,33 +8,34 @@ namespace DecentM.Metrics
     [CustomEditor(typeof(MetricsUI))]
     public class MetricsUIInspector : DEditor
     {
-        MetricsUI ui;
-        URLStore urlStore;
-
         public override void OnInspectorGUI()
         {
-            this.ui = (MetricsUI)target;
-            this.urlStore = this.ui.GetComponentInChildren<URLStore>();
+            MetricsUI ui = (MetricsUI)target;
+            URLStore urlStore = ui.GetComponentInChildren<URLStore>();
 
-            this.ui.metricsServerBaseUrl = EditorGUILayout.TextField("Metrics server base URL:", this.ui.metricsServerBaseUrl);
-            this.ui.worldCapacity = EditorGUILayout.IntField("World capacity", this.ui.worldCapacity);
-            this.ui.instanceCapacity = EditorGUILayout.IntField("Instance capacity", this.ui.instanceCapacity);
+            ui.metricsServerBaseUrl = EditorGUILayout.TextField("Metrics server base URL:", ui.metricsServerBaseUrl);
+            ui.worldCapacity = EditorGUILayout.IntField("World capacity", ui.worldCapacity);
+            ui.instanceCapacity = EditorGUILayout.IntField("Instance capacity", ui.instanceCapacity);
 
             EditorGUI.BeginDisabledGroup(true);
-            EditorGUILayout.TextField("Built at", this.ui.builtAt);
-            EditorGUILayout.TextField("Unity version", this.ui.unity);
-            EditorGUILayout.TextField("SDK Version", this.ui.sdk);
+            if (urlStore != null) EditorGUILayout.TextField("Currently stored URLs", urlStore.urls == null ? "<no URLs stored>" : urlStore.urls.Length.ToString());;
+            EditorGUILayout.Space();
+            EditorGUILayout.TextField("Built at", ui.builtAt);
+            EditorGUILayout.TextField("Unity version", ui.unity);
+            EditorGUILayout.TextField("SDK Version", ui.sdk);
             EditorGUI.EndDisabledGroup();
 
-            if (this.urlStore != null && this.Button("Clear URLs"))
+            if (urlStore != null && this.Button("Clear URLs"))
             {
-                MetricsUrlGenerator.ClearUrls(this.urlStore);
+                MetricsUrlGenerator.ClearUrls(urlStore);
             }
 
-            if (this.urlStore != null && this.Button("Bake URLs"))
+            if (urlStore != null && this.Button("Bake URLs"))
             {
-                MetricsUrlGenerator.SaveUrls(this.ui, this.urlStore);
+                MetricsUrlGenerator.SaveUrls(ui, urlStore);
             }
+
+            DEditor.SavePrefabModifications(ui);
         }
     }
 }

@@ -22,30 +22,15 @@ namespace DecentM.Metrics
 
     public static class PluginManager
     {
-        public static List<PluginRequirements> GetAllRequirements()
+        public static PluginRequirements GetRequirements(MetricsUI ui)
         {
-            ComponentCollector<MetricsUI> collector = new ComponentCollector<MetricsUI>();
-            List<MetricsUI> uis = collector.CollectFromActiveScene();
+            PluginRequirements requirements = new PluginRequirements();
 
-            List<PluginRequirements> result = new List<PluginRequirements>();
+            requirements.system = ui.GetComponentInChildren<MetricsSystem>();
+            requirements.urlStore = ui.GetComponentInChildren<URLStore>();
+            requirements.events = ui.GetComponentInChildren<MetricsEvents>();
 
-            foreach (MetricsUI ui in uis)
-            {
-                PluginRequirements requirements = new PluginRequirements();
-
-                requirements.system = ui.GetComponentInChildren<MetricsSystem>();
-                requirements.urlStore = ui.GetComponentInChildren<URLStore>();
-                requirements.events = ui.GetComponentInChildren<MetricsEvents>();
-
-                result.Add(requirements);
-            }
-
-            return result;
-        }
-
-        public static PluginRequirements GetFirstRequirements()
-        {
-            return GetAllRequirements()[0];
+            return requirements;
         }
     }
 }

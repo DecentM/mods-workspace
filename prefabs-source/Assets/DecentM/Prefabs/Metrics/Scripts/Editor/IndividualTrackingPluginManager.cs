@@ -18,38 +18,17 @@ namespace DecentM.Metrics
 
             foreach (PluginType plugin in plugins)
             {
-                if (PrefabUtility.IsPartOfAnyPrefab(plugin)) PrefabUtility.UnpackPrefabInstance(plugin.gameObject, PrefabUnpackMode.OutermostRoot, InteractionMode.AutomatedAction);
-
                 if (plugin.metricName == null || plugin.metricName == "")
                 {
                     Debug.LogWarning($"Metric name is not set for the metrics plugin on {plugin.name}, generating a random name...");
                     plugin.metricName = RandomStringGenerator.GenerateRandomString(8);
+                    DEditor.SavePrefabModifications(plugin);
                 }
 
                 result.Add(plugin.metricName);
             }
 
             return result;
-        }
-    }
-
-    public class IndividualTrackingPluginTroubleshooter
-    {
-        public static void RelinkRequirements()
-        {
-            ComponentCollector<IndividualTrackingPlugin> collector = new ComponentCollector<IndividualTrackingPlugin>();
-            List<IndividualTrackingPlugin> plugins = collector.CollectFromActiveScene();
-
-            foreach (IndividualTrackingPlugin plugin in plugins)
-            {
-                if (PrefabUtility.IsPartOfAnyPrefab(plugin)) PrefabUtility.UnpackPrefabInstance(plugin.gameObject, PrefabUnpackMode.OutermostRoot, InteractionMode.AutomatedAction);
-
-                PluginRequirements requirements = PluginManager.GetFirstRequirements();
-                plugin.system = requirements.system;
-                plugin.events = requirements.events;
-                plugin.urlStore = requirements.urlStore;
-                plugin.pubsubHosts = new Pubsub.PubsubHost[] { requirements.events };
-            }
         }
     }
 }
