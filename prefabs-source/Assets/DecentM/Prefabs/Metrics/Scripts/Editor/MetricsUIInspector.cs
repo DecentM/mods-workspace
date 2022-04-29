@@ -19,7 +19,9 @@ namespace DecentM.Metrics
             this.ui.instanceCapacity = EditorGUILayout.IntField("Instance capacity", this.ui.instanceCapacity);
 
             EditorGUI.BeginDisabledGroup(true);
-            EditorGUILayout.TextField("World version", this.ui.worldVersion);
+            EditorGUILayout.TextField("Built at", this.ui.builtAt);
+            EditorGUILayout.TextField("Unity version", this.ui.unity);
+            EditorGUILayout.TextField("SDK Version", this.ui.sdk);
             EditorGUI.EndDisabledGroup();
 
             if (this.urlStore != null && this.Button("Clear URLs"))

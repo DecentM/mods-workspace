@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using DecentM.Metrics.Plugins;
 
 namespace DecentM.Metrics
@@ -106,16 +107,41 @@ namespace DecentM.Metrics
         }
     }
 
-    public struct MatrixInput
+    public class IntMetricValue : MetricValue
     {
-        public MatrixInput(List<string> instanceIds, int worldCapacity)
+        public IntMetricValue(string name, int[] values)
         {
-            this.instanceIds = instanceIds;
-            this.worldCapacity = worldCapacity;
+            this.name = name;
+            this.values = values;
         }
 
+        public IntMetricValue(string name, int value)
+        {
+            this.name = name;
+            this.values = new int[] { value };
+        }
+
+        private int[] values;
+
+        public override string[] GetPossibleValues()
+        {
+            List<string> result = new List<string>();
+
+            foreach (int value in this.values)
+            {
+                result.Add(value.ToString());
+            }
+
+            return result.ToArray();
+        }
+    }
+
+    public struct MatrixInput
+    {
         public List<string> instanceIds;
         public int worldCapacity;
+        public int minFps;
+        public int maxFps;
     }
 
     public static class MetricsMatrix
@@ -127,7 +153,7 @@ namespace DecentM.Metrics
             List<MetricValue> heartbeatValues = new List<MetricValue>();
             heartbeatValues.Add(new BoolMetricValue("isMaster"));
             heartbeatValues.Add(new BoolMetricValue("isVr"));
-            heartbeatValues.Add(new IntRangeMetricValue("timezone", -11, 12));
+            heartbeatValues.Add(new IntRangeMetricValue("fps", input.minFps, input.maxFps));
             matrix.Add(Metric.Heartbeat, heartbeatValues);
 
             List<MetricValue> respawnValues = new List<MetricValue>();
@@ -158,10 +184,16 @@ namespace DecentM.Metrics
             pickupValues.Add(new BoolMetricValue("state"));
             matrix.Add(Metric.Pickup, pickupValues);
 
+            List<MetricValue> performanceValues = new List<MetricValue>();
+            performanceValues.Add(new IntMetricValue("mode", (int[])Enum.GetValues(typeof(PerformanceGovernorMode))));
+            performanceValues.Add(new IntRangeMetricValue("fps", input.minFps, input.maxFps));
+            matrix.Add(Metric.PerformanceModeChange, performanceValues);
+
             /*
-            List<MetricValue> Values = new List<MetricValue>();
-            Values.Add(new NullMetricValue());
-            matrix.Add(Metric., Values);
+             * Copy me to add another metric:
+                List<MetricValue> Values = new List<MetricValue>();
+                Values.Add(new NullMetricValue());
+                matrix.Add(Metric., Values);
             */
 
             return matrix;

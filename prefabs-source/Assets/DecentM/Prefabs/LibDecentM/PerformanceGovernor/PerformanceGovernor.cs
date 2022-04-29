@@ -17,9 +17,7 @@ namespace DecentM
 
     public enum PerformanceGovernorEvent
     {
-        OnPerformanceHigh,
-        OnPerformanceMedium,
-        OnPerformanceLow,
+        OnPerformanceModeChange,
     }
 
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
@@ -42,6 +40,13 @@ namespace DecentM
         private int frameCounter = 0;
         private float elapsed = 0;
 
+        private float lastFpsAverage = 0;
+
+        public float GetFps()
+        {
+            return this.lastFpsAverage;
+        }
+
         private void LateUpdate()
         {
             this.frameCounter++;
@@ -52,13 +57,14 @@ namespace DecentM
             {
                 this.CheckFrames();
                 this.elapsed = 0;
+                this.frameCounter = 0;
             }
         }
 
         private void CheckFrames()
         {
             float fpsAverage = this.frameCounter / this.checkEverySeconds;
-
+            this.lastFpsAverage = fpsAverage;
             // Check the current framerate and increase of decrease the level based on the current FPS + some headroom
             // to prevent switching back and forth quickly
             switch (this.currentMode)
@@ -102,19 +108,7 @@ namespace DecentM
 
         private void OnModeChange()
         {
-            switch (this.currentMode)
-            {
-                default:
-                case PerformanceGovernorMode.High:
-                    this.BroadcastEvent(PerformanceGovernorEvent.OnPerformanceHigh);
-                    break;
-                case PerformanceGovernorMode.Medium:
-                    this.BroadcastEvent(PerformanceGovernorEvent.OnPerformanceMedium);
-                    break;
-                case PerformanceGovernorMode.Low:
-                    this.BroadcastEvent(PerformanceGovernorEvent.OnPerformanceLow);
-                    break;
-            }
+            this.BroadcastEvent(PerformanceGovernorEvent.OnPerformanceModeChange, this.currentMode, this.lastFpsAverage);
         }
     }
 }

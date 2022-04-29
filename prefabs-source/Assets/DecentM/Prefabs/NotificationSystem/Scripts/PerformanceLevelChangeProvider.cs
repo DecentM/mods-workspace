@@ -5,10 +5,11 @@ using VRC.SDKBase;
 using VRC.Udon;
 using UnityEngine.UI;
 using DecentM.Pubsub;
+using DecentM.Performance.Plugins;
 
 namespace DecentM.Notifications.Providers
 {
-    public class PerformanceLevelChangeProvider : PubsubSubscriber
+    public class PerformanceLevelChangeProvider : PerformanceGovernorPlugin
     {
         public NotificationSystem notifications;
         public Toggle toggle;
@@ -17,19 +18,19 @@ namespace DecentM.Notifications.Providers
         public Sprite iconMed;
         public Sprite iconLow;
 
-        protected override void OnPubsubEvent(object name, object[] data)
+        protected override void OnPerformanceModeChange(PerformanceGovernorMode mode, float fps)
         {
-            switch (name)
+            switch (mode)
             {
-                case PerformanceGovernorEvent.OnPerformanceLow:
+                case PerformanceGovernorMode.Low:
                     this.OnPerformanceLow();
                     return;
 
-                case PerformanceGovernorEvent.OnPerformanceMedium:
+                case PerformanceGovernorMode.Medium:
                     this.OnPerformanceMedium();
                     return;
 
-                case PerformanceGovernorEvent.OnPerformanceHigh:
+                case PerformanceGovernorMode.High:
                     this.OnPerformanceHigh();
                     return;
             }

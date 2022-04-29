@@ -12,11 +12,11 @@ namespace DecentM.Metrics
     {
         private static VRCUrl MakeUrl(MetricsUI ui, string metricName, Dictionary<string, string> metricData)
         {
-            string query = $"?worldVersion={ui.worldVersion}";
+            string query = $"?builtAt={ui.builtAt}&unity={ui.unity}&sdk={ui.sdk}";
 
             foreach (KeyValuePair<string, string> kvp in metricData)
             {
-                query += $"&{kvp.Key}={Uri.EscapeDataString(kvp.Value)}";
+                query += $"&{Uri.EscapeDataString(kvp.Key)}={Uri.EscapeDataString(kvp.Value)}";
             }
 
             return new VRCUrl($"{ui.metricsServerBaseUrl}/api/v1/metrics/ingest/{metricName}{query}");
@@ -32,10 +32,16 @@ namespace DecentM.Metrics
         public static void SaveUrls(MetricsUI ui, URLStore urlStore)
         {
             List<string> instanceIds = RandomStringGenerator.GenerateRandomStrings(ui.instanceCapacity, 4);
-            UIManager.SetWorldVersion(DateTimeOffset.UtcNow.ToUnixTimeMilliseconds().ToString());
+            UIManager.SetVersionData();
             InstancePluginManager.SetInstanceIds(instanceIds);
 
-            MatrixInput matrixInput = new MatrixInput(instanceIds, ui.worldCapacity);
+            MatrixInput matrixInput = new MatrixInput();
+
+            matrixInput.instanceIds = instanceIds;
+            matrixInput.worldCapacity = ui.worldCapacity;
+            matrixInput.minFps = ui.minFps;
+            matrixInput.maxFps = ui.maxFps;
+
             Dictionary<Metric, List<MetricValue>> matrix = MetricsMatrix.GenerateMatrix(matrixInput);
 
             Dictionary<Metric, List<ResolvedMetricValue[]>> namedCombinations = new Dictionary<Metric, List<ResolvedMetricValue[]>>();

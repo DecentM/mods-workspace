@@ -69,13 +69,13 @@ namespace DecentM.Metrics
             );
         }
 
-        public VRCUrl GetHeartbeatUrl(bool isMaster, bool isVr, int timezone)
+        public VRCUrl GetHeartbeatUrl(bool isMaster, bool isVr, int fps)
         {
             return this.GetMetricUrl(Metric.Heartbeat, new object[][]
                 {
                     new object[] { "isMaster", isMaster.ToString() },
                     new object[] { "isVr", isVr.ToString() },
-                    new object[] { "timezone", timezone.ToString() },
+                    new object[] { "fps", fps.ToString() },
                 }
             );
         }
@@ -127,6 +127,15 @@ namespace DecentM.Metrics
             {
                 new object[] { "name", name },
                 new object[] { "state", state.ToString() },
+            });
+        }
+
+        public VRCUrl GetPerformanceUrl(PerformanceGovernorMode mode, int fps)
+        {
+            return this.GetMetricUrl(Metric.PerformanceModeChange, new object[][]
+            {
+                new object[] { "mode", mode.ToString() },
+                new object[] { "fps", fps.ToString() },
             });
         }
     }

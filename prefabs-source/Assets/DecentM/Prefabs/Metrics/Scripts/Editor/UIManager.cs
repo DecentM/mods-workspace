@@ -1,21 +1,26 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DecentM.EditorTools;
 using DecentM.Metrics.Plugins;
+using UdonSharp;
+using UdonSharpEditor;
 
 namespace DecentM.Metrics
 {
     public static class UIManager
     {
-        public static void SetWorldVersion(string worldVersion)
+        public static void SetVersionData()
         {
             ComponentCollector<MetricsUI> collector = new ComponentCollector<MetricsUI>();
             List<MetricsUI> uis = collector.CollectFromActiveScene();
 
             foreach (MetricsUI ui in uis)
             {
-                ui.worldVersion = worldVersion;
+                ui.builtAt = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds().ToString();
+                ui.sdk = VRC.Tools.ClientVersion;
+                ui.unity = VRC.Tools.UnityVersion.ToString();
             }
         }
     }

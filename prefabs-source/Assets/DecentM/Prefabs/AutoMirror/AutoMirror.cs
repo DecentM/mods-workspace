@@ -3,11 +3,12 @@ using UdonSharp;
 using UnityEngine;
 using VRC.SDKBase;
 using DecentM.Pubsub;
+using DecentM.Performance.Plugins;
 
 namespace DecentM
 {
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
-    public sealed class AutoMirror : PubsubSubscriber
+    public sealed class AutoMirror : PerformanceGovernorPlugin
     {
         public LibDecentM lib;
         public ActivateObjectsVolume trigger;
@@ -91,19 +92,19 @@ namespace DecentM
             }
         }
 
-        protected override void OnPubsubEvent(object eventName, object[] data)
+        protected override void OnPerformanceModeChange(PerformanceGovernorMode mode, float fps)
         {
-            switch (eventName)
+            switch (mode)
             {
-                case PerformanceGovernorEvent.OnPerformanceLow:
+                case PerformanceGovernorMode.Low:
                     this.SetMasks("Player", "MirrorReflection");
                     return;
 
-                case PerformanceGovernorEvent.OnPerformanceMedium:
+                case PerformanceGovernorMode.Medium:
                     this.SetMasks("Player", "MirrorReflection", "Pickup", "Default", "Environment");
                     return;
 
-                case PerformanceGovernorEvent.OnPerformanceHigh:
+                case PerformanceGovernorMode.High:
                     this.SetMasks("Player", "MirrorReflection", "Pickup", "Default", "Walkthrough", "UI", "Environment");
                     return;
             }
