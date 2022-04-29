@@ -15,7 +15,7 @@ namespace DecentM.VideoPlayer
 {
     /// <summary>
     /// Allows people to put in links to YouTube videos and other supported video services and have links just work
-    /// Hooks into VRC's video player URL resolve callback and uses the VRC installation of YouTubeDL to resolve URLs in the editor.
+    /// Hooks into VRC's video player URL resolve callback and uses the bundled version of yt-dlp to resolve URLs in the editor.
     /// </summary>
     public static class EditorURLResolverShim
     {

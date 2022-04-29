@@ -24,7 +24,7 @@ namespace DecentM.EditorTools
         SceneOpened,
         EditMode,
         HierarchyChanged,
-        SceneSaved,
+        SceneSave,
     }
 
     public abstract class AutoSceneFixer : IVRCSDKBuildRequestedCallback
@@ -34,7 +34,7 @@ namespace DecentM.EditorTools
             if (events.Contains(SceneFixEvent.SceneOpened)) EditorSceneManager.sceneOpened += OnSceneOpened;
             if (events.Contains(SceneFixEvent.EditMode)) EditorApplication.playModeStateChanged += OnChangePlayMode;
             if (events.Contains(SceneFixEvent.HierarchyChanged)) EditorApplication.hierarchyChanged += OnHierarchyChanged;
-            if (events.Contains(SceneFixEvent.SceneSaved)) EditorSceneManager.sceneSaved += OnSceneSaved;
+            if (events.Contains(SceneFixEvent.SceneSave)) EditorSceneManager.sceneSaving += OnBeforeSave;
         }
 
         public AutoSceneFixer(params SceneFixEvent[] events)
@@ -44,7 +44,7 @@ namespace DecentM.EditorTools
 
         public AutoSceneFixer()
         {
-            this.AttachEvents(new SceneFixEvent[] { SceneFixEvent.SceneOpened, SceneFixEvent.SceneSaved, SceneFixEvent.EditMode });
+            this.AttachEvents(new SceneFixEvent[] { SceneFixEvent.SceneOpened, SceneFixEvent.EditMode, SceneFixEvent.SceneSave });
         }
 
         protected abstract bool OnPerformFixes();
@@ -80,19 +80,10 @@ namespace DecentM.EditorTools
             if (!success) throw new SceneFixingException("Failed to perform fixes during hierarchy change");
         }
 
-        private bool thisSaveFixed = false;
-        private void OnSceneSaved(Scene scene)
+        private void OnBeforeSave(Scene scene, string path)
         {
-            if (this.thisSaveFixed)
-            {
-                this.thisSaveFixed = false;
-                return;
-            }
-
             bool success = this.OnPerformFixes();
-            if (!success) throw new SceneFixingException("Failed to perform fixes after scene was saved");
-            this.thisSaveFixed = true;
-            EditorSceneManager.SaveScene(scene);
+            if (!success) throw new SceneFixingException("Failed to perform fixes during scene save");
         }
     }
 }

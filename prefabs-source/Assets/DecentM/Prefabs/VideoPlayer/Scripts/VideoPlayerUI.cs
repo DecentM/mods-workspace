@@ -7,5 +7,5 @@ using VRC.Udon;
 namespace DecentM.VideoPlayer
 {
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
-    public class VideoPlayer : UdonSharpBehaviour {}
+    public class VideoPlayerUI : UdonSharpBehaviour {}
 }
