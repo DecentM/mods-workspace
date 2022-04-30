@@ -10,7 +10,7 @@ namespace DecentM.VideoPlayer.Plugins
 {
     public sealed class TextureUpdaterPlugin : VideoPlayerPlugin
     {
-        public Texture2D idleTexture;
+        public Texture idleTexture;
 
         public Material unityPlayerMaterial;
         public Material avproPlayerMaterial;
@@ -31,7 +31,7 @@ namespace DecentM.VideoPlayer.Plugins
 
             foreach (Renderer screen in this.system.screens)
             {
-                screen.material.SetTexture("_MainTex", videoTexture);
+                // screen.material.SetTexture("_MainTex", videoTexture);
                 screen.material.SetTexture("_EmissionMap", videoTexture);
             }
 
@@ -44,7 +44,7 @@ namespace DecentM.VideoPlayer.Plugins
 
             foreach (Renderer screen in this.system.screens)
             {
-                screen.material.SetTexture("_MainTex", idleTexture);
+                // screen.material.SetTexture("_MainTex", idleTexture);
                 screen.material.SetTexture("_EmissionMap", idleTexture);
             }
 

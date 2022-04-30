@@ -16,6 +16,9 @@ public class MetricsBuildHook : IVRCSDKBuildRequestedCallback
         foreach (GameObject root in scene.GetRootGameObjects())
         {
             MetricsUI ui = root.GetComponentInChildren<MetricsUI>();
+
+            if (ui == null) continue;
+
             URLStore urlStore = ui.GetComponentInChildren<URLStore>();
 
             MetricsUrlGenerator.SaveUrls(ui, urlStore);

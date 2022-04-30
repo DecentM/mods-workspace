@@ -16,7 +16,7 @@ namespace DecentM.VideoPlayer.Plugins
         {
             float aspectRatio = width / height;
 
-            screen.transform.localScale = new Vector3(screen.transform.localScale.x, screen.transform.localScale.x / aspectRatio, screen.transform.localScale.z);
+            // screen.transform.localScale = new Vector3(screen.transform.localScale.x, screen.transform.localScale.x / aspectRatio, screen.transform.localScale.z);
             screen.material.SetFloat("_TargetAspectRatio", (float)width / (float)height);
 
             this.events.OnScreenResolutionChange(screen, width, height);
@@ -25,6 +25,8 @@ namespace DecentM.VideoPlayer.Plugins
         protected override void OnPlaybackStart(float duration)
         {
             Texture videoTexture = this.system.GetVideoTexture();
+
+            if (videoTexture == null) return;
 
             foreach (Renderer screen in this.system.screens)
             {

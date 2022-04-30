@@ -243,7 +243,7 @@ namespace DecentM.VideoPlayer.Plugins
         private void PlayingScreen(float duration)
         {
             this.playButton.interactable = false;
-            this.pauseButton.interactable = this.selfOwned;
+            this.pauseButton.interactable = this.selfOwned && !float.IsInfinity(duration);
             this.stopButton.interactable = this.selfOwned;
             this.progress.interactable = this.selfOwned;
 

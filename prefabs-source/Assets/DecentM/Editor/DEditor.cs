@@ -3,6 +3,7 @@ using System.Collections.Immutable;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using UnityEditorInternal;
 using VRC.Udon;
 using VRC.Udon.Common;
 using VRC.Udon.Common.Interfaces;
@@ -68,6 +69,29 @@ namespace DecentM.EditorTools
             }
         }
 
+        protected ReorderableList CreateReorderableList(SerializedObject serializedObject, string propertyPath)
+        {
+            SerializedProperty property = serializedObject.FindProperty(propertyPath);
+            ReorderableList list = new ReorderableList(serializedObject, property, true, true, true, true);
+
+            list.drawElementCallback = (Rect rect, int index, bool isActive, bool isFocused) =>
+            {
+                Rect testFieldRect = new Rect(rect.x, rect.y + 2, rect.width, EditorGUIUtility.singleLineHeight);
+
+                EditorGUI.PropertyField(testFieldRect, list.serializedProperty.GetArrayElementAtIndex(index), label: new GUIContent());
+            };
+
+            list.drawHeaderCallback = (Rect rect) =>
+            {
+                EditorGUI.LabelField(rect, new GUIContent(
+                    "Default Playlist URLs",
+                    "URLs that will play in sequence when you join the world until someone puts in a video."
+                ));
+            };
+
+            return list;
+        }
+
         protected object TabBar(List<EnumerableOption> tabs, object current)
         {
             EditorGUILayout.Space();
@@ -98,6 +122,27 @@ namespace DecentM.EditorTools
             EditorGUILayout.Space();
 
             return clickedTab;
+        }
+
+        protected bool Toggle(string label, bool value)
+        {
+            return EditorGUILayout.Toggle(label, value);
+        }
+
+        protected void HelpBox(MessageType type, string contents)
+        {
+            EditorGUILayout.HelpBox(contents, type);
+        }
+
+        protected void DrawImage(Texture image)
+        {
+            float imageAspectRatio = 1f * image.width / image.height;
+
+            Rect drawRect = EditorGUILayout.GetControlRect(false, Screen.width / imageAspectRatio);
+            drawRect.x = 0;
+            drawRect.width = Screen.width;
+
+            EditorGUI.DrawPreviewTexture(drawRect, image);
         }
 
         protected bool Button(string label, float progress = 0f)

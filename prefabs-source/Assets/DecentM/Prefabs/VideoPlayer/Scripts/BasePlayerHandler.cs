@@ -136,14 +136,18 @@ namespace DecentM.VideoPlayer
 
         public Texture GetScreenTexture()
         {
-            if (this.type == VideoPlayerHandlerType.Unity)
-            {
-                this.screen.GetPropertyBlock(this.fetchBlock);
+            Texture result;
 
-                return this.fetchBlock.GetTexture("_MainTex");
+            this.screen.GetPropertyBlock(this.fetchBlock);
+
+            result = this.fetchBlock.GetTexture("_EmissionMap");
+
+            if (result == null)
+            {
+                result = this.screen.material.GetTexture("_EmissionMap");
             }
 
-            return this.screen.material.GetTexture("_MainTex");
+            return result;
         }
 
         public float GetDuration()
