@@ -715,5 +715,5 @@ MonoBehaviour:
   renderSettingsRTPVSceneView: 0
   renderSettingsRTPVWidth: 640
   renderSettingsRTPVHeight: 360
-  modifiedMeshPaddingArray: 1e000000
+  modifiedMeshPaddingArray: 01000000
   modifiedMeshUnwrapperArray: 01000000
