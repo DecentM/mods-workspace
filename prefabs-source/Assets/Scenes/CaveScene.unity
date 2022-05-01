@@ -98,7 +98,8 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: 37b866cf28f7c59458e718ea655519d2,
+    type: 2}
   m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
@@ -292,14 +293,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 71629640}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.0745, y: 0.21339, z: 0.00611}
-  m_LocalScale: {x: 0.005, y: 0.005, z: 0.005}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.0745, y: 0.21338998, z: 0.0061099897}
+  m_LocalScale: {x: 0.005, y: 0.0050000004, z: 0.0050000004}
   m_Children:
   - {fileID: 171555231}
   - {fileID: 1546956984}
-  m_Father: {fileID: 98743458}
-  m_RootOrder: 9
+  m_Father: {fileID: 905633696}
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &89200233
 PrefabInstance:
@@ -786,15 +787,15 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 140428760}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.13936, y: 0.16517, z: 0}
-  m_LocalScale: {x: 0.005, y: 0.005, z: 0.005}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.13936, y: 0.16516997, z: 0}
+  m_LocalScale: {x: 0.005, y: 0.0050000004, z: 0.0050000004}
   m_Children:
   - {fileID: 1871171641}
   - {fileID: 540422132}
   - {fileID: 527647273}
-  m_Father: {fileID: 98743458}
-  m_RootOrder: 7
+  m_Father: {fileID: 905633696}
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &169452399
 GameObject:
@@ -819,16 +820,16 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 169452399}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.00753, y: 0.1526, z: 0.01848}
-  m_LocalScale: {x: 0.005, y: 0.005, z: 0.005}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.0075299996, y: 0.1526, z: 0.018479995}
+  m_LocalScale: {x: 0.005, y: 0.0050000004, z: 0.0050000004}
   m_Children:
   - {fileID: 1465801020}
   - {fileID: 890105649}
   - {fileID: 291026061}
   - {fileID: 460948465}
-  m_Father: {fileID: 98743458}
-  m_RootOrder: 11
+  m_Father: {fileID: 905633696}
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &171555230
 PrefabInstance:
@@ -1103,14 +1104,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 243260973}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.02542, y: 0.07791, z: 0.01848}
-  m_LocalScale: {x: 0.005, y: 0.005, z: 0.005}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.02542, y: 0.07790998, z: 0.018480001}
+  m_LocalScale: {x: 0.005, y: 0.0050000004, z: 0.0050000004}
   m_Children:
   - {fileID: 1786560976}
   - {fileID: 762266246}
-  m_Father: {fileID: 98743458}
-  m_RootOrder: 14
+  m_Father: {fileID: 905633696}
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &249539344
 PrefabInstance:
@@ -1616,6 +1617,108 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 291026060}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &302527441
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 302527442}
+  - component: {fileID: 302527443}
+  m_Layer: 0
+  m_Name: Lightprobes
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &302527442
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 302527441}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 98743458}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!220 &302527443
+LightProbeGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 302527441}
+  m_Enabled: 1
+  m_SourcePositions:
+  - {x: 0.08584845, y: 0.19869208, z: 0.00984532}
+  - {x: 0, y: -3.4059797e-10, z: 0.0022331662}
+  - {x: 0.005200194, y: 0.022262806, z: 0.0022331662}
+  - {x: 0.0060010175, y: 0.039567713, z: 0.0022331676}
+  - {x: 0.0132381, y: 0.053290393, z: 0.0022331676}
+  - {x: 0.037189923, y: 0.06563844, z: -0.006208163}
+  - {x: 0.021947075, y: 0.07619973, z: -0.0062081576}
+  - {x: 0.0084605785, y: 0.097391576, z: -0.0062081576}
+  - {x: -0.0024218708, y: 0.12628636, z: -0.0062081576}
+  - {x: -0.00987835, y: 0.15056902, z: -0.006208147}
+  - {x: 0.027320717, y: 0.14745979, z: -0.006208147}
+  - {x: 0.04743206, y: 0.14791724, z: -0.006208147}
+  - {x: 0.077728234, y: 0.15313542, z: -0.006208147}
+  - {x: 0.10161551, y: 0.15691885, z: -0.004730137}
+  - {x: 0.13023916, y: 0.16369389, z: 0.0014245065}
+  - {x: 0.12562041, y: 0.18853384, z: 0.003614982}
+  - {x: 0.12196318, y: 0.21115918, z: 0.0045770705}
+  - {x: 0.10574082, y: 0.2333483, z: 0.0050059077}
+  - {x: 0.01171661, y: 0.3087861, z: 0.019031614}
+  - {x: 0.081812866, y: 0.21748066, z: 0.007440121}
+  - {x: 0.06339556, y: 0.20675255, z: 0.007440121}
+  - {x: 0.07689636, y: 0.20883837, z: 0.004999412}
+  - {x: 0.07646596, y: 0.24306051, z: 0.008124303}
+  - {x: 0.04608689, y: 0.2541538, z: 0.008124303}
+  - {x: 0.026322901, y: 0.25959194, z: 0.01116041}
+  - {x: 0.06067959, y: 0.20265806, z: 0.032113608}
+  - {x: 0.009273565, y: 0.2950025, z: 0.014907598}
+  - {x: 0.008324044, y: 0.2683606, z: 0.01116041}
+  - {x: 0.00217115, y: 0.24689122, z: 0.01116041}
+  - {x: -0.009898311, y: 0.21957651, z: 0.016037818}
+  - {x: -0.014299993, y: 0.19179833, z: 0.016037818}
+  - {x: -0.012352163, y: 0.1657983, z: 0.020409962}
+  - {x: 0.0006943127, y: 0.14029007, z: 0.017477233}
+  - {x: 0.023771606, y: 0.12767658, z: 0.017477222}
+  - {x: 0.047430202, y: 0.120061554, z: 0.017477222}
+  - {x: 0.013982263, y: 0.07832531, z: 0.02021307}
+  - {x: 0.06879852, y: 0.15951493, z: 0.024371633}
+  - {x: 0.06959709, y: 0.17878747, z: 0.02646963}
+  - {x: 0.10115277, y: 0.22035265, z: 0.02646962}
+  - {x: 0.06567731, y: 0.19369803, z: 0.02646962}
+  - {x: 0.065994695, y: 0.21610533, z: 0.02646962}
+  - {x: 0.08391494, y: 0.20222385, z: 0.02646962}
+  - {x: 0.06177429, y: 0.13413703, z: 0.021055408}
+  - {x: 0.076823115, y: 0.1110745, z: 0.014191711}
+  - {x: 0.088312335, y: 0.09728858, z: 0.011823972}
+  - {x: -0.025383072, y: -0.0014137243, z: 0.0011860223}
+  - {x: 0.06577305, y: 0.082830265, z: 0.012851346}
+  - {x: 0.052790545, y: 0.08425234, z: 0.017724862}
+  - {x: 0.032209232, y: 0.085585386, z: 0.017724862}
+  - {x: 0.08476004, y: 0.07707215, z: 0.010906052}
+  - {x: 0.074144445, y: 0.054113407, z: 0.007958894}
+  - {x: 0.07088209, y: 0.039793998, z: 0.007958888}
+  - {x: 0.07057441, y: 0.025635187, z: 0.007958888}
+  - {x: 0.054377314, y: 0.009578426, z: 0.005605135}
+  - {x: 0.011185165, y: -0.0151776355, z: 0.00012726149}
+  - {x: 0.03747417, y: -0.012733932, z: 0.0024282446}
+  - {x: 0.042960938, y: -0.0382467, z: 0.0014521063}
+  - {x: 0.028909523, y: -0.062037643, z: 0.00025469193}
+  - {x: 0.0021674484, y: -0.07188297, z: -0.0021401206}
+  - {x: -0.026836377, y: -0.05724802, z: 0.0011860175}
+  - {x: -0.0421854, y: -0.02687901, z: 0.0011860203}
+  m_Dering: 1
 --- !u!1 &309968254
 GameObject:
   m_ObjectHideFlags: 0
@@ -2076,24 +2179,84 @@ MonoBehaviour:
   renderSettingsRTPVSceneView: 0
   renderSettingsRTPVWidth: 640
   renderSettingsRTPVHeight: 360
-  lastBakeTime: 143
+  lastBakeTime: 85
   enlightenWarningShown: 0
   enlightenWarningShown2: 0
-  lightUIDs: 038285cbf543c0d91f18da2f8993d7e43842b7154a6d05385e93d69065415372d618d43ecc23ed88f044b63ff48f9f3c8afe02371c48dadf8ff54cf783cc1ab37e9ec88945545a82e73dea2237457da9f1d11aaa5b4baab4ab42f9ef9c84c5fc07ea72b321697bc6c724a5375348eca6f2dc31c98c251848c1c44d92ad9a2d5c
+  lightUIDs: df8c1943075277ab117a6c8c2bdf991ef3f778b46384eeb06e161e1f03719ddd32a05eb905c9d7094f16cf8c0a18c747c5feb5e8588492eab568212e413c562d0acf3070c5dd7570f685c670ec00c062a3d406b0802d09518079135af7d75e1cff47ec96f5eaa8f1c50be5f1bae57229e3c08ca8866298991ffca6edad9a2d5c
   lights:
+  - tform:
+      e00: -0.23954837
+      e01: 0.002116078
+      e02: 0.196815
+      e03: 8.254747
+      e10: 0.020360671
+      e11: -0.056469925
+      e12: 0.54684705
+      e13: 1.4207159
+      e20: 0.04425391
+      e21: 0.03743553
+      e22: 0.8137706
+      e23: -8.579996
+      e30: 0
+      e31: 0
+      e32: 0
+      e33: 1
+    color: {r: 1, g: 1, b: 1, a: 1}
+    intensity: 1000
+    range: 19.3
+    radius: 0
+    samples: 128
+    samples2: 0
+    bitmask: 0
+    bakeToIndirect: 1
+    selfShadow: 0
+    realisticFalloff: 0
+    projMode: 0
+    cookie: {fileID: 0}
+    angle: 30
+  - tform:
+      e00: -0.24445125
+      e01: 0
+      e02: 0
+      e03: 17.055216
+      e10: 0
+      e11: -0.06547489
+      e12: 0.25881857
+      e13: 7.286646
+      e20: -0
+      e21: 0.017543906
+      e22: 0.96592605
+      e23: -32.84326
+      e30: 0
+      e31: 0
+      e32: 0
+      e33: 1
+    color: {r: 1, g: 1, b: 1, a: 1}
+    intensity: 2000
+    range: 15
+    radius: 0
+    samples: 128
+    samples2: 0
+    bitmask: 0
+    bakeToIndirect: 1
+    selfShadow: 0
+    realisticFalloff: 0
+    projMode: 0
+    cookie: {fileID: 0}
+    angle: 30
   - tform:
       e00: -0.20749423
       e01: -0.009275241
       e02: -0.5106724
       e03: 20.26889
-      e10: 0.000000028304873
-      e11: -0.06547488
-      e12: 0.2588186
-      e13: 3.1128967
-      e20: -0.12923807
-      e21: 0.014891563
-      e22: 0.8198944
-      e23: -26.858461
+      e10: 0.000000028304875
+      e11: -0.06547489
+      e12: 0.25881863
+      e13: 3.112897
+      e20: -0.12923808
+      e21: 0.014891564
+      e22: 0.81989443
+      e23: -26.858458
       e30: 0
       e31: 0
       e32: 0
@@ -2112,138 +2275,18 @@ MonoBehaviour:
     cookie: {fileID: 0}
     angle: 30
   - tform:
-      e00: 0.24431454
-      e01: 0.000586753
-      e02: 0.03230338
-      e03: 0.97371507
-      e10: -0.0024699615
-      e11: -0.05711697
-      e12: 0.53840613
-      e13: 5.1288595
-      e20: 0.007793144
-      e21: -0.036497336
-      e22: -0.84206617
-      e23: -46.849365
-      e30: 0
-      e31: 0
-      e32: 0
-      e33: 1
-    color: {r: 1, g: 1, b: 1, a: 1}
-    intensity: 2000
-    range: 19.63
-    radius: 0
-    samples: 128
-    samples2: 0
-    bitmask: 0
-    bakeToIndirect: 1
-    selfShadow: 0
-    realisticFalloff: 0
-    projMode: 0
-    cookie: {fileID: 0}
-    angle: 30
-  - tform:
-      e00: -0.24445125
-      e01: 0
-      e02: 0
-      e03: 17.055216
-      e10: 0
-      e11: -0.06547488
-      e12: 0.25881854
-      e13: 7.286646
-      e20: -0
-      e21: 0.017543904
-      e22: 0.965926
-      e23: -32.84327
-      e30: 0
-      e31: 0
-      e32: 0
-      e33: 1
-    color: {r: 1, g: 1, b: 1, a: 1}
-    intensity: 2000
-    range: 15
-    radius: 0
-    samples: 128
-    samples2: 0
-    bitmask: 0
-    bakeToIndirect: 1
-    selfShadow: 0
-    realisticFalloff: 0
-    projMode: 0
-    cookie: {fileID: 0}
-    angle: 30
-  - tform:
-      e00: -0.24445121
-      e01: 0
-      e02: 0
-      e03: 4.523467
-      e10: 0
-      e11: -0.0654749
-      e12: 0.2588186
-      e13: 6.4374595
-      e20: -0
-      e21: 0.017543908
-      e22: 0.9659261
-      e23: -10.439509
-      e30: 0
-      e31: 0
-      e32: 0
-      e33: 1
-    color: {r: 1, g: 1, b: 1, a: 1}
-    intensity: 2000
-    range: 15
-    radius: 0
-    samples: 128
-    samples2: 0
-    bitmask: 0
-    bakeToIndirect: 1
-    selfShadow: 0
-    realisticFalloff: 0
-    projMode: 0
-    cookie: {fileID: 0}
-    angle: 30
-  - tform:
-      e00: -0.23798281
-      e01: -0.00043198926
-      e02: -0.2284297
-      e03: 2.2552717
-      e10: 0.0007212728
-      e11: -0.06777632
-      e12: 0.015320537
-      e13: 1.4300303
-      e20: -0.05585695
-      e21: 0.00096533075
-      e22: 0.97343993
-      e23: -23.192862
-      e30: 0
-      e31: 0
-      e32: 0
-      e33: 1
-    color: {r: 1, g: 1, b: 1, a: 1}
-    intensity: 1000
-    range: 12.63
-    radius: 0
-    samples: 128
-    samples2: 0
-    bitmask: 0
-    bakeToIndirect: 1
-    selfShadow: 0
-    realisticFalloff: 0
-    projMode: 0
-    cookie: {fileID: 0}
-    angle: 30
-  - tform:
       e00: -0.008174573
       e01: 0.017534062
       e02: 0.9653859
       e03: 17.973278
-      e10: 0.000000036409745
-      e11: -0.0654749
-      e12: 0.2588181
-      e13: 3.1172705
-      e20: 0.24431431
+      e10: 0.000000036409748
+      e11: -0.065474905
+      e12: 0.25881812
+      e13: 3.1172688
+      e20: 0.24431433
       e21: 0.0005866882
-      e22: 0.03230104
-      e23: -37.48778
+      e22: 0.032301042
+      e23: -37.487778
       e30: 0
       e31: 0
       e32: 0
@@ -2266,14 +2309,164 @@ MonoBehaviour:
       e01: 0.017636204
       e02: 0.88622564
       e03: 1.391684
-      e10: 0.02036054
+      e10: 0.020360542
       e11: -0.06543459
-      e12: 0.24738123
+      e12: 0.24738124
       e13: 1.4243236
-      e20: 0.22486204
-      e21: -0.0014237687
-      e22: -0.39167213
-      e23: -22.543045
+      e20: 0.22486207
+      e21: -0.0014237689
+      e22: -0.39167216
+      e23: -22.54304
+      e30: 0
+      e31: 0
+      e32: 0
+      e33: 1
+    color: {r: 1, g: 1, b: 1, a: 1}
+    intensity: 1000
+    range: 12.63
+    radius: 0
+    samples: 128
+    samples2: 0
+    bitmask: 0
+    bakeToIndirect: 1
+    selfShadow: 0
+    realisticFalloff: 0
+    projMode: 0
+    cookie: {fileID: 0}
+    angle: 30
+  - tform:
+      e00: 0.24431454
+      e01: 0.000586753
+      e02: 0.03230338
+      e03: 0.97371507
+      e10: -0.0024699618
+      e11: -0.057116974
+      e12: 0.5384062
+      e13: 5.1288605
+      e20: 0.0077931443
+      e21: -0.036497336
+      e22: -0.8420662
+      e23: -46.849354
+      e30: 0
+      e31: 0
+      e32: 0
+      e33: 1
+    color: {r: 1, g: 1, b: 1, a: 1}
+    intensity: 2000
+    range: 19.63
+    radius: 0
+    samples: 128
+    samples2: 0
+    bitmask: 0
+    bakeToIndirect: 1
+    selfShadow: 0
+    realisticFalloff: 0
+    projMode: 0
+    cookie: {fileID: 0}
+    angle: 30
+  - tform:
+      e00: -0.24445121
+      e01: 0
+      e02: 0
+      e03: 4.523467
+      e10: 0
+      e11: -0.065474905
+      e12: 0.25881863
+      e13: 6.4374604
+      e20: -0
+      e21: 0.017543908
+      e22: 0.9659263
+      e23: -10.439507
+      e30: 0
+      e31: 0
+      e32: 0
+      e33: 1
+    color: {r: 1, g: 1, b: 1, a: 1}
+    intensity: 2000
+    range: 15
+    radius: 0
+    samples: 128
+    samples2: 0
+    bitmask: 0
+    bakeToIndirect: 1
+    selfShadow: 0
+    realisticFalloff: 0
+    projMode: 0
+    cookie: {fileID: 0}
+    angle: 30
+  - tform:
+      e00: 0.008175812
+      e01: -0.031550735
+      e02: -0.88443905
+      e03: 19.84213
+      e10: 0.00000008743882
+      e11: -0.059984885
+      e12: 0.4657165
+      e13: 3.1077175
+      e20: -0.24431433
+      e21: -0.0010558462
+      e22: -0.029597014
+      e23: -29.965996
+      e30: 0
+      e31: 0
+      e32: 0
+      e33: 1
+    color: {r: 1, g: 1, b: 1, a: 1}
+    intensity: 1500
+    range: 15.63
+    radius: 0
+    samples: 128
+    samples2: 0
+    bitmask: 0
+    bakeToIndirect: 1
+    selfShadow: 0
+    realisticFalloff: 0
+    projMode: 0
+    cookie: {fileID: 0}
+    angle: 30
+  - tform:
+      e00: 0.122225
+      e01: -0.03414112
+      e02: -0.7044988
+      e03: 2.9787638
+      e10: 0.000000062185805
+      e11: -0.055141646
+      e12: 0.581588
+      e13: 2.9159055
+      e20: -0.21170138
+      e21: -0.019711263
+      e22: -0.40673947
+      e23: -13.065972
+      e30: 0
+      e31: 0
+      e32: 0
+      e33: 1
+    color: {r: 1, g: 1, b: 1, a: 1}
+    intensity: 1000
+    range: 12.63
+    radius: 0
+    samples: 128
+    samples2: 0
+    bitmask: 0
+    bakeToIndirect: 1
+    selfShadow: 0
+    realisticFalloff: 0
+    projMode: 0
+    cookie: {fileID: 0}
+    angle: 30
+  - tform:
+      e00: -0.23798281
+      e01: -0.00043198926
+      e02: -0.2284297
+      e03: 2.2552717
+      e10: 0.0007212729
+      e11: -0.06777632
+      e12: 0.015320539
+      e13: 1.4300305
+      e20: -0.055856958
+      e21: 0.0009653308
+      e22: 0.97344005
+      e23: -23.192856
       e30: 0
       e31: 0
       e32: 0
@@ -2297,13 +2490,13 @@ MonoBehaviour:
       e02: -0.8198957
       e03: 9.620002
       e10: 0.00000001897598
-      e11: -0.0654749
-      e12: 0.25881857
-      e13: 3.5213454
-      e20: -0.2074945
-      e21: -0.009275213
-      e22: -0.51067036
-      e23: -37.57937
+      e11: -0.065474905
+      e12: 0.2588186
+      e13: 3.5213437
+      e20: -0.20749451
+      e21: -0.009275214
+      e22: -0.5106704
+      e23: -37.579365
       e30: 0
       e31: 0
       e32: 0
@@ -2321,499 +2514,19 @@ MonoBehaviour:
     projMode: 0
     cookie: {fileID: 0}
     angle: 30
-  - tform:
-      e00: 0.122225
-      e01: -0.03414112
-      e02: -0.7044988
-      e03: 2.9787638
-      e10: 0.00000006218579
-      e11: -0.05514164
-      e12: 0.581588
-      e13: 2.915905
-      e20: -0.21170135
-      e21: -0.019711262
-      e22: -0.4067394
-      e23: -13.065974
-      e30: 0
-      e31: 0
-      e32: 0
-      e33: 1
-    color: {r: 1, g: 1, b: 1, a: 1}
-    intensity: 1000
-    range: 12.63
-    radius: 0
-    samples: 128
-    samples2: 0
-    bitmask: 0
-    bakeToIndirect: 1
-    selfShadow: 0
-    realisticFalloff: 0
-    projMode: 0
-    cookie: {fileID: 0}
-    angle: 30
-  - tform:
-      e00: 0.008175812
-      e01: -0.031550735
-      e02: -0.88443905
-      e03: 19.84213
-      e10: 0.000000087438806
-      e11: -0.05998488
-      e12: 0.46571648
-      e13: 3.1077173
-      e20: -0.24431431
-      e21: -0.0010558461
-      e22: -0.02959701
-      e23: -29.966002
-      e30: 0
-      e31: 0
-      e32: 0
-      e33: 1
-    color: {r: 1, g: 1, b: 1, a: 1}
-    intensity: 1500
-    range: 15.63
-    radius: 0
-    samples: 128
-    samples2: 0
-    bitmask: 0
-    bakeToIndirect: 1
-    selfShadow: 0
-    realisticFalloff: 0
-    projMode: 0
-    cookie: {fileID: 0}
-    angle: 30
-  - tform:
-      e00: -0.23954837
-      e01: 0.002116078
-      e02: 0.196815
-      e03: 8.254747
-      e10: 0.02036067
-      e11: -0.05646992
-      e12: 0.546847
-      e13: 1.4207159
-      e20: 0.044253908
-      e21: 0.037435528
-      e22: 0.8137705
-      e23: -8.579998
-      e30: 0
-      e31: 0
-      e32: 0
-      e33: 1
-    color: {r: 1, g: 1, b: 1, a: 1}
-    intensity: 1000
-    range: 19.3
-    radius: 0
-    samples: 128
-    samples2: 0
-    bitmask: 0
-    bakeToIndirect: 1
-    selfShadow: 0
-    realisticFalloff: 0
-    projMode: 0
-    cookie: {fileID: 0}
-    angle: 30
-  - tform:
-      e00: 3.5611925
-      e01: 0.5848463
-      e02: -1.7250742
-      e03: 9.218788
-      e10: 0.00000063437466
-      e11: 3.7882128
-      e12: 1.2843074
-      e13: 5.930762
-      e20: 1.8215181
-      e21: -1.1434159
-      e22: 3.3726373
-      e23: -17.497402
-      e30: 0
-      e31: 0
-      e32: 0
-      e33: 1
-    color: {r: 1, g: 0.8886478, b: 0.6745283, a: 1}
-    intensity: 2
-    range: 8
-    radius: 0.05
-    samples: 32
-    samples2: 0
-    bitmask: 0
-    bakeToIndirect: 0
-    selfShadow: 0
-    realisticFalloff: 0
-    projMode: 0
-    cookie: {fileID: 0}
-    angle: 30
-  - tform:
-      e00: -3.355121
-      e01: -0.0030699975
-      e02: -2.1778846
-      e03: 4.572292
-      e10: 0.45883232
-      e11: 3.909223
-      e12: -0.7123605
-      e13: 3.7508214
-      e20: 2.1290057
-      e21: -0.8473329
-      e22: -3.2786238
-      e23: -42.934086
-      e30: 0
-      e31: 0
-      e32: 0
-      e33: 1
-    color: {r: 1, g: 0.8886478, b: 0.6745283, a: 1}
-    intensity: 2
-    range: 8
-    radius: 0.05
-    samples: 32
-    samples2: 0
-    bitmask: 0
-    bakeToIndirect: 0
-    selfShadow: 0
-    realisticFalloff: 0
-    projMode: 0
-    cookie: {fileID: 0}
-    angle: 30
-  - tform:
-      e00: 3.59796
-      e01: 0.7204225
-      e02: 1.5923848
-      e03: -4.074102
-      e10: 0.09153433
-      e11: 3.56171
-      e12: -1.8181999
-      e13: 0.98208183
-      e20: -1.7453715
-      e21: 1.6718911
-      e22: 3.187235
-      e23: -28.378716
-      e30: 0
-      e31: 0
-      e32: 0
-      e33: 1
-    color: {r: 1, g: 0.8886478, b: 0.6745283, a: 1}
-    intensity: 2
-    range: 8
-    radius: 0.05
-    samples: 32
-    samples2: 0
-    bitmask: 0
-    bakeToIndirect: 0
-    selfShadow: 0
-    realisticFalloff: 0
-    projMode: 0
-    cookie: {fileID: 0}
-    angle: 30
-  - tform:
-      e00: 2.237849
-      e01: 0.84738666
-      e02: 3.2053046
-      e03: -2.2413268
-      e10: 0.09153377
-      e11: 3.8498766
-      e12: -1.0816989
-      e13: 2.1300435
-      e20: -3.3141627
-      e21: 0.6785176
-      e22: 2.1344688
-      e23: -1.9695996
-      e30: 0
-      e31: 0
-      e32: 0
-      e33: 1
-    color: {r: 1, g: 0.8886478, b: 0.6745283, a: 1}
-    intensity: 2
-    range: 8
-    radius: 0.05
-    samples: 32
-    samples2: 0
-    bitmask: 0
-    bakeToIndirect: 0
-    selfShadow: 0
-    realisticFalloff: 0
-    projMode: 0
-    cookie: {fileID: 0}
-    angle: 30
-  - tform:
-      e00: 0.7071158
-      e01: 0.0000042618926
-      e02: 0.70709795
-      e03: 7.0245
-      e10: -0.00000006471897
-      e11: -1.0000004
-      e12: 0.0000062934037
-      e13: 5.591748
-      e20: 0.70709765
-      e21: -0.0000045302204
-      e22: -0.7071161
-      e23: -20.229744
-      e30: 0
-      e31: 0
-      e32: 0
-      e33: 1
-    color: {r: 1, g: 1, b: 1, a: 1}
-    intensity: 15
-    range: 20
-    radius: 0.05
-    samples: 8
-    samples2: 0
-    bitmask: 0
-    bakeToIndirect: 0
-    selfShadow: 0
-    realisticFalloff: 0
-    projMode: 1
-    cookie: {fileID: 2800000, guid: d9dd420e28efef44b9225877d90c2e05, type: 3}
-    angle: 122.4
-  - tform:
-      e00: -0.9999999
-      e01: 3.4592773e-11
-      e02: 0.00000590086
-      e03: -3.0288
-      e10: 2.1316174e-14
-      e11: -1.0000001
-      e12: 0.0000058412543
-      e13: 5.1659985
-      e20: 0.0000059008576
-      e21: 0.0000059008594
-      e22: 1.0000001
-      e23: -39.723984
-      e30: 0
-      e31: 0
-      e32: 0
-      e33: 1
-    color: {r: 1, g: 1, b: 1, a: 1}
-    intensity: 10
-    range: 15
-    radius: 0.05
-    samples: 8
-    samples2: 0
-    bitmask: 0
-    bakeToIndirect: 0
-    selfShadow: 0
-    realisticFalloff: 0
-    projMode: 1
-    cookie: {fileID: 2800000, guid: d9dd420e28efef44b9225877d90c2e05, type: 3}
-    angle: 122.4
-  - tform:
-      e00: 0.73333126
-      e01: 0.21925858
-      e02: -0.64354575
-      e03: 9.5655
-      e10: -0.6595957
-      e11: -0.00000037542995
-      e12: -0.7516206
-      e13: 11.076492
-      e20: -0.16479939
-      e21: 0.9756676
-      e22: 0.14462161
-      e23: -55.380493
-      e30: 0
-      e31: 0
-      e32: 0
-      e33: 1
-    color: {r: 0.6933962, g: 0.8302251, b: 1, a: 1}
-    intensity: 150
-    range: 15
-    radius: 0.05
-    samples: 8
-    samples2: 0
-    bitmask: 0
-    bakeToIndirect: 0
-    selfShadow: 0
-    realisticFalloff: 0
-    projMode: 1
-    cookie: {fileID: 2800000, guid: d9dd420e28efef44b9225877d90c2e05, type: 3}
-    angle: 48.7
-  - tform:
-      e00: 3.9975574
-      e01: -0.06688346
-      e02: -0.12279635
-      e03: 5.6647425
-      e10: 0.052527122
-      e11: 3.9737587
-      e12: -0.45440114
-      e13: 2.5914583
-      e20: 0.12958878
-      e21: 0.45251036
-      e22: 3.9722097
-      e23: 0.051611792
-      e30: 0
-      e31: 0
-      e32: 0
-      e33: 1
-    color: {r: 1, g: 0.8886478, b: 0.6745283, a: 1}
-    intensity: 2
-    range: 8
-    radius: 0.05
-    samples: 32
-    samples2: 0
-    bitmask: 0
-    bakeToIndirect: 0
-    selfShadow: 0
-    realisticFalloff: 0
-    projMode: 0
-    cookie: {fileID: 0}
-    angle: 30
-  - tform:
-      e00: -2.6510236
-      e01: 0.58754575
-      e02: 2.9371552
-      e03: -2.961684
-      e10: -0.21607998
-      e11: 3.8745625
-      e12: -0.9700936
-      e13: 6.121275
-      e20: -2.9875424
-      e21: -0.80159914
-      e22: -2.5361478
-      e23: -22.413763
-      e30: 0
-      e31: 0
-      e32: 0
-      e33: 1
-    color: {r: 1, g: 0.8886478, b: 0.6745283, a: 1}
-    intensity: 2
-    range: 8
-    radius: 0.05
-    samples: 32
-    samples2: 0
-    bitmask: 0
-    bakeToIndirect: 0
-    selfShadow: 0
-    realisticFalloff: 0
-    projMode: 0
-    cookie: {fileID: 0}
-    angle: 30
-  - tform:
-      e00: 3.790961
-      e01: 0.00000023841858
-      e02: 1.2761794
-      e03: 6.5750995
-      e10: 0.061257303
-      e11: 3.9953887
-      e12: -0.18196829
-      e13: 3.3786864
-      e20: -1.2747086
-      e21: 0.1920023
-      e22: 3.7865894
-      e23: -1.9708936
-      e30: 0
-      e31: 0
-      e32: 0
-      e33: 1
-    color: {r: 1, g: 0.8886478, b: 0.6745283, a: 1}
-    intensity: 2
-    range: 8
-    radius: 0.05
-    samples: 32
-    samples2: 0
-    bitmask: 0
-    bakeToIndirect: 0
-    selfShadow: 0
-    realisticFalloff: 0
-    projMode: 0
-    cookie: {fileID: 0}
-    angle: 30
-  - tform:
-      e00: -3.377278
-      e01: 0.24446112
-      e02: -2.1293783
-      e03: 18.408861
-      e10: 0.020735653
-      e11: 3.9774387
-      e12: 0.4237384
-      e13: 5.084881
-      e20: 2.143266
-      e21: 0.34673172
-      e22: -3.3594933
-      e23: -13.835375
-      e30: 0
-      e31: 0
-      e32: 0
-      e33: 1
-    color: {r: 1, g: 0.8886478, b: 0.6745283, a: 1}
-    intensity: 2
-    range: 8
-    radius: 0.05
-    samples: 32
-    samples2: 0
-    bitmask: 0
-    bakeToIndirect: 0
-    selfShadow: 0
-    realisticFalloff: 0
-    projMode: 0
-    cookie: {fileID: 0}
-    angle: 30
-  - tform:
-      e00: 3.1345181
-      e01: -0.64674425
-      e02: -2.399276
-      e03: 11.73275
-      e10: 0.18340343
-      e11: 3.911825
-      e12: -0.81485784
-      e13: 1.2303278
-      e20: 2.4781377
-      e21: 0.5285372
-      e22: 3.095075
-      e23: -27.194134
-      e30: 0
-      e31: 0
-      e32: 0
-      e33: 1
-    color: {r: 1, g: 0.8886478, b: 0.6745283, a: 1}
-    intensity: 2
-    range: 8
-    radius: 0.05
-    samples: 32
-    samples2: 0
-    bitmask: 0
-    bakeToIndirect: 0
-    selfShadow: 0
-    realisticFalloff: 0
-    projMode: 0
-    cookie: {fileID: 0}
-    angle: 30
-  - tform:
-      e00: 0.09057
-      e01: -0.0000063534458
-      e02: -0.99589044
-      e03: 16.639751
-      e10: -0.0000010723933
-      e11: -1.0000001
-      e12: 0.0000063669004
-      e13: 4.9302487
-      e20: -0.9958898
-      e21: 0.00000041923323
-      e22: -0.09057008
-      e23: -13.687691
-      e30: 0
-      e31: 0
-      e32: 0
-      e33: 1
-    color: {r: 1, g: 1, b: 1, a: 1}
-    intensity: 15
-    range: 20
-    radius: 0.05
-    samples: 8
-    samples2: 0
-    bitmask: 0
-    bakeToIndirect: 0
-    selfShadow: 0
-    realisticFalloff: 0
-    projMode: 1
-    cookie: {fileID: 2800000, guid: d9dd420e28efef44b9225877d90c2e05, type: 3}
-    angle: 122.4
   - tform:
       e00: 0.7333312
       e01: 0.21925858
       e02: -0.6435458
       e03: 16.711624
-      e10: -0.65959567
+      e10: -0.6595957
       e11: -0.00000026367118
-      e12: -0.75162065
-      e13: 15.159243
-      e20: -0.16479933
-      e21: 0.97566736
+      e12: -0.75162077
+      e13: 15.159244
+      e20: -0.16479935
+      e21: 0.9756674
       e22: 0.14462177
-      e23: -37.569637
+      e23: -37.56963
       e30: 0
       e31: 0
       e32: 0
@@ -2832,78 +2545,18 @@ MonoBehaviour:
     cookie: {fileID: 2800000, guid: d9dd420e28efef44b9225877d90c2e05, type: 3}
     angle: 48.7
   - tform:
-      e00: -0.50337625
-      e01: -0.756639
-      e02: 3.8953965
-      e03: -3.7863533
-      e10: 0.11044448
-      e11: 3.9224198
-      e12: 0.77615976
-      e13: 1.0538553
-      e20: -3.9666653
-      e21: 0.2052312
-      e22: -0.47272098
-      e23: -28.898005
-      e30: 0
-      e31: 0
-      e32: 0
-      e33: 1
-    color: {r: 1, g: 0.8886478, b: 0.6745283, a: 1}
-    intensity: 2
-    range: 8
-    radius: 0.05
-    samples: 32
-    samples2: 0
-    bitmask: 0
-    bakeToIndirect: 0
-    selfShadow: 0
-    realisticFalloff: 0
-    projMode: 0
-    cookie: {fileID: 0}
-    angle: 30
-  - tform:
-      e00: 2.9386415
-      e01: -0.8266094
-      e02: -2.584786
-      e03: 20.848541
-      e10: 0.00000068113155
-      e11: 3.8099203
-      e12: -1.2184047
-      e13: 2.6773381
-      e20: 2.7137437
-      e21: 0.89511263
-      e22: 2.798997
-      e23: -40.677715
-      e30: 0
-      e31: 0
-      e32: 0
-      e33: 1
-    color: {r: 1, g: 0.8886478, b: 0.6745283, a: 1}
-    intensity: 2
-    range: 8
-    radius: 0.05
-    samples: 32
-    samples2: 0
-    bitmask: 0
-    bakeToIndirect: 0
-    selfShadow: 0
-    realisticFalloff: 0
-    projMode: 0
-    cookie: {fileID: 0}
-    angle: 30
-  - tform:
-      e00: -1.8092232
-      e01: -1.0983542
-      e02: -3.3941636
-      e03: 12.993625
-      e10: 0.22374363
-      e11: 3.7632713
-      e12: -1.3370622
-      e13: 1.074291
-      e20: 3.5604308
-      e21: -0.7946166
-      e22: -1.6407115
-      e23: -24.84076
+      e00: -3.3551204
+      e01: -0.24033116
+      e02: -2.1645858
+      e03: 7.6949306
+      e10: 0.45883253
+      e11: 3.8083417
+      e12: -1.1340282
+      e13: 3.4147274
+      e20: 2.1290061
+      e21: -1.1994936
+      e22: -3.1667907
+      e23: -43.035458
       e30: 0
       e31: 0
       e32: 0
@@ -2926,13 +2579,13 @@ MonoBehaviour:
       e01: 0.26777792
       e02: 1.8564473
       e03: 8.680241
-      e10: -0.21608044
-      e11: 3.874563
-      e12: -0.97009426
-      e13: 6.0456758
-      e20: -1.8631732
-      e21: -0.9571141
-      e22: -3.4077163
+      e10: -0.21608046
+      e11: 3.8745632
+      e12: -0.9700944
+      e13: 6.0456753
+      e20: -1.8631735
+      e21: -0.9571143
+      e22: -3.4077165
       e23: -18.720675
       e30: 0
       e31: 0
@@ -2952,18 +2605,408 @@ MonoBehaviour:
     cookie: {fileID: 0}
     angle: 30
   - tform:
-      e00: -3.3551204
-      e01: -0.24033116
-      e02: -2.1645858
-      e03: 7.6949306
-      e10: 0.4588325
-      e11: 3.8083413
-      e12: -1.1340281
-      e13: 3.414727
+      e00: 0.73333126
+      e01: 0.21925858
+      e02: -0.64354575
+      e03: 9.5655
+      e10: -0.6595958
+      e11: -0.00000037543006
+      e12: -0.75162065
+      e13: 11.076493
+      e20: -0.1647994
+      e21: 0.97566766
+      e22: 0.14462163
+      e23: -55.380486
+      e30: 0
+      e31: 0
+      e32: 0
+      e33: 1
+    color: {r: 0.6933962, g: 0.8302251, b: 1, a: 1}
+    intensity: 150
+    range: 15
+    radius: 0.05
+    samples: 8
+    samples2: 0
+    bitmask: 0
+    bakeToIndirect: 0
+    selfShadow: 0
+    realisticFalloff: 0
+    projMode: 1
+    cookie: {fileID: 2800000, guid: d9dd420e28efef44b9225877d90c2e05, type: 3}
+    angle: 48.7
+  - tform:
+      e00: -2.6510236
+      e01: 0.58754575
+      e02: 2.9371552
+      e03: -2.9616835
+      e10: -0.21608001
+      e11: 3.874563
+      e12: -0.9700938
+      e13: 6.121275
+      e20: -2.9875426
+      e21: -0.80159914
+      e22: -2.5361478
+      e23: -22.413763
+      e30: 0
+      e31: 0
+      e32: 0
+      e33: 1
+    color: {r: 1, g: 0.8886478, b: 0.6745283, a: 1}
+    intensity: 2
+    range: 8
+    radius: 0.05
+    samples: 32
+    samples2: 0
+    bitmask: 0
+    bakeToIndirect: 0
+    selfShadow: 0
+    realisticFalloff: 0
+    projMode: 0
+    cookie: {fileID: 0}
+    angle: 30
+  - tform:
+      e00: -3.355121
+      e01: -0.0030699975
+      e02: -2.1778846
+      e03: 4.572292
+      e10: 0.45883238
+      e11: 3.9092236
+      e12: -0.71236056
+      e13: 3.7508218
       e20: 2.129006
-      e21: -1.1994935
-      e22: -3.1667902
-      e23: -43.03547
+      e21: -0.84733295
+      e22: -3.2786243
+      e23: -42.934074
+      e30: 0
+      e31: 0
+      e32: 0
+      e33: 1
+    color: {r: 1, g: 0.8886478, b: 0.6745283, a: 1}
+    intensity: 2
+    range: 8
+    radius: 0.05
+    samples: 32
+    samples2: 0
+    bitmask: 0
+    bakeToIndirect: 0
+    selfShadow: 0
+    realisticFalloff: 0
+    projMode: 0
+    cookie: {fileID: 0}
+    angle: 30
+  - tform:
+      e00: -3.377278
+      e01: 0.24446112
+      e02: -2.1293783
+      e03: 18.408861
+      e10: 0.020735655
+      e11: 3.9774392
+      e12: 0.42373842
+      e13: 5.0848813
+      e20: 2.143266
+      e21: 0.34673178
+      e22: -3.3594937
+      e23: -13.835373
+      e30: 0
+      e31: 0
+      e32: 0
+      e33: 1
+    color: {r: 1, g: 0.8886478, b: 0.6745283, a: 1}
+    intensity: 2
+    range: 8
+    radius: 0.05
+    samples: 32
+    samples2: 0
+    bitmask: 0
+    bakeToIndirect: 0
+    selfShadow: 0
+    realisticFalloff: 0
+    projMode: 0
+    cookie: {fileID: 0}
+    angle: 30
+  - tform:
+      e00: 0.7071158
+      e01: 0.0000042618926
+      e02: 0.70709795
+      e03: 7.0245
+      e10: -0.000000064718975
+      e11: -1.0000005
+      e12: 0.000006293404
+      e13: 5.5917478
+      e20: 0.7070977
+      e21: -0.000004530221
+      e22: -0.70711625
+      e23: -20.229742
+      e30: 0
+      e31: 0
+      e32: 0
+      e33: 1
+    color: {r: 1, g: 1, b: 1, a: 1}
+    intensity: 15
+    range: 20
+    radius: 0.05
+    samples: 8
+    samples2: 0
+    bitmask: 0
+    bakeToIndirect: 0
+    selfShadow: 0
+    realisticFalloff: 0
+    projMode: 1
+    cookie: {fileID: 2800000, guid: d9dd420e28efef44b9225877d90c2e05, type: 3}
+    angle: 122.4
+  - tform:
+      e00: 0.09057
+      e01: -0.0000063534458
+      e02: -0.99589044
+      e03: 16.639751
+      e10: -0.0000010723934
+      e11: -1.0000002
+      e12: 0.000006366901
+      e13: 4.930249
+      e20: -0.99588984
+      e21: 0.0000004192333
+      e22: -0.09057008
+      e23: -13.687688
+      e30: 0
+      e31: 0
+      e32: 0
+      e33: 1
+    color: {r: 1, g: 1, b: 1, a: 1}
+    intensity: 15
+    range: 20
+    radius: 0.05
+    samples: 8
+    samples2: 0
+    bitmask: 0
+    bakeToIndirect: 0
+    selfShadow: 0
+    realisticFalloff: 0
+    projMode: 1
+    cookie: {fileID: 2800000, guid: d9dd420e28efef44b9225877d90c2e05, type: 3}
+    angle: 122.4
+  - tform:
+      e00: 2.237849
+      e01: 0.84738666
+      e02: 3.2053046
+      e03: -2.2413268
+      e10: 0.09153377
+      e11: 3.8498766
+      e12: -1.0816989
+      e13: 2.1300435
+      e20: -3.3141627
+      e21: 0.6785176
+      e22: 2.1344688
+      e23: -1.9695991
+      e30: 0
+      e31: 0
+      e32: 0
+      e33: 1
+    color: {r: 1, g: 0.8886478, b: 0.6745283, a: 1}
+    intensity: 2
+    range: 8
+    radius: 0.05
+    samples: 32
+    samples2: 0
+    bitmask: 0
+    bakeToIndirect: 0
+    selfShadow: 0
+    realisticFalloff: 0
+    projMode: 0
+    cookie: {fileID: 0}
+    angle: 30
+  - tform:
+      e00: 3.1345181
+      e01: -0.64674425
+      e02: -2.3992758
+      e03: 11.73275
+      e10: 0.18340345
+      e11: 3.9118247
+      e12: -0.8148578
+      e13: 1.230327
+      e20: 2.4781382
+      e21: 0.5285373
+      e22: 3.0950751
+      e23: -27.194128
+      e30: 0
+      e31: 0
+      e32: 0
+      e33: 1
+    color: {r: 1, g: 0.8886478, b: 0.6745283, a: 1}
+    intensity: 2
+    range: 8
+    radius: 0.05
+    samples: 32
+    samples2: 0
+    bitmask: 0
+    bakeToIndirect: 0
+    selfShadow: 0
+    realisticFalloff: 0
+    projMode: 0
+    cookie: {fileID: 0}
+    angle: 30
+  - tform:
+      e00: 3.9975574
+      e01: -0.06688346
+      e02: -0.12279635
+      e03: 5.6647425
+      e10: 0.05252713
+      e11: 3.9737592
+      e12: -0.45440117
+      e13: 2.5914578
+      e20: 0.1295888
+      e21: 0.4525104
+      e22: 3.97221
+      e23: 0.051613424
+      e30: 0
+      e31: 0
+      e32: 0
+      e33: 1
+    color: {r: 1, g: 0.8886478, b: 0.6745283, a: 1}
+    intensity: 2
+    range: 8
+    radius: 0.05
+    samples: 32
+    samples2: 0
+    bitmask: 0
+    bakeToIndirect: 0
+    selfShadow: 0
+    realisticFalloff: 0
+    projMode: 0
+    cookie: {fileID: 0}
+    angle: 30
+  - tform:
+      e00: 3.59796
+      e01: 0.7204225
+      e02: 1.5923848
+      e03: -4.074102
+      e10: 0.09153434
+      e11: 3.5617101
+      e12: -1.8182
+      e13: 0.9820818
+      e20: -1.7453716
+      e21: 1.6718913
+      e22: 3.1872356
+      e23: -28.378712
+      e30: 0
+      e31: 0
+      e32: 0
+      e33: 1
+    color: {r: 1, g: 0.8886478, b: 0.6745283, a: 1}
+    intensity: 2
+    range: 8
+    radius: 0.05
+    samples: 32
+    samples2: 0
+    bitmask: 0
+    bakeToIndirect: 0
+    selfShadow: 0
+    realisticFalloff: 0
+    projMode: 0
+    cookie: {fileID: 0}
+    angle: 30
+  - tform:
+      e00: -0.9999999
+      e01: 3.4592773e-11
+      e02: 0.00000590086
+      e03: -3.0288
+      e10: 2.1316282e-14
+      e11: -1.0000001
+      e12: 0.0000058412543
+      e13: 5.165998
+      e20: 0.000005900858
+      e21: 0.00000590086
+      e22: 1.0000001
+      e23: -39.723984
+      e30: 0
+      e31: 0
+      e32: 0
+      e33: 1
+    color: {r: 1, g: 1, b: 1, a: 1}
+    intensity: 10
+    range: 15
+    radius: 0.05
+    samples: 8
+    samples2: 0
+    bitmask: 0
+    bakeToIndirect: 0
+    selfShadow: 0
+    realisticFalloff: 0
+    projMode: 1
+    cookie: {fileID: 2800000, guid: d9dd420e28efef44b9225877d90c2e05, type: 3}
+    angle: 122.4
+  - tform:
+      e00: 2.9386415
+      e01: -0.8266094
+      e02: -2.584786
+      e03: 20.84854
+      e10: 0.0000006811316
+      e11: 3.8099205
+      e12: -1.2184049
+      e13: 2.6773362
+      e20: 2.713744
+      e21: 0.8951127
+      e22: 2.7989972
+      e23: -40.67771
+      e30: 0
+      e31: 0
+      e32: 0
+      e33: 1
+    color: {r: 1, g: 0.8886478, b: 0.6745283, a: 1}
+    intensity: 2
+    range: 8
+    radius: 0.05
+    samples: 32
+    samples2: 0
+    bitmask: 0
+    bakeToIndirect: 0
+    selfShadow: 0
+    realisticFalloff: 0
+    projMode: 0
+    cookie: {fileID: 0}
+    angle: 30
+  - tform:
+      e00: 3.5611925
+      e01: 0.5848463
+      e02: -1.7250742
+      e03: 9.218788
+      e10: 0.0000006343747
+      e11: 3.7882133
+      e12: 1.2843075
+      e13: 5.9307623
+      e20: 1.8215182
+      e21: -1.143416
+      e22: 3.3726375
+      e23: -17.4974
+      e30: 0
+      e31: 0
+      e32: 0
+      e33: 1
+    color: {r: 1, g: 0.8886478, b: 0.6745283, a: 1}
+    intensity: 2
+    range: 8
+    radius: 0.05
+    samples: 32
+    samples2: 0
+    bitmask: 0
+    bakeToIndirect: 0
+    selfShadow: 0
+    realisticFalloff: 0
+    projMode: 0
+    cookie: {fileID: 0}
+    angle: 30
+  - tform:
+      e00: -1.809223
+      e01: -1.0983543
+      e02: -3.3941636
+      e03: 12.993625
+      e10: 0.22374359
+      e11: 3.763271
+      e12: -1.3370622
+      e13: 1.0742902
+      e20: 3.5604308
+      e21: -0.79461664
+      e22: -1.6407117
+      e23: -24.840754
       e30: 0
       e31: 0
       e32: 0
@@ -2988,12 +3031,72 @@ MonoBehaviour:
       e03: 10.024333
       e10: -0.0000004170178
       e11: 2.9668322
-      e12: -2.6828923
-      e13: 4.236674
-      e20: 2.0018039
-      e21: 2.322754
-      e22: 2.56858
-      e23: -4.963004
+      e12: -2.6828926
+      e13: 4.2366734
+      e20: 2.001804
+      e21: 2.3227541
+      e22: 2.5685802
+      e23: -4.963003
+      e30: 0
+      e31: 0
+      e32: 0
+      e33: 1
+    color: {r: 1, g: 0.8886478, b: 0.6745283, a: 1}
+    intensity: 2
+    range: 8
+    radius: 0.05
+    samples: 32
+    samples2: 0
+    bitmask: 0
+    bakeToIndirect: 0
+    selfShadow: 0
+    realisticFalloff: 0
+    projMode: 0
+    cookie: {fileID: 0}
+    angle: 30
+  - tform:
+      e00: -0.50337625
+      e01: -0.756639
+      e02: 3.8953965
+      e03: -3.7863533
+      e10: 0.11044449
+      e11: 3.9224205
+      e12: 0.77615976
+      e13: 1.0538553
+      e20: -3.9666657
+      e21: 0.20523122
+      e22: -0.472721
+      e23: -28.897999
+      e30: 0
+      e31: 0
+      e32: 0
+      e33: 1
+    color: {r: 1, g: 0.8886478, b: 0.6745283, a: 1}
+    intensity: 2
+    range: 8
+    radius: 0.05
+    samples: 32
+    samples2: 0
+    bitmask: 0
+    bakeToIndirect: 0
+    selfShadow: 0
+    realisticFalloff: 0
+    projMode: 0
+    cookie: {fileID: 0}
+    angle: 30
+  - tform:
+      e00: 3.790961
+      e01: 0.00000023841858
+      e02: 1.2761794
+      e03: 6.5750995
+      e10: 0.061257306
+      e11: 3.9953892
+      e12: -0.1819683
+      e13: 3.3786862
+      e20: -1.2747087
+      e21: 0.19200231
+      e22: 3.7865899
+      e23: -1.9708924
       e30: 0
       e31: 0
       e32: 0
@@ -3042,74 +3145,76 @@ MonoBehaviour:
     cookie: {fileID: 8900000, guid: e3de3e8435d45a64fa4aa46634ced55a, type: 3}
     angle: 30
   implicitGroups:
-  - {fileID: 1376459653}
-  - {fileID: 1376459653}
-  - {fileID: 1376459653}
-  - {fileID: 1376459653}
-  - {fileID: 1376459653}
-  - {fileID: 1376459653}
-  - {fileID: 1376459653}
-  - {fileID: 1376459653}
-  - {fileID: 1376459653}
-  - {fileID: 1376459653}
-  - {fileID: 1376459653}
-  - {fileID: 1376459653}
-  - {fileID: 1376459653}
-  - {fileID: 1376459653}
-  - {fileID: 1376459653}
-  - {fileID: 1376459653}
-  - {fileID: 1376459653}
-  - {fileID: 1376459653}
-  - {fileID: 1376459653}
-  - {fileID: 1376459653}
-  - {fileID: 1376459653}
-  - {fileID: 1376459653}
-  - {fileID: 1376459653}
-  - {fileID: 1376459653}
-  - {fileID: 1376459653}
-  - {fileID: 1376459653}
-  - {fileID: 1376459653}
-  - {fileID: 1376459653}
-  - {fileID: 1376459653}
-  - {fileID: 1376459653}
-  - {fileID: 1376459653}
-  - {fileID: 1376459653}
-  - {fileID: 1376459653}
-  - {fileID: 1376459653}
-  - {fileID: 1376459653}
-  - {fileID: 1376459653}
-  - {fileID: 1376459653}
-  - {fileID: 1376459653}
-  - {fileID: 1376459653}
-  - {fileID: 1376459653}
-  - {fileID: 1376459653}
-  - {fileID: 1376459653}
-  - {fileID: 1376459653}
-  - {fileID: 1376459653}
-  - {fileID: 1376459653}
-  - {fileID: 1376459653}
-  - {fileID: 1376459653}
-  - {fileID: 1376459653}
-  - {fileID: 1376459653}
-  - {fileID: 1376459653}
-  - {fileID: 1376459653}
-  - {fileID: 1376459653}
-  - {fileID: 1376459653}
-  - {fileID: 1376459653}
-  - {fileID: 1376459653}
-  - {fileID: 1376459653}
-  - {fileID: 1376459653}
-  - {fileID: 1376459653}
-  - {fileID: 1376459653}
-  - {fileID: 1376459653}
-  - {fileID: 1376459653}
-  - {fileID: 1376459653}
-  - {fileID: 1376459653}
-  - {fileID: 1376459653}
-  - {fileID: 1376459653}
-  - {fileID: 1376459653}
-  - {fileID: 1376459653}
+  - {fileID: 1328150340}
+  - {fileID: 1050009387}
+  - {fileID: 1050009387}
+  - {fileID: 1050009387}
+  - {fileID: 1050009387}
+  - {fileID: 1050009387}
+  - {fileID: 1050009387}
+  - {fileID: 1050009387}
+  - {fileID: 1050009387}
+  - {fileID: 1050009387}
+  - {fileID: 1050009387}
+  - {fileID: 1050009387}
+  - {fileID: 1050009387}
+  - {fileID: 1050009387}
+  - {fileID: 1050009387}
+  - {fileID: 1050009387}
+  - {fileID: 1050009387}
+  - {fileID: 1050009387}
+  - {fileID: 1050009387}
+  - {fileID: 1050009387}
+  - {fileID: 1050009387}
+  - {fileID: 1050009387}
+  - {fileID: 1050009387}
+  - {fileID: 1050009387}
+  - {fileID: 1050009387}
+  - {fileID: 1050009387}
+  - {fileID: 1050009387}
+  - {fileID: 1050009387}
+  - {fileID: 1050009387}
+  - {fileID: 1050009387}
+  - {fileID: 1050009387}
+  - {fileID: 1050009387}
+  - {fileID: 1050009387}
+  - {fileID: 1050009387}
+  - {fileID: 1050009387}
+  - {fileID: 1050009387}
+  - {fileID: 1050009387}
+  - {fileID: 1050009387}
+  - {fileID: 1050009387}
+  - {fileID: 1050009387}
+  - {fileID: 1050009387}
+  - {fileID: 1050009387}
+  - {fileID: 1050009387}
+  - {fileID: 1050009387}
+  - {fileID: 1050009387}
+  - {fileID: 1050009387}
+  - {fileID: 1050009387}
+  - {fileID: 1050009387}
+  - {fileID: 1050009387}
+  - {fileID: 1050009387}
+  - {fileID: 1050009387}
+  - {fileID: 1050009387}
+  - {fileID: 1050009387}
+  - {fileID: 1050009387}
+  - {fileID: 1050009387}
+  - {fileID: 1050009387}
+  - {fileID: 1050009387}
+  - {fileID: 1050009387}
+  - {fileID: 1050009387}
+  - {fileID: 1050009387}
+  - {fileID: 1050009387}
+  - {fileID: 1050009387}
+  - {fileID: 1050009387}
+  - {fileID: 1050009387}
+  - {fileID: 1050009387}
+  - {fileID: 1050009387}
+  - {fileID: 1050009387}
+  - {fileID: 1050009387}
   implicitGroupedObjects:
+  - {fileID: 0}
   - {fileID: 8138236}
   - {fileID: 89200235}
   - {fileID: 89924832}
@@ -3178,8 +3283,10 @@ MonoBehaviour:
   - {fileID: 2082485386}
   - {fileID: 1610895693301137573}
   bounds:
-  - m_Center: {x: 9.341413, y: -5.289263, z: -23.75673}
+  - m_Center: {x: 9.341413, y: -5.289263, z: -23.756733}
     m_Extent: {x: 20.300169, y: 17.93051, z: 39.43264}
+  - m_Center: {x: 0, y: 0, z: 0}
+    m_Extent: {x: 5000, y: 5000, z: 5000}
   hasEmissive: 01
   uvBuffOffsets: 
   uvBuffLengths: 
@@ -3192,10 +3299,10 @@ MonoBehaviour:
   lmGroupMinLOD: 
   lmGroupLODMatrix: 
   serverGetFileList: []
-  lightmapHasColor: 01
-  lightmapHasMask: 00
-  lightmapHasDir: 00
-  lightmapHasRNM: 00
+  lightmapHasColor: 0101
+  lightmapHasMask: 0000
+  lightmapHasDir: 0000
+  lightmapHasRNM: 0001
   modifiedAssetPathList:
   - Assets/LowPoly Rocks/FBX/Ground/Rock4.fbx
   - Assets/World/Models/Cave/cave.fbx
@@ -3311,72 +3418,72 @@ MonoBehaviour:
   - {fileID: 728068494}
   bakedIDs: 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
   bakedScaleOffset:
-  - {x: 0.0045029507, y: 0.0052982774, z: 0.3560637, w: 0.022188874}
-  - {x: 0.023518097, y: 0.02803048, z: 0.9730916, w: 0.39601552}
+  - {x: 0.0045029204, y: 0.0052982774, z: 0.6270214, w: 0.022188874}
+  - {x: 0.023518097, y: 0.02803048, z: 0.9357181, w: 0.19731142}
   - {x: 0.025175214, y: 0.029929033, z: 0.9737867, w: 0.003702561}
   - {x: 0.84116286, y: 0.99999994, z: 0, w: 0}
-  - {x: 0.0045029507, y: 0.0052982774, z: 0.36125445, w: 0.02342306}
+  - {x: 0.0045029814, y: 0.0052982774, z: 0.60106754, w: 0.024657248}
+  - {x: 0.0045029507, y: 0.0052982774, z: 0.11313607, w: 0.025891434}
+  - {x: 0.0045029204, y: 0.005298279, z: 0.5585033, w: 0.027125621}
+  - {x: 0.16681752, y: 0.19910353, z: 0.84019774, w: 0.0011549622}
   - {x: 0.0045029507, y: 0.0052982774, z: 0.42665803, w: 0.025891434}
   - {x: 0.0045029204, y: 0.0052982774, z: 0.66854745, w: 0.020954687}
-  - {x: 0.16681752, y: 0.19910355, z: 0.84019774, w: 0.20232743}
-  - {x: 0.0045029204, y: 0.005298279, z: 0.5585033, w: 0.027125621}
-  - {x: 0.004502955, y: 0.0052982774, z: 0.021778679, w: 0.022188874}
   - {x: 0.019984424, y: 0.023758084, z: 0.907345, w: 0.40234494}
-  - {x: 0.0045029814, y: 0.0052982774, z: 0.7931257, w: 0.02342306}
-  - {x: 0.0054502487, y: 0.0064794812, z: 0.9654815, w: 0.018512804}
-  - {x: 0.0033739954, y: 0.0040111076, z: 0.021801194, w: 0.030854674}
-  - {x: 0.0054503083, y: 0.006479482, z: 0.47339737, w: 0.009873495}
-  - {x: 0.0064884424, y: 0.007713669, z: 0.15676098, w: 0}
-  - {x: 0.0023358467, y: 0.0027769192, z: 0.31144565, w: 0.030854674}
-  - {x: 0.0023358467, y: 0.0027769192, z: 0.44017652, w: 0.030854674}
-  - {x: 0.0033739954, y: 0.0040111076, z: 0.11834934, w: 0.030854674}
-  - {x: 0.0054502785, y: 0.0064794812, z: 0.48481706, w: 0.017278617}
-  - {x: 0.0054503083, y: 0.006479482, z: 0.7069816, w: 0.012341869}
-  - {x: 0.0054503083, y: 0.0064794812, z: 0.25227097, w: 0.014810244}
-  - {x: 0.0033739954, y: 0.0040111095, z: 0.24811836, w: 0.028386299}
-  - {x: 0.0033739805, y: 0.0040111095, z: 0.3560862, w: 0.028386299}
-  - {x: 0.0033739805, y: 0.0040111057, z: 0.70386714, w: 0.029620487}
-  - {x: 0.019984424, y: 0.023758098, z: 0.9364132, w: 0.22585621}
+  - {x: 0.004502955, y: 0.0052982774, z: 0.021778679, w: 0.022188874}
   - {x: 0.0054503083, y: 0.0064794812, z: 0.9592526, w: 0.01974699}
-  - {x: 0.0033739936, y: 0.0040111076, z: 0.017648587, w: 0.030854674}
-  - {x: 0.0054502785, y: 0.006479482, z: 0.3405139, w: 0.009873495}
-  - {x: 0.0064884424, y: 0.0077136685, z: 0.4339476, w: 0.007405122}
-  - {x: 0.0023358318, y: 0.0027769192, z: 0.24396576, w: 0.030854674}
-  - {x: 0.0023358169, y: 0.0027769192, z: 0.3062549, w: 0.030854674}
-  - {x: 0.0033739954, y: 0.0040111076, z: 0.122501954, w: 0.030854674}
-  - {x: 0.005450301, y: 0.0064794812, z: 0.107967824, w: 0.01974699}
-  - {x: 0.0054503083, y: 0.006479482, z: 0.4941604, w: 0.012341869}
-  - {x: 0.0054503083, y: 0.0064794812, z: 0.4464054, w: 0.018512804}
-  - {x: 0.0033740103, y: 0.0040111095, z: 0.4443291, w: 0.028386299}
-  - {x: 0.0033740103, y: 0.0040111057, z: 0.3602388, w: 0.029620487}
-  - {x: 0.0033739954, y: 0.0040111095, z: 0.14222685, w: 0.028386299}
-  - {x: 0.0045029204, y: 0.0052982774, z: 0.6270214, w: 0.022188874}
-  - {x: 0.03451854, y: 0.041036725, z: 0.8419414, w: 0.40234494}
-  - {x: 0.03140414, y: 0.037334144, z: 0.87516224, w: 0.40234494}
-  - {x: 0.004502966, y: 0.0052982774, z: 0.23356171, w: 0.025891434}
-  - {x: 0.04282379, y: 0.050910212, z: 0.9364132, w: 0}
-  - {x: 0.0045029507, y: 0.0052982774, z: 0.11313607, w: 0.025891434}
-  - {x: 0.0045029814, y: 0.0052982774, z: 0.7318747, w: 0.020954687}
-  - {x: 0.0054502487, y: 0.006479482, z: 0.5336102, w: 0.011107682}
   - {x: 0.0033739945, y: 0.0040111076, z: 0.008305217, w: 0.030854674}
   - {x: 0.0054503083, y: 0.006479482, z: 0.31767455, w: 0.009873495}
   - {x: 0.0064884424, y: 0.0077136694, z: 0.51492345, w: 0.008639309}
   - {x: 0.0023358467, y: 0.0027769192, z: 0.4183753, w: 0.030854674}
-  - {x: 0.0023358467, y: 0.0027769192, z: 0.30314043, w: 0.030854674}
+  - {x: 0.0023358467, y: 0.0027769192, z: 0.44017652, w: 0.030854674}
   - {x: 0.0033739954, y: 0.0040111076, z: 0.13703609, w: 0.030854674}
+  - {x: 0.0054502487, y: 0.0064794812, z: 0.9654815, w: 0.018512804}
   - {x: 0.0054503083, y: 0.006479482, z: 0.6882949, w: 0.012341869}
+  - {x: 0.0054503083, y: 0.0064794812, z: 0.25227097, w: 0.014810244}
+  - {x: 0.0033739954, y: 0.0040111095, z: 0.24811836, w: 0.028386299}
+  - {x: 0.0033739805, y: 0.0040111095, z: 0.4318713, w: 0.028386299}
+  - {x: 0.0033740103, y: 0.0040111057, z: 0.3602388, w: 0.029620487}
+  - {x: 0.019984424, y: 0.023758098, z: 0.9364132, w: 0.22585621}
+  - {x: 0.0054503083, y: 0.0064794812, z: 0.4464054, w: 0.018512804}
+  - {x: 0.0033739936, y: 0.0040111076, z: 0.017648587, w: 0.030854674}
+  - {x: 0.0054502785, y: 0.006479482, z: 0.3405139, w: 0.009873495}
+  - {x: 0.0064884424, y: 0.0077136685, z: 0.4339476, w: 0.007405122}
+  - {x: 0.0023358318, y: 0.0027769192, z: 0.24396576, w: 0.030854674}
+  - {x: 0.0023358467, y: 0.0027769192, z: 0.31144565, w: 0.030854674}
+  - {x: 0.0033739954, y: 0.0040111076, z: 0.11834934, w: 0.030854674}
+  - {x: 0.005450301, y: 0.0064794812, z: 0.107967824, w: 0.01974699}
+  - {x: 0.0054503083, y: 0.006479482, z: 0.4941604, w: 0.012341869}
+  - {x: 0.0054503083, y: 0.006479482, z: 0.7069816, w: 0.012341869}
+  - {x: 0.0033739805, y: 0.0040111095, z: 0.3560862, w: 0.028386299}
+  - {x: 0.0033739805, y: 0.0040111057, z: 0.70386714, w: 0.029620487}
+  - {x: 0.0033740103, y: 0.0040111095, z: 0.4443291, w: 0.028386299}
+  - {x: 0.0045029814, y: 0.0052982774, z: 0.7318747, w: 0.020954687}
+  - {x: 0.03451854, y: 0.041036725, z: 0.8419414, w: 0.40234494}
+  - {x: 0.03140414, y: 0.037334144, z: 0.87516224, w: 0.40234494}
+  - {x: 0.0045029507, y: 0.0052982774, z: 0.3560637, w: 0.022188874}
+  - {x: 0.04282379, y: 0.050910212, z: 0.9364132, w: 0}
+  - {x: 0.0045029814, y: 0.0052982774, z: 0.7931257, w: 0.02342306}
+  - {x: 0.0045029507, y: 0.0052982774, z: 0.36125445, w: 0.02342306}
+  - {x: 0.0054502785, y: 0.0064794812, z: 0.48481706, w: 0.017278617}
+  - {x: 0.0033739954, y: 0.0040111076, z: 0.021801194, w: 0.030854674}
+  - {x: 0.0054503083, y: 0.006479482, z: 0.47339737, w: 0.009873495}
+  - {x: 0.0064884424, y: 0.007713669, z: 0.15676098, w: 0}
+  - {x: 0.0023358169, y: 0.0027769192, z: 0.3062549, w: 0.030854674}
+  - {x: 0.0023358467, y: 0.0027769192, z: 0.30314043, w: 0.030854674}
+  - {x: 0.0033739954, y: 0.0040111076, z: 0.122501954, w: 0.030854674}
+  - {x: 0.0054502487, y: 0.006479482, z: 0.5336102, w: 0.011107682}
   - {x: 0.0054502934, y: 0.006479482, z: 0.22008826, w: 0.012341869}
   - {x: 0.0054502785, y: 0.006479482, z: 0.26369065, w: 0.012341869}
+  - {x: 0.0033739954, y: 0.0040111095, z: 0.14222685, w: 0.028386299}
   - {x: 0.0033739805, y: 0.0040111076, z: 0.9696341, w: 0.027152112}
-  - {x: 0.0033739805, y: 0.0040111095, z: 0.4318713, w: 0.028386299}
   - {x: 0.0033739936, y: 0.0040111095, z: 0.026991956, w: 0.028386299}
-  - {x: 0.0045029507, y: 0.0052982774, z: 0.14324248, w: 0.022188874}
-  - {x: 0.038671136, y: 0.045973465, z: 0.96132886, w: 0.19500153}
-  - {x: 0.0045029814, y: 0.0052982774, z: 0.6322121, w: 0.02342306}
   - {x: 0.0045029204, y: 0.005298279, z: 0.7671719, w: 0.027125621}
-  - {x: 0.16681752, y: 0.19910353, z: 0.84019774, w: 0.0011549622}
-  - {x: 0.0045029814, y: 0.0052982774, z: 0.60106754, w: 0.024657248}
-  - {x: 0.023518097, y: 0.02803048, z: 0.9357181, w: 0.19731142}
+  - {x: 0.038671136, y: 0.045973465, z: 0.96132886, w: 0.19500153}
+  - {x: 0.004502966, y: 0.0052982774, z: 0.23356171, w: 0.025891434}
+  - {x: 0.0045029507, y: 0.0052982774, z: 0.14324248, w: 0.022188874}
+  - {x: 0.16681752, y: 0.19910355, z: 0.84019774, w: 0.20232743}
+  - {x: 0.0045029814, y: 0.0052982774, z: 0.6322121, w: 0.02342306}
+  - {x: 0.023518097, y: 0.02803048, z: 0.9730916, w: 0.39601552}
   - {x: 0.16227747, y: 0.18965974, z: 0.93479043, w: 0.3867858}
   bakedVertexOffset: ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
   bakedVertexColorMesh:
@@ -3464,7 +3571,6 @@ MonoBehaviour:
   - name: $G
     maps:
     - {fileID: 2800000, guid: 5f79d4e7990db5447a67b4fb95b45dcf, type: 3}
-    - {fileID: 2800000, guid: a99b872983b2cde48a181d152375d2a8, type: 3}
     masks: []
     dirMaps: []
     rnmMaps0: []
@@ -3540,76 +3646,76 @@ MonoBehaviour:
     - {fileID: 2082485387}
     - {fileID: 728068494}
     bakedRenderersTerrain: []
-    bakedIDs: 00000000010000000100000000000000000000000000000000000000010000000000000000000000010000000000000001000000000000000000000000000000000000000000000000000000010000000100000001000000000000000000000000000000010000000100000000000000000000000000000000000000000000000000000001000000010000000100000000000000000000000000000000000000010000000100000000000000010000000000000000000000000000000000000000000000010000000000000000000000000000000100000000000000010000000000000000000000000000000000000001000000000000000000000001000000000000000100000001000000
+    bakedIDs: 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
     bakedIDsTerrain: 
     bakedScaleOffset:
-    - {x: 0.008475756, y: 0.008388721, z: 0.7151506, w: 0.17777926}
-    - {x: 0.06446815, y: 0.11846545, z: 0.8289447, w: 0.12015687}
-    - {x: 0.07099038, y: 0.12877584, z: 0.37160385, w: 0.012718601}
-    - {x: 1.0000001, y: 1, z: 0, w: 0}
-    - {x: 0.008475756, y: 0.008388721, z: 0.27548277, w: 0.20904452}
-    - {x: 0.008475764, y: 0.008388721, z: 0.07030447, w: 0.3985902}
-    - {x: 0.008475756, y: 0.008388721, z: 0.5744569, w: 0.12111096}
-    - {x: 0.47082084, y: 0.85518473, z: 0.4438079, w: 0.004960766}
-    - {x: 0.008475756, y: 0.008388721, z: 0.40249792, w: 0.47675338}
-    - {x: 0.008475756, y: 0.008388721, z: 0.3595082, w: 0.17191702}
-    - {x: 0.05346185, y: 0.09697938, z: 0.79228747, w: 0.83942765}
-    - {x: 0.008475756, y: 0.008388721, z: 0.7307832, w: 0.2676669}
-    - {x: 0.018404901, y: 0.03338632, z: 0.9605609, w: 0.22893482}
-    - {x: 0.004396677, y: 0.004396677, z: 0.7953102, w: 0.5803615}
-    - {x: 0.008304834, y: 0.008304834, z: 0.2892037, w: 0.5705911}
-    - {x: 0.010258913, y: 0.010258914, z: 0.13287738, w: 0.11333659}
-    - {x: 0.0043966775, y: 0.0043966775, z: 0.11919883, w: 0.57449925}
-    - {x: 0.0043966775, y: 0.0043966775, z: 0.5881778, w: 0.57449925}
-    - {x: 0.0063507557, y: 0.0063507557, z: 0.4513923, w: 0.5705911}
-    - {x: 0.018404901, y: 0.033386335, z: 0.7957932, w: 0.20349762}
-    - {x: 0.018404901, y: 0.033386335, z: 0.9605609, w: 0.1526232}
-    - {x: 0.018404901, y: 0.033386335, z: 0.9605609, w: 0.19077902}
-    - {x: 0.004396677, y: 0.004396677, z: 0.8949683, w: 0.5764533}
-    - {x: 0.004396677, y: 0.004396677, z: 0.2794333, w: 0.5784074}
-    - {x: 0.004396677, y: 0.004396677, z: 0.5315095, w: 0.5803615}
-    - {x: 0.05346188, y: 0.096979335, z: 0.39263803, w: 0.14626391}
-    - {x: 0.018404901, y: 0.03338635, z: 0.347064, w: 0.2607313}
-    - {x: 0.004396677, y: 0.004396677, z: 0.76404494, w: 0.5803615}
-    - {x: 0.008304834, y: 0.008304834, z: 0.7054226, w: 0.5530044}
-    - {x: 0.010258913, y: 0.010258914, z: 0.50024426, w: 0.11724475}
-    - {x: 0.0043966775, y: 0.0043966775, z: 0.6604788, w: 0.5725452}
-    - {x: 0.0043966775, y: 0.0043966775, z: 0.9457743, w: 0.5725452}
-    - {x: 0.0063508153, y: 0.0063507557, z: 0.62139714, w: 0.5705911}
-    - {x: 0.018404901, y: 0.033386335, z: 0.7957932, w: 0.24165343}
-    - {x: 0.018404901, y: 0.033386335, z: 0.9605609, w: 0.0763116}
-    - {x: 0.018404901, y: 0.03338632, z: 0.347064, w: 0.22257552}
-    - {x: 0.004396678, y: 0.004396677, z: 0, w: 0.5803615}
-    - {x: 0.004396677, y: 0.004396677, z: 0.29506594, w: 0.5803615}
-    - {x: 0.004396677, y: 0.004396677, z: 0.42403516, w: 0.5764533}
-    - {x: 0.008475756, y: 0.008388721, z: 0.83825755, w: 0.35950863}
-    - {x: 0.09903592, y: 0.17965025, z: 0.8974584, w: 0.76947534}
-    - {x: 0.08851886, y: 0.16057235, z: 0.34005257, w: 0.83942765}
-    - {x: 0.008475756, y: 0.008388721, z: 0.6877935, w: 0.37514126}
-    - {x: 0.12007013, y: 0.21780604, z: 0.26993865, w: 0}
-    - {x: 0.008475756, y: 0.008388721, z: 0.24030936, w: 0.295024}
-    - {x: 0.008475756, y: 0.008388721, z: 0.54709977, w: 0.14065175}
-    - {x: 0.010258913, y: 0.010258913, z: 0.44357598, w: 0.11919883}
-    - {x: 0.004396677, y: 0.004396677, z: 0.7112848, w: 0.5803615}
-    - {x: 0.008304834, y: 0.008304834, z: 0.7972643, w: 0.5236932}
-    - {x: 0.018404901, y: 0.033386324, z: 0.9605609, w: 0.26709062}
-    - {x: 0.0043966775, y: 0.0043966775, z: 0.17586713, w: 0.57449925}
-    - {x: 0.0043966775, y: 0.0043966775, z: 0.7679531, w: 0.5725452}
-    - {x: 0.0063507557, y: 0.0063507557, z: 0.3654128, w: 0.5725452}
-    - {x: 0.018404901, y: 0.03338632, z: 0.9605609, w: 0.11446741}
-    - {x: 0.010258913, y: 0.010258913, z: 0.543234, w: 0.12310699}
-    - {x: 0.018404901, y: 0.033386327, z: 0.9605609, w: 0.0381558}
-    - {x: 0.004396677, y: 0.004396677, z: 0.11333659, w: 0.5764533}
-    - {x: 0.004396677, y: 0.004396677, z: 0.3185149, w: 0.5784074}
-    - {x: 0.004396677, y: 0.004396677, z: 0.1309233, w: 0.5764533}
-    - {x: 0.008475756, y: 0.008388721, z: 0.7425077, w: 0.17191702}
-    - {x: 0.10955298, y: 0.19872814, z: 0.71866786, w: 0}
-    - {x: 0.008475756, y: 0.008388721, z: 0.48261517, w: 0.21881492}
-    - {x: 0.008475787, y: 0.008388721, z: 0.4318091, w: 0.5099727}
-    - {x: 0.47082084, y: 0.85518473, z: -0.0049213013, w: 0.004960766}
-    - {x: 0.008475756, y: 0.008388721, z: 0.7581403, w: 0.29306993}
-    - {x: 0.06446815, y: 0.118465446, z: 0.825439, w: -0.0006698469}
-    - {x: 0.4547139, y: 0.8157727, z: 0.89291126, w: -0.050998032}
+    - {x: 0.0045029507, y: 0.0052982774, z: 0.3560637, w: 0.022188874}
+    - {x: 0.023518097, y: 0.02803048, z: 0.9730916, w: 0.39601552}
+    - {x: 0.025175214, y: 0.029929033, z: 0.9737867, w: 0.003702561}
+    - {x: 0.84116286, y: 0.99999994, z: 0, w: 0}
+    - {x: 0.0045029507, y: 0.0052982774, z: 0.36125445, w: 0.02342306}
+    - {x: 0.0045029507, y: 0.0052982774, z: 0.42665803, w: 0.025891434}
+    - {x: 0.0045029204, y: 0.0052982774, z: 0.66854745, w: 0.020954687}
+    - {x: 0.16681752, y: 0.19910355, z: 0.84019774, w: 0.20232743}
+    - {x: 0.0045029204, y: 0.005298279, z: 0.5585033, w: 0.027125621}
+    - {x: 0.004502955, y: 0.0052982774, z: 0.021778679, w: 0.022188874}
+    - {x: 0.019984424, y: 0.023758084, z: 0.907345, w: 0.40234494}
+    - {x: 0.0045029814, y: 0.0052982774, z: 0.7931257, w: 0.02342306}
+    - {x: 0.0054502487, y: 0.0064794812, z: 0.9654815, w: 0.018512804}
+    - {x: 0.0033739954, y: 0.0040111076, z: 0.021801194, w: 0.030854674}
+    - {x: 0.0054503083, y: 0.006479482, z: 0.47339737, w: 0.009873495}
+    - {x: 0.0064884424, y: 0.007713669, z: 0.15676098, w: 0}
+    - {x: 0.0023358467, y: 0.0027769192, z: 0.31144565, w: 0.030854674}
+    - {x: 0.0023358467, y: 0.0027769192, z: 0.44017652, w: 0.030854674}
+    - {x: 0.0033739954, y: 0.0040111076, z: 0.11834934, w: 0.030854674}
+    - {x: 0.0054502785, y: 0.0064794812, z: 0.48481706, w: 0.017278617}
+    - {x: 0.0054503083, y: 0.006479482, z: 0.7069816, w: 0.012341869}
+    - {x: 0.0054503083, y: 0.0064794812, z: 0.25227097, w: 0.014810244}
+    - {x: 0.0033739954, y: 0.0040111095, z: 0.24811836, w: 0.028386299}
+    - {x: 0.0033739805, y: 0.0040111095, z: 0.3560862, w: 0.028386299}
+    - {x: 0.0033739805, y: 0.0040111057, z: 0.70386714, w: 0.029620487}
+    - {x: 0.019984424, y: 0.023758098, z: 0.9364132, w: 0.22585621}
+    - {x: 0.0054503083, y: 0.0064794812, z: 0.9592526, w: 0.01974699}
+    - {x: 0.0033739936, y: 0.0040111076, z: 0.017648587, w: 0.030854674}
+    - {x: 0.0054502785, y: 0.006479482, z: 0.3405139, w: 0.009873495}
+    - {x: 0.0064884424, y: 0.0077136685, z: 0.4339476, w: 0.007405122}
+    - {x: 0.0023358318, y: 0.0027769192, z: 0.24396576, w: 0.030854674}
+    - {x: 0.0023358169, y: 0.0027769192, z: 0.3062549, w: 0.030854674}
+    - {x: 0.0033739954, y: 0.0040111076, z: 0.122501954, w: 0.030854674}
+    - {x: 0.005450301, y: 0.0064794812, z: 0.107967824, w: 0.01974699}
+    - {x: 0.0054503083, y: 0.006479482, z: 0.4941604, w: 0.012341869}
+    - {x: 0.0054503083, y: 0.0064794812, z: 0.4464054, w: 0.018512804}
+    - {x: 0.0033740103, y: 0.0040111095, z: 0.4443291, w: 0.028386299}
+    - {x: 0.0033740103, y: 0.0040111057, z: 0.3602388, w: 0.029620487}
+    - {x: 0.0033739954, y: 0.0040111095, z: 0.14222685, w: 0.028386299}
+    - {x: 0.0045029204, y: 0.0052982774, z: 0.6270214, w: 0.022188874}
+    - {x: 0.03451854, y: 0.041036725, z: 0.8419414, w: 0.40234494}
+    - {x: 0.03140414, y: 0.037334144, z: 0.87516224, w: 0.40234494}
+    - {x: 0.004502966, y: 0.0052982774, z: 0.23356171, w: 0.025891434}
+    - {x: 0.04282379, y: 0.050910212, z: 0.9364132, w: 0}
+    - {x: 0.0045029507, y: 0.0052982774, z: 0.11313607, w: 0.025891434}
+    - {x: 0.0045029814, y: 0.0052982774, z: 0.7318747, w: 0.020954687}
+    - {x: 0.0054502487, y: 0.006479482, z: 0.5336102, w: 0.011107682}
+    - {x: 0.0033739945, y: 0.0040111076, z: 0.008305217, w: 0.030854674}
+    - {x: 0.0054503083, y: 0.006479482, z: 0.31767455, w: 0.009873495}
+    - {x: 0.0064884424, y: 0.0077136694, z: 0.51492345, w: 0.008639309}
+    - {x: 0.0023358467, y: 0.0027769192, z: 0.4183753, w: 0.030854674}
+    - {x: 0.0023358467, y: 0.0027769192, z: 0.30314043, w: 0.030854674}
+    - {x: 0.0033739954, y: 0.0040111076, z: 0.13703609, w: 0.030854674}
+    - {x: 0.0054503083, y: 0.006479482, z: 0.6882949, w: 0.012341869}
+    - {x: 0.0054502934, y: 0.006479482, z: 0.22008826, w: 0.012341869}
+    - {x: 0.0054502785, y: 0.006479482, z: 0.26369065, w: 0.012341869}
+    - {x: 0.0033739805, y: 0.0040111076, z: 0.9696341, w: 0.027152112}
+    - {x: 0.0033739805, y: 0.0040111095, z: 0.4318713, w: 0.028386299}
+    - {x: 0.0033739936, y: 0.0040111095, z: 0.026991956, w: 0.028386299}
+    - {x: 0.0045029507, y: 0.0052982774, z: 0.14324248, w: 0.022188874}
+    - {x: 0.038671136, y: 0.045973465, z: 0.96132886, w: 0.19500153}
+    - {x: 0.0045029814, y: 0.0052982774, z: 0.6322121, w: 0.02342306}
+    - {x: 0.0045029204, y: 0.005298279, z: 0.7671719, w: 0.027125621}
+    - {x: 0.16681752, y: 0.19910353, z: 0.84019774, w: 0.0011549622}
+    - {x: 0.0045029814, y: 0.0052982774, z: 0.60106754, w: 0.024657248}
+    - {x: 0.023518097, y: 0.02803048, z: 0.9357181, w: 0.19731142}
+    - {x: 0.16227747, y: 0.18965974, z: 0.93479043, w: 0.3867858}
     bakedScaleOffsetTerrain: []
     bakedVertexColorMesh:
     - {fileID: 0}
@@ -4328,16 +4434,16 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 549690086}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.01278, y: 0.15188, z: 0}
-  m_LocalScale: {x: 0.005, y: 0.005, z: 0.005}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.01278, y: 0.15187997, z: 0}
+  m_LocalScale: {x: 0.005, y: 0.0050000004, z: 0.0050000004}
   m_Children:
   - {fileID: 1443847183}
   - {fileID: 173663336}
   - {fileID: 1463455224}
   - {fileID: 249539345}
-  m_Father: {fileID: 98743458}
-  m_RootOrder: 5
+  m_Father: {fileID: 905633696}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &633431442
 GameObject:
@@ -4732,14 +4838,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 713003081}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.04386, y: 0.06231, z: 0}
-  m_LocalScale: {x: 0.005, y: 0.005, z: 0.005}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.04386, y: 0.062309988, z: 0}
+  m_LocalScale: {x: 0.005, y: 0.0050000004, z: 0.0050000004}
   m_Children:
   - {fileID: 8141650903992070086}
   - {fileID: 429584244}
-  m_Father: {fileID: 98743458}
-  m_RootOrder: 4
+  m_Father: {fileID: 905633696}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &723834455
 PrefabInstance:
@@ -4839,16 +4945,16 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 761118962}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.04401, y: 0.25296, z: 0.00928}
-  m_LocalScale: {x: 0.005, y: 0.005, z: 0.005}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.04401, y: 0.25295994, z: 0.009280003}
+  m_LocalScale: {x: 0.005, y: 0.0050000004, z: 0.0050000004}
   m_Children:
   - {fileID: 286904458}
   - {fileID: 642606802}
   - {fileID: 783618067}
   - {fileID: 394256095}
-  m_Father: {fileID: 98743458}
-  m_RootOrder: 10
+  m_Father: {fileID: 905633696}
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &762266245
 PrefabInstance:
@@ -5254,14 +5360,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 788806093}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.07116, y: 0.07596, z: 0.01848}
-  m_LocalScale: {x: 0.005, y: 0.005, z: 0.005}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.07116, y: 0.07595999, z: 0.018480001}
+  m_LocalScale: {x: 0.005, y: 0.0050000004, z: 0.0050000004}
   m_Children:
   - {fileID: 802730627}
   - {fileID: 1038944974}
-  m_Father: {fileID: 98743458}
-  m_RootOrder: 13
+  m_Father: {fileID: 905633696}
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &802730626
 PrefabInstance:
@@ -5968,6 +6074,49 @@ OcclusionArea:
   m_Size: {x: 27.050594, y: 3.9595213, z: 7.3317356}
   m_Center: {x: -9.874514, y: 0.15314397, z: 4.902174}
   m_IsViewVolume: 1
+--- !u!1 &905633695
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 905633696}
+  m_Layer: 0
+  m_Name: Rooms
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 4294967295
+  m_IsActive: 1
+--- !u!4 &905633696
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 905633695}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 916789658}
+  - {fileID: 713003082}
+  - {fileID: 549690087}
+  - {fileID: 963470115}
+  - {fileID: 140428761}
+  - {fileID: 2077363399}
+  - {fileID: 71629641}
+  - {fileID: 761118963}
+  - {fileID: 169452400}
+  - {fileID: 1806814636}
+  - {fileID: 788806094}
+  - {fileID: 243260974}
+  - {fileID: 1486385981}
+  m_Father: {fileID: 98743458}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &916789657
 GameObject:
   m_ObjectHideFlags: 0
@@ -5992,13 +6141,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 916789657}
   m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071067}
-  m_LocalPosition: {x: 0, y: 0.012789985, z: -0.004999988}
+  m_LocalPosition: {x: 0, y: 0.012789982, z: -0.004999988}
   m_LocalScale: {x: 0.005, y: 0.0050000013, z: 0.0050000013}
   m_Children:
   - {fileID: 1953901630}
   - {fileID: 1049777283}
-  m_Father: {fileID: 98743458}
-  m_RootOrder: 3
+  m_Father: {fileID: 905633696}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &956846465
 GameObject:
@@ -6065,15 +6214,15 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963470114}
-  m_LocalRotation: {x: 0.7052106, y: 0.051750075, z: 0.060803983, w: 0.7044876}
-  m_LocalPosition: {x: 0.07632, y: 0.15234, z: -0.0091}
-  m_LocalScale: {x: 0.005714287, y: 0.005714287, z: 0.005714287}
+  m_LocalRotation: {x: 0.7052106, y: 0.051750075, z: 0.060803987, w: 0.7044876}
+  m_LocalPosition: {x: 0.07632, y: 0.15233997, z: -0.009100004}
+  m_LocalScale: {x: 0.005714287, y: 0.0057142866, z: 0.0057142875}
   m_Children:
   - {fileID: 725644140}
   - {fileID: 1802631564}
   - {fileID: 1201189083}
-  m_Father: {fileID: 98743458}
-  m_RootOrder: 6
+  m_Father: {fileID: 905633696}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 80.87, y: 90.00001, z: 90.73601}
 --- !u!1001 &1000814394
 PrefabInstance:
@@ -6569,6 +6718,47 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1049777282}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1050009387
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec0b4dd729a12d046982652f834580a2, type: 3}
+  m_Name: CaveScene_LM0
+  m_EditorClassIdentifier: 
+  resolution: 4096
+  bitmask: 1
+  id: 0
+  sortingID: 1
+  isImplicit: 1
+  area: 12635.445
+  totalVertexCount: 0
+  vertexCounter: 0
+  sceneLodLevel: -1
+  sceneName: CaveScene
+  containsTerrains: 0
+  probes: 0
+  mode: 1
+  renderMode: 1000
+  renderDirMode: 1000
+  atlasPacker: 1000
+  computeSSS: 0
+  sssSamples: 16
+  sssDensity: 10
+  sssColor: {r: 1, g: 1, b: 1, a: 1}
+  sssScale: 1
+  fakeShadowBias: 0
+  transparentSelfShadow: 0
+  flipNormal: 0
+  parentName: 
+  overridePath: 
+  fixPos3D: 0
+  voxelSize: {x: 1, y: 1, z: 1}
+  passedFilter: 0
 --- !u!1001 &1067015096
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7441,6 +7631,47 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1318435376}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1328150340
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec0b4dd729a12d046982652f834580a2, type: 3}
+  m_Name: probes
+  m_EditorClassIdentifier: 
+  resolution: 32
+  bitmask: 1
+  id: 1
+  sortingID: 0
+  isImplicit: 1
+  area: 0
+  totalVertexCount: 61
+  vertexCounter: 0
+  sceneLodLevel: -1
+  sceneName: 
+  containsTerrains: 0
+  probes: 1
+  mode: 2
+  renderMode: 1000
+  renderDirMode: 5
+  atlasPacker: 1000
+  computeSSS: 0
+  sssSamples: 16
+  sssDensity: 10
+  sssColor: {r: 1, g: 1, b: 1, a: 1}
+  sssScale: 1
+  fakeShadowBias: 0
+  transparentSelfShadow: 0
+  flipNormal: 0
+  parentName: 
+  overridePath: 
+  fixPos3D: 0
+  voxelSize: {x: 1, y: 1, z: 1}
+  passedFilter: 0
 --- !u!1001 &1342782716
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7532,47 +7763,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1342782716}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1376459653
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ec0b4dd729a12d046982652f834580a2, type: 3}
-  m_Name: CaveScene_LM0
-  m_EditorClassIdentifier: 
-  resolution: 4096
-  bitmask: 1
-  id: 0
-  sortingID: 0
-  isImplicit: 1
-  area: 12635.445
-  totalVertexCount: 0
-  vertexCounter: 0
-  sceneLodLevel: -1
-  sceneName: CaveScene
-  containsTerrains: 0
-  probes: 0
-  mode: 1
-  renderMode: 1000
-  renderDirMode: 1000
-  atlasPacker: 1000
-  computeSSS: 0
-  sssSamples: 16
-  sssDensity: 10
-  sssColor: {r: 1, g: 1, b: 1, a: 1}
-  sssScale: 1
-  fakeShadowBias: 0
-  transparentSelfShadow: 0
-  flipNormal: 0
-  parentName: 
-  overridePath: 
-  fixPos3D: 0
-  voxelSize: {x: 1, y: 1, z: 1}
-  passedFilter: 0
 --- !u!1001 &1383363627
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8635,15 +8825,15 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1486385980}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.071017, y: 0.030731, z: 0.014715}
-  m_LocalScale: {x: 0.005, y: 0.005, z: 0.005}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.071017, y: 0.030730994, z: 0.014714998}
+  m_LocalScale: {x: 0.005, y: 0.0050000004, z: 0.0050000004}
   m_Children:
   - {fileID: 2024332071}
   - {fileID: 8138234}
   - {fileID: 1416359286}
-  m_Father: {fileID: 98743458}
-  m_RootOrder: 15
+  m_Father: {fileID: 905633696}
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1490133325
 GameObject:
@@ -9598,9 +9788,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1806814635}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.08521, y: 0.20928, z: 0.02859}
-  m_LocalScale: {x: 0.005, y: 0.005, z: 0.005}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.08521, y: 0.20927995, z: 0.028590001}
+  m_LocalScale: {x: 0.005, y: 0.0050000004, z: 0.0050000004}
   m_Children:
   - {fileID: 1397580711}
   - {fileID: 703398285}
@@ -9614,8 +9804,8 @@ Transform:
   - {fileID: 2012431661}
   - {fileID: 1883466181}
   - {fileID: 2082485388}
-  m_Father: {fileID: 98743458}
-  m_RootOrder: 12
+  m_Father: {fileID: 905633696}
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1811023512
 GameObject:
@@ -10056,7 +10246,7 @@ PrefabInstance:
     - target: {fileID: 1094421957795580606, guid: 8894fa7e4588a5c4fab98453e558847d,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1094421957795580606, guid: 8894fa7e4588a5c4fab98453e558847d,
         type: 3}
@@ -10728,13 +10918,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2077363398}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.11381, y: 0.22131, z: 0.00611}
-  m_LocalScale: {x: 0.005, y: 0.005, z: 0.005}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.113809995, y: 0.22130999, z: 0.0061099897}
+  m_LocalScale: {x: 0.005, y: 0.0050000004, z: 0.0050000004}
   m_Children:
   - {fileID: 1759633431}
-  m_Father: {fileID: 98743458}
-  m_RootOrder: 8
+  m_Father: {fileID: 905633696}
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2082485385
 PrefabInstance:
