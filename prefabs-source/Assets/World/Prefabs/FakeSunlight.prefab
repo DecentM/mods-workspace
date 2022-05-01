@@ -76,7 +76,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57f24a4aaa0761b45ba25e7e5108e2c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  UID: 1631310342
+  UID: 1253577740
   color: {r: 0.6933962, g: 0.8302251, b: 1, a: 1}
   intensity: 150
   shadowSpread: 0.05
@@ -106,6 +106,10 @@ PrefabInstance:
     - target: {fileID: 1637740287367378, guid: ac094190461fca94eb68e06e0b6aae90, type: 3}
       propertyPath: m_Name
       value: GodRay
+      objectReference: {fileID: 0}
+    - target: {fileID: 1637740287367378, guid: ac094190461fca94eb68e06e0b6aae90, type: 3}
+      propertyPath: m_Layer
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 1637740287367378, guid: ac094190461fca94eb68e06e0b6aae90, type: 3}
       propertyPath: m_StaticEditorFlags
