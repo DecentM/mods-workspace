@@ -59,7 +59,7 @@ ModelImporter:
     animationWrapMode: 0
     extraExposedTransformPaths: []
     extraUserProperties:
-    - '#BAKERY{"meshName":["Rock6"],"padding":[40],"unwrapper":[1]}'
+    - '#BAKERY{"meshName":["Rock6"],"padding":[33],"unwrapper":[1]}'
     clipAnimations: []
     isReadable: 1
   meshes:

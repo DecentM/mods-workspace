@@ -64,7 +64,7 @@ Material:
     - _DstBlend: 0
     - _FadeAmt: 0.94
     - _FadePow: 1
-    - _FadeStrength: 4.41
+    - _FadeStrength: 4.81
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1

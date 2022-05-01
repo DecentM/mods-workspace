@@ -59,7 +59,7 @@ ModelImporter:
     animationWrapMode: 0
     extraExposedTransformPaths: []
     extraUserProperties:
-    - '#BAKERY{"meshName":["Stalagmite"],"padding":[30],"unwrapper":[1]}'
+    - '#BAKERY{"meshName":["Stalagmite"],"padding":[25],"unwrapper":[1]}'
     clipAnimations: []
     isReadable: 1
   meshes:
