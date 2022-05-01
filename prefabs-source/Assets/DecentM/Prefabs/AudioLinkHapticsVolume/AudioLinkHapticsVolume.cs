@@ -2,14 +2,14 @@
 using UdonSharp;
 using UnityEngine;
 using VRC.SDKBase;
-using VRCAudioLink;
+// using VRCAudioLink;
 
 [UdonBehaviourSyncMode(BehaviourSyncMode.Manual)]
 public class AudioLinkHapticsVolume : UdonSharpBehaviour
 {
-    [Header("References")]
-    [Tooltip("The AudioLink game object in the world")]
-    public AudioLink audioLink;
+    // [Header("References")]
+    // [Tooltip("The AudioLink game object in the world")]
+    // public AudioLink audioLink;
 
     [Header("Haptics settings (values range from 0 to 1)")]
     [Tooltip("How long to vibrate each note for. This should be low as the vibration command is send with every frame.")]
@@ -47,7 +47,7 @@ public class AudioLinkHapticsVolume : UdonSharpBehaviour
         }
     }
 
-    private void Update()
+    /* private void Update()
     {
         Material alMat = this.audioLink.audioMaterial;
 
@@ -97,5 +97,5 @@ public class AudioLinkHapticsVolume : UdonSharpBehaviour
         this.DoHaptics(VRC_Pickup.PickupHand.Right, band1R, this.audioLink.threshold1, this.band1Amplitude, this.band1Frequency);
         this.DoHaptics(VRC_Pickup.PickupHand.Right, band2R, this.audioLink.threshold2, this.band2Amplitude, this.band2Frequency);
         this.DoHaptics(VRC_Pickup.PickupHand.Right, band3R, this.audioLink.threshold3, this.band3Amplitude, this.band3Frequency);
-    }
+    } */
 }

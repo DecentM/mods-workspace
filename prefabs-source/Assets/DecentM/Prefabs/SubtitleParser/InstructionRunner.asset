@@ -332,7 +332,7 @@ MonoBehaviour:
       Data: 18|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
-      Data: UdonSharp.Video.USharpVideoPlayer, Assembly-CSharp
+      Data: DecentM.VideoPlayer.VideoPlayerSystem, Assembly-CSharp
     - Name: 
       Entry: 8
       Data: 

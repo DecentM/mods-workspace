@@ -4,9 +4,9 @@ using UnityEngine;
 using VRC.SDKBase;
 using VRC.Udon;
 using UnityEngine.UI;
-using UdonSharp.Video;
 using TMPro;
 using DecentM;
+using DecentM.VideoPlayer;
 
 [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
 public class InstructionRunner : UdonSharpBehaviour
@@ -31,7 +31,7 @@ public class InstructionRunner : UdonSharpBehaviour
 
     public TextMeshProUGUI text;
     public TextMeshProUGUI debug;
-    public USharpVideoPlayer player;
+    public VideoPlayerSystem player;
 
     private bool initialised = false;
     private float fixedUpdateRate;
@@ -192,7 +192,7 @@ public class InstructionRunner : UdonSharpBehaviour
             return;
         }
 
-        int timeMillis = Mathf.RoundToInt(this.player.GetVideoManager().GetTime() * 1000) + Mathf.RoundToInt(this.subtitleOffset);
+        int timeMillis = Mathf.RoundToInt(this.player.GetTime() * 1000) + Mathf.RoundToInt(this.subtitleOffset);
         object[] instruction = this.instructions[this.instructionIndex];
 
         if (instruction == null)
