@@ -16,4 +16,12 @@ MonoBehaviour:
   - Assets/Bakery/examples/content/sponza/sponza.FBX
   - Assets/World/Models/Cave/cave.fbx
   - Assets/World/Models/Cave/cave-lowpoly.fbx
-  modifiedAssetPaddingHash: aaf8cc2e363fd3d9363fd3d9
+  - Assets/LowPoly Rocks/FBX/Ground/Rock2.fbx
+  - Assets/LowPoly Rocks/FBX/Ground/Rock3.fbx
+  - Assets/LowPoly Rocks/FBX/Ground/Rock4.fbx
+  - Assets/LowPoly Rocks/FBX/Ground/Rock1.fbx
+  - Assets/LowPoly Rocks/FBX/Ground/Rock5.fbx
+  - Assets/LowPoly Rocks/FBX/Ground/Rock11.fbx
+  - Assets/LowPoly Rocks/FBX/Ground/Rock6.fbx
+  - Assets/LowPoly Rocks/FBX/Stalagmites/Stalagmite3.fbx
+  modifiedAssetPaddingHash: aaf8cc2e363fd3d9363fd3d9df4dfff01c7e93633367e2a8465031eea35031ee377e9363b7f23a06d2f23a06

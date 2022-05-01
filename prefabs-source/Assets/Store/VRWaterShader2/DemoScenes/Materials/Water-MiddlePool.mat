@@ -141,7 +141,7 @@ Material:
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
-    - _FirstWaveHeightStrength: 0.02
+    - _FirstWaveHeightStrength: 0.04
     - _FirstWaveNormalStrength: 0.385
     - _FourthWaveEnableThis: 0
     - _FourthWaveHeightStrength: -0.148
@@ -161,7 +161,7 @@ Material:
     - _SSRefractionRefractionFresnel: 3.02
     - _SSRefractionStrength: 0.055
     - _SecondWaveEnableThis: 1
-    - _SecondWaveHeightStrength: 0.02
+    - _SecondWaveHeightStrength: 0.04
     - _SecondWaveNormalStrength: 0.301
     - _ShadowOffset: 0
     - _ShadowOpacityRatio: 1
@@ -184,11 +184,11 @@ Material:
     - _Color: {r: 0.8, g: 0.8, b: 0.8, a: 1}
     - _CubemapBaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _FirstWaveUandVspeed: {r: 0.05, g: 0.123, b: 0, a: 0}
+    - _FirstWaveUandVspeed: {r: 0.05, g: 0.05, b: 0, a: 0}
     - _FirstWaveUandVspeedZWNotused: {r: 0, g: 0, b: 0, a: 0}
     - _FourthWaveUandVspeed: {r: -0.05, g: -0.075, b: 0, a: 0}
     - _FourthWaveUandVspeedZWNotused: {r: -0.05, g: -0.075, b: 0, a: 0}
-    - _SecondWaveUandVspeed: {r: -0.12, g: -0.082, b: 0, a: 0}
+    - _SecondWaveUandVspeed: {r: -0.05, g: -0.05, b: 0, a: 0}
     - _SecondWaveUandVspeedZWNotused: {r: -0.05, g: -0.075, b: 0, a: 0}
-    - _ThirdWaveUandVspeed: {r: -0.01, g: -0.1, b: 0, a: 0}
+    - _ThirdWaveUandVspeed: {r: -0.01, g: 0.01, b: 0, a: 0}
     - _ThirdWaveUandVspeedZWNotused: {r: -0.05, g: -0.075, b: 0, a: 0}
