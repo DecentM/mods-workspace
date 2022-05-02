@@ -1,11 +1,14 @@
-﻿
+﻿#if UNITY_EDITOR && !COMPILER_UDONSHARP
+using UnityEditor;
+#endif
+using UnityEngine;
 using UdonSharp;
 using VRC.SDKBase;
 
 namespace DecentM.Metrics
 {
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
-    public class URLStore : UdonSharpBehaviour
+    public class URLStore : UdonSharpBehaviour, ISerializationCallbackReceiver
     {
         // parameter structure
         // 0 - name
@@ -15,6 +18,83 @@ namespace DecentM.Metrics
         // 0 - object[] { Metric metric, object[][] {} parameters }
         // 1 - VRCUrl url
         public object[][] urls;
+
+        public void OnBeforeSerialize()
+        {
+            if (this.serializedUrls != null && this.serializedUrlData != null && this.urls.Length == this.serializedUrls.Length && this.urls.Length == this.serializedUrlData.Length) return;
+
+            this.serializedUrlData = new string[this.urls.Length];
+            this.serializedUrls = new VRCUrl[this.urls.Length];
+
+            for (int i = 0; i < this.urls.Length; i++)
+            {
+#if UNITY_EDITOR && !COMPILER_UDONSHARP
+                EditorUtility.DisplayProgressBar($"[DecentM.Metrics] Serializing URL combinations...", $"{i}/{this.urls.Length}", (float)i / this.urls.Length);
+#endif
+
+                object[] item = this.urls[i];
+
+                if (item == null) continue;
+
+                object[] data = (object[])item[0];
+                VRCUrl url = (VRCUrl)item[1];
+
+                this.serializedUrls[i] = url;
+                this.serializedUrlData[i] = $"{(int)data[0]}";
+
+                foreach (object[] parameter in (object[][])data[1])
+                {
+                    if (parameter == null) continue;
+
+                    string paramName = (string)parameter[0];
+                    string paramValue = (string)parameter[1];
+
+                    this.serializedUrlData[i] += $";{paramName}={paramValue}";
+                }
+            }
+
+#if UNITY_EDITOR && !COMPILER_UDONSHARP
+            EditorUtility.ClearProgressBar();
+#endif
+        }
+
+        public void OnAfterDeserialize()
+        {
+            if (this.urls != null && this.serializedUrls.Length == this.urls.Length) return;
+
+            this.urls = new object[this.serializedUrls.Length][];
+
+            for (var i = 0; i < this.serializedUrls.Length; i++)
+            {
+                string data = this.serializedUrlData[i];
+
+                if (data == null) continue;
+
+                string[] dataParts = data.Split(';');
+                int metric;
+                bool metricParsed = int.TryParse(dataParts[0], out metric);
+
+                if (!metricParsed) continue;
+
+                object[][] parameters = new object[dataParts.Length][];
+
+                for (int j = 1; j < dataParts.Length - 1; j++)
+                {
+                    if (j >= dataParts.Length || dataParts[j] == null) continue;
+
+                    string[] parameterParts = dataParts[j].Split('=');
+                    parameters[j - 1] = new object[] { parameterParts[0], parameterParts[1] };
+                }
+
+                object[] item = new object[] { new object[] { metric, parameters }, this.serializedUrls[i] };
+                this.urls[i] = item;
+            }
+        }
+
+        [HideInInspector]
+        public VRCUrl[] serializedUrls;
+        [HideInInspector]
+        public string[] serializedUrlData;
 
         private VRCUrl GetMetricUrl(Metric metric, object[][] parameters)
         {

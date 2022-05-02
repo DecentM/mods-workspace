@@ -39,7 +39,7 @@ namespace DecentM.Metrics
                 plugin.urlStore = requirements.urlStore;
                 plugin.pubsubHosts = new Pubsub.PubsubHost[] { requirements.events };
 
-                DEditor.SavePrefabModifications(plugin);
+                Inspector.SaveModifications(plugin);
             }
 
             #endregion
@@ -63,15 +63,17 @@ namespace DecentM.Metrics
             if (performancePlugin != null)
             {
                 performancePlugin.pubsubHosts = new Pubsub.PubsubHost[] { governor };
+                Inspector.SaveModifications(performancePlugin);
             }
 
             HeartbeatPlugin heartbeatPlugin = ui.GetComponentInChildren<HeartbeatPlugin>();
             if (heartbeatPlugin != null)
             {
                 heartbeatPlugin.performanceGovernor = governor;
+                Inspector.SaveModifications(heartbeatPlugin);
             }
 
-            DEditor.SavePrefabModifications(ui);
+            Inspector.SaveModifications(ui);
 
             #endregion
 
@@ -88,7 +90,7 @@ namespace DecentM.Metrics
             if (urlStore.urls == null)
             {
                 urlStore.urls = new object[][] { };
-                DEditor.SavePrefabModifications(ui);
+                Inspector.SaveModifications(ui);
             }
 
             #endregion

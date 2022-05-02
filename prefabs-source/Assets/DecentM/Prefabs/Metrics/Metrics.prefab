@@ -1425,6 +1425,8 @@ MonoBehaviour:
       Entry: 6
       Data: 
   _udonSharpBackingUdonBehaviour: {fileID: 7375632530703662581}
+  serializedUrls: []
+  serializedUrlData: []
 --- !u!114 &7375632530703662581
 MonoBehaviour:
   m_ObjectHideFlags: 0

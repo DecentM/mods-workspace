@@ -7,7 +7,7 @@ using DecentM.EditorTools;
 namespace DecentM.Keyboard
 {
     [CustomEditor(typeof(KeyboardSystem))]
-    public class KeyboardSystemInspector : DEditor
+    public class KeyboardSystemInspector : Inspector
     {
         KeyboardSystem keyboard;
 

@@ -8,7 +8,7 @@ namespace DecentM.Performance.Plugins
     {
         protected virtual void OnPerformanceModeChange(PerformanceGovernorMode mode, float fps) { }
 
-        protected sealed override void OnPubsubEvent(object name, object[] data)
+        public sealed override void OnPubsubEvent(object name, object[] data)
         {
             switch (name)
             {
@@ -22,7 +22,7 @@ namespace DecentM.Performance.Plugins
                         return;
                     }
 
-                    #endregion
+                #endregion
             }
         }
     }

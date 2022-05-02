@@ -27,6 +27,7 @@ namespace DecentM.Metrics
             if (urlStore == null) return;
 
             urlStore.urls = new object[][] { };
+            Inspector.SaveModifications(urlStore);
         }
 
         public static void SaveUrls(MetricsUI ui, URLStore urlStore)
@@ -95,6 +96,7 @@ namespace DecentM.Metrics
             }
 
             urlStore.urls = urls.ToArray();
+            Inspector.SaveModifications(urlStore);
         }
     }
 }

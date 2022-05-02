@@ -6,7 +6,7 @@ using DecentM.EditorTools;
 namespace DecentM.Metrics
 {
     [CustomEditor(typeof(MetricsUI))]
-    public class MetricsUIInspector : DEditor
+    public class MetricsUIInspector : Inspector
     {
         public override void OnInspectorGUI()
         {
@@ -35,7 +35,7 @@ namespace DecentM.Metrics
                 MetricsUrlGenerator.SaveUrls(ui, urlStore);
             }
 
-            DEditor.SavePrefabModifications(ui);
+            this.SaveModifications();
         }
     }
 }

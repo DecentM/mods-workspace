@@ -22,7 +22,7 @@ namespace DecentM.Metrics
                 {
                     Debug.LogWarning($"Metric name is not set for the metrics plugin on {plugin.name}, generating a random name...");
                     plugin.metricName = RandomStringGenerator.GenerateRandomString(8);
-                    DEditor.SavePrefabModifications(plugin);
+                    Inspector.SaveModifications(plugin);
                 }
 
                 result.Add(plugin.metricName);

@@ -67,13 +67,6 @@ namespace DecentM.Pubsub
             this.SubscribeAll();
         }
 
-        protected abstract void OnPubsubEvent(object name, object[] data);
-
-        private object OnPubsubEvent_name;
-        private object[] OnPubsubEvent_data;
-        public void OnPubsubEvent()
-        {
-            this.OnPubsubEvent(OnPubsubEvent_name, OnPubsubEvent_data);
-        }
+        public abstract void OnPubsubEvent(object name, object[] data);
     }
 }

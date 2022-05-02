@@ -48,7 +48,7 @@ namespace DecentM.VideoPlayer.Plugins
 
         protected virtual void OnUIVisibilityChange(bool visible) { }
 
-        protected sealed override void OnPubsubEvent(object name, object[] data)
+        public sealed override void OnPubsubEvent(object name, object[] data)
         {
             switch (name)
             {

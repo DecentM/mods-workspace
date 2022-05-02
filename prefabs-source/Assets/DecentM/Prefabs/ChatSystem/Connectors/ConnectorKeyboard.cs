@@ -19,7 +19,7 @@ namespace DecentM.Chat.Connectors
             this.system.OnSendMessage(0, message);
         }
 
-        protected override void OnPubsubEvent(object name, object[] data)
+        public override void OnPubsubEvent(object name, object[] data)
         {
             switch (name)
             {

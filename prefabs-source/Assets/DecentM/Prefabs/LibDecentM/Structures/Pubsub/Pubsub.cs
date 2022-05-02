@@ -6,6 +6,8 @@ namespace DecentM.Pubsub
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public abstract class PubsubHost : UdonSharpBehaviour
     {
+        public int batchSize = 10;
+
         private PubsubSubscriber[] subscribers;
 
         public int Subscribe(PubsubSubscriber behaviour)
@@ -41,7 +43,7 @@ namespace DecentM.Pubsub
 
         private object[][] queue;
 
-        private void QueuePush(object eventName, object[] data, UdonSharpBehaviour behaviour)
+        private void QueuePush(object eventName, object[] data, PubsubSubscriber behaviour)
         {
             bool initialised = this.queue != null;
 
@@ -73,25 +75,37 @@ namespace DecentM.Pubsub
 
         private void FixedUpdate()
         {
-            // Get the first item from the queue and also remove it from the queue
-            object[] queueItem = this.QueuePop();
+            if (this.queue == null || this.queue.Length == 0) return;
 
-            if (queueItem == null) return;
+            int processedCount = 0;
 
-            string eventName = (string)queueItem[0];
-            object data = queueItem[1];
-            UdonSharpBehaviour behaviour = (UdonSharpBehaviour)queueItem[2];
+            // Process a batch of items from the queue
+            while (processedCount < this.batchSize)
+            {
+                // Get the first item from the queue and also remove it from the queue
+                object[] queueItem = this.QueuePop();
 
-            behaviour.SetProgramVariable($"OnPubsubEvent_name", eventName);
-            behaviour.SetProgramVariable($"OnPubsubEvent_data", data);
-            behaviour.SendCustomEvent($"OnPubsubEvent");
+                if (queueItem == null)
+                {
+                    processedCount++;
+                    break;
+                }
+
+                string eventName = (string)queueItem[0];
+                object[] data = (object[])queueItem[1];
+                PubsubSubscriber subscriber = (PubsubSubscriber)queueItem[2];
+
+                subscriber.OnPubsubEvent(eventName, data);
+
+                processedCount++;
+            }
         }
 
         protected void BroadcastEvent(object eventName, params object[] data)
         {
-            if (this.subscribers == null) return;
+            if (this.subscribers == null || this.subscribers.Length == 0) return;
 
-            foreach (UdonSharpBehaviour subscriber in this.subscribers)
+            foreach (PubsubSubscriber subscriber in this.subscribers)
             {
                 this.QueuePush(eventName, data, subscriber);
             }

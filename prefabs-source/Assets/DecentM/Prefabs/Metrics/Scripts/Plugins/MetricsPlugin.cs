@@ -23,7 +23,7 @@ namespace DecentM.Metrics.Plugins
         protected virtual void OnMetricQueued(Metric metric) { }
         protected virtual void OnMetricRequeued(Metric metric, int attempts) { }
 
-        protected sealed override void OnPubsubEvent(object name, object[] data)
+        public sealed override void OnPubsubEvent(object name, object[] data)
         {
             switch (name)
             {

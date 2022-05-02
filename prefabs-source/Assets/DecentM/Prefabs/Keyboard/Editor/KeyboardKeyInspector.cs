@@ -9,7 +9,7 @@ using VRC.Udon;
 namespace DecentM.Keyboard
 {
     [CustomEditor(typeof(KeyboardKey))]
-    public class KeyboardKeyInspector : DEditor
+    public class KeyboardKeyInspector : Inspector
     {
         KeyboardKey key;
 
