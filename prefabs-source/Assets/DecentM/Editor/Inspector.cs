@@ -252,7 +252,7 @@ namespace DecentM.EditorTools
         protected void DrawLabel(Rect rect, string contents, int size, FontStyle fontStyle, Color color)
         {
             GUIStyle style = new GUIStyle();
-            style.fontSize = Mathf.CeilToInt((8 - size) * 5);
+            style.fontSize = Mathf.CeilToInt((1 + size) * 4);
             style.fontStyle = fontStyle;
             style.normal.textColor = color;
             style.wordWrap = false;

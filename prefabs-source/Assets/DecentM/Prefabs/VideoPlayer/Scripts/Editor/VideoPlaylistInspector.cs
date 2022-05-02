@@ -12,83 +12,74 @@ namespace DecentM.VideoPlayer
     [CustomEditor(typeof(VideoPlaylist))]
     public class VideoPlaylistInspector : Inspector
     {
+        public const int UrlHeight = 150;
+        public const int paddingUnit = 8;
+
         public override void OnInspectorGUI()
         {
             VideoPlaylist playlist = (VideoPlaylist)target;
 
+            Rect screenRect = new Rect(0, 0, Screen.width, Screen.height);
+            EditorGUI.DrawRect(screenRect, new Color(38 / 255f, 38 / 255f, 38 / 255f));
+
             for (int i = 0; i < playlist.urls.Length; i++)
             {
-                Rect regionOuter = this.DrawRegion(150, new Vector4(8, 8, 8, 8));
-                Rect region = this.GetRectInside(regionOuter, new Vector4(8, 8, 8, 8));
-                EditorGUI.DrawRect(region, Color.grey);
+                VideoMetadata videoMetadata = VideoMetadataStore.GetMetadata(playlist.urls[i].ToString());
+
+                Rect regionOuter = this.DrawRegion(UrlHeight, new Vector4(paddingUnit, paddingUnit, paddingUnit, paddingUnit / 2));
+                Rect region = this.GetRectInside(regionOuter, new Vector4(paddingUnit, paddingUnit, paddingUnit, paddingUnit));
+
+                EditorGUI.DrawRect(region, new Color(56 / 255f, 56 / 255f, 56 / 255f));
 
                 Rect thumbnailRectOuter = this.GetRectInside(region, new Vector2(region.width / 3, region.height));
-                Rect thumbnailRectInner = this.GetRectInside(thumbnailRectOuter, new Vector4(8, 8, 8, 8));
-                Texture thumbnail = VideoThumbnailStore.GetThumbnail(playlist.urls[i]);
+                Rect thumbnailRectInner = this.GetRectInside(thumbnailRectOuter, new Vector4(paddingUnit, paddingUnit, paddingUnit, paddingUnit));
 
-                if (thumbnail == null)
+                if (videoMetadata.thumbnail != null)
                 {
-                    VideoThumbnailStore.FetchThumbnail(playlist.urls[i]);
-                    thumbnail = VideoThumbnailStore.GetThumbnail(playlist.urls[i]);
+                    float thumbnailAspectRatio = 1f * videoMetadata.thumbnail.height / videoMetadata.thumbnail.width;
+                    thumbnailRectInner.width = thumbnailRectInner.height / thumbnailAspectRatio;
+                    this.DrawImage(videoMetadata.thumbnail, thumbnailRectInner);
+                }
+                else
+                {
+                    this.DrawImage(EditorAssets.FallbackVideoThumbnail, thumbnailRectInner);
                 }
 
-                this.DrawImage(thumbnail, thumbnailRectInner);
-                // this.DrawImage(EditorAssets.FallbackVideoThumbnail, thumbnailRectInner);
-
-                Rect textRectOuter = this.GetRectInside(region, new Vector2(region.width / 3 * 2, region.height), new Vector4(region.width / 3, 0, 0, 0));
-                Rect textRectInner = this.GetRectInside(textRectOuter, new Vector4(8, 8, 8, 8));
+                Rect textRectOuter = this.GetRectInside(region, new Vector2(region.width - thumbnailRectInner.width, region.height), new Vector4(thumbnailRectInner.width + 8, 0, 0, 0));
+                Rect textRectInner = this.GetRectInside(textRectOuter, new Vector4(paddingUnit, paddingUnit, paddingUnit, paddingUnit));
 
                 int count = 0;
-                float height = textRectInner.height / 3;
+                float height = textRectInner.height / 5;
 
-                Rect titleRect = this.GetRectInside(textRectInner, new Vector2(textRectInner.width, height), new Vector4(8, count * height, 8, 0));
-                this.DrawLabel(titleRect, "The Original Was Better TBH - Let's Play Stanley Parable Ultra Deluxe Part 2 [Blind PC Gameplay]", 4, FontStyle.Bold);
-
-                count++;
-
-                Rect uploaderRect = this.GetRectInside(textRectInner, new Vector2(textRectInner.width, height), new Vector4(8, count * height, 8, 0));
-                this.DrawLabel(uploaderRect, "Materwelonz", 5);
+                Rect titleRect = this.GetRectInside(textRectInner, new Vector2(textRectInner.width, height), new Vector4(paddingUnit, count * height, paddingUnit, 0));
+                this.DrawLabel(titleRect, videoMetadata.title, 3, FontStyle.Bold);
 
                 count++;
 
-                Rect urlRect = this.GetRectInside(textRectInner, new Vector2(textRectInner.width, 20), new Vector4(8, (count * height) + 16, 8, 0));
+                Rect uploaderRect = this.GetRectInside(textRectInner, new Vector2(textRectInner.width, height), new Vector4(paddingUnit, count * height, paddingUnit, 0));
+                this.DrawLabel(uploaderRect, videoMetadata.uploader, 2);
+
+                count++;
+
+                Rect countersRect = this.GetRectInside(textRectInner, new Vector2(textRectInner.width, height), new Vector4(paddingUnit, count * height, paddingUnit, 0));
+                List<string> counterLabels = new List<string>();
+                if (videoMetadata.viewCount != null) counterLabels.Add($"{videoMetadata.viewCount} views");
+                if (videoMetadata.likeCount != null) counterLabels.Add($"{videoMetadata.likeCount} likes");
+                this.DrawLabel(countersRect, string.Join(", ", counterLabels.ToArray()), 2);
+
+                count++;
+
+                Rect specsRect = this.GetRectInside(textRectInner, new Vector2(textRectInner.width, height), new Vector4(paddingUnit, count * height, paddingUnit, 0));
+                List<string> techLabels = new List<string>();
+                if (videoMetadata.resolution != null) techLabels.Add(videoMetadata.resolution);
+                if (videoMetadata.fps != 0) techLabels.Add($"{videoMetadata.fps}fps");
+                this.DrawLabel(specsRect, string.Join("@", techLabels.ToArray()), 2);
+
+                count++;
+
+                Rect urlRect = this.GetRectInside(textRectInner, new Vector2(textRectInner.width, height), new Vector4(paddingUnit, count * height, paddingUnit, 0));
                 playlist.urls[i] = new VRCUrl(EditorGUI.TextField(urlRect, playlist.urls[i].ToString()));
             }
-
-            // Rect thumbnailRect = this.GetRectInside(region, new Vector2(region.width / 3, 1));
-            // EditorGUI.DrawRect(thumbnailRect, Color.grey);
-
-            /*
-            this.HelpBox(MessageType.Info, playlist.looping
-                ? "When the last item is reached, the playlist will start over from the beginning"
-                : "When the last item is reached, playback will end"
-            );
-
-            playlist.looping = this.Toggle("Loop playlist", playlist.looping);
-
-            EditorGUI.BeginDisabledGroup(true);
-            EditorGUILayout.TextField(Application.dataPath);
-            EditorGUI.EndDisabledGroup();
-
-            for (int i = 0; i < playlist.urls.Length; i++)
-            {
-                Rect region = this.DrawRegion(50);
-
-                Rect urlField = new Rect(region);
-                urlField.height = 20;
-
-                playlist.urls[i] = new VRCUrl(EditorGUI.TextField(urlField, playlist.urls[i].ToString()));
-                Texture thumbnail = VideoThumbnailStore.GetThumbnail(playlist.urls[i]);
-
-                if (thumbnail == null)
-                {
-                    VideoThumbnailStore.FetchThumbnail(playlist.urls[i]);
-                    thumbnail = VideoThumbnailStore.GetThumbnail(playlist.urls[i]);
-                }
-
-                this.DrawImage(thumbnail);
-            }
-            */
         }
     }
 }
