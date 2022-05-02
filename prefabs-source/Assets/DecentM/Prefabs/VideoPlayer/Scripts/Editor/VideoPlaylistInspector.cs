@@ -57,7 +57,10 @@ namespace DecentM.VideoPlayer
                 count++;
 
                 Rect uploaderRect = this.GetRectInside(textRectInner, new Vector2(textRectInner.width, height), new Vector4(paddingUnit, count * height, paddingUnit, 0));
-                this.DrawLabel(uploaderRect, videoMetadata.uploader, 2);
+                List<string> uploaderLabels = new List<string>();
+                if (videoMetadata.uploader != null) uploaderLabels.Add(videoMetadata.uploader);
+                if (videoMetadata.siteName != null) uploaderLabels.Add(videoMetadata.siteName);
+                this.DrawLabel(uploaderRect, string.Join(" - ", uploaderLabels.ToArray()), 2);
 
                 count++;
 
@@ -80,6 +83,8 @@ namespace DecentM.VideoPlayer
                 Rect urlRect = this.GetRectInside(textRectInner, new Vector2(textRectInner.width, height), new Vector4(paddingUnit, count * height, paddingUnit, 0));
                 playlist.urls[i] = new VRCUrl(EditorGUI.TextField(urlRect, playlist.urls[i].ToString()));
             }
+
+            this.SaveModifications();
         }
     }
 }

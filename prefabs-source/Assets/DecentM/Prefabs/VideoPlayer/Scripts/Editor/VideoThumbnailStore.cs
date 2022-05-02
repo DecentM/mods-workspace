@@ -26,6 +26,7 @@ namespace DecentM.VideoPlayer
         public string resolution;
         public int fps;
         public string original_url;
+        public string extractor_key;
     }
 
     public struct VideoMetadata
@@ -38,43 +39,11 @@ namespace DecentM.VideoPlayer
         public Texture2D thumbnail;
         public string resolution;
         public int fps;
+        public string siteName;
     }
 
     public class VideoMetadataStore
     {
-        /*
-        private static string GetVideoIdFromUrl(string url)
-        {
-            if (url == "") return null;
-
-            try
-            {
-                Uri uri = new Uri(url);
-                string[] queryParams = uri.Query.Split(new char[] { '?', '&' });
-
-                foreach (string param in queryParams)
-                {
-                    string[] parts = param.Split('=');
-                    if (parts.Length != 2) continue;
-
-                    string key = parts[0];
-                    string value = parts[1];
-
-                    // Look for the query parameter "v", as that's where YouTube stores the video id
-                    // https://www.youtube.com/watch?v=q-fgx5ktr2s
-                    if (key != "v") continue;
-
-                    return value;
-                }
-            }
-            catch
-            {
-                return null;
-            }
-
-            return null;
-        } */
-
         private static string GetHash(string text)
         {
             if (String.IsNullOrEmpty(text))
@@ -114,15 +83,6 @@ namespace DecentM.VideoPlayer
             if (AssetDatabase.CreateFolder(basePath, name) == "") return false;
             return true;
         }
-
-        /* private static Texture2D GetThumbnail(string url)
-        {
-            if (!ValidateUrl(url)) return EditorAssets.FallbackVideoThumbnail;
-
-            string hash = GetHash(url);
-            string path = $"{EditorAssets.VideoMetadataFolder}/{hash}/thumbnail.jpg";
-            return AssetDatabase.LoadAssetAtPath<Texture2D>(path);
-        } */
 
         private static void ApplyThumbnailImportSettings(string path)
         {
@@ -197,6 +157,7 @@ namespace DecentM.VideoPlayer
                 metadata.uploader = json.uploader;
                 metadata.viewCount = json.view_count;
                 metadata.thumbnail = GetThumbnail(hash, json.thumbnail);
+                metadata.siteName = json.extractor_key;
             } catch
             {
                 return metadata;
