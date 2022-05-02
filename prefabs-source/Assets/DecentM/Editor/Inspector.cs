@@ -189,16 +189,37 @@ namespace DecentM.EditorTools
             return this.GetRectInside(drawRect, padding);
         }
 
-        protected Rect GetRectInside(Rect parent, Vector4 padding)
+        protected Rect GetRectInside(Rect parent, Vector2 size)
         {
-            Rect contentRect = new Rect(parent);
+            Rect result = new Rect(parent);
 
-            contentRect.width -= (padding.z + padding.x);
-            contentRect.height -= (padding.w + padding.y);
-            contentRect.x += padding.x;
-            contentRect.y += padding.y;
+            result.width = size.x;
+            result.height = size.y;
 
-            return contentRect;
+            return result;
+        }
+
+        protected Rect GetRectInside(Rect parent, Vector4 margin)
+        {
+            Rect result = new Rect(parent);
+
+            result.width -= margin.z * 2;
+            result.height -= margin.w * 2;
+            result.x += margin.x;
+            result.y += margin.y;
+
+            return result;
+        }
+
+        protected Rect GetRectInside(Rect parent, Vector2 size, Vector4 margin)
+        {
+            Rect result = this.GetRectInside(parent, size);
+            return this.GetRectInside(result, margin);
+        }
+
+        protected Rect DrawRegion(float height, Vector4 padding)
+        {
+            return this.DrawRegion(height, new Vector4(0, 0, 0, 0), padding);
         }
 
         protected Rect DrawRegion(float height)
@@ -226,6 +247,32 @@ namespace DecentM.EditorTools
             bool pressed = GUILayout.Button(label, buttonStyle);
 
             return pressed;
+        }
+
+        protected void DrawLabel(Rect rect, string contents, int size, FontStyle fontStyle, Color color)
+        {
+            GUIStyle style = new GUIStyle();
+            style.fontSize = Mathf.CeilToInt((8 - size) * 5);
+            style.fontStyle = fontStyle;
+            style.normal.textColor = color;
+            style.wordWrap = false;
+            style.clipping = TextClipping.Clip;
+            EditorGUI.LabelField(rect, contents, style);
+        }
+
+        protected void DrawLabel(Rect rect, string contents)
+        {
+            this.DrawLabel(rect, contents, 1, FontStyle.Normal, Color.white);
+        }
+
+        protected void DrawLabel(Rect rect, string contents, int size)
+        {
+            this.DrawLabel(rect, contents, size, FontStyle.Normal, Color.white);
+        }
+
+        protected void DrawLabel(Rect rect, string contents, int size, FontStyle style)
+        {
+            this.DrawLabel(rect, contents, size, style, Color.white);
         }
 
         private IUdonVariable CreateUdonVariable(string symbolName, object value, System.Type type)
