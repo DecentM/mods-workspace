@@ -15,27 +15,13 @@ using DecentM.EditorTools;
 
 namespace DecentM.VideoPlayer
 {
-    struct YTDLJson
-    {
-        public string duration_string;
-        public string title;
-        public string uploader;
-        public string view_count;
-        public string like_count;
-        public string thumbnail;
-        public string resolution;
-        public int fps;
-        public string original_url;
-        public string extractor_key;
-    }
-
     public struct VideoMetadata
     {
         public string duration;
         public string title;
         public string uploader;
-        public string viewCount;
-        public string likeCount;
+        public int viewCount;
+        public int likeCount;
         public Texture2D thumbnail;
         public string resolution;
         public int fps;
@@ -59,14 +45,7 @@ namespace DecentM.VideoPlayer
 
         private static bool ValidateUrl(string url)
         {
-            try
-            {
-                new Uri(url);
-                return true;
-            } catch
-            {
-                return false;
-            }
+            return Uri.TryCreate(url, UriKind.Absolute, out Uri result);
         }
 
         private static bool CreateFolder(string basePath, string name)
@@ -93,7 +72,21 @@ namespace DecentM.VideoPlayer
             importer.maxTextureSize = 1024;
             importer.textureCompression = TextureImporterCompression.Compressed;
             importer.compressionQuality = 50;
+            importer.crunchedCompression = true;
             importer.SaveAndReimport();
+        }
+
+        public static void ReapplyImportSettings()
+        {
+            string[] files = Directory.GetFiles(string.Join(Application.dataPath, "Assets/Editor/DecentM/VideoMetadata"), "*.jpg", SearchOption.AllDirectories);
+
+            for (int i = 0; i < files.Length; i++)
+            {
+                if (EditorUtility.DisplayCancelableProgressBar($"Reapplying import settings... ({i} of {files.Length})", files[i], 1f * i / files.Length)) break;
+                ApplyThumbnailImportSettings(files[i]);
+            }
+
+            EditorUtility.ClearProgressBar();
         }
 
         private static void SetMetadata(string hash, string filename, byte[] bytes)
@@ -102,27 +95,72 @@ namespace DecentM.VideoPlayer
             CreateFolder(EditorAssets.VideoMetadataFolder, hash);
             File.WriteAllBytes(path, bytes);
             AssetDatabase.ImportAsset(path);
+        }
+
+        private static void SetThumbnail(string hash, Texture2D texture)
+        {
+            string filename = "thumbnail.jpg";
+            string path = $"{EditorAssets.VideoMetadataFolder}/{hash}/{filename}";
+            SetMetadata(hash, filename, texture.EncodeToJPG());
             ApplyThumbnailImportSettings(path);
         }
 
-        private static void SetMetadata(string hash, Texture2D texture)
+        private static void SetThumbnail(string hash, byte[] bytes)
         {
-            SetMetadata(hash, "thumbnail.jpg", texture.EncodeToJPG());
+            string filename = "thumbnail.jpg";
+            string path = $"{EditorAssets.VideoMetadataFolder}/{hash}/{filename}";
+            SetMetadata(hash, filename, bytes);
+            ApplyThumbnailImportSettings(path);
         }
 
-        private static Texture2D GetThumbnail(string hash, string url)
+        private static void SetFallbackThumbnail(string hash)
         {
-            string path = $"{EditorAssets.VideoMetadataFolder}/{hash}/thumbnail.jpg";
-            CreateFolder(EditorAssets.VideoMetadataFolder, hash);
+            SetThumbnail(hash, EditorAssets.FallbackVideoThumbnail);
+        }
+
+        private static Texture2D GetThumbnail(string hash)
+        {
+            string filename = "thumbnail.jpg";
+            string path = $"{EditorAssets.VideoMetadataFolder}/{hash}/{filename}";
             Texture2D result = AssetDatabase.LoadAssetAtPath<Texture2D>(path);
 
-            if (result == null)
-            {
-                FetchThumbnail(hash, url);
-                result = AssetDatabase.LoadAssetAtPath<Texture2D>(path);
-            }
-
             return result;
+        }
+
+        public static void RefreshMetadata(string url)
+        {
+            if (!ValidateUrl(url)) return;
+
+            string hash = GetHash(url);
+            FetchMetadata(hash, url);
+
+            YTDLVideoJson? jsonOrNull = GetYTDLJson(url);
+            if (jsonOrNull == null) return;
+            YTDLVideoJson json = (YTDLVideoJson)jsonOrNull;
+
+            FetchThumbnail(hash, json);
+        }
+
+        private static YTDLVideoJson? GetYTDLJson(string url)
+        {
+            if (!ValidateUrl(url)) return null;
+
+            string filename = "metadata.json";
+            string hash = GetHash(url);
+            string path = $"{EditorAssets.VideoMetadataFolder}/{hash}/{filename}";
+
+            TextAsset textAsset = AssetDatabase.LoadAssetAtPath<TextAsset>(path);
+
+            if (textAsset == null) return null;
+
+            try
+            {
+                return JsonUtility.FromJson<YTDLVideoJson>(textAsset.text);
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         public static VideoMetadata GetMetadata(string url)
@@ -132,32 +170,25 @@ namespace DecentM.VideoPlayer
             if (!ValidateUrl(url)) return metadata;
 
             string hash = GetHash(url);
-            string path = $"{EditorAssets.VideoMetadataFolder}/{hash}/metadata.json";
-            CreateFolder(EditorAssets.VideoMetadataFolder, hash);
-
-            TextAsset textAsset = AssetDatabase.LoadAssetAtPath<TextAsset>(path);
-            
-            if (textAsset == null)
-            {
-                FetchMetadata(hash, url);
-                textAsset = AssetDatabase.LoadAssetAtPath<TextAsset>(path);
-            }
-
-            if (textAsset == null) return metadata;
 
             try
             {
-                YTDLJson json = JsonUtility.FromJson<YTDLJson>(textAsset.text);
+                YTDLVideoJson? jsonOrNull = GetYTDLJson(url);
+                if (jsonOrNull == null) return metadata;
+                YTDLVideoJson json = (YTDLVideoJson)jsonOrNull;
 
                 metadata.fps = json.fps;
                 metadata.duration = json.duration_string;
                 metadata.title = json.title;
                 metadata.resolution = json.resolution;
-                metadata.likeCount = json.like_count;
                 metadata.uploader = json.uploader;
-                metadata.viewCount = json.view_count;
-                metadata.thumbnail = GetThumbnail(hash, json.thumbnail);
+                metadata.viewCount = 0;
+                metadata.likeCount = 0;
+                metadata.thumbnail = GetThumbnail(hash);
                 metadata.siteName = json.extractor_key;
+
+                int.TryParse(json.like_count, out metadata.likeCount);
+                int.TryParse(json.view_count, out metadata.viewCount);
             } catch
             {
                 return metadata;
@@ -166,11 +197,11 @@ namespace DecentM.VideoPlayer
             return metadata;
         }
 
-        private static void FetchThumbnail(string hash, string url)
+        private static void FetchThumbnail(string hash, YTDLVideoJson json)
         {
-            if (!ValidateUrl(url)) return;
+            if (!ValidateUrl(json.thumbnail)) return;
 
-            WebRequest request = HttpWebRequest.Create(url);
+            WebRequest request = HttpWebRequest.Create(json.thumbnail);
             request.Method = "GET";
 
             try
@@ -187,77 +218,29 @@ namespace DecentM.VideoPlayer
                     MemoryStream ms = new MemoryStream();
                     data.CopyTo(ms);
                     byte[] bytes = ms.ToArray();
-                    SetMetadata(hash, "thumbnail.jpg", bytes);
+                    SetThumbnail(hash, bytes);
                 }
             }
             catch (Exception ex)
             {
                 UnityEngine.Debug.LogError(ex);
-                UnityEngine.Debug.LogError($"Error while downloading thumbnail for {url.ToString()}, using fallback thumbnail");
+                UnityEngine.Debug.LogError($"Error while downloading thumbnail from {json.thumbnail.ToString()}, using fallback thumbnail");
                 SetFallbackThumbnail(hash);
             }
         }
 
         private static void FetchMetadata(string hash, string url)
         {
-            ProcessResult ytdl = ProcessManager.RunProcess(EditorAssets.YtDlpPath, $"--no-check-certificate -J {url}", 10000);
+            // ProcessResult ytdl = ProcessManager.RunProcess(EditorAssets.YtDlpPath, $"--no-check-certificate -J {url}", 10000);
+            YTDLVideoJson? jsonOrNull = YTDLCommands.GetVideoMetadata(url);
+            if (jsonOrNull == null) return;
+            YTDLVideoJson json = (YTDLVideoJson)jsonOrNull;
 
             string path = $"{EditorAssets.VideoMetadataFolder}/{hash}/metadata.json";
             CreateFolder(EditorAssets.VideoMetadataFolder, hash);
-            byte[] bytes = Encoding.UTF8.GetBytes(ytdl.stdout);
+            byte[] bytes = Encoding.UTF8.GetBytes(JsonUtility.ToJson(json));
             File.WriteAllBytes(path, bytes);
             AssetDatabase.ImportAsset(path);
         }
-
-        private static void SetFallbackThumbnail(string hash)
-        {
-            SetMetadata(hash, EditorAssets.FallbackVideoThumbnail);
-        }
-
-        /* private static void FetchThumbnail(string url)
-        {
-            if (url == null || url.ToString() == "") return;
-            if (!ValidateUrl(url.ToString())) return;
-
-            FetchMetadataJson(url.ToString());
-            string videoId = GetVideoId(url.ToString());
-            string hash = GetHash(url.ToString());
-
-            if (videoId == null || videoId == "")
-            {
-                SetFallbackThumbnail(hash);
-                return;
-            }
-
-            string thumbnailUrl = GetThumbnailUrl(videoId);
-            FetchThumbnailRaw(hash, thumbnailUrl);
-        } */
-
-        /* public static void FetchMetadataJson(string url)
-        {
-            ProcessResult ytdl = ProcessManager.RunProcess(EditorAssets.YtDlpPath, $"--no-check-certificate -J {url}", 10000);
-            string resolvedJson = ytdl.stdout;
-
-            // If a URL fails to resolve, YTDL will send error to stderror and nothing will be output to stdout
-            if (string.IsNullOrEmpty(resolvedJson)) return;
-
-            YTDLJson metadata = JsonUtility.FromJson<YTDLJson>(resolvedJson);
-            UnityEngine.Debug.Log($"Got some metadata: {metadata.title}");
-        }
-
-        public static VideoMetadata GetMetadata(string url)
-        {
-
-
-            VideoMetadata result = new VideoMetadata();
-
-            ProcessResult ytdl = ProcessManager.RunProcess(EditorAssets.YtDlpPath, $"--no-check-certificate -J {url}", 10000);
-            string resolvedJson = ytdl.stdout;
-
-            // If a URL fails to resolve, YTDL will send error to stderror and nothing will be output to stdout
-            if (string.IsNullOrEmpty(resolvedJson)) return result;
-
-            YTDLJson metadata = JsonUtility.FromJson<YTDLJson>(resolvedJson);
-        } */
     }
 }

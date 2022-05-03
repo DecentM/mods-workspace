@@ -137,6 +137,14 @@ namespace DecentM.EditorTools
             return clickedTab;
         }
 
+        protected bool ToolbarButton(Rect rect, string label)
+        {
+            GUIStyle buttonStyle = new GUIStyle("toolbarbutton");
+            buttonStyle.fixedHeight = rect.height;
+
+            return GUI.Button(rect, label, buttonStyle);
+        }
+
         protected bool Toggle(string label, bool value)
         {
             return EditorGUILayout.Toggle(label, value);
@@ -227,24 +235,37 @@ namespace DecentM.EditorTools
             return this.DrawRegion(height, new Vector4(0, 0, 0, 0), new Vector4(0, 0, 0, 0));
         }
 
-        protected bool Button(string label, float progress = 0f)
+        protected bool Button(string label)
         {
-            // TODO: Return to this shitfest when I need to display a progress bar inside a button
-            /*
-            GUIStyle boxStyle = new GUIStyle();
-            Texture2D loadingBackground = new Texture2D(1, 1);
-            loadingBackground.SetPixel(0, 0, new Color(0, 56, 0, .2f));
-            loadingBackground.Apply();
-            loadingBackground.wrapMode = TextureWrapMode.Repeat;
-            boxStyle.normal.background = loadingBackground;
-            boxStyle.fixedHeight = 17.5f;
-
-            // Rect rect = GUILayoutUtility.GetRect(GUIContent.none, boxStyle, GUILayout.Height(17.5f));
-            GUILayout.Box(loadingBackground, boxStyle);
-            */
             GUIStyle buttonStyle = new GUIStyle("LargeButton");
 
             bool pressed = GUILayout.Button(label, buttonStyle);
+
+            return pressed;
+        }
+
+        protected bool Button(Rect rect, string label)
+        {
+            GUIStyle buttonStyle = new GUIStyle("toolbarbutton");
+
+            buttonStyle.fixedHeight = rect.height;
+
+            bool pressed = GUI.Button(rect, label, buttonStyle);
+
+            return pressed;
+        }
+
+        protected bool Button(Rect rect, Texture texture)
+        {
+            GUIStyle buttonStyle = new GUIStyle("toolbarbutton");
+
+            buttonStyle.fixedHeight = rect.height;
+
+            int targetSize = 20;
+            int horizontalPadding = Mathf.FloorToInt((rect.width - targetSize) / 2);
+            buttonStyle.padding = new RectOffset(horizontalPadding, horizontalPadding, 0, 0);
+
+            bool pressed = GUI.Button(rect, texture, buttonStyle);
 
             return pressed;
         }
