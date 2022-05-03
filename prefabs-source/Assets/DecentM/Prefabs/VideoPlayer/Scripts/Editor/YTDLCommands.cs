@@ -28,6 +28,7 @@ namespace DecentM.VideoPlayer
         public int fps;
         public string original_url;
         public string extractor_key;
+        public string description;
     }
 
     [Serializable]

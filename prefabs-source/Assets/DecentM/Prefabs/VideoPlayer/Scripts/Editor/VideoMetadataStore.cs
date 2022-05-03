@@ -26,6 +26,7 @@ namespace DecentM.VideoPlayer
         public string resolution;
         public int fps;
         public string siteName;
+        public string description;
     }
 
     public class VideoMetadataStore
@@ -186,6 +187,8 @@ namespace DecentM.VideoPlayer
                 metadata.likeCount = 0;
                 metadata.thumbnail = GetThumbnail(hash);
                 metadata.siteName = json.extractor_key;
+                metadata.description = json.description;
+                metadata.duration = json.duration_string;
 
                 int.TryParse(json.like_count, out metadata.likeCount);
                 int.TryParse(json.view_count, out metadata.viewCount);

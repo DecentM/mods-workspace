@@ -55,10 +55,16 @@ MonoBehaviour:
     SerializationNodes: []
   _udonSharpBackingUdonBehaviour: {fileID: 4296987169323767012}
   looping: 0
-  urls:
-  - url: 
-  - url: 
-  - url: 
+  shuffle: 0
+  serialisedUrls: []
+  serialisedThumbnails: []
+  serialisedTitles: []
+  serialisedUploaders: []
+  serialisedPlatforms: []
+  serialisedViews: 
+  serialisedLikes: 
+  serialisedResolutions: []
+  serialisedFpses: 
 --- !u!114 &4296987169323767012
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -21,14 +21,13 @@ namespace DecentM.VideoPlayer
 
         public override void OnInspectorGUI()
         {
+            this.DrawDefaultInspector();
+
             EditorGUI.BeginChangeCheck();
 
             VideoPlaylist playlist = (VideoPlaylist)target;
 
-            // Rect screenRect = new Rect(0, 0, Screen.width, Screen.height);
-            // EditorGUI.DrawRect(screenRect, new Color(38 / 255f, 38 / 255f, 38 / 255f));
-
-            Rect toolbarRectOuter = this.DrawRegion(50, new Vector4(Padding, Padding, Padding, Padding));
+            Rect toolbarRectOuter = this.DrawRegion(50, new Vector4(0, Padding, 0, Padding));
             Rect toolbarRectInner = this.GetRectInside(toolbarRectOuter, new Vector2(toolbarRectOuter.width, toolbarRectOuter.height), new Vector4(Padding, Padding, Padding, 0));
 
             int toolbarButtons = 3;
@@ -40,7 +39,7 @@ namespace DecentM.VideoPlayer
             {
                 if (EditorUtility.DisplayDialog(
                         "Confirm metadata refresh",
-                        $"Are you sure you want to refresh metadata (thumbnail, like count, view count, etc.) for all videos? This will take about {Mathf.CeilToInt(playlist.urls.Length * 3f / 60)} minute(s).",
+                        $"Are you sure you want to refresh metadata (thumbnail, like count, view count, etc.) for all videos? This will take about {Mathf.CeilToInt(playlist.urls.Length * 2f / 60)} minute(s).",
                         "Refresh", "Cancel"
                     )
                 )
@@ -73,7 +72,7 @@ namespace DecentM.VideoPlayer
                 }
             }
 
-            Rect importRegion = this.DrawRegion(42, new Vector4(Padding * 2, Padding, Padding * 2, Padding));
+            Rect importRegion = this.DrawRegion(42, new Vector4(Padding, Padding, Padding, Padding));
             Rect importTextField = this.GetRectInside(importRegion, new Vector2(importRegion.width / 6 * 5, importRegion.height));
             Rect importButton = this.GetRectInside(importRegion, new Vector2(importRegion.width / 6, importRegion.height), new Vector4(importTextField.width, 0));
             this.importPlaylistUrl = EditorGUI.TextField(importTextField, this.importPlaylistUrl);
@@ -81,12 +80,12 @@ namespace DecentM.VideoPlayer
             if (this.Button(importButton, "Import playlist")) { this.ImportPlaylist(); }
             EditorGUI.EndDisabledGroup();
 
-            Rect statsRegion = this.DrawRegion(36, new Vector4(Padding * 2, Padding, Padding * 2, Padding));
+            Rect statsRegion = this.DrawRegion(36, new Vector4(Padding, Padding, Padding * 2, Padding));
             this.DrawLabel(statsRegion, $"{playlist.urls.Length} videos loaded", 3);
 
             if (playlist.urls.Length == 0)
             {
-                Rect insertButton = this.DrawRegion(25, new Vector4(Padding * 2, Padding, Padding * 2, 0));
+                Rect insertButton = this.DrawRegion(25, new Vector4(Padding, Padding, Padding * 2, 0));
                 if (this.Button(insertButton, EditorAssets.PlusIcon)) this.AddNew();
             }
 
@@ -97,7 +96,7 @@ namespace DecentM.VideoPlayer
                 object[] item = playlist.urls[i];
 
                 VRCUrl url = (VRCUrl)item[0];
-                Texture2D thumbnail = (Texture2D)item[1];
+                Sprite thumbnail = (Sprite)item[1];
                 string title = (string)item[2];
                 string uploader = (string)item[3];
                 string platform = (string)item[4];
@@ -106,7 +105,7 @@ namespace DecentM.VideoPlayer
                 string resolution = (string)item[7];
                 int fps = (int)item[8];
 
-                Rect regionOuter = this.DrawRegion(UrlHeight, new Vector4(Padding, 0, Padding, 0));
+                Rect regionOuter = this.DrawRegion(UrlHeight, new Vector4(0, 0, 0, 0));
                 Rect region = this.GetRectInside(regionOuter, new Vector4(Padding, 0, Padding, Padding * 1.5f));
 
                 EditorGUI.DrawRect(region, new Color(38 / 255f, 38 / 255f, 38 / 255f));
@@ -148,11 +147,11 @@ namespace DecentM.VideoPlayer
                 Rect thumbnailRectOuter = this.GetRectInside(region, new Vector2(region.width / 3, region.height), new Vector4(orderingButtonsRectInner.width + Padding, 0, 0, 0));
                 Rect thumbnailRectInner = this.GetRectInside(thumbnailRectOuter, new Vector4(Padding, Padding, Padding, Padding));
 
-                if (thumbnail != null)
+                if (thumbnail != null && thumbnail.texture != null)
                 {
-                    float thumbnailAspectRatio = 1f * thumbnail.height / thumbnail.width;
+                    float thumbnailAspectRatio = 1f * thumbnail.texture.height / thumbnail.texture.width;
                     thumbnailRectInner.width = thumbnailRectInner.height / thumbnailAspectRatio;
-                    this.DrawImage(thumbnail, thumbnailRectInner);
+                    this.DrawImage(thumbnail.texture, thumbnailRectInner);
                 }
                 else
                 {
@@ -181,7 +180,7 @@ namespace DecentM.VideoPlayer
 
                 Rect countersRect = this.GetRectInside(textRectInner, new Vector2(textRectInner.width, height), new Vector4(Padding, count * height, Padding, 0));
                 List<string> counterLabels = new List<string>();
-                if (views != 0) counterLabels.Add($"{likes} views");
+                if (views != 0) counterLabels.Add($"{views} views");
                 if (likes != 0) counterLabels.Add($"{likes} likes");
                 this.DrawLabel(countersRect, string.Join(", ", counterLabels.ToArray()), 2);
 
@@ -262,6 +261,10 @@ namespace DecentM.VideoPlayer
                     EditorUtility.DisplayProgressBar($"Adding URLs... ({i} of {json.entries.Length})", entry.url, 1f * i / json.entries.Length);
                     this.AddNew(entry.url);
                 }
+
+                playlist.title = json.title;
+                playlist.author = json.uploader;
+                playlist.description = json.description;
 
                 EditorUtility.ClearProgressBar();
                 this.importPlaylistUrl = "";
@@ -352,19 +355,24 @@ namespace DecentM.VideoPlayer
             playlist.urls = newUrls;
         }
 
-        private object[] CreateNewItem(VRCUrl url, Texture2D thumbnail, string title, string uploader, string platform, int views, int likes, string resolution, int fps)
+        private object[] CreateNewItem(VRCUrl url, Sprite thumbnail, string title, string uploader, string platform, int views, int likes, string resolution, int fps, string description, string duration)
         {
-            return new object[] { url, thumbnail, title, uploader, platform, views, likes, resolution, fps };
+            return new object[] { url, thumbnail, title, uploader, platform, views, likes, resolution, fps, description, duration };
+        }
+
+        private Sprite TextureToSprite(Texture2D input)
+        {
+            return Sprite.Create(input, new Rect(0, 0, input.width, input.height), new Vector2());
         }
 
         private object[] CreateNewItem()
         {
-            return this.CreateNewItem(new VRCUrl(""), EditorAssets.FallbackVideoThumbnail, "", "", "", 0, 0, "", 0);
+            return this.CreateNewItem(new VRCUrl(""), this.TextureToSprite(EditorAssets.FallbackVideoThumbnail), "", "", "", 0, 0, "", 0, "", "");
         }
 
         private object[] CreateNewItem(VRCUrl url)
         {
-            return this.CreateNewItem(url, EditorAssets.FallbackVideoThumbnail, "", "", "", 0, 0, "", 0);
+            return this.CreateNewItem(url, this.TextureToSprite(EditorAssets.FallbackVideoThumbnail), "", "", "", 0, 0, "", 0, "", "");
         }
 
         private void InsertAfterIndex(int index)
@@ -433,14 +441,16 @@ namespace DecentM.VideoPlayer
                 VideoMetadata videoMetadata = VideoMetadataStore.GetMetadata(url.ToString());
                 object[] newItem = this.CreateNewItem(
                     url,
-                    videoMetadata.thumbnail,
+                    this.TextureToSprite(videoMetadata.thumbnail),
                     videoMetadata.title,
                     videoMetadata.uploader,
                     videoMetadata.siteName,
                     videoMetadata.viewCount,
                     videoMetadata.likeCount,
                     videoMetadata.resolution,
-                    videoMetadata.fps
+                    videoMetadata.fps,
+                    videoMetadata.description,
+                    videoMetadata.duration
                 );
 
                 playlist.urls[i] = newItem;
