@@ -10,6 +10,8 @@ using UnityEngine;
 using VRC.SDK3.Components.Video;
 using VRC.SDK3.Video.Components;
 using VRC.SDKBase;
+using DecentM.EditorTools;
+using System.Diagnostics;
 
 namespace DecentM.VideoPlayer
 {
@@ -20,9 +22,8 @@ namespace DecentM.VideoPlayer
     public static class EditorURLResolverShim
     {
         static string youtubeDLPath = "";
-        static HashSet<System.Diagnostics.Process> runningYTDLProcesses = new HashSet<System.Diagnostics.Process>();
+        static HashSet<Process> runningYTDLProcesses = new HashSet<Process>();
         static HashSet<MonoBehaviour> registeredBehaviours = new HashSet<MonoBehaviour>();
-        static DateTime lastRequestTime = DateTime.MinValue;
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
         static void SetupURLResolveCallback()
@@ -32,8 +33,8 @@ namespace DecentM.VideoPlayer
 
             if (!File.Exists(youtubeDLPath))
             {
-                Debug.LogWarning("[DecentM.VideoPlayer YTDL] Unable to find yt-dlp, URLs will not be resolved. Did you move the root folder after importing it?");
-                Debug.LogWarning($"[DecentM.VideoPlayer YTDL] File missing from {youtubeDLPath}");
+                UnityEngine.Debug.LogWarning("[DecentM.VideoPlayer YTDL] Unable to find yt-dlp, URLs will not be resolved. Did you move the root folder after importing it?");
+                UnityEngine.Debug.LogWarning($"[DecentM.VideoPlayer YTDL] File missing from {youtubeDLPath}");
                 return;
             }
 
@@ -71,25 +72,11 @@ namespace DecentM.VideoPlayer
 
         static void ResolveURLCallback(VRCUrl url, int resolution, UnityEngine.Object videoPlayer, Action<string> urlResolvedCallback, Action<VideoError> errorCallback)
         {
-            lastRequestTime = System.DateTime.UtcNow;
+            UnityEngine.Debug.Log($"[<color=#9C6994>DecentM.VideoPlayer YTDL</color>] Attempting to resolve URL '{url}'");
+            Process ytdlp = YTDLCommands.GetVideoUrlAsync(url.ToString(), resolution);
 
-            System.Diagnostics.Process ytdlProcess = new System.Diagnostics.Process();
-
-            ytdlProcess.StartInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
-            ytdlProcess.StartInfo.CreateNoWindow = true;
-            ytdlProcess.StartInfo.UseShellExecute = false;
-            ytdlProcess.StartInfo.RedirectStandardOutput = true;
-            ytdlProcess.StartInfo.FileName = youtubeDLPath;
-            ytdlProcess.StartInfo.Arguments = $"--no-check-certificate --no-cache-dir --rm-cache-dir -f \"mp4[height<=?{resolution}]/best[height<=?{resolution}]\" --get-url \"{url}\"";
-
-            Debug.Log($"{ytdlProcess.StartInfo.FileName} {ytdlProcess.StartInfo.Arguments}");
-            Debug.Log($"[<color=#9C6994>DecentM.VideoPlayer YTDL</color>] Attempting to resolve URL '{url}'");
-
-            ytdlProcess.Start();
-            runningYTDLProcesses.Add(ytdlProcess);
-
-            ((MonoBehaviour)videoPlayer).StartCoroutine(URLResolveCoroutine(url.ToString(), ytdlProcess, videoPlayer, urlResolvedCallback, errorCallback));
-
+            runningYTDLProcesses.Add(ytdlp);
+            ((MonoBehaviour)videoPlayer).StartCoroutine(URLResolveCoroutine(url.ToString(), ytdlp, videoPlayer, urlResolvedCallback, errorCallback));
             registeredBehaviours.Add((MonoBehaviour)videoPlayer);
         }
 
@@ -97,8 +84,6 @@ namespace DecentM.VideoPlayer
         {
             while (!ytdlProcess.HasExited)
                 yield return new WaitForSeconds(0.1f);
-
-            runningYTDLProcesses.Remove(ytdlProcess);
 
             string resolvedURL = ytdlProcess.StandardOutput.ReadLine();
 
@@ -109,7 +94,7 @@ namespace DecentM.VideoPlayer
             }
             else
             {
-                Debug.Log($"[<color=#9C6994>DecentM.VideoPlayer YTDL</color>] Succesfully resolved URL '{originalUrl}' to '{resolvedURL}'");
+                UnityEngine.Debug.Log($"[<color=#9C6994>DecentM.VideoPlayer YTDL</color>] Succesfully resolved URL '{originalUrl}' to '{resolvedURL}'");
                 urlResolvedCallback(resolvedURL);
             }
         }

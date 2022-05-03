@@ -18,6 +18,28 @@ namespace DecentM.EditorTools
     {
         public static ProcessResult RunProcess(string filename, string arguments, int timeout)
         {
+            return RunProcessSync(filename, arguments, timeout);
+        }
+
+        public static Process RunProcessAsync(string filename, string arguments)
+        {
+            Process process = new Process();
+
+            process.StartInfo.FileName = filename;
+            process.StartInfo.Arguments = arguments;
+            process.StartInfo.UseShellExecute = false;
+            process.StartInfo.RedirectStandardOutput = true;
+            process.StartInfo.RedirectStandardError = true;
+            process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            process.StartInfo.CreateNoWindow = true;
+
+            process.Start();
+
+            return process;
+        }
+
+        private static ProcessResult RunProcessSync(string filename, string arguments, int timeout)
+        {
             using (Process process = new Process())
             {
                 process.StartInfo.FileName = filename;

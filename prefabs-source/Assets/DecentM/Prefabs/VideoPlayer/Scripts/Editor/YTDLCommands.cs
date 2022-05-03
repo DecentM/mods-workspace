@@ -55,9 +55,22 @@ namespace DecentM.VideoPlayer
 
     public static class YTDLCommands
     {
-        private static bool ValidateUrl(string url)
+        public static Process GetVideoUrlAsync(string url, int resolution)
         {
-            return Uri.TryCreate(url, UriKind.Absolute, out Uri result);
+            return ProcessManager.RunProcessAsync(EditorAssets.YtDlpPath, $"--no-check-certificate -f \"mp4[height<=?{resolution}]/best[height<=?{resolution}]\" --get-url {url}");
+        }
+
+        public static string GetVideoUrl(string url, int resolution)
+        {
+            try
+            {
+                ProcessResult ytdl = ProcessManager.RunProcess(EditorAssets.YtDlpPath, $"--no-check-certificate -f \"mp4[height<=?{resolution}]/best[height<=?{resolution}]\" --get-url {url}", 10000);
+                return ytdl.stdout;
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         public static YTDLVideoJson? GetVideoMetadata(string url)
