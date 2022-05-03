@@ -277,26 +277,14 @@ namespace DecentM.VideoPlayer
             GUI.FocusControl(null);
             VideoPlaylist playlist = (VideoPlaylist)target;
 
-            for (int i = 0; i < playlist.urls.Length; i++)
-            {
-                VRCUrl url = (VRCUrl)playlist.urls[i][0];
-                if (url == null) continue;
-
-                if (EditorUtility.DisplayCancelableProgressBar($"Refreshing URLs... ({i} of {playlist.urls.Length})", url.ToString(), 1f * i / playlist.urls.Length))
-                {
-                    break;
-                }
-
-                VideoMetadataStore.RefreshMetadata(url.ToString());
-            }
-
-            EditorUtility.ClearProgressBar();
+            VideoMetadataStore.RefreshMetadata(playlist.urls.Select(url => url[0].ToString()).ToArray());
         }
 
         private void RefreshEmpty()
         {
             GUI.FocusControl(null);
             VideoPlaylist playlist = (VideoPlaylist)target;
+            List<string> urls = new List<string>();
 
             for (int i = 0; i < playlist.urls.Length; i++)
             {
@@ -304,17 +292,12 @@ namespace DecentM.VideoPlayer
                 if (url == null) continue;
 
                 VideoMetadata videoMetadata = VideoMetadataStore.GetMetadata(url.ToString());
-                if (videoMetadata.thumbnail != null) continue;
+                if (videoMetadata.thumbnail != null && !string.IsNullOrEmpty(videoMetadata.title)) continue;
 
-                if (EditorUtility.DisplayCancelableProgressBar($"Refreshing URLs... ({i} of {playlist.urls.Length})", url.ToString(), 1f * i / playlist.urls.Length))
-                {
-                    break;
-                }
-
-                VideoMetadataStore.RefreshMetadata(url.ToString());
+                urls.Add(url.ToString());
             }
 
-            EditorUtility.ClearProgressBar();
+            VideoMetadataStore.RefreshMetadata(urls.ToArray());
         }
 
         private void Clear()

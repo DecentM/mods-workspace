@@ -130,6 +130,11 @@ namespace DecentM.VideoPlayer
             FetchMetadata(url);
         }
 
+        public static void RefreshMetadata(string[] urls)
+        {
+            EditorCoroutine.Start(FetchMetadata(urls));
+        }
+
         private static YTDLVideoJson? GetYTDLJson(string url)
         {
             if (!ValidateUrl(url)) return null;
@@ -212,21 +217,14 @@ namespace DecentM.VideoPlayer
             SetThumbnail(hash, data);
         }
 
-        private static void FetchThumbnail(string hash, YTDLVideoJson json)
-        {
-            if (!ValidateUrl(json.thumbnail)) return;
-
-            EditorCoroutine.Start(GetTexture(json.thumbnail, (byte[] result) => FetchThumbnailCallback(hash, result)));
-        }
-
-        private static void FetchThumbnailFromCallback(string url)
+        private static IEnumerator FetchThumbnail(string url, Action<string, byte[]> callback)
         {
             string hash = GetHash(url);
             YTDLVideoJson? jsonOrNull = GetYTDLJson(url);
-            if (jsonOrNull == null) return;
+            if (jsonOrNull == null) yield return null;
             YTDLVideoJson json = (YTDLVideoJson)jsonOrNull;
 
-            FetchThumbnail(hash, json);
+            yield return GetTexture(json.thumbnail, (byte[] result) => callback(hash, result));
         }
 
         private static void FetchMetadataCallback(string url, YTDLVideoJson? jsonOrNull)
@@ -240,13 +238,32 @@ namespace DecentM.VideoPlayer
             byte[] bytes = Encoding.UTF8.GetBytes(JsonUtility.ToJson(json));
             File.WriteAllBytes(path, bytes);
             AssetDatabase.ImportAsset(path);
-
-            FetchThumbnailFromCallback(url);
         }
 
         private static void FetchMetadata(string url)
         {
             YTDLCommands.GetVideoMetadata(url, (result) => FetchMetadataCallback(url, result));
+        }
+
+        private static IEnumerator FetchMetadata(string[] urls)
+        {
+            for (int i = 0; i < urls.Length; i++)
+            {
+                string url = urls[i];
+                if (string.IsNullOrEmpty(url)) continue;
+
+                if (EditorUtility.DisplayCancelableProgressBar($"Refreshing metadata... ({i} of {urls.Length})", url, 1f * i / urls.Length))
+                {
+                    break;
+                }
+
+                if (!ValidateUrl(url)) continue;
+
+                yield return YTDLCommands.GetVideoMetadata(url, (result) => FetchMetadataCallback(url, result));
+                yield return FetchThumbnail(url, FetchThumbnailCallback);
+            }
+            
+            EditorUtility.ClearProgressBar();
         }
     }
 }

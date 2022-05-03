@@ -60,7 +60,7 @@ namespace DecentM.VideoPlayer
             return ProcessManager.CreateProcessCoroutine(
                 EditorAssets.YtDlpPath,
                 $"--no-check-certificate -f \"mp4[height<=?{resolution}]/best[height<=?{resolution}]\" --get-url {url}",
-                10000,
+                BlockingBehaviour.NonBlocking,
                 (Process process) => callback(process.StandardOutput.ReadToEnd())
             );
         }
@@ -70,7 +70,7 @@ namespace DecentM.VideoPlayer
             return ProcessManager.RunProcessCoroutine(
                 EditorAssets.YtDlpPath,
                 $"--no-check-certificate -f \"mp4[height<=?{resolution}]/best[height<=?{resolution}]\" --get-url {url}",
-                10000,
+                BlockingBehaviour.Blocking,
                 (Process process) => callback(process.StandardOutput.ReadToEnd())
             );
         }
@@ -80,7 +80,7 @@ namespace DecentM.VideoPlayer
             return ProcessManager.RunProcessCoroutine(
                 EditorAssets.YtDlpPath,
                 $"--no-check-certificate -J {url}",
-                10000,
+                BlockingBehaviour.Blocking,
                 (Process process) => callback(JsonUtility.FromJson<YTDLVideoJson>(process.StandardOutput.ReadToEnd()))
             );
         }
@@ -90,7 +90,7 @@ namespace DecentM.VideoPlayer
             return ProcessManager.RunProcessCoroutine(
                 EditorAssets.YtDlpPath,
                 $"--no-check-certificate -J --flat-playlist {url}",
-                10000,
+                BlockingBehaviour.Blocking,
                 (Process process) => callback(JsonUtility.FromJson<YTDLFlatPlaylistJson>(process.StandardOutput.ReadToEnd()))
             );
         }

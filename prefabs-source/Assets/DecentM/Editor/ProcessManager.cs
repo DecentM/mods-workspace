@@ -16,17 +16,28 @@ namespace DecentM.EditorTools
         public string stderr;
     }
 
+    public enum BlockingBehaviour
+    {
+        Blocking,
+        NonBlocking,
+    }
+
     public static class ProcessManager
     {
-        private static IEnumerator ProcessCoroutine(Process process, int timeout, Action<Process> callback)
+        private static IEnumerator ProcessCoroutine(Process process, BlockingBehaviour blocking, Action<Process> callback)
         {
             StreamReader read = process.StandardOutput;
 
-            /* while (read.Peek() == 0)
-                yield return new WaitForSeconds(0.1f); */
-
-            while (!process.HasExited)
-                yield return new WaitForSeconds(0.1f);
+            if (blocking == BlockingBehaviour.Blocking)
+            {
+                while (read.Peek() == 0)
+                    yield return new WaitForSeconds(0.1f);
+            }
+            else
+            {
+                while (!process.HasExited)
+                    yield return new WaitForSeconds(0.1f);
+            }
 
             callback(process);
             read.Close();
@@ -47,16 +58,16 @@ namespace DecentM.EditorTools
             return process;
         }
 
-        public static IEnumerator CreateProcessCoroutine(string filename, string arguments, int timeout, Action<Process> callback)
+        public static IEnumerator CreateProcessCoroutine(string filename, string arguments, BlockingBehaviour blocking, Action<Process> callback)
         {
             Process process = CreateProcess(filename, arguments);
             process.Start();
-            return ProcessCoroutine(process, timeout, callback);
+            return ProcessCoroutine(process, blocking, callback);
         }
 
-        public static EditorCoroutine RunProcessCoroutine(string filename, string arguments, int timeout, Action<Process> callback)
+        public static EditorCoroutine RunProcessCoroutine(string filename, string arguments, BlockingBehaviour blocking, Action<Process> callback)
         {
-            IEnumerator coroutine = CreateProcessCoroutine(filename, arguments, timeout, callback);
+            IEnumerator coroutine = CreateProcessCoroutine(filename, arguments, blocking, callback);
             return EditorCoroutine.Start(coroutine);
         }
 

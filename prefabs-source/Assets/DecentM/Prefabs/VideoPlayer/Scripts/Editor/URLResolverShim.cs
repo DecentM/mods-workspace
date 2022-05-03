@@ -15,18 +15,18 @@ namespace DecentM.VideoPlayer
 {
     public static class EditorURLResolverShim
     {
-        static string youtubeDLPath = "";
+        static string ytdlpPath = "";
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
         static void SetupURLResolveCallback()
         {
             string[] splitPath = Application.dataPath.Split('/', '\\');
-            youtubeDLPath = $"{String.Join("\\", splitPath)}\\DecentM\\Prefabs\\VideoPlayer\\Scripts\\Editor\\Bin\\yt-dlp.exe";
+            ytdlpPath = $"{String.Join("\\", splitPath)}\\DecentM\\Prefabs\\VideoPlayer\\Scripts\\Editor\\Bin\\yt-dlp.exe";
 
-            if (!File.Exists(youtubeDLPath))
+            if (!File.Exists(ytdlpPath))
             {
                 UnityEngine.Debug.LogWarning("[DecentM.VideoPlayer YTDL] Unable to find yt-dlp, URLs will not be resolved. Did you move the root folder after importing it?");
-                UnityEngine.Debug.LogWarning($"[DecentM.VideoPlayer YTDL] File missing from {youtubeDLPath}");
+                UnityEngine.Debug.LogWarning($"[DecentM.VideoPlayer YTDL] File missing from {ytdlpPath}");
                 return;
             }
 
