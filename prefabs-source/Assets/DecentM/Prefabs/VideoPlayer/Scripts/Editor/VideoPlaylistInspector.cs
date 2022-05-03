@@ -232,49 +232,44 @@ namespace DecentM.VideoPlayer
             VideoMetadataStore.ReapplyImportSettings();
         }
 
-        private void ImportPlaylist()
+        private void ImportPlaylistCallback(YTDLFlatPlaylistJson? jsonOrNull)
         {
-            GUI.FocusControl(null);
             VideoPlaylist playlist = (VideoPlaylist)target;
 
-            try
+            if (jsonOrNull == null)
             {
-                YTDLFlatPlaylistJson? jsonOrNull = YTDLCommands.GetPlaylistVideos(this.importPlaylistUrl);
-
-                if (jsonOrNull == null)
-                {
-                    EditorUtility.DisplayDialog("Import error", "Could not retrieve videos from this playlist. Make sure the URL points to a playlist and not just a video", "OK");
-                    return;
-                }
-
-                YTDLFlatPlaylistJson json = (YTDLFlatPlaylistJson)jsonOrNull;
-
-                if (playlist.urls.Length != 0)
-                {
-                    bool shouldOverwrite = EditorUtility.DisplayDialog("Playlist import", "There are already videos on the playlist. Do you want to clear them, or append the playlist?", "Overwrite", "Append");
-                    if (shouldOverwrite) this.Clear();
-                }
-
-                for (int i = 0; i < json.entries.Length; i++)
-                {
-                    YTDLFlatPlaylistJsonEntry entry = json.entries[i];
-                    EditorUtility.DisplayProgressBar($"Adding URLs... ({i} of {json.entries.Length})", entry.url, 1f * i / json.entries.Length);
-                    this.AddNew(entry.url);
-                }
-
-                playlist.title = json.title;
-                playlist.author = json.uploader;
-                playlist.description = json.description;
-
-                EditorUtility.ClearProgressBar();
-                this.importPlaylistUrl = "";
-            } catch
-            {
-                EditorUtility.DisplayDialog("Import error", "Exception thrown while importing videos from this playlist. Make sure the URL points to a playlist and not just a video", "OK");
+                EditorUtility.DisplayDialog("Import error", "Could not retrieve videos from this playlist. Make sure the URL points to a playlist and not just a video", "OK");
                 return;
             }
 
+            YTDLFlatPlaylistJson json = (YTDLFlatPlaylistJson)jsonOrNull;
+
+            if (playlist.urls.Length != 0)
+            {
+                bool shouldOverwrite = EditorUtility.DisplayDialog("Playlist import", "There are already videos on the playlist. Do you want to clear them, or append the playlist?", "Overwrite", "Append");
+                if (shouldOverwrite) this.Clear();
+            }
+
+            for (int i = 0; i < json.entries.Length; i++)
+            {
+                YTDLFlatPlaylistJsonEntry entry = json.entries[i];
+                EditorUtility.DisplayProgressBar($"Adding URLs... ({i} of {json.entries.Length})", entry.url, 1f * i / json.entries.Length);
+                this.AddNew(entry.url);
+            }
+
+            playlist.title = json.title;
+            playlist.author = json.uploader;
+            playlist.description = json.description;
+
+            EditorUtility.ClearProgressBar();
+            this.importPlaylistUrl = "";
             this.RemoveEmptyUrls();
+        }
+
+        private void ImportPlaylist()
+        {
+            GUI.FocusControl(null);
+            YTDLCommands.GetPlaylistVideos(this.importPlaylistUrl, this.ImportPlaylistCallback);
         }
 
         private void RefreshAll()

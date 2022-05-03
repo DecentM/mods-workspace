@@ -1,9 +1,11 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Diagnostics;
 using System.Text;
 using System.Threading;
+using System.IO;
 
 namespace DecentM.EditorTools
 {
@@ -16,12 +18,21 @@ namespace DecentM.EditorTools
 
     public static class ProcessManager
     {
-        public static ProcessResult RunProcess(string filename, string arguments, int timeout)
+        private static IEnumerator ProcessCoroutine(Process process, int timeout, Action<Process> callback)
         {
-            return RunProcessSync(filename, arguments, timeout);
+            StreamReader read = process.StandardOutput;
+
+            /* while (read.Peek() == 0)
+                yield return new WaitForSeconds(0.1f); */
+
+            while (!process.HasExited)
+                yield return new WaitForSeconds(0.1f);
+
+            callback(process);
+            read.Close();
         }
 
-        public static Process RunProcessAsync(string filename, string arguments)
+        private static Process CreateProcess(string filename, string arguments)
         {
             Process process = new Process();
 
@@ -33,9 +44,20 @@ namespace DecentM.EditorTools
             process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
             process.StartInfo.CreateNoWindow = true;
 
-            process.Start();
-
             return process;
+        }
+
+        public static IEnumerator CreateProcessCoroutine(string filename, string arguments, int timeout, Action<Process> callback)
+        {
+            Process process = CreateProcess(filename, arguments);
+            process.Start();
+            return ProcessCoroutine(process, timeout, callback);
+        }
+
+        public static EditorCoroutine RunProcessCoroutine(string filename, string arguments, int timeout, Action<Process> callback)
+        {
+            IEnumerator coroutine = CreateProcessCoroutine(filename, arguments, timeout, callback);
+            return EditorCoroutine.Start(coroutine);
         }
 
         private static ProcessResult RunProcessSync(string filename, string arguments, int timeout)

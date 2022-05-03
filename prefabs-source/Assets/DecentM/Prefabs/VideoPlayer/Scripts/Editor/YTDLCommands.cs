@@ -5,7 +5,7 @@ using System.Net;
 using System.IO;
 using System.Text;
 using System.Diagnostics;
-using System.Collections.Generic;
+using System.Collections;
 
 using UnityEngine;
 using UnityEngine.Networking;
@@ -55,46 +55,44 @@ namespace DecentM.VideoPlayer
 
     public static class YTDLCommands
     {
-        public static Process GetVideoUrlAsync(string url, int resolution)
+        public static IEnumerator GetVideoUrlEnumerator(string url, int resolution, Action<string> callback)
         {
-            return ProcessManager.RunProcessAsync(EditorAssets.YtDlpPath, $"--no-check-certificate -f \"mp4[height<=?{resolution}]/best[height<=?{resolution}]\" --get-url {url}");
+            return ProcessManager.CreateProcessCoroutine(
+                EditorAssets.YtDlpPath,
+                $"--no-check-certificate -f \"mp4[height<=?{resolution}]/best[height<=?{resolution}]\" --get-url {url}",
+                10000,
+                (Process process) => callback(process.StandardOutput.ReadToEnd())
+            );
         }
 
-        public static string GetVideoUrl(string url, int resolution)
+        public static EditorCoroutine GetVideoUrl(string url, int resolution, Action<string> callback)
         {
-            try
-            {
-                ProcessResult ytdl = ProcessManager.RunProcess(EditorAssets.YtDlpPath, $"--no-check-certificate -f \"mp4[height<=?{resolution}]/best[height<=?{resolution}]\" --get-url {url}", 10000);
-                return ytdl.stdout;
-            }
-            catch
-            {
-                return null;
-            }
+            return ProcessManager.RunProcessCoroutine(
+                EditorAssets.YtDlpPath,
+                $"--no-check-certificate -f \"mp4[height<=?{resolution}]/best[height<=?{resolution}]\" --get-url {url}",
+                10000,
+                (Process process) => callback(process.StandardOutput.ReadToEnd())
+            );
         }
 
-        public static YTDLVideoJson? GetVideoMetadata(string url)
+        public static EditorCoroutine GetVideoMetadata(string url, Action<YTDLVideoJson?> callback)
         {
-            try
-            {
-                ProcessResult ytdl = ProcessManager.RunProcess(EditorAssets.YtDlpPath, $"--no-check-certificate -J {url}", 10000);
-                return JsonUtility.FromJson<YTDLVideoJson>(ytdl.stdout);
-            } catch
-            {
-                return null;
-            }
+            return ProcessManager.RunProcessCoroutine(
+                EditorAssets.YtDlpPath,
+                $"--no-check-certificate -J {url}",
+                10000,
+                (Process process) => callback(JsonUtility.FromJson<YTDLVideoJson>(process.StandardOutput.ReadToEnd()))
+            );
         }
 
-        public static YTDLFlatPlaylistJson? GetPlaylistVideos(string url)
+        public static EditorCoroutine GetPlaylistVideos(string url, Action<YTDLFlatPlaylistJson?> callback)
         {
-            try
-            {
-                ProcessResult ytdl = ProcessManager.RunProcess(EditorAssets.YtDlpPath, $"--no-check-certificate -J --flat-playlist {url}", 10000);
-                return JsonUtility.FromJson<YTDLFlatPlaylistJson>(ytdl.stdout);
-            } catch
-            {
-                return null;
-            }
+            return ProcessManager.RunProcessCoroutine(
+                EditorAssets.YtDlpPath,
+                $"--no-check-certificate -J --flat-playlist {url}",
+                10000,
+                (Process process) => callback(JsonUtility.FromJson<YTDLFlatPlaylistJson>(process.StandardOutput.ReadToEnd()))
+            );
         }
     }
 }

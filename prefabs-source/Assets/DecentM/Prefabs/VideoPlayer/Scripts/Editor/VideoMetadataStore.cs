@@ -5,7 +5,7 @@ using System.Net;
 using System.IO;
 using System.Text;
 using System.Diagnostics;
-using System.Collections.Generic;
+using System.Collections;
 
 using UnityEngine;
 using UnityEngine.Networking;
@@ -114,11 +114,6 @@ namespace DecentM.VideoPlayer
             ApplyThumbnailImportSettings(path);
         }
 
-        private static void SetFallbackThumbnail(string hash)
-        {
-            SetThumbnail(hash, EditorAssets.FallbackVideoThumbnail);
-        }
-
         private static Texture2D GetThumbnail(string hash)
         {
             string filename = "thumbnail.jpg";
@@ -132,14 +127,7 @@ namespace DecentM.VideoPlayer
         {
             if (!ValidateUrl(url)) return;
 
-            string hash = GetHash(url);
-            FetchMetadata(hash, url);
-
-            YTDLVideoJson? jsonOrNull = GetYTDLJson(url);
-            if (jsonOrNull == null) return;
-            YTDLVideoJson json = (YTDLVideoJson)jsonOrNull;
-
-            FetchThumbnail(hash, json);
+            FetchMetadata(url);
         }
 
         private static YTDLVideoJson? GetYTDLJson(string url)
@@ -200,50 +188,65 @@ namespace DecentM.VideoPlayer
             return metadata;
         }
 
+        private static IEnumerator GetTexture(string url, Action<byte[]> callback)
+        {
+            UnityWebRequest www = UnityWebRequestTexture.GetTexture(url);
+            yield return www.SendWebRequest();
+            
+            while (!www.isDone && !www.isNetworkError)
+                yield return new WaitForSeconds(0.1f);
+
+            if (www.isNetworkError)
+            {
+                callback(null);
+            }
+            else
+            {
+                callback(www.downloadHandler.data);
+            }
+        }
+
+        private static void FetchThumbnailCallback(string hash, byte[] data)
+        {
+            if (hash == null || data == null) return;
+            SetThumbnail(hash, data);
+        }
+
         private static void FetchThumbnail(string hash, YTDLVideoJson json)
         {
             if (!ValidateUrl(json.thumbnail)) return;
 
-            WebRequest request = HttpWebRequest.Create(json.thumbnail);
-            request.Method = "GET";
-
-            try
-            {
-                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
-                {
-                    if ((int)response.StatusCode < 200 || (int)response.StatusCode >= 400)
-                    {
-                        UnityEngine.Debug.LogWarning($"The web server hosting {request.RequestUri.AbsolutePath} has responded with {(int)response.StatusCode}");
-                        return;
-                    }
-
-                    Stream data = response.GetResponseStream();
-                    MemoryStream ms = new MemoryStream();
-                    data.CopyTo(ms);
-                    byte[] bytes = ms.ToArray();
-                    SetThumbnail(hash, bytes);
-                }
-            }
-            catch (Exception ex)
-            {
-                UnityEngine.Debug.LogError(ex);
-                UnityEngine.Debug.LogError($"Error while downloading thumbnail from {json.thumbnail.ToString()}, using fallback thumbnail");
-                SetFallbackThumbnail(hash);
-            }
+            EditorCoroutine.Start(GetTexture(json.thumbnail, (byte[] result) => FetchThumbnailCallback(hash, result)));
         }
 
-        private static void FetchMetadata(string hash, string url)
+        private static void FetchThumbnailFromCallback(string url)
         {
-            // ProcessResult ytdl = ProcessManager.RunProcess(EditorAssets.YtDlpPath, $"--no-check-certificate -J {url}", 10000);
-            YTDLVideoJson? jsonOrNull = YTDLCommands.GetVideoMetadata(url);
+            string hash = GetHash(url);
+            YTDLVideoJson? jsonOrNull = GetYTDLJson(url);
             if (jsonOrNull == null) return;
             YTDLVideoJson json = (YTDLVideoJson)jsonOrNull;
 
+            FetchThumbnail(hash, json);
+        }
+
+        private static void FetchMetadataCallback(string url, YTDLVideoJson? jsonOrNull)
+        {
+            if (jsonOrNull == null) return;
+            YTDLVideoJson json = (YTDLVideoJson)jsonOrNull;
+
+            string hash = GetHash(url);
             string path = $"{EditorAssets.VideoMetadataFolder}/{hash}/metadata.json";
             CreateFolder(EditorAssets.VideoMetadataFolder, hash);
             byte[] bytes = Encoding.UTF8.GetBytes(JsonUtility.ToJson(json));
             File.WriteAllBytes(path, bytes);
             AssetDatabase.ImportAsset(path);
+
+            FetchThumbnailFromCallback(url);
+        }
+
+        private static void FetchMetadata(string url)
+        {
+            YTDLCommands.GetVideoMetadata(url, (result) => FetchMetadataCallback(url, result));
         }
     }
 }
