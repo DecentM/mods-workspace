@@ -39,8 +39,10 @@ namespace DecentM.VideoPlayer
         public bool looping = true;
         public bool shuffle = true;
         [Space]
-        public VideoPlayerSystem system;
+        public PlaylistPlayerPlugin playlistPlayer;
         public TextureUpdaterPlugin textureUpdater;
+        [HideInInspector]
+        public VideoPlaylistUI ui;
 
         [HideInInspector]
         public object[][] urls;
@@ -197,7 +199,7 @@ namespace DecentM.VideoPlayer
 
         private int currentIndex = 0;
 
-        public VRCUrl Next()
+        public object[] Next()
         {
             if (this.urls == null || this.urls.Length == 0) return null;
 
@@ -209,10 +211,10 @@ namespace DecentM.VideoPlayer
                 else return null;
             }
 
-            return (VRCUrl)this.urls[this.currentIndex][0];
+            return this.urls[this.currentIndex];
         }
 
-        public VRCUrl Previous()
+        public object[] Previous()
         {
             if (this.urls == null || this.urls.Length == 0) return null;
 
@@ -224,14 +226,14 @@ namespace DecentM.VideoPlayer
                 else return null;
             }
 
-            return (VRCUrl)this.urls[this.currentIndex][0];
+            return this.urls[this.currentIndex];
         }
 
-        public VRCUrl GetCurrentUrl()
+        public object[] GetCurrent()
         {
             if (this.urls == null || this.urls.Length == 0 || this.currentIndex >= urls.Length) return null;
 
-            return (VRCUrl)this.urls[this.currentIndex][0];
+            return this.urls[this.currentIndex];
         }
 
         public int AddUrl(VRCUrl url)
@@ -299,10 +301,9 @@ namespace DecentM.VideoPlayer
             object[] item = this.GetIndex(index);
             if (item == null) return false;
 
-            Sprite thumbnail = (Sprite)item[1];
-            // this.system.UnloadVideo();
-            this.system.LoadVideo((VRCUrl)item[0]);
-            this.textureUpdater.SetTexture(thumbnail.texture);
+            this.currentIndex = index;
+            this.playlistPlayer.SetCurrentPlaylist(this);
+            this.playlistPlayer.PlayItem(item);
             return true;
         }
     }

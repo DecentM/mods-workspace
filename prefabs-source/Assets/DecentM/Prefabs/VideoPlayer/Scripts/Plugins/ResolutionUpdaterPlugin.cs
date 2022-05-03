@@ -10,19 +10,24 @@ namespace DecentM.VideoPlayer.Plugins
 {
     public sealed class ResolutionUpdaterPlugin : VideoPlayerPlugin
     {
+        public bool dynamicResolution = false;
+
         public Vector2Int defaultResolution = new Vector2Int(1920, 1080);
 
         private void ChangeScreenResolution(Renderer screen, float width, float height)
         {
-            float aspectRatio = width / height;
+            if (this.dynamicResolution)
+            {
+                float aspectRatio = width / height;
 
-            // screen.transform.localScale = new Vector3(screen.transform.localScale.x, screen.transform.localScale.x / aspectRatio, screen.transform.localScale.z);
-            screen.material.SetFloat("_TargetAspectRatio", (float)width / (float)height);
+                screen.transform.localScale = new Vector3(screen.transform.localScale.x, screen.transform.localScale.x / aspectRatio, screen.transform.localScale.z);
+                screen.material.SetFloat("_TargetAspectRatio", aspectRatio);
+            }
 
             this.events.OnScreenResolutionChange(screen, width, height);
         }
 
-        protected override void OnPlaybackStart(float duration)
+        private void ChangeScreenResolution()
         {
             Texture videoTexture = this.system.GetVideoTexture();
 
@@ -37,32 +42,14 @@ namespace DecentM.VideoPlayer.Plugins
             }
         }
 
-        private void ResetScreenResolution()
+        protected override void OnPlaybackStart(float duration)
         {
-            foreach (Renderer screen in this.system.screens)
-            {
-                this.ChangeScreenResolution(screen, this.defaultResolution.x, this.defaultResolution.y);
-            }
+            this.ChangeScreenResolution();
         }
 
-        protected override void OnLoadBegin()
+        protected override void OnScreenTextureChange()
         {
-            this.ResetScreenResolution();
-        }
-
-        protected override void OnPlaybackEnd()
-        {
-            this.ResetScreenResolution();
-        }
-
-        protected override void OnUnload()
-        {
-            this.ResetScreenResolution();
-        }
-
-        protected override void OnVideoPlayerInit()
-        {
-            this.ResetScreenResolution();
+            this.ChangeScreenResolution();
         }
     }
 }

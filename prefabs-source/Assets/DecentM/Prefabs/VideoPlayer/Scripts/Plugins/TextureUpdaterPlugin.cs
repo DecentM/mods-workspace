@@ -20,13 +20,13 @@ namespace DecentM.VideoPlayer.Plugins
         {
             Texture videoTexture = this.system.GetVideoTexture();
 
-            this.UpdateMaterial(this.system.currentPlayerHandler.type == VideoPlayerHandlerType.AVPro);
+            this.UpdateMaterial();
             this.SetTexture(videoTexture);
         }
 
         private void ShowIdleTexture()
         {
-            this.UpdateMaterial(false);
+            this.UpdateMaterial();
             this.SetTexture(idleTexture);
         }
 
@@ -45,9 +45,10 @@ namespace DecentM.VideoPlayer.Plugins
             this.ShowIdleTexture();
         }
 
-        [PublicAPI]
-        public void UpdateMaterial(bool isAVPro)
+        private void UpdateMaterial()
         {
+            bool isAVPro = this.system.currentPlayerHandler.type == VideoPlayerHandlerType.AVPro;
+
             foreach (Renderer screen in this.system.screens)
             {
                 screen.material = isAVPro ? this.avproPlayerMaterial : this.unityPlayerMaterial;

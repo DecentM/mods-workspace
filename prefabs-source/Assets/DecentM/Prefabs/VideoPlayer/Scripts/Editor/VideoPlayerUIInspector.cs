@@ -78,23 +78,29 @@ namespace DecentM.VideoPlayer
                 soundEffects.enabled = this.Toggle("Sound effects", soundEffects.enabled);
             }
 
-            this.SaveModifications();
-            this.ApplySettings();
-        }
-
-        private void ApplySettings()
-        {
-            VideoPlayerUI ui = (VideoPlayerUI)target;
-
-            if (ui == null) return;
-
             PlaylistPlayerPlugin playlistPlayer = ui.GetComponentInChildren<PlaylistPlayerPlugin>();
-            if (playlistPlayer != null) playlistPlayer.enabled = ui.hasDefaultPlaylist;
+            if (playlistPlayer != null)
+            {
+                this.HelpBox(MessageType.Info, playlistPlayer.enabled
+                    ? "A playlist will be preloaded when the video player starts for the first time"
+                    : "No videos will preload, players will have to enter a URL on their own"
+                );
 
-            /*
-            Plugin  = ui.GetComponentInChildren<>();
-            if ( != null) .enabled = ui.;
-            */
+                playlistPlayer.enabled = this.Toggle("Default playlist", playlistPlayer.enabled);
+            }
+
+            ResolutionUpdaterPlugin resolutionUpdater = ui.GetComponentInChildren<ResolutionUpdaterPlugin>();
+            if (resolutionUpdater != null)
+            {
+                this.HelpBox(MessageType.Info, resolutionUpdater.dynamicResolution
+                    ? "The video screen will adapt its scale to match the aspect ratio of the video"
+                    : "The video screen will stay the same size and use black bars to keep the video from stretching"
+                );
+
+                resolutionUpdater.enabled = this.Toggle("Dynamic resolution", resolutionUpdater.dynamicResolution);
+            }
+
+            this.SaveModifications();
         }
     }
 }

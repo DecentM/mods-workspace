@@ -11,6 +11,7 @@ namespace DecentM.VideoPlayer.Plugins
     {
         [Tooltip("Switch to the next player handler after this many failures. Each attempt takes 5 seconds.")]
         public int failureCeiling = 3;
+        public bool abortAfterAllPlayersFailed = true;
         private int failures = 0;
 
         public int videoLoadTimeout = 10;
@@ -74,7 +75,22 @@ namespace DecentM.VideoPlayer.Plugins
             if (this.failures >= this.failureCeiling)
             {
                 this.failures = 0;
-                this.system.NextPlayerHandler();
+
+                // IF the next player handler index is 0, it means we've gone around all of them
+                if (this.system.NextPlayerHandler() == 0)
+                {
+                    if (abortAfterAllPlayersFailed)
+                    {
+                        this.system.UnloadVideo();
+                        this.events.OnAutoRetryAbort();
+                        return;
+                    }
+                    else
+                    {
+                        this.events.OnAutoRetryAllPlayersFailed();
+                    }
+                }
+
                 this.events.OnAutoRetrySwitchPlayer();
             }
 

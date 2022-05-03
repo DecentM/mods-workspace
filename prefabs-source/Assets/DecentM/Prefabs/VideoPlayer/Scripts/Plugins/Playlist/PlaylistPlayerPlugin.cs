@@ -13,18 +13,36 @@ namespace DecentM.VideoPlayer.Plugins
 
         protected override void OnVideoPlayerInit()
         {
-            VRCUrl nextUrl = this.playlist.GetCurrentUrl();
-            if (nextUrl == null) return;
-
-            this.system.LoadVideo(nextUrl);
+            object[] next = this.playlist.GetCurrent();
+            this.PlayItem(next);
         }
 
         protected override void OnPlaybackEnd()
         {
-            VRCUrl nextUrl = this.playlist.Next();
-            if (nextUrl == null) return;
+            object[] next = this.playlist.Next();
+            this.PlayItem(next);
+        }
 
-            this.system.LoadVideo(nextUrl);
+        protected override void OnAutoRetryAbort()
+        {
+            object[] next = this.playlist.Next();
+            this.PlayItem(next);
+        }
+
+        public void SetCurrentPlaylist(VideoPlaylist playlist)
+        {
+            this.playlist = playlist;
+        }
+
+        public void PlayItem(object[] item)
+        {
+            if (item == null) return;
+
+            VRCUrl url = (VRCUrl)item[0];
+            Sprite thumbnail = (Sprite)item[1];
+
+            this.playlist.textureUpdater.SetTexture(thumbnail.texture);
+            this.system.LoadVideo(url);
         }
     }
 }

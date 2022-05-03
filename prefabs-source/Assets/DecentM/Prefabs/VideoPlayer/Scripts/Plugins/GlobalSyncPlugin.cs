@@ -13,7 +13,6 @@ namespace DecentM.VideoPlayer.Plugins
     public class GlobalSyncPlugin : VideoPlayerPlugin
     {
         public float diffToleranceSeconds = 2f;
-        public DebugPlugin debug;
 
         private float latency = 0.1f;
 
@@ -32,6 +31,8 @@ namespace DecentM.VideoPlayer.Plugins
                 float localProgress = this.system.GetTime();
                 float diff = desiredProgress - localProgress;
 
+                // While paused we accept any seek input from the owner
+                if (!system.IsPlaying()) this.system.Seek(value);
                 // If diff is positive, the local player is ahead of the remote one
                 if (diff > diffToleranceSeconds || diff < diffToleranceSeconds * -1) this.system.Seek(desiredProgress);
             }
@@ -48,7 +49,7 @@ namespace DecentM.VideoPlayer.Plugins
                 if (Networking.GetOwner(this.gameObject) == Networking.LocalPlayer) return;
 
                 _isPlaying = value;
-                if (value) this.system.StartPlayback();
+                if (value) this.system.StartPlayback(this.system.GetTime() + this.latency);
                 else this.system.PausePlayback();
             }
             get => _isPlaying;
@@ -70,6 +71,16 @@ namespace DecentM.VideoPlayer.Plugins
             get => _url;
         }
 
+        /* private float CalculateServerPing()
+        {
+            DateTime localTime = Networking.GetNetworkDateTime();
+            TimeSpan serverTimeSpan = TimeSpan.FromMilliseconds(Networking.GetServerTimeInMilliseconds());
+            DateTime serverTime = new DateTime(1970, 1, 1) + serverTimeSpan;
+            TimeSpan difference = localTime - serverTime;
+
+            return difference.Milliseconds;
+        } */
+
         protected override void OnProgress(float timestamp, float duration)
         {
             if (Networking.GetOwner(this.gameObject) != Networking.LocalPlayer) return;
@@ -80,7 +91,19 @@ namespace DecentM.VideoPlayer.Plugins
 
         protected override void OnLoadRequested(VRCUrl url)
         {
-            if (Networking.GetOwner(this.gameObject) != Networking.LocalPlayer) return;
+            if (url == null) return;
+
+            if (Networking.GetOwner(this.gameObject) != Networking.LocalPlayer)
+            {
+                // If a non-owner somehow has a different URL loaded (via a playlist probably)
+                // we unload that video and replace it with the synced URL
+                if (this.url != null && url.ToString() != this.url.ToString())
+                {
+                    this.system.UnloadVideo();
+                    this.system.LoadVideo(this.url);
+                }
+                return;
+            }
 
             this._url = url;
             this.RequestSerialization();
@@ -95,6 +118,8 @@ namespace DecentM.VideoPlayer.Plugins
 
         protected override void OnUnload()
         {
+            this.latency = 0;
+
             if (Networking.GetOwner(this.gameObject) != Networking.LocalPlayer) return;
 
             this.SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, nameof(this.SyncUnload));
@@ -112,32 +137,17 @@ namespace DecentM.VideoPlayer.Plugins
             this.RequestSerialization();
         }
 
-        private float CalculateServerPing()
-        {
-            DateTime localTime = Networking.GetNetworkDateTime();
-            TimeSpan serverTimeSpan = TimeSpan.FromMilliseconds(Networking.GetServerTimeInMilliseconds());
-            DateTime serverTime = new DateTime(1970, 1, 1) + serverTimeSpan;
-            TimeSpan difference = localTime - serverTime;
-
-            return difference.Milliseconds;
-        }
-
         protected override void OnPlaybackStop(float timestamp)
         {
-            if (Networking.GetOwner(this.gameObject) != Networking.LocalPlayer) return;
+            if (Networking.GetOwner(this.gameObject) != Networking.LocalPlayer)
+            {
+                this.SyncPausedTime();
+                return;
+            }
 
             this._progress = timestamp;
             this._isPlaying = false;
             this.RequestSerialization();
-
-            // Send a network event to sync the paused time, but only after one network roundtrip
-            // to make sure everyone's paused by now.
-            this.SendCustomEventDelayedSeconds(nameof(AfterOnPlaybackStop), this.CalculateServerPing() / 1000f);
-        }
-
-        public void AfterOnPlaybackStop()
-        {
-            this.SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, nameof(SyncPausedTime));
         }
 
         public void SyncPausedTime()
@@ -150,7 +160,7 @@ namespace DecentM.VideoPlayer.Plugins
             float diff = this.progress - currentTime;
             this.latency += diff;
 
-            this.system.PausePlayback(this.progress);
+            if (this.system.IsPlaying()) this.system.PausePlayback(this.progress);
         }
 
         protected override void OnLoadReady(float duration)
@@ -188,7 +198,6 @@ namespace DecentM.VideoPlayer.Plugins
             if (requestingPlayer == null || !requestingPlayer.IsValid()) return false;
             if (requestedOwner == null || !requestedOwner.IsValid()) return false;
 
-            this.events.OnDebugLog($"{requestingPlayer.playerId} is requesting {requestedOwner.playerId} to be owner");
             return requestingPlayer.playerId == requestedOwner.playerId;
         }
 
@@ -201,28 +210,5 @@ namespace DecentM.VideoPlayer.Plugins
         {
             Networking.SetOwner(Networking.LocalPlayer, this.gameObject);
         }
-
-        /* 
-        protected override void OnVideoPlayerInit() { this.Log(nameof(OnVideoPlayerInit)); }
-        protected override void OnPlaybackEnd() { this.Log(nameof(OnPlaybackEnd)); }
-        protected override void OnLoadReady(float duration) { this.Log(nameof(OnLoadReady), duration.ToString()); }
-        protected override void OnLoadBegin() { this.Log(nameof(OnLoadBegin)); }
-        protected override void OnLoadBegin(VRCUrl url) { this.Log(nameof(OnLoadBegin), "(with URL)"); }
-        protected override void OnLoadError(VideoError videoError) { this.Log(nameof(OnLoadError), videoError.ToString()); }
-        protected override void OnProgress(float timestamp, float duration) { this.Log(nameof(OnProgress), timestamp.ToString(), duration.ToString()); }
-        protected override void OnUnload() { this.Log(nameof(OnUnload)); }
-        protected override void OnPlaybackStart(float timestamp) { this.Log(nameof(OnPlaybackStart), timestamp.ToString()); }
-        protected override void OnPlaybackStop(float timestamp) { this.Log(nameof(OnPlaybackStop), timestamp.ToString()); }
-        protected override void OnAutoRetry(int attempt) { this.Log(nameof(OnAutoRetry), attempt.ToString()); }
-        protected override void OnAutoRetryLoadTimeout() { this.Log(nameof(OnAutoRetryLoadTimeout)); }
-        protected override void OnAutoRetrySwitchPlayer() { this.Log(nameof(OnAutoRetrySwitchPlayer)); }
-        protected override void OnAutoRetryAbort() { this.Log(nameof(OnAutoRetryAbort)); }
-        protected override void OnBrightnessChange(float alpha) { this.Log(nameof(OnBrightnessChange), alpha.ToString()); }
-        protected override void OnVolumeChange(float volume, bool muted) { this.Log(nameof(OnVolumeChange), volume.ToString(), muted.ToString()); }
-        protected override void OnMutedChange(bool muted, float volume) { this.Log(nameof(OnMutedChange), muted.ToString(), volume.ToString()); }
-        protected override void OnFpsChange(int fps) { this.Log(nameof(OnFpsChange), fps.ToString()); }
-        protected override void OnScreenResolutionChange(Renderer screen, float width, float height) { this.Log(nameof(OnScreenResolutionChange), screen.name, width.ToString(), height.ToString()); }
-        protected override void OnLoadRequested(VRCUrl url) { this.Log(nameof(OnLoadRequested), "(with URL)"); }
-        */
     }
 }

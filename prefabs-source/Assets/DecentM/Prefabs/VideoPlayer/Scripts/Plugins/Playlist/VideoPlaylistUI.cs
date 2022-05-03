@@ -12,6 +12,8 @@ namespace DecentM.VideoPlayer.Plugins
         public Transform itemsRoot;
         public GameObject itemRendererTemplate;
         public VideoPlaylist playlist;
+        public RectTransform lockedOverlay;
+        private Canvas canvas;
 
         private PlaylistItemRenderer[] instances;
 
@@ -64,10 +66,18 @@ namespace DecentM.VideoPlayer.Plugins
 
         void Start()
         {
+            this.playlist.SetProgramVariable(nameof(this.playlist.ui), this);
+            this.canvas = GetComponent<Canvas>();
             this.instances = new PlaylistItemRenderer[playlist.urls.Length];
             this.itemRendererTemplate.SetActive(false);
 
             this.isInstantiating = true;
+        }
+
+        public void SetIsOwner(bool isOwner)
+        {
+            this.canvas.enabled = isOwner;
+            this.lockedOverlay.gameObject.SetActive(!isOwner);
         }
     }
 }

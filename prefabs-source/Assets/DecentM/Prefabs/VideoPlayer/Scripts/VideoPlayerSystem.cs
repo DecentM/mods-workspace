@@ -104,9 +104,9 @@ namespace DecentM.VideoPlayer
         }
 
         [PublicAPI]
-        public bool NextPlayerHandler()
+        public int NextPlayerHandler()
         {
-            if (this.playerHandlers.Length == 0) return false;
+            if (this.playerHandlers.Length == 0) return -1;
 
             int newIndex = this.currentPlayerHandlerIndex + 1;
 
@@ -123,7 +123,7 @@ namespace DecentM.VideoPlayer
             this.currentPlayerHandlerIndex = newIndex;
             this.EnablePlayer(this.currentPlayerHandler);
 
-            return true;
+            return newIndex;
         }
 
         [PublicAPI]

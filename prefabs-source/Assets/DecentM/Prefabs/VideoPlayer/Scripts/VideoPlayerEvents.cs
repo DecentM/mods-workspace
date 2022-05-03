@@ -36,6 +36,7 @@ namespace DecentM.VideoPlayer
         OnAutoRetrySwitchPlayer,
         OnAutoRetryLoadTimeout,
         OnAutoRetryAbort,
+        OnAutoRetryAllPlayersFailed,
 
         OnOwnershipChanged,
         OnOwnershipSecurityChanged,
@@ -158,6 +159,11 @@ namespace DecentM.VideoPlayer
         public void OnAutoRetryAbort()
         {
             this.BroadcastEvent(VideoPlayerEvent.OnAutoRetryAbort);
+        }
+
+        public void OnAutoRetryAllPlayersFailed()
+        {
+            this.BroadcastEvent(VideoPlayerEvent.OnAutoRetryAllPlayersFailed);
         }
 
         #endregion
