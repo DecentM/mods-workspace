@@ -150,6 +150,12 @@ namespace DecentM.VideoPlayer
             return result;
         }
 
+        public void SetScreenTexture(Texture texture)
+        {
+            this.fetchBlock.SetTexture("_EmissionMap", texture);
+            this.screen.material.SetTexture("_EmissionMap", texture);
+        }
+
         public float GetDuration()
         {
             return this.player.GetDuration();

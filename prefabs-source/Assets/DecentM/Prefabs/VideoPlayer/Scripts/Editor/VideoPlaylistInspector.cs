@@ -441,7 +441,7 @@ namespace DecentM.VideoPlayer
                 VideoMetadata videoMetadata = VideoMetadataStore.GetMetadata(url.ToString());
                 object[] newItem = this.CreateNewItem(
                     url,
-                    this.TextureToSprite(videoMetadata.thumbnail),
+                    this.TextureToSprite(videoMetadata.thumbnail == null ? EditorAssets.FallbackVideoThumbnail : videoMetadata.thumbnail),
                     videoMetadata.title,
                     videoMetadata.uploader,
                     videoMetadata.siteName,

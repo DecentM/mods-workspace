@@ -8,6 +8,8 @@ using VRC.Udon;
 using UnityEditor;
 #endif
 
+using DecentM.VideoPlayer.Plugins;
+
 namespace DecentM.VideoPlayer
 {
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
@@ -36,6 +38,9 @@ namespace DecentM.VideoPlayer
         [Space]
         public bool looping = true;
         public bool shuffle = true;
+        [Space]
+        public VideoPlayerSystem system;
+        public TextureUpdaterPlugin textureUpdater;
 
         [HideInInspector]
         public object[][] urls;
@@ -276,6 +281,28 @@ namespace DecentM.VideoPlayer
             tmp[indexB] = this.urls[indexA];
             tmp[indexA] = this.urls[indexB];
             this.urls = tmp;
+            return true;
+        }
+
+        public object[] GetIndex(int index)
+        {
+            if (index < 0 || index >= this.urls.Length) return null;
+
+            object[] item = this.urls[index];
+            if (item == null || item.Length == 0) return null;
+
+            return item;
+        }
+
+        public bool PlayIndex(int index)
+        {
+            object[] item = this.GetIndex(index);
+            if (item == null) return false;
+
+            Sprite thumbnail = (Sprite)item[1];
+            // this.system.UnloadVideo();
+            this.system.LoadVideo((VRCUrl)item[0]);
+            this.textureUpdater.SetTexture(thumbnail.texture);
             return true;
         }
     }

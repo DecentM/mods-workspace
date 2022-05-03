@@ -11,6 +11,8 @@ namespace DecentM.VideoPlayer.Plugins
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class PlaylistItemRenderer : UdonSharpBehaviour
     {
+        public VideoPlaylist playlist;
+
         public int index;
         public VRCUrl url;
         public Image thumbnailSlot;
@@ -54,6 +56,11 @@ namespace DecentM.VideoPlayer.Plugins
             else this.specsSlot.text = $"";
 
             this.descriptionSlot.text = description;
+        }
+
+        public void OnClick()
+        {
+            this.playlist.PlayIndex(this.index);
         }
     }
 }
