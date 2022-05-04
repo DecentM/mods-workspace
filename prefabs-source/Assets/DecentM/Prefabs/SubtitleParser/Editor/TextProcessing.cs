@@ -36,7 +36,18 @@ namespace DecentM.Subtitles
         public TextProcessing ResolveHTMLEntities()
         {
             this.input = input
-                .Replace("&nbsp;", " ");
+                .Replace("&nbsp;", " ")
+                .Replace("&lt;", "<")
+                .Replace("&gt;", ">")
+                .Replace("&amp;", "&")
+                .Replace("&quot;", "\"")
+                .Replace("&apos;", "\'")
+                .Replace("&cent;", "¢")
+                .Replace("&pound;", "£")
+                .Replace("&yen;", "¥")
+                .Replace("&euro;", "€")
+                .Replace("&copy;", "©")
+                .Replace("&reg;", "®");
 
             return this;
         }

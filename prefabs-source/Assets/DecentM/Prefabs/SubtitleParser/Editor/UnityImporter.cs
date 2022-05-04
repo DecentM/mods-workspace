@@ -10,7 +10,6 @@ namespace DecentM.Subtitles
 {
     public class UnityImporter
     {
-        private Compiler compiler = new Compiler();
         private string targetPath = "Assets/DecentM/Assets/CompiledSubtitleInstructions";
         private string sourcePath = "Assets/DecentM/Assets/Subtitles";
 
@@ -32,7 +31,7 @@ namespace DecentM.Subtitles
 
                 try
                 {
-                    Compiler.CompilationResult result = this.compiler.Compile(reader.ReadToEnd(), fileInfo.Extension);
+                    SubtitleCompiler.CompilationResult result = SubtitleCompiler.Compile(reader.ReadToEnd(), fileInfo.Extension);
                     reader.Close();
 
                     if (result.errors.Count != 0)

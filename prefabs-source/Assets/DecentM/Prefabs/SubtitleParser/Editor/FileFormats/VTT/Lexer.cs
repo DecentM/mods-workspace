@@ -21,6 +21,7 @@ namespace DecentM.Subtitles.Vtt
             WEBVTTHeader,
             Note,
             DoubleNewline,
+            Style,
         }
 
         public struct Token
@@ -123,6 +124,16 @@ namespace DecentM.Subtitles.Vtt
                 {
                     string value = ConsumeUntilDoubleNewline(webvttWord.Length);
                     AddToken(TokenType.WEBVTTHeader, value);
+                    AddToken(TokenType.DoubleNewline, "\n\n");
+                    cursor--;
+                    continue;
+                }
+
+                string styleWord = "STYLE";
+                if (FindWord(styleWord))
+                {
+                    string value = ConsumeUntilDoubleNewline(styleWord.Length);
+                    AddToken(TokenType.Style, value);
                     AddToken(TokenType.DoubleNewline, "\n\n");
                     cursor--;
                     continue;

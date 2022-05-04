@@ -148,6 +148,14 @@ namespace DecentM.Subtitles.Vtt
                     continue;
                 }
 
+                // Ignore styles (for now) as they're probably hard to convert into
+                // TMPro styles.
+                if (current.type == Lexer.TokenType.Style)
+                {
+                    cursor++;
+                    continue;
+                }
+
                 if (mode == NodeKind.Header)
                 {
                     if (current.type != Lexer.TokenType.WEBVTTHeader)
@@ -168,6 +176,13 @@ namespace DecentM.Subtitles.Vtt
                     // token type 2 == int
                     if (current.type != Lexer.TokenType.Number)
                     {
+                        cursor++;
+                        continue;
+                    }
+
+                    // Special case to ignore the screen number if present, as this VTT parser just uses its
+                    // index
+                    if ((cursor + 1) < tokens.Count && tokens[cursor + 1].type == Lexer.TokenType.Newline) {
                         cursor++;
                         continue;
                     }

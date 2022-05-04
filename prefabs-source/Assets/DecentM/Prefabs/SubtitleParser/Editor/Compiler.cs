@@ -23,16 +23,8 @@ namespace DecentM.Subtitles
         public static string[] SupportedFormats = { Srt, Vtt };
     }
 
-    public class Compiler
+    public static class SubtitleCompiler
     {
-        private Srt.Lexer srtLexer = new Srt.Lexer();
-        private Srt.Parser srtParser = new Srt.Parser();
-        private Srt.Transformer srtTransformer = new Srt.Transformer();
-
-        private Vtt.Lexer vttLexer = new Vtt.Lexer();
-        private Vtt.Parser vttParser = new Vtt.Parser();
-        private Vtt.Transformer vttTransformer = new Vtt.Transformer();
-
         public struct CompilationResultError
         {
             public string value;
@@ -55,7 +47,7 @@ namespace DecentM.Subtitles
             }
         }
 
-        public CompilationResult Compile(string source, string fileType)
+        public static CompilationResult Compile(string source, string fileType)
         {
             CompilationResult result = new CompilationResult(new List<CompilationResultError>(), "");
             List<Instruction> instructions = new List<Instruction>();
@@ -74,8 +66,12 @@ namespace DecentM.Subtitles
             {
                 case FileTypes.Srt:
                     {
-                        List<Srt.Lexer.Token> tokens = this.srtLexer.Lex(sanitisedSource);
-                        Srt.Parser.Ast ast = this.srtParser.Parse(tokens);
+                        Srt.Lexer lexer = new Srt.Lexer();
+                        Srt.Parser parser = new Srt.Parser();
+                        Srt.Transformer transformer = new Srt.Transformer();
+
+                        List<Srt.Lexer.Token> tokens = lexer.Lex(sanitisedSource);
+                        Srt.Parser.Ast ast = parser.Parse(tokens);
                         List<Srt.Parser.Node> errors = Srt.Parser.GetUnknowns(ast);
 
                         // Add all errors to the result struct so they can be displayed to the user
@@ -90,7 +86,7 @@ namespace DecentM.Subtitles
                             });
                         }
 
-                        instructions = this.srtTransformer.ToInstructions(ast);
+                        instructions = transformer.ToInstructions(ast);
                         break;
                     }
 
@@ -98,8 +94,12 @@ namespace DecentM.Subtitles
                 case FileTypes.Usf:
                 case FileTypes.Vtt:
                     {
-                        List<Vtt.Lexer.Token> tokens = this.vttLexer.Lex(sanitisedSource);
-                        Vtt.Parser.Ast ast = this.vttParser.Parse(tokens);
+                        Vtt.Lexer lexer = new Vtt.Lexer();
+                        Vtt.Parser parser = new Vtt.Parser();
+                        Vtt.Transformer transformer = new Vtt.Transformer();
+
+                        List<Vtt.Lexer.Token> tokens = lexer.Lex(sanitisedSource);
+                        Vtt.Parser.Ast ast = parser.Parse(tokens);
                         List<Vtt.Parser.Node> errors = Vtt.Parser.GetUnknowns(ast);
 
                         // Add all errors to the result struct so they can be displayed to the user
@@ -114,7 +114,7 @@ namespace DecentM.Subtitles
                             });
                         }
 
-                        instructions = this.vttTransformer.ToInstructions(ast);
+                        instructions = transformer.ToInstructions(ast);
                         break;
                     }
                 case FileTypes.Stl:
