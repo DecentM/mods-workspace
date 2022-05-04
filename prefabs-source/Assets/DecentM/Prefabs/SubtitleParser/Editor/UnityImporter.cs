@@ -18,25 +18,26 @@ namespace DecentM.Subtitles
         {
             DirectoryInfo info = new DirectoryInfo(this.sourcePath);
 
-            FileInfo[] fileInfos = info.GetFiles().Where(file => FileTypes.IsSupported(file.Extension)).ToArray();
+            List<FileInfo> fileInfos = info.GetFiles().Where(file => FileTypes.IsSupported(file.Extension)).ToList();
             List<TextAsset> assets = new List<TextAsset>();
 
             // Go through all the files in the directory and parse them using a parser based on its file extension
-            for (int i = 0; i < fileInfos.Length; i++)
+            for (int i = 0; i < fileInfos.Count; i++)
             {
                 FileInfo fileInfo = fileInfos[i];
-
-                EditorUtility.DisplayProgressBar($"Processing subtitles... ({i}/{fileInfos.Length})", fileInfo.Name, (float)i / fileInfos.Length);
-
+                EditorUtility.DisplayProgressBar($"Processing subtitles... ({i}/{fileInfos.Count})", fileInfo.Name, (float)i / fileInfos.Count);
                 StreamReader reader = new StreamReader(fileInfo.FullName);
+
+                Debug.Log(fileInfo.Name);
 
                 try
                 {
                     Compiler.CompilationResult result = this.compiler.Compile(reader.ReadToEnd(), fileInfo.Extension);
+                    reader.Close();
 
                     if (result.errors.Count != 0)
                     {
-                        throw new Exception($"Encountered {result.errors.Count} errors while parsing subtitles.");
+                        throw new Exception($"Encountered {result.errors.Count} errors while parsing {fileInfo.Name}, some sections might be missing from the output.");
                     }
 
                     TextAsset asset = new TextAsset(result.output);
@@ -45,10 +46,7 @@ namespace DecentM.Subtitles
                     assets.Add(asset);
                 } catch (Exception ex)
                 {
-                    if (!EditorUtility.DisplayDialog("Compilation error", $"This subtitle file has an error:\n{ex.Message}", "Continue", "Abort"))
-                    {
-                        break;
-                    };
+                    Debug.LogWarning(ex);
                 }
             }
 

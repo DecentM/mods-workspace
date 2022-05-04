@@ -82,14 +82,29 @@ namespace DecentM.EditorTools
 
         public static void RunProcessAsync(string filename, string arguments, string workdir, Action<ProcessResult> callback)
         {
+            RunProcessAsync(filename, arguments, workdir, 15000, callback);
+        }
+
+        public static void RunProcessAsync(string filename, string arguments, Action<ProcessResult> callback)
+        {
+            RunProcessAsync(filename, arguments, ".", 15000, callback);
+        }
+
+        public static void RunProcessAsync(string filename, string arguments, int timeout, Action<ProcessResult> callback)
+        {
+            RunProcessAsync(filename, arguments, ".", timeout, callback);
+        }
+
+        public static void RunProcessAsync(string filename, string arguments, string workdir, int timeout, Action<ProcessResult> callback)
+        {
             Task.Run(() =>
             {
-                ProcessResult result = RunProcessSync(filename, arguments, 10000);
+                ProcessResult result = RunProcessSync(filename, arguments, workdir, timeout);
                 callback(result);
             });
         }
 
-        public static ProcessResult RunProcessSync(string filename, string arguments, int timeout)
+        public static ProcessResult RunProcessSync(string filename, string arguments, string workdir, int timeout)
         {
             using (Process process = new Process())
             {
@@ -100,6 +115,7 @@ namespace DecentM.EditorTools
                 process.StartInfo.RedirectStandardError = true;
                 process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
                 process.StartInfo.CreateNoWindow = true;
+                process.StartInfo.WorkingDirectory = workdir;
 
                 StringBuilder output = new StringBuilder();
                 StringBuilder error = new StringBuilder();

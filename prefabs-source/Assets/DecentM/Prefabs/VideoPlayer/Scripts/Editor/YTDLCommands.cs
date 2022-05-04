@@ -92,7 +92,7 @@ namespace DecentM.VideoPlayer
             );
         }
 
-        public static void GetVideoMetadata(string url, Action<YTDLVideoJson> callback)
+        public static void GetMetadata(string url, Action<YTDLVideoJson> callback)
         {
             ProcessManager.RunProcessAsync(
                 EditorAssets.YtDlpPath,
@@ -126,13 +126,13 @@ namespace DecentM.VideoPlayer
             );
         }
 
-        public static void DownloadComments(string url, string path, Action<string> callback)
+        public static void GetMetadataWithComments(string url, Action<YTDLVideoJson> callback)
         {
             ProcessManager.RunProcessAsync(
                 EditorAssets.YtDlpPath,
-                $"--no-check-certificate --skip-download --write-comments {url}",
-                path,
-                (ProcessResult result) => callback(result.stdout)
+                $"--no-check-certificate --skip-download --write-comments -J {url}",
+                120000,
+                (ProcessResult result) => callback(JsonUtility.FromJson<YTDLVideoJson>(result.stdout))
             );
         }
     }

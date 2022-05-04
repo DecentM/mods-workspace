@@ -14,6 +14,7 @@ using UnityEngine.Networking;
 using UnityEditor;
 
 using DecentM.EditorTools;
+using SubtitlesParser.Classes.Parsers;
 
 namespace DecentM.VideoPlayer
 {
@@ -53,24 +54,16 @@ namespace DecentM.VideoPlayer
 
         private static bool CreateFolder(string basePath, string name)
         {
-            Debug.Log($"create folder {basePath} {name}");
             if (!basePath.StartsWith("Assets/")) return false;
 
-            Debug.Log($"create folder - 1");
             if (AssetDatabase.IsValidFolder($"{basePath}/{name}")) return true;
-            Debug.Log($"create folder - 2");
             if (!AssetDatabase.IsValidFolder(basePath))
             {
-                Debug.Log($"create folder - 3");
                 string[] paths = basePath.Split('/');
-                Debug.Log($"create folder - 4");
                 CreateFolder(string.Join("/", paths.Take(paths.Length - 1)), paths[paths.Length - 1]);
-                Debug.Log($"create folder - 5");
             }
 
-            Debug.Log($"create folder - 6");
             if (AssetDatabase.CreateFolder(basePath, name) == "") return false;
-            Debug.Log($"create folder returns");
             return true;
         }
 
@@ -84,7 +77,7 @@ namespace DecentM.VideoPlayer
             importer.textureCompression = TextureImporterCompression.Compressed;
             importer.compressionQuality = 50;
             importer.crunchedCompression = true;
-            // importer.SaveAndReimport();
+            importer.SaveAndReimport();
         }
 
         public static void ReapplyImportSettings()
@@ -103,9 +96,7 @@ namespace DecentM.VideoPlayer
         private static void SetMetadata(string hash, string filename, byte[] bytes)
         {
             string path = $"{EditorAssets.VideoMetadataFolder}/{hash}/{filename}";
-            // CreateFolder(EditorAssets.VideoMetadataFolder, hash);
             File.WriteAllBytes(path, bytes);
-            // AssetDatabase.ImportAsset(path);
         }
 
         private static void SetThumbnail(string hash, Texture2D texture)
@@ -201,75 +192,101 @@ namespace DecentM.VideoPlayer
             return metadata;
         }
 
-        Queue<Task> postFetchTasks = new Queue<Task>();
-
-        private static void FetchSubtitlesCallback(string url)
+        private static void FetchCommentsCallback(string hash, YTDLVideoJson json)
         {
-            UnityEngine.Debug.Log("FetchSubtitlesCallback");
-
-            UnityEngine.Debug.Log($"Subtitles downloaded for {url}");
+            string path = $"{EditorAssets.VideoMetadataFolder}/{hash}/comments.json";
+            string data = JsonUtility.ToJson(json);
+            File.WriteAllBytes(path, Encoding.UTF8.GetBytes(data));
         }
 
-        private static void FetchSubtitles(string url, Action callback)
+        private static void FetchComments(string url, Action<YTDLVideoJson> callback)
         {
             string hash = GetHash(url);
 
             string path = $"{EditorAssets.VideoMetadataFolder}/{hash}";
-            // if (!CreateFolder(path, "Subtitles")) return;
+
+            YTDLCommands.GetMetadataWithComments(url, callback);
+        }
+
+        private static void FetchSubtitlesCallback(string hash)
+        {
+            IEnumerable<string> files = Directory
+                .GetFiles(string.Join(Application.dataPath, $"Assets/Editor/DecentM/VideoMetadata/{hash}/Subtitles"), "*.*", SearchOption.TopDirectoryOnly)
+                .Where(name => !name.EndsWith(".srt"));
+
+            /* List<string> paths = files.ToList();
+
+            for (int i = 0; i < paths.Count; i++)
+            {
+                var parser = new SubParser();
+                using (var fileStream = File.OpenRead(paths[i]))
+                {
+                    var items = parser.ParseStream(fileStream);
+
+                    var writer = new SubtitlesParser.Classes.Writers.SrtWriter();
+                    using (var fileStream = File.OpenWrite(pathToSrtFile))
+                    {
+                        writer.WriteStream(fileStream, yourListOfSubtitleItems);
+                    }
+                }
+            } */
+        }
+
+        private static void FetchSubtitles(string url, string hash, Action callback)
+        {
+            string path = $"{EditorAssets.VideoMetadataFolder}/{hash}";
 
             YTDLCommands.DownloadSubtitles(url, $"{path}/Subtitles", false, (string stdout) => callback());
         }
 
-        private static void FetchThumbnailCallback(string hash, byte[] data)
+        private static void FetchThumbnailCallback(string path, byte[] data)
         {
-            Debug.Log("FetchThumbnailCallback");
+            if (string.IsNullOrEmpty(path) || data == null) return;
 
-            if (string.IsNullOrEmpty(hash) || data == null) return;
-
-            SetThumbnail(hash, data);
+            File.WriteAllBytes(path, data);
         }
 
-        private static IEnumerator FetchThumbnail(YTDLVideoJson json, Action<byte[]> callback)
+        private static void FetchThumbnail(YTDLVideoJson json, Action<byte[]> callback)
         {
-            UnityWebRequest www = UnityWebRequestTexture.GetTexture(json.thumbnail);
-            yield return www.SendWebRequest();
+            if (!ValidateUrl(json.thumbnail)) return;
 
-            while (!www.isDone && !www.isNetworkError)
-                yield return new WaitForSeconds(0.1f);
+            WebRequest request = HttpWebRequest.Create(json.thumbnail);
+            request.Method = "GET";
 
-            if (www.isNetworkError)
+            try
             {
-                Debug.LogError($"Network error while fetching thumbnail: {www.error}");
-                callback(null);
+                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+                {
+                    if ((int)response.StatusCode < 200 || (int)response.StatusCode >= 400)
+                    {
+                        Debug.LogWarning($"The web server hosting {request.RequestUri.AbsolutePath} has responded with {(int)response.StatusCode}");
+                        return;
+                    }
+
+                    Stream data = response.GetResponseStream();
+                    MemoryStream ms = new MemoryStream();
+                    data.CopyTo(ms);
+                    byte[] bytes = ms.ToArray();
+                    callback(bytes);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                callback(www.downloadHandler.data);
+                Debug.LogError(ex);
+                Debug.LogError($"Error while downloading thumbnail from {json.thumbnail.ToString()}, using fallback thumbnail");
+                callback(null);
             }
         }
 
         private static void FetchMetadataCallback(string hash, YTDLVideoJson? jsonOrNull)
         {
-            Debug.Log("FetchMetadataCallback");
+            if (jsonOrNull == null) return;
 
-            if (jsonOrNull == null)
-            {
-                Debug.Log("jsonOrNull is null");
-                return;
-            }
-
-            Debug.Log("FetchMetadataCallback - 1");
             YTDLVideoJson json = (YTDLVideoJson)jsonOrNull;
 
-            Debug.Log("FetchMetadataCallback - 2");
             string path = $"{EditorAssets.VideoMetadataFolder}/{hash}/metadata.json";
-            Debug.Log("FetchMetadataCallback - 3");
-            
-            Debug.Log("FetchMetadataCallback - 4");
             byte[] bytes = Encoding.UTF8.GetBytes(JsonUtility.ToJson(json));
-            Debug.Log("FetchMetadataCallback - 5");
             File.WriteAllBytes(path, bytes);
-            Debug.Log("FetchMetadataCallback - 6");
             // AssetDatabase.ImportAsset(path);
         }
 
@@ -277,48 +294,41 @@ namespace DecentM.VideoPlayer
         {
             try
             {
-                EditorUtility.DisplayProgressBar($"Refreshing metadata...", "Dispatching threads...", 0);
+                for (int i = 0; i < urls.Length; i++)
+                {
+                    string url = urls[i];
+                    if (string.IsNullOrEmpty(url)) continue;
+                    if (!ValidateUrl(url)) continue;
+
+                    EditorUtility.DisplayProgressBar("Creating folders...", url, 1f * i / urls.Length);
+
+                    string hash = GetHash(url);
+                    CreateFolder($"{EditorAssets.VideoMetadataFolder}/{hash}", "Subtitles");
+                }
+
+                EditorUtility.ClearProgressBar();
 
                 for (int i = 0; i < urls.Length; i++)
                 {
                     string url = urls[i];
                     if (string.IsNullOrEmpty(url)) continue;
-
-                    /* if (EditorUtility.DisplayCancelableProgressBar($"Refreshing metadata... ({i} of {urls.Length})", url, 1f * i / urls.Length))
-                    {
-                        break;
-                    } */
-
                     if (!ValidateUrl(url)) continue;
 
                     string hash = GetHash(url);
-                    CreateFolder($"{EditorAssets.VideoMetadataFolder}/{hash}", "Subtitles");
 
-                    YTDLCommands.GetVideoMetadata(url, (YTDLVideoJson json) =>
+                    YTDLCommands.GetMetadata(url, (YTDLVideoJson json) =>
                     {
-                        Debug.Log($"{i} - 1");
                         FetchMetadataCallback(hash, json);
-                        Debug.Log($"{i} - 1.1");
 
                         FetchThumbnail(json, (byte[] data) =>
                         {
-                            Debug.Log($"{i} - 2");
-                            FetchThumbnailCallback(hash, data);
+                            string path = $"{EditorAssets.VideoMetadataFolder}/{hash}/thumbnail.jpg";
+                            FetchThumbnailCallback(path, data);
                         });
                     });
 
-                    FetchSubtitles(url, () =>
-                    {
-                        Debug.Log($"{i} - 3");
-                        FetchSubtitlesCallback(url);
-                        // EditorUtility.DisplayProgressBar($"Refreshed metadata {i} of {urls.Length}", url, 1f * i / urls.Length);
-                    });
-
-                    /* Task.Run(() =>
-                    {
-                        // return YTDLCommands.GetVideoMetadata(url);
-                        // (result) => FetchMetadataCallback(url, result)
-                    }); */
+                    FetchSubtitles(url, hash, () => FetchSubtitlesCallback(hash));
+                    FetchComments(url, (YTDLVideoJson json) => FetchCommentsCallback(hash, json));
                 }
             }
             catch (Exception ex)
@@ -328,8 +338,8 @@ namespace DecentM.VideoPlayer
             }
             finally
             {
-                // EditorUtility.ClearProgressBar();
-                AsyncProgress.Clear();
+                EditorUtility.ClearProgressBar();
+                // AsyncProgress.Clear();
             }
         }
     }

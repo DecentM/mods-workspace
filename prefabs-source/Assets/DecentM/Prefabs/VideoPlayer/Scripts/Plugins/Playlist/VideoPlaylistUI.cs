@@ -19,10 +19,18 @@ namespace DecentM.VideoPlayer.Plugins
 
         private bool isInstantiating = false;
         private int instantiatingIndex = 0;
+        private float elapsed = 0;
+        private float instantiatingInterval = 1;
 
         private void FixedUpdate()
         {
-            if (!this.isInstantiating) return;
+            if (!this.isInstantiating || Time.deltaTime >= 1 / 49f) return;
+
+            elapsed += Time.fixedUnscaledDeltaTime;
+            if (elapsed <= this.instantiatingInterval) return;
+            elapsed = 0;
+            this.instantiatingInterval = UnityEngine.Random.Range(.05f, .5f);
+
             if (this.instantiatingIndex >= playlist.urls.Length)
             {
                 this.isInstantiating = false;

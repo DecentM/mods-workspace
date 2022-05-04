@@ -20,7 +20,7 @@ namespace DecentM.Subtitles
             return FileTypes.SupportedFormats.Any(f => f == filetype);
         }
 
-        public static string[] SupportedFormats = { Srt };
+        public static string[] SupportedFormats = { Srt, Vtt };
     }
 
     public class Compiler
@@ -28,6 +28,10 @@ namespace DecentM.Subtitles
         private Srt.Lexer srtLexer = new Srt.Lexer();
         private Srt.Parser srtParser = new Srt.Parser();
         private Srt.Transformer srtTransformer = new Srt.Transformer();
+
+        private Vtt.Lexer vttLexer = new Vtt.Lexer();
+        private Vtt.Parser vttParser = new Vtt.Parser();
+        private Vtt.Transformer vttTransformer = new Vtt.Transformer();
 
         public struct CompilationResultError
         {
@@ -61,31 +65,58 @@ namespace DecentM.Subtitles
                 throw new NotImplementedException($"File type {fileType} is not supported. Use a different file, or convert your subtitles to a supported format: {String.Join(", ", FileTypes.SupportedFormats)}");
             }
 
+            string sanitisedSource = new TextProcessing(source)
+                .CRLFToLF()
+                .ResolveHTMLEntities()
+                .GetResult();
+
             switch (fileType)
             {
                 case FileTypes.Srt:
-                    List<Srt.Lexer.Token> tokens = this.srtLexer.Lex(source);
-                    Srt.Parser.Ast ast = this.srtParser.Parse(tokens);
-                    List<Srt.Parser.Node> errors = Srt.Parser.GetUnknowns(ast);
-
-                    // Add all errors to the result struct so they can be displayed to the user
-                    if (errors.Count != 0)
                     {
-                        errors.ForEach(error =>
-                        {
-                            if (error.value != null)
-                            {
-                                result.errors.Add(new CompilationResultError(((string)error.value)));
-                            }
-                        });
-                    }
+                        List<Srt.Lexer.Token> tokens = this.srtLexer.Lex(sanitisedSource);
+                        Srt.Parser.Ast ast = this.srtParser.Parse(tokens);
+                        List<Srt.Parser.Node> errors = Srt.Parser.GetUnknowns(ast);
 
-                    instructions = this.srtTransformer.ToInstructions(ast);
-                    break;
+                        // Add all errors to the result struct so they can be displayed to the user
+                        if (errors.Count != 0)
+                        {
+                            errors.ForEach(error =>
+                            {
+                                if (error.value != null)
+                                {
+                                    result.errors.Add(new CompilationResultError((error.value.ToString())));
+                                }
+                            });
+                        }
+
+                        instructions = this.srtTransformer.ToInstructions(ast);
+                        break;
+                    }
 
                 case FileTypes.Ass:
                 case FileTypes.Usf:
                 case FileTypes.Vtt:
+                    {
+                        List<Vtt.Lexer.Token> tokens = this.vttLexer.Lex(sanitisedSource);
+                        Vtt.Parser.Ast ast = this.vttParser.Parse(tokens);
+                        List<Vtt.Parser.Node> errors = Vtt.Parser.GetUnknowns(ast);
+
+                        // Add all errors to the result struct so they can be displayed to the user
+                        if (errors.Count != 0)
+                        {
+                            errors.ForEach(error =>
+                            {
+                                if (error.value != null)
+                                {
+                                    result.errors.Add(new CompilationResultError((error.value.ToString())));
+                                }
+                            });
+                        }
+
+                        instructions = this.vttTransformer.ToInstructions(ast);
+                        break;
+                    }
                 case FileTypes.Stl:
                 case FileTypes.Sub:
                 case FileTypes.Ssa:
@@ -96,7 +127,7 @@ namespace DecentM.Subtitles
 
             result.output = "";
 
-            instructions.ForEach(delegate (Instruction instruction)
+            instructions.ForEach((Instruction instruction) =>
             {
                 result.output += instruction.ToString();
                 result.output += '\n';
