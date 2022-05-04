@@ -16,6 +16,20 @@ using DecentM.EditorTools;
 namespace DecentM.VideoPlayer
 {
     [Serializable]
+    public struct YTDLVideoJsonComment
+    {
+        public string id;
+        public string text;
+        public string timestamp;
+        public int like_count;
+        public string author;
+        public string author_id;
+        public string author_thumbnail;
+        public bool author_is_uploader;
+        public string parent;
+    }
+
+    [Serializable]
     public struct YTDLVideoJson
     {
         public string duration_string;
@@ -29,6 +43,7 @@ namespace DecentM.VideoPlayer
         public string original_url;
         public string extractor_key;
         public string description;
+        public YTDLVideoJsonComment[] comments;
     }
 
     [Serializable]
@@ -60,6 +75,7 @@ namespace DecentM.VideoPlayer
             return ProcessManager.CreateProcessCoroutine(
                 EditorAssets.YtDlpPath,
                 $"--no-check-certificate -f \"mp4[height<=?{resolution}]/best[height<=?{resolution}]\" --get-url {url}",
+                ".",
                 BlockingBehaviour.NonBlocking,
                 (Process process) => callback(process.StandardOutput.ReadToEnd())
             );
@@ -70,6 +86,7 @@ namespace DecentM.VideoPlayer
             return ProcessManager.RunProcessCoroutine(
                 EditorAssets.YtDlpPath,
                 $"--no-check-certificate -f \"mp4[height<=?{resolution}]/best[height<=?{resolution}]\" --get-url {url}",
+                ".",
                 BlockingBehaviour.Blocking,
                 (Process process) => callback(process.StandardOutput.ReadToEnd())
             );
@@ -79,7 +96,8 @@ namespace DecentM.VideoPlayer
         {
             return ProcessManager.RunProcessCoroutine(
                 EditorAssets.YtDlpPath,
-                $"--no-check-certificate -J {url}",
+                $"--no-check-certificate -J --write-comments {url}",
+                ".",
                 BlockingBehaviour.Blocking,
                 (Process process) => callback(JsonUtility.FromJson<YTDLVideoJson>(process.StandardOutput.ReadToEnd()))
             );
@@ -90,8 +108,35 @@ namespace DecentM.VideoPlayer
             return ProcessManager.RunProcessCoroutine(
                 EditorAssets.YtDlpPath,
                 $"--no-check-certificate -J --flat-playlist {url}",
+                ".",
                 BlockingBehaviour.Blocking,
                 (Process process) => callback(JsonUtility.FromJson<YTDLFlatPlaylistJson>(process.StandardOutput.ReadToEnd()))
+            );
+        }
+
+        public static EditorCoroutine DownloadSubtitles(string url, string path, bool autoSubs, Action<int> callback)
+        {
+            string arguments = autoSubs
+                ? $"--no-check-certificate --skip-download --write-subs --write-auto-subs --sub-format vtt --sub-langs all {url}"
+                : $"--no-check-certificate --skip-download --write-subs --no-write-auto-subs --sub-format vtt --sub-langs all {url}";
+
+            return ProcessManager.RunProcessCoroutine(
+                EditorAssets.YtDlpPath,
+                arguments,
+                path,
+                BlockingBehaviour.NonBlocking,
+                (Process process) => callback(process.ExitCode)
+            );
+        }
+
+        public static EditorCoroutine DownloadComments(string url, string path, Action<int> callback)
+        {
+            return ProcessManager.RunProcessCoroutine(
+                EditorAssets.YtDlpPath,
+                $"--no-check-certificate --skip-download --write-comments {url}",
+                path,
+                BlockingBehaviour.NonBlocking,
+                (Process process) => callback(process.ExitCode)
             );
         }
     }

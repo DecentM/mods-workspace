@@ -125,9 +125,7 @@ namespace DecentM.VideoPlayer
 
         public static void RefreshMetadata(string url)
         {
-            if (!ValidateUrl(url)) return;
-
-            FetchMetadata(url);
+            EditorCoroutine.Start(FetchMetadata(new string[] { url }));
         }
 
         public static void RefreshMetadata(string[] urls)
@@ -193,38 +191,45 @@ namespace DecentM.VideoPlayer
             return metadata;
         }
 
-        private static IEnumerator GetTexture(string url, Action<byte[]> callback)
+        private static void FetchSubtitlesCallback(string url)
         {
-            UnityWebRequest www = UnityWebRequestTexture.GetTexture(url);
+            UnityEngine.Debug.Log($"Subtitles downloaded for {url}");
+        }
+
+        private static IEnumerator FetchSubtitles(string url, Action callback)
+        {
+            string hash = GetHash(url);
+
+            string path = $"{EditorAssets.VideoMetadataFolder}/{hash}";
+            if (!CreateFolder(path, "Subtitles")) yield return null;
+
+            yield return YTDLCommands.DownloadSubtitles(url, $"{path}/Subtitles", false, (int exitCode) => callback());
+        }
+
+        private static void FetchThumbnailCallback(string hash, byte[] data)
+        {
+            if (string.IsNullOrEmpty(hash) || data == null) return;
+
+            SetThumbnail(hash, data);
+        }
+
+        private static IEnumerator FetchThumbnail(YTDLVideoJson json, Action<byte[]> callback)
+        {
+            UnityWebRequest www = UnityWebRequestTexture.GetTexture(json.thumbnail);
             yield return www.SendWebRequest();
-            
+
             while (!www.isDone && !www.isNetworkError)
                 yield return new WaitForSeconds(0.1f);
 
             if (www.isNetworkError)
             {
+                UnityEngine.Debug.LogError($"Network error while fetching thumbnail: {www.error}");
                 callback(null);
             }
             else
             {
                 callback(www.downloadHandler.data);
             }
-        }
-
-        private static void FetchThumbnailCallback(string hash, byte[] data)
-        {
-            if (hash == null || data == null) return;
-            SetThumbnail(hash, data);
-        }
-
-        private static IEnumerator FetchThumbnail(string url, Action<string, byte[]> callback)
-        {
-            string hash = GetHash(url);
-            YTDLVideoJson? jsonOrNull = GetYTDLJson(url);
-            if (jsonOrNull == null) yield return null;
-            YTDLVideoJson json = (YTDLVideoJson)jsonOrNull;
-
-            yield return GetTexture(json.thumbnail, (byte[] result) => callback(hash, result));
         }
 
         private static void FetchMetadataCallback(string url, YTDLVideoJson? jsonOrNull)
@@ -238,11 +243,9 @@ namespace DecentM.VideoPlayer
             byte[] bytes = Encoding.UTF8.GetBytes(JsonUtility.ToJson(json));
             File.WriteAllBytes(path, bytes);
             AssetDatabase.ImportAsset(path);
-        }
 
-        private static void FetchMetadata(string url)
-        {
-            YTDLCommands.GetVideoMetadata(url, (result) => FetchMetadataCallback(url, result));
+            EditorCoroutine.Start(FetchThumbnail(json, (byte[] data) => FetchThumbnailCallback(hash, data)));
+            EditorCoroutine.Start(FetchSubtitles(url, () => FetchSubtitlesCallback(url)));
         }
 
         private static IEnumerator FetchMetadata(string[] urls)
@@ -260,7 +263,6 @@ namespace DecentM.VideoPlayer
                 if (!ValidateUrl(url)) continue;
 
                 yield return YTDLCommands.GetVideoMetadata(url, (result) => FetchMetadataCallback(url, result));
-                yield return FetchThumbnail(url, FetchThumbnailCallback);
             }
             
             EditorUtility.ClearProgressBar();

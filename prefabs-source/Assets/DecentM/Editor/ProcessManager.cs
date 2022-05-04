@@ -43,7 +43,7 @@ namespace DecentM.EditorTools
             read.Close();
         }
 
-        private static Process CreateProcess(string filename, string arguments)
+        private static Process CreateProcess(string filename, string arguments, string workdir)
         {
             Process process = new Process();
 
@@ -54,24 +54,25 @@ namespace DecentM.EditorTools
             process.StartInfo.RedirectStandardError = true;
             process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
             process.StartInfo.CreateNoWindow = true;
+            process.StartInfo.WorkingDirectory = workdir;
 
             return process;
         }
 
-        public static IEnumerator CreateProcessCoroutine(string filename, string arguments, BlockingBehaviour blocking, Action<Process> callback)
+        public static IEnumerator CreateProcessCoroutine(string filename, string arguments, string workdir, BlockingBehaviour blocking, Action<Process> callback)
         {
-            Process process = CreateProcess(filename, arguments);
+            Process process = CreateProcess(filename, arguments, workdir);
             process.Start();
             return ProcessCoroutine(process, blocking, callback);
         }
 
-        public static EditorCoroutine RunProcessCoroutine(string filename, string arguments, BlockingBehaviour blocking, Action<Process> callback)
+        public static EditorCoroutine RunProcessCoroutine(string filename, string arguments, string workdir, BlockingBehaviour blocking, Action<Process> callback)
         {
-            IEnumerator coroutine = CreateProcessCoroutine(filename, arguments, blocking, callback);
+            IEnumerator coroutine = CreateProcessCoroutine(filename, arguments, workdir, blocking, callback);
             return EditorCoroutine.Start(coroutine);
         }
 
-        private static ProcessResult RunProcessSync(string filename, string arguments, int timeout)
+        public static ProcessResult RunProcessSync(string filename, string arguments, int timeout)
         {
             using (Process process = new Process())
             {
