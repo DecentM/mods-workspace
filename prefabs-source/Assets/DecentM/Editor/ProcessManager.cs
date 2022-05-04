@@ -5,13 +5,13 @@ using UnityEngine;
 using System.Diagnostics;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 using System.IO;
 
 namespace DecentM.EditorTools
 {
     public struct ProcessResult
     {
-        public Process process;
         public string stdout;
         public string stderr;
     }
@@ -43,6 +43,14 @@ namespace DecentM.EditorTools
             read.Close();
         }
 
+        private static IEnumerator WaitForTask(Task task)
+        {
+            while (!task.IsCompleted && !task.IsCanceled && !task.IsFaulted)
+                yield return new WaitForSeconds(.15f);
+
+            yield return task;
+        }
+
         private static Process CreateProcess(string filename, string arguments, string workdir)
         {
             Process process = new Process();
@@ -66,10 +74,19 @@ namespace DecentM.EditorTools
             return ProcessCoroutine(process, blocking, callback);
         }
 
-        public static EditorCoroutine RunProcessCoroutine(string filename, string arguments, string workdir, BlockingBehaviour blocking, Action<Process> callback)
+        public static EditorCoroutines.EditorCoroutine RunProcessCoroutine(string filename, string arguments, string workdir, BlockingBehaviour blocking, Action<Process> callback)
         {
             IEnumerator coroutine = CreateProcessCoroutine(filename, arguments, workdir, blocking, callback);
-            return EditorCoroutine.Start(coroutine);
+            return EditorCoroutines.StartCoroutine(coroutine, typeof(ProcessManager));
+        }
+
+        public static void RunProcessAsync(string filename, string arguments, string workdir, Action<ProcessResult> callback)
+        {
+            Task.Run(() =>
+            {
+                ProcessResult result = RunProcessSync(filename, arguments, 10000);
+                callback(result);
+            });
         }
 
         public static ProcessResult RunProcessSync(string filename, string arguments, int timeout)
@@ -123,7 +140,6 @@ namespace DecentM.EditorTools
                         outputWaitHandle.WaitOne(timeout) &&
                         errorWaitHandle.WaitOne(timeout))
                     {
-                        result.process = process;
                         result.stdout = output.ToString();
                         result.stderr = error.ToString();
 
@@ -131,7 +147,6 @@ namespace DecentM.EditorTools
                     }
                     else
                     {
-                        result.process = process;
                         result.stdout = output.ToString();
                         result.stderr = error.ToString();
 

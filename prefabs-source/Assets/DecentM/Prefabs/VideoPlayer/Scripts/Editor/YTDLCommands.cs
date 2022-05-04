@@ -6,6 +6,7 @@ using System.IO;
 using System.Text;
 using System.Diagnostics;
 using System.Collections;
+using System.Threading.Tasks;
 
 using UnityEngine;
 using UnityEngine.Networking;
@@ -81,62 +82,57 @@ namespace DecentM.VideoPlayer
             );
         }
 
-        public static EditorCoroutine GetVideoUrl(string url, int resolution, Action<string> callback)
+        public static void GetVideoUrl(string url, int resolution, Action<string> callback)
         {
-            return ProcessManager.RunProcessCoroutine(
+            ProcessManager.RunProcessAsync(
                 EditorAssets.YtDlpPath,
                 $"--no-check-certificate -f \"mp4[height<=?{resolution}]/best[height<=?{resolution}]\" --get-url {url}",
                 ".",
-                BlockingBehaviour.Blocking,
-                (Process process) => callback(process.StandardOutput.ReadToEnd())
+                (ProcessResult result) => callback(result.stdout)
             );
         }
 
-        public static EditorCoroutine GetVideoMetadata(string url, Action<YTDLVideoJson?> callback)
+        public static void GetVideoMetadata(string url, Action<YTDLVideoJson> callback)
         {
-            return ProcessManager.RunProcessCoroutine(
+            ProcessManager.RunProcessAsync(
                 EditorAssets.YtDlpPath,
-                $"--no-check-certificate -J --write-comments {url}",
+                $"--no-check-certificate -J {url}",
                 ".",
-                BlockingBehaviour.Blocking,
-                (Process process) => callback(JsonUtility.FromJson<YTDLVideoJson>(process.StandardOutput.ReadToEnd()))
+                (ProcessResult result) => callback(JsonUtility.FromJson<YTDLVideoJson>(result.stdout))
             );
         }
 
-        public static EditorCoroutine GetPlaylistVideos(string url, Action<YTDLFlatPlaylistJson?> callback)
+        public static void GetPlaylistVideos(string url, Action<YTDLFlatPlaylistJson?> callback)
         {
-            return ProcessManager.RunProcessCoroutine(
+            ProcessManager.RunProcessAsync(
                 EditorAssets.YtDlpPath,
                 $"--no-check-certificate -J --flat-playlist {url}",
                 ".",
-                BlockingBehaviour.Blocking,
-                (Process process) => callback(JsonUtility.FromJson<YTDLFlatPlaylistJson>(process.StandardOutput.ReadToEnd()))
+                (ProcessResult result) => callback(JsonUtility.FromJson<YTDLFlatPlaylistJson>(result.stdout))
             );
         }
 
-        public static EditorCoroutine DownloadSubtitles(string url, string path, bool autoSubs, Action<int> callback)
+        public static void DownloadSubtitles(string url, string path, bool autoSubs, Action<string> callback)
         {
             string arguments = autoSubs
                 ? $"--no-check-certificate --skip-download --write-subs --write-auto-subs --sub-format vtt --sub-langs all {url}"
                 : $"--no-check-certificate --skip-download --write-subs --no-write-auto-subs --sub-format vtt --sub-langs all {url}";
 
-            return ProcessManager.RunProcessCoroutine(
+            ProcessManager.RunProcessAsync(
                 EditorAssets.YtDlpPath,
                 arguments,
                 path,
-                BlockingBehaviour.NonBlocking,
-                (Process process) => callback(process.ExitCode)
+                (ProcessResult result) => callback(result.stdout)
             );
         }
 
-        public static EditorCoroutine DownloadComments(string url, string path, Action<int> callback)
+        public static void DownloadComments(string url, string path, Action<string> callback)
         {
-            return ProcessManager.RunProcessCoroutine(
+            ProcessManager.RunProcessAsync(
                 EditorAssets.YtDlpPath,
                 $"--no-check-certificate --skip-download --write-comments {url}",
                 path,
-                BlockingBehaviour.NonBlocking,
-                (Process process) => callback(process.ExitCode)
+                (ProcessResult result) => callback(result.stdout)
             );
         }
     }

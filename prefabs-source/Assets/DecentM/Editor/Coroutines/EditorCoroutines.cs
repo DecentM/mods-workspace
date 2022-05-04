@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Networking;
 using System.Collections;
 using UnityEditor;
 using System.Collections.Generic;
@@ -87,7 +88,7 @@ namespace DecentM.EditorTools
 
 		struct YieldWWW : ICoroutineYield
 		{
-			public WWW Www;
+			public UnityWebRequest Www;
 
 			public bool IsDone(float deltaTime)
 			{
@@ -371,9 +372,9 @@ namespace DecentM.EditorTools
 					customYield = current as CustomYieldInstruction
 				};
 			}
-			else if (current is WWW)
+			else if (current is UnityWebRequest)
 			{
-				coroutine.currentYield = new YieldWWW { Www = (WWW)current };
+				coroutine.currentYield = new YieldWWW { Www = (UnityWebRequest)current };
 			}
 			else if (current is WaitForFixedUpdate || current is WaitForEndOfFrame)
 			{
