@@ -53,5 +53,9 @@ namespace DecentM.VideoPlayer.Plugins
         protected override void OnRemotePlayerLoaded(int[] loadedPlayers) { this.Log(nameof(OnRemotePlayerLoaded), loadedPlayers.Length.ToString()); }
         protected override void OnUrlValidationFailed(VRCUrl url) { this.Log(nameof(OnUrlValidationFailed), "(with URL)"); }
         protected override void OnUIVisibilityChange(bool visible) { this.Log(nameof(OnUIVisibilityChange), visible.ToString()); }
+        protected override void OnAutoRetryAllPlayersFailed() { this.Log(nameof(OnAutoRetryAllPlayersFailed)); }
+        protected override void OnMetadataChange(string title, string uploader, string siteName, int viewCount, int likeCount, string resolution, int fps, string description, string duration, string[][] subtitles) { this.Log(nameof(OnMetadataChange), viewCount.ToString(), likeCount.ToString(), fps.ToString(), duration, subtitles.Length.ToString());  }
+        protected override void OnSubtitleLanguageOptionsChange(string[] newOptions) { this.Log(nameof(OnSubtitleLanguageOptionsChange), newOptions.ToString()); }
+        protected override void OnSubtitleLanguageRequested(string language) { this.Log(nameof(OnSubtitleLanguageRequested), language); }
     }
 }

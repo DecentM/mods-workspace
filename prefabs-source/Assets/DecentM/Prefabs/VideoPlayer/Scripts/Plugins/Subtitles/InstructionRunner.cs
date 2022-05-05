@@ -14,23 +14,7 @@ public class InstructionRunner : UdonSharpBehaviour
     public LibDecentM lib;
     public float subtitleOffset = 0;
 
-    private TextAsset _instructionsFile;
-
-    public TextAsset instructionsFile
-    {
-        get {
-            return this._instructionsFile;
-        }
-
-        set
-        {
-            this._instructionsFile = value;
-            this.Reset();
-        }
-    }
-
     public TextMeshProUGUI text;
-    public TextMeshProUGUI debug;
     public VideoPlayerSystem player;
 
     private bool initialised = false;
@@ -46,13 +30,13 @@ public class InstructionRunner : UdonSharpBehaviour
     private int clock = 0;
     private bool running = false;
 
-    private void Reset()
+    public void Reset()
     {
         this.clock = 0;
         this.running = true;
         this.instructionIndex = 0;
-
-        this.ReadInstructions();
+        this.text.text = "";
+        this.SetInstructions("");
     }
 
     private object[] CreateInstruction(int type = 0, int timestamp = 0, string value = "")
@@ -68,14 +52,9 @@ public class InstructionRunner : UdonSharpBehaviour
 
     private const char NewlineDelimeter = '˟';
 
-    private void ReadInstructions()
+    public void SetInstructions(string newInstructions)
     {
-        if (this.instructionsFile == null)
-        {
-            return;
-        }
-
-        string[] lines = this.instructionsFile.text.Split('\n');
+        string[] lines = newInstructions.Split('\n');
         this.instructions = new object[lines.Length][];
         int lastTimestamp = 0;
 
@@ -96,10 +75,11 @@ public class InstructionRunner : UdonSharpBehaviour
             int.TryParse(parts[1], out timestamp);
 
             // Skip clearing the canvas if the next instruction is less than .2 seconds away
-            if (type == 2 && timestamp - lastTimestamp < 200 && timestamp - lastTimestamp > -200)
+            // Commented out because this is now handled by the compiler in the editor instead of runtime
+            /* if (type == 2 && timestamp - lastTimestamp < 200 && timestamp - lastTimestamp > -200)
             {
                 return;
-            }
+            } */
 
             string text = parts[2].Replace(NewlineDelimeter, '\n');
 
@@ -129,6 +109,16 @@ public class InstructionRunner : UdonSharpBehaviour
     private object[][] instructions = new object[0][];
     private int instructionIndex = 0;
 
+    public void JumpToStart()
+    {
+        this.instructionIndex = 0;
+    }
+
+    public void SeekToTimestamp(int timestamp)
+    {
+        this.SearchForInstructionIndex(timestamp, instructionIndex);
+    }
+
     private int SearchForInstructionIndex(int timestamp, int startIndex)
     {
         int cursor = startIndex;
@@ -142,7 +132,7 @@ public class InstructionRunner : UdonSharpBehaviour
             diff = diff * -1;
         }
 
-        // Binary search for an instruction **behind** the needed one by about 10 seconds.
+        // Search for an instruction **behind** the needed one by about 10 seconds.
         // Accuracy of 10 seconds, because the default behaviour is that
         // the instructions tick forward quickly if their timestamps are in the past.
         while (diff > -5000 && loop < 10)
@@ -163,8 +153,6 @@ public class InstructionRunner : UdonSharpBehaviour
 
             loop++;
         }
-
-        Debug.Log($"Found index at {cursor} with offset {currentTimestamp - timestamp}");
 
         return cursor;
     }
@@ -188,7 +176,7 @@ public class InstructionRunner : UdonSharpBehaviour
          **/
 
         // We've reached the end of the instructions, stop processing more
-        if (this.instructionsFile == null || this.instructions == null || this.instructionIndex >= this.instructions.Length)
+        if (this.instructions == null || this.instructionIndex >= this.instructions.Length)
         {
             this.running = false;
             return;
@@ -204,13 +192,15 @@ public class InstructionRunner : UdonSharpBehaviour
 
         int diff = timeMillis - (int)instruction[1];
 
-        this.debug.text = $"index {this.instructionIndex}\n" +
+        /*
+          this.debug.text = $"index {this.instructionIndex}\n" +
             $"system type {instruction}\n" +
             $"type {((int)instruction[0] == 1 ? "write" : "clear")}\n" +
             $"timestamp {instruction[1]}\n" +
             $"current time {timeMillis}\n" +
             $"diff: {diff}\n" +
             $"seeking: {this.seekDirection}";
+        */
 
         // if we're behind, start seeking forward
         if (diff > 10000)

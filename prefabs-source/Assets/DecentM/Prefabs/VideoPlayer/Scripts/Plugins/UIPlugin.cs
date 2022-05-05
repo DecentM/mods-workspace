@@ -49,6 +49,14 @@ namespace DecentM.VideoPlayer.Plugins
 
         [Space]
         public TextMeshProUGUI info;
+        public Dropdown dropdown;
+
+        [Space]
+        public TextMeshProUGUI titleSlot;
+        public TextMeshProUGUI uploaderSlot;
+        public TextMeshProUGUI descriptionSlot;
+        public TextMeshProUGUI viewCountSlot;
+        public TextMeshProUGUI likeCountSlot;
 
         [Space]
         public Button ownershipButton;
@@ -83,13 +91,18 @@ namespace DecentM.VideoPlayer.Plugins
 
         private RaycastHit hitInfo;
 
+        public Quaternion desktopRaycastTurn = Quaternion.identity;
+        public Quaternion vrRaycastTurn = Quaternion.identity;
+
         private bool CheckDesktopHit()
         {
             if (Networking.LocalPlayer.IsUserInVR()) return false;
 
             VRCPlayerApi.TrackingData head = Networking.LocalPlayer.GetTrackingData(VRCPlayerApi.TrackingDataType.Head);
 
-            return Physics.Raycast(head.position, head.rotation * Vector3.forward, out hitInfo, this.raycastMaxDistance, this.raycastLayerMask);
+            // Debug.DrawRay(head.position, head.rotation * desktopRaycastTurn * Vector3.forward, Color.magenta);
+
+            return Physics.Raycast(head.position, head.rotation * desktopRaycastTurn * Vector3.forward, out hitInfo, this.raycastMaxDistance, this.raycastLayerMask);
         }
 
         private bool CheckVRHit()
@@ -102,8 +115,8 @@ namespace DecentM.VideoPlayer.Plugins
             RaycastHit rightHitInfo;
             RaycastHit leftHitInfo;
 
-            bool rightHit = Physics.Raycast(rightHand.position, rightHand.rotation * Vector3.forward, out rightHitInfo, this.raycastMaxDistance, this.raycastLayerMask);
-            bool leftHit = Physics.Raycast(leftHand.position, leftHand.rotation * Vector3.forward, out leftHitInfo, this.raycastMaxDistance, this.raycastLayerMask);
+            bool rightHit = Physics.Raycast(rightHand.position, rightHand.rotation * vrRaycastTurn * Vector3.forward, out rightHitInfo, this.raycastMaxDistance, this.raycastLayerMask);
+            bool leftHit = Physics.Raycast(leftHand.position, leftHand.rotation * vrRaycastTurn * Vector3.forward, out leftHitInfo, this.raycastMaxDistance, this.raycastLayerMask);
 
             if (rightHit)
             {
@@ -144,6 +157,37 @@ namespace DecentM.VideoPlayer.Plugins
 
         #region Outputs
 
+        protected override void OnSubtitleLanguageOptionsChange(string[] newOptions)
+        {
+            foreach (string option in newOptions)
+            {
+                if (option == "en") this.events.OnSubtitleLanguageRequested(option);
+            }
+        }
+
+        private void RenderMetadata(string title, string uploader, string description, int viewCount, int likeCount)
+        {
+            this.titleSlot.text = title;
+            this.uploaderSlot.text = uploader;
+            this.descriptionSlot.text = description;
+            if (viewCount > 0) this.viewCountSlot.text = $"{viewCount} views";
+            if (likeCount > 0) this.likeCountSlot.text = $"{likeCount} likes";
+        }
+
+        private void ClearMetadata()
+        {
+            this.titleSlot.text = "";
+            this.uploaderSlot.text = "";
+            this.descriptionSlot.text = "";
+            this.viewCountSlot.text = "";
+            this.likeCountSlot.text = "";
+        }
+
+        protected override void OnMetadataChange(string title, string uploader, string siteName, int viewCount, int likeCount, string resolution, int fps, string description, string duration, string[][] subtitles)
+        {
+            this.RenderMetadata(title, uploader, description, viewCount, likeCount);
+        }
+
         protected override void OnProgress(float timestamp, float duration)
         {
             this.status.text = this.GetProgressIndicator(timestamp, duration);
@@ -172,6 +216,7 @@ namespace DecentM.VideoPlayer.Plugins
 
         protected override void OnLoadRequested(VRCUrl url)
         {
+            this.ClearMetadata();
             this.isLoading = true;
             this.status.text = "Waiting for video player...";
             this.RenderScreen(0);
@@ -340,6 +385,7 @@ namespace DecentM.VideoPlayer.Plugins
 
         protected override void OnPlaybackEnd()
         {
+            this.ClearMetadata();
             this.status.text = "Playback ended";
             this.RenderScreen(this.system.GetDuration());
         }
@@ -358,6 +404,7 @@ namespace DecentM.VideoPlayer.Plugins
 
         protected override void OnUnload()
         {
+            this.ClearMetadata();
             this.isLoading = false;
             this.status.text = "Stopped";
             this.RenderScreen(this.system.GetDuration());

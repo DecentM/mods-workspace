@@ -45,6 +45,10 @@ namespace DecentM.VideoPlayer
         OnRemotePlayerLoaded,
 
         OnUIVisibilityChange,
+
+        OnMetadataChange,
+        OnSubtitleLanguageOptionsChange,
+        OnSubtitleLanguageRequested,
     }
 
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
@@ -139,7 +143,7 @@ namespace DecentM.VideoPlayer
 
         #endregion
 
-        #region Auto Retry plugin
+        #region Plugins
 
         public void OnAutoRetry(int attempt)
         {
@@ -166,10 +170,6 @@ namespace DecentM.VideoPlayer
             this.BroadcastEvent(VideoPlayerEvent.OnAutoRetryAllPlayersFailed);
         }
 
-        #endregion
-
-        #region Global Sync plugin
-
         public void OnOwnershipChanged(int previousOwnerId, VRCPlayerApi nextOwner)
         {
             this.BroadcastEvent(VideoPlayerEvent.OnOwnershipChanged, previousOwnerId, nextOwner);
@@ -185,31 +185,57 @@ namespace DecentM.VideoPlayer
             this.BroadcastEvent(VideoPlayerEvent.OnOwnershipRequested);
         }
 
-        #endregion
-
-        #region Texture Updater plugin
-
         public void OnScreenTextureChange()
         {
             this.BroadcastEvent(VideoPlayerEvent.OnScreenTextureChange);
         }
-
-        #endregion
-
-        #region Wait for players plugin
 
         public void OnRemotePlayerLoaded(int[] loadedPlayers)
         {
             this.BroadcastEvent(VideoPlayerEvent.OnRemotePlayerLoaded, loadedPlayers);
         }
 
-        #endregion
-
-        #region UI plugin
-
         public void OnUIVisibilityChange(bool visible)
         {
             this.BroadcastEvent(VideoPlayerEvent.OnUIVisibilityChange, visible);
+        }
+
+        public void OnMetadataChange(
+            string title,
+            string uploader,
+            string siteName,
+            int viewCount,
+            int likeCount,
+            string resolution,
+            int fps,
+            string description,
+            string duration,
+            string[][] subtitles
+        )
+        {
+            this.BroadcastEvent(
+                VideoPlayerEvent.OnMetadataChange,
+                title,
+                uploader,
+                siteName,
+                viewCount,
+                likeCount,
+                resolution,
+                fps,
+                description,
+                duration,
+                subtitles
+            );
+        }
+
+        public void OnSubtitleLanguageOptionsChange(string[] newOptions)
+        {
+            this.BroadcastEvent(VideoPlayerEvent.OnSubtitleLanguageOptionsChange, newOptions);
+        }
+
+        public void OnSubtitleLanguageRequested(string language)
+        {
+            this.BroadcastEvent(VideoPlayerEvent.OnSubtitleLanguageRequested, language);
         }
 
         #endregion

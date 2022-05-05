@@ -48,6 +48,21 @@ namespace DecentM.VideoPlayer.Plugins
         protected virtual void OnRemotePlayerLoaded(int[] loadedPlayers) { }
 
         protected virtual void OnUIVisibilityChange(bool visible) { }
+        protected virtual void OnSubtitleLanguageOptionsChange(string[] newOptions) { }
+        protected virtual void OnSubtitleLanguageRequested(string language) { }
+
+        protected virtual void OnMetadataChange(
+            string title,
+            string uploader,
+            string siteName,
+            int viewCount,
+            int likeCount,
+            string resolution,
+            int fps,
+            string description,
+            string duration,
+            string[][] subtitles
+        ) { }
 
         public sealed override void OnPubsubEvent(object name, object[] data)
         {
@@ -251,6 +266,37 @@ namespace DecentM.VideoPlayer.Plugins
                     {
                         bool visible = (bool)data[0];
                         this.OnUIVisibilityChange(visible);
+                        return;
+                    }
+
+                case VideoPlayerEvent.OnMetadataChange:
+                    {
+                        string title = (string)data[0];
+                        string uploader = (string)data[1];
+                        string siteName = (string)data[2];
+                        int viewCount = (int)data[3];
+                        int likeCount = (int)data[4];
+                        string resolution = (string)data[5];
+                        int fps = (int)data[6];
+                        string description = (string)data[7];
+                        string duration = (string)data[8];
+                        string[][] subtitles = (string[][])data[9];
+
+                        this.OnMetadataChange(title, uploader, siteName, viewCount, likeCount, resolution, fps, description, duration, subtitles);
+                        return;
+                    }
+
+                case VideoPlayerEvent.OnSubtitleLanguageOptionsChange:
+                    {
+                        string[] newOptions = (string[])data;
+                        this.OnSubtitleLanguageOptionsChange(newOptions);
+                        return;
+                    }
+
+                case VideoPlayerEvent.OnSubtitleLanguageRequested:
+                    {
+                        string language = (string)data[0];
+                        this.OnSubtitleLanguageRequested(language);
                         return;
                     }
 

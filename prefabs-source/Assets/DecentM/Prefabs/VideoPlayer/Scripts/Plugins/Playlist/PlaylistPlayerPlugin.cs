@@ -40,9 +40,20 @@ namespace DecentM.VideoPlayer.Plugins
 
             VRCUrl url = (VRCUrl)item[0];
             Sprite thumbnail = (Sprite)item[1];
+            string title = (string)item[2];
+            string uploader = (string)item[3];
+            string platform = (string)item[4];
+            int views = (int)item[5];
+            int likes = (int)item[6];
+            string resolution = (string)item[7];
+            int fps = (int)item[8];
+            string description = (string)item[9];
+            string duration = (string)item[10];
+            string[][] subtitles = (string[][])item[11];
 
             this.playlist.textureUpdater.SetTexture(thumbnail.texture);
             this.system.LoadVideo(url);
+            this.events.OnMetadataChange(title, uploader, platform, views, likes, resolution, fps, description, duration, subtitles);
         }
     }
 }
