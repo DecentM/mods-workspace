@@ -155,7 +155,7 @@ namespace DecentM.VideoPlayer
             YTDLVideoJson json = (YTDLVideoJson)jsonOrNull;
             Texture2D thumbnail = GetCachedThumbnail(json.thumbnail);
 
-            return json.title != null && thumbnail != null;
+            return thumbnail != null;
         }
 
         /*
