@@ -28,12 +28,10 @@ public class InstructionRunner : UdonSharpBehaviour
     }
 
     private int clock = 0;
-    private bool running = false;
 
     public void Reset()
     {
         this.clock = 0;
-        this.running = true;
         this.instructionIndex = 0;
         this.text.text = "";
         this.SetInstructions("");
@@ -92,7 +90,7 @@ public class InstructionRunner : UdonSharpBehaviour
 
     private void FixedUpdate()
     {
-        if (!this.initialised || !this.running)
+        if (!this.initialised || !this.player.IsPlaying())
         {
             return;
         }
@@ -178,7 +176,6 @@ public class InstructionRunner : UdonSharpBehaviour
         // We've reached the end of the instructions, stop processing more
         if (this.instructions == null || this.instructionIndex >= this.instructions.Length)
         {
-            this.running = false;
             return;
         }
 

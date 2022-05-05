@@ -97,7 +97,7 @@ namespace DecentM.VideoPlayer
                     : "The video screen will stay the same size and use black bars to keep the video from stretching"
                 );
 
-                resolutionUpdater.enabled = this.Toggle("Dynamic resolution", resolutionUpdater.dynamicResolution);
+                resolutionUpdater.dynamicResolution = this.Toggle("Dynamic resolution", resolutionUpdater.dynamicResolution);
             }
 
             this.SaveModifications();

@@ -100,8 +100,6 @@ namespace DecentM.VideoPlayer.Plugins
 
             VRCPlayerApi.TrackingData head = Networking.LocalPlayer.GetTrackingData(VRCPlayerApi.TrackingDataType.Head);
 
-            // Debug.DrawRay(head.position, head.rotation * desktopRaycastTurn * Vector3.forward, Color.magenta);
-
             return Physics.Raycast(head.position, head.rotation * desktopRaycastTurn * Vector3.forward, out hitInfo, this.raycastMaxDistance, this.raycastLayerMask);
         }
 
@@ -179,7 +177,7 @@ namespace DecentM.VideoPlayer.Plugins
             this.titleSlot.text = "";
             this.uploaderSlot.text = "";
             this.descriptionSlot.text = "";
-            this.viewCountSlot.text = "";
+            this.viewCountSlot.text = "DecentM.VideoPlayer";
             this.likeCountSlot.text = "";
         }
 

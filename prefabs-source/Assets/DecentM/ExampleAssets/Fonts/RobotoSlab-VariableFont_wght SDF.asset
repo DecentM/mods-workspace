@@ -9,7 +9,7 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: RobotoSlab-VariableFont_wght Atlas Material
   m_Shader: {fileID: 4800000, guid: 68e6db2ebdc24f95958faec2be5558d6, type: 3}
-  m_ShaderKeywords: UNDERLAY_ON
+  m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -1559,6 +1559,20 @@ MonoBehaviour:
       m_Height: 27
     m_Scale: 1
     m_AtlasIndex: 0
+  - m_Index: 1034
+    m_Metrics:
+      m_Width: 35.859375
+      m_Height: 39.8125
+      m_HorizontalBearingX: 3.34375
+      m_HorizontalBearingY: 44.515625
+      m_HorizontalAdvance: 44.6875
+    m_GlyphRect:
+      m_X: 584
+      m_Y: 437
+      m_Width: 37
+      m_Height: 41
+    m_Scale: 1
+    m_AtlasIndex: 0
   - m_Index: 1049
     m_Metrics:
       m_Width: 57.4375
@@ -1655,20 +1669,6 @@ MonoBehaviour:
       m_Y: 430
       m_Width: 33
       m_Height: 7
-    m_Scale: 1
-    m_AtlasIndex: 0
-  - m_Index: 1034
-    m_Metrics:
-      m_Width: 35.859375
-      m_Height: 39.8125
-      m_HorizontalBearingX: 3.34375
-      m_HorizontalBearingY: 44.515625
-      m_HorizontalAdvance: 44.6875
-    m_GlyphRect:
-      m_X: 584
-      m_Y: 437
-      m_Width: 37
-      m_Height: 41
     m_Scale: 1
     m_AtlasIndex: 0
   m_CharacterTable:
@@ -1787,6 +1787,10 @@ MonoBehaviour:
   - m_ElementType: 1
     m_Unicode: 59
     m_GlyphIndex: 958
+    m_Scale: 1
+  - m_ElementType: 1
+    m_Unicode: 60
+    m_GlyphIndex: 1034
     m_Scale: 1
   - m_ElementType: 1
     m_Unicode: 61
@@ -2103,10 +2107,6 @@ MonoBehaviour:
   - m_ElementType: 1
     m_Unicode: 8230
     m_GlyphIndex: 959
-    m_Scale: 1
-  - m_ElementType: 1
-    m_Unicode: 60
-    m_GlyphIndex: 1034
     m_Scale: 1
   m_AtlasTextures:
   - {fileID: 4067535710033729780}
