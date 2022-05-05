@@ -162,6 +162,11 @@ namespace DecentM.EditorTools
             });
         }
 
+        public static ProcessResult RunProcessSync(string filename, string arguments, string workdir)
+        {
+            return RunProcessSync(filename, arguments, workdir, 15000);
+        }
+
         public static ProcessResult RunProcessSync(string filename, string arguments, string workdir, int timeout)
         {
             using (Process process = new Process())

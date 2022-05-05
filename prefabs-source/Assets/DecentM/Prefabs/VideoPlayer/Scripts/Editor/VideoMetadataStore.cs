@@ -7,6 +7,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
+using JetBrains.Annotations;
+
 using UnityEngine;
 using UnityEditor;
 
@@ -31,37 +33,9 @@ namespace DecentM.VideoPlayer
 
     public class VideoMetadataStore
     {
-        private static string GetHash(string text)
-        {
-            if (String.IsNullOrEmpty(text))
-                return String.Empty;
-
-            using (var sha = new System.Security.Cryptography.SHA256Managed())
-            {
-                byte[] textData = Encoding.UTF8.GetBytes(text);
-                byte[] hash = sha.ComputeHash(textData);
-                return BitConverter.ToString(hash).Replace("-", String.Empty);
-            }
-        }
-
         private static bool ValidateUrl(string url)
         {
             return Uri.TryCreate(url, UriKind.Absolute, out Uri result);
-        }
-
-        private static bool CreateFolder(string basePath, string name)
-        {
-            if (!basePath.StartsWith("Assets/")) return false;
-
-            if (AssetDatabase.IsValidFolder($"{basePath}/{name}")) return true;
-            if (!AssetDatabase.IsValidFolder(basePath))
-            {
-                string[] paths = basePath.Split('/');
-                CreateFolder(string.Join("/", paths.Take(paths.Length - 1)), paths[paths.Length - 1]);
-            }
-
-            if (AssetDatabase.CreateFolder(basePath, name) == "") return false;
-            return true;
         }
 
         private static void ApplyThumbnailImportSettings(string path)
@@ -100,7 +74,7 @@ namespace DecentM.VideoPlayer
             EditorUtility.ClearProgressBar();
         }
 
-        private static Texture2D GetThumbnail(string hash)
+        private static Texture2D GetCachedThumbnail(string hash)
         {
             string filename = "thumbnail.jpg";
             string path = $"{EditorAssets.VideoMetadataFolder}/{hash}/{filename}";
@@ -109,23 +83,12 @@ namespace DecentM.VideoPlayer
             return result;
         }
 
-        public static void RefreshMetadata(string url, Action OnFinish)
-        {
-            FetchMetadata(new string[] { url }, OnFinish);
-        }
-
-        public static void RefreshMetadata(string[] urls, Action OnFinish)
-        {
-            if (urls.Length == 0) return;
-            FetchMetadata(urls, OnFinish);
-        }
-
-        private static YTDLVideoJson? GetYTDLJson(string url)
+        private static YTDLVideoJson? GetCachedYTDLJson(string url)
         {
             if (!ValidateUrl(url)) return null;
 
             string filename = "metadata.json";
-            string hash = GetHash(url);
+            string hash = Hash.String(url);
             string path = $"{EditorAssets.VideoMetadataFolder}/{hash}/{filename}";
 
             TextAsset textAsset = AssetDatabase.LoadAssetAtPath<TextAsset>(path);
@@ -142,17 +105,18 @@ namespace DecentM.VideoPlayer
             }
         }
 
-        public static VideoMetadata GetMetadata(string url)
+        [PublicAPI]
+        public static VideoMetadata GetCachedMetadata(string url)
         {
             VideoMetadata metadata = new VideoMetadata();
 
             if (!ValidateUrl(url)) return metadata;
 
-            string hash = GetHash(url);
+            string hash = Hash.String(url);
 
             try
             {
-                YTDLVideoJson? jsonOrNull = GetYTDLJson(url);
+                YTDLVideoJson? jsonOrNull = GetCachedYTDLJson(url);
                 if (jsonOrNull == null) return metadata;
                 YTDLVideoJson json = (YTDLVideoJson)jsonOrNull;
 
@@ -163,7 +127,7 @@ namespace DecentM.VideoPlayer
                 metadata.uploader = json.uploader;
                 metadata.viewCount = 0;
                 metadata.likeCount = 0;
-                metadata.thumbnail = GetThumbnail(hash);
+                metadata.thumbnail = GetCachedThumbnail(hash);
                 metadata.siteName = json.extractor_key;
                 metadata.description = json.description;
                 metadata.duration = json.duration_string;
@@ -178,10 +142,14 @@ namespace DecentM.VideoPlayer
             return metadata;
         }
 
-        private async static Task FetchComments(string url, string path)
-        {
-            await YTDLCommands.DownloadMetadataWithComments(url, path);
-        }
+        /*
+         * * TODO: uncomment when I implement video comments!
+
+            private async static Task FetchComments(string url, string path)
+            {
+                await YTDLCommands.DownloadMetadataWithComments(url, path);
+            }
+        */
 
         private static void CompileSubtitles(string inputPath, string outputPath)
         {
@@ -226,11 +194,35 @@ namespace DecentM.VideoPlayer
             EditorUtility.ClearProgressBar();
         }
 
-        private static Task FetchSubtitles(string url, string hash)
+        private static void FetchSubtitlesSync(string url, string hash)
+        {
+            string path = $"{EditorAssets.VideoMetadataFolder}/{hash}";
+
+            YTDLCommands.DownloadSubtitlesSync(url, $"{path}/Subtitles", false);
+        }
+
+        private static Task FetchSubtitlesAsync(string url, string hash)
         {
             string path = $"{EditorAssets.VideoMetadataFolder}/{hash}";
 
             return YTDLCommands.DownloadSubtitles(url, $"{path}/Subtitles", false);
+        }
+
+        private static void FetchThumbnailSync(YTDLVideoJson json, string path)
+        {
+            WebRequest request = HttpWebRequest.Create(json.thumbnail);
+            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+
+            if ((int)response.StatusCode < 200 || (int)response.StatusCode >= 400)
+            {
+                throw new Exception($"The web server hosting {request.RequestUri.AbsolutePath} has responded with {(int)response.StatusCode}");
+            }
+
+            Stream data = response.GetResponseStream();
+            MemoryStream ms = new MemoryStream();
+            data.CopyTo(ms);
+            byte[] bytes = ms.ToArray();
+            File.WriteAllBytes(path, bytes);
         }
 
         private async static Task FetchThumbnail(YTDLVideoJson json, string path)
@@ -250,7 +242,7 @@ namespace DecentM.VideoPlayer
             File.WriteAllBytes(path, bytes);
         }
 
-        private static void FetchMetadataCallback(string hash, YTDLVideoJson? jsonOrNull)
+        private static void SaveMetadata(string hash, YTDLVideoJson? jsonOrNull)
         {
             if (jsonOrNull == null) return;
 
@@ -261,17 +253,61 @@ namespace DecentM.VideoPlayer
             File.WriteAllBytes(path, bytes);
         }
 
-        private async static Task FetchMetadata(string url)
+        private static void FetchMetadataSync(string url)
         {
             if (string.IsNullOrEmpty(url)) return;
             if (!ValidateUrl(url)) return;
 
-            string hash = GetHash(url);
+            string hash = Hash.String(url);
+
+            try
+            {
+                YTDLVideoJson json = YTDLCommands.GetMetadataSync(url);
+                SaveMetadata(hash, json);
+                FetchThumbnailSync(json, $"{EditorAssets.VideoMetadataFolder}/{hash}/thumbnail.jpg");
+            }
+            catch (Exception ex)
+            {
+                Debug.LogException(ex);
+                Debug.LogWarning($"Error while downloading metadata for {url}, skipping this video...");
+                return;
+            }
+
+            try
+            {
+                FetchSubtitlesSync(url, hash);
+            }
+            catch (Exception ex)
+            {
+                Debug.LogException(ex);
+                Debug.LogWarning($"This video won't have subtitles because of the above error.");
+            }
+
+            /*
+             * TODO: uncomment when I implement video comments!
+
+                try
+                {
+                    await FetchComments(url, $"{EditorAssets.VideoMetadataFolder}/{hash}/Comments");
+                } catch (Exception ex)
+                {
+                    Debug.LogException(ex);
+                    Debug.LogWarning($"This video won't have comments because of the above error.");
+                }
+            */
+        }
+
+        private async static Task FetchMetadataAsync(string url)
+        {
+            if (string.IsNullOrEmpty(url)) return;
+            if (!ValidateUrl(url)) return;
+
+            string hash = Hash.String(url);
 
             try
             {
                 YTDLVideoJson json = await YTDLCommands.GetMetadata(url);
-                FetchMetadataCallback(hash, json);
+                SaveMetadata(hash, json);
                 await FetchThumbnail(json, $"{EditorAssets.VideoMetadataFolder}/{hash}/thumbnail.jpg");
             } catch (Exception ex)
             {
@@ -282,47 +318,25 @@ namespace DecentM.VideoPlayer
 
             try
             {
-                await FetchSubtitles(url, hash);
+                await FetchSubtitlesAsync(url, hash);
             } catch (Exception ex)
             {
                 Debug.LogException(ex);
                 Debug.LogWarning($"This video won't have subtitles because of the above error.");
             }
 
-            try
-            {
-                await FetchComments(url, $"{EditorAssets.VideoMetadataFolder}/{hash}/Comments");
-            } catch (Exception ex)
-            {
-                Debug.LogException(ex);
-                Debug.LogWarning($"This video won't have comments because of the above error.");
-            }
-        }
+            /*
+             * TODO: uncomment when I implement video comments!
 
-        private static IEnumerator WaitForTask(Task task, Action OnSettled)
-        {
-            bool isSettled = false;
-
-            while (!isSettled)
-            {
-                if (task.IsCompleted || task.IsCanceled || task.IsFaulted)
+                try
                 {
-                    if (task.IsFaulted)
-                    {
-                        Debug.LogError("The task has entered the faulted state, it will not continue.");
-                    }
-
-                    isSettled = true;
+                    await FetchComments(url, $"{EditorAssets.VideoMetadataFolder}/{hash}/Comments");
+                } catch (Exception ex)
+                {
+                    Debug.LogException(ex);
+                    Debug.LogWarning($"This video won't have comments because of the above error.");
                 }
-
-                yield return new WaitForSeconds(0.25f);
-            }
-
-            if (isSettled)
-            {
-                OnSettled();
-                yield return null;
-            }
+            */
         }
 
         private async static Task FetchMetadataInParallel(List<string> urls)
@@ -335,7 +349,7 @@ namespace DecentM.VideoPlayer
                 if (string.IsNullOrEmpty(url)) continue;
                 if (!ValidateUrl(url)) continue;
 
-                tasks.Add(FetchMetadata(url));
+                tasks.Add(FetchMetadataAsync(url));
             }
 
             await Task.WhenAll(tasks);
@@ -364,7 +378,33 @@ namespace DecentM.VideoPlayer
             }
         }
 
-        private static void FetchMetadata(string[] urls, Action OnFinish)
+        private static bool isLocked = false;
+
+        public static bool IsLocked
+        {
+            get { return isLocked; }
+        }
+
+        private static void CreateFolders(string[] urls)
+        {
+            List<Tuple<string, string>> folders = new List<Tuple<string, string>>();
+
+            foreach (string url in urls)
+            {
+                string hash = Hash.String(url);
+                folders.Add(new Tuple<string, string>($"{EditorAssets.VideoMetadataFolder}/{hash}", "Subtitles"));
+
+                /*
+                 * TODO: uncomment when I implement video comments!
+
+                    folders.Add(new Tuple<string, string>($"{EditorAssets.VideoMetadataFolder}/{hash}", "Comments"));
+                */
+            }
+
+            Assets.CreateFolders(folders);
+        }
+
+        private static Queue<string> PreprocessAssets(string[] urls)
         {
             Queue<string> queue = new Queue<string>();
 
@@ -374,26 +414,103 @@ namespace DecentM.VideoPlayer
                 if (string.IsNullOrEmpty(url)) continue;
                 if (!ValidateUrl(url)) continue;
 
-                EditorUtility.DisplayProgressBar("Creating folders...", url, 1f * i / urls.Length);
-
-                string hash = GetHash(url);
-                CreateFolder($"{EditorAssets.VideoMetadataFolder}/{hash}", "Subtitles");
-                CreateFolder($"{EditorAssets.VideoMetadataFolder}/{hash}", "Comments");
                 queue.Enqueue(url);
             }
 
-            EditorUtility.ClearProgressBar();
+            AssetDatabase.DisallowAutoRefresh();
+            CreateFolders(urls);
+            isLocked = false;
+
+            return queue;
+        }
+
+        private static void PostprocessAssets()
+        {
+            CompileAllSubtitles();
+            ReapplyImportSettings();
+            AssetDatabase.Refresh();
+            AssetDatabase.AllowAutoRefresh();
+            isLocked = false;
+        }
+
+        private static bool FetchMetadataAsync(string[] urls, Action OnFinish)
+        {
+            if (isLocked) return false;
+
+            Queue<string> queue = PreprocessAssets(urls);
 
             Task allFetches = Task.Run(() => FetchMetadataAsync(queue, 4));
 
             EditorCoroutine.Start(
-                WaitForTask(allFetches, () => {
-                    CompileAllSubtitles();
-                    ReapplyImportSettings();
-                    AssetDatabase.Refresh();
+                Parallelism.WaitForTask(allFetches, (bool success) => {
+                    PostprocessAssets();
                     OnFinish();
                 })
             );
+
+            return true;
+        }
+
+        private static void FetchMetadataSync(Queue<string> urls)
+        {
+            for (int i = 0; i < urls.Count; i++)
+            {
+                string url = urls.ElementAt(i);
+                if (url == null) continue;
+
+                if (EditorUtility.DisplayCancelableProgressBar("Fetching metadata...", url, 1f * i / urls.Count))
+                {
+                    break;
+                }
+
+                FetchMetadataSync(url);
+            }
+
+            EditorUtility.ClearProgressBar();
+        }
+
+        private static bool FetchMetadataSync(string[] urls)
+        {
+            if (isLocked) return false;
+
+            Queue<string> queue = PreprocessAssets(urls);
+
+            FetchMetadataSync(queue);
+            PostprocessAssets();
+
+            return true;
+        }
+
+        [PublicAPI]
+        public static bool RefreshMetadataAsync(string url, Action OnFinish)
+        {
+            return FetchMetadataAsync(new string[] { url }, OnFinish);
+        }
+
+        [PublicAPI]
+        public static bool RefreshMetadataAsync(string[] urls, Action OnFinish)
+        {
+            if (urls.Length == 0) return true;
+            return FetchMetadataAsync(urls, OnFinish);
+        }
+
+        [PublicAPI]
+        public static bool RefreshMetadataAsync(string[] urls)
+        {
+            return RefreshMetadataAsync(urls, () => { });
+        }
+
+        [PublicAPI]
+        public static bool RefreshMetadataSync(string url)
+        {
+            return FetchMetadataSync(new string[] { url });
+        }
+
+        [PublicAPI]
+        public static bool RefreshMetadataSync(string[] urls)
+        {
+            if (urls.Length == 0) return true;
+            return FetchMetadataSync(urls);
         }
     }
 }

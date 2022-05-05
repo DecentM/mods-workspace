@@ -85,6 +85,22 @@ namespace DecentM.VideoPlayer
             );
         }
 
+        public static YTDLVideoJson GetMetadataSync(string url)
+        {
+            ProcessResult result = ProcessManager.RunProcessSync(
+                EditorAssets.YtDlpPath,
+                $"--no-check-certificate -J {url}",
+                "."
+            );
+
+            if (!string.IsNullOrEmpty(result.stderr))
+            {
+                throw new Exception(result.stderr);
+            }
+
+            return JsonUtility.FromJson<YTDLVideoJson>(result.stdout);
+        }
+
         public async static Task<YTDLVideoJson> GetMetadata(string url)
         {
             ProcessResult result = await ProcessManager.RunProcessAsync(
@@ -99,6 +115,18 @@ namespace DecentM.VideoPlayer
             }
 
             return JsonUtility.FromJson<YTDLVideoJson>(result.stdout);
+        }
+
+        public static YTDLFlatPlaylistJson GetPlaylistVideosSync(string url)
+        {
+            ProcessResult result = ProcessManager.RunProcessSync(
+                EditorAssets.YtDlpPath,
+                $"--no-check-certificate -J --flat-playlist {url}",
+                ".",
+                10000
+            );
+
+            return JsonUtility.FromJson<YTDLFlatPlaylistJson>(result.stdout);
         }
 
         public async static Task<YTDLFlatPlaylistJson> GetPlaylistVideos(string url)
@@ -117,16 +145,23 @@ namespace DecentM.VideoPlayer
             return JsonUtility.FromJson<YTDLFlatPlaylistJson>(result.stdout);
         }
 
-        public static YTDLFlatPlaylistJson GetPlaylistVideosSync(string url)
+        public static void DownloadSubtitlesSync(string url, string path, bool autoSubs)
         {
+            string arguments = autoSubs
+                ? $"--no-check-certificate --skip-download --write-subs --write-auto-subs --sub-format vtt --sub-langs all {url}"
+                : $"--no-check-certificate --skip-download --write-subs --no-write-auto-subs --sub-format vtt --sub-langs all {url}";
+
             ProcessResult result = ProcessManager.RunProcessSync(
                 EditorAssets.YtDlpPath,
-                $"--no-check-certificate -J --flat-playlist {url}",
-                ".",
-                10000
+                arguments,
+                path,
+                120000 // 2 minutes
             );
 
-            return JsonUtility.FromJson<YTDLFlatPlaylistJson>(result.stdout);
+            if (!string.IsNullOrEmpty(result.stderr))
+            {
+                throw new Exception(result.stderr);
+            }
         }
 
         public async static Task DownloadSubtitles(string url, string path, bool autoSubs)
@@ -147,6 +182,23 @@ namespace DecentM.VideoPlayer
             }
         }
 
+        public static YTDLVideoJson GetMetadataWithCommentsSync(string url)
+        {
+            ProcessResult result = ProcessManager.RunProcessSync(
+                EditorAssets.YtDlpPath,
+                $"--no-check-certificate --skip-download --write-comments -J {url}",
+                ".",
+                300000 // 5 minutes
+            );
+
+            if (!string.IsNullOrEmpty(result.stderr))
+            {
+                throw new Exception(result.stderr);
+            }
+
+            return JsonUtility.FromJson<YTDLVideoJson>(result.stdout);
+        }
+
         public async static Task<YTDLVideoJson> GetMetadataWithComments(string url)
         {
             ProcessResult result = await ProcessManager.RunProcessAsync(
@@ -161,6 +213,20 @@ namespace DecentM.VideoPlayer
             }
 
             return JsonUtility.FromJson<YTDLVideoJson>(result.stdout);
+        }
+
+        public static void DownloadMetadataWithCommentsSync(string url, string path)
+        {
+            ProcessResult result = ProcessManager.RunProcessSync(
+                EditorAssets.YtDlpPath,
+                $"--no-check-certificate --skip-download --write-comments {url}",
+                path
+            );
+
+            if (!string.IsNullOrEmpty(result.stderr))
+            {
+                throw new Exception(result.stderr);
+            }
         }
 
         public async static Task DownloadMetadataWithComments(string url, string path)

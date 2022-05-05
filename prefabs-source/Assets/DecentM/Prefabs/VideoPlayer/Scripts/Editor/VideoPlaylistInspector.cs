@@ -30,7 +30,7 @@ namespace DecentM.VideoPlayer
             Rect toolbarRectOuter = this.DrawRegion(50, new Vector4(0, Padding, 0, Padding));
             Rect toolbarRectInner = this.GetRectInside(toolbarRectOuter, new Vector2(toolbarRectOuter.width, toolbarRectOuter.height), new Vector4(Padding, Padding, Padding, 0));
 
-            int toolbarButtons = 3;
+            int toolbarButtons = 4;
             int toolbarButtonCount = 0;
 
             Rect refreshAllButton = this.GetRectInside(toolbarRectInner, new Vector2(toolbarRectInner.width / toolbarButtons, toolbarRectInner.height), new Vector4(toolbarRectInner.width / toolbarButtons * toolbarButtonCount, 0));
@@ -48,6 +48,11 @@ namespace DecentM.VideoPlayer
                 }
             }
             EditorGUI.EndDisabledGroup();
+
+            toolbarButtonCount++;
+
+            Rect refreshAllSyncButton = this.GetRectInside(toolbarRectInner, new Vector2(toolbarRectInner.width / toolbarButtons, toolbarRectInner.height), new Vector4(toolbarRectInner.width / toolbarButtons * toolbarButtonCount, 0));
+            if (this.ToolbarButton(refreshAllSyncButton, "Refresh all sync")) { this.RefreshAllSync(); }
 
             toolbarButtonCount++;
 
@@ -205,7 +210,11 @@ namespace DecentM.VideoPlayer
                 buttonHeight = actionButtonsRectInner.height / buttons;
 
                 Rect refreshButton = this.GetRectInside(actionButtonsRectInner, new Vector2(actionButtonsRectInner.width, buttonHeight), new Vector4(buttonPadding, buttonCount * buttonHeight, buttonPadding, buttonPadding));
-                if (this.Button(refreshButton, EditorAssets.RefreshIcon)) VideoMetadataStore.RefreshMetadata(url.ToString(), this.BakeMetadata);
+                if (this.Button(refreshButton, EditorAssets.RefreshIcon))
+                {
+                    VideoMetadataStore.RefreshMetadataSync(url.ToString());
+                    this.BakeMetadata();
+                }
 
                 buttonCount++;
 
@@ -252,7 +261,6 @@ namespace DecentM.VideoPlayer
 
             for (int i = 0; i < json.entries.Length; i++)
             {
-                Debug.Log($"8-{i}");
                 YTDLFlatPlaylistJsonEntry entry = json.entries[i];
                 EditorUtility.DisplayProgressBar($"Adding URLs... ({i} of {json.entries.Length})", entry.url, 1f * i / json.entries.Length);
                 this.AddNew(entry.url);
@@ -278,28 +286,17 @@ namespace DecentM.VideoPlayer
             GUI.FocusControl(null);
             VideoPlaylist playlist = (VideoPlaylist)target;
 
-            VideoMetadataStore.RefreshMetadata(playlist.urls.Select(url => url[0].ToString()).ToArray(), this.BakeMetadata);
+            VideoMetadataStore.RefreshMetadataAsync(playlist.urls.Select(url => url[0].ToString()).ToArray(), this.BakeMetadata);
         }
 
-        /* private void RefreshEmpty()
+        private void RefreshAllSync()
         {
             GUI.FocusControl(null);
             VideoPlaylist playlist = (VideoPlaylist)target;
-            List<string> urls = new List<string>();
 
-            for (int i = 0; i < playlist.urls.Length; i++)
-            {
-                VRCUrl url = (VRCUrl)playlist.urls[i][0];
-                if (url == null) continue;
-
-                VideoMetadata videoMetadata = VideoMetadataStore.GetMetadata(url.ToString());
-                if (videoMetadata.thumbnail != null && !string.IsNullOrEmpty(videoMetadata.title)) continue;
-
-                urls.Add(url.ToString());
-            }
-
-            VideoMetadataStore.RefreshMetadata(urls.ToArray(), this.BakeMetadata);
-        } */
+            VideoMetadataStore.RefreshMetadataSync(playlist.urls.Select(url => url[0].ToString()).ToArray());
+            this.BakeMetadata();
+        }
 
         private void Clear()
         {
@@ -417,7 +414,7 @@ namespace DecentM.VideoPlayer
                 VRCUrl url = (VRCUrl)item[0];
                 if (url == null) continue;
 
-                VideoMetadata videoMetadata = VideoMetadataStore.GetMetadata(url.ToString());
+                VideoMetadata videoMetadata = VideoMetadataStore.GetCachedMetadata(url.ToString());
                 object[] newItem = this.CreateNewItem(
                     url,
                     this.TextureToSprite(videoMetadata.thumbnail == null ? EditorAssets.FallbackVideoThumbnail : videoMetadata.thumbnail),

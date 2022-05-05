@@ -51,7 +51,7 @@ namespace DecentM.EditorTools
 
         public int callbackOrder => 8;
 
-        public bool OnBuildRequested(VRCSDKRequestedBuildType requestedBuildType)
+        public virtual bool OnBuildRequested(VRCSDKRequestedBuildType requestedBuildType)
         {
             if (requestedBuildType != VRCSDKRequestedBuildType.Scene) return true;
 
