@@ -6,6 +6,7 @@ using System.Text;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Threading;
 
 using JetBrains.Annotations;
 
@@ -74,8 +75,11 @@ namespace DecentM.VideoPlayer
             EditorUtility.ClearProgressBar();
         }
 
-        private static Texture2D GetCachedThumbnail(string hash)
+        private static Texture2D GetCachedThumbnail(string url)
         {
+            if (!ValidateUrl(url)) return null;
+
+            string hash = Hash.String(url);
             string filename = "thumbnail.jpg";
             string path = $"{EditorAssets.VideoMetadataFolder}/{hash}/{filename}";
             Texture2D result = AssetDatabase.LoadAssetAtPath<Texture2D>(path);
@@ -112,8 +116,6 @@ namespace DecentM.VideoPlayer
 
             if (!ValidateUrl(url)) return metadata;
 
-            string hash = Hash.String(url);
-
             try
             {
                 YTDLVideoJson? jsonOrNull = GetCachedYTDLJson(url);
@@ -127,7 +129,7 @@ namespace DecentM.VideoPlayer
                 metadata.uploader = json.uploader;
                 metadata.viewCount = 0;
                 metadata.likeCount = 0;
-                metadata.thumbnail = GetCachedThumbnail(hash);
+                metadata.thumbnail = GetCachedThumbnail(url);
                 metadata.siteName = json.extractor_key;
                 metadata.description = json.description;
                 metadata.duration = json.duration_string;
@@ -142,6 +144,20 @@ namespace DecentM.VideoPlayer
             return metadata;
         }
 
+        [PublicAPI]
+        public static bool IsUrlCached(string url)
+        {
+            if (!ValidateUrl(url)) return false;
+
+            YTDLVideoJson? jsonOrNull = GetCachedYTDLJson(url);
+            if (jsonOrNull == null) return false;
+
+            YTDLVideoJson json = (YTDLVideoJson)jsonOrNull;
+            Texture2D thumbnail = GetCachedThumbnail(json.thumbnail);
+
+            return json.title != null && thumbnail != null;
+        }
+
         /*
          * * TODO: uncomment when I implement video comments!
 
@@ -153,7 +169,7 @@ namespace DecentM.VideoPlayer
 
         private static void CompileSubtitles(string inputPath, string outputPath)
         {
-            if (!File.Exists(inputPath)) return;
+            if (!File.Exists(inputPath) || File.Exists(outputPath)) return;
 
             try
             {
@@ -162,8 +178,6 @@ namespace DecentM.VideoPlayer
                 SubtitleCompiler.CompilationResult result = SubtitleCompiler.Compile(sourceContents, extension);
 
                 File.WriteAllBytes(outputPath, Encoding.UTF8.GetBytes(result.output));
-                File.Delete(inputPath);
-                File.Delete($"{inputPath}.meta");
             }
             catch (Exception ex)
             {
@@ -260,6 +274,8 @@ namespace DecentM.VideoPlayer
 
             string hash = Hash.String(url);
 
+            if (cancellation.IsCancellationRequested) return;
+
             try
             {
                 YTDLVideoJson json = YTDLCommands.GetMetadataSync(url);
@@ -272,6 +288,8 @@ namespace DecentM.VideoPlayer
                 Debug.LogWarning($"Error while downloading metadata for {url}, skipping this video...");
                 return;
             }
+
+            if (cancellation.IsCancellationRequested) return;
 
             try
             {
@@ -304,6 +322,8 @@ namespace DecentM.VideoPlayer
 
             string hash = Hash.String(url);
 
+            if (cancellation.IsCancellationRequested) return;
+
             try
             {
                 YTDLVideoJson json = await YTDLCommands.GetMetadata(url);
@@ -315,6 +335,8 @@ namespace DecentM.VideoPlayer
                 Debug.LogWarning($"Error while downloading metadata for {url}, skipping this video...");
                 return;
             }
+
+            if (cancellation.IsCancellationRequested) return;
 
             try
             {
@@ -345,6 +367,8 @@ namespace DecentM.VideoPlayer
 
             for (int i = 0; i < urls.Count; i++)
             {
+                if (cancellation.IsCancellationRequested) break;
+
                 string url = urls[i];
                 if (string.IsNullOrEmpty(url)) continue;
                 if (!ValidateUrl(url)) continue;
@@ -361,6 +385,8 @@ namespace DecentM.VideoPlayer
 
             while (urls.Count > 0)
             {
+                if (cancellation.IsCancellationRequested) break;
+
                 batch.Add(urls.Dequeue());
 
                 if (batch.Count >= batchSize)
@@ -370,6 +396,8 @@ namespace DecentM.VideoPlayer
                 }
             }
 
+            if (cancellation.IsCancellationRequested) return;
+
             // Process the last batch
             if (batch.Count > 0)
             {
@@ -378,12 +406,16 @@ namespace DecentM.VideoPlayer
             }
         }
 
+        #region Methods that support the public API
+
         private static bool isLocked = false;
 
         public static bool IsLocked
         {
             get { return isLocked; }
         }
+
+        private static CancellationTokenSource cancellation;
 
         private static void CreateFolders(string[] urls)
         {
@@ -406,6 +438,7 @@ namespace DecentM.VideoPlayer
 
         private static Queue<string> PreprocessAssets(string[] urls)
         {
+            cancellation = new CancellationTokenSource();
             Queue<string> queue = new Queue<string>();
 
             for (int i = 0; i < urls.Length; i++)
@@ -413,6 +446,7 @@ namespace DecentM.VideoPlayer
                 string url = urls[i];
                 if (string.IsNullOrEmpty(url)) continue;
                 if (!ValidateUrl(url)) continue;
+                if (IsUrlCached(url)) continue;
 
                 queue.Enqueue(url);
             }
@@ -427,8 +461,8 @@ namespace DecentM.VideoPlayer
         private static void PostprocessAssets()
         {
             CompileAllSubtitles();
-            ReapplyImportSettings();
             AssetDatabase.Refresh();
+            ReapplyImportSettings();
             AssetDatabase.AllowAutoRefresh();
             isLocked = false;
         }
@@ -444,6 +478,7 @@ namespace DecentM.VideoPlayer
             EditorCoroutine.Start(
                 Parallelism.WaitForTask(allFetches, (bool success) => {
                     PostprocessAssets();
+                    if (!success) Debug.LogError("An error occurred during batched metadata fetching, there is likely more information about it above.");
                     OnFinish();
                 })
             );
@@ -475,10 +510,27 @@ namespace DecentM.VideoPlayer
 
             Queue<string> queue = PreprocessAssets(urls);
 
-            FetchMetadataSync(queue);
-            PostprocessAssets();
+            try
+            {
+                FetchMetadataSync(queue);
+            } catch (Exception ex)
+            {
+                PostprocessAssets();
+                throw ex;
+            }
 
             return true;
+        }
+
+        #endregion
+
+        [PublicAPI]
+        public static void CancelRefresh()
+        {
+            if (!isLocked) return;
+
+            cancellation.Cancel();
+            isLocked = false;
         }
 
         [PublicAPI]

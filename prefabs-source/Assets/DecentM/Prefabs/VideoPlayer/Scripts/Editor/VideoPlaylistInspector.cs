@@ -30,7 +30,7 @@ namespace DecentM.VideoPlayer
             Rect toolbarRectOuter = this.DrawRegion(50, new Vector4(0, Padding, 0, Padding));
             Rect toolbarRectInner = this.GetRectInside(toolbarRectOuter, new Vector2(toolbarRectOuter.width, toolbarRectOuter.height), new Vector4(Padding, Padding, Padding, 0));
 
-            int toolbarButtons = 4;
+            int toolbarButtons = 5;
             int toolbarButtonCount = 0;
 
             Rect refreshAllButton = this.GetRectInside(toolbarRectInner, new Vector2(toolbarRectInner.width / toolbarButtons, toolbarRectInner.height), new Vector4(toolbarRectInner.width / toolbarButtons * toolbarButtonCount, 0));
@@ -56,6 +56,11 @@ namespace DecentM.VideoPlayer
 
             toolbarButtonCount++;
 
+            Rect cancelButton = this.GetRectInside(toolbarRectInner, new Vector2(toolbarRectInner.width / toolbarButtons, toolbarRectInner.height), new Vector4(toolbarRectInner.width / toolbarButtons * toolbarButtonCount, 0));
+            if (this.ToolbarButton(cancelButton, "Cancel refresh")) { this.CancelRefresh(); }
+
+            toolbarButtonCount++;
+
             Rect clearButton = this.GetRectInside(toolbarRectInner, new Vector2(toolbarRectInner.width / toolbarButtons, toolbarRectInner.height), new Vector4(toolbarRectInner.width / toolbarButtons * toolbarButtonCount, 0));
             EditorGUI.BeginDisabledGroup(playlist.urls.Length == 0);
             if (this.ToolbarButton(clearButton, "Clear playlist")) { this.Clear(); }
@@ -64,18 +69,7 @@ namespace DecentM.VideoPlayer
             toolbarButtonCount++;
 
             Rect reimportMetadataButton = this.GetRectInside(toolbarRectInner, new Vector2(toolbarRectInner.width / toolbarButtons, toolbarRectInner.height), new Vector4(toolbarRectInner.width / toolbarButtons * toolbarButtonCount, 0));
-            if (this.ToolbarButton(reimportMetadataButton, "Reimport metadata"))
-            {
-                if (EditorUtility.DisplayDialog(
-                        "Confirm metadata reimport",
-                        $"Are you sure you want to reimport metadata? This will re-apply crunch compression on the thumbnails and it will take a long time if you have a lot of thumbnails cached.",
-                        "Reimport", "Cancel"
-                    )
-                )
-                {
-                    this.ReimportMetadata();
-                }
-            }
+            if (this.ToolbarButton(reimportMetadataButton, "Reimport metadata")) this.ReimportMetadata();
 
             Rect importRegion = this.DrawRegion(42, new Vector4(Padding, Padding, Padding, Padding));
             Rect importTextField = this.GetRectInside(importRegion, new Vector2(importRegion.width / 6 * 5, importRegion.height));
@@ -298,6 +292,12 @@ namespace DecentM.VideoPlayer
             this.BakeMetadata();
         }
 
+        private void CancelRefresh()
+        {
+            GUI.FocusControl(null);
+            VideoMetadataStore.CancelRefresh();
+        }
+
         private void Clear()
         {
             GUI.FocusControl(null);
@@ -399,8 +399,6 @@ namespace DecentM.VideoPlayer
 
         private void BakeMetadata()
         {
-            // this.RefreshEmpty();
-
             VideoPlaylist playlist = (VideoPlaylist)target;
 
             bool showProgress = playlist.urls.Length > 35;
@@ -415,6 +413,7 @@ namespace DecentM.VideoPlayer
                 if (url == null) continue;
 
                 VideoMetadata videoMetadata = VideoMetadataStore.GetCachedMetadata(url.ToString());
+
                 object[] newItem = this.CreateNewItem(
                     url,
                     this.TextureToSprite(videoMetadata.thumbnail == null ? EditorAssets.FallbackVideoThumbnail : videoMetadata.thumbnail),

@@ -148,8 +148,8 @@ namespace DecentM.VideoPlayer
         public static void DownloadSubtitlesSync(string url, string path, bool autoSubs)
         {
             string arguments = autoSubs
-                ? $"--no-check-certificate --skip-download --write-subs --write-auto-subs --sub-format vtt --sub-langs all {url}"
-                : $"--no-check-certificate --skip-download --write-subs --no-write-auto-subs --sub-format vtt --sub-langs all {url}";
+                ? $"--no-check-certificate --skip-download --write-subs --write-auto-subs --sub-format vtt/srt --sub-langs all {url}"
+                : $"--no-check-certificate --skip-download --write-subs --no-write-auto-subs --sub-format vtt/srt --sub-langs all {url}";
 
             ProcessResult result = ProcessManager.RunProcessSync(
                 EditorAssets.YtDlpPath,
@@ -167,8 +167,8 @@ namespace DecentM.VideoPlayer
         public async static Task DownloadSubtitles(string url, string path, bool autoSubs)
         {
             string arguments = autoSubs
-                ? $"--no-check-certificate --skip-download --write-subs --write-auto-subs --sub-format vtt --sub-langs all {url}"
-                : $"--no-check-certificate --skip-download --write-subs --no-write-auto-subs --sub-format vtt --sub-langs all {url}";
+                ? $"--no-check-certificate --skip-download --write-subs --write-auto-subs --sub-format vtt/srt --sub-langs all {url}"
+                : $"--no-check-certificate --skip-download --write-subs --no-write-auto-subs --sub-format vtt/srt --sub-langs all {url}";
 
             ProcessResult result = await ProcessManager.RunProcessAsync(
                 EditorAssets.YtDlpPath,
