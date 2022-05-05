@@ -5,9 +5,7 @@ using System.Threading.Tasks;
 
 using UnityEngine;
 
-using DecentM.EditorTools;
-
-namespace DecentM.VideoPlayer
+namespace DecentM.EditorTools
 {
     [Serializable]
     public struct YTDLVideoJsonComment

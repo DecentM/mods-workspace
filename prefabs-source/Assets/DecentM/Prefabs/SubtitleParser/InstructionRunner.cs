@@ -66,6 +66,8 @@ public class InstructionRunner : UdonSharpBehaviour
         return instruction;
     }
 
+    private const char NewlineDelimeter = '˟';
+
     private void ReadInstructions()
     {
         if (this.instructionsFile == null)
@@ -99,7 +101,7 @@ public class InstructionRunner : UdonSharpBehaviour
                 return;
             }
 
-            string text = parts[2].Replace('ª', '\n');
+            string text = parts[2].Replace(NewlineDelimeter, '\n');
 
             object[] instruction = this.CreateInstruction(type, timestamp, text);
 

@@ -33,6 +33,8 @@ public class VideoMetadataAutoFixer : AutoSceneFixer
 
     protected override bool OnPerformFixes()
     {
+        return true;
+
         List<string> urls = this.GetAllUrlsInScene();
 
         bool accepted = VideoMetadataStore.RefreshMetadataAsync(urls.ToArray());
@@ -47,7 +49,7 @@ public class VideoMetadataAutoFixer : AutoSceneFixer
         if (requestedBuildType != VRCSDKRequestedBuildType.Scene) return true;
 
         List<string> urls = this.GetAllUrlsInScene();
-        VideoMetadataStore.CancelRefresh();
+        VideoMetadataStore.Unlock();
         VideoMetadataStore.RefreshMetadataSync(urls.ToArray());
 
         return true;

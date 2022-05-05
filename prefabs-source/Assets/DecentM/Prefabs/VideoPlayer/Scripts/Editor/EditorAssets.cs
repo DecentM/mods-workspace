@@ -69,5 +69,15 @@ namespace DecentM.EditorTools
         {
             get { return "Assets/Editor/DecentM/VideoMetadata"; }
         }
+
+        public static string ImageCacheFolder
+        {
+            get { return "Assets/Editor/DecentM/ImageCache"; }
+        }
+
+        public static string SubtitleCacheFolder
+        {
+            get { return "Assets/Editor/DecentM/SubtitleCache"; }
+        }
     }
 }

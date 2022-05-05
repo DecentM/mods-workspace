@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Linq;
 using System.Reflection;
@@ -50,6 +51,26 @@ namespace DecentM.EditorTools
                 OnSettled(!isFaulted);
                 yield return null;
             }
+        }
+
+        public static async Task WhenAllBatched(IEnumerable<Task> tasks, int maxConcurrency)
+        {
+            SemaphoreSlim semaphore = new SemaphoreSlim(maxConcurrency);
+
+            var pendingTasks = tasks.Select(async task =>
+            {
+                try
+                {
+                    semaphore.Wait();
+                    await task;
+                }
+                finally
+                {
+                    semaphore.Release();
+                }
+            });
+
+            await Task.WhenAll(pendingTasks);
         }
     }
 

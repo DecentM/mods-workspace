@@ -30,7 +30,7 @@ namespace DecentM.VideoPlayer
             Rect toolbarRectOuter = this.DrawRegion(50, new Vector4(0, Padding, 0, Padding));
             Rect toolbarRectInner = this.GetRectInside(toolbarRectOuter, new Vector2(toolbarRectOuter.width, toolbarRectOuter.height), new Vector4(Padding, Padding, Padding, 0));
 
-            int toolbarButtons = 5;
+            int toolbarButtons = 4;
             int toolbarButtonCount = 0;
 
             Rect refreshAllButton = this.GetRectInside(toolbarRectInner, new Vector2(toolbarRectInner.width / toolbarButtons, toolbarRectInner.height), new Vector4(toolbarRectInner.width / toolbarButtons * toolbarButtonCount, 0));
@@ -54,10 +54,10 @@ namespace DecentM.VideoPlayer
             Rect refreshAllSyncButton = this.GetRectInside(toolbarRectInner, new Vector2(toolbarRectInner.width / toolbarButtons, toolbarRectInner.height), new Vector4(toolbarRectInner.width / toolbarButtons * toolbarButtonCount, 0));
             if (this.ToolbarButton(refreshAllSyncButton, "Refresh all sync")) { this.RefreshAllSync(); }
 
-            toolbarButtonCount++;
+            /* toolbarButtonCount++;
 
             Rect cancelButton = this.GetRectInside(toolbarRectInner, new Vector2(toolbarRectInner.width / toolbarButtons, toolbarRectInner.height), new Vector4(toolbarRectInner.width / toolbarButtons * toolbarButtonCount, 0));
-            if (this.ToolbarButton(cancelButton, "Cancel refresh")) { this.CancelRefresh(); }
+            if (this.ToolbarButton(cancelButton, "Cancel refresh")) { this.CancelRefresh(); } */
 
             toolbarButtonCount++;
 
@@ -93,6 +93,7 @@ namespace DecentM.VideoPlayer
                 if (i < 0 || i >= playlist.urls.Length) continue;
 
                 object[] item = playlist.urls[i];
+                if (item == null) continue;
 
                 VRCUrl url = (VRCUrl)item[0];
                 Sprite thumbnail = (Sprite)item[1];
@@ -103,6 +104,9 @@ namespace DecentM.VideoPlayer
                 int likes = (int)item[6];
                 string resolution = (string)item[7];
                 int fps = (int)item[8];
+                string description = (string)item[9];
+                string duration = (string)item[10];
+                string[][] subtitles = (string[][])item[11];
 
                 Rect regionOuter = this.DrawRegion(UrlHeight, new Vector4(0, 0, 0, 0));
                 Rect region = this.GetRectInside(regionOuter, new Vector4(Padding, 0, Padding, Padding * 1.5f));
@@ -161,10 +165,10 @@ namespace DecentM.VideoPlayer
                 Rect textRectInner = this.GetRectInside(textRectOuter, new Vector4(0, Padding, Padding, Padding));
 
                 int count = 0;
-                int texts = 5;
+                int texts = 6;
                 float height = textRectInner.height / texts;
 
-                Rect titleRect = this.GetRectInside(textRectInner, new Vector2(textRectInner.width, height), new Vector4(Padding, count * height, Padding, 0));
+                Rect titleRect = this.GetRectInside(textRectInner, new Vector2(textRectInner.width, height + 4), new Vector4(Padding, count * height - 4, Padding, 0));
                 this.DrawLabel(titleRect, title, 3, FontStyle.Bold);
 
                 count++;
@@ -190,6 +194,19 @@ namespace DecentM.VideoPlayer
                 if (resolution != null) techLabels.Add(resolution);
                 if (fps != 0) techLabels.Add($"{fps}fps");
                 this.DrawLabel(specsRect, string.Join("@", techLabels.ToArray()), 2);
+
+                count++;
+
+                Rect subsRect = this.GetRectInside(textRectInner, new Vector2(textRectInner.width, height), new Vector4(Padding, count * height, Padding, 0));
+                List<string> langs = new List<string>();
+                if (subtitles != null)
+                {
+                    foreach (string[] sub in subtitles)
+                    {
+                        langs.Add(sub[0]);
+                    }
+                }
+                this.DrawLabel(subsRect, string.Join(", ", langs.ToArray()), 2);
 
                 count++;
 
@@ -232,7 +249,7 @@ namespace DecentM.VideoPlayer
 
         private void ReimportMetadata()
         {
-            VideoMetadataStore.ReapplyImportSettings();
+            // VideoMetadataStore.ReapplyImportSettings();
         }
 
         private void ImportPlaylistCallback(YTDLFlatPlaylistJson? jsonOrNull)
@@ -292,12 +309,6 @@ namespace DecentM.VideoPlayer
             this.BakeMetadata();
         }
 
-        private void CancelRefresh()
-        {
-            GUI.FocusControl(null);
-            VideoMetadataStore.CancelRefresh();
-        }
-
         private void Clear()
         {
             GUI.FocusControl(null);
@@ -331,9 +342,9 @@ namespace DecentM.VideoPlayer
             playlist.urls = newUrls;
         }
 
-        private object[] CreateNewItem(VRCUrl url, Sprite thumbnail, string title, string uploader, string platform, int views, int likes, string resolution, int fps, string description, string duration)
+        private object[] CreateNewItem(VRCUrl url, Sprite thumbnail, string title, string uploader, string platform, int views, int likes, string resolution, int fps, string description, string duration, string[][] subtitles)
         {
-            return new object[] { url, thumbnail, title, uploader, platform, views, likes, resolution, fps, description, duration };
+            return new object[] { url, thumbnail, title, uploader, platform, views, likes, resolution, fps, description, duration, subtitles };
         }
 
         private Sprite TextureToSprite(Texture2D input)
@@ -343,12 +354,12 @@ namespace DecentM.VideoPlayer
 
         private object[] CreateNewItem()
         {
-            return this.CreateNewItem(new VRCUrl(""), this.TextureToSprite(EditorAssets.FallbackVideoThumbnail), "", "", "", 0, 0, "", 0, "", "");
+            return this.CreateNewItem(new VRCUrl(""), this.TextureToSprite(EditorAssets.FallbackVideoThumbnail), "", "", "", 0, 0, "", 0, "", "", new string[][] { });
         }
 
         private object[] CreateNewItem(VRCUrl url)
         {
-            return this.CreateNewItem(url, this.TextureToSprite(EditorAssets.FallbackVideoThumbnail), "", "", "", 0, 0, "", 0, "", "");
+            return this.CreateNewItem(url, this.TextureToSprite(EditorAssets.FallbackVideoThumbnail), "", "", "", 0, 0, "", 0, "", "", new string[][] { } );
         }
 
         private void InsertAfterIndex(int index)
@@ -413,6 +424,17 @@ namespace DecentM.VideoPlayer
                 if (url == null) continue;
 
                 VideoMetadata videoMetadata = VideoMetadataStore.GetCachedMetadata(url.ToString());
+                string[][] subtitles = new string[0][];
+
+                if (videoMetadata.subtitles != null && videoMetadata.subtitles.Length != 0)
+                {
+                    subtitles = new string[videoMetadata.subtitles.Length][];
+
+                    for (int j = 0; j < videoMetadata.subtitles.Length; j++)
+                    {
+                        subtitles[j] = new string[] { videoMetadata.subtitles[j].language, videoMetadata.subtitles[j].contents };
+                    }
+                }
 
                 object[] newItem = this.CreateNewItem(
                     url,
@@ -425,7 +447,8 @@ namespace DecentM.VideoPlayer
                     videoMetadata.resolution,
                     videoMetadata.fps,
                     videoMetadata.description,
-                    videoMetadata.duration
+                    videoMetadata.duration,
+                    subtitles
                 );
 
                 playlist.urls[i] = newItem;

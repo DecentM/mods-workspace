@@ -25,9 +25,11 @@ namespace DecentM.Subtitles
         public int timestamp;
         public string value;
 
+        public const char NewlineDelimeter = '˟';
+
         public override string ToString()
         {
-            return $"{(int)this.type} {this.timestamp} {this.value.Replace('\n', 'ª')}";
+            return $"{(int)this.type} {this.timestamp} {this.value.Replace('\n', NewlineDelimeter)}";
         }
 
         public SubtitleScreen ToSubtitleScreen(int index, int length)

@@ -16,6 +16,12 @@ namespace DecentM.VideoPlayer
     public class VideoPlaylist : UdonSharpBehaviour, ISerializationCallbackReceiver
     {
         /*
+         * subtitle structure
+         * 0 - string lang
+         * 1 - string instructions
+         */
+
+        /*
          * item structure:
          * 0 - VRCUrl url
          * 1 - Sprite thumbnail
@@ -27,6 +33,8 @@ namespace DecentM.VideoPlayer
          * 7 - string resolution
          * 8 - int fps
          * 9 - string description
+         * 10 - string duration
+         * 11 - string[][] subtitles
          */
 
         [Space]
@@ -71,6 +79,10 @@ namespace DecentM.VideoPlayer
         private string[] serialisedDescriptions;
         [SerializeField, HideInInspector]
         private string[] serialisedDurations;
+        [SerializeField, HideInInspector]
+        private string[] serialisedSubtitles;
+
+        private const char SubtitleSeparator = 'ˠ';
 
         public void OnBeforeSerialize()
         {
@@ -88,6 +100,7 @@ namespace DecentM.VideoPlayer
                 && this.serialisedFpses != null
                 && this.serialisedDescriptions != null
                 && this.serialisedDurations != null
+                && this.serialisedSubtitles != null
 
                 && this.serialisedUrls.Length == this.urls.Length
                 && this.serialisedThumbnails.Length == this.urls.Length
@@ -100,6 +113,7 @@ namespace DecentM.VideoPlayer
                 && this.serialisedFpses.Length == this.urls.Length
                 && this.serialisedDescriptions.Length == this.urls.Length
                 && this.serialisedDurations.Length == this.urls.Length
+                && this.serialisedSubtitles.Length == this.urls.Length
             ) return;
 
             this.serialisedUrls = new VRCUrl[this.urls.Length];
@@ -113,6 +127,7 @@ namespace DecentM.VideoPlayer
             this.serialisedFpses = new int[this.urls.Length];
             this.serialisedDescriptions = new string[this.urls.Length];
             this.serialisedDurations = new string[this.urls.Length];
+            this.serialisedSubtitles = new string[this.urls.Length];
 
             for (int i = 0; i < this.urls.Length; i++)
             {
@@ -135,6 +150,7 @@ namespace DecentM.VideoPlayer
                 int fps = (int)item[8];
                 string description = (string)item[9];
                 string duration = (string)item[10];
+                string[][] subtitles = (string[][])item[11];
 
                 this.serialisedUrls[i] = url;
                 this.serialisedThumbnails[i] = thumbnail;
@@ -147,6 +163,21 @@ namespace DecentM.VideoPlayer
                 this.serialisedFpses[i] = fps;
                 this.serialisedDescriptions[i] = description;
                 this.serialisedDurations[i] = duration;
+
+                string serialisedSubtitle = "";
+
+                for (int j = 0; j < subtitles.Length; j++)
+                {
+                    string[] subtitle = subtitles[j];
+                    if (subtitle == null) continue;
+
+                    serialisedSubtitle += subtitle[0]; // lang
+                    serialisedSubtitle += SubtitleSeparator;
+                    serialisedSubtitle += subtitle[1]; // content
+                    serialisedSubtitle += SubtitleSeparator;
+                }
+
+                this.serialisedSubtitles[i] = serialisedSubtitle;
             }
 
 #if UNITY_EDITOR && !COMPILER_UDONSHARP
@@ -170,6 +201,7 @@ namespace DecentM.VideoPlayer
                 && this.serialisedFpses.Length == this.urls.Length
                 && this.serialisedDescriptions.Length == this.urls.Length
                 && this.serialisedDurations.Length == this.urls.Length
+                && this.serialisedSubtitles.Length == this.urls.Length
             ) return;
 
             this.urls = new object[this.serialisedUrls.Length][];
@@ -189,8 +221,31 @@ namespace DecentM.VideoPlayer
                 int fps = this.serialisedFpses[i];
                 string description = this.serialisedDescriptions[i];
                 string duration = this.serialisedDurations[i];
+                string subtitles = this.serialisedSubtitles[i];
 
-                object[] item = new object[] { url, thumbnail, title, uploader, platform, views, likes, resolution, fps, description, duration };
+                string[][] deserialisedSubtitles = new string[0][];
+                string[] subtitleParts = subtitles.Split(SubtitleSeparator);
+
+                // Debug.Log($"[Deserialisation] parts length {subtitleParts.Length}");
+
+                for (int j = 0; j < subtitleParts.Length - 1; j += 2)
+                {
+                    string lang = subtitleParts[j];
+                    string content = subtitleParts[j + 1];
+
+                    if (lang == null || content == null)
+                    {
+                        // Debug.LogWarning($"[Deserialisation] subtitle parts parity mismatch!");
+                        continue;
+                    }
+
+                    string[][] tmp = new string[deserialisedSubtitles.Length + 1][];
+                    Array.Copy(deserialisedSubtitles, tmp, deserialisedSubtitles.Length);
+                    tmp[tmp.Length - 1] = new string[] { lang, content };
+                    deserialisedSubtitles = tmp;
+                }
+
+                object[] item = new object[] { url, thumbnail, title, uploader, platform, views, likes, resolution, fps, description, duration, deserialisedSubtitles };
                 this.urls[i] = item;
             }
         }
@@ -238,7 +293,7 @@ namespace DecentM.VideoPlayer
 
         public int AddUrl(VRCUrl url)
         {
-            object[] item = new object[] { url, null, "", "", "", 0, 0, "", 0 };
+            object[] item = new object[] { url, null, "", "", "", 0, 0, "", 0, "", "", new string[][] { } };
 
             if (this.urls != null)
             {
