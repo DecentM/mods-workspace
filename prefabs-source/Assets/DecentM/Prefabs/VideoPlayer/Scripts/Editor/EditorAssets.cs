@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System.IO;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -61,7 +62,7 @@ namespace DecentM.EditorTools
 
         public static string YtDlpPath
         {
-            get { return string.Join("/", Application.dataPath, "DecentM", VideoScriptsPath, "Bin/yt-dlp.exe"); }
+            get { return string.Join("/", Directory.GetCurrentDirectory(), "Assets", "DecentM", VideoScriptsPath, "Bin/yt-dlp.exe"); }
         }
 
         public static string VideoMetadataFolder

@@ -73,6 +73,7 @@ namespace DecentM.Subtitles.Vtt
 
                     if (text[cursor] == '\n' && lastCharWasNewline) break;
                     if (text[cursor] == '\n') lastCharWasNewline = true;
+                    else lastCharWasNewline = false;
                 }
 
                 return result;

@@ -205,7 +205,7 @@ namespace DecentM.VideoPlayer
                 buttonHeight = actionButtonsRectInner.height / buttons;
 
                 Rect refreshButton = this.GetRectInside(actionButtonsRectInner, new Vector2(actionButtonsRectInner.width, buttonHeight), new Vector4(buttonPadding, buttonCount * buttonHeight, buttonPadding, buttonPadding));
-                if (this.Button(refreshButton, EditorAssets.RefreshIcon)) VideoMetadataStore.RefreshMetadata(url.ToString());
+                if (this.Button(refreshButton, EditorAssets.RefreshIcon)) VideoMetadataStore.RefreshMetadata(url.ToString(), this.BakeMetadata);
 
                 buttonCount++;
 
@@ -252,6 +252,7 @@ namespace DecentM.VideoPlayer
 
             for (int i = 0; i < json.entries.Length; i++)
             {
+                Debug.Log($"8-{i}");
                 YTDLFlatPlaylistJsonEntry entry = json.entries[i];
                 EditorUtility.DisplayProgressBar($"Adding URLs... ({i} of {json.entries.Length})", entry.url, 1f * i / json.entries.Length);
                 this.AddNew(entry.url);
@@ -269,7 +270,7 @@ namespace DecentM.VideoPlayer
         private void ImportPlaylist()
         {
             GUI.FocusControl(null);
-            YTDLCommands.GetPlaylistVideos(this.importPlaylistUrl, this.ImportPlaylistCallback);
+            this.ImportPlaylistCallback(YTDLCommands.GetPlaylistVideosSync(this.importPlaylistUrl));
         }
 
         private void RefreshAll()
@@ -277,10 +278,10 @@ namespace DecentM.VideoPlayer
             GUI.FocusControl(null);
             VideoPlaylist playlist = (VideoPlaylist)target;
 
-            VideoMetadataStore.RefreshMetadata(playlist.urls.Select(url => url[0].ToString()).ToArray());
+            VideoMetadataStore.RefreshMetadata(playlist.urls.Select(url => url[0].ToString()).ToArray(), this.BakeMetadata);
         }
 
-        private void RefreshEmpty()
+        /* private void RefreshEmpty()
         {
             GUI.FocusControl(null);
             VideoPlaylist playlist = (VideoPlaylist)target;
@@ -297,8 +298,8 @@ namespace DecentM.VideoPlayer
                 urls.Add(url.ToString());
             }
 
-            VideoMetadataStore.RefreshMetadata(urls.ToArray());
-        }
+            VideoMetadataStore.RefreshMetadata(urls.ToArray(), this.BakeMetadata);
+        } */
 
         private void Clear()
         {
@@ -401,7 +402,7 @@ namespace DecentM.VideoPlayer
 
         private void BakeMetadata()
         {
-            this.RefreshEmpty();
+            // this.RefreshEmpty();
 
             VideoPlaylist playlist = (VideoPlaylist)target;
 

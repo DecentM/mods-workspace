@@ -1,16 +1,9 @@
 ﻿using System;
-using System.Linq;
-using System.Web;
-using System.Net;
-using System.IO;
-using System.Text;
 using System.Diagnostics;
 using System.Collections;
 using System.Threading.Tasks;
 
 using UnityEngine;
-using UnityEngine.Networking;
-using UnityEditor;
 
 using DecentM.EditorTools;
 
@@ -92,48 +85,96 @@ namespace DecentM.VideoPlayer
             );
         }
 
-        public static void GetMetadata(string url, Action<YTDLVideoJson> callback)
+        public async static Task<YTDLVideoJson> GetMetadata(string url)
         {
-            ProcessManager.RunProcessAsync(
+            ProcessResult result = await ProcessManager.RunProcessAsync(
                 EditorAssets.YtDlpPath,
                 $"--no-check-certificate -J {url}",
-                ".",
-                (ProcessResult result) => callback(JsonUtility.FromJson<YTDLVideoJson>(result.stdout))
+                "."
             );
+
+            if (!string.IsNullOrEmpty(result.stderr))
+            {
+                throw new Exception(result.stderr);
+            }
+
+            return JsonUtility.FromJson<YTDLVideoJson>(result.stdout);
         }
 
-        public static void GetPlaylistVideos(string url, Action<YTDLFlatPlaylistJson?> callback)
+        public async static Task<YTDLFlatPlaylistJson> GetPlaylistVideos(string url)
         {
-            ProcessManager.RunProcessAsync(
+            ProcessResult result = await ProcessManager.RunProcessAsync(
+                EditorAssets.YtDlpPath,
+                $"--no-check-certificate -J --flat-playlist {url}",
+                "."
+            );
+
+            if (!string.IsNullOrEmpty(result.stderr))
+            {
+                throw new Exception(result.stderr);
+            }
+
+            return JsonUtility.FromJson<YTDLFlatPlaylistJson>(result.stdout);
+        }
+
+        public static YTDLFlatPlaylistJson GetPlaylistVideosSync(string url)
+        {
+            ProcessResult result = ProcessManager.RunProcessSync(
                 EditorAssets.YtDlpPath,
                 $"--no-check-certificate -J --flat-playlist {url}",
                 ".",
-                (ProcessResult result) => callback(JsonUtility.FromJson<YTDLFlatPlaylistJson>(result.stdout))
+                10000
             );
+
+            return JsonUtility.FromJson<YTDLFlatPlaylistJson>(result.stdout);
         }
 
-        public static void DownloadSubtitles(string url, string path, bool autoSubs, Action<string> callback)
+        public async static Task DownloadSubtitles(string url, string path, bool autoSubs)
         {
             string arguments = autoSubs
                 ? $"--no-check-certificate --skip-download --write-subs --write-auto-subs --sub-format vtt --sub-langs all {url}"
                 : $"--no-check-certificate --skip-download --write-subs --no-write-auto-subs --sub-format vtt --sub-langs all {url}";
 
-            ProcessManager.RunProcessAsync(
+            ProcessResult result = await ProcessManager.RunProcessAsync(
                 EditorAssets.YtDlpPath,
                 arguments,
-                path,
-                (ProcessResult result) => callback(result.stdout)
+                path
             );
+
+            if (!string.IsNullOrEmpty(result.stderr))
+            {
+                throw new Exception(result.stderr);
+            }
         }
 
-        public static void GetMetadataWithComments(string url, Action<YTDLVideoJson> callback)
+        public async static Task<YTDLVideoJson> GetMetadataWithComments(string url)
         {
-            ProcessManager.RunProcessAsync(
+            ProcessResult result = await ProcessManager.RunProcessAsync(
                 EditorAssets.YtDlpPath,
                 $"--no-check-certificate --skip-download --write-comments -J {url}",
-                120000,
-                (ProcessResult result) => callback(JsonUtility.FromJson<YTDLVideoJson>(result.stdout))
+                "."
             );
+
+            if (!string.IsNullOrEmpty(result.stderr))
+            {
+                throw new Exception(result.stderr);
+            }
+
+            return JsonUtility.FromJson<YTDLVideoJson>(result.stdout);
+        }
+
+        public async static Task DownloadMetadataWithComments(string url, string path)
+        {
+            ProcessResult result = await ProcessManager.RunProcessAsync(
+                EditorAssets.YtDlpPath,
+                $"--no-check-certificate --skip-download --write-comments {url}",
+                path
+            );
+
+            if (!string.IsNullOrEmpty(result.stderr))
+            {
+                throw new Exception(result.stderr);
+            }
         }
     }
 }

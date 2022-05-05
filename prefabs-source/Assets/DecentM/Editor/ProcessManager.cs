@@ -53,16 +53,22 @@ namespace DecentM.EditorTools
 
         private static Process CreateProcess(string filename, string arguments, string workdir)
         {
-            Process process = new Process();
+            Process process = new Process
+            {
+                StartInfo =
+                {
+                    FileName = filename,
+                    Arguments = arguments,
+                    UseShellExecute = false,
+                    RedirectStandardOutput = true,
+                    RedirectStandardError = true,
+                    WindowStyle = ProcessWindowStyle.Hidden,
+                    CreateNoWindow = true,
+                    WorkingDirectory = workdir,
+                },
 
-            process.StartInfo.FileName = filename;
-            process.StartInfo.Arguments = arguments;
-            process.StartInfo.UseShellExecute = false;
-            process.StartInfo.RedirectStandardOutput = true;
-            process.StartInfo.RedirectStandardError = true;
-            process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-            process.StartInfo.CreateNoWindow = true;
-            process.StartInfo.WorkingDirectory = workdir;
+                EnableRaisingEvents = true
+            };
 
             return process;
         }
@@ -93,6 +99,58 @@ namespace DecentM.EditorTools
         public static void RunProcessAsync(string filename, string arguments, int timeout, Action<ProcessResult> callback)
         {
             RunProcessAsync(filename, arguments, ".", timeout, callback);
+        }
+
+        public static Task<ProcessResult> RunProcessAsync(string filename, string arguments, string workdir)
+        {
+            var tcs = new TaskCompletionSource<ProcessResult>();
+            Process process = CreateProcess(filename, arguments, workdir);
+            ProcessResult result = new ProcessResult();
+
+            StringBuilder output = new StringBuilder();
+            StringBuilder error = new StringBuilder();
+
+            process.Exited += (sender, args) =>
+            {
+                result.stdout = output.ToString();
+                result.stderr = error.ToString();
+
+                tcs.SetResult(result);
+                process.Dispose();
+            };
+
+            process.Start();
+
+            using (AutoResetEvent outputWaitHandle = new AutoResetEvent(false))
+            using (AutoResetEvent errorWaitHandle = new AutoResetEvent(false))
+            {
+                process.OutputDataReceived += (sender, e) => {
+                    if (e.Data == null)
+                    {
+                        outputWaitHandle.Set();
+                    }
+                    else
+                    {
+                        output.AppendLine(e.Data);
+                    }
+                };
+                process.ErrorDataReceived += (sender, e) =>
+                {
+                    if (e.Data == null)
+                    {
+                        errorWaitHandle.Set();
+                    }
+                    else
+                    {
+                        error.AppendLine(e.Data);
+                    }
+                };
+
+                process.BeginOutputReadLine();
+                process.BeginErrorReadLine();
+            }
+
+            return tcs.Task;
         }
 
         public static void RunProcessAsync(string filename, string arguments, string workdir, int timeout, Action<ProcessResult> callback)
