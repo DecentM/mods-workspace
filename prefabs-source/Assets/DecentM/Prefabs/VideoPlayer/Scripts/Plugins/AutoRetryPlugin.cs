@@ -90,8 +90,6 @@ namespace DecentM.VideoPlayer.Plugins
                         this.events.OnAutoRetryAllPlayersFailed();
                     }
                 }
-
-                this.events.OnAutoRetrySwitchPlayer();
             }
 
             // Schedule a retry after the rate limit expires

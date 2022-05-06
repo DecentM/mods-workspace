@@ -19,8 +19,9 @@ namespace DecentM.VideoPlayer.Plugins
         protected virtual void OnVolumeChange(float volume, bool muted) { }
         protected virtual void OnMutedChange(bool muted, float volume) { }
         protected virtual void OnFpsChange(int fps) { }
-        protected virtual void OnScreenResolutionChange(Renderer screen, float width, float height) { }
+        protected virtual void OnScreenResolutionChange(ScreenHandler screen, float width, float height) { }
         protected virtual void OnScreenTextureChange() { }
+        protected virtual void OnPlayerSwitch(VideoPlayerHandlerType type) { }
 
         protected virtual void OnPlaybackStart(float timestamp) { }
         protected virtual void OnPlaybackStop(float timestamp) { }
@@ -36,7 +37,6 @@ namespace DecentM.VideoPlayer.Plugins
         protected virtual void OnLoadRequested(VRCUrl url) { }
 
         protected virtual void OnAutoRetry(int attempt) { }
-        protected virtual void OnAutoRetrySwitchPlayer() { }
         protected virtual void OnAutoRetryLoadTimeout(int timeout) { }
         protected virtual void OnAutoRetryAbort() { }
         protected virtual void OnAutoRetryAllPlayersFailed() { }
@@ -124,7 +124,7 @@ namespace DecentM.VideoPlayer.Plugins
 
                 case VideoPlayerEvent.OnScreenResolutionChange:
                     {
-                        Renderer screen = (Renderer)data[0];
+                        ScreenHandler screen = (ScreenHandler)data[0];
                         float width = (float)data[1];
                         float height = (float)data[2];
                         this.OnScreenResolutionChange(screen, width, height);
@@ -192,6 +192,13 @@ namespace DecentM.VideoPlayer.Plugins
                         return;
                     }
 
+                case VideoPlayerEvent.OnPlayerSwitch:
+                    {
+                        VideoPlayerHandlerType type = (VideoPlayerHandlerType)data[0];
+                        this.OnPlayerSwitch(type);
+                        return;
+                    }
+
                 #endregion
 
                 #region Plugins
@@ -200,12 +207,6 @@ namespace DecentM.VideoPlayer.Plugins
                     {
                         int attempt = (int)data[0];
                         this.OnAutoRetry(attempt);
-                        return;
-                    }
-
-                case VideoPlayerEvent.OnAutoRetrySwitchPlayer:
-                    {
-                        this.OnAutoRetrySwitchPlayer();
                         return;
                     }
 

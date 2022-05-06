@@ -21,10 +21,11 @@ namespace DecentM.VideoPlayer
 
         public BaseVRCVideoPlayer player;
         public VideoPlayerEvents events;
-
         public Renderer screen;
 
-        private MaterialPropertyBlock fetchBlock;
+        protected virtual void _Start() { }
+
+        private MaterialPropertyBlock _fetchBlock;
 
         void Start()
         {
@@ -35,7 +36,9 @@ namespace DecentM.VideoPlayer
                 return;
             }
 
-            this.fetchBlock = new MaterialPropertyBlock();
+            this._fetchBlock = new MaterialPropertyBlock();
+
+            this._Start();
         }
 
         public float progressReportIntervalSeconds = 1;
@@ -53,6 +56,19 @@ namespace DecentM.VideoPlayer
                 this.HandleProgress();
                 this.clock = 0;
             }
+        }
+
+        public Texture GetScreenTexture()
+        {
+            Texture result = this.screen.material.GetTexture("_MainTex");
+
+            if (result == null)
+            {
+                this.screen.GetPropertyBlock(_fetchBlock);
+                result = _fetchBlock.GetTexture("_MainTex");
+            }
+
+            return result;
         }
 
         private void HandleProgress()
@@ -132,28 +148,6 @@ namespace DecentM.VideoPlayer
         public bool IsPlaying()
         {
             return this.player.IsPlaying;
-        }
-
-        public Texture GetScreenTexture()
-        {
-            Texture result;
-
-            this.screen.GetPropertyBlock(this.fetchBlock);
-
-            result = this.fetchBlock.GetTexture("_EmissionMap");
-
-            if (result == null)
-            {
-                result = this.screen.material.GetTexture("_EmissionMap");
-            }
-
-            return result;
-        }
-
-        public void SetScreenTexture(Texture texture)
-        {
-            this.fetchBlock.SetTexture("_EmissionMap", texture);
-            this.screen.material.SetTexture("_EmissionMap", texture);
         }
 
         public float GetDuration()

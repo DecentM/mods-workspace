@@ -32,6 +32,7 @@ namespace DecentM.VideoPlayer.Plugins
         private float fps = 0;
 
         private new Camera camera;
+        private bool enableSampleVisualisation = true;
 
         protected override void _Start()
         {
@@ -46,9 +47,8 @@ namespace DecentM.VideoPlayer.Plugins
 
             if (this.sampleVisualisationTexture != null && (this.sampleVisualisationTexture.width != this.camera.scaledPixelWidth || this.sampleVisualisationTexture.height != this.camera.scaledPixelHeight))
             {
-                Debug.LogError($"[ScreenAnalysisPlugin] Sample visualisation texture size must match the camera. Expected {this.camera.scaledPixelWidth}x{this.camera.scaledPixelHeight}, got {this.sampleVisualisationTexture.width}x{this.sampleVisualisationTexture.height}.");
-                this.enabled = false;
-                return;
+                Debug.LogWarning($"[ScreenAnalysisPlugin] Sample visualisation texture size must match the camera. Expected {this.camera.scaledPixelWidth}x{this.camera.scaledPixelHeight}, got {this.sampleVisualisationTexture.width}x{this.sampleVisualisationTexture.height}.");
+                this.enableSampleVisualisation = false;
             }
 
             this.camera.enabled = false;
@@ -258,7 +258,7 @@ namespace DecentM.VideoPlayer.Plugins
 
             this.UpdateHistoryValues(colours);
 
-            if (this.sampleVisualisationTexture != null)
+            if (this.sampleVisualisationTexture != null && this.enableSampleVisualisation)
             {
                 Color colour = this.GenerateRandomColour();
 

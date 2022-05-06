@@ -5,13 +5,12 @@ using VRC.Udon;
 
 namespace DecentM.VideoPlayer.Plugins
 {
-    public class RenderTextureOutput : VideoPlayerPlugin
+    public class TextureReferencePlugin : VideoPlayerPlugin
     {
-        public int targetFps = 30;
         public Material[] outputs;
 
         public string textureProperty = "_EmissionMap";
-        public string avProProperty = "_IsAVPro";
+        public string avProProperty = "_IsAVProInput";
 
         protected override void OnScreenTextureChange()
         {
@@ -22,7 +21,14 @@ namespace DecentM.VideoPlayer.Plugins
             foreach (Material material in this.outputs)
             {
                 material.SetTexture(this.textureProperty, videoPlayerTex);
-                material.SetInt(this.avProProperty, this.system.currentPlayerHandler.type == VideoPlayerHandlerType.AVPro ? 1 : 0);
+            }
+        }
+
+        protected override void OnPlayerSwitch(VideoPlayerHandlerType type)
+        {
+            foreach (Material material in this.outputs)
+            {
+                material.SetInt(this.avProProperty, type == VideoPlayerHandlerType.AVPro ? 1 : 0);
             }
         }
     }

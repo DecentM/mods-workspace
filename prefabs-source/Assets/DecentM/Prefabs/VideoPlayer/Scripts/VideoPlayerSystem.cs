@@ -12,7 +12,7 @@ namespace DecentM.VideoPlayer
         public VideoPlayerEvents events;
         public BasePlayerHandler[] playerHandlers;
         public AudioSource[] speakers;
-        public Renderer[] screens;
+        public ScreenHandler[] screens;
 
         public int fps = 30;
         public bool muted = false;
@@ -44,6 +44,28 @@ namespace DecentM.VideoPlayer
             this.PausePlayback();
             this.Seek(0);
             this.events.OnVideoPlayerInit();
+        }
+
+        [PublicAPI]
+        public int ScreenCount
+        {
+            get { return this.screens.Length; }
+        }
+
+        [PublicAPI]
+        public void RenderCurrentFrame(RenderTexture texture, int screenIndex)
+        {
+            if (this.screens == null || this.screens.Length == 0) return;
+            if (screenIndex >= this.screens.Length || screenIndex < 0) screenIndex = 0;
+
+            ScreenHandler screen = this.screens[screenIndex];
+            screen.RenderToRenderTexture(texture);
+        }
+
+        [PublicAPI]
+        public void RenderCurrentFrame(RenderTexture texture)
+        {
+            this.RenderCurrentFrame(texture, 0);
         }
 
         [PublicAPI]
@@ -122,6 +144,7 @@ namespace DecentM.VideoPlayer
             this.DisablePlayer(this.currentPlayerHandler);
             this.currentPlayerHandlerIndex = newIndex;
             this.EnablePlayer(this.currentPlayerHandler);
+            this.events.OnPlayerSwitch(this.currentPlayerHandler.type);
 
             return newIndex;
         }
@@ -211,10 +234,8 @@ namespace DecentM.VideoPlayer
         {
             if (this.screens.Length == 0) return 1f;
 
-            Renderer screen = this.screens[0];
-            Color color = screen.material.GetColor("_Color");
-
-            return (color.r + color.g + color.b) / 3;
+            ScreenHandler screen = this.screens[0];
+            return screen.GetBrightness();
         }
 
         [PublicAPI]
@@ -222,9 +243,9 @@ namespace DecentM.VideoPlayer
         {
             if (alpha < 0 || alpha > 1) return false;
 
-            foreach (Renderer screen in this.screens)
+            foreach (ScreenHandler screen in this.screens)
             {
-                screen.material.SetColor("_EmissionColor", new Color(alpha, alpha, alpha));
+                screen.SetBrightness(alpha);
             }
 
             this.events.OnBrightnessChange(alpha);

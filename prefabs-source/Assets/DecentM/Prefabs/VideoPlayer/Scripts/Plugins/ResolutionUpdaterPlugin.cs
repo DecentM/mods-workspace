@@ -14,14 +14,14 @@ namespace DecentM.VideoPlayer.Plugins
 
         public Vector2Int defaultResolution = new Vector2Int(1920, 1080);
 
-        private void ChangeScreenResolution(Renderer screen, float width, float height)
+        private void ChangeScreenResolution(ScreenHandler screen, float width, float height)
         {
             if (this.dynamicResolution)
             {
                 float aspectRatio = width / height;
 
-                screen.transform.localScale = new Vector3(screen.transform.localScale.x, screen.transform.localScale.x / aspectRatio, screen.transform.localScale.z);
-                screen.material.SetFloat("_TargetAspectRatio", aspectRatio);
+                screen.SetSize(new Vector2(screen.transform.localScale.x, screen.transform.localScale.x / aspectRatio));
+                screen.SetAspectRatio(aspectRatio);
             }
 
             this.events.OnScreenResolutionChange(screen, width, height);
@@ -33,7 +33,7 @@ namespace DecentM.VideoPlayer.Plugins
 
             if (videoTexture == null) return;
 
-            foreach (Renderer screen in this.system.screens)
+            foreach (ScreenHandler screen in this.system.screens)
             {
                 float w = videoTexture.width;
                 float h = videoTexture.height;

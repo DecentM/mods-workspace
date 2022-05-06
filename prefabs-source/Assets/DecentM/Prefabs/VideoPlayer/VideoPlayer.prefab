@@ -477,10 +477,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Hello and welcome to another coding adventure.
-
-    While I was messing
-    around with ray-tracing last  '
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 107b6ce4ce23a9e438e20054935c001e, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: 6952b117d4d6daa4484a525691b0d04d, type: 2}
@@ -507,7 +504,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 48
+  m_fontSize: 36
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -2223,7 +2220,7 @@ MonoBehaviour:
   renderMode: 1
   targetTexture: {fileID: 0}
   targetMaterialRenderer: {fileID: 7128736245404155829}
-  targetMaterialProperty: _EmissionMap
+  targetMaterialProperty: _MainTex
   aspectRatio: 2
   targetAudioSources:
   - {fileID: 6605304171337992003}
@@ -2588,7 +2585,7 @@ MonoBehaviour:
   speakers:
   - {fileID: 6605304171337992003}
   screens:
-  - {fileID: 5506587896146400139}
+  - {fileID: 0}
   fps: 15
   muted: 0
   volume: 1
@@ -3611,8 +3608,6 @@ MonoBehaviour:
   system: {fileID: 6605304171436077072}
   events: {fileID: 6605304172379286785}
   idleTexture: {fileID: 2800000, guid: 863acd2753267484f80d1b5d0e1c9622, type: 3}
-  unityPlayerMaterial: {fileID: 2100000, guid: 0b045fec2d99c7e4cb7059b63aa665fc, type: 2}
-  avproPlayerMaterial: {fileID: 2100000, guid: 18df059c3a2b4ae4585526051af2278a, type: 2}
 --- !u!114 &7128736243534412140
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4490,7 +4485,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   videoPlayer: {fileID: 6605304170921272112}
   materialIndex: 0
-  textureProperty: _EmissionMap
+  textureProperty: _MainTex
   useSharedMaterial: 0
 --- !u!1 &7128736244015735628
 GameObject:
@@ -7662,7 +7657,7 @@ MonoBehaviour:
   system: {fileID: 6605304171436077072}
   events: {fileID: 6605304172379286785}
   knownLivestreamHosts:
-  - https://twitch.tv
+  - twitch.tv
 --- !u!114 &7128736245374082904
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8024,6 +8019,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7128736245534455560}
+  - component: {fileID: 5512085942956211066}
+  - component: {fileID: 4376687678054885535}
   m_Layer: 0
   m_Name: Screen
   m_TagString: Untagged
@@ -8049,6 +8046,73 @@ Transform:
   m_Father: {fileID: 6605304171507725384}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!20 &5512085942956211066
+Camera:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7128736245534455561}
+  m_Enabled: 1
+  serializedVersion: 2
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
+  m_projectionMatrixMode: 1
+  m_GateFitMode: 2
+  m_FOVAxisMode: 0
+  m_SensorSize: {x: 36, y: 24}
+  m_LensShift: {x: 0, y: 0}
+  m_FocalLength: 50
+  m_NormalizedViewPortRect:
+    serializedVersion: 2
+    x: 0.03
+    y: 0.163
+    width: 1
+    height: 1
+  near clip plane: -0.01
+  far clip plane: 0.01
+  field of view: 26.991467
+  orthographic: 1
+  orthographic size: 1.076
+  m_Depth: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 2048
+  m_RenderingPath: -1
+  m_TargetTexture: {fileID: 0}
+  m_TargetDisplay: 0
+  m_TargetEye: 0
+  m_HDR: 0
+  m_AllowMSAA: 0
+  m_AllowDynamicResolution: 0
+  m_ForceIntoRT: 0
+  m_OcclusionCulling: 0
+  m_StereoConvergence: 10
+  m_StereoSeparation: 0.022
+--- !u!114 &4376687678054885535
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7128736245534455561}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37f1baacd54290d4abd1ecd18b591975, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  _udonSharpBackingUdonBehaviour: {fileID: 0}
+  screens:
+  - {fileID: 5506587896146400139}
 --- !u!1 &7128736245535667152
 GameObject:
   m_ObjectHideFlags: 0

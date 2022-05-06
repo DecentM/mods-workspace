@@ -1,11 +1,4 @@
-﻿using JetBrains.Annotations;
-using System;
-using UdonSharp;
-using UnityEngine;
-using VRC.SDK3.Components.Video;
-using VRC.SDKBase;
-using VRC.Udon;
-using TMPro;
+﻿using UnityEngine;
 
 namespace DecentM.VideoPlayer.Plugins
 {
@@ -13,20 +6,15 @@ namespace DecentM.VideoPlayer.Plugins
     {
         public Texture idleTexture;
 
-        public Material unityPlayerMaterial;
-        public Material avproPlayerMaterial;
-
         protected override void OnPlaybackStart(float duration)
         {
             Texture videoTexture = this.system.GetVideoTexture();
 
-            this.UpdateMaterial();
             this.SetTexture(videoTexture);
         }
 
         private void ShowIdleTexture()
         {
-            this.UpdateMaterial();
             this.SetTexture(idleTexture);
         }
 
@@ -45,23 +33,19 @@ namespace DecentM.VideoPlayer.Plugins
             this.ShowIdleTexture();
         }
 
-        private void UpdateMaterial()
+        protected override void OnPlayerSwitch(VideoPlayerHandlerType type)
         {
-            bool isAVPro = this.system.currentPlayerHandler.type == VideoPlayerHandlerType.AVPro;
-
-            foreach (Renderer screen in this.system.screens)
+            foreach (ScreenHandler screen in this.system.screens)
             {
-                screen.material = isAVPro ? this.avproPlayerMaterial : this.unityPlayerMaterial;
+                screen.SetIsAVPro(type == VideoPlayerHandlerType.AVPro);
             }
         }
 
-        [PublicAPI]
         public void SetTexture(Texture texture)
         {
-            foreach (Renderer screen in this.system.screens)
+            foreach (ScreenHandler screen in this.system.screens)
             {
-                // screen.material.SetTexture("_MainTex", texture);
-                screen.material.SetTexture("_EmissionMap", texture);
+                screen.SetTexture(texture);
             }
 
             this.events.OnScreenTextureChange();

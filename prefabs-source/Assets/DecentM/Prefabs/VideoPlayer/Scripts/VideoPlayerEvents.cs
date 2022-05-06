@@ -19,6 +19,7 @@ namespace DecentM.VideoPlayer
         OnFpsChange,
         OnScreenResolutionChange,
         OnScreenTextureChange,
+        OnPlayerSwitch,
 
         OnPlaybackStart,
         OnPlaybackStop,
@@ -33,7 +34,6 @@ namespace DecentM.VideoPlayer
         OnLoadRequested,
 
         OnAutoRetry,
-        OnAutoRetrySwitchPlayer,
         OnAutoRetryLoadTimeout,
         OnAutoRetryAbort,
         OnAutoRetryAllPlayersFailed,
@@ -86,7 +86,7 @@ namespace DecentM.VideoPlayer
             this.BroadcastEvent(VideoPlayerEvent.OnFpsChange, fps);
         }
 
-        public void OnScreenResolutionChange(Renderer screen, float width, float height)
+        public void OnScreenResolutionChange(ScreenHandler screen, float width, float height)
         {
             this.BroadcastEvent(VideoPlayerEvent.OnScreenResolutionChange, screen, width, height);
         }
@@ -141,6 +141,11 @@ namespace DecentM.VideoPlayer
             this.BroadcastEvent(VideoPlayerEvent.OnLoadError, videoError);
         }
 
+        public void OnPlayerSwitch(VideoPlayerHandlerType type)
+        {
+            this.BroadcastEvent(VideoPlayerEvent.OnPlayerSwitch, type);
+        }
+
         #endregion
 
         #region Plugins
@@ -148,11 +153,6 @@ namespace DecentM.VideoPlayer
         public void OnAutoRetry(int attempt)
         {
             this.BroadcastEvent(VideoPlayerEvent.OnAutoRetry, attempt);
-        }
-
-        public void OnAutoRetrySwitchPlayer()
-        {
-            this.BroadcastEvent(VideoPlayerEvent.OnAutoRetrySwitchPlayer);
         }
 
         public void OnAutoRetryLoadTimeout(int timeout)

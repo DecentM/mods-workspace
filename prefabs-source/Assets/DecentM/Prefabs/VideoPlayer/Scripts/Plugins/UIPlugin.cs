@@ -202,7 +202,7 @@ namespace DecentM.VideoPlayer.Plugins
             this.isLoading = false;
         }
 
-        protected override void OnAutoRetrySwitchPlayer()
+        protected override void OnPlayerSwitch(VideoPlayerHandlerType type)
         {
             this.status.text = "Trying with a different player...";
         }
@@ -409,7 +409,7 @@ namespace DecentM.VideoPlayer.Plugins
             this.urlInput.SetUrl(this.emptyUrl);
         }
 
-        protected override void OnScreenResolutionChange(Renderer screen, float width, float height)
+        protected override void OnScreenResolutionChange(ScreenHandler screen, float width, float height)
         {
             if (width / height != 16f / 9f)
             {
