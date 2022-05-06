@@ -10,13 +10,14 @@ namespace DecentM.VideoPlayer.Plugins
     public class ScreenAnalysisPlugin : VideoPlayerPlugin
     {
         public float targetFps = 30;
-        public float blackCutoff = 0.2f;
         public float historyLengthSeconds = 0.3333f;
+        public int sampleSize = 40;
+        public float sampleRandomisationFactor = 1f;
 
         private bool isRunning = false;
 
         public Texture2D fetchTexture;
-        public Texture2D outputTexture;
+        public Texture2D sampleVisualisationTexture;
 
         public Texture2D averageColourHistoryTexture;
         public Texture2D smoothedAverageColourHistoryTexture;
@@ -43,12 +44,19 @@ namespace DecentM.VideoPlayer.Plugins
                 return;
             }
 
+            if (this.sampleVisualisationTexture != null && (this.sampleVisualisationTexture.width != this.camera.scaledPixelWidth || this.sampleVisualisationTexture.height != this.camera.scaledPixelHeight))
+            {
+                Debug.LogError($"[ScreenAnalysisPlugin] Sample visualisation texture size must match the camera. Expected {this.camera.scaledPixelWidth}x{this.camera.scaledPixelHeight}, got {this.sampleVisualisationTexture.width}x{this.sampleVisualisationTexture.height}.");
+                this.enabled = false;
+                return;
+            }
+
             this.camera.enabled = false;
 
             this.Reset();
         }
 
-        private void Reset()
+        public void Reset()
         {
             int length = Mathf.CeilToInt(this.targetFps * this.historyLengthSeconds);
             this.averageHistory = new Color[length];
@@ -57,6 +65,7 @@ namespace DecentM.VideoPlayer.Plugins
             this.smoothedMostVibrantHistory = new Color[length];
             this.brightestHistory = new Color[length];
             this.smoothedBrightestHistory = new Color[length];
+            this.UpdateHistoryValues(new Color[] { Color.black });
         }
 
         private void LateUpdate()
@@ -148,15 +157,26 @@ namespace DecentM.VideoPlayer.Plugins
             return result;
         }
 
+        private Color GenerateRandomColour()
+        {
+            Color result = new Color();
+
+            result.r = UnityEngine.Random.Range(0.0f, 1.0f);
+            result.g = UnityEngine.Random.Range(0.0f, 1.0f);
+            result.b = UnityEngine.Random.Range(0.0f, 1.0f);
+
+            return result;
+        }
+
         private void ResizeFetchTexture(Texture2D outputTexture, Vector2Int oldSize)
         {
             float widthSkip = (float)oldSize.x / outputTexture.width;
             float heightSkip = (float)oldSize.y / outputTexture.height;
 
-            Vector2Int center = new Vector2Int(oldSize.x / 2, oldSize.y / 2);
-
             for (int i = 0; i < outputTexture.width * outputTexture.height; i++)
             {
+                int randomOffset = Mathf.FloorToInt(UnityEngine.Random.Range(0, Mathf.Min(oldSize.x, oldSize.y) / 2));
+                Vector2Int center = new Vector2Int(oldSize.x / 2 + randomOffset, oldSize.y / 2 + randomOffset);
                 Vector2Int writeCoords = GetCoordsForIndex(i, outputTexture.width);
 
                 Vector2Int rawReadCoords = new Vector2Int(Mathf.FloorToInt(writeCoords.x * widthSkip), Mathf.FloorToInt(writeCoords.y * heightSkip));
@@ -165,8 +185,49 @@ namespace DecentM.VideoPlayer.Plugins
                 fetchTexture.ReadPixels(new Rect(readCoords.x, readCoords.y, 1, 1), 0, 0);
                 Color colour = fetchTexture.GetPixel(0, 0);
 
-                outputTexture.SetPixel(writeCoords.x, outputTexture.height - writeCoords.y, colour);
+                outputTexture.SetPixel(writeCoords.x, outputTexture.height - writeCoords.y, colour == Color.black ? Color.red : colour);
             }
+        }
+
+        private Vector2Int[] GenerateSamplePoints(int sampleCount, Vector2Int size)
+        {
+            Vector2Int[] result = new Vector2Int[sampleCount];
+            int skip = size.x * size.y / sampleCount;
+            float twitchXMultiplier = size.x / sampleCount;
+            float twitchYMultiplier = size.y / sampleCount;
+
+            for (int i = 0; i < sampleCount; i++)
+            {
+                Vector2Int rawReadCoords = GetCoordsForIndex(i * skip, size.x);
+
+                float twitchX = UnityEngine.Random.Range(-1, 1) * twitchXMultiplier * this.sampleRandomisationFactor;
+                float twitchY = UnityEngine.Random.Range(-1, 1) * twitchYMultiplier * this.sampleRandomisationFactor;
+                Vector2Int readCoords = new Vector2Int(
+                    Mathf.Max(Mathf.Min(Mathf.RoundToInt(rawReadCoords.x + twitchX), size.x), 0),
+                    Mathf.Max(Mathf.Min(Mathf.RoundToInt(rawReadCoords.y + twitchY), size.y), 0)
+                );
+
+                result[i] = readCoords;
+            }
+
+            return result;
+        }
+
+        private Color[] SampleFetchTexture(Vector2Int[] samplePoints)
+        {
+            Color[] result = new Color[samplePoints.Length];
+
+            for (int i = 0; i < samplePoints.Length; i++)
+            {
+                Vector2Int readCoords = samplePoints[i];
+
+                fetchTexture.ReadPixels(new Rect(readCoords.x, readCoords.y, 1, 1), 0, 0);
+                Color colour = fetchTexture.GetPixel(0, 0);
+
+                result[i] = colour;
+            }
+
+            return result;
         }
 
         private void UpdateTexture(Texture2D texture, Color[] colours)
@@ -192,12 +253,26 @@ namespace DecentM.VideoPlayer.Plugins
 
         private void OnPostRender()
         {
-            this.ResizeFetchTexture(this.outputTexture, new Vector2Int(this.camera.scaledPixelWidth, this.camera.scaledPixelHeight));
+            Vector2Int[] samplePoints = this.GenerateSamplePoints(Mathf.Min(Mathf.Max(this.sampleSize, 1), 1000), new Vector2Int(this.camera.scaledPixelWidth, this.camera.scaledPixelHeight));
+            Color[] colours = SampleFetchTexture(samplePoints);
 
-            outputTexture.Apply();
+            this.UpdateHistoryValues(colours);
 
-            Color[] colours = this.outputTexture.GetPixels();
+            if (this.sampleVisualisationTexture != null)
+            {
+                Color colour = this.GenerateRandomColour();
 
+                foreach (Vector2Int point in samplePoints)
+                {
+                    this.sampleVisualisationTexture.SetPixel(point.x, point.y, colour);
+                }
+
+                this.sampleVisualisationTexture.Apply();
+            }
+        }
+
+        private void UpdateHistoryValues(Color[] colours)
+        {
             if (this.averageColourHistoryTexture != null)
             {
                 this.averageHistory = this.AddColourHistory(this.averageHistory, this.GetAverage(colours));
