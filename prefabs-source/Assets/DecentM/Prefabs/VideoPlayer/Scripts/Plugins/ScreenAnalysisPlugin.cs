@@ -321,6 +321,12 @@ namespace DecentM.VideoPlayer.Plugins
             this.Reset();
         }
 
+        protected override void OnLoadApproved(VRCUrl url)
+        {
+            this.isRunning = false;
+            this.Reset();
+        }
+
         protected override void OnPlaybackStart(float timestamp)
         {
             this.isRunning = true;

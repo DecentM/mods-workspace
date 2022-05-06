@@ -26,12 +26,13 @@ namespace DecentM.VideoPlayer
         OnPlaybackEnd,
         OnProgress,
 
-        OnUrlValidationFailed,
         OnLoadBegin,
         OnLoadReady,
         OnLoadError,
         OnUnload,
         OnLoadRequested,
+        OnLoadApproved,
+        OnLoadDenied,
 
         OnAutoRetry,
         OnAutoRetryLoadTimeout,
@@ -108,11 +109,6 @@ namespace DecentM.VideoPlayer
             this.BroadcastEvent(VideoPlayerEvent.OnProgress, timestamp, duration);
         }
 
-        public void OnUrlValidationFailed(VRCUrl url)
-        {
-            this.BroadcastEvent(VideoPlayerEvent.OnUrlValidationFailed, url);
-        }
-
         public void OnPlaybackEnd()
         {
             this.BroadcastEvent(VideoPlayerEvent.OnPlaybackEnd);
@@ -126,6 +122,16 @@ namespace DecentM.VideoPlayer
         public void OnLoadRequested(VRCUrl url)
         {
             this.BroadcastEvent(VideoPlayerEvent.OnLoadRequested, url);
+        }
+
+        public void OnLoadApproved(VRCUrl url)
+        {
+            this.BroadcastEvent(VideoPlayerEvent.OnLoadApproved, url);
+        }
+
+        public void OnLoadDenied(VRCUrl url, string reason)
+        {
+            this.BroadcastEvent(VideoPlayerEvent.OnLoadDenied, url, reason);
         }
 
         public void OnLoadReady(float duration)

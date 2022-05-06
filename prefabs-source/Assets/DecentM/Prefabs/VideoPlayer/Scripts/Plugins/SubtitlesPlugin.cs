@@ -16,11 +16,6 @@ namespace DecentM.VideoPlayer.Plugins
             else this.SeekToTimestamp(Mathf.FloorToInt(timestamp));
         }
 
-        protected override void OnLoadRequested(VRCUrl url)
-        {
-            this.Reset();
-        }
-
         protected override void OnUnload()
         {
             this.Reset();

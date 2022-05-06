@@ -27,7 +27,6 @@ namespace DecentM.VideoPlayer.Plugins
         protected virtual void OnPlaybackStop(float timestamp) { }
         protected virtual void OnPlaybackEnd() { }
         protected virtual void OnProgress(float timestamp, float duration) { }
-        protected virtual void OnUrlValidationFailed(VRCUrl url) { }
 
         protected virtual void OnLoadBegin(VRCUrl url) { }
         protected virtual void OnLoadBegin() { }
@@ -35,6 +34,8 @@ namespace DecentM.VideoPlayer.Plugins
         protected virtual void OnLoadError(VideoError videoError) { }
         protected virtual void OnUnload() { }
         protected virtual void OnLoadRequested(VRCUrl url) { }
+        protected virtual void OnLoadApproved(VRCUrl url) { }
+        protected virtual void OnLoadDenied(VRCUrl url, string reason) { }
 
         protected virtual void OnAutoRetry(int attempt) { }
         protected virtual void OnAutoRetryLoadTimeout(int timeout) { }
@@ -83,6 +84,21 @@ namespace DecentM.VideoPlayer.Plugins
                     {
                         VRCUrl url = (VRCUrl)data[0];
                         this.OnLoadRequested(url);
+                        return;
+                    }
+
+                case VideoPlayerEvent.OnLoadApproved:
+                    {
+                        VRCUrl url = (VRCUrl)data[0];
+                        this.OnLoadApproved(url);
+                        return;
+                    }
+
+                case VideoPlayerEvent.OnLoadDenied:
+                    {
+                        VRCUrl url = (VRCUrl)data[0];
+                        string reason = (string)data[1];
+                        this.OnLoadDenied(url, reason);
                         return;
                     }
 
@@ -172,13 +188,6 @@ namespace DecentM.VideoPlayer.Plugins
                         float timestamp = (float)data[0];
                         float duration = (float)data[1];
                         this.OnProgress(timestamp, duration);
-                        return;
-                    }
-
-                case VideoPlayerEvent.OnUrlValidationFailed:
-                    {
-                        VRCUrl url = (VRCUrl)data[0];
-                        this.OnUrlValidationFailed(url);
                         return;
                     }
 

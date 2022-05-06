@@ -52,7 +52,7 @@ namespace DecentM.VideoPlayer.Plugins
             string[][] subtitles = (string[][])item[11];
 
             this.playlist.textureUpdater.SetTexture(thumbnail.texture);
-            this.system.LoadVideo(url);
+            this.system.RequestVideo(url);
             this.events.OnMetadataChange(title, uploader, platform, views, likes, resolution, fps, description, duration, subtitles);
         }
     }

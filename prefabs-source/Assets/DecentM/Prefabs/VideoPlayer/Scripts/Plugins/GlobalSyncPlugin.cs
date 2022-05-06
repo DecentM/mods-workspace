@@ -95,13 +95,7 @@ namespace DecentM.VideoPlayer.Plugins
 
             if (Networking.GetOwner(this.gameObject) != Networking.LocalPlayer)
             {
-                // If a non-owner somehow has a different URL loaded (via a playlist probably)
-                // we unload that video and replace it with the synced URL
-                if (this.url != null && url.ToString() != this.url.ToString())
-                {
-                    this.system.UnloadVideo();
-                    this.system.LoadVideo(this.url);
-                }
+                this.events.OnLoadDenied(url, "Only the player owner can change the URL");
                 return;
             }
 

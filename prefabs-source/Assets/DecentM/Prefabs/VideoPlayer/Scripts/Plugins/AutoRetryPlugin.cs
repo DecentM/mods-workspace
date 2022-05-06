@@ -41,10 +41,10 @@ namespace DecentM.VideoPlayer.Plugins
                 return;
             }
 
-            this.system.LoadVideo(url);
+            this.system.RequestVideo(url);
         }
 
-        protected override void OnLoadRequested(VRCUrl url)
+        protected override void OnLoadApproved(VRCUrl url)
         {
             this.timeoutClock = 0;
             this.waitingForLoad = true;
@@ -64,7 +64,7 @@ namespace DecentM.VideoPlayer.Plugins
                 case VideoError.AccessDenied:
                     this.timeoutClock = 0;
                     this.failures = 0;
-                    this.waitingForLoad = false;
+                    this.events.OnAutoRetryAbort();
                     return;
             }
 
@@ -76,7 +76,8 @@ namespace DecentM.VideoPlayer.Plugins
             {
                 this.failures = 0;
 
-                // IF the next player handler index is 0, it means we've gone around all of them
+                // If the next player handler index is 0, it means we've gone around all of them
+                // TODO: This above statement isn't true if we didn't start playback using the first player
                 if (this.system.NextPlayerHandler() == 0)
                 {
                     if (abortAfterAllPlayersFailed)
@@ -100,6 +101,13 @@ namespace DecentM.VideoPlayer.Plugins
         protected override void OnLoadReady(float duration)
         {
             // Reset the failure count after a video loads successfully
+            this.failures = 0;
+            this.waitingForLoad = false;
+        }
+
+        protected override void OnUnload()
+        {
+            this.timeoutClock = 0;
             this.failures = 0;
             this.waitingForLoad = false;
         }

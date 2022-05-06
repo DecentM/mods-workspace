@@ -215,6 +215,11 @@ namespace DecentM.VideoPlayer.Plugins
 
         protected override void OnLoadRequested(VRCUrl url)
         {
+            this.status.text = "Checking URL...";
+        }
+
+        protected override void OnLoadApproved(VRCUrl url)
+        {
             this.ClearMetadata();
             this.isLoading = true;
             this.status.text = "Waiting for video player...";
@@ -237,9 +242,13 @@ namespace DecentM.VideoPlayer.Plugins
             this.RenderScreen(0);
         }
 
-        protected override void OnUrlValidationFailed(VRCUrl url)
+        protected override void OnLoadDenied(VRCUrl url, string reason)
         {
             this.urlInput.SetUrl(this.emptyUrl);
+
+            // TODO Display the reason to the user (via a notification of some sort?)
+            // (the status text isn't visible at this time, because the URL input field is shown)
+            this.status.text = reason; 
         }
 
         private void StoppedScreen(float duration)
@@ -554,7 +563,7 @@ namespace DecentM.VideoPlayer.Plugins
 
         public void OnUrlInput()
         {
-            this.system.LoadVideo(this.urlInput.GetUrl());
+            this.system.RequestVideo(this.urlInput.GetUrl());
         }
 
         public void OnOwnershipButton()

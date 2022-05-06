@@ -46,12 +46,13 @@ namespace DecentM.VideoPlayer.Plugins
         protected override void OnFpsChange(int fps) { this.Log(nameof(OnFpsChange), fps.ToString()); }
         protected override void OnScreenResolutionChange(ScreenHandler screen, float width, float height) { this.Log(nameof(OnScreenResolutionChange), screen.name, width.ToString(), height.ToString()); }
         protected override void OnLoadRequested(VRCUrl url) { this.Log(nameof(OnLoadRequested), "(with URL)"); }
+        protected override void OnLoadApproved(VRCUrl url) { this.Log(nameof(OnLoadApproved), "(with URL)"); }
+        protected override void OnLoadDenied(VRCUrl url, string reason) { this.Log(nameof(OnLoadDenied), $"(with URL) {reason}"); }
         protected override void OnOwnershipChanged(int previousOwnerId, VRCPlayerApi nextOwner) { this.Log(nameof(OnOwnershipChanged), previousOwnerId.ToString(), nextOwner.playerId.ToString()); }
         protected override void OnOwnershipRequested() { this.Log(nameof(OnOwnershipRequested)); }
         protected override void OnOwnershipSecurityChanged(bool locked) { this.Log(nameof(OnOwnershipSecurityChanged), locked.ToString()); }
         protected override void OnScreenTextureChange() { this.Log(nameof(OnScreenTextureChange)); }
         protected override void OnRemotePlayerLoaded(int[] loadedPlayers) { this.Log(nameof(OnRemotePlayerLoaded), loadedPlayers.Length.ToString()); }
-        protected override void OnUrlValidationFailed(VRCUrl url) { this.Log(nameof(OnUrlValidationFailed), "(with URL)"); }
         protected override void OnUIVisibilityChange(bool visible) { this.Log(nameof(OnUIVisibilityChange), visible.ToString()); }
         protected override void OnAutoRetryAllPlayersFailed() { this.Log(nameof(OnAutoRetryAllPlayersFailed)); }
         protected override void OnMetadataChange(string title, string uploader, string siteName, int viewCount, int likeCount, string resolution, int fps, string description, string duration, string[][] subtitles) { this.Log(nameof(OnMetadataChange), viewCount.ToString(), likeCount.ToString(), fps.ToString(), duration, subtitles.Length.ToString());  }
