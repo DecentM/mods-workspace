@@ -43,6 +43,8 @@ namespace DecentM.VideoPlayer.Plugins
 
         public void SetTexture(Texture texture)
         {
+            if (texture == null) return;
+
             foreach (ScreenHandler screen in this.system.screens)
             {
                 screen.SetTexture(texture);
