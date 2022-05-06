@@ -49,6 +49,8 @@ namespace DecentM.VideoPlayer
         OnMetadataChange,
         OnSubtitleLanguageOptionsChange,
         OnSubtitleLanguageRequested,
+        OnSubtitleRender,
+        OnSubtitleClear,
     }
 
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
@@ -226,6 +228,16 @@ namespace DecentM.VideoPlayer
                 duration,
                 subtitles
             );
+        }
+
+        public void OnSubtitleRender(string text)
+        {
+            this.BroadcastEvent(VideoPlayerEvent.OnSubtitleRender, text);
+        }
+
+        public void OnSubtitleClear()
+        {
+            this.BroadcastEvent(VideoPlayerEvent.OnSubtitleClear);
         }
 
         public void OnSubtitleLanguageOptionsChange(string[] newOptions)

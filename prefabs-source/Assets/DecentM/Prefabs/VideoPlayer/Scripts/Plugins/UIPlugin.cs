@@ -57,6 +57,7 @@ namespace DecentM.VideoPlayer.Plugins
         public TextMeshProUGUI descriptionSlot;
         public TextMeshProUGUI viewCountSlot;
         public TextMeshProUGUI likeCountSlot;
+        public TextMeshProUGUI subtitleSlot;
 
         [Space]
         public Button ownershipButton;
@@ -407,6 +408,16 @@ namespace DecentM.VideoPlayer.Plugins
             this.status.text = "Stopped";
             this.RenderScreen(this.system.GetDuration());
             this.urlInput.SetUrl(this.emptyUrl);
+        }
+
+        protected override void OnSubtitleRender(string text)
+        {
+            this.subtitleSlot.text = text;
+        }
+
+        protected override void OnSubtitleClear()
+        {
+            this.subtitleSlot.text = "";
         }
 
         protected override void OnScreenResolutionChange(ScreenHandler screen, float width, float height)

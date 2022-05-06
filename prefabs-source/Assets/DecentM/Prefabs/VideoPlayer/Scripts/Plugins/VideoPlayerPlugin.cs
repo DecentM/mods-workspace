@@ -48,6 +48,8 @@ namespace DecentM.VideoPlayer.Plugins
         protected virtual void OnRemotePlayerLoaded(int[] loadedPlayers) { }
 
         protected virtual void OnUIVisibilityChange(bool visible) { }
+        protected virtual void OnSubtitleRender(string text) { }
+        protected virtual void OnSubtitleClear() { }
         protected virtual void OnSubtitleLanguageOptionsChange(string[] newOptions) { }
         protected virtual void OnSubtitleLanguageRequested(string language) { }
 
@@ -284,6 +286,19 @@ namespace DecentM.VideoPlayer.Plugins
                         string[][] subtitles = (string[][])data[9];
 
                         this.OnMetadataChange(title, uploader, siteName, viewCount, likeCount, resolution, fps, description, duration, subtitles);
+                        return;
+                    }
+
+                case VideoPlayerEvent.OnSubtitleRender:
+                    {
+                        string text = (string)data[0];
+                        this.OnSubtitleRender(text);
+                        return;
+                    }
+
+                case VideoPlayerEvent.OnSubtitleClear:
+                    {
+                        this.OnSubtitleClear();
                         return;
                     }
 
