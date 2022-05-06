@@ -12,7 +12,6 @@ namespace DecentM.VideoPlayer.Plugins
         public float targetFps = 30;
         public float blackCutoff = 0.2f;
         public float historyLengthSeconds = 0.3333f;
-        public float brightnessOffset = 0.15f;
 
         private bool isRunning = false;
 
@@ -20,12 +19,13 @@ namespace DecentM.VideoPlayer.Plugins
         public Texture2D outputTexture;
 
         public Texture2D averageColourHistoryTexture;
+        public Texture2D smoothedAverageColourHistoryTexture;
 
         public Texture2D mostVibrantColourHistoryTexture;
-        public Texture2D averageMostVibrantColourHistoryTexture;
+        public Texture2D smoothedMostVibrantColourHistoryTexture;
 
         public Texture2D brightestColourHistoryTexture;
-        public Texture2D averageBrightestColourHistoryTexture;
+        public Texture2D smoothedBrightestColourHistoryTexture;
 
         private float elapsed = 0;
         private float fps = 0;
@@ -52,10 +52,11 @@ namespace DecentM.VideoPlayer.Plugins
         {
             int length = Mathf.CeilToInt(this.targetFps * this.historyLengthSeconds);
             this.averageHistory = new Color[length];
+            this.smoothedAverageHistory = new Color[length];
             this.mostVibrantHistory = new Color[length];
-            this.averageMostVibrantHistory = new Color[length];
+            this.smoothedMostVibrantHistory = new Color[length];
             this.brightestHistory = new Color[length];
-            this.averageBrightestHistory = new Color[length];
+            this.smoothedBrightestHistory = new Color[length];
         }
 
         private void LateUpdate()
@@ -183,10 +184,11 @@ namespace DecentM.VideoPlayer.Plugins
         }
 
         private Color[] averageHistory;
+        private Color[] smoothedAverageHistory;
         private Color[] brightestHistory;
-        private Color[] averageBrightestHistory;
+        private Color[] smoothedBrightestHistory;
         private Color[] mostVibrantHistory;
-        private Color[] averageMostVibrantHistory;
+        private Color[] smoothedMostVibrantHistory;
 
         private void OnPostRender()
         {
@@ -202,16 +204,22 @@ namespace DecentM.VideoPlayer.Plugins
                 this.UpdateTexture(this.averageColourHistoryTexture, this.averageHistory);
             }
 
+            if (this.smoothedAverageColourHistoryTexture != null)
+            {
+                this.smoothedAverageHistory = this.AddColourHistory(this.smoothedAverageHistory, this.GetAverage(this.averageHistory));
+                this.UpdateTexture(this.smoothedAverageColourHistoryTexture, this.smoothedAverageHistory);
+            }
+
             if (this.brightestColourHistoryTexture != null)
             {
                 this.brightestHistory = this.AddColourHistory(this.brightestHistory, this.GetBrightest(colours));
                 this.UpdateTexture(this.brightestColourHistoryTexture, this.brightestHistory);
             }
 
-            if (this.averageBrightestColourHistoryTexture != null)
+            if (this.smoothedBrightestColourHistoryTexture != null)
             {
-                this.averageBrightestHistory = this.AddColourHistory(this.averageBrightestHistory, this.GetAverage(this.brightestHistory));
-                this.UpdateTexture(this.averageBrightestColourHistoryTexture, this.averageBrightestHistory);
+                this.smoothedBrightestHistory = this.AddColourHistory(this.smoothedBrightestHistory, this.GetAverage(this.brightestHistory));
+                this.UpdateTexture(this.smoothedBrightestColourHistoryTexture, this.smoothedBrightestHistory);
             }
 
             if (this.mostVibrantColourHistoryTexture != null)
@@ -220,10 +228,10 @@ namespace DecentM.VideoPlayer.Plugins
                 this.UpdateTexture(this.mostVibrantColourHistoryTexture, this.mostVibrantHistory);
             }
 
-            if (this.averageMostVibrantColourHistoryTexture != null)
+            if (this.smoothedMostVibrantColourHistoryTexture != null)
             {
-                this.averageMostVibrantHistory = this.AddColourHistory(this.averageMostVibrantHistory, this.GetAverage(this.mostVibrantHistory));
-                this.UpdateTexture(this.averageMostVibrantColourHistoryTexture, this.averageMostVibrantHistory);
+                this.smoothedMostVibrantHistory = this.AddColourHistory(this.smoothedMostVibrantHistory, this.GetAverage(this.mostVibrantHistory));
+                this.UpdateTexture(this.smoothedMostVibrantColourHistoryTexture, this.smoothedMostVibrantHistory);
             }
         }
 
