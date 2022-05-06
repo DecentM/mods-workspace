@@ -7,25 +7,26 @@ using VRC.Udon;
 
 namespace DecentM.VideoPlayer.Plugins
 {
-    public class RealtimeLightOutput : VideoPlayerPlugin
+    public class ScreenAnalysisPlugin : VideoPlayerPlugin
     {
         public float targetFps = 30;
         public float blackCutoff = 0.2f;
-        public float lightFadeTimeSeconds = 0.5f;
+        public float historyLengthSeconds = 0.3333f;
         public float brightnessOffset = 0.15f;
-        public bool enableSmoothing = true;
-        public bool applyOutputTexture = true;
 
         private bool isRunning = false;
 
         public Texture2D fetchTexture;
-        public Texture2D historyTexture;
         public Texture2D outputTexture;
-        public Texture2D smoothedAverageColourTexture;
-        public Texture2D primaryColourTexture;
-        public Texture2D brightestRecentColourTexture;
 
-        private Light[] lights;
+        public Texture2D averageColourHistoryTexture;
+
+        public Texture2D mostVibrantColourHistoryTexture;
+        public Texture2D averageMostVibrantColourHistoryTexture;
+
+        public Texture2D brightestColourHistoryTexture;
+        public Texture2D averageBrightestColourHistoryTexture;
+
         private float elapsed = 0;
         private float fps = 0;
 
@@ -37,14 +38,24 @@ namespace DecentM.VideoPlayer.Plugins
 
             if (this.fetchTexture == null)
             {
-                Debug.LogError($"Missing fetch texture!");
+                Debug.LogError($"[ScreenAnalysisPlugin] Missing fetch texture!");
                 this.enabled = false;
                 return;
             }
 
-            this.previousColours = new Color[Mathf.CeilToInt(this.targetFps * this.lightFadeTimeSeconds)];
-            this.lights = GetComponentsInChildren<Light>();
             this.camera.enabled = false;
+
+            this.Reset();
+        }
+
+        private void Reset()
+        {
+            int length = Mathf.CeilToInt(this.targetFps * this.historyLengthSeconds);
+            this.averageHistory = new Color[length];
+            this.mostVibrantHistory = new Color[length];
+            this.averageMostVibrantHistory = new Color[length];
+            this.brightestHistory = new Color[length];
+            this.averageBrightestHistory = new Color[length];
         }
 
         private void LateUpdate()
@@ -58,29 +69,52 @@ namespace DecentM.VideoPlayer.Plugins
             camera.Render();
         }
 
-        private float GetProximity(Color colourA, Color colourB)
+        private float GetVibrance(Color colour)
         {
-            return (colourB.r - colourA.r) + (colourB.b - colourA.b) + (colourB.b - colourA.b);
+            float rgDiff = Mathf.Abs(colour.r - colour.g);
+            float rbDiff = Mathf.Abs(colour.r - colour.b);
+            float gbDiff = Mathf.Abs(colour.g - colour.b);
+
+            return (rgDiff + rbDiff + gbDiff) / 3;
         }
 
-        private Color[] previousColours;
+        private Color GetMostVibrant(Color[] colours)
+        {
+            Color result = Color.black;
+
+            foreach (Color colour in colours)
+            {
+                float vibrance = GetVibrance(colour);
+                if (vibrance > GetVibrance(result)) result = colour;
+            }
+
+            return result;
+        }
+
+        private float GetBrightness(Color colour)
+        {
+            return (colour.r + colour.g + colour.b) / 3;
+        }
+
+        private Color GetBrightest(Color[] colours)
+        {
+            Color result = Color.black;
+
+            foreach (Color colour in colours)
+            {
+                float brightness = GetBrightness(colour);
+                if (brightness > GetBrightness(result)) result = colour;
+            }
+
+            return result;
+        }
 
         private Color[] AddColourHistory(Color[] history, Color colour)
         {
-            Color[] tmp = new Color[this.previousColours.Length];
-            Array.Copy(this.previousColours, 0, tmp, 1, this.previousColours.Length - 1);
+            Color[] tmp = new Color[history.Length];
+            Array.Copy(history, 0, tmp, 1, history.Length - 1);
             tmp[0] = colour;
             return tmp;
-        }
-
-        private bool IsAboveCutoff(Color colour)
-        {
-            return colour.r + colour.g + colour.b > this.blackCutoff;
-        }
-
-        private Color AdjustBrightness(Color colour, float offset)
-        {
-            return new Color(colour.r + offset, colour.g + offset, colour.b + offset, colour.a);
         }
 
         private Color GetAverage(Color[] colors)
@@ -148,59 +182,60 @@ namespace DecentM.VideoPlayer.Plugins
             texture.Apply();
         }
 
-        private void SetLights(Color colour)
-        {
-            foreach (Light light in this.lights)
-            {
-                light.color = this.AdjustBrightness(colour, this.brightnessOffset);
-            }
-        }
+        private Color[] averageHistory;
+        private Color[] brightestHistory;
+        private Color[] averageBrightestHistory;
+        private Color[] mostVibrantHistory;
+        private Color[] averageMostVibrantHistory;
 
         private void OnPostRender()
         {
             this.ResizeFetchTexture(this.outputTexture, new Vector2Int(this.camera.scaledPixelWidth, this.camera.scaledPixelHeight));
 
-            if (this.applyOutputTexture) outputTexture.Apply();
+            outputTexture.Apply();
 
             Color[] colours = this.outputTexture.GetPixels();
-            Color average;
 
-            if (this.enableSmoothing)
+            if (this.averageColourHistoryTexture != null)
             {
-                this.previousColours = this.AddColourHistory(this.previousColours, this.GetAverage(colours));
-                if (this.historyTexture != null) this.UpdateTexture(this.historyTexture, this.previousColours);
-
-                average = this.GetAverage(this.previousColours);
-            }
-            else
-            {
-                average = this.GetAverage(colours);
+                this.averageHistory = this.AddColourHistory(this.averageHistory, this.GetAverage(colours));
+                this.UpdateTexture(this.averageColourHistoryTexture, this.averageHistory);
             }
 
-            bool lightsOn = this.IsAboveCutoff(average);
-            this.ToggleLights(lightsOn);
-            if (!lightsOn) return;
-            this.SetLights(average);
-        }
-
-        private void ToggleLights(bool state)
-        {
-            foreach (Light light in this.lights)
+            if (this.brightestColourHistoryTexture != null)
             {
-                light.enabled = state;
+                this.brightestHistory = this.AddColourHistory(this.brightestHistory, this.GetBrightest(colours));
+                this.UpdateTexture(this.brightestColourHistoryTexture, this.brightestHistory);
+            }
+
+            if (this.averageBrightestColourHistoryTexture != null)
+            {
+                this.averageBrightestHistory = this.AddColourHistory(this.averageBrightestHistory, this.GetAverage(this.brightestHistory));
+                this.UpdateTexture(this.averageBrightestColourHistoryTexture, this.averageBrightestHistory);
+            }
+
+            if (this.mostVibrantColourHistoryTexture != null)
+            {
+                this.mostVibrantHistory = this.AddColourHistory(this.mostVibrantHistory, this.GetMostVibrant(colours));
+                this.UpdateTexture(this.mostVibrantColourHistoryTexture, this.mostVibrantHistory);
+            }
+
+            if (this.averageMostVibrantColourHistoryTexture != null)
+            {
+                this.averageMostVibrantHistory = this.AddColourHistory(this.averageMostVibrantHistory, this.GetAverage(this.mostVibrantHistory));
+                this.UpdateTexture(this.averageMostVibrantColourHistoryTexture, this.averageMostVibrantHistory);
             }
         }
 
         protected override void OnMetadataChange(string title, string uploader, string siteName, int viewCount, int likeCount, string resolution, int fps, string description, string duration, string[][] subtitles)
         {
             this.fps = fps <= 0 ? this.targetFps : Mathf.Min(fps, targetFps);
-            this.previousColours = new Color[Mathf.CeilToInt(this.fps * this.lightFadeTimeSeconds)];
         }
 
         protected override void OnPlaybackEnd()
         {
             this.isRunning = false;
-            this.ToggleLights(false);
+            this.Reset();
         }
 
         protected override void OnPlaybackStart(float timestamp)
@@ -216,7 +251,7 @@ namespace DecentM.VideoPlayer.Plugins
         protected override void OnUnload()
         {
             this.isRunning = false;
-            this.ToggleLights(false);
+            this.Reset();
         }
     }
 }
