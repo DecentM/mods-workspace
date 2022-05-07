@@ -295,6 +295,7 @@ namespace DecentM.VideoPlayer
             void OnFinish()
             {
                 AsyncProgress.Clear();
+                this.BakeMetadata();
             }
 
             VideoMetadataStore.Refresh(playlist.urls.Select(url => url[0].ToString()).ToArray(), (value) => OnProgress("metadata", value), () =>
