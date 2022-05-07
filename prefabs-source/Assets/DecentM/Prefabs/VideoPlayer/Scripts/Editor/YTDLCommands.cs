@@ -76,16 +76,22 @@ namespace DecentM.EditorTools
             });
         }
 
+        private static bool IsError(ProcessResult result)
+        {
+            if (string.IsNullOrEmpty(result.stderr)) return false;
+            if (result.stderr.Contains("Retrying")) return false;
+
+            Debug.LogWarning(result.stderr);
+            Debug.LogWarning($"yt-dlp has outputted an error, results may be incomplete.");
+
+            return true;
+        }
+
         public static IEnumerator GetVideoUrlEnumerator(string url, int resolution, Action<string> OnSuccess)
         {
             void OnFinish(ProcessResult result)
             {
-                if (!string.IsNullOrEmpty(result.stderr))
-                {
-                    Debug.LogWarning(result.stderr);
-                    Debug.LogWarning($"yt-dlp has outputted an error, ignoring results for {url}");
-                    return;
-                }
+                if (IsError(result)) return;
 
                 OnSuccess(result.stdout);
             }
@@ -112,12 +118,7 @@ namespace DecentM.EditorTools
         {
             void OnFinish(ProcessResult result)
             {
-                if (!string.IsNullOrEmpty(result.stderr))
-                {
-                    Debug.LogWarning(result.stderr);
-                    Debug.LogWarning($"yt-dlp has outputted an error, ignoring results for {url}");
-                    return;
-                }
+                if (IsError(result)) return;
 
                 OnSuccess(JsonUtility.FromJson<YTDLVideoJson>(result.stdout));
             }
@@ -134,12 +135,7 @@ namespace DecentM.EditorTools
         {
             void OnFinish(ProcessResult result)
             {
-                if (!string.IsNullOrEmpty(result.stderr))
-                {
-                    Debug.LogWarning(result.stderr);
-                    Debug.LogWarning($"yt-dlp has outputted an error, ignoring results for {url}");
-                    return;
-                }
+                if (IsError(result)) return;
 
                 OnSuccess(JsonUtility.FromJson<YTDLFlatPlaylistJson>(result.stdout));
             }
@@ -156,12 +152,7 @@ namespace DecentM.EditorTools
         {
             void OnFinish(ProcessResult result)
             {
-                if (!string.IsNullOrEmpty(result.stderr))
-                {
-                    Debug.LogWarning(result.stderr);
-                    Debug.LogWarning($"yt-dlp has outputted an error, ignoring results for {url}");
-                    return;
-                }
+                if (IsError(result)) return;
             }
 
             string arguments = autoSubs
@@ -180,12 +171,7 @@ namespace DecentM.EditorTools
         {
             void OnFinish(ProcessResult result)
             {
-                if (!string.IsNullOrEmpty(result.stderr))
-                {
-                    Debug.LogWarning(result.stderr);
-                    Debug.LogWarning($"yt-dlp has outputted an error, ignoring results for {url}");
-                    return;
-                }
+                if (IsError(result)) return;
 
                 OnSuccess(JsonUtility.FromJson<YTDLVideoJson>(result.stdout));
             }
@@ -202,12 +188,7 @@ namespace DecentM.EditorTools
         {
             void OnFinish(ProcessResult result)
             {
-                if (!string.IsNullOrEmpty(result.stderr))
-                {
-                    Debug.LogWarning(result.stderr);
-                    Debug.LogWarning($"yt-dlp has outputted an error, ignoring results for {url}");
-                    return;
-                }
+                if (IsError(result)) return;
             }
 
             return Parallelism.WaitForCallback((callback) => ProcessManager.RunProcess(
@@ -222,12 +203,7 @@ namespace DecentM.EditorTools
         {
             void OnFinish(ProcessResult result)
             {
-                if (!string.IsNullOrEmpty(result.stderr))
-                {
-                    Debug.LogWarning(result.stderr);
-                    Debug.LogWarning($"yt-dlp has outputted an error, ignoring results for {url}");
-                    return;
-                }
+                if (IsError(result)) return;
             }
 
             return Parallelism.WaitForCallback((callback) => ProcessManager.RunProcess(

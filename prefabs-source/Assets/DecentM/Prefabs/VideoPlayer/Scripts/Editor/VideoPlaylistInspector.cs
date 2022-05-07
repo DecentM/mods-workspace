@@ -246,15 +246,13 @@ namespace DecentM.VideoPlayer
         {
             VideoPlaylist playlist = (VideoPlaylist)target;
 
-            /* if (jsonOrNull == null)
+            if (jsonOrNull as YTDLFlatPlaylistJson? == null)
             {
                 EditorUtility.DisplayDialog("Import error", "Could not retrieve videos from this playlist. Make sure the URL points to a playlist and not just a video", "OK");
                 return;
-            } */
+            }
 
             YTDLFlatPlaylistJson json = (YTDLFlatPlaylistJson)jsonOrNull;
-
-            Debug.Log($"[{Thread.CurrentThread.Name}] Got {json.entries.Length} playlist videos");
 
             if (playlist.urls.Length != 0)
             {
@@ -281,7 +279,6 @@ namespace DecentM.VideoPlayer
         private void ImportPlaylist()
         {
             GUI.FocusControl(null);
-            Debug.Log($"[{Thread.CurrentThread.Name}] Getting playlist videos");
             DCoroutine.Start(YTDLCommands.GetPlaylistVideos(this.importPlaylistUrl, this.ImportPlaylistCallback));
         }
 
