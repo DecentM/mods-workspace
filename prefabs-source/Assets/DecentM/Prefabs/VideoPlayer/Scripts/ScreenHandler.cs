@@ -25,6 +25,7 @@ namespace DecentM.VideoPlayer
 
             this.isLocked = true;
             this.camera.enabled = false;
+            this.camera.forceIntoRenderTexture = true;
             this.camera.targetTexture = texture;
             this.camera.Render();
             return true;
