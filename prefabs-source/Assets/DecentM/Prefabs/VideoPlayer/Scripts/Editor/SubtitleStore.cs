@@ -63,8 +63,8 @@ namespace DecentM.EditorTools
             try
             {
                 files = Directory.GetFiles($"{EditorAssets.SubtitleCacheFolder}", "*.*", SearchOption.AllDirectories)
-                .Where(name => name.EndsWith(".srt") || name.EndsWith(".vtt"))
-                .ToList();
+                    .Where(name => name.EndsWith(".srt") || name.EndsWith(".vtt"))
+                    .ToList();
             } catch (Exception ex)
             {
                 if (!(ex is DirectoryNotFoundException))
@@ -147,7 +147,7 @@ namespace DecentM.EditorTools
             return YTDLCommands.DownloadSubtitles(url, path, false);
         }
 
-        private static IEnumerator FetchInParallel(List<string> urls)
+        private static IEnumerator FetchInParallel(List<string> urls, Action OnFinish)
         {
             List<DCoroutine> coroutines = new List<DCoroutine>();
 
@@ -160,52 +160,26 @@ namespace DecentM.EditorTools
                 coroutines.Add(DCoroutine.Start(Fetch(url)));
             }
 
-            return Parallelism.WaitForCoroutines(coroutines);
+            return Parallelism.WaitForCoroutines(coroutines, OnFinish);
         }
 
-        private static IEnumerator Fetch(Queue<string> urls, int batchSize, Action OnFinish)
+        private static DCoroutine Fetch(Queue<string> urls, int batchSize, Action OnFinish)
         {
+            if (urls.Count == 0)
+            {
+                OnFinish();
+                return null;
+            }
+
             List<string> batch = new List<string>();
 
-            while (urls.Count > 0)
+            while (urls.Count > 0 && batch.Count < batchSize)
             {
                 batch.Add(urls.Dequeue());
-
-                if (batch.Count >= batchSize)
-                {
-                    yield return FetchInParallel(batch);
-                    batch.Clear();
-                }
             }
 
-            // Process the last batch
-            if (batch.Count > 0)
-            {
-                yield return FetchInParallel(batch);
-                batch.Clear();
-            }
-
-            OnFinish();
+            return DCoroutine.Start(FetchInParallel(batch, () => Fetch(urls, batchSize, OnFinish)));
         }
-
-        /*
-         protected override bool OnPerformFixes()
-        {
-            if (isLocked) return true;
-
-            PreprocessAssets(pendingUrls.ToArray());
-
-            Task allFetches = Task.Run(() => FetchAsync(pendingUrls, 4));
-
-            EditorCoroutine.Start(
-                Parallelism.WaitForTask(allFetches, (bool success) => {
-                    PostprocessAssets();
-                    if (!success) Debug.LogError("An error occurred during batched subtitle downloading, there is likely more information about it above.");
-                })
-            );
-
-            return true;
-        }*/
 
         private static bool Fetch(string[] urls, Action OnFinish)
         {
@@ -217,7 +191,7 @@ namespace DecentM.EditorTools
                 OnFinish();
             }
 
-            EditorCoroutine.Start(Fetch(queue, 4, Callback));
+            Fetch(queue, 4, Callback);
 
             return true;
         }
@@ -295,7 +269,7 @@ namespace DecentM.EditorTools
 
             CachedSubtitle[] assets = GetFromCache(url);
 
-            return assets.Length != 0;
+            return assets != null && assets.Length != 0;
         }
     }
 }

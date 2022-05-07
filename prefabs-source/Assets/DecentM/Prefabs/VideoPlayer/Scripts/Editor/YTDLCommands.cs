@@ -62,6 +62,22 @@ namespace DecentM.EditorTools
 
     public static class YTDLCommands
     {
+        private static string GetArguments(string arguments)
+        {
+            return string.Join(" ", new string[]
+            {
+                $"{arguments}",
+                $"--no-check-certificate",
+                $"--skip-download",
+                $"--no-exec",
+                $"--no-overwrites",
+                $"--restrict-filenames",
+                $"--geo-bypass",
+                $"--ignore-config",
+                $"--ignore-errors"
+            });
+        }
+
         public static IEnumerator GetVideoUrlEnumerator(string url, int resolution, Action<string> OnSuccess)
         {
             void OnFinish(ProcessResult result)
@@ -76,7 +92,7 @@ namespace DecentM.EditorTools
 
             return Parallelism.WaitForCallback((callback) => ProcessManager.RunProcess(
                 EditorAssets.YtDlpPath,
-                $"--no-check-certificate -f \"mp4[height<=?{resolution}]/best[height<=?{resolution}]\" --get-url {url}",
+                GetArguments($"-f \"mp4[height<=?{resolution}]/best[height<=?{resolution}]\" --get-url {url}"),
                 ".",
                 (result) => { callback(); OnFinish(result); }
             ));
@@ -106,7 +122,7 @@ namespace DecentM.EditorTools
 
             return Parallelism.WaitForCallback((callback) => ProcessManager.RunProcess(
                 EditorAssets.YtDlpPath,
-                $"--no-check-certificate -J {url}",
+                GetArguments($"-J {url}"),
                 ".",
                 (result) => { callback(); OnFinish(result); }
             ));
@@ -118,6 +134,7 @@ namespace DecentM.EditorTools
             {
                 if (!string.IsNullOrEmpty(result.stderr))
                 {
+                    UnityEngine.Debug.LogError(result.stderr);
                     throw new Exception(result.stderr);
                 }
 
@@ -126,7 +143,7 @@ namespace DecentM.EditorTools
 
             return Parallelism.WaitForCallback((callback) => ProcessManager.RunProcess(
                 EditorAssets.YtDlpPath,
-                $"--no-check-certificate -J --flat-playlist {url}",
+                GetArguments($"-J --flat-playlist {url}"),
                 ".",
                 (result) => { callback(); OnFinish(result); }
             ));
@@ -143,12 +160,12 @@ namespace DecentM.EditorTools
             }
 
             string arguments = autoSubs
-                ? $"--no-check-certificate --skip-download --write-subs --write-auto-subs --sub-format vtt/srt --sub-langs all {url}"
-                : $"--no-check-certificate --skip-download --write-subs --no-write-auto-subs --sub-format vtt/srt --sub-langs all {url}";
+                ? $"--write-subs --write-auto-subs --convert-subtitles srt --sub-langs all {url}"
+                : $"--write-subs --no-write-auto-subs --convert-subtitles srt --sub-langs all {url}";
 
             return Parallelism.WaitForCallback((callback) => ProcessManager.RunProcess(
                 EditorAssets.YtDlpPath,
-                arguments,
+                GetArguments(arguments),
                 path,
                 (result) => { callback(); OnFinish(result); }
             ));
@@ -168,7 +185,7 @@ namespace DecentM.EditorTools
 
             return Parallelism.WaitForCallback((callback) => ProcessManager.RunProcess(
                 EditorAssets.YtDlpPath,
-                $"--no-check-certificate --skip-download --write-comments -J {url}",
+                GetArguments($"--write-comments -J {url}"),
                 ".",
                 (result) => { callback(); OnFinish(result); }
             ));
@@ -186,7 +203,25 @@ namespace DecentM.EditorTools
 
             return Parallelism.WaitForCallback((callback) => ProcessManager.RunProcess(
                 EditorAssets.YtDlpPath,
-                $"--no-check-certificate --skip-download --write-comments {url}",
+                GetArguments($"--write-comments {url}"),
+                path,
+                (result) => { callback(); OnFinish(result); }
+            ));
+        }
+
+        public static IEnumerator DownloadThumbnail(string url, string path)
+        {
+            void OnFinish(ProcessResult result)
+            {
+                if (!string.IsNullOrEmpty(result.stderr))
+                {
+                    throw new Exception(result.stderr);
+                }
+            }
+
+            return Parallelism.WaitForCallback((callback) => ProcessManager.RunProcess(
+                EditorAssets.YtDlpPath,
+                GetArguments($"--convert-thumbnails jpg --write-thumbnail {url}"),
                 path,
                 (result) => { callback(); OnFinish(result); }
             ));

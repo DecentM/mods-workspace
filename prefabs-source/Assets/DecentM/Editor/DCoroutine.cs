@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
+using UnityEngine;
 
 namespace DecentM.EditorTools
 {
@@ -15,7 +16,6 @@ namespace DecentM.EditorTools
             coroutine.Start();
             return coroutine;
         }
-
 
         public static DCoroutine Start(Action action)
         {
@@ -61,8 +61,16 @@ namespace DecentM.EditorTools
         {
             if (routine != null)
             {
-                if (!routine.MoveNext())
+                try
+                {
+                    if (!routine.MoveNext()) this.Stop();
+                } catch (Exception ex)
+                {
+                    Debug.LogException(ex);
+                    Debug.LogError("A step in this coroutine has thrown an exception. Stopping coroutine.");
                     this.Stop();
+                }
+                
             }
             else if (action != null)
             {

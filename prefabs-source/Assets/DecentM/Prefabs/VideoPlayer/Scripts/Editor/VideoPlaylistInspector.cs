@@ -7,6 +7,7 @@ using UnityEngine;
 using DecentM.EditorTools;
 using System.Linq;
 using VRC.SDKBase;
+using System.Threading;
 
 namespace DecentM.VideoPlayer
 {
@@ -253,6 +254,8 @@ namespace DecentM.VideoPlayer
 
             YTDLFlatPlaylistJson json = (YTDLFlatPlaylistJson)jsonOrNull;
 
+            Debug.Log($"[{Thread.CurrentThread.Name}] Got {json.entries.Length} playlist videos");
+
             if (playlist.urls.Length != 0)
             {
                 bool shouldOverwrite = EditorUtility.DisplayDialog("Playlist import", "There are already videos on the playlist. Do you want to clear them, or append the playlist?", "Overwrite", "Append");
@@ -278,7 +281,8 @@ namespace DecentM.VideoPlayer
         private void ImportPlaylist()
         {
             GUI.FocusControl(null);
-            YTDLCommands.GetPlaylistVideos(this.importPlaylistUrl, this.ImportPlaylistCallback);
+            Debug.Log($"[{Thread.CurrentThread.Name}] Getting playlist videos");
+            DCoroutine.Start(YTDLCommands.GetPlaylistVideos(this.importPlaylistUrl, this.ImportPlaylistCallback));
         }
 
         private void RefreshAll()
@@ -287,6 +291,8 @@ namespace DecentM.VideoPlayer
             VideoPlaylist playlist = (VideoPlaylist)target;
 
             VideoMetadataStore.Refresh(playlist.urls.Select(url => url[0].ToString()).ToArray(), this.BakeMetadata);
+            ImageStore.Refresh(playlist.urls.Select(url => url[0].ToString()).ToArray());
+            SubtitleStore.Refresh(playlist.urls.Select(url => url[0].ToString()).ToArray());
         }
 
         private void Clear()

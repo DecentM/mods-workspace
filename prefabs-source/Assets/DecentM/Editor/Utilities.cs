@@ -53,6 +53,43 @@ namespace DecentM.EditorTools
             }
         }
 
+        public static IEnumerator WaitForProcess(System.Diagnostics.Process process, Action<ProcessResult> OnExited)
+        {
+            /* ProcessResult result = new ProcessResult();
+            StringBuilder stdout = new StringBuilder();
+            StringBuilder stderr = new StringBuilder();
+
+            while (!process.HasExited)
+            {
+                stdout.Append(process.StandardOutput.ReadLine());
+                stderr.Append(process.StandardError.ReadLine());
+
+                yield return new WaitForSeconds(0.25f);
+            }
+
+            result.stdout = stdout.ToString();
+            result.stderr = stderr.ToString();
+            
+            OnExited(result); */
+
+            Task<string> stdoutTask = process.StandardOutput.ReadToEndAsync();
+            Task<string> stderrTask = process.StandardError.ReadToEndAsync();
+
+            Task allTask = Task.WhenAny(stdoutTask, stderrTask);
+
+            void OnTasksEnded(bool success)
+            {
+                ProcessResult result = new ProcessResult();
+
+                result.stdout = stdoutTask.Result;
+                result.stderr = stderrTask.Result;
+
+                OnExited(result);
+            }
+
+            return WaitForTask(allTask, OnTasksEnded);
+        }
+
         public static IEnumerator WaitForCallback(Action<Action> CallbackReceiver)
         {
             bool isCompleted = false;
@@ -68,7 +105,7 @@ namespace DecentM.EditorTools
                 yield return new WaitForSeconds(0.25f);
         }
 
-        public static IEnumerator WaitForCoroutines(List<DCoroutine> coroutines)
+        public static IEnumerator WaitForCoroutines(List<DCoroutine> coroutines, Action OnFinish)
         {
             List<DCoroutine> finishedCoroutines = new List<DCoroutine>();
 
@@ -84,6 +121,38 @@ namespace DecentM.EditorTools
 
                 yield return new WaitForSeconds(0.25f);
             }
+
+            OnFinish();
+        }
+
+        public static Action<T1> WrapCallback<T1>(Action<T1> Callback)
+        {
+            void WrappedCallback(T1 a1)
+            {
+                try { Callback(a1); }
+                catch (Exception e)
+                {
+                    Debug.LogException(e);
+                    Debug.LogError("Error in wrapped callback, this action will not continue. There's additional debugging information above.");
+                }
+            }
+
+            return WrappedCallback;
+        }
+
+        public static Action<T1, T2> WrapCallback<T1, T2>(Action<T1, T2> Callback)
+        {
+            void WrappedCallback(T1 a1, T2 a2)
+            {
+                try { Callback(a1, a2); }
+                catch (Exception e)
+                {
+                    Debug.LogException(e);
+                    Debug.LogError("Error in wrapped callback, this action will not continue. There's additional debugging information above.");
+                }
+            }
+
+            return WrappedCallback;
         }
     }
 

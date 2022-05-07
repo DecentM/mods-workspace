@@ -15,44 +15,50 @@ using UnityEditor;
 
 namespace DecentM.EditorTools
 {
-    public class ImageStore : AutoSceneFixer
+    public class ImageStore
     {
         private static bool ValidateUrl(string url)
         {
             return Uri.TryCreate(url, UriKind.Absolute, out Uri result);
         }
 
-        private static void ApplyImportSettings(string path)
+        private static void ApplyImportSettings()
         {
-            AssetImporter importer = AssetImporter.GetAtPath(path);
-            if (importer == null) return;
+            List<string> files = Directory.GetFiles($"{EditorAssets.ImageCacheFolder}", "*.jpg", SearchOption.TopDirectoryOnly)
+                .ToList();
 
-            TextureImporter textureImporter = (TextureImporter)importer;
-
-            // If it's imported as a sprite, we assume it's done by us so that we don't keep re-crunching already imported images.
-            // This also lets the user change the other settings without us resetting them every time.
-            if (textureImporter.textureType == TextureImporterType.Sprite) return;
-
-            textureImporter.textureType = TextureImporterType.Sprite;
-            textureImporter.mipmapEnabled = false;
-            textureImporter.wrapMode = TextureWrapMode.Clamp;
-            textureImporter.maxTextureSize = 1024;
-            textureImporter.textureCompression = TextureImporterCompression.Compressed;
-            textureImporter.compressionQuality = 50;
-            textureImporter.crunchedCompression = true;
-            textureImporter.SaveAndReimport();
-        }
-
-        private static void ReapplyImportSettings(string[] urls)
-        {
-            for (int i = 0; i < urls.Length; i++)
+            for (int i = 0; i < files.Count; i++)
             {
-                EditorUtility.DisplayProgressBar($"Reapplying import settings... ({i} of {urls.Length})", urls[i], 1f * i / urls.Length);
-                string path = GetPathFromUrl(urls[i]);
-                ApplyImportSettings(path);
+                string file = files[i];
+                if (string.IsNullOrEmpty(file)) continue;
+
+                EditorUtility.DisplayProgressBar("Reapplying import settings...", Path.GetFileName(file), (float)i / files.Count);
+
+                AssetImporter importer = AssetImporter.GetAtPath(file);
+                if (importer == null || !(importer is TextureImporter)) continue;
+
+                TextureImporter textureImporter = (TextureImporter)importer;
+
+                // If it's imported as a sprite, we assume it's done by us so that we don't keep re-crunching already imported images.
+                // This also lets the user change the other settings without us resetting them every time.
+                if (textureImporter.textureType == TextureImporterType.Sprite) continue;
+
+                textureImporter.textureType = TextureImporterType.Sprite;
+                textureImporter.mipmapEnabled = false;
+                textureImporter.wrapMode = TextureWrapMode.Clamp;
+                textureImporter.maxTextureSize = 1024;
+                textureImporter.textureCompression = TextureImporterCompression.Compressed;
+                textureImporter.compressionQuality = 50;
+                textureImporter.crunchedCompression = true;
+                textureImporter.SaveAndReimport();
             }
 
             EditorUtility.ClearProgressBar();
+        }
+
+        private static void PostprocessAssets(string[] urls)
+        {
+            ApplyImportSettings();
         }
 
         private static string GetPathFromUrl(string url)
@@ -60,8 +66,71 @@ namespace DecentM.EditorTools
             if (!ValidateUrl(url)) return null;
 
             string hash = Hash.String(url);
-            string filename = "image.jpg";
-            return $"{EditorAssets.ImageCacheFolder}/{hash}/{filename}";
+            return $"{EditorAssets.ImageCacheFolder}/{hash}";
+        }
+
+        private static IEnumerator Fetch(string url)
+        {
+            if (string.IsNullOrEmpty(url)) return null;
+            if (!ValidateUrl(url)) return null;
+
+            string path = GetPathFromUrl(url);
+
+            return YTDLCommands.DownloadThumbnail(url, path);
+        }
+
+        private static IEnumerator FetchInParallel(List<string> urls, Action OnFinish)
+        {
+            List<DCoroutine> coroutines = new List<DCoroutine>();
+
+            for (int i = 0; i < urls.Count; i++)
+            {
+                string url = urls[i];
+                if (string.IsNullOrEmpty(url)) continue;
+                if (!ValidateUrl(url)) continue;
+
+                coroutines.Add(DCoroutine.Start(Fetch(url)));
+            }
+
+            return Parallelism.WaitForCoroutines(coroutines, OnFinish);
+        }
+
+        private static DCoroutine Fetch(Queue<string> urls, int batchSize, Action OnFinish)
+        {
+            if (urls.Count == 0)
+            {
+                OnFinish();
+                return null;
+            }
+
+            List<string> batch = new List<string>();
+
+            while (urls.Count > 0 && batch.Count < batchSize)
+            {
+                batch.Add(urls.Dequeue());
+            }
+
+            return DCoroutine.Start(FetchInParallel(batch, () => Fetch(urls, batchSize, OnFinish)));
+        }
+
+        [PublicAPI]
+        public static Texture2D GetCached(string url)
+        {
+            return null;
+
+            if (!ValidateUrl(url)) return null;
+
+            string path = GetPathFromUrl(url);
+            return AssetDatabase.LoadAssetAtPath<Texture2D>(path);
+        }
+
+        [PublicAPI]
+        public static bool IsCached(string url)
+        {
+            if (!ValidateUrl(url)) return false;
+
+            Texture2D texture = GetCached(url);
+            return texture != null;
         }
 
         private static void CreateFolders(string[] urls)
@@ -77,64 +146,57 @@ namespace DecentM.EditorTools
             Assets.CreateFolders(folders);
         }
 
-        private static List<string> pendingUrls = new List<string>();
-
-        protected override bool OnPerformFixes()
+        private static Queue<string> PreprocessAssets(string[] urls)
         {
-            string[] urls = pendingUrls.ToArray();
-            if (urls.Length == 0) return true;
+            Queue<string> queue = new Queue<string>();
 
-            CreateFolders(pendingUrls.ToArray());
-
-            foreach (string url in pendingUrls)
+            for (int i = 0; i < urls.Length; i++)
             {
-                FetchSync(url);
+                string url = urls[i];
+                if (string.IsNullOrEmpty(url)) continue;
+                if (!ValidateUrl(url)) continue;
+                if (IsCached(url)) continue;
+
+                queue.Enqueue(url);
             }
 
-            AssetDatabase.Refresh();
-            ReapplyImportSettings(urls);
+            CreateFolders(urls);
+
+            return queue;
+        }
+
+        private static bool Fetch(string[] urls, Action OnFinish)
+        {
+            Queue<string> queue = PreprocessAssets(urls);
+
+            void Callback()
+            {
+                PostprocessAssets(urls);
+                OnFinish();
+            }
+
+            Fetch(queue, 4, Callback);
 
             return true;
         }
 
         [PublicAPI]
-        public static Texture2D GetFromCache(string url)
+        public static bool Refresh(string url, Action OnFinish)
         {
-            if (!ValidateUrl(url)) return null;
-
-            string path = GetPathFromUrl(url);
-            Texture2D result = AssetDatabase.LoadAssetAtPath<Texture2D>(path);
-
-            if (result == null && !pendingUrls.Contains(url))
-            {
-                pendingUrls.Add(url);
-            }
-
-            return result;
+            return Fetch(new string[] { url }, OnFinish);
         }
 
-        private static void WriteImageFromResponse(HttpWebResponse response, string path)
+        [PublicAPI]
+        public static bool Refresh(string[] urls, Action OnFinish)
         {
-            if ((int)response.StatusCode < 200 || (int)response.StatusCode >= 400)
-            {
-                throw new Exception($"The web server hosting {response.ResponseUri} has responded with {(int)response.StatusCode}");
-            }
-
-            Stream data = response.GetResponseStream();
-            MemoryStream ms = new MemoryStream();
-            data.CopyTo(ms);
-            byte[] bytes = ms.ToArray();
-            File.WriteAllBytes(path, bytes);
+            if (urls.Length == 0) return true;
+            return Fetch(urls, OnFinish);
         }
 
-        private static void FetchSync(string url)
+        [PublicAPI]
+        public static bool Refresh(string[] urls)
         {
-            if (string.IsNullOrEmpty(url) || !ValidateUrl(url)) return;
-
-            WebRequest request = HttpWebRequest.Create(url);
-            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-            string path = GetPathFromUrl(url);
-            WriteImageFromResponse(response, path);
+            return Refresh(urls, () => { });
         }
     }
 }
