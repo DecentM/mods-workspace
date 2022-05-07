@@ -110,8 +110,6 @@ namespace DecentM.EditorTools
             Assets.CreateFolders(folders);
         }
 
-        private static Queue<string> pendingUrls = new Queue<string>();
-
         private static Queue<string> PreprocessAssets(string[] urls)
         {
             Queue<string> queue = new Queue<string>();
@@ -226,13 +224,11 @@ namespace DecentM.EditorTools
 
                 CreateFolders(new string[] { url });
 
-                List<string> files = Directory.GetFiles(path, "*.*", SearchOption.TopDirectoryOnly)
-                    .Where(name => name.EndsWith(".txt"))
+                List<string> files = Directory.GetFiles(path, "*.txt", SearchOption.TopDirectoryOnly)
                     .ToList();
 
-                if (files.Count == 0 && !pendingUrls.Contains(url))
+                if (files.Count == 0)
                 {
-                    pendingUrls.Enqueue(url);
                     return null;
                 }
 
@@ -242,9 +238,8 @@ namespace DecentM.EditorTools
                 {
                     TextAsset asset = AssetDatabase.LoadAssetAtPath<TextAsset>(file);
 
-                    if (asset == null && !pendingUrls.Contains(url))
+                    if (asset == null)
                     {
-                        pendingUrls.Enqueue(url);
                         return result.ToArray();
                     }
 

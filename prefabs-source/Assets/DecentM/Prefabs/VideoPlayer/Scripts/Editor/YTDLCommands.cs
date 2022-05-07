@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Collections;
-using System.Threading.Tasks;
 
 using UnityEngine;
 
@@ -84,7 +82,9 @@ namespace DecentM.EditorTools
             {
                 if (!string.IsNullOrEmpty(result.stderr))
                 {
-                    throw new Exception(result.stderr);
+                    Debug.LogWarning(result.stderr);
+                    Debug.LogWarning($"yt-dlp has outputted an error, ignoring results for {url}");
+                    return;
                 }
 
                 OnSuccess(result.stdout);
@@ -114,7 +114,9 @@ namespace DecentM.EditorTools
             {
                 if (!string.IsNullOrEmpty(result.stderr))
                 {
-                    throw new Exception(result.stderr);
+                    Debug.LogWarning(result.stderr);
+                    Debug.LogWarning($"yt-dlp has outputted an error, ignoring results for {url}");
+                    return;
                 }
 
                 OnSuccess(JsonUtility.FromJson<YTDLVideoJson>(result.stdout));
@@ -134,8 +136,9 @@ namespace DecentM.EditorTools
             {
                 if (!string.IsNullOrEmpty(result.stderr))
                 {
-                    UnityEngine.Debug.LogError(result.stderr);
-                    throw new Exception(result.stderr);
+                    Debug.LogWarning(result.stderr);
+                    Debug.LogWarning($"yt-dlp has outputted an error, ignoring results for {url}");
+                    return;
                 }
 
                 OnSuccess(JsonUtility.FromJson<YTDLFlatPlaylistJson>(result.stdout));
@@ -155,7 +158,9 @@ namespace DecentM.EditorTools
             {
                 if (!string.IsNullOrEmpty(result.stderr))
                 {
-                    throw new Exception(result.stderr);
+                    Debug.LogWarning(result.stderr);
+                    Debug.LogWarning($"yt-dlp has outputted an error, ignoring results for {url}");
+                    return;
                 }
             }
 
@@ -177,7 +182,9 @@ namespace DecentM.EditorTools
             {
                 if (!string.IsNullOrEmpty(result.stderr))
                 {
-                    throw new Exception(result.stderr);
+                    Debug.LogWarning(result.stderr);
+                    Debug.LogWarning($"yt-dlp has outputted an error, ignoring results for {url}");
+                    return;
                 }
 
                 OnSuccess(JsonUtility.FromJson<YTDLVideoJson>(result.stdout));
@@ -197,7 +204,9 @@ namespace DecentM.EditorTools
             {
                 if (!string.IsNullOrEmpty(result.stderr))
                 {
-                    throw new Exception(result.stderr);
+                    Debug.LogWarning(result.stderr);
+                    Debug.LogWarning($"yt-dlp has outputted an error, ignoring results for {url}");
+                    return;
                 }
             }
 
@@ -215,7 +224,9 @@ namespace DecentM.EditorTools
             {
                 if (!string.IsNullOrEmpty(result.stderr))
                 {
-                    throw new Exception(result.stderr);
+                    Debug.LogWarning(result.stderr);
+                    Debug.LogWarning($"yt-dlp has outputted an error, ignoring results for {url}");
+                    return;
                 }
             }
 
