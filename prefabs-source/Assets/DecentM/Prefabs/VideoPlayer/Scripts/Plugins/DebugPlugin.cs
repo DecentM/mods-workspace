@@ -24,7 +24,16 @@ namespace DecentM.VideoPlayer.Plugins
             this.gui.text = String.Join("\n", this.logs);
         }
 
-        protected override void _Start() { this.Log(nameof(_Start)); }
+        protected override void _Start()
+        {
+            if (this.gui == null)
+            {
+                this.enabled = false;
+                return;
+            }
+
+            this.Log(nameof(_Start));
+        }
         protected override void OnDebugLog(string message) { this.Log(message); }
         protected override void OnVideoPlayerInit() { this.Log(nameof(OnVideoPlayerInit)); }
         protected override void OnPlayerSwitch(VideoPlayerHandlerType type) { this.Log(nameof(OnPlayerSwitch), type.ToString()); }

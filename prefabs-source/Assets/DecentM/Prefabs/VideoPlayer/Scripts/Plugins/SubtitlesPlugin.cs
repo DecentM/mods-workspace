@@ -1,19 +1,25 @@
-﻿
-using UdonSharp;
+﻿using UdonSharp;
 using UnityEngine;
 using VRC.SDKBase;
 using VRC.Udon;
+using TMPro;
 
 namespace DecentM.VideoPlayer.Plugins
 {
     public class SubtitlesPlugin : VideoPlayerPlugin
     {
+        public TextMeshProUGUI debugSlot;
+
         private string[][] currentSubtitles;
 
         protected override void OnPlaybackStart(float timestamp)
         {
             if (timestamp < 10000) this.JumpToStart();
-            else this.SeekToTimestamp(Mathf.FloorToInt(timestamp));
+            else
+            {
+                int index = this.SearchForInstructionIndex(Mathf.FloorToInt(timestamp));
+                if (index >= 0) this.instructionIndex = index;
+            }
         }
 
         protected override void OnUnload()
@@ -31,6 +37,7 @@ namespace DecentM.VideoPlayer.Plugins
                 langs[i] = subtitles[i][0];
             }
 
+            this.Reset();
             this.events.OnSubtitleLanguageOptionsChange(langs);
         }
 
@@ -105,13 +112,6 @@ namespace DecentM.VideoPlayer.Plugins
                 int.TryParse(parts[0], out type);
                 int.TryParse(parts[1], out timestamp);
 
-                // Skip clearing the canvas if the next instruction is less than .2 seconds away
-                // Commented out because this is now handled by the compiler in the editor instead of runtime
-                /* if (type == 2 && timestamp - lastTimestamp < 200 && timestamp - lastTimestamp > -200)
-                {
-                    return;
-                } */
-
                 string text = parts[2].Replace(NewlineDelimeter, '\n');
 
                 object[] instruction = this.CreateInstruction(type, timestamp, text);
@@ -122,14 +122,15 @@ namespace DecentM.VideoPlayer.Plugins
         }
 
         private float elapsed = 0;
+        public float tickInterval = 0.1f;
 
         private void FixedUpdate()
         {
             if (!this.system.IsPlaying()) return;
 
             this.elapsed += Time.fixedUnscaledDeltaTime;
-            bool seeking = this.seekDirection != 0;
-            if (seeking || this.elapsed >= 0.1)
+            // bool seeking = this.seekDirection != 0;
+            if (this.elapsed >= this.tickInterval)
             {
                 this.TickInstruction();
                 this.elapsed = 0;
@@ -144,52 +145,38 @@ namespace DecentM.VideoPlayer.Plugins
             this.instructionIndex = 0;
         }
 
-        public void SeekToTimestamp(int timestamp)
+        public int timestampSeekAccuracy = 10000;
+
+        private object[] GetInstructionAtIndex(int index)
         {
-            this.SearchForInstructionIndex(timestamp, instructionIndex);
+            if (this.instructions == null || this.instructions.Length == 0) return null;
+            if (index < 0) return null;
+            if (index >= this.instructions.Length) return this.instructions[this.instructions.Length - 1];
+
+            return this.instructions[index];
         }
 
-        private int SearchForInstructionIndex(int timestamp, int startIndex)
+        private int SearchForInstructionIndex(int targetTimestamp)
         {
-            int cursor = startIndex;
-            object[] currentInstruction = this.instructions[cursor];
-            int currentTimestamp = (int)currentInstruction[1];
-            int diff = timestamp - currentTimestamp;
-            int loop = 0;
+            float lowestDiff = float.PositiveInfinity;
 
-            if (diff < 0)
+            for (int i = 0; i < this.instructions.Length; i++)
             {
-                diff = diff * -1;
+                object[] instruction = this.GetInstructionAtIndex(i);
+                if (instruction == null || instruction.Length == 0) continue;
+
+                int timestamp = (int)instruction[1];
+                int diff = Mathf.Abs(timestamp - targetTimestamp);
+
+                if (diff <= lowestDiff) lowestDiff = diff;
+                else return i - 1;
             }
 
-            // Search for an instruction **behind** the needed one by about 10 seconds.
-            // Accuracy of 10 seconds, because the default behaviour is that
-            // the instructions tick forward quickly if their timestamps are in the past.
-            while (diff > -5000 && loop < 10)
-            {
-                // If we're smaller that the needed timestamp, we search forward.
-                if (currentTimestamp < timestamp - 5000)
-                {
-                    cursor = cursor + ((this.instructions.Length - cursor) / 2);
-                }
-                else if (currentTimestamp > timestamp) // We search backwards
-                {
-                    cursor = cursor / 2;
-                }
-
-                currentInstruction = this.instructions[cursor];
-                currentTimestamp = (int)currentInstruction[1];
-
-                diff = timestamp - currentTimestamp;
-
-                loop++;
-            }
-
-            return cursor;
+            return -1;
         }
 
         // -1, 0, or 1
-        private int seekDirection = 0;
+        // private int seekDirection = 0;
 
         private void TickInstruction()
         {
@@ -206,66 +193,60 @@ namespace DecentM.VideoPlayer.Plugins
              * 2 - Clear
              **/
 
-            // We've reached the end of the instructions, stop processing more
-            if (this.instructions == null || this.instructionIndex >= this.instructions.Length)
+            if (this.instructions == null || this.instructions.Length == 0)
             {
+                if (this.debugSlot != null) this.debugSlot.text = "No subtitles set.";
+                return;
+            }
+
+            // We've reached the end of the instructions, stop processing more
+            if (this.instructionIndex >= this.instructions.Length)
+            {
+                if (this.debugSlot != null) this.debugSlot.text = "End of subtitles reached.";
                 return;
             }
 
             int timeMillis = Mathf.RoundToInt(this.system.GetTime() * 1000) + Mathf.RoundToInt(this.subtitleOffset);
-            object[] instruction = this.instructions[this.instructionIndex];
+            object[] instruction = this.GetInstructionAtIndex(this.instructionIndex);
+            object[] previousInstruction = this.GetInstructionAtIndex(this.instructionIndex - 1);
 
             if (instruction == null)
             {
+                this.instructionIndex++;
                 return;
             }
 
-            int diff = timeMillis - (int)instruction[1];
+            int instructionTimestamp = (int)instruction[1];
+            int diff = timeMillis - instructionTimestamp;
 
-            /*
-              this.debug.text = $"index {this.instructionIndex}\n" +
-                $"system type {instruction}\n" +
-                $"type {((int)instruction[0] == 1 ? "write" : "clear")}\n" +
-                $"timestamp {instruction[1]}\n" +
-                $"current time {timeMillis}\n" +
-                $"diff: {diff}\n" +
-                $"seeking: {this.seekDirection}";
-            */
+            if (previousInstruction != null)
+            {
+                int previousInstructionTimestamp = (int)previousInstruction[1];
+                int previousDiff = timeMillis - previousInstructionTimestamp;
 
-            // if we're behind, start seeking forward
-            if (diff > 10000)
-            {
-                this.seekDirection = 1;
-                // if we're ahead, start seeking backward
-            }
-            else if (diff < -10000)
-            {
-                this.seekDirection = -1;
-                // stop seeking if we're about right
-            }
-            else if (this.seekDirection != 0)
-            {
-                this.events.OnSubtitleClear();
-                this.seekDirection = 0;
+                // If we're far away from the next instruction, check if we need to seek
+                // Seek if the previous instruction is in the future OR of the next instruction is in the past
+                if (Mathf.Abs(diff) > this.timestampSeekAccuracy && (previousDiff < 0 || diff > 0))
+                {
+                    this.events.OnSubtitleClear();
+                    int index = this.SearchForInstructionIndex(timeMillis);
+                    if (index >= 0) this.instructionIndex = index;
+                    return;
+                }
             }
 
-            this.instructionIndex = Mathf.Max(this.instructionIndex + this.seekDirection, 0);
-
-            // If we're seeking, we make a progress report to the player
-            //if (this.seekDirection != 0)
-            //{
-            //    this.text.text = $"Seeking... ({(diff < 0 ? diff * -1 : diff)})";
-            //}
+            if (this.debugSlot != null) this.debugSlot.text =
+                $"Instructions: {this.instructions.Length}\n" +
+                $"Next instruction index: {this.instructionIndex}\n" +
+                $"Next instruction type: {((int)instruction[0] == 1 ? "write" : "clear")}\n" +
+                $"Next instruction timestamp: {instruction[1]}\n" +
+                $"Distance from next instruction: {diff}\n" +
+                $"Current playback time {timeMillis}\n";
 
             // If the timestamp of the current instruction is in the past, it means we should be displaying it
             if ((int)instruction[1] < timeMillis)
             {
-                // Prevent writing to the screen while seeking
-                if (this.seekDirection == 0)
-                {
-                    this.ExecuteInstruction((int)instruction[0], (string)instruction[2]);
-                }
-
+                this.ExecuteInstruction((int)instruction[0], (string)instruction[2]);
                 this.instructionIndex++;
             }
         }
