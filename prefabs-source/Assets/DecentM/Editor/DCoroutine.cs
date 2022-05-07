@@ -67,7 +67,7 @@ namespace DecentM.EditorTools
                 } catch (Exception ex)
                 {
                     Debug.LogException(ex);
-                    Debug.LogError("A step in this coroutine has thrown an exception. Stopping coroutine.");
+                    Debug.LogError("A step in this coroutine has thrown an exception, stopping coroutine. There's additional debugging information above.");
                     this.Stop();
                 }
                 

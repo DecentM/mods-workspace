@@ -38,9 +38,9 @@ namespace DecentM.VideoPlayer.EditorTools
 
             List<string> urls = this.GetAllUrlsInScene();
 
-            bool accepted = VideoMetadataStore.Refresh(urls.ToArray());
+            // bool accepted = VideoMetadataStore.Refresh(urls.ToArray());
 
-            if (!accepted) return false;
+            // if (!accepted) return false;
 
             return true;
         }
@@ -50,7 +50,7 @@ namespace DecentM.VideoPlayer.EditorTools
             if (requestedBuildType != VRCSDKRequestedBuildType.Scene) return true;
 
             List<string> urls = this.GetAllUrlsInScene();
-            VideoMetadataStore.Refresh(urls.ToArray());
+            // VideoMetadataStore.Refresh(urls.ToArray());
 
             return true;
         }

@@ -95,7 +95,7 @@ namespace DecentM.EditorTools
             return Parallelism.WaitForCoroutines(coroutines, OnFinish);
         }
 
-        private static DCoroutine Fetch(Queue<string> urls, int batchSize, Action OnFinish)
+        private static DCoroutine Fetch(Queue<string> urls, int batchSize, Action OnFinish, Action<int> OnQueueSizeChange)
         {
             if (urls.Count == 0)
             {
@@ -108,14 +108,16 @@ namespace DecentM.EditorTools
             while (urls.Count > 0 && batch.Count < batchSize)
             {
                 batch.Add(urls.Dequeue());
+                OnQueueSizeChange(urls.Count);
             }
 
-            return DCoroutine.Start(FetchInParallel(batch, () => Fetch(urls, batchSize, OnFinish)));
+            return DCoroutine.Start(FetchInParallel(batch, () => Fetch(urls, batchSize, OnFinish, OnQueueSizeChange)));
         }
 
         [PublicAPI]
         public static Texture2D GetCached(string url)
         {
+            // TODO: Implement getting a cached image from the folder
             return null;
 
             if (!ValidateUrl(url)) return null;
@@ -165,38 +167,44 @@ namespace DecentM.EditorTools
             return queue;
         }
 
-        private static bool Fetch(string[] urls, Action OnFinish)
+        private static bool Fetch(string[] urls, Action<float> OnProgress, Action OnFinish)
         {
             Queue<string> queue = PreprocessAssets(urls);
 
             void Callback()
             {
+                AsyncProgress.Clear();
                 PostprocessAssets(urls);
                 OnFinish();
             }
 
-            Fetch(queue, 4, Callback);
+            void OnQueueSizeChange(int newSize)
+            {
+                OnProgress((urls.Length - newSize) / (float)urls.Length);
+            }
+
+            Fetch(queue, 4, Callback, OnQueueSizeChange);
 
             return true;
         }
 
         [PublicAPI]
-        public static bool Refresh(string url, Action OnFinish)
+        public static bool Refresh(string url, Action<float> OnProgress, Action OnFinish)
         {
-            return Fetch(new string[] { url }, OnFinish);
+            return Fetch(new string[] { url }, OnProgress, OnFinish);
         }
 
         [PublicAPI]
-        public static bool Refresh(string[] urls, Action OnFinish)
+        public static bool Refresh(string[] urls, Action<float> OnProgress, Action OnFinish)
         {
             if (urls.Length == 0) return true;
-            return Fetch(urls, OnFinish);
+            return Fetch(urls, OnProgress, OnFinish);
         }
 
         [PublicAPI]
-        public static bool Refresh(string[] urls)
+        public static bool Refresh(string[] urls, Action<float> OnProgress)
         {
-            return Refresh(urls, () => { });
+            return Refresh(urls, OnProgress, () => { });
         }
     }
 }

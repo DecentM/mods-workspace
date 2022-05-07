@@ -214,7 +214,7 @@ namespace DecentM.VideoPlayer
                 Rect refreshButton = this.GetRectInside(actionButtonsRectInner, new Vector2(actionButtonsRectInner.width, buttonHeight), new Vector4(buttonPadding, buttonCount * buttonHeight, buttonPadding, buttonPadding));
                 if (this.Button(refreshButton, EditorAssets.RefreshIcon))
                 {
-                    VideoMetadataStore.Refresh(url.ToString(), this.BakeMetadata);
+                    VideoMetadataStore.Refresh(url.ToString(), (progress) => { }, this.BakeMetadata);
                 }
 
                 buttonCount++;
@@ -263,7 +263,7 @@ namespace DecentM.VideoPlayer
             for (int i = 0; i < json.entries.Length; i++)
             {
                 YTDLFlatPlaylistJsonEntry entry = json.entries[i];
-                EditorUtility.DisplayProgressBar($"Adding URLs... ({i} of {json.entries.Length})", entry.url, 1f * i / json.entries.Length);
+                AsyncProgress.Display($"Adding URLs... ({i} of {json.entries.Length})", 1f * i / json.entries.Length);
                 this.AddNew(entry.url);
             }
 
@@ -271,7 +271,7 @@ namespace DecentM.VideoPlayer
             playlist.author = json.uploader;
             playlist.description = json.description;
 
-            EditorUtility.ClearProgressBar();
+            AsyncProgress.Clear();
             this.importPlaylistUrl = "";
             this.RemoveEmptyUrls();
         }
@@ -287,9 +287,23 @@ namespace DecentM.VideoPlayer
             GUI.FocusControl(null);
             VideoPlaylist playlist = (VideoPlaylist)target;
 
-            VideoMetadataStore.Refresh(playlist.urls.Select(url => url[0].ToString()).ToArray(), this.BakeMetadata);
-            ImageStore.Refresh(playlist.urls.Select(url => url[0].ToString()).ToArray());
-            SubtitleStore.Refresh(playlist.urls.Select(url => url[0].ToString()).ToArray());
+            void OnProgress(string name, float progress)
+            {
+                AsyncProgress.Display($"Refreshing {name}...", progress);
+            }
+
+            void OnFinish()
+            {
+                AsyncProgress.Clear();
+            }
+
+            VideoMetadataStore.Refresh(playlist.urls.Select(url => url[0].ToString()).ToArray(), (value) => OnProgress("metadata", value), () =>
+            {
+                ImageStore.Refresh(playlist.urls.Select(url => url[0].ToString()).ToArray(), (value) => OnProgress("thumbnails", value), () =>
+                {
+                    SubtitleStore.Refresh(playlist.urls.Select(url => url[0].ToString()).ToArray(), (value) => OnProgress("subtitles", value), OnFinish);
+                });
+            });
         }
 
         private void Clear()
@@ -382,13 +396,13 @@ namespace DecentM.VideoPlayer
 
             for (int i = 0; i < playlist.urls.Length; i++)
             {
-                if (showProgress) EditorUtility.DisplayProgressBar($"Checking integrity...", $"{i} / {playlist.urls.Length}", 1f * i / playlist.urls.Length);
+                if (showProgress) AsyncProgress.Display($"Checking integrity {i} / {playlist.urls.Length}", 1f * i / playlist.urls.Length);
                 object[] item = playlist.urls[i];
 
                 if (item == null || item[0] == null) this.RemoveUrl(i);
             }
 
-            EditorUtility.ClearProgressBar();
+            AsyncProgress.Clear();
         }
 
         private void BakeMetadata()
@@ -399,7 +413,7 @@ namespace DecentM.VideoPlayer
 
             for (int i = 0; i < playlist.urls.Length; i++)
             {
-                if (showProgress) EditorUtility.DisplayProgressBar($"Baking playlist...", $"{i} / {playlist.urls.Length}", 1f * i / playlist.urls.Length);
+                if (showProgress) AsyncProgress.Display($"Baking playlist {i} / {playlist.urls.Length}", 1f * i / playlist.urls.Length);
 
                 object[] item = playlist.urls[i];
                 if (item == null) continue;
@@ -439,7 +453,7 @@ namespace DecentM.VideoPlayer
 
             playlist.serialisedUrls = new VRCUrl[0];
 
-            EditorUtility.ClearProgressBar();
+            AsyncProgress.Clear();
         }
     }
 }

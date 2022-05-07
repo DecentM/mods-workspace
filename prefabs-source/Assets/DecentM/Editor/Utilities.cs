@@ -55,23 +55,6 @@ namespace DecentM.EditorTools
 
         public static IEnumerator WaitForProcess(System.Diagnostics.Process process, Action<ProcessResult> OnExited)
         {
-            /* ProcessResult result = new ProcessResult();
-            StringBuilder stdout = new StringBuilder();
-            StringBuilder stderr = new StringBuilder();
-
-            while (!process.HasExited)
-            {
-                stdout.Append(process.StandardOutput.ReadLine());
-                stderr.Append(process.StandardError.ReadLine());
-
-                yield return new WaitForSeconds(0.25f);
-            }
-
-            result.stdout = stdout.ToString();
-            result.stderr = stderr.ToString();
-            
-            OnExited(result); */
-
             Task<string> stdoutTask = process.StandardOutput.ReadToEndAsync();
             Task<string> stderrTask = process.StandardError.ReadToEndAsync();
 
