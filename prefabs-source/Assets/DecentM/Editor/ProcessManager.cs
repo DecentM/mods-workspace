@@ -24,34 +24,7 @@ namespace DecentM.EditorTools
 
     public static class ProcessManager
     {
-        private static IEnumerator ProcessCoroutine(Process process, BlockingBehaviour blocking, Action<Process> callback)
-        {
-            StreamReader read = process.StandardOutput;
-
-            if (blocking == BlockingBehaviour.Blocking)
-            {
-                while (read.Peek() == 0)
-                    yield return new WaitForSeconds(0.1f);
-            }
-            else
-            {
-                while (!process.HasExited)
-                    yield return new WaitForSeconds(0.1f);
-            }
-
-            callback(process);
-            read.Close();
-        }
-
-        private static IEnumerator WaitForTask(Task task)
-        {
-            while (!task.IsCompleted && !task.IsCanceled && !task.IsFaulted)
-                yield return new WaitForSeconds(.15f);
-
-            yield return task;
-        }
-
-        private static Process CreateProcess(string filename, string arguments, string workdir)
+        private static Process StartProcess(string filename, string arguments, string workdir, Action<Process> OnExited, Action<Process, DataReceivedEventArgs> OnOutputDataReceived, Action<Process, DataReceivedEventArgs> OnErrorDataReceived)
         {
             Process process = new Process
             {
@@ -70,23 +43,46 @@ namespace DecentM.EditorTools
                 EnableRaisingEvents = true
             };
 
+            process.Exited += (o, e) => OnExited(process);
+            process.OutputDataReceived += (o, e) => OnOutputDataReceived(process, e);
+            process.ErrorDataReceived += (o, e) => OnErrorDataReceived(process, e);
+
+            process.Start();
+
+            process.BeginOutputReadLine();
+            process.BeginErrorReadLine();
+
             return process;
         }
 
-        public static IEnumerator CreateProcessCoroutine(string filename, string arguments, string workdir, BlockingBehaviour blocking, Action<Process> callback)
+        public static void RunProcess(string filename, string arguments, string workdir, Action<ProcessResult> OnFinished)
         {
-            Process process = CreateProcess(filename, arguments, workdir);
-            process.Start();
-            return ProcessCoroutine(process, blocking, callback);
+            StringBuilder stdout = new StringBuilder();
+            StringBuilder stderr = new StringBuilder();
+
+            void OnExited(Process process) {
+                ProcessResult result = new ProcessResult();
+
+                result.stdout = stdout.ToString();
+                result.stderr = stderr.ToString();
+
+                OnFinished(result);
+            };
+
+            void OnOutputDataReceived(Process process, DataReceivedEventArgs e)
+            {
+                stdout.Append(e.Data);
+            }
+
+            void OnErrorDataReceived(Process process, DataReceivedEventArgs e)
+            {
+                stderr.Append(e.Data);
+            }
+
+            StartProcess(filename, arguments, workdir, OnExited, OnOutputDataReceived, OnErrorDataReceived);
         }
 
-        public static EditorCoroutines.EditorCoroutine RunProcessCoroutine(string filename, string arguments, string workdir, BlockingBehaviour blocking, Action<Process> callback)
-        {
-            IEnumerator coroutine = CreateProcessCoroutine(filename, arguments, workdir, blocking, callback);
-            return EditorCoroutines.StartCoroutine(coroutine, typeof(ProcessManager));
-        }
-
-        public static void RunProcessAsync(string filename, string arguments, string workdir, Action<ProcessResult> callback)
+        /* public static void RunProcessAsync(string filename, string arguments, string workdir, Action<ProcessResult> callback)
         {
             RunProcessAsync(filename, arguments, workdir, 15000, callback);
         }
@@ -233,6 +229,6 @@ namespace DecentM.EditorTools
                     }
                 }
             }
-        }
+        } */
     }
 }

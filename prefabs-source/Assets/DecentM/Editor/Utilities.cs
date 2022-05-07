@@ -53,24 +53,37 @@ namespace DecentM.EditorTools
             }
         }
 
-        public static async Task WhenAllBatched(IEnumerable<Task> tasks, int maxConcurrency)
+        public static IEnumerator WaitForCallback(Action<Action> CallbackReceiver)
         {
-            SemaphoreSlim semaphore = new SemaphoreSlim(maxConcurrency);
+            bool isCompleted = false;
 
-            var pendingTasks = tasks.Select(async task =>
+            void Callback()
             {
-                try
-                {
-                    semaphore.Wait();
-                    await task;
-                }
-                finally
-                {
-                    semaphore.Release();
-                }
-            });
+                isCompleted = true;
+            }
 
-            await Task.WhenAll(pendingTasks);
+            CallbackReceiver(Callback);
+
+            while (!isCompleted)
+                yield return new WaitForSeconds(0.25f);
+        }
+
+        public static IEnumerator WaitForCoroutines(List<DCoroutine> coroutines)
+        {
+            List<DCoroutine> finishedCoroutines = new List<DCoroutine>();
+
+            while (finishedCoroutines.Count < coroutines.Count)
+            {
+                foreach (DCoroutine coroutine in coroutines)
+                {
+                    if (!coroutine.IsRunning && !finishedCoroutines.Contains(coroutine))
+                    {
+                        finishedCoroutines.Add(coroutine);
+                    }
+                }
+
+                yield return new WaitForSeconds(0.25f);
+            }
         }
     }
 

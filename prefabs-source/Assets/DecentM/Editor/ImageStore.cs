@@ -82,6 +82,8 @@ namespace DecentM.EditorTools
         protected override bool OnPerformFixes()
         {
             string[] urls = pendingUrls.ToArray();
+            if (urls.Length == 0) return true;
+
             CreateFolders(pendingUrls.ToArray());
 
             foreach (string url in pendingUrls)

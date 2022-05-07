@@ -8,50 +8,51 @@ using VRC.SDKBase;
 using VRC.SDKBase.Editor.BuildPipeline;
 
 using DecentM.EditorTools;
-using DecentM.VideoPlayer;
 
-public class VideoMetadataAutoFixer : AutoSceneFixer
+namespace DecentM.VideoPlayer.EditorTools
 {
-    private List<string> GetAllUrlsInScene()
+    public class VideoMetadataAutoFixer : AutoSceneFixer
     {
-        ComponentCollector<VideoPlaylist> collector = new ComponentCollector<VideoPlaylist>();
-        List<VideoPlaylist> playlists = collector.CollectFromActiveScene();
-
-        List<string> urls = new List<string>();
-
-        foreach (VideoPlaylist playlist in playlists)
+        private List<string> GetAllUrlsInScene()
         {
-            foreach (object[] item in playlist.urls)
+            ComponentCollector<VideoPlaylist> collector = new ComponentCollector<VideoPlaylist>();
+            List<VideoPlaylist> playlists = collector.CollectFromActiveScene();
+
+            List<string> urls = new List<string>();
+
+            foreach (VideoPlaylist playlist in playlists)
             {
-                VRCUrl url = (VRCUrl)item[0];
-                urls.Add(url.ToString());
+                foreach (object[] item in playlist.urls)
+                {
+                    VRCUrl url = (VRCUrl)item[0];
+                    urls.Add(url.ToString());
+                }
             }
+
+            return urls;
         }
 
-        return urls;
-    }
+        protected override bool OnPerformFixes()
+        {
+            return true;
 
-    protected override bool OnPerformFixes()
-    {
-        return true;
+            List<string> urls = this.GetAllUrlsInScene();
 
-        List<string> urls = this.GetAllUrlsInScene();
+            bool accepted = VideoMetadataStore.Refresh(urls.ToArray());
 
-        bool accepted = VideoMetadataStore.RefreshMetadataAsync(urls.ToArray());
+            if (!accepted) return false;
 
-        if (!accepted) return false;
+            return true;
+        }
 
-        return true;
-    }
+        public override bool OnBuildRequested(VRCSDKRequestedBuildType requestedBuildType)
+        {
+            if (requestedBuildType != VRCSDKRequestedBuildType.Scene) return true;
 
-    public override bool OnBuildRequested(VRCSDKRequestedBuildType requestedBuildType)
-    {
-        if (requestedBuildType != VRCSDKRequestedBuildType.Scene) return true;
+            List<string> urls = this.GetAllUrlsInScene();
+            VideoMetadataStore.Refresh(urls.ToArray());
 
-        List<string> urls = this.GetAllUrlsInScene();
-        VideoMetadataStore.Unlock();
-        VideoMetadataStore.RefreshMetadataSync(urls.ToArray());
-
-        return true;
+            return true;
+        }
     }
 }

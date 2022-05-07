@@ -63,7 +63,7 @@ namespace DecentM.VideoPlayer
         }
 
         [PublicAPI]
-        public static VideoMetadata GetCachedMetadata(string url)
+        public static VideoMetadata GetCached(string url)
         {
             VideoMetadata metadata = new VideoMetadata();
 
@@ -99,7 +99,7 @@ namespace DecentM.VideoPlayer
         }
 
         [PublicAPI]
-        public static bool IsUrlCached(string url)
+        public static bool IsCached(string url)
         {
             if (!ValidateUrl(url)) return false;
 
@@ -118,48 +118,19 @@ namespace DecentM.VideoPlayer
             File.WriteAllBytes(path, bytes);
         }
 
-        private static void FetchMetadataSync(string url)
+        private static IEnumerator Fetch(string url)
         {
-            if (string.IsNullOrEmpty(url)) return;
-            if (!ValidateUrl(url)) return;
+            if (string.IsNullOrEmpty(url)) return null;
+            if (!ValidateUrl(url)) return null;
 
             string hash = Hash.String(url);
 
-            try
-            {
-                YTDLVideoJson json = YTDLCommands.GetMetadataSync(url);
-                SaveMetadata(hash, json);
-            }
-            catch (Exception ex)
-            {
-                Debug.LogException(ex);
-                Debug.LogWarning($"Error while downloading metadata for {url}, skipping this video...");
-                return;
-            }
+            return YTDLCommands.GetMetadata(url, (json) => SaveMetadata(hash, json));
         }
 
-        private async static Task FetchMetadataAsync(string url)
+        private static IEnumerator FetchInParallel(List<string> urls)
         {
-            if (string.IsNullOrEmpty(url)) return;
-            if (!ValidateUrl(url)) return;
-
-            string hash = Hash.String(url);
-
-            try
-            {
-                YTDLVideoJson json = await YTDLCommands.GetMetadata(url);
-                SaveMetadata(hash, json);
-            } catch (Exception ex)
-            {
-                Debug.LogException(ex);
-                Debug.LogWarning($"Error while downloading metadata for {url}, skipping this video...");
-                return;
-            }
-        }
-
-        private async static Task FetchMetadataInParallel(List<string> urls)
-        {
-            List<Task> tasks = new List<Task>();
+            List<DCoroutine> coroutines = new List<DCoroutine>();
 
             for (int i = 0; i < urls.Count; i++)
             {
@@ -167,13 +138,13 @@ namespace DecentM.VideoPlayer
                 if (string.IsNullOrEmpty(url)) continue;
                 if (!ValidateUrl(url)) continue;
 
-                tasks.Add(FetchMetadataAsync(url));
+                coroutines.Add(DCoroutine.Start(Fetch(url)));
             }
 
-            await Task.WhenAll(tasks);
+            return Parallelism.WaitForCoroutines(coroutines);
         }
 
-        private async static Task FetchMetadataAsync(Queue<string> urls, int batchSize)
+        private static IEnumerator Fetch(Queue<string> urls, int batchSize, Action OnFinish)
         {
             List<string> batch = new List<string>();
 
@@ -183,7 +154,7 @@ namespace DecentM.VideoPlayer
 
                 if (batch.Count >= batchSize)
                 {
-                    await FetchMetadataInParallel(batch);
+                    yield return FetchInParallel(batch);
                     batch.Clear();
                 }
             }
@@ -191,19 +162,14 @@ namespace DecentM.VideoPlayer
             // Process the last batch
             if (batch.Count > 0)
             {
-                await FetchMetadataInParallel(batch);
+                yield return FetchInParallel(batch);
                 batch.Clear();
             }
+
+            OnFinish();
         }
 
         #region Methods that support the public API
-
-        private static bool isLocked = false;
-
-        public static bool IsLocked
-        {
-            get { return isLocked; }
-        }
 
         private static void CreateFolders(string[] urls)
         {
@@ -227,13 +193,12 @@ namespace DecentM.VideoPlayer
                 string url = urls[i];
                 if (string.IsNullOrEmpty(url)) continue;
                 if (!ValidateUrl(url)) continue;
-                if (IsUrlCached(url)) continue;
+                if (IsCached(url)) continue;
 
                 queue.Enqueue(url);
             }
 
             CreateFolders(urls);
-            isLocked = true;
 
             return queue;
         }
@@ -241,60 +206,19 @@ namespace DecentM.VideoPlayer
         private static void PostprocessAssets()
         {
             AssetDatabase.Refresh();
-            isLocked = false;
         }
 
-        private static bool FetchMetadataAsync(string[] urls, Action OnFinish)
+        private static bool Fetch(string[] urls, Action OnFinish)
         {
-            if (isLocked) return false;
-
             Queue<string> queue = PreprocessAssets(urls);
 
-            Task allFetches = Task.Run(() => FetchMetadataAsync(queue, 4));
-
-            EditorCoroutine.Start(
-                Parallelism.WaitForTask(allFetches, (bool success) => {
-                    PostprocessAssets();
-                    if (!success) Debug.LogError("An error occurred during batched metadata fetching, there is likely more information about it above.");
-                    OnFinish();
-                })
-            );
-
-            return true;
-        }
-
-        private static void FetchMetadataSync(Queue<string> urls)
-        {
-            for (int i = 0; i < urls.Count; i++)
-            {
-                string url = urls.ElementAt(i);
-                if (url == null) continue;
-
-                if (EditorUtility.DisplayCancelableProgressBar("Fetching metadata...", url, 1f * i / urls.Count))
-                {
-                    break;
-                }
-
-                FetchMetadataSync(url);
-            }
-
-            EditorUtility.ClearProgressBar();
-        }
-
-        private static bool FetchMetadataSync(string[] urls)
-        {
-            if (isLocked) return false;
-
-            Queue<string> queue = PreprocessAssets(urls);
-
-            try
-            {
-                FetchMetadataSync(queue);
-            } catch (Exception ex)
+            void Callback()
             {
                 PostprocessAssets();
-                throw ex;
+                OnFinish();
             }
+
+            DCoroutine.Start(Fetch(queue, 4, Callback));
 
             return true;
         }
@@ -302,43 +226,22 @@ namespace DecentM.VideoPlayer
         #endregion
 
         [PublicAPI]
-        public static void Unlock()
+        public static bool Refresh(string url, Action OnFinish)
         {
-            if (!isLocked) return;
-
-            isLocked = false;
+            return Fetch(new string[] { url }, OnFinish);
         }
 
         [PublicAPI]
-        public static bool RefreshMetadataAsync(string url, Action OnFinish)
-        {
-            return FetchMetadataAsync(new string[] { url }, OnFinish);
-        }
-
-        [PublicAPI]
-        public static bool RefreshMetadataAsync(string[] urls, Action OnFinish)
+        public static bool Refresh(string[] urls, Action OnFinish)
         {
             if (urls.Length == 0) return true;
-            return FetchMetadataAsync(urls, OnFinish);
+            return Fetch(urls, OnFinish);
         }
 
         [PublicAPI]
-        public static bool RefreshMetadataAsync(string[] urls)
+        public static bool Refresh(string[] urls)
         {
-            return RefreshMetadataAsync(urls, () => { });
-        }
-
-        [PublicAPI]
-        public static bool RefreshMetadataSync(string url)
-        {
-            return FetchMetadataSync(new string[] { url });
-        }
-
-        [PublicAPI]
-        public static bool RefreshMetadataSync(string[] urls)
-        {
-            if (urls.Length == 0) return true;
-            return FetchMetadataSync(urls);
+            return Refresh(urls, () => { });
         }
     }
 }

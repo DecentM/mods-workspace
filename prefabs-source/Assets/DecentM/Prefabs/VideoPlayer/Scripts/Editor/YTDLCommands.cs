@@ -62,20 +62,29 @@ namespace DecentM.EditorTools
 
     public static class YTDLCommands
     {
-        public static IEnumerator GetVideoUrlEnumerator(string url, int resolution, Action<string> callback)
+        public static IEnumerator GetVideoUrlEnumerator(string url, int resolution, Action<string> OnSuccess)
         {
-            return ProcessManager.CreateProcessCoroutine(
+            void OnFinish(ProcessResult result)
+            {
+                if (!string.IsNullOrEmpty(result.stderr))
+                {
+                    throw new Exception(result.stderr);
+                }
+
+                OnSuccess(result.stdout);
+            }
+
+            return Parallelism.WaitForCallback((callback) => ProcessManager.RunProcess(
                 EditorAssets.YtDlpPath,
                 $"--no-check-certificate -f \"mp4[height<=?{resolution}]/best[height<=?{resolution}]\" --get-url {url}",
                 ".",
-                BlockingBehaviour.NonBlocking,
-                (Process process) => callback(process.StandardOutput.ReadToEnd())
-            );
+                (result) => { callback(); OnFinish(result); }
+            ));
         }
 
         public static void GetVideoUrl(string url, int resolution, Action<string> callback)
         {
-            ProcessManager.RunProcessAsync(
+            ProcessManager.RunProcess(
                 EditorAssets.YtDlpPath,
                 $"--no-check-certificate -f \"mp4[height<=?{resolution}]/best[height<=?{resolution}]\" --get-url {url}",
                 ".",
@@ -83,162 +92,104 @@ namespace DecentM.EditorTools
             );
         }
 
-        public static YTDLVideoJson GetMetadataSync(string url)
+        public static IEnumerator GetMetadata(string url, Action<YTDLVideoJson> OnSuccess)
         {
-            ProcessResult result = ProcessManager.RunProcessSync(
-                EditorAssets.YtDlpPath,
-                $"--no-check-certificate -J {url}",
-                "."
-            );
-
-            if (!string.IsNullOrEmpty(result.stderr))
+            void OnFinish(ProcessResult result)
             {
-                throw new Exception(result.stderr);
+                if (!string.IsNullOrEmpty(result.stderr))
+                {
+                    throw new Exception(result.stderr);
+                }
+
+                OnSuccess(JsonUtility.FromJson<YTDLVideoJson>(result.stdout));
             }
 
-            return JsonUtility.FromJson<YTDLVideoJson>(result.stdout);
-        }
-
-        public async static Task<YTDLVideoJson> GetMetadata(string url)
-        {
-            ProcessResult result = await ProcessManager.RunProcessAsync(
+            return Parallelism.WaitForCallback((callback) => ProcessManager.RunProcess(
                 EditorAssets.YtDlpPath,
                 $"--no-check-certificate -J {url}",
-                "."
-            );
-
-            if (!string.IsNullOrEmpty(result.stderr))
-            {
-                throw new Exception(result.stderr);
-            }
-
-            return JsonUtility.FromJson<YTDLVideoJson>(result.stdout);
+                ".",
+                (result) => { callback(); OnFinish(result); }
+            ));
         }
 
-        public static YTDLFlatPlaylistJson GetPlaylistVideosSync(string url)
+        public static IEnumerator GetPlaylistVideos(string url, Action<YTDLFlatPlaylistJson> OnSuccess)
         {
-            ProcessResult result = ProcessManager.RunProcessSync(
+            void OnFinish(ProcessResult result)
+            {
+                if (!string.IsNullOrEmpty(result.stderr))
+                {
+                    throw new Exception(result.stderr);
+                }
+
+                OnSuccess(JsonUtility.FromJson<YTDLFlatPlaylistJson>(result.stdout));
+            }
+
+            return Parallelism.WaitForCallback((callback) => ProcessManager.RunProcess(
                 EditorAssets.YtDlpPath,
                 $"--no-check-certificate -J --flat-playlist {url}",
                 ".",
-                10000
-            );
-
-            return JsonUtility.FromJson<YTDLFlatPlaylistJson>(result.stdout);
+                (result) => { callback(); OnFinish(result); }
+            ));
         }
 
-        public async static Task<YTDLFlatPlaylistJson> GetPlaylistVideos(string url)
+        public static IEnumerator DownloadSubtitles(string url, string path, bool autoSubs)
         {
-            ProcessResult result = await ProcessManager.RunProcessAsync(
-                EditorAssets.YtDlpPath,
-                $"--no-check-certificate -J --flat-playlist {url}",
-                "."
-            );
-
-            if (!string.IsNullOrEmpty(result.stderr))
+            void OnFinish(ProcessResult result)
             {
-                throw new Exception(result.stderr);
+                if (!string.IsNullOrEmpty(result.stderr))
+                {
+                    throw new Exception(result.stderr);
+                }
             }
 
-            return JsonUtility.FromJson<YTDLFlatPlaylistJson>(result.stdout);
-        }
-
-        public static void DownloadSubtitlesSync(string url, string path, bool autoSubs)
-        {
             string arguments = autoSubs
                 ? $"--no-check-certificate --skip-download --write-subs --write-auto-subs --sub-format vtt/srt --sub-langs all {url}"
                 : $"--no-check-certificate --skip-download --write-subs --no-write-auto-subs --sub-format vtt/srt --sub-langs all {url}";
 
-            ProcessResult result = ProcessManager.RunProcessSync(
+            return Parallelism.WaitForCallback((callback) => ProcessManager.RunProcess(
                 EditorAssets.YtDlpPath,
                 arguments,
                 path,
-                120000 // 2 minutes
-            );
-
-            if (!string.IsNullOrEmpty(result.stderr))
-            {
-                throw new Exception(result.stderr);
-            }
+                (result) => { callback(); OnFinish(result); }
+            ));
         }
 
-        public async static Task DownloadSubtitles(string url, string path, bool autoSubs)
+        public static IEnumerator GetMetadataWithComments(string url, Action<YTDLVideoJson> OnSuccess)
         {
-            string arguments = autoSubs
-                ? $"--no-check-certificate --skip-download --write-subs --write-auto-subs --sub-format vtt/srt --sub-langs all {url}"
-                : $"--no-check-certificate --skip-download --write-subs --no-write-auto-subs --sub-format vtt/srt --sub-langs all {url}";
-
-            ProcessResult result = await ProcessManager.RunProcessAsync(
-                EditorAssets.YtDlpPath,
-                arguments,
-                path
-            );
-
-            if (!string.IsNullOrEmpty(result.stderr))
+            void OnFinish(ProcessResult result)
             {
-                throw new Exception(result.stderr);
-            }
-        }
+                if (!string.IsNullOrEmpty(result.stderr))
+                {
+                    throw new Exception(result.stderr);
+                }
 
-        public static YTDLVideoJson GetMetadataWithCommentsSync(string url)
-        {
-            ProcessResult result = ProcessManager.RunProcessSync(
+                OnSuccess(JsonUtility.FromJson<YTDLVideoJson>(result.stdout));
+            }
+
+            return Parallelism.WaitForCallback((callback) => ProcessManager.RunProcess(
                 EditorAssets.YtDlpPath,
                 $"--no-check-certificate --skip-download --write-comments -J {url}",
                 ".",
-                300000 // 5 minutes
-            );
-
-            if (!string.IsNullOrEmpty(result.stderr))
-            {
-                throw new Exception(result.stderr);
-            }
-
-            return JsonUtility.FromJson<YTDLVideoJson>(result.stdout);
+                (result) => { callback(); OnFinish(result); }
+            ));
         }
 
-        public async static Task<YTDLVideoJson> GetMetadataWithComments(string url)
+        public static IEnumerator DownloadMetadataWithComments(string url, string path)
         {
-            ProcessResult result = await ProcessManager.RunProcessAsync(
-                EditorAssets.YtDlpPath,
-                $"--no-check-certificate --skip-download --write-comments -J {url}",
-                "."
-            );
-
-            if (!string.IsNullOrEmpty(result.stderr))
+            void OnFinish(ProcessResult result)
             {
-                throw new Exception(result.stderr);
+                if (!string.IsNullOrEmpty(result.stderr))
+                {
+                    throw new Exception(result.stderr);
+                }
             }
 
-            return JsonUtility.FromJson<YTDLVideoJson>(result.stdout);
-        }
-
-        public static void DownloadMetadataWithCommentsSync(string url, string path)
-        {
-            ProcessResult result = ProcessManager.RunProcessSync(
+            return Parallelism.WaitForCallback((callback) => ProcessManager.RunProcess(
                 EditorAssets.YtDlpPath,
                 $"--no-check-certificate --skip-download --write-comments {url}",
-                path
-            );
-
-            if (!string.IsNullOrEmpty(result.stderr))
-            {
-                throw new Exception(result.stderr);
-            }
-        }
-
-        public async static Task DownloadMetadataWithComments(string url, string path)
-        {
-            ProcessResult result = await ProcessManager.RunProcessAsync(
-                EditorAssets.YtDlpPath,
-                $"--no-check-certificate --skip-download --write-comments {url}",
-                path
-            );
-
-            if (!string.IsNullOrEmpty(result.stderr))
-            {
-                throw new Exception(result.stderr);
-            }
+                path,
+                (result) => { callback(); OnFinish(result); }
+            ));
         }
     }
 }

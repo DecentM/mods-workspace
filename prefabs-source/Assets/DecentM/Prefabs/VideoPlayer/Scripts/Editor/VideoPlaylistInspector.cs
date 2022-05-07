@@ -30,7 +30,7 @@ namespace DecentM.VideoPlayer
             Rect toolbarRectOuter = this.DrawRegion(50, new Vector4(0, Padding, 0, Padding));
             Rect toolbarRectInner = this.GetRectInside(toolbarRectOuter, new Vector2(toolbarRectOuter.width, toolbarRectOuter.height), new Vector4(Padding, Padding, Padding, 0));
 
-            int toolbarButtons = 4;
+            int toolbarButtons = 3;
             int toolbarButtonCount = 0;
 
             Rect refreshAllButton = this.GetRectInside(toolbarRectInner, new Vector2(toolbarRectInner.width / toolbarButtons, toolbarRectInner.height), new Vector4(toolbarRectInner.width / toolbarButtons * toolbarButtonCount, 0));
@@ -48,16 +48,6 @@ namespace DecentM.VideoPlayer
                 }
             }
             EditorGUI.EndDisabledGroup();
-
-            toolbarButtonCount++;
-
-            Rect refreshAllSyncButton = this.GetRectInside(toolbarRectInner, new Vector2(toolbarRectInner.width / toolbarButtons, toolbarRectInner.height), new Vector4(toolbarRectInner.width / toolbarButtons * toolbarButtonCount, 0));
-            if (this.ToolbarButton(refreshAllSyncButton, "Refresh all sync")) { this.RefreshAllSync(); }
-
-            /* toolbarButtonCount++;
-
-            Rect cancelButton = this.GetRectInside(toolbarRectInner, new Vector2(toolbarRectInner.width / toolbarButtons, toolbarRectInner.height), new Vector4(toolbarRectInner.width / toolbarButtons * toolbarButtonCount, 0));
-            if (this.ToolbarButton(cancelButton, "Cancel refresh")) { this.CancelRefresh(); } */
 
             toolbarButtonCount++;
 
@@ -223,8 +213,7 @@ namespace DecentM.VideoPlayer
                 Rect refreshButton = this.GetRectInside(actionButtonsRectInner, new Vector2(actionButtonsRectInner.width, buttonHeight), new Vector4(buttonPadding, buttonCount * buttonHeight, buttonPadding, buttonPadding));
                 if (this.Button(refreshButton, EditorAssets.RefreshIcon))
                 {
-                    VideoMetadataStore.RefreshMetadataSync(url.ToString());
-                    this.BakeMetadata();
+                    VideoMetadataStore.Refresh(url.ToString(), this.BakeMetadata);
                 }
 
                 buttonCount++;
@@ -252,15 +241,15 @@ namespace DecentM.VideoPlayer
             // VideoMetadataStore.ReapplyImportSettings();
         }
 
-        private void ImportPlaylistCallback(YTDLFlatPlaylistJson? jsonOrNull)
+        private void ImportPlaylistCallback(YTDLFlatPlaylistJson jsonOrNull)
         {
             VideoPlaylist playlist = (VideoPlaylist)target;
 
-            if (jsonOrNull == null)
+            /* if (jsonOrNull == null)
             {
                 EditorUtility.DisplayDialog("Import error", "Could not retrieve videos from this playlist. Make sure the URL points to a playlist and not just a video", "OK");
                 return;
-            }
+            } */
 
             YTDLFlatPlaylistJson json = (YTDLFlatPlaylistJson)jsonOrNull;
 
@@ -289,7 +278,7 @@ namespace DecentM.VideoPlayer
         private void ImportPlaylist()
         {
             GUI.FocusControl(null);
-            this.ImportPlaylistCallback(YTDLCommands.GetPlaylistVideosSync(this.importPlaylistUrl));
+            YTDLCommands.GetPlaylistVideos(this.importPlaylistUrl, this.ImportPlaylistCallback);
         }
 
         private void RefreshAll()
@@ -297,16 +286,7 @@ namespace DecentM.VideoPlayer
             GUI.FocusControl(null);
             VideoPlaylist playlist = (VideoPlaylist)target;
 
-            VideoMetadataStore.RefreshMetadataAsync(playlist.urls.Select(url => url[0].ToString()).ToArray(), this.BakeMetadata);
-        }
-
-        private void RefreshAllSync()
-        {
-            GUI.FocusControl(null);
-            VideoPlaylist playlist = (VideoPlaylist)target;
-
-            VideoMetadataStore.RefreshMetadataSync(playlist.urls.Select(url => url[0].ToString()).ToArray());
-            this.BakeMetadata();
+            VideoMetadataStore.Refresh(playlist.urls.Select(url => url[0].ToString()).ToArray(), this.BakeMetadata);
         }
 
         private void Clear()
@@ -423,7 +403,7 @@ namespace DecentM.VideoPlayer
                 VRCUrl url = (VRCUrl)item[0];
                 if (url == null) continue;
 
-                VideoMetadata videoMetadata = VideoMetadataStore.GetCachedMetadata(url.ToString());
+                VideoMetadata videoMetadata = VideoMetadataStore.GetCached(url.ToString());
                 string[][] subtitles = new string[0][];
 
                 if (videoMetadata.subtitles != null && videoMetadata.subtitles.Length != 0)

@@ -23,7 +23,7 @@ namespace DecentM.EditorTools
         public string contents;
     }
 
-    public class SubtitleStore : AutoSceneFixer
+    public class SubtitleStore
     {
         private static bool ValidateUrl(string url)
         {
@@ -112,8 +112,6 @@ namespace DecentM.EditorTools
 
         private static Queue<string> pendingUrls = new Queue<string>();
 
-        private static bool isLocked = false;
-
         private static Queue<string> PreprocessAssets(string[] urls)
         {
             Queue<string> queue = new Queue<string>();
@@ -129,7 +127,6 @@ namespace DecentM.EditorTools
             }
 
             CreateFolders(urls);
-            isLocked = true;
 
             return queue;
         }
@@ -138,10 +135,61 @@ namespace DecentM.EditorTools
         {
             CompileAllSubtitles();
             AssetDatabase.Refresh();
-            isLocked = false;
         }
 
-        protected override bool OnPerformFixes()
+        private static IEnumerator Fetch(string url)
+        {
+            if (string.IsNullOrEmpty(url)) return null;
+            if (!ValidateUrl(url)) return null;
+
+            string path = GetPathFromUrl(url);
+
+            return YTDLCommands.DownloadSubtitles(url, path, false);
+        }
+
+        private static IEnumerator FetchInParallel(List<string> urls)
+        {
+            List<DCoroutine> coroutines = new List<DCoroutine>();
+
+            for (int i = 0; i < urls.Count; i++)
+            {
+                string url = urls[i];
+                if (string.IsNullOrEmpty(url)) continue;
+                if (!ValidateUrl(url)) continue;
+
+                coroutines.Add(DCoroutine.Start(Fetch(url)));
+            }
+
+            return Parallelism.WaitForCoroutines(coroutines);
+        }
+
+        private static IEnumerator Fetch(Queue<string> urls, int batchSize, Action OnFinish)
+        {
+            List<string> batch = new List<string>();
+
+            while (urls.Count > 0)
+            {
+                batch.Add(urls.Dequeue());
+
+                if (batch.Count >= batchSize)
+                {
+                    yield return FetchInParallel(batch);
+                    batch.Clear();
+                }
+            }
+
+            // Process the last batch
+            if (batch.Count > 0)
+            {
+                yield return FetchInParallel(batch);
+                batch.Clear();
+            }
+
+            OnFinish();
+        }
+
+        /*
+         protected override bool OnPerformFixes()
         {
             if (isLocked) return true;
 
@@ -157,45 +205,40 @@ namespace DecentM.EditorTools
             );
 
             return true;
+        }*/
+
+        private static bool Fetch(string[] urls, Action OnFinish)
+        {
+            Queue<string> queue = PreprocessAssets(urls);
+
+            void Callback()
+            {
+                PostprocessAssets();
+                OnFinish();
+            }
+
+            EditorCoroutine.Start(Fetch(queue, 4, Callback));
+
+            return true;
         }
 
-        private async static Task FetchInParallel(List<string> urls)
+        [PublicAPI]
+        public static bool Refresh(string url, Action OnFinish)
         {
-            List<Task> tasks = new List<Task>();
-
-            for (int i = 0; i < urls.Count; i++)
-            {
-                string url = urls[i];
-                if (string.IsNullOrEmpty(url)) continue;
-                if (!ValidateUrl(url)) continue;
-
-                tasks.Add(FetchAsync(url));
-            }
-
-            await Task.WhenAll(tasks);
+            return Fetch(new string[] { url }, OnFinish);
         }
 
-        private async static Task FetchAsync(Queue<string> urls, int batchSize)
+        [PublicAPI]
+        public static bool Refresh(string[] urls, Action OnFinish)
         {
-            List<string> batch = new List<string>();
+            if (urls.Length == 0) return true;
+            return Fetch(urls, OnFinish);
+        }
 
-            while (urls.Count > 0)
-            {
-                batch.Add(urls.Dequeue());
-
-                if (batch.Count >= batchSize)
-                {
-                    await FetchInParallel(batch);
-                    batch.Clear();
-                }
-            }
-
-            // Process the last batch
-            if (batch.Count > 0)
-            {
-                await FetchInParallel(batch);
-                batch.Clear();
-            }
+        [PublicAPI]
+        public static bool Refresh(string[] urls)
+        {
+            return Refresh(urls, () => { });
         }
 
         [PublicAPI]
@@ -219,7 +262,6 @@ namespace DecentM.EditorTools
                     return null;
                 }
 
-                // UnityEngine.Object[] assets = AssetDatabase.LoadAllAssetsAtPath(path);
                 List<CachedSubtitle> result = new List<CachedSubtitle>();
 
                 foreach (string file in files)
@@ -243,36 +285,6 @@ namespace DecentM.EditorTools
             {
                 Debug.LogException(ex);
                 throw ex;
-            }
-        }
-
-        [PublicAPI]
-        public static void FetchSync(string url)
-        {
-            if (string.IsNullOrEmpty(url) || IsCached(url)) return;
-
-            string path = GetPathFromUrl(url);
-            YTDLCommands.DownloadSubtitlesSync(url, path, false);
-        }
-
-        [PublicAPI]
-        public async static Task FetchAsync(string url)
-        {
-            string path = GetPathFromUrl(url);
-            if (string.IsNullOrEmpty(url)) return;
-            if (!ValidateUrl(url)) return;
-
-            string hash = Hash.String(url);
-
-            try
-            {
-                await YTDLCommands.DownloadSubtitles(url, path, false);
-            }
-            catch (Exception ex)
-            {
-                Debug.LogException(ex);
-                Debug.LogWarning($"Error while downloading metadata for {url}, skipping this video...");
-                return;
             }
         }
 
