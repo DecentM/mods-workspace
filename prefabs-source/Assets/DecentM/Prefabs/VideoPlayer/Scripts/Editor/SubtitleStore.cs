@@ -30,65 +30,6 @@ namespace DecentM.EditorTools
             return Uri.TryCreate(url, UriKind.Absolute, out Uri result);
         }
 
-        private static void CompileSubtitles(string inputPath, string outputPath)
-        {
-            if (!File.Exists(inputPath) || File.Exists(outputPath)) return;
-
-            try
-            {
-                string sourceContents = File.ReadAllText(inputPath);
-                string extension = Path.GetExtension(inputPath);
-                SubtitleCompiler.CompilationResult result = SubtitleCompiler.Compile(sourceContents, extension);
-
-                File.WriteAllBytes(outputPath, Encoding.UTF8.GetBytes(result.output));
-
-                // Get rid of the source files so that they're not included in the asset database refresh
-                // later on.
-                if (File.Exists(inputPath)) File.Delete(inputPath);
-                if (File.Exists($"{inputPath}.meta")) File.Delete($"{inputPath}.meta");
-                if (File.Exists($"{inputPath}.part")) File.Delete($"{inputPath}.part");
-                if (File.Exists($"{inputPath}.part.meta")) File.Delete($"{inputPath}.part.meta");
-            }
-            catch (Exception ex)
-            {
-                Debug.LogWarning(ex);
-                Debug.LogWarning($"Failed to compile subtitles, skipping file: {inputPath}");
-            }
-        }
-
-        private static void CompileAllSubtitles()
-        {
-            List<string> files = new List<string>();
-
-            try
-            {
-                files = Directory.GetFiles($"{EditorAssets.SubtitleCacheFolder}", "*.*", SearchOption.AllDirectories)
-                    .Where(name => name.EndsWith(".srt") || name.EndsWith(".vtt"))
-                    .ToList();
-            } catch (Exception ex)
-            {
-                if (!(ex is DirectoryNotFoundException))
-                {
-                    throw ex;
-                }
-            }
-
-            for (int i = 0; i < files.Count; i++)
-            {
-                string file = files[i];
-                if (string.IsNullOrEmpty(file) || !File.Exists(file)) continue;
-
-                EditorUtility.DisplayProgressBar("Compiling subtitles...", Path.GetFileName(file), 1f * i / files.Count);
-
-                string lang = Path.GetExtension(Path.GetFileNameWithoutExtension(file)).Remove(0, 1);
-                if (string.IsNullOrEmpty(lang)) lang = Path.GetFileNameWithoutExtension(file);
-                string outputPath = $"{Path.GetDirectoryName(file)}/{lang}.txt";
-                CompileSubtitles(file, outputPath);
-            }
-
-            EditorUtility.ClearProgressBar();
-        }
-
         private static string GetPathFromUrl(string url)
         {
             if (!ValidateUrl(url)) return null;
@@ -131,7 +72,6 @@ namespace DecentM.EditorTools
 
         private static void PostprocessAssets()
         {
-            CompileAllSubtitles();
             AssetDatabase.Refresh();
         }
 
@@ -142,7 +82,7 @@ namespace DecentM.EditorTools
 
             string path = GetPathFromUrl(url);
 
-            return YTDLCommands.DownloadSubtitles(url, path, true);
+            return YTDLCommands.DownloadSubtitles(url, path, false);
         }
 
         private static IEnumerator FetchInParallel(List<string> urls, Action OnFinish)
@@ -233,7 +173,9 @@ namespace DecentM.EditorTools
 
                 CreateFolders(new string[] { url });
 
-                List<string> files = Directory.GetFiles(path, "*.txt", SearchOption.TopDirectoryOnly)
+                List<string> files = Directory
+                    .GetFiles(path, "*.*", SearchOption.TopDirectoryOnly)
+                    .Where(file => SubtitleFormat.IsSupported(Path.GetExtension(file)))
                     .ToList();
 
                 if (files.Count == 0) return null;

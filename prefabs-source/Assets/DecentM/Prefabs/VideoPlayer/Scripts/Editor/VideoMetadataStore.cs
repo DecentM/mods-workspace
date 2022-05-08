@@ -14,7 +14,7 @@ using UnityEngine;
 using UnityEditor;
 
 using DecentM.EditorTools;
-using DecentM.Subtitles;
+using DecentM.VideoPlayer.EditorTools.Importers;
 
 namespace DecentM.VideoPlayer
 {
@@ -44,22 +44,15 @@ namespace DecentM.VideoPlayer
         {
             if (!ValidateUrl(url)) return null;
 
-            string filename = "metadata.json";
+            string filename = "metadata.ytdl-json";
             string hash = Hash.String(url);
             string path = $"{EditorAssets.VideoMetadataFolder}/{hash}/{filename}";
 
-            TextAsset textAsset = AssetDatabase.LoadAssetAtPath<TextAsset>(path);
+            VideoMetadataAsset asset = AssetDatabase.LoadAssetAtPath<VideoMetadataAsset>(path);
 
-            if (textAsset == null) return null;
+            if (asset == null) return null;
 
-            try
-            {
-                return JsonUtility.FromJson<YTDLVideoJson>(textAsset.text);
-            }
-            catch
-            {
-                return null;
-            }
+            return asset.metadata;
         }
 
         [PublicAPI]
@@ -113,7 +106,7 @@ namespace DecentM.VideoPlayer
 
             YTDLVideoJson json = (YTDLVideoJson)jsonOrNull;
 
-            string path = $"{EditorAssets.VideoMetadataFolder}/{hash}/metadata.json";
+            string path = $"{EditorAssets.VideoMetadataFolder}/{hash}/metadata.ytdl-json";
             byte[] bytes = Encoding.UTF8.GetBytes(JsonUtility.ToJson(json));
             File.WriteAllBytes(path, bytes);
         }

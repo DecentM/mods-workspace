@@ -17,7 +17,7 @@ namespace DecentM.Subtitles
         {
             DirectoryInfo info = new DirectoryInfo(this.sourcePath);
 
-            List<FileInfo> fileInfos = info.GetFiles().Where(file => FileTypes.IsSupported(file.Extension)).ToList();
+            List<FileInfo> fileInfos = info.GetFiles().Where(file => SubtitleFormat.IsSupported(file.Extension)).ToList();
             List<TextAsset> assets = new List<TextAsset>();
 
             // Go through all the files in the directory and parse them using a parser based on its file extension

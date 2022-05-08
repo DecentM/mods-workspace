@@ -10,74 +10,23 @@ namespace DecentM.EditorTools
         private const string VideoTexturesPath = "Prefabs/VideoPlayer/Textures/Editor";
         private const string VideoScriptsPath = "Prefabs/VideoPlayer/Scripts/Editor";
 
-        public static Texture2D VideoPlayerBanner
-        {
-            get { return GetAsset<Texture2D>(VideoTexturesPath, "splash.psd"); }
-        }
+        public static Texture2D VideoPlayerBanner { get { return GetAsset<Texture2D>(VideoTexturesPath, "splash.psd"); } }
+        public static Sprite FallbackVideoThumbnail { get { return GetAsset<Sprite>(VideoTexturesPath, "thumbnail-missing.psd"); } }
+        public static Texture2D DeleteIcon { get { return GetAsset<Texture2D>(VideoTexturesPath, "delete.png");  }}
+        public static Texture2D RefreshIcon { get { return GetAsset<Texture2D>(VideoTexturesPath, "refresh.png"); }}
+        public static Texture2D ChevronUp { get { return GetAsset<Texture2D>(VideoTexturesPath, "chevron-up.png"); }}
+        public static Texture2D ChevronDown { get { return GetAsset<Texture2D>(VideoTexturesPath, "chevron-down.png"); }}
+        public static Texture2D ChevronDoubleUp { get { return GetAsset<Texture2D>(VideoTexturesPath, "chevron-double-up.png"); }}
+        public static Texture2D ChevronDoubleDown { get { return GetAsset<Texture2D>(VideoTexturesPath, "chevron-double-down.png"); }}
+        public static Texture2D CloseIcon { get { return GetAsset<Texture2D>(VideoTexturesPath, "close.png"); }}
+        public static Texture2D PlusIcon { get { return GetAsset<Texture2D>(VideoTexturesPath, "plus.png"); }}
+        public static Texture2D ClosedCaptionsIcon { get { return GetAsset<Texture2D>(VideoTexturesPath, "closed-caption.png"); }}
+        public static Texture2D SubtitlesOutlineIcon { get { return GetAsset<Texture2D>(VideoTexturesPath, "subtitles-outline.png"); } }
 
-        public static Sprite FallbackVideoThumbnail
-        {
-            get { return GetAsset<Sprite>(VideoTexturesPath, "thumbnail-missing.psd"); }
-        }
+        public static string YtDlpPath { get { return string.Join("/", Directory.GetCurrentDirectory(), "Assets", "DecentM", VideoScriptsPath, "Bin/yt-dlp.exe"); }}
 
-        public static Texture2D DeleteIcon
-        {
-            get { return GetAsset<Texture2D>(VideoTexturesPath, "delete.png");  }
-        }
-
-        public static Texture2D RefreshIcon
-        {
-            get { return GetAsset<Texture2D>(VideoTexturesPath, "refresh.png"); }
-        }
-
-        public static Texture2D ChevronUp
-        {
-            get { return GetAsset<Texture2D>(VideoTexturesPath, "chevron-up.png"); }
-        }
-
-        public static Texture2D ChevronDown
-        {
-            get { return GetAsset<Texture2D>(VideoTexturesPath, "chevron-down.png"); }
-        }
-
-        public static Texture2D ChevronDoubleUp
-        {
-            get { return GetAsset<Texture2D>(VideoTexturesPath, "chevron-double-up.png"); }
-        }
-
-        public static Texture2D ChevronDoubleDown
-        {
-            get { return GetAsset<Texture2D>(VideoTexturesPath, "chevron-double-down.png"); }
-        }
-
-        public static Texture2D CloseIcon
-        {
-            get { return GetAsset<Texture2D>(VideoTexturesPath, "close.png"); }
-        }
-
-        public static Texture2D PlusIcon
-        {
-            get { return GetAsset<Texture2D>(VideoTexturesPath, "plus.png"); }
-        }
-
-        public static string YtDlpPath
-        {
-            get { return string.Join("/", Directory.GetCurrentDirectory(), "Assets", "DecentM", VideoScriptsPath, "Bin/yt-dlp.exe"); }
-        }
-
-        public static string VideoMetadataFolder
-        {
-            get { return "Assets/Editor/DecentM/VideoMetadata"; }
-        }
-
-        public static string ImageCacheFolder
-        {
-            get { return "Assets/Editor/DecentM/ImageCache"; }
-        }
-
-        public static string SubtitleCacheFolder
-        {
-            get { return "Assets/Editor/DecentM/SubtitleCache"; }
-        }
+        public static string VideoMetadataFolder { get { return "Assets/Editor/DecentM/VideoMetadata"; }}
+        public static string ImageCacheFolder { get { return "Assets/Editor/DecentM/ImageCache"; }}
+        public static string SubtitleCacheFolder { get { return "Assets/Editor/DecentM/SubtitleCache"; }}
     }
 }

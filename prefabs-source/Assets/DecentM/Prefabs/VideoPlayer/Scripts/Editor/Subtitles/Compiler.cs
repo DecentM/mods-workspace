@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace DecentM.Subtitles
 {
-    class FileTypes
+    public static class SubtitleFormat
     {
         public const string Srt = ".srt";
         public const string Ass = ".ass";
@@ -17,7 +17,7 @@ namespace DecentM.Subtitles
 
         public static bool IsSupported(string filetype)
         {
-            return FileTypes.SupportedFormats.Any(f => f == filetype);
+            return SubtitleFormat.SupportedFormats.Any(f => f == filetype);
         }
 
         public static string[] SupportedFormats = { Srt, Vtt };
@@ -52,9 +52,9 @@ namespace DecentM.Subtitles
             CompilationResult result = new CompilationResult(new List<CompilationResultError>(), "");
             List<Instruction> instructions = new List<Instruction>();
 
-            if (!FileTypes.IsSupported(fileType))
+            if (!SubtitleFormat.IsSupported(fileType))
             {
-                throw new NotImplementedException($"File type {fileType} is not supported. Use a different file, or convert your subtitles to a supported format: {String.Join(", ", FileTypes.SupportedFormats)}");
+                throw new NotImplementedException($"File type {fileType} is not supported. Use a different file, or convert your subtitles to a supported format: {String.Join(", ", SubtitleFormat.SupportedFormats)}");
             }
 
             string sanitisedSource = new TextProcessing(source)
@@ -64,7 +64,7 @@ namespace DecentM.Subtitles
 
             switch (fileType)
             {
-                case FileTypes.Srt:
+                case SubtitleFormat.Srt:
                     {
                         Srt.Lexer lexer = new Srt.Lexer();
                         Srt.Parser parser = new Srt.Parser();
@@ -90,9 +90,9 @@ namespace DecentM.Subtitles
                         break;
                     }
 
-                case FileTypes.Ass:
-                case FileTypes.Usf:
-                case FileTypes.Vtt:
+                case SubtitleFormat.Ass:
+                case SubtitleFormat.Usf:
+                case SubtitleFormat.Vtt:
                     {
                         Vtt.Lexer lexer = new Vtt.Lexer();
                         Vtt.Parser parser = new Vtt.Parser();
@@ -117,10 +117,10 @@ namespace DecentM.Subtitles
                         instructions = transformer.ToInstructions(ast);
                         break;
                     }
-                case FileTypes.Stl:
-                case FileTypes.Sub:
-                case FileTypes.Ssa:
-                case FileTypes.Ttxt:
+                case SubtitleFormat.Stl:
+                case SubtitleFormat.Sub:
+                case SubtitleFormat.Ssa:
+                case SubtitleFormat.Ttxt:
                 default:
                     break;
             }
