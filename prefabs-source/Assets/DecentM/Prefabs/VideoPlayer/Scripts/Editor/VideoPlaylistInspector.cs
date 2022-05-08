@@ -40,7 +40,7 @@ namespace DecentM.VideoPlayer
             {
                 if (EditorUtility.DisplayDialog(
                         "Confirm metadata refresh",
-                        $"Are you sure you want to refresh metadata (thumbnail, like count, view count, etc.) for all videos? This will take about {Mathf.CeilToInt(playlist.urls.Length * 2f / 60)} minute(s).",
+                        $"Are you sure you want to refresh metadata (thumbnail, like count, view count, etc.) for all videos on this playlist?",
                         "Refresh", "Cancel"
                     )
                 )
@@ -97,7 +97,7 @@ namespace DecentM.VideoPlayer
                 int fps = (int)item[8];
                 string description = (string)item[9];
                 string duration = (string)item[10];
-                string[][] subtitles = (string[][])item[11];
+                TextAsset[] subtitles = (TextAsset[])item[11];
 
                 Rect regionOuter = this.DrawRegion(UrlHeight, new Vector4(0, 0, 0, 0));
                 Rect region = this.GetRectInside(regionOuter, new Vector4(Padding, 0, Padding, Padding * 1.5f));
@@ -189,15 +189,7 @@ namespace DecentM.VideoPlayer
                 count++;
 
                 Rect subsRect = this.GetRectInside(textRectInner, new Vector2(textRectInner.width, height), new Vector4(Padding, count * height, Padding, 0));
-                List<string> langs = new List<string>();
-                if (subtitles != null)
-                {
-                    foreach (string[] sub in subtitles)
-                    {
-                        langs.Add(sub[0]);
-                    }
-                }
-                this.DrawLabel(subsRect, string.Join(", ", langs.ToArray()), 2);
+                this.DrawLabel(subsRect, subtitles == null ? "" : string.Join(", ", subtitles.Select((asset) => asset.name).ToArray()), 2);
 
                 count++;
 
@@ -233,13 +225,14 @@ namespace DecentM.VideoPlayer
             if (EditorGUI.EndChangeCheck())
             {
                 this.BakeMetadata();
-                this.SaveModifications();
+                // this.SaveModifications();
             }
         }
 
         private void ReimportMetadata()
         {
             // VideoMetadataStore.ReapplyImportSettings();
+            this.BakeMetadata();
         }
 
         private void ImportPlaylistCallback(YTDLFlatPlaylistJson jsonOrNull)
@@ -274,6 +267,7 @@ namespace DecentM.VideoPlayer
             AsyncProgress.Clear();
             this.importPlaylistUrl = "";
             this.RemoveEmptyUrls();
+            this.BakeMetadata();
         }
 
         private void ImportPlaylist()
@@ -286,6 +280,7 @@ namespace DecentM.VideoPlayer
         {
             GUI.FocusControl(null);
             VideoPlaylist playlist = (VideoPlaylist)target;
+            string[] urls = playlist.urls.Select(url => url[0].ToString()).ToArray();
 
             void OnProgress(string name, float progress)
             {
@@ -298,13 +293,11 @@ namespace DecentM.VideoPlayer
                 this.BakeMetadata();
             }
 
-            VideoMetadataStore.Refresh(playlist.urls.Select(url => url[0].ToString()).ToArray(), (value) => OnProgress("metadata", value), () =>
-            {
-                ImageStore.Refresh(playlist.urls.Select(url => url[0].ToString()).ToArray(), (value) => OnProgress("thumbnails", value), () =>
-                {
-                    SubtitleStore.Refresh(playlist.urls.Select(url => url[0].ToString()).ToArray(), (value) => OnProgress("subtitles", value), OnFinish);
-                });
-            });
+            void RefreshSubtitleStore() => SubtitleStore.Refresh(urls, (value) => OnProgress("subtitles", value), OnFinish);
+            void RefreshImageStore() => ImageStore.Refresh(urls, (value) => OnProgress("thumbnails", value), RefreshSubtitleStore);
+            void RefreshMetadataStore() => VideoMetadataStore.Refresh(urls, (value) => OnProgress("metadata", value), RefreshImageStore);
+
+            RefreshMetadataStore();
         }
 
         private void Clear()
@@ -340,7 +333,7 @@ namespace DecentM.VideoPlayer
             playlist.urls = newUrls;
         }
 
-        private object[] CreateNewItem(VRCUrl url, Sprite thumbnail, string title, string uploader, string platform, int views, int likes, string resolution, int fps, string description, string duration, string[][] subtitles)
+        private object[] CreateNewItem(VRCUrl url, Sprite thumbnail, string title, string uploader, string platform, int views, int likes, string resolution, int fps, string description, string duration, TextAsset[] subtitles)
         {
             return new object[] { url, thumbnail, title, uploader, platform, views, likes, resolution, fps, description, duration, subtitles };
         }
@@ -352,12 +345,12 @@ namespace DecentM.VideoPlayer
 
         private object[] CreateNewItem()
         {
-            return this.CreateNewItem(new VRCUrl(""), this.TextureToSprite(EditorAssets.FallbackVideoThumbnail), "", "", "", 0, 0, "", 0, "", "", new string[][] { });
+            return this.CreateNewItem(new VRCUrl(""), this.TextureToSprite(EditorAssets.FallbackVideoThumbnail), "", "", "", 0, 0, "", 0, "", "", new TextAsset[] { });
         }
 
         private object[] CreateNewItem(VRCUrl url)
         {
-            return this.CreateNewItem(url, this.TextureToSprite(EditorAssets.FallbackVideoThumbnail), "", "", "", 0, 0, "", 0, "", "", new string[][] { } );
+            return this.CreateNewItem(url, this.TextureToSprite(EditorAssets.FallbackVideoThumbnail), "", "", "", 0, 0, "", 0, "", "", new TextAsset[] { } );
         }
 
         private void InsertAfterIndex(int index)
@@ -422,17 +415,6 @@ namespace DecentM.VideoPlayer
                 if (url == null) continue;
 
                 VideoMetadata videoMetadata = VideoMetadataStore.GetCached(url.ToString());
-                string[][] subtitles = new string[0][];
-
-                if (videoMetadata.subtitles != null && videoMetadata.subtitles.Length != 0)
-                {
-                    subtitles = new string[videoMetadata.subtitles.Length][];
-
-                    for (int j = 0; j < videoMetadata.subtitles.Length; j++)
-                    {
-                        subtitles[j] = new string[] { videoMetadata.subtitles[j].language, videoMetadata.subtitles[j].contents };
-                    }
-                }
 
                 object[] newItem = this.CreateNewItem(
                     url,
@@ -446,13 +428,14 @@ namespace DecentM.VideoPlayer
                     videoMetadata.fps,
                     videoMetadata.description,
                     videoMetadata.duration,
-                    subtitles
+                    videoMetadata.subtitles
                 );
 
                 playlist.urls[i] = newItem;
             }
 
-            playlist.serialisedUrls = new VRCUrl[0];
+            this.SaveModifications();
+            // playlist.serialisedUrls = new VRCUrl[0];
 
             AsyncProgress.Clear();
         }

@@ -33,10 +33,10 @@ namespace DecentM.VideoPlayer
         {
             UnityEngine.Debug.Log($"[DecentM.VideoPlayer YTDL] Attempting to resolve URL '{url}'");
 
-            EditorCoroutine.Start(YTDLCommands.GetVideoUrlEnumerator(url.ToString(), resolution, (string result) =>
+            DCoroutine.Start(YTDLCommands.GetVideoUrlEnumerator(url.ToString(), resolution, (string result) =>
             {
                 UnityEngine.Debug.Log($"[DecentM.VideoPlayer YTDL] Resolved '{url}' to '{result}'");
-                urlResolvedCallback(result);
+                if (videoPlayer != null) urlResolvedCallback(result);
             }));
         }
     }

@@ -30,7 +30,7 @@ namespace DecentM.VideoPlayer.Plugins
             this.system.RenderCurrentFrame(this.renderTexture);
         }
 
-        protected override void OnMetadataChange(string title, string uploader, string siteName, int viewCount, int likeCount, string resolution, int fps, string description, string duration, string[][] subtitles)
+        protected override void OnMetadataChange(string title, string uploader, string siteName, int viewCount, int likeCount, string resolution, int fps, string description, string duration, TextAsset[] subtitles)
         {
             if (fps > 0) this.fps = Mathf.Min(fps, this.targetFps);
             else this.fps = this.targetFps;

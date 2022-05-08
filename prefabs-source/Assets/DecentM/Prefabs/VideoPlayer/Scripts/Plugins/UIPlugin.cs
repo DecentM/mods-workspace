@@ -182,7 +182,7 @@ namespace DecentM.VideoPlayer.Plugins
             this.likeCountSlot.text = "";
         }
 
-        protected override void OnMetadataChange(string title, string uploader, string siteName, int viewCount, int likeCount, string resolution, int fps, string description, string duration, string[][] subtitles)
+        protected override void OnMetadataChange(string title, string uploader, string siteName, int viewCount, int likeCount, string resolution, int fps, string description, string duration, TextAsset[] subtitles)
         {
             this.RenderMetadata(title, uploader, description, viewCount, likeCount);
         }

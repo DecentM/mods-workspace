@@ -10,7 +10,7 @@ namespace DecentM.VideoPlayer.Plugins
     {
         public TextMeshProUGUI debugSlot;
 
-        private string[][] currentSubtitles;
+        private TextAsset[] currentSubtitles;
 
         protected override void OnPlaybackStart(float timestamp)
         {
@@ -27,14 +27,14 @@ namespace DecentM.VideoPlayer.Plugins
             this.Reset();
         }
 
-        protected override void OnMetadataChange(string title, string uploader, string siteName, int viewCount, int likeCount, string resolution, int fps, string description, string duration, string[][] subtitles)
+        protected override void OnMetadataChange(string title, string uploader, string siteName, int viewCount, int likeCount, string resolution, int fps, string description, string duration, TextAsset[] subtitles)
         {
             this.currentSubtitles = subtitles;
             string[] langs = new string[subtitles.Length];
 
             for (int i = 0; i < subtitles.Length; i++)
             {
-                langs[i] = subtitles[i][0];
+                langs[i] = subtitles[i].name;
             }
 
             this.Reset();
@@ -51,8 +51,8 @@ namespace DecentM.VideoPlayer.Plugins
 
             for (int i = 0; i < currentSubtitles.Length; i++)
             {
-                string lang = currentSubtitles[i][0];
-                string content = currentSubtitles[i][1];
+                string lang = currentSubtitles[i].name;
+                string content = currentSubtitles[i].text;
 
                 if (language == lang)
                 {

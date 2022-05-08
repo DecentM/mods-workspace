@@ -49,7 +49,7 @@ namespace DecentM.VideoPlayer.Plugins
             int fps = (int)item[8];
             string description = (string)item[9];
             string duration = (string)item[10];
-            string[][] subtitles = (string[][])item[11];
+            TextAsset[] subtitles = (TextAsset[])item[11];
 
             this.playlist.textureUpdater.SetTexture(thumbnail.texture);
             this.system.RequestVideo(url);

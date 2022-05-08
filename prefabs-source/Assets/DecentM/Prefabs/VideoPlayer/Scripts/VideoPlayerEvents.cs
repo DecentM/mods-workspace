@@ -218,7 +218,7 @@ namespace DecentM.VideoPlayer
             int fps,
             string description,
             string duration,
-            string[][] subtitles
+            TextAsset[] subtitles
         )
         {
             this.BroadcastEvent(

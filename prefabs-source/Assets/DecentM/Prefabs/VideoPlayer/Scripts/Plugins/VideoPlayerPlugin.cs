@@ -64,7 +64,7 @@ namespace DecentM.VideoPlayer.Plugins
             int fps,
             string description,
             string duration,
-            string[][] subtitles
+            TextAsset[] subtitles
         ) { }
 
         public sealed override void OnPubsubEvent(object name, object[] data)
@@ -292,7 +292,7 @@ namespace DecentM.VideoPlayer.Plugins
                         int fps = (int)data[6];
                         string description = (string)data[7];
                         string duration = (string)data[8];
-                        string[][] subtitles = (string[][])data[9];
+                        TextAsset[] subtitles = (TextAsset[])data[9];
 
                         this.OnMetadataChange(title, uploader, siteName, viewCount, likeCount, resolution, fps, description, duration, subtitles);
                         return;

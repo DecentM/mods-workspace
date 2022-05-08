@@ -30,7 +30,7 @@ namespace DecentM.VideoPlayer
         public int fps;
         public string siteName;
         public string description;
-        public CachedSubtitle[] subtitles;
+        public TextAsset[] subtitles;
     }
 
     public class VideoMetadataStore
@@ -171,6 +171,8 @@ namespace DecentM.VideoPlayer
 
             foreach (string url in urls)
             {
+                if (!ValidateUrl(url)) continue;
+                
                 string hash = Hash.String(url);
                 folders.Add(new Tuple<string, string>($"{EditorAssets.VideoMetadataFolder}", hash));
             }

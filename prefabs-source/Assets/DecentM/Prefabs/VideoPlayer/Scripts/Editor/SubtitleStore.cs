@@ -20,7 +20,7 @@ namespace DecentM.EditorTools
     public struct CachedSubtitle
     {
         public string language;
-        public string contents;
+        public TextAsset contents;
     }
 
     public class SubtitleStore
@@ -221,9 +221,11 @@ namespace DecentM.EditorTools
         }
 
         [PublicAPI]
-        public static CachedSubtitle[] GetFromCache(string url)
+        public static TextAsset[] GetFromCache(string url)
         {
             if (!ValidateUrl(url)) return null;
+
+            List<TextAsset> result = new List<TextAsset>();
 
             try
             {
@@ -234,34 +236,22 @@ namespace DecentM.EditorTools
                 List<string> files = Directory.GetFiles(path, "*.txt", SearchOption.TopDirectoryOnly)
                     .ToList();
 
-                if (files.Count == 0)
-                {
-                    return null;
-                }
-
-                List<CachedSubtitle> result = new List<CachedSubtitle>();
+                if (files.Count == 0) return null;
 
                 foreach (string file in files)
                 {
                     TextAsset asset = AssetDatabase.LoadAssetAtPath<TextAsset>(file);
 
-                    if (asset == null)
-                    {
-                        return result.ToArray();
-                    }
+                    if (asset == null) continue;
 
-                    CachedSubtitle cachedSubtitle = new CachedSubtitle();
-                    cachedSubtitle.contents = asset.text;
-                    cachedSubtitle.language = Path.GetFileNameWithoutExtension(asset.name);
-                    result.Add(cachedSubtitle);
+                    result.Add(asset);
                 }
-
-                return result.ToArray();
             } catch (Exception ex)
             {
                 Debug.LogException(ex);
-                throw ex;
             }
+
+            return result.ToArray();
         }
 
         [PublicAPI]
@@ -269,7 +259,7 @@ namespace DecentM.EditorTools
         {
             if (!ValidateUrl(url)) return false;
 
-            CachedSubtitle[] assets = GetFromCache(url);
+            TextAsset[] assets = GetFromCache(url);
 
             return assets != null && assets.Length != 0;
         }
