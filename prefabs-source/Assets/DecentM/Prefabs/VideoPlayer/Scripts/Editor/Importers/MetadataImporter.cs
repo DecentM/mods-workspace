@@ -4,6 +4,7 @@ using UnityEditor.Experimental.AssetImporters;
 using System.IO;
 
 using DecentM.EditorTools;
+using DecentM.EditorTools.Icons;
 
 namespace DecentM.VideoPlayer.EditorTools.Importers
 {
@@ -23,7 +24,7 @@ namespace DecentM.VideoPlayer.EditorTools.Importers
             string rawMetadata = File.ReadAllText(ctx.assetPath);
             VideoMetadataAsset asset = VideoMetadataAsset.CreateInstance(rawMetadata);
 
-            ctx.AddObjectToAsset(Path.GetFileName(ctx.assetPath), asset, EditorAssets.SubtitlesOutlineIcon);
+            ctx.AddObjectToAsset(Path.GetFileName(ctx.assetPath), asset, MaterialIcons.Database);
             ctx.SetMainObject(asset);
         }
     }

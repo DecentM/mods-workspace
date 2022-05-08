@@ -69363,6 +69363,11 @@ PrefabInstance:
         type: 3}
     - target: {fileID: 7128736243476747627, guid: 214e040e268500f4c8301b1d1793fe09,
         type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7128736243476747627, guid: 214e040e268500f4c8301b1d1793fe09,
+        type: 3}
       propertyPath: vrRaycastTurn.w
       value: 0.9396926
       objectReference: {fileID: 0}
@@ -69377,6 +69382,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 7128736243476747627, guid: 214e040e268500f4c8301b1d1793fe09,
         type: 3}
+    - target: {fileID: 7128736243490116661, guid: 214e040e268500f4c8301b1d1793fe09,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7128736243490116661, guid: 214e040e268500f4c8301b1d1793fe09,
         type: 3}
       propertyPath: serializationData.Prefab
@@ -69688,6 +69698,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7128736244372558392, guid: 214e040e268500f4c8301b1d1793fe09,
         type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7128736244372558392, guid: 214e040e268500f4c8301b1d1793fe09,
+        type: 3}
       propertyPath: serializationData.Prefab
       value: 
       objectReference: {fileID: 7128736244372558392, guid: 214e040e268500f4c8301b1d1793fe09,
@@ -69809,6 +69824,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7128736244915973930, guid: 214e040e268500f4c8301b1d1793fe09,
         type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7128736244915973930, guid: 214e040e268500f4c8301b1d1793fe09,
+        type: 3}
       propertyPath: serializationData.Prefab
       value: 
       objectReference: {fileID: 7128736244915973930, guid: 214e040e268500f4c8301b1d1793fe09,
@@ -69914,6 +69934,11 @@ PrefabInstance:
       propertyPath: playlist
       value: 
       objectReference: {fileID: 729440632}
+    - target: {fileID: 7128736245201164480, guid: 214e040e268500f4c8301b1d1793fe09,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7128736245201164480, guid: 214e040e268500f4c8301b1d1793fe09,
         type: 3}
       propertyPath: serializationData.Prefab

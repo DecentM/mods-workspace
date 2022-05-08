@@ -18,7 +18,6 @@ namespace DecentM.VideoPlayer
         {
             VideoPlayerUI ui = (VideoPlayerUI)target;
 
-            // GUI.DrawTexture(new Rect(10, 10, 60, 60), aTexture, ScaleMode.ScaleToFit, true, 10.0F);
             this.DrawImage(EditorAssets.VideoPlayerBanner);
 
             AutoPlayPlugin autoPlay = ui.GetComponentInChildren<AutoPlayPlugin>();
