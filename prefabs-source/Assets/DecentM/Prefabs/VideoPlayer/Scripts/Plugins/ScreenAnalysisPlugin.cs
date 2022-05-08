@@ -58,6 +58,7 @@ namespace DecentM.VideoPlayer.Plugins
 
         public void Reset()
         {
+            this.fps = this.targetFps;
             int length = Mathf.CeilToInt(this.targetFps * this.historyLengthSeconds);
             this.averageHistory = new Color[length];
             this.smoothedAverageHistory = new Color[length];
@@ -70,7 +71,7 @@ namespace DecentM.VideoPlayer.Plugins
 
         private void LateUpdate()
         {
-            if (!this.isRunning || !this.camera) return;
+            if (!this.isRunning || this.camera == null) return;
 
             this.elapsed += Time.unscaledDeltaTime;
             if (elapsed < 1f / this.fps) return;
