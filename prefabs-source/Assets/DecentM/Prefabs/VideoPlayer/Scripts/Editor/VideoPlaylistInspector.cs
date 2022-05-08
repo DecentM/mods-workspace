@@ -19,6 +19,7 @@ namespace DecentM.VideoPlayer
         public const int ButtonsWidth = 50;
 
         private string importPlaylistUrl = "";
+        private bool importPlaylistAutoSubtitles = false;
 
         public override void OnInspectorGUI()
         {

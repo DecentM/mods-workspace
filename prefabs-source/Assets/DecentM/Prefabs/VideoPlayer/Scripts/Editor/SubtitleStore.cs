@@ -142,7 +142,7 @@ namespace DecentM.EditorTools
 
             string path = GetPathFromUrl(url);
 
-            return YTDLCommands.DownloadSubtitles(url, path, false);
+            return YTDLCommands.DownloadSubtitles(url, path, true);
         }
 
         private static IEnumerator FetchInParallel(List<string> urls, Action OnFinish)

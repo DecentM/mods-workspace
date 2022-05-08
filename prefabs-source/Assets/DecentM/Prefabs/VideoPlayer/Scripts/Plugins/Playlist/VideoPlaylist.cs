@@ -168,14 +168,17 @@ namespace DecentM.VideoPlayer
                 this.serialisedDurations[i] = duration == null ? "" : duration;
                 this.serialisedSubtitleIndexes[i] = "";
 
-                foreach (TextAsset subtitle in subtitles)
+                if (subtitles != null)
                 {
-                    TextAsset[] tmp = new TextAsset[this.serialisedSubtitles.Length + 1];
-                    Array.Copy(this.serialisedSubtitles, 0, tmp, 0, this.serialisedSubtitles.Length);
-                    tmp[tmp.Length - 1] = subtitle;
-                    this.serialisedSubtitles = tmp;
+                    foreach (TextAsset subtitle in subtitles)
+                    {
+                        TextAsset[] tmp = new TextAsset[this.serialisedSubtitles.Length + 1];
+                        Array.Copy(this.serialisedSubtitles, 0, tmp, 0, this.serialisedSubtitles.Length);
+                        tmp[tmp.Length - 1] = subtitle;
+                        this.serialisedSubtitles = tmp;
 
-                    this.serialisedSubtitleIndexes[i] += $"{tmp.Length - 1}#";
+                        this.serialisedSubtitleIndexes[i] += $"{tmp.Length - 1}#";
+                    }
                 }
             }
 

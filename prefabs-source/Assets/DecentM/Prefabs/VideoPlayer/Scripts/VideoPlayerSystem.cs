@@ -87,6 +87,15 @@ namespace DecentM.VideoPlayer
             return this.currentPlayerHandler.GetScreenTexture();
         }
 
+        [PublicAPI]
+        public void SetScreenTexture(Texture texture)
+        {
+            foreach (ScreenHandler screen in this.screens)
+            {
+                screen.SetTexture(texture);
+            }
+        }
+
         private void DisablePlayer(BasePlayerHandler player)
         {
             player.UnloadVideo();

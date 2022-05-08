@@ -119,14 +119,20 @@ namespace DecentM.EditorTools
         {
             if (!ValidateUrl(url)) return null;
 
-            string hash = Hash.String(url);
-            List<string> files = Directory
-                .GetFiles($"{EditorAssets.ImageCacheFolder}/{hash}", "*.jpg", SearchOption.TopDirectoryOnly)
-                .ToList();
+            try
+            {
+                string hash = Hash.String(url);
+                List<string> files = Directory
+                    .GetFiles($"{EditorAssets.ImageCacheFolder}/{hash}", "*.jpg", SearchOption.TopDirectoryOnly)
+                    .ToList();
 
-            if (files.Count == 0) return null;
+                if (files.Count == 0) return null;
 
-            return AssetDatabase.LoadAssetAtPath<Sprite>(files[0]);
+                return AssetDatabase.LoadAssetAtPath<Sprite>(files[0]);
+            } catch
+            {
+                return null;
+            }
         }
 
         [PublicAPI]

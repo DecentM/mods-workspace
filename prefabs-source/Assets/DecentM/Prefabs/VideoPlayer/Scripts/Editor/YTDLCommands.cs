@@ -156,8 +156,8 @@ namespace DecentM.EditorTools
             }
 
             string arguments = autoSubs
-                ? $"--write-subs --write-auto-subs --convert-subtitles srt --sub-langs all {url}"
-                : $"--write-subs --no-write-auto-subs --convert-subtitles srt --sub-langs all {url}";
+                ? $"--write-subs --write-auto-subs --sub-format srt/vtt --sub-langs all {url}"
+                : $"--write-subs --no-write-auto-subs --sub-format srt/vtt --sub-langs all {url}";
 
             return Parallelism.WaitForCallback((callback) => ProcessManager.RunProcess(
                 EditorAssets.YtDlpPath,
