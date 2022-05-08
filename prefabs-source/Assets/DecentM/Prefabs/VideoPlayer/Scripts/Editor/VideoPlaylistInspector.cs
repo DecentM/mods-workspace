@@ -430,7 +430,6 @@ namespace DecentM.VideoPlayer
             }
 
             this.SaveModifications();
-            // playlist.serialisedUrls = new VRCUrl[0];
 
             AsyncProgress.Clear();
         }

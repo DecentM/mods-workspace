@@ -59,7 +59,7 @@ namespace DecentM.VideoPlayer
 
         [SerializeField, HideInInspector]
         private VRCUrl[] serialisedUrls;
-        [SerializeField]
+        [SerializeField, HideInInspector]
         private Sprite[] serialisedThumbnails;
         [SerializeField, HideInInspector]
         private string[] serialisedTitles;
