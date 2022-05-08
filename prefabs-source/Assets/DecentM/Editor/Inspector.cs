@@ -155,6 +155,20 @@ namespace DecentM.EditorTools
             EditorGUILayout.HelpBox(contents, type);
         }
 
+        protected void DrawImage(Sprite image)
+        {
+            if (image == null) return;
+
+            EditorGUI.DrawPreviewTexture(image.rect, image.texture);
+        }
+
+        protected void DrawImage(Sprite image, Rect rect)
+        {
+            if (image == null) return;
+
+            EditorGUI.DrawPreviewTexture(rect, image.texture);
+        }
+
         protected void DrawImage(Texture image, Rect rect)
         {
             if (image == null) return;

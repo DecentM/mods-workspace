@@ -57,32 +57,32 @@ namespace DecentM.VideoPlayer
 
         #region Serialisation
 
+        [SerializeField, HideInInspector]
+        private VRCUrl[] serialisedUrls;
         [SerializeField]
-        public VRCUrl[] serialisedUrls;
-        [SerializeField]
-        public Sprite[] serialisedThumbnails;
-        [SerializeField]
-        public string[] serialisedTitles;
-        [SerializeField]
-        public string[] serialisedUploaders;
-        [SerializeField]
-        public string[] serialisedPlatforms;
-        [SerializeField]
-        public int[] serialisedViews;
-        [SerializeField]
-        public int[] serialisedLikes;
-        [SerializeField]
-        public string[] serialisedResolutions;
-        [SerializeField]
-        public int[] serialisedFpses;
-        [SerializeField]
-        public string[] serialisedDescriptions;
-        [SerializeField]
-        public string[] serialisedDurations;
-        [SerializeField]
-        public TextAsset[] serialisedSubtitles;
-        [SerializeField]
-        public string[] serialisedSubtitleIndexes;
+        private Sprite[] serialisedThumbnails;
+        [SerializeField, HideInInspector]
+        private string[] serialisedTitles;
+        [SerializeField, HideInInspector]
+        private string[] serialisedUploaders;
+        [SerializeField, HideInInspector]
+        private string[] serialisedPlatforms;
+        [SerializeField, HideInInspector]
+        private int[] serialisedViews;
+        [SerializeField, HideInInspector]
+        private int[] serialisedLikes;
+        [SerializeField, HideInInspector]
+        private string[] serialisedResolutions;
+        [SerializeField, HideInInspector]
+        private int[] serialisedFpses;
+        [SerializeField, HideInInspector]
+        private string[] serialisedDescriptions;
+        [SerializeField, HideInInspector]
+        private string[] serialisedDurations;
+        [SerializeField, HideInInspector]
+        private TextAsset[] serialisedSubtitles;
+        [SerializeField, HideInInspector]
+        private string[] serialisedSubtitleIndexes;
 
         public void OnBeforeSerialize()
         {
@@ -231,7 +231,6 @@ namespace DecentM.VideoPlayer
                 int fps = this.serialisedFpses == null ? 0 : this.serialisedFpses[i];
                 string description = this.serialisedDescriptions == null ? "" : this.serialisedDescriptions[i];
                 string duration = this.serialisedDurations == null ? "" : this.serialisedDurations[i];
-                // TextAsset[] subtitles = this.serialisedSubtitles == null ? new TextAsset[0] : this.serialisedSubtitles[i];
                 string serialisedIndexes = this.serialisedSubtitleIndexes == null ? "" : this.serialisedSubtitleIndexes[i];
 
                 TextAsset[] subtitles = new TextAsset[0];

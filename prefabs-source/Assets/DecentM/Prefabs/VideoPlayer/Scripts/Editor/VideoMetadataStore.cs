@@ -25,7 +25,7 @@ namespace DecentM.VideoPlayer
         public string uploader;
         public int viewCount;
         public int likeCount;
-        public Texture2D thumbnail;
+        public Sprite thumbnail;
         public string resolution;
         public int fps;
         public string siteName;

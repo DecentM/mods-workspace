@@ -338,19 +338,14 @@ namespace DecentM.VideoPlayer
             return new object[] { url, thumbnail, title, uploader, platform, views, likes, resolution, fps, description, duration, subtitles };
         }
 
-        private Sprite TextureToSprite(Texture2D input)
-        {
-            return Sprite.Create(input, new Rect(0, 0, input.width, input.height), new Vector2());
-        }
-
         private object[] CreateNewItem()
         {
-            return this.CreateNewItem(new VRCUrl(""), this.TextureToSprite(EditorAssets.FallbackVideoThumbnail), "", "", "", 0, 0, "", 0, "", "", new TextAsset[] { });
+            return this.CreateNewItem(new VRCUrl(""), EditorAssets.FallbackVideoThumbnail, "", "", "", 0, 0, "", 0, "", "", new TextAsset[] { });
         }
 
         private object[] CreateNewItem(VRCUrl url)
         {
-            return this.CreateNewItem(url, this.TextureToSprite(EditorAssets.FallbackVideoThumbnail), "", "", "", 0, 0, "", 0, "", "", new TextAsset[] { } );
+            return this.CreateNewItem(url, EditorAssets.FallbackVideoThumbnail, "", "", "", 0, 0, "", 0, "", "", new TextAsset[] { } );
         }
 
         private void InsertAfterIndex(int index)
@@ -418,7 +413,7 @@ namespace DecentM.VideoPlayer
 
                 object[] newItem = this.CreateNewItem(
                     url,
-                    this.TextureToSprite(videoMetadata.thumbnail == null ? EditorAssets.FallbackVideoThumbnail : videoMetadata.thumbnail),
+                    videoMetadata.thumbnail == null ? EditorAssets.FallbackVideoThumbnail : videoMetadata.thumbnail,
                     videoMetadata.title,
                     videoMetadata.uploader,
                     videoMetadata.siteName,

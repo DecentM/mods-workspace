@@ -15,9 +15,9 @@ namespace DecentM.EditorTools
             get { return GetAsset<Texture2D>(VideoTexturesPath, "splash.psd"); }
         }
 
-        public static Texture2D FallbackVideoThumbnail
+        public static Sprite FallbackVideoThumbnail
         {
-            get { return GetAsset<Texture2D>(VideoTexturesPath, "thumbnail-missing.psd"); }
+            get { return GetAsset<Sprite>(VideoTexturesPath, "thumbnail-missing.psd"); }
         }
 
         public static Texture2D DeleteIcon

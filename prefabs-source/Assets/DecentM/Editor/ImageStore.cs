@@ -24,7 +24,7 @@ namespace DecentM.EditorTools
 
         private static void ApplyImportSettings()
         {
-            List<string> files = Directory.GetFiles($"{EditorAssets.ImageCacheFolder}", "*.jpg", SearchOption.TopDirectoryOnly)
+            List<string> files = Directory.GetFiles($"{EditorAssets.ImageCacheFolder}", "*.jpg", SearchOption.AllDirectories)
                 .ToList();
 
             for (int i = 0; i < files.Count; i++)
@@ -115,15 +115,18 @@ namespace DecentM.EditorTools
         }
 
         [PublicAPI]
-        public static Texture2D GetCached(string url)
+        public static Sprite GetCached(string url)
         {
-            // TODO: Implement getting a cached image from the folder
-            return null;
-
             if (!ValidateUrl(url)) return null;
 
-            string path = GetPathFromUrl(url);
-            return AssetDatabase.LoadAssetAtPath<Texture2D>(path);
+            string hash = Hash.String(url);
+            List<string> files = Directory
+                .GetFiles($"{EditorAssets.ImageCacheFolder}/{hash}", "*.jpg", SearchOption.TopDirectoryOnly)
+                .ToList();
+
+            if (files.Count == 0) return null;
+
+            return AssetDatabase.LoadAssetAtPath<Sprite>(files[0]);
         }
 
         [PublicAPI]
@@ -131,7 +134,7 @@ namespace DecentM.EditorTools
         {
             if (!ValidateUrl(url)) return false;
 
-            Texture2D texture = GetCached(url);
+            Sprite texture = GetCached(url);
             return texture != null;
         }
 
