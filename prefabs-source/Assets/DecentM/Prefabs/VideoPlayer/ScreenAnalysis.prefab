@@ -53,14 +53,14 @@ Camera:
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0.03
-    y: 0.163
+    y: 0.151
     width: 1
     height: 1
   near clip plane: 1.778
   far clip plane: 1.788
   field of view: 26.991467
   orthographic: 1
-  orthographic size: 1.075
+  orthographic size: 1.081
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
@@ -68,7 +68,7 @@ Camera:
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
-  m_TargetEye: 0
+  m_TargetEye: 1
   m_HDR: 0
   m_AllowMSAA: 0
   m_AllowDynamicResolution: 0
@@ -106,6 +106,7 @@ MonoBehaviour:
   historyLengthSeconds: 0.33333
   sampleSize: 30
   sampleRandomisationFactor: 1
+  applyTextures: 0
   fetchTexture: {fileID: 2800000, guid: b7e8c2ab9fb8b294ea521f22bec448d6, type: 3}
   sampleVisualisationTexture: {fileID: 2800000, guid: 5ccb9f6bce540f44db81aba6492bb3d3,
     type: 3}

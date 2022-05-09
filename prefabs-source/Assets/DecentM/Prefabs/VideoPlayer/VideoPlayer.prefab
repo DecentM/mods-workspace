@@ -604,8 +604,10 @@ MonoBehaviour:
   - {fileID: 6605304172379286785}
   system: {fileID: 6605304171436077072}
   events: {fileID: 6605304172379286785}
+  debugSlot: {fileID: 0}
   subtitleOffset: 0
   tickInterval: 0.1
+  timestampSeekAccuracy: 10000
 --- !u!114 &7726828189770638925
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7686,15 +7688,15 @@ Camera:
   m_FocalLength: 50
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0.03
-    y: 0.163
+    x: 0.998
+    y: 0.999
     width: 1
     height: 1
   near clip plane: -0.01
   far clip plane: 0.01
   field of view: 26.991467
   orthographic: 1
-  orthographic size: 1.076
+  orthographic size: 1.08
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2

@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Collections;
-using UdonSharp;
+using JetBrains.Annotations;
+
 using UnityEngine;
+
 using VRC.SDKBase;
 using VRC.Udon;
+
+using UdonSharp;
 
 namespace DecentM.VideoPlayer.Plugins
 {
@@ -17,22 +21,11 @@ namespace DecentM.VideoPlayer.Plugins
         private bool isRunning = false;
 
         public Texture2D fetchTexture;
-        public Texture2D sampleVisualisationTexture;
-
-        public Texture2D averageColourHistoryTexture;
-        public Texture2D smoothedAverageColourHistoryTexture;
-
-        public Texture2D mostVibrantColourHistoryTexture;
-        public Texture2D smoothedMostVibrantColourHistoryTexture;
-
-        public Texture2D brightestColourHistoryTexture;
-        public Texture2D smoothedBrightestColourHistoryTexture;
 
         private float elapsed = 0;
         private float fps = 0;
 
         private new Camera camera;
-        private bool enableSampleVisualisation = true;
 
         protected override void _Start()
         {
@@ -45,12 +38,6 @@ namespace DecentM.VideoPlayer.Plugins
                 return;
             }
 
-            if (this.sampleVisualisationTexture != null && (this.sampleVisualisationTexture.width != this.camera.scaledPixelWidth || this.sampleVisualisationTexture.height != this.camera.scaledPixelHeight))
-            {
-                Debug.LogWarning($"[ScreenAnalysisPlugin] Sample visualisation texture size must match the camera. Expected {this.camera.scaledPixelWidth}x{this.camera.scaledPixelHeight}, got {this.sampleVisualisationTexture.width}x{this.sampleVisualisationTexture.height}.");
-                this.enableSampleVisualisation = false;
-            }
-
             this.camera.enabled = false;
 
             this.Reset();
@@ -60,13 +47,7 @@ namespace DecentM.VideoPlayer.Plugins
         {
             this.fps = this.targetFps;
             int length = Mathf.CeilToInt(this.targetFps * this.historyLengthSeconds);
-            this.averageHistory = new Color[length];
-            this.smoothedAverageHistory = new Color[length];
-            this.mostVibrantHistory = new Color[length];
-            this.smoothedMostVibrantHistory = new Color[length];
-            this.brightestHistory = new Color[length];
-            this.smoothedBrightestHistory = new Color[length];
-            this.UpdateHistoryValues(new Color[] { Color.black });
+            this.UpdateValues(new Color[] { Color.black });
         }
 
         private void LateUpdate()
@@ -120,14 +101,6 @@ namespace DecentM.VideoPlayer.Plugins
             return result;
         }
 
-        private Color[] AddColourHistory(Color[] history, Color colour)
-        {
-            Color[] tmp = new Color[history.Length];
-            Array.Copy(history, 0, tmp, 1, history.Length - 1);
-            tmp[0] = colour;
-            return tmp;
-        }
-
         private Color GetAverage(Color[] colors)
         {
             if (colors == null || colors.Length == 0) return Color.black;
@@ -156,38 +129,6 @@ namespace DecentM.VideoPlayer.Plugins
             result.y = Mathf.FloorToInt(index / width);
 
             return result;
-        }
-
-        private Color GenerateRandomColour()
-        {
-            Color result = new Color();
-
-            result.r = UnityEngine.Random.Range(0.0f, 1.0f);
-            result.g = UnityEngine.Random.Range(0.0f, 1.0f);
-            result.b = UnityEngine.Random.Range(0.0f, 1.0f);
-
-            return result;
-        }
-
-        private void ResizeFetchTexture(Texture2D outputTexture, Vector2Int oldSize)
-        {
-            float widthSkip = (float)oldSize.x / outputTexture.width;
-            float heightSkip = (float)oldSize.y / outputTexture.height;
-
-            for (int i = 0; i < outputTexture.width * outputTexture.height; i++)
-            {
-                int randomOffset = Mathf.FloorToInt(UnityEngine.Random.Range(0, Mathf.Min(oldSize.x, oldSize.y) / 2));
-                Vector2Int center = new Vector2Int(oldSize.x / 2 + randomOffset, oldSize.y / 2 + randomOffset);
-                Vector2Int writeCoords = GetCoordsForIndex(i, outputTexture.width);
-
-                Vector2Int rawReadCoords = new Vector2Int(Mathf.FloorToInt(writeCoords.x * widthSkip), Mathf.FloorToInt(writeCoords.y * heightSkip));
-                Vector2Int readCoords = new Vector2Int(rawReadCoords.x + (center.x - rawReadCoords.x) / outputTexture.width / 3, rawReadCoords.y + (center.y - rawReadCoords.y) / outputTexture.height / 3);
-
-                fetchTexture.ReadPixels(new Rect(readCoords.x, readCoords.y, 1, 1), 0, 0);
-                Color colour = fetchTexture.GetPixel(0, 0);
-
-                outputTexture.SetPixel(writeCoords.x, outputTexture.height - writeCoords.y, colour == Color.black ? Color.red : colour);
-            }
         }
 
         private Vector2Int[] GenerateSamplePoints(int sampleCount, Vector2Int size)
@@ -231,84 +172,31 @@ namespace DecentM.VideoPlayer.Plugins
             return result;
         }
 
-        private void UpdateTexture(Texture2D texture, Color[] colours)
-        {
-            // Create an output of all blacks in case there are less colours in the input
-            Color[] output = new Color[texture.width * texture.height];
-            for (int i = 0; i < output.Length; i++) output[i] = Color.black;
+        private Color average = Color.black;
+        [PublicAPI]
+        public Color GetAverage() { return average; }
 
-            // Copy all colours to the output array and throw away ones that wouldn't fit
-            if (colours.Length <= output.Length) Array.Copy(colours, output, colours.Length);
-            else Array.Copy(colours, output, output.Length);
+        private Color brightest = Color.black;
+        [PublicAPI]
+        public Color GetBrightest() { return brightest; }
 
-            texture.SetPixels(output);
-            texture.Apply();
-        }
-
-        private Color[] averageHistory;
-        private Color[] smoothedAverageHistory;
-        private Color[] brightestHistory;
-        private Color[] smoothedBrightestHistory;
-        private Color[] mostVibrantHistory;
-        private Color[] smoothedMostVibrantHistory;
+        private Color mostVibrant = Color.black;
+        [PublicAPI]
+        public Color GetMostVibrant() { return mostVibrant; }
 
         private void OnPostRender()
         {
             Vector2Int[] samplePoints = this.GenerateSamplePoints(Mathf.Min(Mathf.Max(this.sampleSize, 1), 1000), new Vector2Int(this.camera.scaledPixelWidth, this.camera.scaledPixelHeight));
             Color[] colours = SampleFetchTexture(samplePoints);
 
-            this.UpdateHistoryValues(colours);
-
-            if (this.sampleVisualisationTexture != null && this.enableSampleVisualisation)
-            {
-                Color colour = this.GenerateRandomColour();
-
-                foreach (Vector2Int point in samplePoints)
-                {
-                    this.sampleVisualisationTexture.SetPixel(point.x, point.y, colour);
-                }
-
-                this.sampleVisualisationTexture.Apply();
-            }
+            this.UpdateValues(colours);
         }
 
-        private void UpdateHistoryValues(Color[] colours)
+        private void UpdateValues(Color[] colours)
         {
-            if (this.averageColourHistoryTexture != null)
-            {
-                this.averageHistory = this.AddColourHistory(this.averageHistory, this.GetAverage(colours));
-                this.UpdateTexture(this.averageColourHistoryTexture, this.averageHistory);
-            }
-
-            if (this.smoothedAverageColourHistoryTexture != null)
-            {
-                this.smoothedAverageHistory = this.AddColourHistory(this.smoothedAverageHistory, this.GetAverage(this.averageHistory));
-                this.UpdateTexture(this.smoothedAverageColourHistoryTexture, this.smoothedAverageHistory);
-            }
-
-            if (this.brightestColourHistoryTexture != null)
-            {
-                this.brightestHistory = this.AddColourHistory(this.brightestHistory, this.GetBrightest(colours));
-                this.UpdateTexture(this.brightestColourHistoryTexture, this.brightestHistory);
-            }
-
-            if (this.smoothedBrightestColourHistoryTexture != null)
-            {
-                this.smoothedBrightestHistory = this.AddColourHistory(this.smoothedBrightestHistory, this.GetAverage(this.brightestHistory));
-                this.UpdateTexture(this.smoothedBrightestColourHistoryTexture, this.smoothedBrightestHistory);
-            }
-
-            if (this.mostVibrantColourHistoryTexture != null)
-            {
-                this.mostVibrantHistory = this.AddColourHistory(this.mostVibrantHistory, this.GetMostVibrant(colours));
-                this.UpdateTexture(this.mostVibrantColourHistoryTexture, this.mostVibrantHistory);
-            }
-
-            if (this.smoothedMostVibrantColourHistoryTexture != null)
-            {
-                this.smoothedMostVibrantHistory = this.AddColourHistory(this.smoothedMostVibrantHistory, this.GetAverage(this.mostVibrantHistory));
-                this.UpdateTexture(this.smoothedMostVibrantColourHistoryTexture, this.smoothedMostVibrantHistory);
-            }
+            this.average = this.GetAverage(colours);
+            this.brightest = this.GetBrightest(colours);
+            this.mostVibrant = this.GetMostVibrant(colours);
         }
 
         protected override void OnMetadataChange(string title, string uploader, string siteName, int viewCount, int likeCount, string resolution, int fps, string description, string duration, TextAsset[] subtitles)
