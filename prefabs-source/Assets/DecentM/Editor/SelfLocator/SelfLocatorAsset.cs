@@ -3,6 +3,7 @@ using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 using System.IO;
 
 using DecentM.EditorTools;
@@ -11,7 +12,6 @@ namespace DecentM.EditorTools.SelfLocator
 {
     public class SelfLocatingException : Exception
     {
-        public SelfLocatingException() : base() { }
         public SelfLocatingException(string message) : base(message) { }
     }
 
@@ -27,8 +27,8 @@ namespace DecentM.EditorTools.SelfLocator
                 .GetFiles(Application.dataPath, $"*.{SelfLocatorId}", SearchOption.AllDirectories)
                 .ToList();
 
-            if (files.Count > 1) throw new SelfLocatingException("You have DecenM's prefabs imported more than once. Please delete all of DecenM's prefabs and import the unitypackage just once. You may move the imported folder after.");
-            if (files.Count == 0) throw new SelfLocatingException("Could not find the self-locator file. Please delete all of DecenM's prefabs and import the unitypackage again.");
+            if (files.Count > 1) throw new SelfLocatingException("You have DecenM's prefabs imported more than once. Please delete all of DecenM's prefabs and import the unitypackage(s) just once. You may move the imported folder after.");
+            if (files.Count == 0) throw new SelfLocatingException("Could not find the self-locator file. Please delete all of DecenM's prefabs and import the unitypackage(s) again.");
 
             string path = files[0];
             string[] parts = path.Split(new string[] { Application.dataPath }, StringSplitOptions.None);
@@ -36,9 +36,15 @@ namespace DecentM.EditorTools.SelfLocator
             if (parts.Length != 2) throw new SelfLocatingException("Could not find the self-locator file, because the Editor data path cannot split the local file path in two. Something really weird is going on, please report this to DecentM!");
             string subPath = Path.GetDirectoryName(parts[1].Remove(0, 1));
 
-            SelfLocation = $"Assets/{subPath}";
+            string possibleLocation = $"Assets/{subPath}";
+            SelfLocatorAsset asset = AssetDatabase.LoadAssetAtPath<SelfLocatorAsset>($"{possibleLocation}/{Path.GetFileName(path)}");
 
-            return SelfLocation;
+            if (asset == null)
+            {
+                throw new SelfLocatingException($"Could not identify the self-locator file. A file does exist at this path but it's not imported as a SelfLocatorAsset. Try reimporting the file at Assets{parts[1]}");
+            }
+
+            return SelfLocation = possibleLocation;
         }
 
         public const string SelfLocatorId = "decentm-self-locator";

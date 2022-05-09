@@ -22,7 +22,7 @@ namespace DecentM.EditorTools.SelfLocator
                 return;
             }
 
-            TextAsset asset = new TextAsset(File.ReadAllText(ctx.assetPath));
+            SelfLocatorAsset asset = SelfLocatorAsset.CreateInstance(File.ReadAllText(ctx.assetPath));
 
             ctx.AddObjectToAsset(Path.GetFileName(ctx.assetPath), asset, MaterialIcons.GetIcon(Icon.MapMarker));
             ctx.SetMainObject(asset);

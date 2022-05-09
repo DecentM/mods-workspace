@@ -13,7 +13,7 @@ using DecentM.VideoPlayer.Plugins;
 namespace DecentM.VideoPlayer
 {
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
-    public class VideoPlaylist : UdonSharpBehaviour, ISerializationCallbackReceiver
+    public class VideoPlaylist : VideoPlayerPlugin, ISerializationCallbackReceiver
     {
         /*
          * subtitle structure
@@ -258,6 +258,8 @@ namespace DecentM.VideoPlayer
 
         private int currentIndex = 0;
 
+        #region Controls
+
         public object[] Next()
         {
             if (this.urls == null || this.urls.Length == 0) return null;
@@ -365,5 +367,59 @@ namespace DecentM.VideoPlayer
             this.playlistPlayer.PlayItem(item);
             return true;
         }
+
+        #endregion
+
+        #region Autoupdate
+
+        private int searchIndex = 0;
+        private VRCUrl searchingUrl;
+
+        protected override void OnLoadApproved(VRCUrl url)
+        {
+            this.searchIndex = 0;
+            this.searchingUrl = url;
+        }
+
+        private void FixedUpdate()
+        {
+            if (this.searchingUrl == null || this.urls == null) return;
+            if (this.searchIndex >= this.urls.Length)
+            {
+                this.searchIndex = 0;
+                this.searchingUrl = null;
+                return;
+            }
+
+            object[] item = this.urls[this.searchIndex];
+
+            if (item == null) return;
+
+            VRCUrl url = (VRCUrl)item[0];
+            Sprite thumbnail = (Sprite)item[1];
+            string title = (string)item[2];
+            string uploader = (string)item[3];
+            string platform = (string)item[4];
+            int views = (int)item[5];
+            int likes = (int)item[6];
+            string resolution = (string)item[7];
+            int fps = (int)item[8];
+            string description = (string)item[9];
+            string duration = (string)item[10];
+            TextAsset[] subtitles = (TextAsset[])item[11];
+
+            if (url.ToString() == this.searchingUrl.ToString())
+            {
+                this.system.SetScreenTexture(thumbnail.texture);
+                this.events.OnMetadataChange(title, uploader, platform, views, likes, resolution, fps, description, duration, subtitles);
+                this.searchingUrl = null;
+                this.searchIndex = 0;
+                return;
+            }
+
+            this.searchIndex++;
+        }
+
+        #endregion
     }
 }
