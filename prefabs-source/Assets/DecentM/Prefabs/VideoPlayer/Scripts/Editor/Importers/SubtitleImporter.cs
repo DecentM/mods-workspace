@@ -4,6 +4,7 @@ using UnityEditor.Experimental.AssetImporters;
 using System.IO;
 
 using DecentM.EditorTools;
+using DecentM.Icons;
 using DecentM.Subtitles;
 
 namespace DecentM.VideoPlayer.EditorTools.Importers
@@ -19,7 +20,7 @@ namespace DecentM.VideoPlayer.EditorTools.Importers
             {
                 ctx.LogImportError($"Imported file disappeared from {ctx.assetPath}");
                 TextAsset errorAsset = new TextAsset("");
-                ctx.AddObjectToAsset(Path.GetFileName(ctx.assetPath), errorAsset, EditorAssets.CloseIcon);
+                ctx.AddObjectToAsset(Path.GetFileName(ctx.assetPath), errorAsset, MaterialIcons.GetIcon(Icon.Close));
                 ctx.SetMainObject(errorAsset);
                 return;
             }
@@ -38,7 +39,7 @@ namespace DecentM.VideoPlayer.EditorTools.Importers
                 ctx.LogImportWarning($"{compiled.errors.Count} error(s) encountered while compiling subtitle file, see above. Continuing with possibly incomplete compilation results...");
             }
 
-            ctx.AddObjectToAsset(Path.GetFileName(ctx.assetPath), asset, EditorAssets.SubtitlesOutlineIcon);
+            ctx.AddObjectToAsset(Path.GetFileName(ctx.assetPath), asset, MaterialIcons.GetIcon(Icon.SubtitlesOutline));
             ctx.SetMainObject(asset);
         }
     }

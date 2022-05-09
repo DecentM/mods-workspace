@@ -9,6 +9,8 @@ using System.Linq;
 using VRC.SDKBase;
 using System.Threading;
 
+using DecentM.Icons;
+
 namespace DecentM.VideoPlayer
 {
     [CustomEditor(typeof(VideoPlaylist))]
@@ -19,7 +21,6 @@ namespace DecentM.VideoPlayer
         public const int ButtonsWidth = 50;
 
         private string importPlaylistUrl = "";
-        private bool importPlaylistAutoSubtitles = false;
 
         public override void OnInspectorGUI()
         {
@@ -77,7 +78,7 @@ namespace DecentM.VideoPlayer
             if (playlist.urls.Length == 0)
             {
                 Rect insertButton = this.DrawRegion(25, new Vector4(Padding, Padding, Padding * 2, 0));
-                if (this.Button(insertButton, EditorAssets.PlusIcon)) this.AddNew();
+                if (this.Button(insertButton, MaterialIcons.GetIcon(Icon.Plus))) this.AddNew();
             }
 
             for (int i = 0; i < playlist.urls.Length; i++)
@@ -115,28 +116,28 @@ namespace DecentM.VideoPlayer
 
                 Rect topButton = this.GetRectInside(orderingButtonsRectInner, new Vector2(orderingButtonsRectInner.width, buttonHeight), new Vector4(buttonPadding, buttonCount * buttonHeight, buttonPadding, buttonPadding));
                 EditorGUI.BeginDisabledGroup(i <= 0);
-                if (this.Button(topButton, EditorAssets.ChevronDoubleUp)) { this.SwapIndexes(i, 0); i = 0; continue; }
+                if (this.Button(topButton, MaterialIcons.GetIcon(Icon.ChevronDoubleUp))) { this.SwapIndexes(i, 0); i = 0; continue; }
                 EditorGUI.EndDisabledGroup();
 
                 buttonCount++;
 
                 Rect upButton = this.GetRectInside(orderingButtonsRectInner, new Vector2(orderingButtonsRectInner.width, buttonHeight), new Vector4(buttonPadding, buttonCount * buttonHeight, buttonPadding, buttonPadding));
                 EditorGUI.BeginDisabledGroup(i <= 0);
-                if (this.Button(upButton, EditorAssets.ChevronUp)) { this.SwapIndexes(i, i - 1); i--; continue; }
+                if (this.Button(upButton, MaterialIcons.GetIcon(Icon.ChevronUp))) { this.SwapIndexes(i, i - 1); i--; continue; }
                 EditorGUI.EndDisabledGroup();
 
                 buttonCount++;
 
                 Rect downButton = this.GetRectInside(orderingButtonsRectInner, new Vector2(orderingButtonsRectInner.width, buttonHeight), new Vector4(buttonPadding, buttonCount * buttonHeight, buttonPadding, buttonPadding));
                 EditorGUI.BeginDisabledGroup(i >= playlist.urls.Length - 1);
-                if (this.Button(downButton, EditorAssets.ChevronDown)) { this.SwapIndexes(i, i + 1); i--; continue; }
+                if (this.Button(downButton, MaterialIcons.GetIcon(Icon.ChevronDown))) { this.SwapIndexes(i, i + 1); i--; continue; }
                 EditorGUI.EndDisabledGroup();
 
                 buttonCount++;
 
                 Rect bottomButton = this.GetRectInside(orderingButtonsRectInner, new Vector2(orderingButtonsRectInner.width, buttonHeight), new Vector4(buttonPadding, buttonCount * buttonHeight, buttonPadding, buttonPadding));
                 EditorGUI.BeginDisabledGroup(i >= playlist.urls.Length - 1);
-                if (this.Button(bottomButton, EditorAssets.ChevronDoubleDown)) { this.SwapIndexes(i, playlist.urls.Length - 1); i--; continue; }
+                if (this.Button(bottomButton, MaterialIcons.GetIcon(Icon.ChevronDoubleDown))) { this.SwapIndexes(i, playlist.urls.Length - 1); i--; continue; }
                 EditorGUI.EndDisabledGroup();
 
                 Rect thumbnailRectOuter = this.GetRectInside(region, new Vector2(region.width / 3, region.height), new Vector4(orderingButtonsRectInner.width + Padding, 0, 0, 0));
@@ -205,7 +206,7 @@ namespace DecentM.VideoPlayer
                 buttonHeight = actionButtonsRectInner.height / buttons;
 
                 Rect refreshButton = this.GetRectInside(actionButtonsRectInner, new Vector2(actionButtonsRectInner.width, buttonHeight), new Vector4(buttonPadding, buttonCount * buttonHeight, buttonPadding, buttonPadding));
-                if (this.Button(refreshButton, EditorAssets.RefreshIcon))
+                if (this.Button(refreshButton, MaterialIcons.GetIcon(Icon.Refresh)))
                 {
                     VideoMetadataStore.Refresh(url.ToString(), (progress) => { }, this.BakeMetadata);
                 }
@@ -213,10 +214,10 @@ namespace DecentM.VideoPlayer
                 buttonCount++;
 
                 Rect removeButton = this.GetRectInside(actionButtonsRectInner, new Vector2(actionButtonsRectInner.width, buttonHeight), new Vector4(buttonPadding, buttonCount * buttonHeight, buttonPadding, buttonPadding));
-                if (this.Button(removeButton, EditorAssets.CloseIcon)) { this.RemoveUrl(i); i--; continue; }
+                if (this.Button(removeButton, MaterialIcons.GetIcon(Icon.Close))) { this.RemoveUrl(i); i--; continue; }
 
                 Rect insertButton = this.GetRectInside(region, new Vector2(region.width, 25), new Vector4(0, region.height, 0, 0));
-                if (this.Button(insertButton, EditorAssets.PlusIcon)) this.InsertAfterIndex(i);
+                if (this.Button(insertButton, MaterialIcons.GetIcon(Icon.Plus))) this.InsertAfterIndex(i);
 
                 playlist.urls[i] = item;
             }
