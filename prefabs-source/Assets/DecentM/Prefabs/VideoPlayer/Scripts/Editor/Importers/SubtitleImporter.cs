@@ -28,6 +28,7 @@ namespace DecentM.VideoPlayer.EditorTools.Importers
             string srt = File.ReadAllText(ctx.assetPath);
             SubtitleCompiler.CompilationResult compiled = SubtitleCompiler.Compile(srt, Path.GetExtension(ctx.assetPath));
             TextAsset asset = new TextAsset(compiled.output);
+            asset.name = Path.GetFileNameWithoutExtension(Path.GetFileNameWithoutExtension(ctx.assetPath));
 
             if (compiled.errors.Count > 0)
             {

@@ -13,18 +13,24 @@ namespace DecentM.VideoPlayer.Plugins
 
         protected override void OnVideoPlayerInit()
         {
+            if (this.playlist == null) return;
+
             object[] next = this.playlist.GetCurrent();
             this.PlayItem(next);
         }
 
         protected override void OnPlaybackEnd()
         {
+            if (this.playlist == null) return;
+
             object[] next = this.playlist.Next();
             this.PlayItem(next);
         }
 
         protected override void OnAutoRetryAbort()
         {
+            if (this.playlist == null) return;
+
             object[] next = this.playlist.Next();
             this.PlayItem(next);
         }

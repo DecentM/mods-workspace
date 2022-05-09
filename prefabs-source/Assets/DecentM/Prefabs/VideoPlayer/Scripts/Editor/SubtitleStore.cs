@@ -14,15 +14,10 @@ using UnityEngine;
 using UnityEditor;
 
 using DecentM.Subtitles;
+using DecentM.VideoPlayer.EditorTools.Importers;
 
 namespace DecentM.EditorTools
 {
-    public struct CachedSubtitle
-    {
-        public string language;
-        public TextAsset contents;
-    }
-
     public class SubtitleStore
     {
         private static bool ValidateUrl(string url)

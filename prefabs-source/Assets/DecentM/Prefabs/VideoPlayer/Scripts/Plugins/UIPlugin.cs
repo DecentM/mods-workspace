@@ -7,6 +7,7 @@ using VRC.SDKBase;
 using VRC.Udon;
 using TMPro;
 using UnityEngine.UI;
+using DecentM.UI;
 
 namespace DecentM.VideoPlayer.Plugins
 {
@@ -49,7 +50,6 @@ namespace DecentM.VideoPlayer.Plugins
 
         [Space]
         public TextMeshProUGUI info;
-        public Dropdown dropdown;
 
         [Space]
         public TextMeshProUGUI titleSlot;
@@ -58,6 +58,16 @@ namespace DecentM.VideoPlayer.Plugins
         public TextMeshProUGUI viewCountSlot;
         public TextMeshProUGUI likeCountSlot;
         public TextMeshProUGUI subtitleSlot;
+        public UI.Dropdown subtitlesDropdown;
+        public Button subtitlesButton;
+        public Image subtitlesButtonImage;
+        public Image subtitlesButtonIcon;
+        public TextMeshProUGUI subtitlesButtonLabel;
+        public Sprite subtitlesAvailable;
+        public Sprite subtitlesUnavailable;
+        public Button subtitlesToggleButton;
+        public Image subtitlesToggleButtonImage;
+        public Image subtitlesToggleButtonIcon;
 
         [Space]
         public Button ownershipButton;
@@ -156,11 +166,56 @@ namespace DecentM.VideoPlayer.Plugins
 
         #region Outputs
 
+        private string currentLanguage = string.Empty;
+
+        public void OnSubtitleSelected()
+        {
+            string selected = (string)this.subtitlesDropdown.GetValue();
+            this.currentLanguage = selected;
+            this.events.OnSubtitleLanguageRequested(selected);
+        }
+
+        private bool subtitlesOn = false;
+
+        public void OnToggleSubtitles()
+        {
+            bool newState = !this.subtitlesOn;
+            this.subtitlesToggleButtonIcon.color = newState ? Color.black : Color.white;
+            this.subtitlesToggleButtonImage.color = newState ? Color.white : new Color(0, 0, 0, 0);
+            this.events.OnSubtitleLanguageRequested(newState ? this.currentLanguage : string.Empty);
+            this.subtitlesDropdown.button.interactable = newState;
+            this.subtitlesDropdown.animator.SetBool("DropdownOpen", false);
+            this.subtitlesOn = newState;
+        }
+
         protected override void OnSubtitleLanguageOptionsChange(string[] newOptions)
         {
+            this.subtitlesDropdown.SetListener(this, "OnSubtitleSelected");
+            this.subtitlesDropdown.SetOptions(newOptions);
+
+            if (newOptions.Length == 0)
+            {
+                this.subtitlesButton.interactable = false;
+                this.subtitlesButtonImage.color = new Color(0, 0, 0, 0);
+                this.subtitlesButtonLabel.color = Color.white;
+                this.subtitlesButtonIcon.color = Color.white;
+                this.subtitlesButtonIcon.sprite = this.subtitlesUnavailable;
+            } else
+            {
+                this.subtitlesButton.interactable = true;
+                this.subtitlesButtonImage.color = Color.white;
+                this.subtitlesButtonLabel.color = Color.black;
+                this.subtitlesButtonIcon.color = Color.black;
+                this.subtitlesButtonIcon.sprite = this.subtitlesAvailable;
+            }
+
+            if (!this.subtitlesOn) return;
+
+            // Automatically re-select the current language after the video was changed, so the player doesn't have to
+            // look for their language every time the video changes
             foreach (string option in newOptions)
             {
-                if (option == "en") this.events.OnSubtitleLanguageRequested(option);
+                if (option == this.currentLanguage) this.events.OnSubtitleLanguageRequested(option);
             }
         }
 

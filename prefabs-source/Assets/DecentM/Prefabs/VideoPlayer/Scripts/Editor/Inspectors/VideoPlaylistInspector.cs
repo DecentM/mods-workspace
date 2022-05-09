@@ -10,6 +10,7 @@ using VRC.SDKBase;
 using System.Threading;
 
 using DecentM.Icons;
+using DecentM.VideoPlayer.EditorTools.Importers;
 
 namespace DecentM.VideoPlayer
 {

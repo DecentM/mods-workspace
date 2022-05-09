@@ -27,6 +27,14 @@ namespace DecentM.VideoPlayer.Plugins
             this.Reset();
         }
 
+        private string GetLanguageFromFilename(string filename)
+        {
+            string[] parts = filename.Split('.');
+            if (parts.Length < 2) return "unknown";
+
+            return parts[1];
+        }
+
         protected override void OnMetadataChange(string title, string uploader, string siteName, int viewCount, int likeCount, string resolution, int fps, string description, string duration, TextAsset[] subtitles)
         {
             this.currentSubtitles = subtitles;
@@ -34,7 +42,7 @@ namespace DecentM.VideoPlayer.Plugins
 
             for (int i = 0; i < subtitles.Length; i++)
             {
-                langs[i] = subtitles[i].name;
+                langs[i] = this.GetLanguageFromFilename(subtitles[i].name);
             }
 
             this.Reset();
@@ -43,6 +51,8 @@ namespace DecentM.VideoPlayer.Plugins
 
         protected override void OnSubtitleLanguageRequested(string language)
         {
+            this.events.OnSubtitleClear();
+
             if (string.IsNullOrEmpty(language))
             {
                 this.Reset();
@@ -51,12 +61,13 @@ namespace DecentM.VideoPlayer.Plugins
 
             for (int i = 0; i < currentSubtitles.Length; i++)
             {
-                string lang = currentSubtitles[i].name;
+                string filename = currentSubtitles[i].name;
                 string content = currentSubtitles[i].text;
 
-                if (language == lang)
+                if (language == this.GetLanguageFromFilename(filename))
                 {
                     this.SetInstructions(content);
+                    this.instructionIndex = this.SearchForInstructionIndex(Mathf.FloorToInt(this.system.GetTime()));
                     break;
                 }
             }
