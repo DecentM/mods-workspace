@@ -9,7 +9,6 @@ namespace DecentM.Icons
     public static class MaterialIcons
     {
         private static int IconSize = 96;
-        private static Color UnityEditorBackground = new Color(51 / 255f, 51 / 255f, 51 / 255f);
 
         private static Dictionary<int, Texture2D> cache = new Dictionary<int, Texture2D>();
 
