@@ -157,6 +157,36 @@ namespace DecentM.VideoPlayer.Plugins
             if (player != Networking.LocalPlayer) return;
 
             this.uiRunning = false;
+            this.animator.SetBool("ShowControls", false);
+        }
+
+        public float raycastElapsed = 0;
+        public float autoHideTimeout = 5f;
+        private RaycastHit lastHitInfo;
+
+        private void RaycastActivityUpdate()
+        {
+            if (object.Equals(this.hitInfo, null)) return;
+            if (object.Equals(this.lastHitInfo, null)) this.lastHitInfo = this.hitInfo;
+
+            float distance = Vector3.Distance(this.lastHitInfo.point, this.hitInfo.point);
+
+            if (distance < 0.1f)
+            {
+                if (this.raycastElapsed <= this.autoHideTimeout) this.raycastElapsed += this.raycastIntervalSeconds;
+            }
+            else
+            {
+                this.animator.SetBool("ShowControls", true);
+                this.raycastElapsed = 0;
+            }
+
+            this.lastHitInfo = this.hitInfo;
+
+            if (this.raycastElapsed >= this.autoHideTimeout)
+            {
+                this.animator.SetBool("ShowControls", false);
+            }
         }
 
         private void FixedUpdate()
@@ -172,12 +202,18 @@ namespace DecentM.VideoPlayer.Plugins
             bool desktopHit = this.CheckDesktopHit();
             bool vrHit = this.CheckVRHit();
             
-            bool uiShown = (desktopHit || vrHit) && hitInfo.transform.gameObject == this.raycastTarget;
+            bool isLookingAtUi = (desktopHit || vrHit) && hitInfo.transform.gameObject == this.raycastTarget;
+
+            if (isLookingAtUi)
+            {
+                this.RaycastActivityUpdate();
+                return;
+            }
+
             bool shown = this.animator.GetBool("ShowControls");
+            if (!shown) return;
 
-            if (uiShown == shown) return;
-
-            this.animator.SetBool("ShowControls", uiShown);
+            this.animator.SetBool("ShowControls", false);
         }
 
         #endregion

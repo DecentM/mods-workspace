@@ -1086,53 +1086,53 @@ PrefabInstance:
     - target: {fileID: 6759095419728963412, guid: 8894fa7e4588a5c4fab98453e558847d,
         type: 3}
       propertyPath: DynamicMaterials.Array.size
-      value: 15
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 6759095419728963412, guid: 8894fa7e4588a5c4fab98453e558847d,
         type: 3}
       propertyPath: DynamicMaterials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: a5a3c2284842e094eae890898f3e3e3e, type: 2}
+      objectReference: {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
     - target: {fileID: 6759095419728963412, guid: 8894fa7e4588a5c4fab98453e558847d,
         type: 3}
       propertyPath: DynamicMaterials.Array.data[1]
       value: 
-      objectReference: {fileID: 2100000, guid: 80529befc888c724abb1fc6619768fb5, type: 2}
+      objectReference: {fileID: 2100000, guid: 0b045fec2d99c7e4cb7059b63aa665fc, type: 2}
     - target: {fileID: 6759095419728963412, guid: 8894fa7e4588a5c4fab98453e558847d,
         type: 3}
       propertyPath: DynamicMaterials.Array.data[2]
       value: 
-      objectReference: {fileID: 2100000, guid: 60c8bea6746fbb94090a1c078c31c8d0, type: 2}
+      objectReference: {fileID: 2100000, guid: 76ff537c8e1a84345868e6aeee938ab3, type: 2}
     - target: {fileID: 6759095419728963412, guid: 8894fa7e4588a5c4fab98453e558847d,
         type: 3}
       propertyPath: DynamicMaterials.Array.data[3]
       value: 
-      objectReference: {fileID: 2100000, guid: ba96e3016f28abe4fbf95894abafcfef, type: 2}
+      objectReference: {fileID: 2100000, guid: a5a3c2284842e094eae890898f3e3e3e, type: 2}
     - target: {fileID: 6759095419728963412, guid: 8894fa7e4588a5c4fab98453e558847d,
         type: 3}
       propertyPath: DynamicMaterials.Array.data[4]
       value: 
-      objectReference: {fileID: 2100000, guid: baf16ab3ac8874342aeb394fa3441048, type: 2}
+      objectReference: {fileID: 2100000, guid: 80529befc888c724abb1fc6619768fb5, type: 2}
     - target: {fileID: 6759095419728963412, guid: 8894fa7e4588a5c4fab98453e558847d,
         type: 3}
       propertyPath: DynamicMaterials.Array.data[5]
       value: 
-      objectReference: {fileID: 2100000, guid: e1dff992a97ecff448b8bd2f4529ca92, type: 2}
+      objectReference: {fileID: 2100000, guid: 60c8bea6746fbb94090a1c078c31c8d0, type: 2}
     - target: {fileID: 6759095419728963412, guid: 8894fa7e4588a5c4fab98453e558847d,
         type: 3}
       propertyPath: DynamicMaterials.Array.data[6]
       value: 
-      objectReference: {fileID: 2100000, guid: 229ab290431fe5b4687f2890b1fa4547, type: 2}
+      objectReference: {fileID: 2100000, guid: ba96e3016f28abe4fbf95894abafcfef, type: 2}
     - target: {fileID: 6759095419728963412, guid: 8894fa7e4588a5c4fab98453e558847d,
         type: 3}
       propertyPath: DynamicMaterials.Array.data[7]
       value: 
-      objectReference: {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+      objectReference: {fileID: 2100000, guid: baf16ab3ac8874342aeb394fa3441048, type: 2}
     - target: {fileID: 6759095419728963412, guid: 8894fa7e4588a5c4fab98453e558847d,
         type: 3}
       propertyPath: DynamicMaterials.Array.data[8]
       value: 
-      objectReference: {fileID: 2100000, guid: 76ff537c8e1a84345868e6aeee938ab3, type: 2}
+      objectReference: {fileID: 2100000, guid: e1dff992a97ecff448b8bd2f4529ca92, type: 2}
     - target: {fileID: 6759095419728963412, guid: 8894fa7e4588a5c4fab98453e558847d,
         type: 3}
       propertyPath: DynamicMaterials.Array.data[9]
@@ -13140,6 +13140,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5622076067985796228, guid: f11a728db487e45469810356a9fcee74,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 163.07368
+      objectReference: {fileID: 0}
     - target: {fileID: 5622076068098106353, guid: f11a728db487e45469810356a9fcee74,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -13309,7 +13314,7 @@ PrefabInstance:
     - target: {fileID: 5622076069600687885, guid: f11a728db487e45469810356a9fcee74,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 13742.611
+      value: 13742.612
       objectReference: {fileID: 0}
     - target: {fileID: 5622076069718880280, guid: f11a728db487e45469810356a9fcee74,
         type: 3}
@@ -15120,7 +15125,7 @@ MonoBehaviour:
   renderSettingsHackEmissiveBoost: 1
   renderSettingsHackIndirectBoost: 1
   renderSettingsTempPath: 
-  renderSettingsOutPath: 
+  renderSettingsOutPath: BakeryLightmaps
   renderSettingsUseScenePath: 0
   renderSettingsHackAOIntensity: 0
   renderSettingsHackAOSamples: 16

@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
+using DecentM.EditorTools.SelfLocator;
+
 namespace DecentM.Icons
 {
     public static class MaterialIcons
@@ -21,7 +23,7 @@ namespace DecentM.Icons
                 return cachedResult;
             }
 
-            string path = $"Assets/DecentM/Editor/MaterialIcons/spritesheet.png";
+            string path = $"{SelfLocatorAsset.LocateSelf()}/Editor/MaterialIcons/spritesheet.png";
             Texture2D sheet = AssetDatabase.LoadAssetAtPath<Texture2D>(path);
 
             int iconX = index % (sheet.width / IconSize);

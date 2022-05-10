@@ -147,6 +147,8 @@ namespace DecentM.VideoPlayer
 
         public bool IsPlaying()
         {
+            if (this.player == null) return false;
+
             return this.player.IsPlaying;
         }
 

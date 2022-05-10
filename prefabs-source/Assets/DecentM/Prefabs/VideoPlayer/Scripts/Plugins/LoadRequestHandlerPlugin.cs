@@ -11,6 +11,7 @@ namespace DecentM.VideoPlayer.Plugins
     public class LoadRequestHandlerPlugin : VideoPlayerPlugin
     {
         private VRCUrl approvalPending;
+        public float approvalTimeout = 0.3f;
 
         protected override void OnLoadRequested(VRCUrl vrcUrl)
         {
@@ -18,7 +19,7 @@ namespace DecentM.VideoPlayer.Plugins
 
             this.denials = 0;
             this.approvalPending = vrcUrl;
-            this.SendCustomEventDelayedSeconds(nameof(CheckForDenials), 0.3f);
+            this.SendCustomEventDelayedSeconds(nameof(CheckForDenials), this.approvalTimeout);
         }
 
         private int denials = 0;

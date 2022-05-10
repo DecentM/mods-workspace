@@ -24,7 +24,7 @@ namespace DecentM.EditorTools.SelfLocator
 
             SelfLocatorAsset asset = SelfLocatorAsset.CreateInstance(File.ReadAllText(ctx.assetPath));
 
-            ctx.AddObjectToAsset(Path.GetFileName(ctx.assetPath), asset, MaterialIcons.GetIcon(Icon.MapMarker));
+            ctx.AddObjectToAsset(Path.GetFileName(ctx.assetPath), asset);
             ctx.SetMainObject(asset);
         }
     }
