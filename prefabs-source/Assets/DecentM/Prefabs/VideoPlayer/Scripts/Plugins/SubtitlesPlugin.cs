@@ -35,9 +35,8 @@ namespace DecentM.VideoPlayer.Plugins
         private string GetLanguageFromFilename(string filename)
         {
             string[] parts = filename.Split('.');
-            if (parts.Length < 2) return "unknown";
 
-            return parts[1];
+            return parts[parts.Length - 1];
         }
 
         protected override void OnMetadataChange(string title, string uploader, string siteName, int viewCount, int likeCount, string resolution, int fps, string description, string duration, TextAsset[] subtitles)

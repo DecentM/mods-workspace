@@ -131,7 +131,7 @@ namespace DecentM.EditorTools
                 OnProgress((urls.Length - newSize) / (float)urls.Length);
             }
 
-            Fetch(queue, 4, Callback, OnQueueSizeChange);
+            Fetch(queue, 1, Callback, OnQueueSizeChange);
 
             return true;
         }

@@ -79,9 +79,9 @@ namespace DecentM.VideoPlayer
         private string[] serialisedDescriptions;
         [SerializeField, HideInInspector]
         private string[] serialisedDurations;
-        [SerializeField, HideInInspector]
+        [SerializeField]
         private TextAsset[] serialisedSubtitles;
-        [SerializeField, HideInInspector]
+        [SerializeField]
         private string[] serialisedSubtitleIndexes;
 
         public void OnBeforeSerialize()
@@ -114,7 +114,7 @@ namespace DecentM.VideoPlayer
                 && this.serialisedFpses.Length == this.urls.Length
                 && this.serialisedDescriptions.Length == this.urls.Length
                 && this.serialisedDurations.Length == this.urls.Length
-                // Skipping this.serialisedSubtitles because its length is the total amount of subtitles, not the URL count (one URL can have subtitles in multiple languages)
+                && this.serialisedSubtitles.Length != 0
                 && this.serialisedSubtitleIndexes.Length == this.urls.Length
             ) return;
 
@@ -214,7 +214,7 @@ namespace DecentM.VideoPlayer
             if (this.serialisedFpses.Length != this.serialisedUrls.Length) this.serialisedFpses = new int[this.serialisedUrls.Length];
             if (this.serialisedDescriptions.Length != this.serialisedUrls.Length) this.serialisedDescriptions = new string[this.serialisedUrls.Length];
             if (this.serialisedDurations.Length != this.serialisedUrls.Length) this.serialisedDurations = new string[this.serialisedUrls.Length];
-            // Skipping this.serialisedSubtitles because its length is the total amount of subtitles, not the URL count (one URL can have subtitles in multiple languages)
+
             if (this.serialisedSubtitleIndexes.Length != this.serialisedUrls.Length) this.serialisedSubtitleIndexes = new string[this.serialisedUrls.Length];
 
             this.urls = new object[this.serialisedUrls.Length][];

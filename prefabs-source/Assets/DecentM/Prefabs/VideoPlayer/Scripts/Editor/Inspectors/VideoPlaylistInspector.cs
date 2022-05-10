@@ -27,8 +27,6 @@ namespace DecentM.VideoPlayer
         {
             this.DrawDefaultInspector();
 
-            EditorGUI.BeginChangeCheck();
-
             VideoPlaylist playlist = (VideoPlaylist)target;
 
             Rect toolbarRectOuter = this.DrawRegion(50, new Vector4(0, Padding, 0, Padding));
@@ -224,17 +222,10 @@ namespace DecentM.VideoPlayer
             }
 
             EditorGUILayout.GetControlRect();
-
-            if (EditorGUI.EndChangeCheck())
-            {
-                this.BakeMetadata();
-                // this.SaveModifications();
-            }
         }
 
         private void ReimportMetadata()
         {
-            // VideoMetadataStore.ReapplyImportSettings();
             this.BakeMetadata();
         }
 
@@ -270,7 +261,6 @@ namespace DecentM.VideoPlayer
             AsyncProgress.Clear();
             this.importPlaylistUrl = "";
             this.RemoveEmptyUrls();
-            this.BakeMetadata();
         }
 
         private void ImportPlaylist()
