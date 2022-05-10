@@ -11,6 +11,17 @@ using DecentM.UI;
 
 namespace DecentM.VideoPlayer.Plugins
 {
+    enum SubtitleSlot
+    {
+        Default,
+        Japanese,
+        ChineseTraditional,
+        Korean,
+        ChineseSimplified,
+        Arabic,
+        Thai,
+    }
+
     public sealed class UIPlugin : VideoPlayerPlugin
     {
         [Space]
@@ -58,7 +69,8 @@ namespace DecentM.VideoPlayer.Plugins
         public TextMeshProUGUI descriptionSlot;
         public TextMeshProUGUI viewCountSlot;
         public TextMeshProUGUI likeCountSlot;
-        public TextMeshProUGUI subtitleSlot;
+
+        [Space]
         public UI.Dropdown subtitlesDropdown;
         public Button subtitlesButton;
         public Image subtitlesButtonImage;
@@ -69,6 +81,16 @@ namespace DecentM.VideoPlayer.Plugins
         public Button subtitlesToggleButton;
         public Image subtitlesToggleButtonImage;
         public Image subtitlesToggleButtonIcon;
+
+        [Space]
+        private TextMeshProUGUI subtitleSlot;
+        public TextMeshProUGUI subtitleSlot_default;
+        public TextMeshProUGUI subtitleSlot_japanese;
+        public TextMeshProUGUI subtitleSlot_chineseTraditional;
+        public TextMeshProUGUI subtitleSlot_korean;
+        public TextMeshProUGUI subtitleSlot_chineseSimplified;
+        public TextMeshProUGUI subtitleSlot_arabic;
+        public TextMeshProUGUI subtitleSlot_thai;
 
         [Space]
         public Button ownershipButton;
@@ -201,7 +223,7 @@ namespace DecentM.VideoPlayer.Plugins
 
             bool desktopHit = this.CheckDesktopHit();
             bool vrHit = this.CheckVRHit();
-            
+
             bool isLookingAtUi = (desktopHit || vrHit) && hitInfo.transform.gameObject == this.raycastTarget;
 
             if (isLookingAtUi)
@@ -216,16 +238,53 @@ namespace DecentM.VideoPlayer.Plugins
             this.animator.SetBool("ShowControls", false);
         }
 
+        private void SwitchSubtitleSlot(SubtitleSlot slot)
+        {
+            if (this.subtitleSlot != null) this.subtitleSlot.text = "";
+
+            switch (slot)
+            {
+                case SubtitleSlot.Japanese:
+                    this.subtitleSlot = this.subtitleSlot_japanese;
+                    return;
+
+                case SubtitleSlot.ChineseTraditional:
+                    this.subtitleSlot = this.subtitleSlot_chineseTraditional;
+                    return;
+
+                case SubtitleSlot.Korean:
+                    this.subtitleSlot = this.subtitleSlot_korean;
+                    return;
+
+                case SubtitleSlot.ChineseSimplified:
+                    this.subtitleSlot = this.subtitleSlot_chineseSimplified;
+                    return;
+
+                case SubtitleSlot.Arabic:
+                    this.subtitleSlot = this.subtitleSlot_arabic;
+                    return;
+
+                case SubtitleSlot.Thai:
+                    this.subtitleSlot = this.subtitleSlot_thai;
+                    return;
+
+                default:
+                    this.subtitleSlot = this.subtitleSlot_default;
+                    return;
+            }
+        }
+
         #endregion
 
         #region Outputs
 
         protected override void _Start()
         {
+            this.SwitchSubtitleSlotForLanguage(this.currentLanguage);
             this.OnSubtitleLanguageOptionsChange(new string[0]);
         }
 
-        private string currentLanguage = string.Empty;
+        private string currentLanguage = "en";
 
         public void OnSubtitleSelected()
         {
@@ -244,12 +303,49 @@ namespace DecentM.VideoPlayer.Plugins
 
         private void ToggleSubtitles(bool newState)
         {
+            this.events.OnSubtitleLanguageRequested(newState ? this.currentLanguage : string.Empty);
+        }
+
+        private bool LanguageIncludes(string[] array, string test)
+        {
+            foreach (string item in array)
+            {
+                if (item == test) return true;
+                if (item.StartsWith($"{test}-")) return true;
+            }
+
+            return false;
+        }
+
+        public string[] japaneseLanguages;
+        public string[] chineseTraditionalLanguages;
+        public string[] koreanLanguages;
+        public string[] chineseSimplifiedLanguages;
+        public string[] arabicLanguages;
+        public string[] thaiLanguages;
+
+        private void SwitchSubtitleSlotForLanguage(string language)
+        {
+            if (this.LanguageIncludes(this.japaneseLanguages, language)) { this.SwitchSubtitleSlot(SubtitleSlot.Japanese); return; }
+            if (this.LanguageIncludes(this.chineseTraditionalLanguages, language)) { this.SwitchSubtitleSlot(SubtitleSlot.ChineseTraditional); return; }
+            if (this.LanguageIncludes(this.koreanLanguages, language)) { this.SwitchSubtitleSlot(SubtitleSlot.Korean); return;  }
+            if (this.LanguageIncludes(this.chineseSimplifiedLanguages, language)) { this.SwitchSubtitleSlot(SubtitleSlot.ChineseSimplified); return; }
+            if (this.LanguageIncludes(this.arabicLanguages, language)) { this.SwitchSubtitleSlot(SubtitleSlot.Arabic); return; }
+            if (this.LanguageIncludes(this.thaiLanguages, language)) { this.SwitchSubtitleSlot(SubtitleSlot.Thai); return; }
+
+            this.SwitchSubtitleSlot(SubtitleSlot.Default);
+        }
+
+        protected override void OnSubtitleLanguageRequested(string language)
+        {
+            bool newState = !string.IsNullOrEmpty(language);
             this.subtitlesToggleButtonIcon.color = newState ? Color.black : Color.white;
             this.subtitlesToggleButtonImage.color = newState ? Color.white : new Color(0, 0, 0, 0);
-            this.events.OnSubtitleLanguageRequested(newState ? this.currentLanguage : string.Empty);
             this.subtitlesDropdown.button.interactable = newState;
             this.subtitlesDropdown.animator.SetBool("DropdownOpen", false);
             this.subtitlesOn = newState;
+
+            this.SwitchSubtitleSlotForLanguage(language);
         }
 
         protected override void OnSubtitleLanguageOptionsChange(string[] newOptions)

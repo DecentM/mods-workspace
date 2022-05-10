@@ -18,6 +18,14 @@ namespace DecentM.VideoPlayer.Plugins
             this.SetTexture(idleTexture);
         }
 
+        private void SetAVPro(bool isAVPro)
+        {
+            foreach (ScreenHandler screen in this.system.screens)
+            {
+                screen.SetIsAVPro(isAVPro);
+            }
+        }
+
         protected override void OnVideoPlayerInit()
         {
             this.ShowIdleTexture();
@@ -35,10 +43,10 @@ namespace DecentM.VideoPlayer.Plugins
 
         protected override void OnPlayerSwitch(VideoPlayerHandlerType type)
         {
-            foreach (ScreenHandler screen in this.system.screens)
-            {
-                screen.SetIsAVPro(type == VideoPlayerHandlerType.AVPro);
-            }
+            Texture videoTexture = this.system.GetVideoTexture();
+
+            this.SetTexture(videoTexture);
+            this.SetAVPro(type == VideoPlayerHandlerType.AVPro);
         }
 
         public void SetTexture(Texture texture)

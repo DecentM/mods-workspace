@@ -4,86 +4,36 @@ using System.Linq;
 
 namespace DecentM.Subtitles.Vtt
 {
-    public class Parser
+    public enum NodeKind
     {
-        public enum NodeKind
-        {
-            Unknown,
-            VttAst,
-            Header,
-            Note,
-            TimestampStart,
-            TimestampArrow,
-            TimestampEnd,
-            TextContents,
-            Parameters,
-        }
+        Unknown,
+        VttAst,
+        Header,
+        Note,
+        TimestampStart,
+        TimestampArrow,
+        TimestampEnd,
+        TextContents,
+        Parameters,
+    }
 
-        public struct Node
-        {
-            public Node(NodeKind kind, string value)
-            {
-                this.kind = kind;
-                this.value = value;
-            }
-
-            public Node(NodeKind kind, int value)
-            {
-                this.kind = kind;
-                this.value = value;
-            }
-
-            public Node(NodeKind kind, Dictionary<string, string> value)
-            {
-                this.kind = kind;
-                this.value = value;
-            }
-
-            public readonly NodeKind kind;
-            public readonly object value;
-        }
-
-        public struct Ast
-        {
-            public Ast(List<Node> nodes)
-            {
-                this.nodes = nodes;
-                this.kind = NodeKind.VttAst;
-            }
-
-            public readonly NodeKind kind;
-            public readonly List<Node> nodes;
-
-            public string Dump()
-            {
-                string result = "";
-
-                foreach (Node node in this.nodes)
-                {
-                    result += $"{node.kind.ToString()}\n";
-                    result += $"{node.value.ToString()}\n";
-                    result += $"==================\n";
-                }
-
-                return result;
-            }
-        }
-
-        public static List<Node> GetUnknowns(Ast ast)
+    public class VttParser : Parser<NodeKind, VttLexer, TokenType>
+    {
+        public static List<Node<NodeKind>> GetUnknowns(Ast<NodeKind> ast)
         {
             return ast.nodes.Where(node => node.kind == NodeKind.Unknown).ToList();
         }
 
-        private int ParseTimestampFromIndex(List<Lexer.Token> tokens, int index)
+        private int ParseTimestampFromIndex(List<VttLexer.Token> tokens, int index)
         {
             int tCursor = index;
-            Lexer.Token tCurrent = tokens.ElementAt(tCursor);
+            VttLexer.Token tCurrent = tokens.ElementAt(tCursor);
             string timestamp = "";
 
             // Keep going until we see a space or newline
             while (
-                tCurrent.type != Lexer.TokenType.Space
-                && tCurrent.type != Lexer.TokenType.Newline
+                tCurrent.type != TokenType.Space
+                && tCurrent.type != TokenType.Newline
             ) {
                 tCursor++;
                 tCurrent = tokens.ElementAt(tCursor);
@@ -126,9 +76,9 @@ namespace DecentM.Subtitles.Vtt
             return millis + (seconds * 1000) + (minutes * 60 * 1000) + (hours * 60 * 60 * 1000);
         }
 
-        public Ast Parse(List<Lexer.Token> tokens)
+        public override Ast<NodeKind> Parse(List<VttLexer.Token> tokens)
         {
-            List<Node> nodes = new List<Node>();
+            List<Node<NodeKind>> nodes = new List<Node<NodeKind>>();
             int cursor = 0;
 
             // Mode is just a NodeKind, to check where we currently are
@@ -139,10 +89,10 @@ namespace DecentM.Subtitles.Vtt
             {
                 // Console.WriteLine($"Parsing... cursor: {cursor}, mode: {mode}");
 
-                Lexer.Token current = tokens.ElementAt(cursor);
+                VttLexer.Token current = tokens.ElementAt(cursor);
 
                 // Ignore notes as they're just comments
-                if (current.type == Lexer.TokenType.Note)
+                if (current.type == TokenType.Note)
                 {
                     cursor++;
                     continue;
@@ -150,7 +100,7 @@ namespace DecentM.Subtitles.Vtt
 
                 // Ignore styles (for now) as they're probably hard to convert into
                 // TMPro styles.
-                if (current.type == Lexer.TokenType.Style)
+                if (current.type == TokenType.Style)
                 {
                     cursor++;
                     continue;
@@ -158,7 +108,7 @@ namespace DecentM.Subtitles.Vtt
 
                 if (mode == NodeKind.Header)
                 {
-                    if (current.type != Lexer.TokenType.WEBVTTHeader)
+                    if (current.type != TokenType.WEBVTTHeader)
                     {
                         cursor++;
                         continue;
@@ -174,7 +124,7 @@ namespace DecentM.Subtitles.Vtt
                 {
                     // Go until we see an int
                     // token type 2 == int
-                    if (current.type != Lexer.TokenType.Number)
+                    if (current.type != TokenType.Number)
                     {
                         cursor++;
                         continue;
@@ -182,7 +132,7 @@ namespace DecentM.Subtitles.Vtt
 
                     // Special case to ignore the screen number if present, as this VTT parser just uses its
                     // index
-                    if ((cursor + 1) < tokens.Count && tokens[cursor + 1].type == Lexer.TokenType.Newline) {
+                    if ((cursor + 1) < tokens.Count && tokens[cursor + 1].type == TokenType.Newline) {
                         cursor++;
                         continue;
                     }
@@ -194,14 +144,14 @@ namespace DecentM.Subtitles.Vtt
                         timestampMillis = this.ParseTimestampFromIndex(tokens, cursor);
                     } catch (ArgumentException ex)
                     {
-                        Node unknownNode = new Node(NodeKind.Unknown, ex.Message);
+                        Node<NodeKind> unknownNode = new Node<NodeKind>(NodeKind.Unknown, ex.Message);
                         nodes.Add(unknownNode);
                         mode = NodeKind.TimestampArrow;
                         continue;
                     }
 
                     // node kind 2 == TimestampStart
-                    Node node = new Node(NodeKind.TimestampStart, timestampMillis);
+                    Node<NodeKind> node = new Node<NodeKind>(NodeKind.TimestampStart, timestampMillis);
                     nodes.Add(node);
 
                     // Skip the timestamp + a space
@@ -215,18 +165,18 @@ namespace DecentM.Subtitles.Vtt
                 if (mode == NodeKind.TimestampArrow)
                 {
                     // Go until we see a hyphen
-                    if (current.type != Lexer.TokenType.Hyphen)
+                    if (current.type != TokenType.Hyphen)
                     {
                         cursor++;
                         continue;
                     }
 
                     int tCursor = cursor;
-                    Lexer.Token tCurrent = tokens.ElementAt(tCursor);
+                    VttLexer.Token tCurrent = tokens.ElementAt(tCursor);
                     string body = "";
 
                     // Keep going until we see a space
-                    while (tCurrent.type != Lexer.TokenType.Space && tCurrent.type != Lexer.TokenType.Unknown)
+                    while (tCurrent.type != TokenType.Space && tCurrent.type != TokenType.Unknown)
                     {
                         body = $"{body}{tCurrent.value}";
                         tCursor++;
@@ -242,7 +192,7 @@ namespace DecentM.Subtitles.Vtt
                     if (body == "-->")
                     {
                         // node kind 3 == TimestampArrow
-                        Node node = new Node(NodeKind.TimestampArrow, body);
+                        Node<NodeKind> node = new Node<NodeKind>(NodeKind.TimestampArrow, body);
                         nodes.Add(node);
 
                         cursor = tCursor;
@@ -250,7 +200,7 @@ namespace DecentM.Subtitles.Vtt
                     // If we didn't, advance the cursor by one and add an unknown node
                     else
                     {
-                        Node unknownNode = new Node(NodeKind.Unknown, $"Cannot parse arrow: {current.value}");
+                        Node<NodeKind> unknownNode = new Node<NodeKind>(NodeKind.Unknown, $"Cannot parse arrow: {current.value}");
                         nodes.Add(unknownNode);
                         cursor++;
                     }
@@ -266,7 +216,7 @@ namespace DecentM.Subtitles.Vtt
                 {
                     // Go until we see an int
                     // token type 2 == int
-                    if (current.type != Lexer.TokenType.Number)
+                    if (current.type != TokenType.Number)
                     {
                         cursor++;
                         continue;
@@ -280,14 +230,14 @@ namespace DecentM.Subtitles.Vtt
                     }
                     catch (ArgumentException ex)
                     {
-                        Node unknownNode = new Node(NodeKind.Unknown, ex.Message);
+                        Node<NodeKind> unknownNode = new Node<NodeKind>(NodeKind.Unknown, ex.Message);
                         nodes.Add(unknownNode);
                         mode = NodeKind.TimestampArrow;
                         continue;
                     }
 
                     // node kind 4 == TimestampEnd
-                    Node node = new Node(NodeKind.TimestampEnd, timestampMillis);
+                    Node<NodeKind> node = new Node<NodeKind>(NodeKind.TimestampEnd, timestampMillis);
                     nodes.Add(node);
 
                     // Skip the timestamp + a space
@@ -299,7 +249,7 @@ namespace DecentM.Subtitles.Vtt
 
                 if (mode == NodeKind.Parameters)
                 {
-                    if (current.type == Lexer.TokenType.Newline)
+                    if (current.type == TokenType.Newline)
                     {
                         cursor++;
                         mode = NodeKind.TextContents;
@@ -308,7 +258,7 @@ namespace DecentM.Subtitles.Vtt
 
                     string allParameters = "";
 
-                    while (cursor < tokens.Count && tokens[cursor].type != Lexer.TokenType.Newline)
+                    while (cursor < tokens.Count && tokens[cursor].type != TokenType.Newline)
                     {
                         allParameters += tokens[cursor].value;
                         cursor++;
@@ -328,7 +278,7 @@ namespace DecentM.Subtitles.Vtt
                         parameters.Add(name, value);
                     }
 
-                    Node node = new Node(NodeKind.Parameters, parameters);
+                    Node<NodeKind> node = new Node<NodeKind>(NodeKind.Parameters, parameters);
                     nodes.Add(node);
                     mode = NodeKind.TextContents;
                     continue;
@@ -340,20 +290,20 @@ namespace DecentM.Subtitles.Vtt
                     int tCursor = cursor;
                     string textContents = "";
 
-                    while (tCursor < tokens.Count && tokens.ElementAt(tCursor).type != Lexer.TokenType.DoubleNewline)
+                    while (tCursor < tokens.Count && tokens.ElementAt(tCursor).type != TokenType.DoubleNewline)
                     {
-                        Lexer.Token tCurrent = tokens.ElementAt(tCursor);
+                        VttLexer.Token tCurrent = tokens.ElementAt(tCursor);
                         textContents = $"{textContents}{tCurrent.value}";
                         tCursor++;
                     }
 
                     if (textContents == "")
                     {
-                        Node unknownNode = new Node(NodeKind.Unknown, $"Cannot parse text contents in token {tCursor} because the parsed value is empty");
+                        Node<NodeKind> unknownNode = new Node<NodeKind>(NodeKind.Unknown, $"Cannot parse text contents in token {tCursor} because the parsed value is empty");
                         nodes.Add(unknownNode);
                     } else
                     {
-                        Node node = new Node(NodeKind.TextContents, textContents);
+                        Node<NodeKind> node = new Node<NodeKind>(NodeKind.TextContents, textContents);
                         nodes.Add(node);
                     }
 
@@ -368,7 +318,7 @@ namespace DecentM.Subtitles.Vtt
                 cursor++;
             }
 
-            return new Ast(nodes);
+            return new Ast<NodeKind>(NodeKind.VttAst, nodes);
         }
     }
 }

@@ -1,17 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using System.Text;
-using System.Web;
-using System.Net;
+﻿using System.Text;
 
-namespace DecentM.Subtitles
+namespace DecentM.TextProcessing
 {
-    public class TextProcessing
+    public class TextProcessor
     {
         private string input = "";
 
-        public TextProcessing(string input)
+        public TextProcessor(string input)
         {
             this.input = input;
         }
@@ -21,19 +16,25 @@ namespace DecentM.Subtitles
             return this.input;
         }
 
-        public TextProcessing CRLFToLF()
+        public TextProcessor CRLFToLF()
         {
             this.input = input.Replace("\r\n", "\n");
             return this;
         }
 
-        public TextProcessing AsciiToUTF8()
+        public TextProcessor AsciiToUTF8()
         {
-            this.input = Encoding.UTF8.GetString(Encoding.ASCII.GetBytes(input));
+            this.input = Encoding.UTF8.GetString(Encoding.ASCII.GetBytes(this.input));
             return this;
         }
 
-        public TextProcessing ResolveHTMLEntities()
+        public TextProcessor LigaturiseArabicText()
+        {
+            this.input = ArabicText.ConvertLigatures(this.input);
+            return this;
+        }
+
+        public TextProcessor ResolveHTMLEntities()
         {
             this.input = input
                 .Replace("&nbsp;", " ")

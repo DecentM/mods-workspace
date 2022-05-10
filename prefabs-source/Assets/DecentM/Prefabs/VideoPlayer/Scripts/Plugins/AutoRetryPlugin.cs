@@ -34,12 +34,7 @@ namespace DecentM.VideoPlayer.Plugins
         public void AttemptRetry()
         {
             VRCUrl url = this.system.GetCurrentUrl();
-            if (url == null)
-            {
-                this.events.OnAutoRetryAbort();
-                this.system.UnloadVideo();
-                return;
-            }
+            if (url == null) return;
 
             this.system.RequestVideo(url);
         }
@@ -52,6 +47,9 @@ namespace DecentM.VideoPlayer.Plugins
 
         protected override void OnLoadError(VideoError videoError)
         {
+            VRCUrl url = this.system.GetCurrentUrl();
+            if (url == null || string.IsNullOrEmpty(this.system.GetCurrentUrl().ToString())) return;
+
             switch (videoError)
             {
                 // Continue for rate limit errors and unknown ones

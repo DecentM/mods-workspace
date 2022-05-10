@@ -78,7 +78,11 @@ namespace DecentM.VideoPlayer.Plugins
         // Everyone except the owner does this, because then owner already knows when it finishes loading
         protected override void OnLoadReady(float duration)
         {
-            if (VRCPlayerApi.GetPlayerCount() == 1 && this.autoplayOnLoad) this.system.StartPlayback();
+            if (VRCPlayerApi.GetPlayerCount() == 1 && this.autoplayOnLoad)
+            {
+                this.system.StartPlayback();
+                return;
+            }
 
             if (Networking.LocalPlayer.playerId == this.ownerId) return;
 
@@ -96,7 +100,7 @@ namespace DecentM.VideoPlayer.Plugins
 
         private int[] loadedPlayers = new int[0];
 
-        protected override void OnLoadRequested(VRCUrl url)
+        protected override void OnLoadApproved(VRCUrl url)
         {
             this.loadedPlayers = new int[0];
         }

@@ -63,10 +63,12 @@ namespace DecentM.VideoPlayer.Plugins
             set
             {
                 if (Networking.GetOwner(this.gameObject) == Networking.LocalPlayer) return;
+                if (value == null || string.IsNullOrEmpty(value.ToString())) return;
 
                 _url = value;
 
-                if (value != null) this.system.LoadVideo(value);
+                this.events.OnLoadApproved(value);
+                this.system.LoadVideo(value);
             }
             get => _url;
         }
@@ -98,6 +100,11 @@ namespace DecentM.VideoPlayer.Plugins
                 this.events.OnLoadDenied(url, "Only the player owner can change the URL");
                 return;
             }
+        }
+
+        protected override void OnLoadApproved(VRCUrl url)
+        {
+            if (url == null) return;
 
             this._url = url;
             this.RequestSerialization();

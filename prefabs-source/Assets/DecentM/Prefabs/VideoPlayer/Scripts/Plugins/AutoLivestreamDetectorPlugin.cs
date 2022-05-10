@@ -28,8 +28,7 @@ namespace DecentM.VideoPlayer.Plugins
                     this.events.OnLoadDenied(vrcUrl, "Switching to livestream mode");
                     this.system.UnloadVideo();
                     this.system.NextPlayerHandler();
-                    this.events.OnLoadApproved(vrcUrl);
-                    this.system.LoadVideo(vrcUrl);
+                    this.system.RequestVideo(vrcUrl);
                     break;
                 }
             }

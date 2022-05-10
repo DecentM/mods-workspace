@@ -4,40 +4,22 @@ using System.Linq;
 
 namespace DecentM.Subtitles.Srt
 {
-    public class Lexer
+    public enum TokenType
     {
-        public enum TokenType
-        {
-            Unknown = 0,
-            Char = 1,
-            Number = 2,
-            Hyphen = 3,
-            SidewaysCaret = 4,
-            Colon = 5,
-            Comma = 6,
-            Newline = 7,
-            Space = 8,
-        }
+        Unknown = 0,
+        Char = 1,
+        Number = 2,
+        Hyphen = 3,
+        SidewaysCaret = 4,
+        Colon = 5,
+        Comma = 6,
+        Newline = 7,
+        Space = 8,
+    }
 
-        public struct Token
-        {
-            public Token(TokenType type, string value)
-            {
-                this.type = type;
-                this.value = value;
-            }
-
-            public Token(TokenType type, int value)
-            {
-                this.type = type;
-                this.value = value;
-            }
-
-            public readonly TokenType type;
-            public readonly object value;
-        }
-
-        public List<Token> Lex(string text)
+    public class SrtLexer : Lexer<TokenType>
+    {
+        public override List<Token> Lex(string text)
         {
             int cursor = 0;
             //object[][] tokens = new object[0][];

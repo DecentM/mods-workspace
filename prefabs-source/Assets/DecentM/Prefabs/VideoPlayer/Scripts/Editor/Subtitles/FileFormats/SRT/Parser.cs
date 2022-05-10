@@ -5,63 +5,34 @@ using System.Linq;
 
 namespace DecentM.Subtitles.Srt
 {
-    public class Parser
+    public enum NodeKind
     {
-        public enum NodeKind
-        {
-            Unknown = 0,
-            ScreenIndex = 1,
-            TimestampStart = 2,
-            TimestampArrow = 3,
-            TimestampEnd = 4,
-            TextContents = 5,
-        }
+        Unknown,
+        SubtitleParserAst,
+        ScreenIndex,
+        TimestampStart,
+        TimestampArrow,
+        TimestampEnd,
+        TextContents,
+    }
 
-        public struct Node
-        {
-            public Node(NodeKind kind, string value)
-            {
-                this.kind = kind;
-                this.value = value;
-            }
-
-            public Node(NodeKind kind, int value)
-            {
-                this.kind = kind;
-                this.value = value;
-            }
-
-            public readonly NodeKind kind;
-            public readonly object value;
-        }
-
-        public struct Ast
-        {
-            public Ast(List<Node> nodes)
-            {
-                this.nodes = nodes;
-                this.kind = "SubtitleParserAst";
-            }
-
-            public readonly string kind;
-            public readonly List<Node> nodes;
-        }
-
-        public static List<Node> GetUnknowns(Ast ast)
+    public class SrtParser : Parser<NodeKind, SrtLexer, TokenType>
+    {
+        public static List<Node<NodeKind>> GetUnknowns(Ast<NodeKind> ast)
         {
             return ast.nodes.Where(node => node.kind == NodeKind.Unknown).ToList();
         }
 
-        private int ParseTimestampFromIndex(List<Lexer.Token> tokens, int index)
+        private int ParseTimestampFromIndex(List<SrtLexer.Token> tokens, int index)
         {
             int tCursor = index;
-            Lexer.Token tCurrent = tokens.ElementAt(tCursor);
+            SrtLexer.Token tCurrent = tokens.ElementAt(tCursor);
             string timestamp = "";
 
             // Keep going until we see a space or newline
             while (
-                tCurrent.type != Lexer.TokenType.Space
-                && tCurrent.type != Lexer.TokenType.Newline
+                tCurrent.type != TokenType.Space
+                && tCurrent.type != TokenType.Newline
             ) {
                 tCursor++;
                 tCurrent = tokens.ElementAt(tCursor);
@@ -104,9 +75,9 @@ namespace DecentM.Subtitles.Srt
             return millis + (seconds * 1000) + (minutes * 60 * 1000) + (hours * 60 * 60 * 1000);
         }
 
-        public Ast Parse(List<Lexer.Token> tokens)
+        public override Ast<NodeKind> Parse(List<SrtLexer.Token> tokens)
         {
-            List<Node> nodes = new List<Node>();
+            List<Node<NodeKind>> nodes = new List<Node<NodeKind>>();
             int cursor = 0;
 
             // Mode is just a NodeKind, to check where we currently are
@@ -115,27 +86,25 @@ namespace DecentM.Subtitles.Srt
 
             while (cursor < tokens.Count)
             {
-                // Console.WriteLine($"Parsing... cursor: {cursor}, mode: {mode}");
-
-                Lexer.Token current = tokens.ElementAt(cursor);
+                SrtLexer.Token current = tokens.ElementAt(cursor);
 
                 // If we're expecting ScreenIndex
                 if (mode == NodeKind.ScreenIndex)
                 {
                     // Go until we see an int
                     // token type 2 == int
-                    if (current.type != Lexer.TokenType.Number)
+                    if (current.type != TokenType.Number)
                     {
                         cursor++;
                         continue;
                     }
 
                     int tCursor = cursor;
-                    Lexer.Token tCurrent = tokens.ElementAt(tCursor);
+                    SrtLexer.Token tCurrent = tokens.ElementAt(tCursor);
                     string indexValue = "";
 
                     // Go until we see a newline
-                    while (tCursor < tokens.Count && tCurrent.type != Lexer.TokenType.Newline)
+                    while (tCursor < tokens.Count && tCurrent.type != TokenType.Newline)
                     {
                         indexValue = $"{indexValue}{tCurrent.value}";
 
@@ -150,11 +119,11 @@ namespace DecentM.Subtitles.Srt
 
                     if (indexValue == "")
                     {
-                        Node unknownNode = new Node(NodeKind.Unknown, $"Cannot parse screen index in token {tCursor} because the parsed value is empty");
+                        Node<NodeKind> unknownNode = new Node<NodeKind>(NodeKind.Unknown, $"Cannot parse screen index in token {tCursor} because the parsed value is empty");
                         nodes.Add(unknownNode);
                     } else
                     {
-                        Node node = new Node(NodeKind.ScreenIndex, indexValue);
+                        Node<NodeKind> node = new Node<NodeKind>(NodeKind.ScreenIndex, indexValue);
                         nodes.Add(node);
                     }
 
@@ -169,7 +138,7 @@ namespace DecentM.Subtitles.Srt
                 {
                     // Go until we see an int
                     // token type 2 == int
-                    if (current.type != Lexer.TokenType.Number)
+                    if (current.type != TokenType.Number)
                     {
                         cursor++;
                         continue;
@@ -182,14 +151,14 @@ namespace DecentM.Subtitles.Srt
                         timestampMillis = this.ParseTimestampFromIndex(tokens, cursor);
                     } catch (ArgumentException ex)
                     {
-                        Node unknownNode = new Node(NodeKind.Unknown, ex.Message);
+                        Node<NodeKind> unknownNode = new Node<NodeKind>(NodeKind.Unknown, ex.Message);
                         nodes.Add(unknownNode);
                         mode = NodeKind.TimestampArrow;
                         continue;
                     }
 
                     // node kind 2 == TimestampStart
-                    Node node = new Node(NodeKind.TimestampStart, timestampMillis);
+                    Node<NodeKind> node = new Node<NodeKind>(NodeKind.TimestampStart, timestampMillis);
                     nodes.Add(node);
 
                     // Skip the timestamp + a space
@@ -203,18 +172,18 @@ namespace DecentM.Subtitles.Srt
                 if (mode == NodeKind.TimestampArrow)
                 {
                     // Go until we see a hyphen
-                    if (current.type != Lexer.TokenType.Hyphen)
+                    if (current.type != TokenType.Hyphen)
                     {
                         cursor++;
                         continue;
                     }
 
                     int tCursor = cursor;
-                    Lexer.Token tCurrent = tokens.ElementAt(tCursor);
+                    SrtLexer.Token tCurrent = tokens.ElementAt(tCursor);
                     string body = "";
 
                     // Keep going until we see a space
-                    while (tCurrent.type != Lexer.TokenType.Space && tCurrent.type != Lexer.TokenType.Unknown)
+                    while (tCurrent.type != TokenType.Space && tCurrent.type != TokenType.Unknown)
                     {
                         body = $"{body}{tCurrent.value}";
                         tCursor++;
@@ -230,7 +199,7 @@ namespace DecentM.Subtitles.Srt
                     if (body == "-->")
                     {
                         // node kind 3 == TimestampArrow
-                        Node node = new Node(NodeKind.TimestampArrow, body);
+                        Node<NodeKind> node = new Node<NodeKind>(NodeKind.TimestampArrow, body);
                         nodes.Add(node);
 
                         cursor = tCursor;
@@ -238,7 +207,7 @@ namespace DecentM.Subtitles.Srt
                     // If we didn't, advance the cursor by one and add an unknown node
                     else
                     {
-                        Node unknownNode = new Node(NodeKind.Unknown, $"Cannot parse arrow: {current.value}");
+                        Node<NodeKind> unknownNode = new Node<NodeKind>(NodeKind.Unknown, $"Cannot parse arrow: {current.value}");
                         nodes.Add(unknownNode);
                         cursor++;
                     }
@@ -254,7 +223,7 @@ namespace DecentM.Subtitles.Srt
                 {
                     // Go until we see an int
                     // token type 2 == int
-                    if (current.type != Lexer.TokenType.Number)
+                    if (current.type != TokenType.Number)
                     {
                         cursor++;
                         continue;
@@ -268,14 +237,14 @@ namespace DecentM.Subtitles.Srt
                     }
                     catch (ArgumentException ex)
                     {
-                        Node unknownNode = new Node(NodeKind.Unknown, ex.Message);
+                        Node<NodeKind> unknownNode = new Node<NodeKind>(NodeKind.Unknown, ex.Message);
                         nodes.Add(unknownNode);
                         mode = NodeKind.TimestampArrow;
                         continue;
                     }
 
                     // node kind 4 == TimestampEnd
-                    Node node = new Node(NodeKind.TimestampEnd, timestampMillis);
+                    Node<NodeKind> node = new Node<NodeKind>(NodeKind.TimestampEnd, timestampMillis);
                     nodes.Add(node);
 
                     // Skip the timestamp + a space
@@ -293,7 +262,7 @@ namespace DecentM.Subtitles.Srt
                     string textContents = "";
 
                     // Skip the first newline
-                    if (current.type == Lexer.TokenType.Newline)
+                    if (current.type == TokenType.Newline)
                     {
                         cursor++;
                         continue;
@@ -308,12 +277,12 @@ namespace DecentM.Subtitles.Srt
                             break;
                         }
 
-                        Lexer.Token tCurrent = tokens.ElementAt(tCursor);
+                        SrtLexer.Token tCurrent = tokens.ElementAt(tCursor);
 
                         // If we've seen two consecutive newlines, it's the end of the text contents part,
                         // and we need to return to expecting the next subtitle screen
                         // tokenType 7 == newline
-                        if (tCurrent.type == Lexer.TokenType.Newline)
+                        if (tCurrent.type == TokenType.Newline)
                         {
                             consecutiveNewlines++;
                         }
@@ -328,11 +297,11 @@ namespace DecentM.Subtitles.Srt
 
                     if (textContents == "")
                     {
-                        Node unknownNode = new Node(NodeKind.Unknown, $"Cannot parse text contents in token {tCursor} because the parsed value is empty");
+                        Node<NodeKind> unknownNode = new Node<NodeKind>(NodeKind.Unknown, $"Cannot parse text contents in token {tCursor} because the parsed value is empty");
                         nodes.Add(unknownNode);
                     } else
                     {
-                        Node node = new Node(NodeKind.TextContents, textContents);
+                        Node<NodeKind> node = new Node<NodeKind>(NodeKind.TextContents, textContents);
                         nodes.Add(node);
                     }
 
@@ -347,7 +316,7 @@ namespace DecentM.Subtitles.Srt
                 cursor++;
             }
 
-            return new Ast(nodes);
+            return new Ast<NodeKind>(NodeKind.SubtitleParserAst, nodes);
         }
     }
 }

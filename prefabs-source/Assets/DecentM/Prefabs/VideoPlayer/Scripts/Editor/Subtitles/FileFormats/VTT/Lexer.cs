@@ -5,50 +5,26 @@ using System;
 
 namespace DecentM.Subtitles.Vtt
 {
-    public class Lexer
+    public enum TokenType
     {
-        public enum TokenType
-        {
-            Unknown,
-            Char,
-            Number,
-            Hyphen,
-            SidewaysCaret,
-            Colon,
-            Comma,
-            Newline,
-            Space,
-            WEBVTTHeader,
-            Note,
-            DoubleNewline,
-            Style,
-        }
+        Unknown,
+        Char,
+        Number,
+        Hyphen,
+        SidewaysCaret,
+        Colon,
+        Comma,
+        Newline,
+        Space,
+        WEBVTTHeader,
+        Note,
+        DoubleNewline,
+        Style,
+    }
 
-        public struct Token
-        {
-            public Token(TokenType type, string value)
-            {
-                this.type = type;
-                this.value = value;
-            }
-
-            public Token(TokenType type, int value)
-            {
-                this.type = type;
-                this.value = value;
-            }
-
-            public Token(TokenType type, object value)
-            {
-                this.type = type;
-                this.value = value;
-            }
-
-            public readonly TokenType type;
-            public readonly object value;
-        }
-
-        public List<Token> Lex(string text)
+    public class VttLexer : Lexer<TokenType>
+    {
+        public override List<Token> Lex(string text)
         {
             int cursor = 0;
             List<Token> tokens = new List<Token>();

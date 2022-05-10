@@ -1,62 +1,39 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+using DecentM.TextProcessing;
 
 namespace DecentM.Subtitles.Srt
 {
-    public class Transformer
+    public class SrtTransformer : Transformer<NodeKind>
     {
-        public List<SubtitleScreen> ToSubtitleScreens(Parser.Ast ast)
+        public SrtTransformer(Ast<NodeKind> ast)
         {
-            List<SubtitleScreen> screens = new List<SubtitleScreen>();
-
-            int index = 0;
-            int timestampStart = 0;
-            int timestampEnd = 0;
-            string text = "";
-
-            for (int i = 0; i < ast.nodes.Count; i++)
-            {
-                Parser.Node node = ast.nodes.ElementAtOrDefault(i);
-
-                if (object.Equals(node, null))
-                {
-                    continue;
-                }
-
-                if (node.kind == Parser.NodeKind.ScreenIndex)
-                {
-                    int.TryParse((string)node.value, out index);
-                }
-
-                if (node.kind == Parser.NodeKind.TimestampStart)
-                {
-                    timestampStart = (int)node.value;
-                }
-
-                if (node.kind == Parser.NodeKind.TimestampEnd)
-                {
-                    timestampEnd = (int)node.value;
-                }
-
-                if (node.kind == Parser.NodeKind.TextContents)
-                {
-                    text = (string)node.value;
-
-                    SubtitleScreen screen = new SubtitleScreen(index, timestampStart, timestampEnd, text);
-
-                    screens.Add(screen);
-                }
-            }
-
-            return screens;
+            this.input = ast;
         }
 
-        public List<Instruction> ToInstructions(Parser.Ast ast)
+        public override Transformer<NodeKind> LigaturiseArabicText()
         {
-            List<SubtitleScreen> screens = this.ToSubtitleScreens(ast);
+            Ast<NodeKind> newAst = new Ast<NodeKind>(NodeKind.SubtitleParserAst);
 
-            return Instruction.FromScreens(screens);
+            foreach (Node<NodeKind> node in this.input.nodes)
+            {
+                Node<NodeKind> newNode = node;
+
+                if (node.kind == NodeKind.TextContents)
+                {
+                    newNode = new Node<NodeKind>(node.kind, ArabicText.ConvertLigatures((string)node.value));
+                }
+
+                newAst.nodes.Add(newNode);
+            }
+
+            this.input = newAst;
+
+            return this;
         }
     }
 }
