@@ -166,13 +166,18 @@ namespace DecentM.VideoPlayer.Plugins
 
         #region Outputs
 
+        protected override void _Start()
+        {
+            this.OnSubtitleLanguageOptionsChange(new string[0]);
+        }
+
         private string currentLanguage = string.Empty;
 
         public void OnSubtitleSelected()
         {
             string selected = (string)this.subtitlesDropdown.GetValue();
             this.currentLanguage = selected;
-            this.events.OnSubtitleLanguageRequested(selected);
+            this.ToggleSubtitles(true);
         }
 
         private bool subtitlesOn = false;
@@ -180,6 +185,11 @@ namespace DecentM.VideoPlayer.Plugins
         public void OnToggleSubtitles()
         {
             bool newState = !this.subtitlesOn;
+            this.ToggleSubtitles(newState);
+        }
+
+        private void ToggleSubtitles(bool newState)
+        {
             this.subtitlesToggleButtonIcon.color = newState ? Color.black : Color.white;
             this.subtitlesToggleButtonImage.color = newState ? Color.white : new Color(0, 0, 0, 0);
             this.events.OnSubtitleLanguageRequested(newState ? this.currentLanguage : string.Empty);
@@ -192,6 +202,7 @@ namespace DecentM.VideoPlayer.Plugins
         {
             this.subtitlesDropdown.SetListener(this, "OnSubtitleSelected");
             this.subtitlesDropdown.SetOptions(newOptions);
+            this.subtitlesDropdown.animator.SetBool("DropdownOpen", false);
 
             if (newOptions.Length == 0)
             {
@@ -199,19 +210,23 @@ namespace DecentM.VideoPlayer.Plugins
                 this.subtitlesButtonImage.color = new Color(0, 0, 0, 0);
                 this.subtitlesButtonLabel.color = Color.white;
                 this.subtitlesButtonIcon.color = Color.white;
-                this.subtitlesButtonIcon.sprite = this.subtitlesUnavailable;
+                this.subtitlesToggleButtonIcon.sprite = this.subtitlesUnavailable;
+                this.subtitlesToggleButton.interactable = false;
+                this.subtitlesDropdown.button.interactable = false;
             } else
             {
                 this.subtitlesButton.interactable = true;
                 this.subtitlesButtonImage.color = Color.white;
                 this.subtitlesButtonLabel.color = Color.black;
                 this.subtitlesButtonIcon.color = Color.black;
-                this.subtitlesButtonIcon.sprite = this.subtitlesAvailable;
+                this.subtitlesToggleButtonIcon.sprite = this.subtitlesAvailable;
+                this.subtitlesToggleButton.interactable = true;
+                this.subtitlesDropdown.button.interactable = this.subtitlesOn;
             }
 
             if (!this.subtitlesOn) return;
 
-            // Automatically re-select the current language after the video was changed, so the player doesn't have to
+            // Automatically re-select the current language after the video was changed, so the user doesn't have to
             // look for their language every time the video changes
             foreach (string option in newOptions)
             {
@@ -279,6 +294,7 @@ namespace DecentM.VideoPlayer.Plugins
             this.isLoading = true;
             this.status.text = "Waiting for video player...";
             this.RenderScreen(0);
+            this.OnSubtitleLanguageOptionsChange(new string[0]);
         }
 
         protected override void OnLoadBegin()

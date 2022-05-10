@@ -27,6 +27,11 @@ namespace DecentM.VideoPlayer.Plugins
             this.Reset();
         }
 
+        protected override void OnLoadApproved(VRCUrl url)
+        {
+            this.Reset();
+        }
+
         private string GetLanguageFromFilename(string filename)
         {
             string[] parts = filename.Split('.');
@@ -45,19 +50,18 @@ namespace DecentM.VideoPlayer.Plugins
                 langs[i] = this.GetLanguageFromFilename(subtitles[i].name);
             }
 
-            this.Reset();
             this.events.OnSubtitleLanguageOptionsChange(langs);
         }
 
         protected override void OnSubtitleLanguageRequested(string language)
         {
-            this.events.OnSubtitleClear();
-
             if (string.IsNullOrEmpty(language))
             {
                 this.Reset();
                 return;
             }
+
+            this.events.OnSubtitleClear();
 
             for (int i = 0; i < currentSubtitles.Length; i++)
             {
