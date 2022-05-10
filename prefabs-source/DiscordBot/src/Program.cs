@@ -1,12 +1,8 @@
 ﻿using Discord;
 using Discord.WebSocket;
-using Discord.Commands;
-using DecentM.Subtitles;
 using System.Text;
-using System.IO;
 using Sentry;
 using Config.Net;
-using System;
 
 namespace DecentM.Subtitles.DiscordBot
 {
@@ -34,14 +30,14 @@ namespace DecentM.Subtitles.DiscordBot
         public static Task Main(string[] args) => new Program().MainAsync();
 
         private DiscordSocketClient client = new DiscordSocketClient();
-        private Compiler compiler = new Compiler();
+        // private Compiler compiler = new SubtitleCompiler();
         private HttpClient http = new HttpClient();
 
         public async Task MainAsync()
         {
             using (SentrySdk.Init(o =>
             {
-                o.Dsn = this.botConfig.SentryDsn;
+                o.Dsn = botConfig.SentryDsn;
                 // When configuring for the first time, to see what the SDK is doing:
                 o.Debug = false;
                 // Set traces_sample_rate to 1.0 to capture 100% of transactions for performance monitoring.
@@ -49,13 +45,13 @@ namespace DecentM.Subtitles.DiscordBot
                 o.TracesSampleRate = 1.0;
             }))
             {
-                this.client.Log += this.Log;
-                this.client.MessageReceived += this.OnMessage;
-                this.client.Ready += this.OnClientReady;
-                this.client.SlashCommandExecuted += this.OnSlashCommand;
+                client.Log += Log;
+                client.MessageReceived += OnMessage;
+                client.Ready += OnClientReady;
+                client.SlashCommandExecuted += OnSlashCommand;
 
-                await this.client.LoginAsync(TokenType.Bot, this.botConfig.DiscordToken);
-                await this.client.StartAsync();
+                await client.LoginAsync(TokenType.Bot, botConfig.DiscordToken);
+                await client.StartAsync();
 
                 await Task.Delay(-1);
             }
@@ -73,12 +69,12 @@ namespace DecentM.Subtitles.DiscordBot
             switch (command.Data.Name)
             {
                 case "help":
-                    await this.HelpCommand(command);
+                    await HelpCommand(command);
                     break;
 
                 // We should only hit this default branch if we have a programming error as commands are created at startup
                 default:
-                    await command.RespondAsync($"I don't know a {command.Data.Name} command. This is an issue with me.");
+                    await command.RespondAsync($"I don't know a {command.Data.Name} command.");
                     break;
             }
         }
@@ -97,7 +93,7 @@ namespace DecentM.Subtitles.DiscordBot
         {
             try
             {
-                await this.client.CreateGlobalApplicationCommandAsync(Commands.HelpCommand.Build());
+                await client.CreateGlobalApplicationCommandAsync(Commands.HelpCommand.Build());
             }
             catch (Exception ex)
             {
@@ -117,7 +113,7 @@ namespace DecentM.Subtitles.DiscordBot
             }
 
             // Reject messages that mention us but aren't DMs
-            if (msg.MentionedUsers.Any(u => u.Id == this.client.CurrentUser.Id) && msg.Channel.GetType() != typeof(Discord.WebSocket.SocketDMChannel))
+            if (msg.MentionedUsers.Any(u => u.Id == client.CurrentUser.Id) && msg.Channel.GetType() != typeof(SocketDMChannel))
             {
                 await msg.AddReactionAsync(EmojiIcon.rightArrow);
                 await msg.Channel.SendMessageAsync("Please DM me to prevent clogging this channel!");
@@ -125,7 +121,7 @@ namespace DecentM.Subtitles.DiscordBot
             }
 
             // Ignore messages that don't mention us and aren't a DM
-            if (msg.Channel.GetType() != typeof(Discord.WebSocket.SocketDMChannel))
+            if (msg.Channel.GetType() != typeof(SocketDMChannel))
             {
                 return;
             }
@@ -175,8 +171,8 @@ namespace DecentM.Subtitles.DiscordBot
             try
             {
                 // Download the attachment from Discord servers
-                string file = await this.http.GetStringAsync(attachment.Url);
-                Compiler.CompilationResult result = this.compiler.Compile(file, Path.GetExtension(attachment.Filename));
+                string file = await http.GetStringAsync(attachment.Url);
+                Compiler.CompilationResult result = SubtitleCompiler.Compile(file, Path.GetExtension(attachment.Filename));
 
                 // In theory this will never happen as the output is an empty string by default
                 if (result.output == null)

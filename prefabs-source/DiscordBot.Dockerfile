@@ -7,9 +7,9 @@ COPY ./DiscordBot/*.csproj ./
 RUN dotnet restore
 
 # Copy everything else and build
-COPY ./DiscordBot/*.cs ./
-COPY ./DiscordBot/Source ./
-COPY ./Assets/DecentM/Scripts/SubtitleParser ../Assets/DecentM/Scripts/SubtitleParser
+COPY ./DiscordBot/src/* ./
+COPY ./Assets/DecentM/Prefabs/VideoPlayer/Scripts/Editor/Subtitles/* ./
+COPY ./Assets/DecentM/Editor/TextProcessing.cs ./Assets/DecentM/Editor/ArabicLigaturesPreprocessor.cs ./
 
 RUN dotnet publish -c Release -o out
 
