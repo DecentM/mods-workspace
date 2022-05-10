@@ -48,7 +48,6 @@ namespace DecentM.VideoPlayer.Plugins
 
         protected virtual void OnRemotePlayerLoaded(int[] loadedPlayers) { }
 
-        protected virtual void OnUIVisibilityChange(bool visible) { }
         protected virtual void OnSubtitleRender(string text) { }
         protected virtual void OnSubtitleClear() { }
         protected virtual void OnSubtitleLanguageOptionsChange(string[] newOptions) { }
@@ -271,13 +270,6 @@ namespace DecentM.VideoPlayer.Plugins
                     {
                         int[] loadedPlayers = (int[])data[0];
                         this.OnRemotePlayerLoaded(loadedPlayers);
-                        return;
-                    }
-
-                case VideoPlayerEvent.OnUIVisibilityChange:
-                    {
-                        bool visible = (bool)data[0];
-                        this.OnUIVisibilityChange(visible);
                         return;
                     }
 

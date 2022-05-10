@@ -62,7 +62,6 @@ namespace DecentM.VideoPlayer.Plugins
         protected override void OnOwnershipSecurityChanged(bool locked) { this.Log(nameof(OnOwnershipSecurityChanged), locked.ToString()); }
         protected override void OnScreenTextureChange() { this.Log(nameof(OnScreenTextureChange)); }
         protected override void OnRemotePlayerLoaded(int[] loadedPlayers) { this.Log(nameof(OnRemotePlayerLoaded), loadedPlayers.Length.ToString()); }
-        protected override void OnUIVisibilityChange(bool visible) { this.Log(nameof(OnUIVisibilityChange), visible.ToString()); }
         protected override void OnAutoRetryAllPlayersFailed() { this.Log(nameof(OnAutoRetryAllPlayersFailed)); }
         protected override void OnMetadataChange(string title, string uploader, string siteName, int viewCount, int likeCount, string resolution, int fps, string description, string duration, TextAsset[] subtitles) { this.Log(nameof(OnMetadataChange), viewCount.ToString(), likeCount.ToString(), fps.ToString(), duration, subtitles.Length.ToString());  }
         protected override void OnSubtitleRender(string text) { this.Log(nameof(OnSubtitleRender), $"({text.Length} long string)"); }

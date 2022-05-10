@@ -50,6 +50,7 @@ namespace DecentM.VideoPlayer.Plugins
 
         [Space]
         public TextMeshProUGUI info;
+        public Animator loadingAnimator;
 
         [Space]
         public TextMeshProUGUI titleSlot;
@@ -142,8 +143,26 @@ namespace DecentM.VideoPlayer.Plugins
             return false;
         }
 
+        private bool uiRunning = false;
+
+        public override void OnPlayerTriggerEnter(VRCPlayerApi player)
+        {
+            if (player != Networking.LocalPlayer) return;
+
+            this.uiRunning = true;
+        }
+
+        public override void OnPlayerTriggerExit(VRCPlayerApi player)
+        {
+            if (player != Networking.LocalPlayer) return;
+
+            this.uiRunning = false;
+        }
+
         private void FixedUpdate()
         {
+            if (!this.uiRunning) return;
+
             this.elapsed += Time.fixedUnscaledDeltaTime;
             if (this.elapsed < this.raycastIntervalSeconds) return;
             this.elapsed = 0;
@@ -159,7 +178,6 @@ namespace DecentM.VideoPlayer.Plugins
             if (uiShown == shown) return;
 
             this.animator.SetBool("ShowControls", uiShown);
-            this.events.OnUIVisibilityChange(uiShown);
         }
 
         #endregion
@@ -265,6 +283,7 @@ namespace DecentM.VideoPlayer.Plugins
 
         protected override void OnAutoRetry(int attempt)
         {
+            this.loadingAnimator.SetBool("Loading", true);
             this.status.text = $"Retrying (attempt {attempt + 1})...";
         }
 
@@ -290,6 +309,7 @@ namespace DecentM.VideoPlayer.Plugins
 
         protected override void OnLoadApproved(VRCUrl url)
         {
+            this.loadingAnimator.SetBool("Loading", true);
             this.ClearMetadata();
             this.isLoading = true;
             this.status.text = "Waiting for video player...";
@@ -299,11 +319,13 @@ namespace DecentM.VideoPlayer.Plugins
 
         protected override void OnLoadBegin()
         {
+            this.loadingAnimator.SetBool("Loading", true);
             this.status.text = "Loading...";
         }
 
         protected override void OnLoadBegin(VRCUrl url)
         {
+            this.loadingAnimator.SetBool("Loading", true);
             this.status.text = "Loading...";
             this.urlInput.SetUrl(url);
         }
@@ -408,6 +430,7 @@ namespace DecentM.VideoPlayer.Plugins
             this.isLoading = false;
             this.status.text = this.selfOwned ? "Loaded, press play to begin" : "Loaded, waiting for owner to start";
             this.RenderScreen(duration);
+            this.loadingAnimator.SetBool("Loading", false);
         }
 
         protected override void OnLoadError(VideoError videoError)
@@ -424,6 +447,8 @@ namespace DecentM.VideoPlayer.Plugins
 
                 // We don't care about the rest of the errors as they're handled by the AutoRetry plugin
             }
+
+            this.loadingAnimator.SetBool("Loading", false);
         }
 
         private Sprite GetBrightnessSprite(float alpha)
@@ -488,6 +513,7 @@ namespace DecentM.VideoPlayer.Plugins
             this.status.text = "Stopped";
             this.RenderScreen(this.system.GetDuration());
             this.urlInput.SetUrl(this.emptyUrl);
+            this.loadingAnimator.SetBool("Loading", false);
         }
 
         protected override void OnSubtitleRender(string text)

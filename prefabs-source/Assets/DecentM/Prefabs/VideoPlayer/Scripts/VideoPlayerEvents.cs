@@ -45,8 +45,6 @@ namespace DecentM.VideoPlayer
 
         OnRemotePlayerLoaded,
 
-        OnUIVisibilityChange,
-
         OnMetadataChange,
         OnSubtitleLanguageOptionsChange,
         OnSubtitleLanguageRequested,
@@ -201,11 +199,6 @@ namespace DecentM.VideoPlayer
         public void OnRemotePlayerLoaded(int[] loadedPlayers)
         {
             this.BroadcastEvent(VideoPlayerEvent.OnRemotePlayerLoaded, loadedPlayers);
-        }
-
-        public void OnUIVisibilityChange(bool visible)
-        {
-            this.BroadcastEvent(VideoPlayerEvent.OnUIVisibilityChange, visible);
         }
 
         public void OnMetadataChange(

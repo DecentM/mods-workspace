@@ -31,17 +31,6 @@ namespace DecentM.VideoPlayer
                 autoPlay.enabled = this.Toggle("Autoplay", autoPlay.enabled);
             }
 
-            LoadingOverlayPlugin loading = ui.GetComponentInChildren<LoadingOverlayPlugin>();
-            if (loading != null)
-            {
-                this.HelpBox(MessageType.Info, loading.enabled
-                    ? "While the video is loading, an animation will play to let people know about it"
-                    : "A black screen will be visible while videos are loading"
-                );
-
-                loading.enabled = this.Toggle("Loading screen", loading.enabled);
-            }
-
             UIPlugin uiPlugin = ui.GetComponentInChildren<UIPlugin>();
             if (uiPlugin != null)
             {
