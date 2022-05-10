@@ -87,10 +87,10 @@ MonoBehaviour:
     value: -0.3
   maxLuminance:
     overrideState: 1
-    value: 0.3
+    value: 0.6
   keyValue:
     overrideState: 1
-    value: 0.7
+    value: 0.52
   eyeAdaptation:
     overrideState: 1
     value: 0

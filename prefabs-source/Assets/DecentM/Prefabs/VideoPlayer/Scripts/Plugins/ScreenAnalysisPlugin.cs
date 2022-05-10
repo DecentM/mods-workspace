@@ -70,7 +70,7 @@ namespace DecentM.VideoPlayer.Plugins
             return (rgDiff + rbDiff + gbDiff) / 3;
         }
 
-        private Color GetMostVibrant(Color[] colours)
+        public Color GetMostVibrant(Color[] colours)
         {
             Color result = Color.black;
 
@@ -88,7 +88,7 @@ namespace DecentM.VideoPlayer.Plugins
             return (colour.r + colour.g + colour.b) / 3;
         }
 
-        private Color GetBrightest(Color[] colours)
+        public Color GetBrightest(Color[] colours)
         {
             Color result = Color.black;
 
@@ -101,7 +101,7 @@ namespace DecentM.VideoPlayer.Plugins
             return result;
         }
 
-        private Color GetAverage(Color[] colors)
+        public Color GetAverage(Color[] colors)
         {
             if (colors == null || colors.Length == 0) return Color.black;
 
