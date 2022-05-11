@@ -85,18 +85,6 @@ namespace DecentM.Subtitles
 
     public abstract class IntermediateCompiler
     {
-        public struct IntermediateCompilationResult
-        {
-            public Ast output;
-            public List<Node> errors;
-
-            public IntermediateCompilationResult(List<Node> errors, Ast output)
-            {
-                this.output = output;
-                this.errors = errors;
-            }
-        }
-
-        public abstract IntermediateCompilationResult CompileIntermediate(string input);
+        public abstract Ast CompileIntermediate(string input);
     }
 }

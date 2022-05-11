@@ -69,10 +69,10 @@ namespace DecentM.Subtitles
 
             List<CompilationResultError> errors = new List<CompilationResultError>();
 
-            IntermediateCompiler.IntermediateCompilationResult result = compiler.CompileIntermediate(sanitisedSource);
-            errors.AddRange(result.errors.Select(err => new CompilationResultError(err.value.ToString())));
+            Ast result = compiler.CompileIntermediate(sanitisedSource);
+            errors.AddRange(result.nodes.Where(node => node.kind == NodeKind.Unknown).Select(err => new CompilationResultError(err.value.ToString())));
 
-            Ast newAst = transformer.Transform(result.output);
+            Ast newAst = transformer.Transform(result);
             Writer writer = null;
 
             switch (outFileType)
