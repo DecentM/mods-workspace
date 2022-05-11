@@ -8,9 +8,7 @@ namespace DecentM.Subtitles.Srt
 {
     public class SrtCompiler : IntermediateCompiler<NodeKind>
     {
-        private Transformer<NodeKind> transformer;
-
-        public override IntermediateCompilationResult CompileIntermediate(string input)
+        public override IntermediateCompilationResult CompileIntermediate(string input, Transformer<NodeKind> transformer)
         {
             SrtLexer lexer = new SrtLexer();
             SrtParser parser = new SrtParser();
@@ -18,9 +16,7 @@ namespace DecentM.Subtitles.Srt
             List<SrtLexer.Token> tokens = lexer.Lex(input);
             Ast<NodeKind> ast = parser.Parse(tokens);
 
-            ast = new SrtTransformer(ast)
-                .LigaturiseArabicText()
-                .Transform();
+            ast = transformer.Transform(ast);
 
             List<Node<NodeKind>> errors = SrtParser.GetUnknowns(ast);
 
@@ -29,9 +25,10 @@ namespace DecentM.Subtitles.Srt
 
         public override CompilationResult Compile(string input)
         {
+            SrtTransformer transformer = new SrtTransformer();
             SrtWriter writer = new SrtWriter();
             List<CompilationResultError> errors = new List<CompilationResultError>();
-            IntermediateCompilationResult intermediateResult = this.CompileIntermediate(input);
+            IntermediateCompilationResult intermediateResult = this.CompileIntermediate(input, transformer);
 
             foreach (Node<NodeKind> unknownNode in intermediateResult.errors)
             {

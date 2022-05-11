@@ -10,16 +10,11 @@ namespace DecentM.Subtitles.Vtt
 {
     public class VttTransformer : Transformer<NodeKind>
     {
-        public VttTransformer(Ast<NodeKind> ast)
-        {
-            this.input = ast;
-        }
-
-        public override Transformer<NodeKind> LigaturiseArabicText()
+        private Ast<NodeKind> ArabicTextLigaturiserTransform(Ast<NodeKind> input)
         {
             Ast<NodeKind> newAst = new Ast<NodeKind>(NodeKind.VttAst);
 
-            foreach (Node<NodeKind> node in this.input.nodes)
+            foreach (Node<NodeKind> node in input.nodes)
             {
                 Node<NodeKind> newNode = node;
 
@@ -31,7 +26,12 @@ namespace DecentM.Subtitles.Vtt
                 newAst.nodes.Add(newNode);
             }
 
-            this.input = newAst;
+            return newAst;
+        }
+
+        public override Transformer<NodeKind> LigaturiseArabicText()
+        {
+            this.AddTransform(this.ArabicTextLigaturiserTransform);
 
             return this;
         }

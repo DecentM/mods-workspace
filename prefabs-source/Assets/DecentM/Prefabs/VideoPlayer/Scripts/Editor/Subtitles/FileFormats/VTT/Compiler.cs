@@ -8,7 +8,7 @@ namespace DecentM.Subtitles.Vtt
 {
     public class VttCompiler : IntermediateCompiler<NodeKind>
     {
-        public override IntermediateCompilationResult CompileIntermediate(string input)
+        public override IntermediateCompilationResult CompileIntermediate(string input, Transformer<NodeKind> transformer)
         {
             VttLexer lexer = new VttLexer();
             VttParser parser = new VttParser();
@@ -16,9 +16,7 @@ namespace DecentM.Subtitles.Vtt
             List<VttLexer.Token> tokens = lexer.Lex(input);
             Ast<NodeKind> ast = parser.Parse(tokens);
 
-            ast = new VttTransformer(ast)
-                .LigaturiseArabicText()
-                .Transform();
+            ast = transformer.Transform(ast);
 
             List<Node<NodeKind>> errors = VttParser.GetUnknowns(ast);
 
@@ -27,9 +25,9 @@ namespace DecentM.Subtitles.Vtt
 
         public override CompilationResult Compile(string input)
         {
+            Transformer<NodeKind> transformer = new VttTransformer();
             VttWriter writer = new VttWriter();
-
-            IntermediateCompilationResult intermediateResult = this.CompileIntermediate(input);
+            IntermediateCompilationResult intermediateResult = this.CompileIntermediate(input, transformer);
             List<CompilationResultError> errors = new List<CompilationResultError>();
 
             foreach (Node<NodeKind> unknownNode in intermediateResult.errors)

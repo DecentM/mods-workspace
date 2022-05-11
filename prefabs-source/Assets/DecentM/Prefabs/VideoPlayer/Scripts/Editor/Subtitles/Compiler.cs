@@ -21,7 +21,7 @@ namespace DecentM.Subtitles
 
         public static bool IsSupported(string filetype)
         {
-            return SubtitleFormat.SupportedFormats.Any(f => f == filetype);
+            return SupportedFormats.Any(f => f == filetype);
         }
 
         public static string[] SupportedFormats = { Srt, Vtt };

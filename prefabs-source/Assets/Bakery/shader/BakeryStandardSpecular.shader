@@ -1,8 +1,16 @@
-﻿Shader "Bakery/Standard Specular"
+Shader "Bakery/Standard Specular"
 {
     Properties
 	{
-		_Color("Color", Color) = (1,1,1,1)
+		
+        // Merlin Patch
+        _RNM0("RNM0", 2D) = "black" {}
+        _RNM1("RNM1", 2D) = "black" {}
+        _RNM2("RNM2", 2D) = "black" {}
+        [Enum(DEFAULT, 0, VERTEXLM, 1, RNM, 2, SH, 3)] bakeryLightmapMode("Bakery Lightmap Mode", Int) = 0
+        // End Merlin patch
+
+        _Color("Color", Color) = (1,1,1,1)
 		_MainTex("Albedo", 2D) = "white" {}
 
 		_Cutoff("Alpha Cutoff", Range(0.0, 1.0)) = 0.5

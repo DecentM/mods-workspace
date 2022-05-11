@@ -98,13 +98,27 @@ namespace DecentM.Subtitles
 
     public abstract class Transformer<NodeKind>
     {
-        protected Ast<NodeKind> input;
+        protected List<Func<Ast<NodeKind>, Ast<NodeKind>>> transforms = new List<Func<Ast<NodeKind>, Ast<NodeKind>>>();
 
         public abstract Transformer<NodeKind> LigaturiseArabicText();
 
-        public Ast<NodeKind> Transform()
+        protected void AddTransform(Func<Ast<NodeKind>, Ast<NodeKind>> transform)
         {
-            return this.input;
+            if (transforms.Contains(transform)) return;
+
+            transforms.Add(transform);
+        }
+
+        public Ast<NodeKind> Transform(Ast<NodeKind> input)
+        {
+            Ast<NodeKind> result = input;
+
+            foreach (Func<Ast<NodeKind>, Ast<NodeKind>> transformer in transforms)
+            {
+                result = transformer(result);
+            }
+
+            return result;
         }
     }
 
@@ -154,6 +168,6 @@ namespace DecentM.Subtitles
             }
         }
 
-        public abstract IntermediateCompilationResult CompileIntermediate(string input);
+        public abstract IntermediateCompilationResult CompileIntermediate(string input, Transformer<NodeKind> transformer);
     }
 }

@@ -1,7 +1,15 @@
-﻿Shader "Bakery/Standard"
+Shader "Bakery/Standard"
 {
     Properties
     {
+        
+        // Merlin Patch
+        _RNM0("RNM0", 2D) = "black" {}
+        _RNM1("RNM1", 2D) = "black" {}
+        _RNM2("RNM2", 2D) = "black" {}
+        [Enum(DEFAULT, 0, VERTEXLM, 1, RNM, 2, SH, 3)] bakeryLightmapMode("Bakery Lightmap Mode", Int) = 0
+        // End Merlin patch
+
         _Color("Color", Color) = (1,1,1,1)
         _MainTex("Albedo", 2D) = "white" {}
 
