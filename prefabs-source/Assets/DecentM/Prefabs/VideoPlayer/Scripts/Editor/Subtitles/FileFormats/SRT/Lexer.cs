@@ -24,7 +24,7 @@ namespace DecentM.Subtitles.Srt
             int cursor = 0;
             List<Token> tokens = new List<Token>();
 
-            void AddToken(TokenType type)
+            void AddToken(TokenType type, object value)
             {
                 Token token = new Token(type);
                 tokens.Add(token);
@@ -38,45 +38,45 @@ namespace DecentM.Subtitles.Srt
                 // Hyphens are in arrows, and text
                 if (current == '-')
                 {
-                    AddToken(TokenType.Hyphen);
+                    AddToken(TokenType.Hyphen, "-");
                     continue;
                 }
 
                 // Sideways carets are in arrows, and text
                 if (current == '>')
                 {
-                    AddToken(TokenType.SidewaysCaret);
+                    AddToken(TokenType.SidewaysCaret, ">");
                     continue;
                 }
 
                 if (current == ':')
                 {
-                    AddToken(TokenType.Colon);
+                    AddToken(TokenType.Colon, ":");
                     continue;
                 }
 
                 if (current == ',')
                 {
-                    AddToken(TokenType.Comma);
+                    AddToken(TokenType.Comma, ",");
                     continue;
                 }
 
                 if (current == '\n')
                 {
-                    AddToken(TokenType.Newline);
+                    AddToken(TokenType.Newline, "\n");
                     continue;
                 }
 
                 if (current == ' ')
                 {
-                    AddToken(TokenType.Space);
+                    AddToken(TokenType.Space, " ");
                     continue;
                 }
 
                 int intValue;
                 if (int.TryParse(current.ToString(), out intValue) == true)
                 {
-                    Token intToken = new Token(TokenType.Char, intValue);
+                    Token intToken = new Token(TokenType.Number, intValue);
                     tokens.Add(intToken);
                     cursor++;
                     continue;
