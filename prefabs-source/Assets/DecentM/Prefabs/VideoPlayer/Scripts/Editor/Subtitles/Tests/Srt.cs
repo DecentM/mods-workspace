@@ -11,7 +11,7 @@ namespace DecentM.Subtitles.Tests
         [Test]
         public void EmptyInputProducesEmptyResult()
         {
-            var result = SubtitleCompiler.Compile("", SubtitleFormat.Srt, SubtitleFormat.VrcSI);
+            var result = SubtitleCompiler.Compile("", SubtitleFormat.Srt, SubtitleFormat.Vsi);
 
             Assert.IsEmpty(result.output);
             Assert.Zero(result.errors.Count);

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 using DecentM.TextProcessing;
 
+using DecentM.Subtitles.Vsi;
 using DecentM.Subtitles.Srt;
 using DecentM.Subtitles.Vtt;
 
@@ -11,7 +12,8 @@ namespace DecentM.Subtitles
 {
     public static class SubtitleFormat
     {
-        public const string VrcSI = ".vrcsi";
+        // .vsi is our own custom format
+        public const string Vsi = ".vsi";
 
         public const string Srt = ".srt";
         public const string Ass = ".ass";
@@ -32,11 +34,11 @@ namespace DecentM.Subtitles
 
     public static class SubtitleCompiler
     {
-        public static Compiler.CompilationResult Compile(string source, string fileType, string outFileType)
+        public static Compiler.CompilationResult Compile(string source, string inFileType, string outFileType)
         {
-            if (!SubtitleFormat.IsSupported(fileType))
+            if (!SubtitleFormat.IsSupported(inFileType))
             {
-                throw new NotImplementedException($"File type {fileType} is not supported. Use a different file, or convert your subtitles to a supported format: {String.Join(", ", SubtitleFormat.SupportedFormats)}");
+                throw new NotImplementedException($"File type {inFileType} is not supported. Use a different file, or convert your subtitles to a supported format: {String.Join(", ", SubtitleFormat.SupportedFormats)}");
             }
 
             string sanitisedSource = new TextProcessor(source)
@@ -46,7 +48,7 @@ namespace DecentM.Subtitles
 
             IntermediateCompiler compiler = null;
 
-            switch (fileType)
+            switch (inFileType)
             {
                 case SubtitleFormat.Srt:
                     compiler = new SrtCompiler();
@@ -60,7 +62,7 @@ namespace DecentM.Subtitles
                     break;
             }
 
-            if (compiler == null) throw new NotImplementedException($"No compiler exists for this format: {fileType}");
+            if (compiler == null) throw new NotImplementedException($"No compiler exists for this format: {inFileType}");
 
             Transformer transformer = new Transformer()
                 .LigaturiseArabicText();
@@ -81,6 +83,10 @@ namespace DecentM.Subtitles
 
                 case SubtitleFormat.Vtt:
                     writer = new VttWriter(newAst);
+                    break;
+
+                case SubtitleFormat.Vsi:
+                    writer = new VsiWriter(newAst);
                     break;
 
                 default:

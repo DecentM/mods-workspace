@@ -34,6 +34,8 @@ namespace DecentM.TextProcessing
 
         public static string ConvertLigatures(string input)
         {
+            if (input == null || !IsArabic(input)) return input;
+
             string outStr = "";
             using (StringReader reader = new StringReader(input))
             {
