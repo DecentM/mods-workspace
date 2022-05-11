@@ -28,6 +28,12 @@ namespace DecentM.Subtitles
                 this.value = value;
             }
 
+            public Token(TokenType type)
+            {
+                this.type = type;
+                this.value = null;
+            }
+
             public readonly TokenType type;
             public readonly object value;
         }

@@ -29,9 +29,16 @@ namespace DecentM.Subtitles.Vtt
             int cursor = 0;
             List<Token> tokens = new List<Token>();
 
-            void AddToken(TokenType type, object value)
+            void AddTokenWithValue(TokenType type, object value)
             {
                 Token token = new Token(type, value);
+                tokens.Add(token);
+                cursor++;
+            }
+
+            void AddToken(TokenType type)
+            {
+                Token token = new Token(type);
                 tokens.Add(token);
                 cursor++;
             }
@@ -90,8 +97,8 @@ namespace DecentM.Subtitles.Vtt
                 if (FindWord(noteWord))
                 {
                     string noteValue = ConsumeUntilDoubleNewline(noteWord.Length);
-                    AddToken(TokenType.Note, noteValue);
-                    AddToken(TokenType.DoubleNewline, "\n\n");
+                    AddTokenWithValue(TokenType.Note, noteValue);
+                    AddToken(TokenType.DoubleNewline);
                     cursor--;
                     continue;
                 }
@@ -100,8 +107,8 @@ namespace DecentM.Subtitles.Vtt
                 if (FindWord(webvttWord))
                 {
                     string value = ConsumeUntilDoubleNewline(webvttWord.Length);
-                    AddToken(TokenType.WEBVTTHeader, value);
-                    AddToken(TokenType.DoubleNewline, "\n\n");
+                    AddTokenWithValue(TokenType.WEBVTTHeader, value);
+                    AddToken(TokenType.DoubleNewline);
                     cursor--;
                     continue;
                 }
@@ -110,8 +117,8 @@ namespace DecentM.Subtitles.Vtt
                 if (FindWord(styleWord))
                 {
                     string value = ConsumeUntilDoubleNewline(styleWord.Length);
-                    AddToken(TokenType.Style, value);
-                    AddToken(TokenType.DoubleNewline, "\n\n");
+                    AddTokenWithValue(TokenType.Style, value);
+                    AddToken(TokenType.DoubleNewline);
                     cursor--;
                     continue;
                 }
@@ -119,26 +126,26 @@ namespace DecentM.Subtitles.Vtt
                 // Hyphens are in arrows, and text
                 if (current == '-')
                 {
-                    AddToken(TokenType.Hyphen, "-");
+                    AddToken(TokenType.Hyphen);
                     continue;
                 }
 
                 // Sideways carets are in arrows, and text
                 if (current == '>')
                 {
-                    AddToken(TokenType.SidewaysCaret, ">");
+                    AddToken(TokenType.SidewaysCaret);
                     continue;
                 }
 
                 if (current == ':')
                 {
-                    AddToken(TokenType.Colon, ":");
+                    AddToken(TokenType.Colon);
                     continue;
                 }
 
                 if (current == ',')
                 {
-                    AddToken(TokenType.Comma, ",");
+                    AddToken(TokenType.Comma);
                     continue;
                 }
 
@@ -146,43 +153,36 @@ namespace DecentM.Subtitles.Vtt
                 {
                     if (CheckNextCharIsNewline())
                     {
-                        AddToken(TokenType.DoubleNewline, "\n\n");
+                        AddToken(TokenType.DoubleNewline);
                         continue;
                     }
                     
                     if (!CheckPreviousCharIsNewline())
                     {
-                        AddToken(TokenType.Newline, "\n");
+                        AddToken(TokenType.Newline);
                         continue;
                     }
 
-                    cursor++;
-                    continue;
-                }
-
-                if (current == '\r')
-                {
-                    // Autoconvert CRLF to LF by ignoring \r
                     cursor++;
                     continue;
                 }
 
                 if (current == ' ')
                 {
-                    AddToken(TokenType.Space, " ");
+                    AddToken(TokenType.Space);
                     continue;
                 }
 
                 int intValue;
                 if (int.TryParse(current.ToString(), out intValue) == true)
                 {
-                    AddToken(TokenType.Number, intValue);
+                    AddTokenWithValue(TokenType.Number, intValue);
                     continue;
                 }
 
                 // If we're down here, that means we have a char, so we just treat it as part of
                 // the subtitle text
-                AddToken(TokenType.Char, current.ToString());
+                AddTokenWithValue(TokenType.Char, current.ToString());
                 continue;
             }
 
