@@ -172,7 +172,7 @@ namespace DecentM.Subtitles.DiscordBot
             {
                 // Download the attachment from Discord servers
                 string file = await http.GetStringAsync(attachment.Url);
-                Compiler.CompilationResult result = SubtitleCompiler.Compile(file, Path.GetExtension(attachment.Filename));
+                Compiler.CompilationResult result = SubtitleCompiler.Compile(file, Path.GetExtension(attachment.Filename), SubtitleFormat.Vsi);
 
                 // In theory this will never happen as the output is an empty string by default
                 if (result.output == null)
