@@ -74,6 +74,13 @@ namespace DecentM.Subtitles
 
             return instructions;
         }
+
+        public List<Instruction> FromAst(Ast ast)
+        {
+            List<SubtitleScreen> screens = SubtitleScreen.FromAst(ast);
+
+            return FromScreens(screens);
+        }
     }
 
     // Intermediate struct used while converting screens to instructions
@@ -109,6 +116,48 @@ namespace DecentM.Subtitles
         public SubtitleScreenInstructions ToInstructions()
         {
             return new SubtitleScreenInstructions(this);
+        }
+
+        public static List<SubtitleScreen> FromAst(Ast ast)
+        {
+            List<SubtitleScreen> screens = new List<SubtitleScreen>();
+
+            int index = 0;
+            int timestampStart = 0;
+            int timestampEnd = 0;
+            string text = "";
+
+            for (int i = 0; i < ast.nodes.Count; i++)
+            {
+                Node node = ast.nodes.ElementAtOrDefault(i);
+
+                if (object.Equals(node, null))
+                {
+                    continue;
+                }
+
+                if (node.kind == NodeKind.TimestampStart)
+                {
+                    timestampStart = (int)node.value;
+                }
+
+                if (node.kind == NodeKind.TimestampEnd)
+                {
+                    timestampEnd = (int)node.value;
+                }
+
+                if (node.kind == NodeKind.TextContents)
+                {
+                    text = (string)node.value;
+                    index++;
+
+                    SubtitleScreen screen = new SubtitleScreen(index, timestampStart, timestampEnd, text);
+
+                    screens.Add(screen);
+                }
+            }
+
+            return screens;
         }
     }
 }

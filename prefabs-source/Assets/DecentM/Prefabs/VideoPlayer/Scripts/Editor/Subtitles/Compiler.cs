@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Collections.Generic;
 
 using DecentM.TextProcessing;
 
@@ -10,6 +11,8 @@ namespace DecentM.Subtitles
 {
     public static class SubtitleFormat
     {
+        public const string VrcSI = ".vrcsi";
+
         public const string Srt = ".srt";
         public const string Ass = ".ass";
         public const string Usf = ".usf";
@@ -29,7 +32,7 @@ namespace DecentM.Subtitles
 
     public static class SubtitleCompiler
     {
-        public static Compiler.CompilationResult Compile(string source, string fileType)
+        public static Compiler.CompilationResult Compile(string source, string fileType, string outFileType)
         {
             if (!SubtitleFormat.IsSupported(fileType))
             {
@@ -41,7 +44,7 @@ namespace DecentM.Subtitles
                 .ResolveHTMLEntities()
                 .GetResult();
 
-            Compiler compiler = null;
+            IntermediateCompiler compiler = null;
 
             switch (fileType)
             {
@@ -49,20 +52,46 @@ namespace DecentM.Subtitles
                     compiler = new SrtCompiler();
                     break;
 
-                case SubtitleFormat.Ass:
-                case SubtitleFormat.Usf:
                 case SubtitleFormat.Vtt:
                     compiler = new VttCompiler();
                     break;
-                case SubtitleFormat.Stl:
-                case SubtitleFormat.Sub:
-                case SubtitleFormat.Ssa:
-                case SubtitleFormat.Ttxt:
+
                 default:
                     break;
             }
 
-            return compiler.Compile(sanitisedSource);
+            if (compiler == null) throw new NotImplementedException($"No compiler exists for this format: {fileType}");
+
+            Transformer transformer = new Transformer()
+                .LigaturiseArabicText();
+
+            List<CompilationResultError> errors = new List<CompilationResultError>();
+
+            IntermediateCompiler.IntermediateCompilationResult result = compiler.CompileIntermediate(sanitisedSource);
+            errors.AddRange(result.errors.Select(err => new CompilationResultError(err.value.ToString())));
+
+            Ast newAst = transformer.Transform(result.output);
+            Writer writer = null;
+
+            switch (outFileType)
+            {
+                case SubtitleFormat.Srt:
+                    writer = new SrtWriter(newAst);
+                    break;
+
+                case SubtitleFormat.Vtt:
+                    writer = new VttWriter(newAst);
+                    break;
+
+                default:
+                    break;
+            }
+
+            if (writer == null) throw new NotImplementedException($"No writer exists for this format: {outFileType}");
+
+            string output = writer.ToString();
+
+            return new Compiler.CompilationResult(errors, output);
         }
     }
 }

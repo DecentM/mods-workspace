@@ -4,20 +4,9 @@ using System.Linq;
 
 namespace DecentM.Subtitles.Srt
 {
-    public enum NodeKind
+    public class SrtParser : Parser<SrtLexer, TokenType>
     {
-        Unknown,
-        SubtitleParserAst,
-        ScreenIndex,
-        TimestampStart,
-        TimestampArrow,
-        TimestampEnd,
-        TextContents,
-    }
-
-    public class SrtParser : Parser<NodeKind, SrtLexer, TokenType>
-    {
-        public static List<Node<NodeKind>> GetUnknowns(Ast<NodeKind> ast)
+        public static List<Node> GetUnknowns(Ast ast)
         {
             return ast.nodes.Where(node => node.kind == NodeKind.Unknown).ToList();
         }
@@ -74,9 +63,9 @@ namespace DecentM.Subtitles.Srt
             return millis + (seconds * 1000) + (minutes * 60 * 1000) + (hours * 60 * 60 * 1000);
         }
 
-        public override Ast<NodeKind> Parse(List<SrtLexer.Token> tokens)
+        public override Ast Parse(List<SrtLexer.Token> tokens)
         {
-            List<Node<NodeKind>> nodes = new List<Node<NodeKind>>();
+            List<Node> nodes = new List<Node>();
             int cursor = 0;
 
             // Mode is just a NodeKind, to check where we currently are
@@ -118,11 +107,11 @@ namespace DecentM.Subtitles.Srt
 
                     if (indexValue == "")
                     {
-                        Node<NodeKind> unknownNode = new Node<NodeKind>(NodeKind.Unknown, $"Cannot parse screen index in token {tCursor} because the parsed value is empty");
+                        Node unknownNode = new Node(NodeKind.Unknown, $"Cannot parse screen index in token {tCursor} because the parsed value is empty");
                         nodes.Add(unknownNode);
                     } else
                     {
-                        Node<NodeKind> node = new Node<NodeKind>(NodeKind.ScreenIndex, indexValue);
+                        Node node = new Node(NodeKind.ScreenIndex, indexValue);
                         nodes.Add(node);
                     }
 
@@ -150,14 +139,14 @@ namespace DecentM.Subtitles.Srt
                         timestampMillis = this.ParseTimestampFromIndex(tokens, cursor);
                     } catch (ArgumentException ex)
                     {
-                        Node<NodeKind> unknownNode = new Node<NodeKind>(NodeKind.Unknown, ex.Message);
+                        Node unknownNode = new Node(NodeKind.Unknown, ex.Message);
                         nodes.Add(unknownNode);
                         mode = NodeKind.TimestampArrow;
                         continue;
                     }
 
                     // node kind 2 == TimestampStart
-                    Node<NodeKind> node = new Node<NodeKind>(NodeKind.TimestampStart, timestampMillis);
+                    Node node = new Node(NodeKind.TimestampStart, timestampMillis);
                     nodes.Add(node);
 
                     // Skip the timestamp + a space
@@ -198,7 +187,7 @@ namespace DecentM.Subtitles.Srt
                     if (body == "-->")
                     {
                         // node kind 3 == TimestampArrow
-                        Node<NodeKind> node = new Node<NodeKind>(NodeKind.TimestampArrow, body);
+                        Node node = new Node(NodeKind.TimestampArrow, body);
                         nodes.Add(node);
 
                         cursor = tCursor;
@@ -206,7 +195,7 @@ namespace DecentM.Subtitles.Srt
                     // If we didn't, advance the cursor by one and add an unknown node
                     else
                     {
-                        Node<NodeKind> unknownNode = new Node<NodeKind>(NodeKind.Unknown, $"Cannot parse arrow: {current.value}");
+                        Node unknownNode = new Node(NodeKind.Unknown, $"Cannot parse arrow: {current.value}");
                         nodes.Add(unknownNode);
                         cursor++;
                     }
@@ -236,14 +225,14 @@ namespace DecentM.Subtitles.Srt
                     }
                     catch (ArgumentException ex)
                     {
-                        Node<NodeKind> unknownNode = new Node<NodeKind>(NodeKind.Unknown, ex.Message);
+                        Node unknownNode = new Node(NodeKind.Unknown, ex.Message);
                         nodes.Add(unknownNode);
                         mode = NodeKind.TimestampArrow;
                         continue;
                     }
 
                     // node kind 4 == TimestampEnd
-                    Node<NodeKind> node = new Node<NodeKind>(NodeKind.TimestampEnd, timestampMillis);
+                    Node node = new Node(NodeKind.TimestampEnd, timestampMillis);
                     nodes.Add(node);
 
                     // Skip the timestamp + a space
@@ -296,11 +285,11 @@ namespace DecentM.Subtitles.Srt
 
                     if (textContents == "")
                     {
-                        Node<NodeKind> unknownNode = new Node<NodeKind>(NodeKind.Unknown, $"Cannot parse text contents in token {tCursor} because the parsed value is empty");
+                        Node unknownNode = new Node(NodeKind.Unknown, $"Cannot parse text contents in token {tCursor} because the parsed value is empty");
                         nodes.Add(unknownNode);
                     } else
                     {
-                        Node<NodeKind> node = new Node<NodeKind>(NodeKind.TextContents, textContents);
+                        Node node = new Node(NodeKind.TextContents, textContents);
                         nodes.Add(node);
                     }
 
@@ -315,7 +304,7 @@ namespace DecentM.Subtitles.Srt
                 cursor++;
             }
 
-            return new Ast<NodeKind>(NodeKind.SubtitleParserAst, nodes);
+            return new Ast(NodeKind.Root, nodes);
         }
     }
 }

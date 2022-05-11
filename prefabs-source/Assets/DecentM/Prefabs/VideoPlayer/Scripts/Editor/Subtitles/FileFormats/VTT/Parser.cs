@@ -4,26 +4,8 @@ using System.Linq;
 
 namespace DecentM.Subtitles.Vtt
 {
-    public enum NodeKind
+    public class VttParser : Parser<VttLexer, TokenType>
     {
-        Unknown,
-        VttAst,
-        Header,
-        Note,
-        TimestampStart,
-        TimestampArrow,
-        TimestampEnd,
-        TextContents,
-        Parameters,
-    }
-
-    public class VttParser : Parser<NodeKind, VttLexer, TokenType>
-    {
-        public static List<Node<NodeKind>> GetUnknowns(Ast<NodeKind> ast)
-        {
-            return ast.nodes.Where(node => node.kind == NodeKind.Unknown).ToList();
-        }
-
         private int ParseTimestampFromIndex(List<VttLexer.Token> tokens, int index)
         {
             int tCursor = index;
@@ -76,9 +58,9 @@ namespace DecentM.Subtitles.Vtt
             return millis + (seconds * 1000) + (minutes * 60 * 1000) + (hours * 60 * 60 * 1000);
         }
 
-        public override Ast<NodeKind> Parse(List<VttLexer.Token> tokens)
+        public override Ast Parse(List<VttLexer.Token> tokens)
         {
-            List<Node<NodeKind>> nodes = new List<Node<NodeKind>>();
+            List<Node> nodes = new List<Node>();
             int cursor = 0;
 
             // Mode is just a NodeKind, to check where we currently are
@@ -144,14 +126,14 @@ namespace DecentM.Subtitles.Vtt
                         timestampMillis = this.ParseTimestampFromIndex(tokens, cursor);
                     } catch (ArgumentException ex)
                     {
-                        Node<NodeKind> unknownNode = new Node<NodeKind>(NodeKind.Unknown, ex.Message);
+                        Node unknownNode = new Node(NodeKind.Unknown, ex.Message);
                         nodes.Add(unknownNode);
                         mode = NodeKind.TimestampArrow;
                         continue;
                     }
 
                     // node kind 2 == TimestampStart
-                    Node<NodeKind> node = new Node<NodeKind>(NodeKind.TimestampStart, timestampMillis);
+                    Node node = new Node(NodeKind.TimestampStart, timestampMillis);
                     nodes.Add(node);
 
                     // Skip the timestamp + a space
@@ -192,7 +174,7 @@ namespace DecentM.Subtitles.Vtt
                     if (body == "-->")
                     {
                         // node kind 3 == TimestampArrow
-                        Node<NodeKind> node = new Node<NodeKind>(NodeKind.TimestampArrow, body);
+                        Node node = new Node(NodeKind.TimestampArrow, body);
                         nodes.Add(node);
 
                         cursor = tCursor;
@@ -200,7 +182,7 @@ namespace DecentM.Subtitles.Vtt
                     // If we didn't, advance the cursor by one and add an unknown node
                     else
                     {
-                        Node<NodeKind> unknownNode = new Node<NodeKind>(NodeKind.Unknown, $"Cannot parse arrow: {current.value}");
+                        Node unknownNode = new Node(NodeKind.Unknown, $"Cannot parse arrow: {current.value}");
                         nodes.Add(unknownNode);
                         cursor++;
                     }
@@ -230,24 +212,24 @@ namespace DecentM.Subtitles.Vtt
                     }
                     catch (ArgumentException ex)
                     {
-                        Node<NodeKind> unknownNode = new Node<NodeKind>(NodeKind.Unknown, ex.Message);
+                        Node unknownNode = new Node(NodeKind.Unknown, ex.Message);
                         nodes.Add(unknownNode);
                         mode = NodeKind.TimestampArrow;
                         continue;
                     }
 
                     // node kind 4 == TimestampEnd
-                    Node<NodeKind> node = new Node<NodeKind>(NodeKind.TimestampEnd, timestampMillis);
+                    Node node = new Node(NodeKind.TimestampEnd, timestampMillis);
                     nodes.Add(node);
 
                     // Skip the timestamp + a space
                     cursor = cursor + 12;
                     // Move to expecting the arrow
-                    mode = NodeKind.Parameters;
+                    mode = NodeKind.TextParameters;
                     continue;
                 }
 
-                if (mode == NodeKind.Parameters)
+                if (mode == NodeKind.TextParameters)
                 {
                     if (current.type == TokenType.Newline)
                     {
@@ -278,7 +260,7 @@ namespace DecentM.Subtitles.Vtt
                         parameters.Add(name, value);
                     }
 
-                    Node<NodeKind> node = new Node<NodeKind>(NodeKind.Parameters, parameters);
+                    Node node = new Node(NodeKind.TextParameters, parameters);
                     nodes.Add(node);
                     mode = NodeKind.TextContents;
                     continue;
@@ -299,11 +281,11 @@ namespace DecentM.Subtitles.Vtt
 
                     if (textContents == "")
                     {
-                        Node<NodeKind> unknownNode = new Node<NodeKind>(NodeKind.Unknown, $"Cannot parse text contents in token {tCursor} because the parsed value is empty");
+                        Node unknownNode = new Node(NodeKind.Unknown, $"Cannot parse text contents in token {tCursor} because the parsed value is empty");
                         nodes.Add(unknownNode);
                     } else
                     {
-                        Node<NodeKind> node = new Node<NodeKind>(NodeKind.TextContents, textContents);
+                        Node node = new Node(NodeKind.TextContents, textContents);
                         nodes.Add(node);
                     }
 
@@ -318,7 +300,7 @@ namespace DecentM.Subtitles.Vtt
                 cursor++;
             }
 
-            return new Ast<NodeKind>(NodeKind.VttAst, nodes);
+            return new Ast(NodeKind.Root, nodes);
         }
     }
 }

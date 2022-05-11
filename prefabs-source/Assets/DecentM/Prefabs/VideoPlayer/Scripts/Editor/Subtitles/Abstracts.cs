@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using DecentM.TextProcessing;
 
 namespace DecentM.Subtitles
 {
@@ -35,96 +33,21 @@ namespace DecentM.Subtitles
         }
     }
 
-    public struct Node<NodeKind>
+    public abstract class Parser<LexerType, TokenType> where LexerType : Lexer<TokenType>
     {
-        public Node(NodeKind kind, string value)
-        {
-            this.kind = kind;
-            this.value = value;
-        }
-
-        public Node(NodeKind kind, int value)
-        {
-            this.kind = kind;
-            this.value = value;
-        }
-
-        public Node(NodeKind kind, Dictionary<string, string> value)
-        {
-            this.kind = kind;
-            this.value = value;
-        }
-
-        public readonly NodeKind kind;
-        public readonly object value;
+        public abstract Ast Parse(List<Lexer<TokenType>.Token> tokens);
     }
 
-    public struct Ast<NodeKind>
+    public abstract class Writer
     {
-        public Ast(NodeKind kind, List<Node<NodeKind>> nodes)
+        protected Ast ast;
+
+        public Writer(Ast ast)
         {
-            this.nodes = nodes;
-            this.kind = kind;
+            this.ast = ast;
         }
 
-        public Ast(NodeKind kind)
-        {
-            this.nodes = new List<Node<NodeKind>>();
-            this.kind = kind;
-        }
-
-        public readonly NodeKind kind;
-        public readonly List<Node<NodeKind>> nodes;
-
-        public string Dump()
-        {
-            string result = "";
-
-            foreach (Node<NodeKind> node in this.nodes)
-            {
-                result += $"{node.kind.ToString()}\n";
-                result += $"{node.value.ToString()}\n";
-                result += $"==================\n";
-            }
-
-            return result;
-        }
-    }
-
-    public abstract class Parser<NodeKind, LexerType, TokenType> where LexerType : Lexer<TokenType>
-    {
-        public abstract Ast<NodeKind> Parse(List<Lexer<TokenType>.Token> tokens);
-    }
-
-    public abstract class Transformer<NodeKind>
-    {
-        protected List<Func<Ast<NodeKind>, Ast<NodeKind>>> transforms = new List<Func<Ast<NodeKind>, Ast<NodeKind>>>();
-
-        public abstract Transformer<NodeKind> LigaturiseArabicText();
-
-        protected void AddTransform(Func<Ast<NodeKind>, Ast<NodeKind>> transform)
-        {
-            if (transforms.Contains(transform)) return;
-
-            transforms.Add(transform);
-        }
-
-        public Ast<NodeKind> Transform(Ast<NodeKind> input)
-        {
-            Ast<NodeKind> result = input;
-
-            foreach (Func<Ast<NodeKind>, Ast<NodeKind>> transformer in transforms)
-            {
-                result = transformer(result);
-            }
-
-            return result;
-        }
-    }
-
-    public abstract class Writer<ParserType, NodeKind, LexerType, TokenType> where LexerType : Lexer<TokenType> where ParserType : Parser<NodeKind, LexerType, TokenType>
-    {
-        public abstract string ToString(Ast<NodeKind> ast);
+        public override abstract string ToString();
     }
 
     public struct CompilationResultError
@@ -151,23 +74,23 @@ namespace DecentM.Subtitles
             }
         }
 
-        public abstract CompilationResult Compile(string input);
+        public abstract CompilationResult Compile(string input, Transformer transformer);
     }
 
-    public abstract class IntermediateCompiler<NodeKind> : Compiler
+    public abstract class IntermediateCompiler
     {
         public struct IntermediateCompilationResult
         {
-            public Ast<NodeKind> output;
-            public List<Node<NodeKind>> errors;
+            public Ast output;
+            public List<Node> errors;
 
-            public IntermediateCompilationResult(List<Node<NodeKind>> errors, Ast<NodeKind> output)
+            public IntermediateCompilationResult(List<Node> errors, Ast output)
             {
                 this.output = output;
                 this.errors = errors;
             }
         }
 
-        public abstract IntermediateCompilationResult CompileIntermediate(string input, Transformer<NodeKind> transformer);
+        public abstract IntermediateCompilationResult CompileIntermediate(string input);
     }
 }
