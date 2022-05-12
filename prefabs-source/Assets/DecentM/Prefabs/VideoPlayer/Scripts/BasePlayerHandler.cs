@@ -31,7 +31,9 @@ namespace DecentM.VideoPlayer
         {
             if (this.player == null)
             {
-                Debug.LogError($"missing BaseVRCVideoPlayer on {this.name}, this video player will be broken");
+                Debug.LogError(
+                    $"missing BaseVRCVideoPlayer on {this.name}, this video player will be broken"
+                );
                 this.enabled = false;
                 return;
             }
@@ -47,7 +49,12 @@ namespace DecentM.VideoPlayer
 
         private void FixedUpdate()
         {
-            if (this.player == null || !this.player.IsPlaying || float.IsInfinity(this.player.GetDuration())) return;
+            if (
+                this.player == null
+                || !this.player.IsPlaying
+                || float.IsInfinity(this.player.GetDuration())
+            )
+                return;
 
             this.clock += Time.fixedDeltaTime;
 
@@ -147,7 +154,8 @@ namespace DecentM.VideoPlayer
 
         public bool IsPlaying()
         {
-            if (this.player == null) return false;
+            if (this.player == null)
+                return false;
 
             return this.player.IsPlaying;
         }

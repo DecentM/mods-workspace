@@ -93,7 +93,10 @@ namespace DecentM.Subtitles.Srt
 
                     if (timestampMillis == -1)
                     {
-                        Node errorNode = new Node(NodeKind.Unknown, $"Failed to parse start timestamp: {timestamp}");
+                        Node errorNode = new Node(
+                            NodeKind.Unknown,
+                            $"Failed to parse start timestamp: {timestamp}"
+                        );
                         nodes.Add(errorNode);
 
                         // Don't change the mode, if we're expecting a start timestamp, we should go until we find one.
@@ -142,7 +145,10 @@ namespace DecentM.Subtitles.Srt
 
                     if (timestampMillis == -1)
                     {
-                        Node errorNode = new Node(NodeKind.Unknown, $"Failed to parse end timestamp: {timestamp}");
+                        Node errorNode = new Node(
+                            NodeKind.Unknown,
+                            $"Failed to parse end timestamp: {timestamp}"
+                        );
                         nodes.Add(errorNode);
 
                         // Don't change the mode, if we're expecting a start timestamp, we should go until we find one.
@@ -172,7 +178,7 @@ namespace DecentM.Subtitles.Srt
                         cursor++;
                         continue;
                     }
-                    
+
                     // Two consecutive newlines mean the end of the current screen
                     while (consecutiveNewlines < 2)
                     {
@@ -202,9 +208,13 @@ namespace DecentM.Subtitles.Srt
 
                     if (textContents == "")
                     {
-                        Node unknownNode = new Node(NodeKind.Unknown, $"Cannot parse text contents in token {tCursor} because the parsed value is empty");
+                        Node unknownNode = new Node(
+                            NodeKind.Unknown,
+                            $"Cannot parse text contents in token {tCursor} because the parsed value is empty"
+                        );
                         nodes.Add(unknownNode);
-                    } else
+                    }
+                    else
                     {
                         while (textContents.EndsWith("\n"))
                         {

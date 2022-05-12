@@ -30,7 +30,8 @@ public class NotificationSystem : UdonSharpBehaviour
 
     public void SendNotification(Sprite image, string text)
     {
-        if (this.queueTexts == null) this.queueTexts = new string[0];
+        if (this.queueTexts == null)
+            this.queueTexts = new string[0];
 
         string[] tempStr = new string[this.queueTexts.Length + 1];
         Array.Copy(this.queueTexts, 0, tempStr, 0, this.queueTexts.Length);
@@ -56,7 +57,8 @@ public class NotificationSystem : UdonSharpBehaviour
 
     private void AnimationTrackingFixedUpdate()
     {
-        if (this.animationRunning) this.animationClock++;
+        if (this.animationRunning)
+            this.animationClock++;
 
         // If at least 5 seconds passed since we started the animation, mark it as finished, so that the
         // next notification is displayed from the queue.
@@ -78,7 +80,8 @@ public class NotificationSystem : UdonSharpBehaviour
         this.clock++;
 
         // Only check notifications twice every second
-        if (this.clock < this.ticksPerSecond / 2) return;
+        if (this.clock < this.ticksPerSecond / 2)
+            return;
 
         this.clock = 0;
         this.CheckNotifications();
@@ -86,7 +89,8 @@ public class NotificationSystem : UdonSharpBehaviour
 
     private void CheckNotifications()
     {
-        if (this.queueTexts.Length == 0 || this.animationRunning) return;
+        if (this.queueTexts.Length == 0 || this.animationRunning)
+            return;
 
         // If the queue length is not zero, it means we have at least one notification pending
         this.animationRunning = true;

@@ -18,7 +18,7 @@ namespace DecentM.Keyboard
 
         public override void OnInspectorGUI()
         {
-            this.keyboard = (KeyboardSystem) target;
+            this.keyboard = (KeyboardSystem)target;
             UdonSharpBehaviour events = this.keyboard.GetComponentInChildren<KeyboardEvents>();
 
             if (this.Button("Link all keyboard event listeners"))
@@ -28,17 +28,28 @@ namespace DecentM.Keyboard
 
             KeyboardLayout[] layouts = this.keyboard.GetComponentsInChildren<KeyboardLayout>();
 
-            Rect position = GUILayoutUtility.GetRect(GUIContent.none, GUIStyle.none, GUILayout.Height(17.5f));
+            Rect position = GUILayoutUtility.GetRect(
+                GUIContent.none,
+                GUIStyle.none,
+                GUILayout.Height(17.5f)
+            );
             List<EnumerableOption> options = new List<EnumerableOption>();
 
             foreach (KeyboardLayout layout in layouts)
             {
-                string layoutName = (string) this.GetUdonVariable(layout, "layoutName");
-                if (layoutName == null) continue;
+                string layoutName = (string)this.GetUdonVariable(layout, "layoutName");
+                if (layoutName == null)
+                    continue;
                 options.Add(new EnumerableOption(layoutName, layoutName));
             }
 
-            this.Dropdown(position, "Default layout", options, this.GetUdonVariable(this.keyboard, "defaultLayout"), this.OnDefaultLayoutChange);
+            this.Dropdown(
+                position,
+                "Default layout",
+                options,
+                this.GetUdonVariable(this.keyboard, "defaultLayout"),
+                this.OnDefaultLayoutChange
+            );
         }
     }
 }

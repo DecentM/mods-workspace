@@ -8,9 +8,13 @@ public class AnimatorSync : UdonSharpBehaviour
     [Header("References")]
     [Tooltip("The animator component to control")]
     public Animator animator;
+
     [Tooltip("Which animation to target in the controller")]
     public int layerIndex = 0;
-    [Tooltip("Float between 0 and 1 - We will offset the animation by this much to count for network latency")]
+
+    [Tooltip(
+        "Float between 0 and 1 - We will offset the animation by this much to count for network latency"
+    )]
     public float latencyOffset = 0.01f;
 
     private float lastFiredHandshake = 0f;
@@ -29,7 +33,7 @@ public class AnimatorSync : UdonSharpBehaviour
 
     // Called from a network event from the master, only non-masters run this, as the master is
     // the source of truth.
-    public void OnHandshake ()
+    public void OnHandshake()
     {
         VRCPlayerApi localPlayer = Networking.LocalPlayer;
 
@@ -49,13 +53,16 @@ public class AnimatorSync : UdonSharpBehaviour
     }
 
     // Private function called only by the master
-    private void DoHandshake ()
+    private void DoHandshake()
     {
         AnimatorStateInfo info = this.animator.GetCurrentAnimatorStateInfo(this.layerIndex);
         this.lastFiredHandshake = info.normalizedTime;
 
         this.handshakeFiredThisLoop = true;
-        SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, nameof(this.OnHandshake));
+        SendCustomNetworkEvent(
+            VRC.Udon.Common.Interfaces.NetworkEventTarget.All,
+            nameof(this.OnHandshake)
+        );
     }
 
     private void FixedUpdate()

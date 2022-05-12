@@ -148,7 +148,8 @@ namespace DecentM.Metrics
     {
         public static Dictionary<Metric, List<MetricValue>> GenerateMatrix(MatrixInput input)
         {
-            Dictionary<Metric, List<MetricValue>> matrix = new Dictionary<Metric, List<MetricValue>>();
+            Dictionary<Metric, List<MetricValue>> matrix =
+                new Dictionary<Metric, List<MetricValue>>();
 
             List<MetricValue> heartbeatValues = new List<MetricValue>();
             heartbeatValues.Add(new BoolMetricValue("isMaster"));
@@ -166,26 +167,56 @@ namespace DecentM.Metrics
             matrix.Add(Metric.Instance, instanceValues);
 
             List<MetricValue> interactionValues = new List<MetricValue>();
-            interactionValues.Add(new StringMetricValue("name", IndividualTrackingPluginManager<InteractionsPlugin>.CollectInteractionNames().ToArray()));
+            interactionValues.Add(
+                new StringMetricValue(
+                    "name",
+                    IndividualTrackingPluginManager<InteractionsPlugin>
+                        .CollectInteractionNames()
+                        .ToArray()
+                )
+            );
             matrix.Add(Metric.Interaction, interactionValues);
 
             List<MetricValue> triggerValues = new List<MetricValue>();
-            triggerValues.Add(new StringMetricValue("name", IndividualTrackingPluginManager<TriggerVolumePlugin>.CollectInteractionNames().ToArray()));
+            triggerValues.Add(
+                new StringMetricValue(
+                    "name",
+                    IndividualTrackingPluginManager<TriggerVolumePlugin>
+                        .CollectInteractionNames()
+                        .ToArray()
+                )
+            );
             triggerValues.Add(new BoolMetricValue("state"));
             matrix.Add(Metric.Trigger, triggerValues);
 
             List<MetricValue> stationValues = new List<MetricValue>();
-            stationValues.Add(new StringMetricValue("name", IndividualTrackingPluginManager<StationPlugin>.CollectInteractionNames().ToArray()));
+            stationValues.Add(
+                new StringMetricValue(
+                    "name",
+                    IndividualTrackingPluginManager<StationPlugin>
+                        .CollectInteractionNames()
+                        .ToArray()
+                )
+            );
             stationValues.Add(new BoolMetricValue("state"));
             matrix.Add(Metric.Station, stationValues);
 
             List<MetricValue> pickupValues = new List<MetricValue>();
-            pickupValues.Add(new StringMetricValue("name", IndividualTrackingPluginManager<PickupPlugin>.CollectInteractionNames().ToArray()));
+            pickupValues.Add(
+                new StringMetricValue(
+                    "name",
+                    IndividualTrackingPluginManager<PickupPlugin>
+                        .CollectInteractionNames()
+                        .ToArray()
+                )
+            );
             pickupValues.Add(new BoolMetricValue("state"));
             matrix.Add(Metric.Pickup, pickupValues);
 
             List<MetricValue> performanceValues = new List<MetricValue>();
-            performanceValues.Add(new IntMetricValue("mode", (int[])Enum.GetValues(typeof(PerformanceGovernorMode))));
+            performanceValues.Add(
+                new IntMetricValue("mode", (int[])Enum.GetValues(typeof(PerformanceGovernorMode)))
+            );
             performanceValues.Add(new IntRangeMetricValue("fps", input.minFps, input.maxFps));
             matrix.Add(Metric.PerformanceModeChange, performanceValues);
 

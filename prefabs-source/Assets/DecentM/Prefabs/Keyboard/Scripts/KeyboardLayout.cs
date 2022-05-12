@@ -22,7 +22,8 @@ namespace DecentM.Keyboard
 
         private void Start()
         {
-            if (this.layoutName == "") this.layoutName = this.name;
+            if (this.layoutName == "")
+                this.layoutName = this.name;
 
             this.allKeys = this.GetComponentsInChildren<KeyboardKey>();
             this.AttachSelfToKeys();
@@ -36,9 +37,11 @@ namespace DecentM.Keyboard
             {
                 KeyboardKey[] keys = this.keysBySymbolIndex[i];
 
-                if (keys == null || keys.Length == 0) continue;
+                if (keys == null || keys.Length == 0)
+                    continue;
 
-                if (keys[0].primarySymbol == symbol) return i;
+                if (keys[0].primarySymbol == symbol)
+                    return i;
             }
 
             return -1;
@@ -63,7 +66,8 @@ namespace DecentM.Keyboard
 
                 KeyboardKey[] keys = this.keysBySymbolIndex[index];
 
-                if (keys == null) continue;
+                if (keys == null)
+                    continue;
 
                 // If the symbol already exists, add it to the existing index
                 KeyboardKey[] tmp = new KeyboardKey[keys.Length + 1];
@@ -77,7 +81,8 @@ namespace DecentM.Keyboard
 
         public KeyboardKey[] GetKeysBySymbolIndex(int index)
         {
-            if (index < 0 || index >= this.keysBySymbolIndex.Length) return null;
+            if (index < 0 || index >= this.keysBySymbolIndex.Length)
+                return null;
 
             return this.keysBySymbolIndex[index];
         }
@@ -88,8 +93,10 @@ namespace DecentM.Keyboard
             {
                 KeyboardKey[] keys = this.keysBySymbolIndex[i];
 
-                if (keys == null || keys.Length == 0) continue;
-                if (keys[0].primarySymbol == symbol) return i;
+                if (keys == null || keys.Length == 0)
+                    continue;
+                if (keys[0].primarySymbol == symbol)
+                    return i;
             }
 
             return -1;
@@ -128,8 +135,10 @@ namespace DecentM.Keyboard
 
         public void SetState(int modifier, bool state)
         {
-            if (state) this.AddModifier(modifier);
-            else this.RemoveModifier(modifier);
+            if (state)
+                this.AddModifier(modifier);
+            else
+                this.RemoveModifier(modifier);
         }
 
         private bool HasModifier(int state)
@@ -141,26 +150,66 @@ namespace DecentM.Keyboard
         {
             switch (key.primarySymbol)
             {
-                case "BACKSPACE": this.events.OnCommandClear(); break;
-                case "X": this.events.OnCommandClipboardCut(); break;
-                case "C": this.events.OnCommandClipboardCopy(); break;
-                case "V": this.events.OnCommandClipboardPaste(); break;
-                case "Z": this.events.OnCommandUndo(); break;
-                case "Y": this.events.OnCommandRedo(); break;
-                case "Q": this.events.OnCommandQuit(); break;
-                case "W": this.events.OnCommandCloseTab(); break;
-                case "R": this.events.OnCommandRefresh(); break;
-                case "O": this.events.OnCommandOpen(); break;
-                case "P": this.events.OnCommandPrint(); break;
-                case "A": this.events.OnCommandSelectAll(); break;
-                case "S": this.events.OnCommandSave(); break;
-                case "D": this.events.OnCommandDuplicate(); break;
-                case "F": this.events.OnCommandSearch(); break;
-                case "H": this.events.OnCommandHistory(); break;
-                case "N": this.events.OnCommandNew(); break;
-                case "M": this.events.OnCommandMap(); break;
-                case "SPACE": this.events.OnCommandQuickAction(); break;
-                case "TAB": this.events.OnCommandNext(); break;
+                case "BACKSPACE":
+                    this.events.OnCommandClear();
+                    break;
+                case "X":
+                    this.events.OnCommandClipboardCut();
+                    break;
+                case "C":
+                    this.events.OnCommandClipboardCopy();
+                    break;
+                case "V":
+                    this.events.OnCommandClipboardPaste();
+                    break;
+                case "Z":
+                    this.events.OnCommandUndo();
+                    break;
+                case "Y":
+                    this.events.OnCommandRedo();
+                    break;
+                case "Q":
+                    this.events.OnCommandQuit();
+                    break;
+                case "W":
+                    this.events.OnCommandCloseTab();
+                    break;
+                case "R":
+                    this.events.OnCommandRefresh();
+                    break;
+                case "O":
+                    this.events.OnCommandOpen();
+                    break;
+                case "P":
+                    this.events.OnCommandPrint();
+                    break;
+                case "A":
+                    this.events.OnCommandSelectAll();
+                    break;
+                case "S":
+                    this.events.OnCommandSave();
+                    break;
+                case "D":
+                    this.events.OnCommandDuplicate();
+                    break;
+                case "F":
+                    this.events.OnCommandSearch();
+                    break;
+                case "H":
+                    this.events.OnCommandHistory();
+                    break;
+                case "N":
+                    this.events.OnCommandNew();
+                    break;
+                case "M":
+                    this.events.OnCommandMap();
+                    break;
+                case "SPACE":
+                    this.events.OnCommandQuickAction();
+                    break;
+                case "TAB":
+                    this.events.OnCommandNext();
+                    break;
                 default:
                     break;
             }
@@ -179,28 +228,28 @@ namespace DecentM.Keyboard
             switch (key.primarySymbol)
             {
                 case "SHIFT":
-                    {
-                        bool newState = !this.HasModifier(this.shiftModifier);
-                        this.SetState(this.shiftModifier, newState);
-                        this.events.OnShiftStateChange(newState, this);
-                        break;
-                    }
+                {
+                    bool newState = !this.HasModifier(this.shiftModifier);
+                    this.SetState(this.shiftModifier, newState);
+                    this.events.OnShiftStateChange(newState, this);
+                    break;
+                }
 
                 case "CTRL":
-                    {
-                        bool newState = !this.HasModifier(this.ctrlModifier);
-                        this.SetState(this.ctrlModifier, newState);
-                        this.events.OnCtrlStateChange(newState, this);
-                        break;
-                    }
+                {
+                    bool newState = !this.HasModifier(this.ctrlModifier);
+                    this.SetState(this.ctrlModifier, newState);
+                    this.events.OnCtrlStateChange(newState, this);
+                    break;
+                }
 
                 case "ALTGR":
-                    {
-                        bool newState = !this.HasModifier(this.altGrModifier);
-                        this.SetState(this.altGrModifier, newState);
-                        this.events.OnAltGrStateChange(newState, this);
-                        break;
-                    }
+                {
+                    bool newState = !this.HasModifier(this.altGrModifier);
+                    this.SetState(this.altGrModifier, newState);
+                    this.events.OnAltGrStateChange(newState, this);
+                    break;
+                }
 
                 case "TAB":
                     this.events.OnSymbolEntry("\t");
@@ -225,9 +274,11 @@ namespace DecentM.Keyboard
                     if (this.HasModifier(this.shiftModifier))
                     {
                         // If the key has one symbol, shift means uppercase
-                        if (key.symbolCount == 1) symbol = key.primarySymbol.ToUpper();
+                        if (key.symbolCount == 1)
+                            symbol = key.primarySymbol.ToUpper();
                         // If it has two or more, shift means the secondary symbol
-                        else symbol = key.secondarySymbol;
+                        else
+                            symbol = key.secondarySymbol;
 
                         this.SetState(this.shiftModifier, false);
                         this.events.OnShiftStateChange(false, this);
@@ -242,7 +293,8 @@ namespace DecentM.Keyboard
                     }
 
                     // If there's no symbol to send, we ignore the keypress
-                    if (symbol == null || symbol == "") return;
+                    if (symbol == null || symbol == "")
+                        return;
 
                     this.events.OnSymbolEntry(symbol);
                     break;

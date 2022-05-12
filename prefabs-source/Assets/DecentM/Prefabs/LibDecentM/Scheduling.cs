@@ -1,5 +1,4 @@
-﻿
-using UdonSharp;
+﻿using UdonSharp;
 using UnityEngine;
 using VRC.SDKBase;
 using VRC.Udon;
@@ -19,9 +18,13 @@ namespace DecentM
         [Header("Internals")]
         [Tooltip("The list of components that are currently receiving events")]
         public Component[] secondSubscribers = new Component[0];
+
         [Tooltip("The current state of the internal clock used to count time")]
         public int clock = 0;
-        [Tooltip("Calculated from Unity's value, this shows how many times FixedUpdate events are sent per second")]
+
+        [Tooltip(
+            "Calculated from Unity's value, this shows how many times FixedUpdate events are sent per second"
+        )]
         public float fixedUpdateRate;
 
         private void Start()
@@ -75,12 +78,13 @@ namespace DecentM
             // Tell subscribers that a second has passed
             for (int i = 0; i < this.secondSubscribers.Length; i++)
             {
-                UdonBehaviour subscriber = (UdonBehaviour) this.secondSubscribers[i];
+                UdonBehaviour subscriber = (UdonBehaviour)this.secondSubscribers[i];
 
                 if (subscriber.enabled && subscriber.gameObject.activeSelf)
                 {
                     subscriber.SendCustomEvent(this.OnSecondPassedEvent);
-                } else if (this.cleanupInactive == true)
+                }
+                else if (this.cleanupInactive == true)
                 {
                     // Automatically unsubscribe a subscriber if it has been deactivated
                     this.OffEverySecond(subscriber);

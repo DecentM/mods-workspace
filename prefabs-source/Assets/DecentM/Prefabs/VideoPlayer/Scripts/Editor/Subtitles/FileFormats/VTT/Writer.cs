@@ -35,7 +35,13 @@ namespace DecentM.Subtitles.Vtt
 
                     int timestamp = (int)node.value;
                     TimeSpan t = TimeSpan.FromMilliseconds(timestamp);
-                    string stringTimestamp = string.Format("{0:D2}:{1:D2}:{2:D2}.{3:D3}", t.Hours, t.Minutes, t.Seconds, t.Milliseconds);
+                    string stringTimestamp = string.Format(
+                        "{0:D2}:{1:D2}:{2:D2}.{3:D3}",
+                        t.Hours,
+                        t.Minutes,
+                        t.Seconds,
+                        t.Milliseconds
+                    );
                     sb.Append($"{stringTimestamp} --> ");
                 }
 
@@ -43,7 +49,13 @@ namespace DecentM.Subtitles.Vtt
                 {
                     int timestamp = (int)node.value;
                     TimeSpan t = TimeSpan.FromMilliseconds(timestamp);
-                    string stringTimestamp = string.Format("{0:D2}:{1:D2}:{2:D2}.{3:D3}", t.Hours, t.Minutes, t.Seconds, t.Milliseconds);
+                    string stringTimestamp = string.Format(
+                        "{0:D2}:{1:D2}:{2:D2}.{3:D3}",
+                        t.Hours,
+                        t.Minutes,
+                        t.Seconds,
+                        t.Milliseconds
+                    );
                     sb.Append(stringTimestamp);
                     sb.Append('\n');
                 }

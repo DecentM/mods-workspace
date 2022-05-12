@@ -47,7 +47,8 @@ namespace DecentM.VideoPlayer.EditorTools
 
         public override bool OnBuildRequested(VRCSDKRequestedBuildType requestedBuildType)
         {
-            if (requestedBuildType != VRCSDKRequestedBuildType.Scene) return true;
+            if (requestedBuildType != VRCSDKRequestedBuildType.Scene)
+                return true;
 
             List<string> urls = this.GetAllUrlsInScene();
             // VideoMetadataStore.Refresh(urls.ToArray());

@@ -1,5 +1,4 @@
-﻿
-using UdonSharp;
+﻿using UdonSharp;
 using UnityEngine;
 using VRC.SDKBase;
 using DecentM;
@@ -9,7 +8,10 @@ public class PlayAudioSources : UdonSharpBehaviour
 {
     [Tooltip("A list of AudioSources to play")]
     public AudioSource[] targets;
-    [Tooltip("The default state of the AudioSources. If checked they will start playing when this UdonBehaviour starts.")]
+
+    [Tooltip(
+        "The default state of the AudioSources. If checked they will start playing when this UdonBehaviour starts."
+    )]
     public bool defaultState = false;
 
     [Header("Settings")]
@@ -19,10 +21,17 @@ public class PlayAudioSources : UdonSharpBehaviour
     [Header("LibDecentM")]
     [Tooltip("The LibDecentM object")]
     public LibDecentM lib;
-    [Tooltip("If checked, the list will function as a whitelist, otherwise it will function as a blacklist")]
+
+    [Tooltip(
+        "If checked, the list will function as a whitelist, otherwise it will function as a blacklist"
+    )]
     public bool isWhitelist = false;
-    [Tooltip("If checked, only the instance master can use this trigger, and the player list will be ignored")]
+
+    [Tooltip(
+        "If checked, only the instance master can use this trigger, and the player list will be ignored"
+    )]
     public bool masterOnly = false;
+
     [Tooltip("A list of players who can (or cannot) use this trigger")]
     public PlayerList playerList;
 
@@ -33,7 +42,8 @@ public class PlayAudioSources : UdonSharpBehaviour
             if (this.defaultState == true)
             {
                 this.targets[i].Play();
-            } else
+            }
+            else
             {
                 this.targets[i].Stop();
             }
@@ -43,7 +53,12 @@ public class PlayAudioSources : UdonSharpBehaviour
     public override void Interact()
     {
         VRCPlayerApi player = Networking.LocalPlayer;
-        bool isAllowed = this.lib.permissions.IsPlayerAllowed(player, this.masterOnly, this.isWhitelist, this.playerList);
+        bool isAllowed = this.lib.permissions.IsPlayerAllowed(
+            player,
+            this.masterOnly,
+            this.isWhitelist,
+            this.playerList
+        );
 
         if (!isAllowed)
         {
@@ -53,7 +68,8 @@ public class PlayAudioSources : UdonSharpBehaviour
         if (this.targets[0].isPlaying)
         {
             this.BroadcastStop();
-        } else
+        }
+        else
         {
             this.BroadcastPlay();
         }
@@ -63,7 +79,10 @@ public class PlayAudioSources : UdonSharpBehaviour
     {
         if (this.global)
         {
-            SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, nameof(this.Play));
+            SendCustomNetworkEvent(
+                VRC.Udon.Common.Interfaces.NetworkEventTarget.All,
+                nameof(this.Play)
+            );
         }
         else
         {
@@ -75,7 +94,10 @@ public class PlayAudioSources : UdonSharpBehaviour
     {
         if (this.global)
         {
-            SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, nameof(this.Stop));
+            SendCustomNetworkEvent(
+                VRC.Udon.Common.Interfaces.NetworkEventTarget.All,
+                nameof(this.Stop)
+            );
         }
         else
         {

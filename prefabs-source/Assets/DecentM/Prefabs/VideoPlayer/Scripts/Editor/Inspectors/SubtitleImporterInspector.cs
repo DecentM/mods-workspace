@@ -18,7 +18,11 @@ namespace DecentM.VideoPlayer.EditorTools.Importers
         {
             if (!string.IsNullOrEmpty(output))
             {
-                EditorGUILayout.SelectableLabel(this.output, EditorStyles.textArea, GUILayout.Height(512));
+                EditorGUILayout.SelectableLabel(
+                    this.output,
+                    EditorStyles.textArea,
+                    GUILayout.Height(512)
+                );
                 base.ApplyRevertGUI();
                 return;
             }
@@ -26,11 +30,18 @@ namespace DecentM.VideoPlayer.EditorTools.Importers
             SubtitleImporter importer = (SubtitleImporter)target;
 
             string contents = File.ReadAllText(importer.assetPath);
-            Compiler.CompilationResult compiled = SubtitleCompiler.Compile(contents, Path.GetExtension(importer.assetPath), SubtitleFormat.Vsi);
+            Compiler.CompilationResult compiled = SubtitleCompiler.Compile(
+                contents,
+                Path.GetExtension(importer.assetPath),
+                SubtitleFormat.Vsi
+            );
 
             if (compiled.errors.Count > 0)
             {
-                EditorGUILayout.HelpBox($"{compiled.errors.Count} errors found while compiling.", MessageType.Warning);
+                EditorGUILayout.HelpBox(
+                    $"{compiled.errors.Count} errors found while compiling.",
+                    MessageType.Warning
+                );
 
                 string errors = "";
 
@@ -40,7 +51,8 @@ namespace DecentM.VideoPlayer.EditorTools.Importers
                 }
 
                 EditorGUILayout.HelpBox(errors, MessageType.Warning);
-            } else
+            }
+            else
             {
                 this.output = compiled.output;
             }

@@ -1,5 +1,4 @@
-﻿
-using UdonSharp;
+﻿using UdonSharp;
 using UnityEngine;
 using VRC.SDKBase;
 using VRC.Udon;
@@ -12,9 +11,16 @@ namespace DecentM.VideoPlayer.Plugins
         {
             // Some super vague heuristics to prevent some InvalidURL errors and keep the rate limit from being hit
             // by other video players in the world unnecessarily
-            if (url == null || url == "") return false;
-            if (url.StartsWith("http://") || url.StartsWith("https://") || url.StartsWith("localhost")) return true;
-            if (url.Split('/').Length >= 2) return true;
+            if (url == null || url == "")
+                return false;
+            if (
+                url.StartsWith("http://")
+                || url.StartsWith("https://")
+                || url.StartsWith("localhost")
+            )
+                return true;
+            if (url.Split('/').Length >= 2)
+                return true;
 
             return false;
         }

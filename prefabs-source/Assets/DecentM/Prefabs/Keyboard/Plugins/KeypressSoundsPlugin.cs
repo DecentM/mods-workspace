@@ -1,5 +1,4 @@
-﻿
-using UdonSharp;
+﻿using UdonSharp;
 using UnityEngine;
 using VRC.SDKBase;
 using VRC.Udon;
@@ -19,7 +18,8 @@ namespace DecentM.Keyboard.Plugins
 
         private void PlayTypingSound(int index)
         {
-            if (this.audioPlayer.isPlaying) return;
+            if (this.audioPlayer.isPlaying)
+                return;
 
             this.audioPlayer.time = index;
             this.audioPlayer.Play();
@@ -34,12 +34,16 @@ namespace DecentM.Keyboard.Plugins
 
         private void PlayRandomTypingNoise()
         {
-            int typingSoundIndex = Random.Range(0, (Mathf.FloorToInt(this.audioPlayer.clip.length * 2) / 2) + 1);
+            int typingSoundIndex = Random.Range(
+                0,
+                (Mathf.FloorToInt(this.audioPlayer.clip.length * 2) / 2) + 1
+            );
             this.PlayTypingSound(typingSoundIndex);
         }
 
         private string OnKeyboardEvent_name;
         private object OnKeyboardEvent_data;
+
         public void OnKeyboardEvent()
         {
             switch (OnKeyboardEvent_name)

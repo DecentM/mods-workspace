@@ -9,7 +9,6 @@ using VRC.Udon.Common.Interfaces;
 using System;
 using UdonSharp;
 
-
 namespace DecentM.Keyboard
 {
     [CustomEditor(typeof(SymbolStorage))]
@@ -17,11 +16,20 @@ namespace DecentM.Keyboard
     {
         public override void OnInspectorGUI()
         {
-            if (UdonSharpGUI.DrawDefaultUdonSharpBehaviourHeader(target)) return;
+            if (UdonSharpGUI.DrawDefaultUdonSharpBehaviourHeader(target))
+                return;
             EditorGUILayout.Space();
 
-            if (GUILayout.Button(new GUIContent("Link all keys to this Symbol Storage", "Links all UdonBehaviours with 'symbolStorage' parameter to this object."))) {
-                this.LinkAll(); 
+            if (
+                GUILayout.Button(
+                    new GUIContent(
+                        "Link all keys to this Symbol Storage",
+                        "Links all UdonBehaviours with 'symbolStorage' parameter to this object."
+                    )
+                )
+            )
+            {
+                this.LinkAll();
             }
 
             EditorGUILayout.Space();
@@ -31,7 +39,7 @@ namespace DecentM.Keyboard
         private IUdonVariable CreateUdonVariable(string symbolName, object value, System.Type type)
         {
             System.Type udonVariableType = typeof(UdonVariable<>).MakeGenericType(type);
-            return (IUdonVariable) Activator.CreateInstance(udonVariableType, symbolName, value);
+            return (IUdonVariable)Activator.CreateInstance(udonVariableType, symbolName, value);
         }
 
         private void LinkAll()
@@ -40,19 +48,35 @@ namespace DecentM.Keyboard
             foreach (UdonBehaviour behaviour in allBehaviours)
             {
                 var program = behaviour.programSource.SerializedProgramAsset.RetrieveProgram();
-                ImmutableArray<string> exportedSymbolNames = program.SymbolTable.GetExportedSymbols();
+                ImmutableArray<string> exportedSymbolNames =
+                    program.SymbolTable.GetExportedSymbols();
                 foreach (string exportedSymbolName in exportedSymbolNames)
                 {
-                    if (!exportedSymbolName.Equals("symbolStorage")) continue;
+                    if (!exportedSymbolName.Equals("symbolStorage"))
+                        continue;
 
-                    var variableValue = UdonSharpEditorUtility.GetBackingUdonBehaviour((UdonSharpBehaviour)target);
+                    var variableValue = UdonSharpEditorUtility.GetBackingUdonBehaviour(
+                        (UdonSharpBehaviour)target
+                    );
                     System.Type symbolType = program.SymbolTable.GetSymbolType(exportedSymbolName);
 
-                    if (behaviour.publicVariables.TrySetVariableValue("symbolStorage", variableValue)) continue;
+                    if (
+                        behaviour.publicVariables.TrySetVariableValue(
+                            "symbolStorage",
+                            variableValue
+                        )
+                    )
+                        continue;
 
-                    if (!behaviour.publicVariables.TryAddVariable(CreateUdonVariable(exportedSymbolName, variableValue, symbolType)))
+                    if (
+                        !behaviour.publicVariables.TryAddVariable(
+                            CreateUdonVariable(exportedSymbolName, variableValue, symbolType)
+                        )
+                    )
                     {
-                        Debug.LogError($"Failed to set public variable '{exportedSymbolName}' value.");
+                        Debug.LogError(
+                            $"Failed to set public variable '{exportedSymbolName}' value."
+                        );
                     }
 
                     if (PrefabUtility.IsPartOfPrefabInstance(behaviour))

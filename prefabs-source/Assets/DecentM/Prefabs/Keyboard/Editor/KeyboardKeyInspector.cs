@@ -20,16 +20,17 @@ namespace DecentM.Keyboard
 
         KeyLayout[] layouts
         {
-            get
-            {
-                return this.currentLayout.transform.parent.GetComponentsInChildren<KeyLayout>();
-            }
+            get { return this.currentLayout.transform.parent.GetComponentsInChildren<KeyLayout>(); }
         }
 
         private void OnKeyLayoutChange(object layoutIndex)
         {
             KeyLayout layout = this.layouts[(int)layoutIndex];
-            this.SetUdonVariable(this.key, "layoutTemplate", UdonSharpEditorUtility.GetBackingUdonBehaviour(layout));
+            this.SetUdonVariable(
+                this.key,
+                "layoutTemplate",
+                UdonSharpEditorUtility.GetBackingUdonBehaviour(layout)
+            );
         }
 
         private int currentTab = 0;
@@ -58,7 +59,11 @@ namespace DecentM.Keyboard
         {
             this.key = (KeyboardKey)target;
 
-            Rect position = GUILayoutUtility.GetRect(GUIContent.none, GUIStyle.none, GUILayout.Height(17.5f));
+            Rect position = GUILayoutUtility.GetRect(
+                GUIContent.none,
+                GUIStyle.none,
+                GUILayout.Height(17.5f)
+            );
             List<EnumerableOption> options = new List<EnumerableOption>();
 
             for (int i = 0; i < layouts.Length; i++)
@@ -66,30 +71,60 @@ namespace DecentM.Keyboard
                 options.Add(new EnumerableOption(layouts[i].name, i));
             }
 
-            this.Dropdown(position, "Key layout", options, this.currentLayout.name, this.OnKeyLayoutChange);
+            this.Dropdown(
+                position,
+                "Key layout",
+                options,
+                this.currentLayout.name,
+                this.OnKeyLayoutChange
+            );
 
             EditorGUILayout.Space();
 
             EditorGUILayout.BeginHorizontal();
 
             EditorGUILayout.BeginVertical();
-            Rect pRect1 = GUILayoutUtility.GetRect(GUIContent.none, GUIStyle.none, GUILayout.Height(12));
+            Rect pRect1 = GUILayoutUtility.GetRect(
+                GUIContent.none,
+                GUIStyle.none,
+                GUILayout.Height(12)
+            );
             EditorGUI.PrefixLabel(pRect1, new GUIContent("Primary symbol"));
-            Rect pRect2 = GUILayoutUtility.GetRect(GUIContent.none, GUIStyle.none, GUILayout.Height(17.5f));
+            Rect pRect2 = GUILayoutUtility.GetRect(
+                GUIContent.none,
+                GUIStyle.none,
+                GUILayout.Height(17.5f)
+            );
             EditorGUI.TextField(pRect2, "");
             EditorGUILayout.EndVertical();
 
             EditorGUILayout.BeginVertical();
-            Rect sRect1 = GUILayoutUtility.GetRect(GUIContent.none, GUIStyle.none, GUILayout.Height(12));
+            Rect sRect1 = GUILayoutUtility.GetRect(
+                GUIContent.none,
+                GUIStyle.none,
+                GUILayout.Height(12)
+            );
             EditorGUI.PrefixLabel(sRect1, new GUIContent("Secondary symbol"));
-            Rect sRect2 = GUILayoutUtility.GetRect(GUIContent.none, GUIStyle.none, GUILayout.Height(17.5f));
+            Rect sRect2 = GUILayoutUtility.GetRect(
+                GUIContent.none,
+                GUIStyle.none,
+                GUILayout.Height(17.5f)
+            );
             EditorGUI.TextField(sRect2, "");
             EditorGUILayout.EndVertical();
 
             EditorGUILayout.BeginVertical();
-            Rect tRect1 = GUILayoutUtility.GetRect(GUIContent.none, GUIStyle.none, GUILayout.Height(12));
+            Rect tRect1 = GUILayoutUtility.GetRect(
+                GUIContent.none,
+                GUIStyle.none,
+                GUILayout.Height(12)
+            );
             EditorGUI.PrefixLabel(pRect1, new GUIContent("Tertiary symbol"));
-            Rect tRect2 = GUILayoutUtility.GetRect(GUIContent.none, GUIStyle.none, GUILayout.Height(17.5f));
+            Rect tRect2 = GUILayoutUtility.GetRect(
+                GUIContent.none,
+                GUIStyle.none,
+                GUILayout.Height(17.5f)
+            );
             EditorGUI.TextField(tRect2, "");
             EditorGUILayout.EndVertical();
 

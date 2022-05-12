@@ -17,12 +17,18 @@ namespace DecentM.EditorTools.SelfLocator
             {
                 ctx.LogImportError($"Imported file disappeared from {ctx.assetPath}");
                 TextAsset errorAsset = new TextAsset("");
-                ctx.AddObjectToAsset(Path.GetFileName(ctx.assetPath), errorAsset, MaterialIcons.GetIcon(Icon.Close));
+                ctx.AddObjectToAsset(
+                    Path.GetFileName(ctx.assetPath),
+                    errorAsset,
+                    MaterialIcons.GetIcon(Icon.Close)
+                );
                 ctx.SetMainObject(errorAsset);
                 return;
             }
 
-            SelfLocatorAsset asset = SelfLocatorAsset.CreateInstance(File.ReadAllText(ctx.assetPath));
+            SelfLocatorAsset asset = SelfLocatorAsset.CreateInstance(
+                File.ReadAllText(ctx.assetPath)
+            );
 
             ctx.AddObjectToAsset(Path.GetFileName(ctx.assetPath), asset);
             ctx.SetMainObject(asset);

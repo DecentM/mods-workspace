@@ -7,7 +7,8 @@ using UnityEditor;
 
 namespace DecentM.Metrics
 {
-    public class IndividualTrackingPluginManager<PluginType> where PluginType : IndividualTrackingPlugin
+    public class IndividualTrackingPluginManager<PluginType>
+        where PluginType : IndividualTrackingPlugin
     {
         public static List<string> CollectInteractionNames()
         {
@@ -20,7 +21,9 @@ namespace DecentM.Metrics
             {
                 if (plugin.metricName == null || plugin.metricName == "")
                 {
-                    Debug.LogWarning($"Metric name is not set for the metrics plugin on {plugin.name}, generating a random name...");
+                    Debug.LogWarning(
+                        $"Metric name is not set for the metrics plugin on {plugin.name}, generating a random name..."
+                    );
                     plugin.metricName = RandomStringGenerator.GenerateRandomString(8);
                     Inspector.SaveModifications(plugin);
                 }

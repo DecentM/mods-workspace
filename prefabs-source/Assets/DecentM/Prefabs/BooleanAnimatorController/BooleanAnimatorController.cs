@@ -1,5 +1,4 @@
-﻿
-using UdonSharp;
+﻿using UdonSharp;
 using UnityEngine;
 using VRC.SDKBase;
 
@@ -9,8 +8,10 @@ public class BooleanAnimatorController : UdonSharpBehaviour
     [Header("Settings")]
     [Tooltip("The Animator to control")]
     public Animator animator;
+
     [Tooltip("Which animation to target in the controller")]
     public int layerIndex = 0;
+
     [Tooltip("The name of the parameter to toggle")]
     public string parameterName = "";
 

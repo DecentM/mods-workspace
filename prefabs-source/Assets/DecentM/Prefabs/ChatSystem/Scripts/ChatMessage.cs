@@ -47,10 +47,12 @@ namespace DecentM.Chat
          */
         [HideInInspector]
         public int OnStatusChange_status = MessageStatusErr;
+
         public void OnStatusChange()
         {
             // Ignore improperly sent event
-            if (OnStatusChange_status == -1) return;
+            if (OnStatusChange_status == -1)
+                return;
 
             this.status = OnStatusChange_status;
 
@@ -85,30 +87,41 @@ namespace DecentM.Chat
 
         [HideInInspector]
         public int status = -1;
+
         [HideInInspector]
         public int packetId = -1;
+
         [HideInInspector]
         public string id = "";
+
         [HideInInspector]
         public int channel = -1;
+
         [HideInInspector]
         public int senderId = -1;
+
         [HideInInspector]
         public string message = "";
+
         [HideInInspector]
-[VRC.Udon.Serialization.OdinSerializer.OdinSerialize] /* UdonSharp auto-upgrade: serialization */ 
+        [VRC.Udon.Serialization.OdinSerializer.OdinSerialize] /* UdonSharp auto-upgrade: serialization */
         public DateTime timestamp;
 
         [HideInInspector]
         public int OnReceive_packetId;
+
         [HideInInspector]
         public string OnReceive_id;
+
         [HideInInspector]
         public int OnReceive_channel;
+
         [HideInInspector]
         public int OnReceive_senderId;
+
         [HideInInspector]
         public string OnReceive_message;
+
         public void OnReceive()
         {
             this.packetId = this.OnReceive_packetId;
@@ -126,10 +139,12 @@ namespace DecentM.Chat
 
         [HideInInspector]
         public Color OnColourChange_colour;
+
         public void OnColourChange()
         {
             // Ignore improperly sent event
-            if (OnColourChange_colour == null) return;
+            if (OnColourChange_colour == null)
+                return;
 
             this.colour = OnColourChange_colour;
 
@@ -144,11 +159,16 @@ namespace DecentM.Chat
             var ts = new TimeSpan(DateTime.UtcNow.Ticks - dateTime.Ticks);
             double delta = Math.Abs(ts.TotalSeconds);
 
-            if (delta < Minute) return ts.Seconds <= 1 ? "just now" : $"less than a minute ago";
-            if (delta < Minute * 2) return "a minute ago";
-            if (delta < 50 * Minute) return $"{ts.Minutes} minutes ago";
-            if (delta < 75 * Minute) return "about an hour ago";
-            if (delta < 24 * Hour) return $"{ts.Hours} hours ago";
+            if (delta < Minute)
+                return ts.Seconds <= 1 ? "just now" : $"less than a minute ago";
+            if (delta < Minute * 2)
+                return "a minute ago";
+            if (delta < 50 * Minute)
+                return $"{ts.Minutes} minutes ago";
+            if (delta < 75 * Minute)
+                return "about an hour ago";
+            if (delta < 24 * Hour)
+                return $"{ts.Hours} hours ago";
 
             return "long ago";
         }
@@ -161,12 +181,14 @@ namespace DecentM.Chat
         }
 
         private int clock = 0;
+
         private void FixedUpdate()
         {
             this.clock++;
 
             // Re-render every 10 seconds to update the timestamp
-            if (this.clock <= this.ticksPerSecond * 10) return;
+            if (this.clock <= this.ticksPerSecond * 10)
+                return;
 
             this.clock = 0;
             this.RenderMessage();
@@ -178,7 +200,8 @@ namespace DecentM.Chat
         {
             string displayName = "<unknown>";
             VRCPlayerApi player = VRCPlayerApi.GetPlayerById(this.senderId);
-            if (player != null && player.IsValid()) displayName = player.displayName;
+            if (player != null && player.IsValid())
+                displayName = player.displayName;
 
             this.usernameSlot.text = displayName;
             this.messageSlot.text = this.message;
@@ -193,7 +216,7 @@ namespace DecentM.Chat
             {
                 this.noteSlot.text = this.ToRelativeTime(this.timestamp);
             }
-            
+
             RenderTexture rt = this.profilePictureStore.GetPlayerPicture(this.senderId);
             this.ppSlot.texture = rt;
         }

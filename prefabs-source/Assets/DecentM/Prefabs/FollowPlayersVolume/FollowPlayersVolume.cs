@@ -1,5 +1,4 @@
-﻿
-using UdonSharp;
+﻿using UdonSharp;
 using UnityEngine;
 using VRC.SDKBase;
 using DecentM;
@@ -12,36 +11,54 @@ public class FollowPlayersVolume : UdonSharpBehaviour
     public GameObject link;
 
     [Header("Settings")]
-    [Tooltip("How many people to track at once - If exceeded, players who step on later will not be tracked until someone else leaves the volume")]
+    [Tooltip(
+        "How many people to track at once - If exceeded, players who step on later will not be tracked until someone else leaves the volume"
+    )]
     public int trackLimit = 5;
-    [Tooltip("If false, it will only track the local player, regardless of the track limit setting")]
+
+    [Tooltip(
+        "If false, it will only track the local player, regardless of the track limit setting"
+    )]
     public bool global = true;
-    [Tooltip("The link object will be spawned under the player's feet, and then offset by this vector.")]
+
+    [Tooltip(
+        "The link object will be spawned under the player's feet, and then offset by this vector."
+    )]
     public Vector3 linkOffset = new Vector3(0, 0, 0);
 
     [Header("LibDecentM")]
     [Tooltip("The LibDecentM object")]
     public LibDecentM lib;
-    [Tooltip("If checked, the list will function as a whitelist, otherwise it will function as a blacklist")]
+
+    [Tooltip(
+        "If checked, the list will function as a whitelist, otherwise it will function as a blacklist"
+    )]
     public bool isWhitelist = false;
-    [Tooltip("If checked, only the instance master can use this trigger, and the player list will be ignored")]
+
+    [Tooltip(
+        "If checked, only the instance master can use this trigger, and the player list will be ignored"
+    )]
     public bool masterOnly = false;
+
     [Tooltip("A list of players who can (or cannot) use this trigger")]
     public PlayerList playerList;
 
     private VRCPlayerApi[] followingPlayers;
     private GameObject[] followingLinks;
 
-    private GameObject SpawnLinkClone ()
+    private GameObject SpawnLinkClone()
     {
         GameObject playerLink = VRCInstantiate(this.link);
         playerLink.SetActive(true);
-        playerLink.transform.SetPositionAndRotation(this.link.transform.position, this.link.transform.rotation);
+        playerLink.transform.SetPositionAndRotation(
+            this.link.transform.position,
+            this.link.transform.rotation
+        );
 
         return playerLink;
     }
 
-    private bool IsFollowingPlayer (VRCPlayerApi player)
+    private bool IsFollowingPlayer(VRCPlayerApi player)
     {
         // Search for the player
         bool result = false;
@@ -57,7 +74,7 @@ public class FollowPlayersVolume : UdonSharpBehaviour
         return result;
     }
 
-    private void FollowPlayer (VRCPlayerApi player)
+    private void FollowPlayer(VRCPlayerApi player)
     {
         // Insert the player into the first empty index
         // This has the side effect of not pushing players when the array length has reached
@@ -75,7 +92,7 @@ public class FollowPlayersVolume : UdonSharpBehaviour
         }
     }
 
-    private void UnfollowPlayer (VRCPlayerApi player)
+    private void UnfollowPlayer(VRCPlayerApi player)
     {
         // Remove the player from the array by setting its index to null
         for (int i = 0; i < this.followingPlayers.Length; i++)
@@ -145,11 +162,14 @@ public class FollowPlayersVolume : UdonSharpBehaviour
             }
 
             // Move the link to the player
-            link.transform.SetPositionAndRotation(player.GetPosition() + this.linkOffset, player.GetRotation());
+            link.transform.SetPositionAndRotation(
+                player.GetPosition() + this.linkOffset,
+                player.GetRotation()
+            );
         }
     }
 
-    public override void OnPlayerTriggerEnter (VRCPlayerApi player)
+    public override void OnPlayerTriggerEnter(VRCPlayerApi player)
     {
         // We don't do anything if we're already following someone or the player isn't valid
         if (!player.IsValid() || this.IsFollowingPlayer(player))
@@ -157,7 +177,12 @@ public class FollowPlayersVolume : UdonSharpBehaviour
             return;
         }
 
-        bool isAllowed = this.lib.permissions.IsPlayerAllowed(player, this.masterOnly, this.isWhitelist, this.playerList);
+        bool isAllowed = this.lib.permissions.IsPlayerAllowed(
+            player,
+            this.masterOnly,
+            this.isWhitelist,
+            this.playerList
+        );
 
         if (!isAllowed)
         {

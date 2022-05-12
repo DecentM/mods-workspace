@@ -1,5 +1,4 @@
-﻿
-using UdonSharp;
+﻿using UdonSharp;
 using UnityEngine;
 using VRC.SDKBase;
 using VRC.Udon;
@@ -24,7 +23,8 @@ namespace DecentM.UI
 
         public void OnClick()
         {
-            if (this.dropdown == null) return;
+            if (this.dropdown == null)
+                return;
 
             this.dropdown.OnValueClick(this.value);
         }

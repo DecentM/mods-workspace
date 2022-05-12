@@ -1,5 +1,4 @@
-﻿
-using UdonSharp;
+﻿using UdonSharp;
 using UnityEngine;
 using VRC.SDK3.Components.Video;
 using VRC.SDKBase;
@@ -9,7 +8,9 @@ namespace DecentM.VideoPlayer.Plugins
 {
     public class AutoRetryPlugin : VideoPlayerPlugin
     {
-        [Tooltip("Switch to the next player handler after this many failures. Each attempt takes 5 seconds.")]
+        [Tooltip(
+            "Switch to the next player handler after this many failures. Each attempt takes 5 seconds."
+        )]
         public int failureCeiling = 3;
         public bool abortAfterAllPlayersFailed = true;
         private int failures = 0;
@@ -20,7 +21,8 @@ namespace DecentM.VideoPlayer.Plugins
 
         private void FixedUpdate()
         {
-            if (!this.waitingForLoad) return;
+            if (!this.waitingForLoad)
+                return;
 
             this.timeoutClock += Time.fixedDeltaTime;
             if (this.timeoutClock > this.videoLoadTimeout + ((this.failures + 1) * 5))
@@ -34,7 +36,8 @@ namespace DecentM.VideoPlayer.Plugins
         public void AttemptRetry()
         {
             VRCUrl url = this.system.GetCurrentUrl();
-            if (url == null) return;
+            if (url == null)
+                return;
 
             this.system.RequestVideo(url);
         }
@@ -48,15 +51,19 @@ namespace DecentM.VideoPlayer.Plugins
         protected override void OnLoadError(VideoError videoError)
         {
             VRCUrl url = this.system.GetCurrentUrl();
-            if (url == null || string.IsNullOrEmpty(this.system.GetCurrentUrl().ToString())) return;
+            if (url == null || string.IsNullOrEmpty(this.system.GetCurrentUrl().ToString()))
+                return;
 
             switch (videoError)
             {
                 // Continue for rate limit errors and unknown ones
                 // (we repurposed unknown to mean player timeout as well)
-                case VideoError.Unknown: break;
-                case VideoError.RateLimited: break;
-                case VideoError.PlayerError: break;
+                case VideoError.Unknown:
+                    break;
+                case VideoError.RateLimited:
+                    break;
+                case VideoError.PlayerError:
+                    break;
                 // Don't retry for errors that are unlikely to be temporary
                 case VideoError.InvalidURL:
                 case VideoError.AccessDenied:

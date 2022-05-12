@@ -1,5 +1,4 @@
-﻿
-using UdonSharp;
+﻿using UdonSharp;
 using UnityEngine;
 using VRC.SDK3.Components.Video;
 using VRC.SDKBase;
@@ -13,7 +12,8 @@ namespace DecentM.VideoPlayer.Plugins
 
         protected override void OnVideoPlayerInit()
         {
-            if (this.playlist == null) return;
+            if (this.playlist == null)
+                return;
 
             object[] next = this.playlist.GetCurrent();
             this.PlayItem(next);
@@ -21,7 +21,8 @@ namespace DecentM.VideoPlayer.Plugins
 
         protected override void OnPlaybackEnd()
         {
-            if (this.playlist == null) return;
+            if (this.playlist == null)
+                return;
 
             object[] next = this.playlist.Next();
             this.PlayItem(next);
@@ -29,7 +30,8 @@ namespace DecentM.VideoPlayer.Plugins
 
         protected override void OnAutoRetryAbort()
         {
-            if (this.playlist == null) return;
+            if (this.playlist == null)
+                return;
 
             object[] next = this.playlist.Next();
             this.PlayItem(next);
@@ -42,7 +44,8 @@ namespace DecentM.VideoPlayer.Plugins
 
         public void PlayItem(object[] item)
         {
-            if (item == null) return;
+            if (item == null)
+                return;
 
             VRCUrl url = (VRCUrl)item[0];
 

@@ -42,7 +42,8 @@ namespace DecentM.VideoPlayer
 
         private static YTDLVideoJson? GetCachedYTDLJson(string url)
         {
-            if (!ValidateUrl(url)) return null;
+            if (!ValidateUrl(url))
+                return null;
 
             string filename = "metadata.ytdl-json";
             string hash = Hash.String(url);
@@ -50,7 +51,8 @@ namespace DecentM.VideoPlayer
 
             VideoMetadataAsset asset = AssetDatabase.LoadAssetAtPath<VideoMetadataAsset>(path);
 
-            if (asset == null) return null;
+            if (asset == null)
+                return null;
 
             return asset.metadata;
         }
@@ -60,12 +62,14 @@ namespace DecentM.VideoPlayer
         {
             VideoMetadata metadata = new VideoMetadata();
 
-            if (!ValidateUrl(url)) return metadata;
+            if (!ValidateUrl(url))
+                return metadata;
 
             try
             {
                 YTDLVideoJson? jsonOrNull = GetCachedYTDLJson(url);
-                if (jsonOrNull == null) return metadata;
+                if (jsonOrNull == null)
+                    return metadata;
                 YTDLVideoJson json = (YTDLVideoJson)jsonOrNull;
 
                 metadata.fps = json.fps;
@@ -83,7 +87,8 @@ namespace DecentM.VideoPlayer
 
                 int.TryParse(json.like_count, out metadata.likeCount);
                 int.TryParse(json.view_count, out metadata.viewCount);
-            } catch
+            }
+            catch
             {
                 return metadata;
             }
@@ -94,7 +99,8 @@ namespace DecentM.VideoPlayer
         [PublicAPI]
         public static bool IsCached(string url)
         {
-            if (!ValidateUrl(url)) return false;
+            if (!ValidateUrl(url))
+                return false;
 
             YTDLVideoJson? jsonOrNull = GetCachedYTDLJson(url);
             return jsonOrNull != null;
@@ -102,7 +108,8 @@ namespace DecentM.VideoPlayer
 
         private static void Save(string hash, YTDLVideoJson? jsonOrNull)
         {
-            if (jsonOrNull == null) return;
+            if (jsonOrNull == null)
+                return;
 
             YTDLVideoJson json = (YTDLVideoJson)jsonOrNull;
 
@@ -113,8 +120,10 @@ namespace DecentM.VideoPlayer
 
         private static IEnumerator Fetch(string url)
         {
-            if (string.IsNullOrEmpty(url)) return null;
-            if (!ValidateUrl(url)) return null;
+            if (string.IsNullOrEmpty(url))
+                return null;
+            if (!ValidateUrl(url))
+                return null;
 
             string hash = Hash.String(url);
 
@@ -128,8 +137,10 @@ namespace DecentM.VideoPlayer
             for (int i = 0; i < urls.Count; i++)
             {
                 string url = urls[i];
-                if (string.IsNullOrEmpty(url)) continue;
-                if (!ValidateUrl(url)) continue;
+                if (string.IsNullOrEmpty(url))
+                    continue;
+                if (!ValidateUrl(url))
+                    continue;
 
                 coroutines.Add(DCoroutine.Start(Fetch(url)));
             }
@@ -137,7 +148,12 @@ namespace DecentM.VideoPlayer
             return Parallelism.WaitForCoroutines(coroutines, OnFinish);
         }
 
-        private static DCoroutine Fetch(Queue<string> urls, int batchSize, Action OnFinish, Action<int> OnQueueSizeChange)
+        private static DCoroutine Fetch(
+            Queue<string> urls,
+            int batchSize,
+            Action OnFinish,
+            Action<int> OnQueueSizeChange
+        )
         {
             if (urls.Count == 0)
             {
@@ -153,7 +169,9 @@ namespace DecentM.VideoPlayer
                 OnQueueSizeChange(urls.Count);
             }
 
-            return DCoroutine.Start(FetchInParallel(batch, () => Fetch(urls, batchSize, OnFinish, OnQueueSizeChange)));
+            return DCoroutine.Start(
+                FetchInParallel(batch, () => Fetch(urls, batchSize, OnFinish, OnQueueSizeChange))
+            );
         }
 
         #region Methods that support the public API
@@ -164,8 +182,9 @@ namespace DecentM.VideoPlayer
 
             foreach (string url in urls)
             {
-                if (!ValidateUrl(url)) continue;
-                
+                if (!ValidateUrl(url))
+                    continue;
+
                 string hash = Hash.String(url);
                 folders.Add(new Tuple<string, string>($"{EditorAssets.VideoMetadataFolder}", hash));
             }
@@ -180,9 +199,12 @@ namespace DecentM.VideoPlayer
             for (int i = 0; i < urls.Length; i++)
             {
                 string url = urls[i];
-                if (string.IsNullOrEmpty(url)) continue;
-                if (!ValidateUrl(url)) continue;
-                if (IsCached(url)) continue;
+                if (string.IsNullOrEmpty(url))
+                    continue;
+                if (!ValidateUrl(url))
+                    continue;
+                if (IsCached(url))
+                    continue;
 
                 queue.Enqueue(url);
             }
@@ -229,7 +251,8 @@ namespace DecentM.VideoPlayer
         [PublicAPI]
         public static bool Refresh(string[] urls, Action<float> OnProgress, Action OnFinish)
         {
-            if (urls.Length == 0) return true;
+            if (urls.Length == 0)
+                return true;
             return Fetch(urls, OnProgress, OnFinish);
         }
 

@@ -15,7 +15,8 @@ namespace DecentM.VideoPlayer.Plugins
 
         protected override void OnLoadRequested(VRCUrl vrcUrl)
         {
-            if (this.approvalPending != null) return;
+            if (this.approvalPending != null)
+                return;
 
             this.denials = 0;
             this.approvalPending = vrcUrl;
@@ -26,7 +27,8 @@ namespace DecentM.VideoPlayer.Plugins
 
         protected override void OnLoadDenied(VRCUrl url, string reason)
         {
-            if (this.approvalPending == null || url != this.approvalPending) return;
+            if (this.approvalPending == null || url != this.approvalPending)
+                return;
 
             this.denials++;
         }

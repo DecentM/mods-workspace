@@ -25,13 +25,16 @@ namespace DecentM.Keyboard.Plugins
             this.field.ForceLabelUpdate();
             this.RenderLengthHint();
 
-            if (Networking.LocalPlayer == null || !Networking.LocalPlayer.IsValid()) return;
+            if (Networking.LocalPlayer == null || !Networking.LocalPlayer.IsValid())
+                return;
 
             if (Networking.LocalPlayer.IsUserInVR())
             {
                 this.vrOnlyHint.SetActive(true);
                 this.placeholder.text = "Start typing to enter text...";
-            } else { 
+            }
+            else
+            {
                 this.vrOnlyHint.SetActive(false);
                 this.placeholder.text = "Click here and start typing...";
             }
@@ -59,7 +62,8 @@ namespace DecentM.Keyboard.Plugins
                 return;
             }
 
-            if (this.field.text.Length >= maxLength) return;
+            if (this.field.text.Length >= maxLength)
+                return;
 
             this.field.ActivateInputField();
             this.field.text += symbol;
@@ -69,7 +73,8 @@ namespace DecentM.Keyboard.Plugins
 
         private void HandleBackspace()
         {
-            if (this.field.text.Length == 0) return;
+            if (this.field.text.Length == 0)
+                return;
             this.field.text = this.field.text.Remove(this.field.text.Length - 1, 1);
             this.field.MoveTextEnd(false);
             this.RenderLengthHint();
@@ -85,6 +90,7 @@ namespace DecentM.Keyboard.Plugins
 
         private string OnKeyboardEvent_name;
         private object[] OnKeyboardEvent_data;
+
         public void OnKeyboardEvent()
         {
             switch (OnKeyboardEvent_name)

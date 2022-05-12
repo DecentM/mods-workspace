@@ -1,5 +1,4 @@
-﻿
-using UdonSharp;
+﻿using UdonSharp;
 using UnityEngine;
 using VRC.SDKBase;
 using DecentM;
@@ -10,10 +9,13 @@ public class ToggleObjects : UdonSharpBehaviour
     [Header("Settings")]
     [Tooltip("If true, the trigger will enable/disable targets when other players enter/exit it")]
     public bool global = false;
- 
+
     [Space]
-    [Tooltip("The initial state of all of the targets - This will be applied when this UdonBehaviour starts")]
+    [Tooltip(
+        "The initial state of all of the targets - This will be applied when this UdonBehaviour starts"
+    )]
     public bool defaultState = false;
+
     [Space]
     [Tooltip("A list of GameObjects to toggle. They will always have the same state")]
     public GameObject[] targets;
@@ -21,10 +23,17 @@ public class ToggleObjects : UdonSharpBehaviour
     [Header("LibDecentM")]
     [Tooltip("The LibDecentM object")]
     public LibDecentM lib;
-    [Tooltip("If checked, the list will function as a whitelist, otherwise it will function as a blacklist")]
+
+    [Tooltip(
+        "If checked, the list will function as a whitelist, otherwise it will function as a blacklist"
+    )]
     public bool isWhitelist = false;
-    [Tooltip("If checked, only the instance master can use this trigger, and the player list will be ignored")]
+
+    [Tooltip(
+        "If checked, only the instance master can use this trigger, and the player list will be ignored"
+    )]
     public bool masterOnly = false;
+
     [Tooltip("A list of players who can (or cannot) use this trigger")]
     public PlayerList playerList;
 
@@ -34,10 +43,15 @@ public class ToggleObjects : UdonSharpBehaviour
         this.SetActiveAll(this.defaultState);
     }
 
-    public override void Interact ()
+    public override void Interact()
     {
         VRCPlayerApi player = Networking.LocalPlayer;
-        bool isAllowed = this.lib.permissions.IsPlayerAllowed(player, this.masterOnly, this.isWhitelist, this.playerList);
+        bool isAllowed = this.lib.permissions.IsPlayerAllowed(
+            player,
+            this.masterOnly,
+            this.isWhitelist,
+            this.playerList
+        );
 
         if (!isAllowed)
         {
@@ -46,8 +60,12 @@ public class ToggleObjects : UdonSharpBehaviour
 
         if (this.global)
         {
-            SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, nameof(this.Toggle));
-        } else
+            SendCustomNetworkEvent(
+                VRC.Udon.Common.Interfaces.NetworkEventTarget.All,
+                nameof(this.Toggle)
+            );
+        }
+        else
         {
             this.Toggle();
         }
@@ -72,14 +90,21 @@ public class ToggleObjects : UdonSharpBehaviour
 
         if (isActive)
         {
-            SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, nameof(this.ToggleOn));
-        } else
+            SendCustomNetworkEvent(
+                VRC.Udon.Common.Interfaces.NetworkEventTarget.All,
+                nameof(this.ToggleOn)
+            );
+        }
+        else
         {
-            SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, nameof(this.ToggleOff));
+            SendCustomNetworkEvent(
+                VRC.Udon.Common.Interfaces.NetworkEventTarget.All,
+                nameof(this.ToggleOff)
+            );
         }
     }
 
-    public void Toggle ()
+    public void Toggle()
     {
         // All targets should be the same at this point, so use the first one as the source of truth
         // This way we don't need to store an internal variable
@@ -88,7 +113,8 @@ public class ToggleObjects : UdonSharpBehaviour
         if (isActive)
         {
             this.ToggleOff();
-        } else
+        }
+        else
         {
             this.ToggleOn();
         }

@@ -1,5 +1,4 @@
-﻿
-using UdonSharp;
+﻿using UdonSharp;
 using UnityEngine;
 using VRC.SDKBase;
 using VRC.Udon;
@@ -19,10 +18,17 @@ public class UdonBehaviourToggler : UdonSharpBehaviour
     [Header("LibDecentM")]
     [Tooltip("The LibDecentM object")]
     public LibDecentM lib;
-    [Tooltip("If checked, the list will function as a whitelist, otherwise it will function as a blacklist")]
+
+    [Tooltip(
+        "If checked, the list will function as a whitelist, otherwise it will function as a blacklist"
+    )]
     public bool isWhitelist = false;
-    [Tooltip("If checked, only the instance master can use this trigger, and the player list will be ignored")]
+
+    [Tooltip(
+        "If checked, only the instance master can use this trigger, and the player list will be ignored"
+    )]
     public bool masterOnly = false;
+
     [Tooltip("A list of players who can (or cannot) use this trigger")]
     public PlayerList playerList;
 
@@ -38,7 +44,12 @@ public class UdonBehaviourToggler : UdonSharpBehaviour
 
     public override void OnPlayerTriggerEnter(VRCPlayerApi player)
     {
-        bool isAllowed = this.lib.permissions.IsPlayerAllowed(player, this.masterOnly, this.isWhitelist, this.playerList);
+        bool isAllowed = this.lib.permissions.IsPlayerAllowed(
+            player,
+            this.masterOnly,
+            this.isWhitelist,
+            this.playerList
+        );
 
         if (!isAllowed)
         {
@@ -53,7 +64,12 @@ public class UdonBehaviourToggler : UdonSharpBehaviour
 
     public override void OnPlayerTriggerExit(VRCPlayerApi player)
     {
-        bool isAllowed = this.lib.permissions.IsPlayerAllowed(player, this.masterOnly, this.isWhitelist, this.playerList);
+        bool isAllowed = this.lib.permissions.IsPlayerAllowed(
+            player,
+            this.masterOnly,
+            this.isWhitelist,
+            this.playerList
+        );
 
         if (!isAllowed)
         {

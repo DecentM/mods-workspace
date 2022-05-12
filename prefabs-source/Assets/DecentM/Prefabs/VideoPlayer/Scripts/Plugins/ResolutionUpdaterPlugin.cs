@@ -20,7 +20,12 @@ namespace DecentM.VideoPlayer.Plugins
             {
                 float aspectRatio = width / height;
 
-                screen.SetSize(new Vector2(screen.transform.localScale.x, screen.transform.localScale.x / aspectRatio));
+                screen.SetSize(
+                    new Vector2(
+                        screen.transform.localScale.x,
+                        screen.transform.localScale.x / aspectRatio
+                    )
+                );
                 screen.SetAspectRatio(aspectRatio);
             }
 
@@ -31,7 +36,8 @@ namespace DecentM.VideoPlayer.Plugins
         {
             Texture videoTexture = this.system.GetVideoTexture();
 
-            if (videoTexture == null) return;
+            if (videoTexture == null)
+                return;
 
             foreach (ScreenHandler screen in this.system.screens)
             {

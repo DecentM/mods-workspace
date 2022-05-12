@@ -49,7 +49,8 @@ namespace DecentM.Chat
          */
         public void OnSendMessage(int channel, string message)
         {
-            if (channel < 0 || message == "") return;
+            if (channel < 0 || message == "")
+                return;
 
             this.HandleOutgoingMessage(channel, message);
         }
@@ -75,7 +76,8 @@ namespace DecentM.Chat
 
         private void DebugLog(string message)
         {
-            if (!this.lib.debugging.isDebugging) return;
+            if (!this.lib.debugging.isDebugging)
+                return;
 
             this.channelsStore.AddMessage(0, 0, Networking.LocalPlayer.playerId, message);
         }
@@ -101,12 +103,18 @@ namespace DecentM.Chat
         private int OnUNetReceived_dataIndex;
         private int OnUNetReceived_dataLength;
         private int OnUNetReceived_id;
+
         public void OnUNetReceived()
         {
             // Ignore messages coming from ourselves
-            if (OnUNetReceived_sender == Networking.LocalPlayer.playerId) return;
+            if (OnUNetReceived_sender == Networking.LocalPlayer.playerId)
+                return;
 
-            string value = this.reader.ReadUTF8String(OnUNetReceived_dataLength, OnUNetReceived_dataBuffer, OnUNetReceived_dataIndex);
+            string value = this.reader.ReadUTF8String(
+                OnUNetReceived_dataLength,
+                OnUNetReceived_dataBuffer,
+                OnUNetReceived_dataIndex
+            );
             string command = value.Split(null, 2)[0];
             string arguments = value.Split(null, 2)[1];
 
@@ -117,69 +125,77 @@ namespace DecentM.Chat
             {
                 // SendMessageCommand - int id, int channel, string message
                 case SendMessageCommand:
-                    {
-                        string id = "";
-                        int channel = -1;
-                        string message = "";
+                {
+                    string id = "";
+                    int channel = -1;
+                    string message = "";
 
-                        string[] args = arguments.Split(null, 3);
-                        id = args[0];
-                        bool channelParsed = int.TryParse(args[1], out channel);
-                        message = args[2];
+                    string[] args = arguments.Split(null, 3);
+                    id = args[0];
+                    bool channelParsed = int.TryParse(args[1], out channel);
+                    message = args[2];
 
-                        if (!channelParsed) break;
-
-                        this.HandleIncomingMessage(OnUNetReceived_id, id, channel, OnUNetReceived_sender, message);
+                    if (!channelParsed)
                         break;
-                    }
+
+                    this.HandleIncomingMessage(
+                        OnUNetReceived_id,
+                        id,
+                        channel,
+                        OnUNetReceived_sender,
+                        message
+                    );
+                    break;
+                }
                 // SendLateMessageCommand - int id, int channel, int senderId, string message
                 case SendLateMessageCommand:
-                    {
-                        string id = "";
-                        int channel = -1;
-                        int senderId = -1;
-                        string message = "";
+                {
+                    string id = "";
+                    int channel = -1;
+                    int senderId = -1;
+                    string message = "";
 
-                        string[] args = arguments.Split(null, 4);
-                        id = args[0];
-                        bool channelParsed = int.TryParse(args[1], out channel);
-                        bool senderIdParsed = int.TryParse(args[2], out senderId);
-                        message = args[3];
+                    string[] args = arguments.Split(null, 4);
+                    id = args[0];
+                    bool channelParsed = int.TryParse(args[1], out channel);
+                    bool senderIdParsed = int.TryParse(args[2], out senderId);
+                    message = args[3];
 
-                        if (!channelParsed || !senderIdParsed) break;
-
-                        this.HandleIncomingMessage(OnUNetReceived_id, id, channel, senderId, message);
+                    if (!channelParsed || !senderIdParsed)
                         break;
-                    }
+
+                    this.HandleIncomingMessage(OnUNetReceived_id, id, channel, senderId, message);
+                    break;
+                }
                 // AckMessageCommand: int id
                 case AckMessageCommand:
-                    {
-                        string id = arguments;
+                {
+                    string id = arguments;
 
-                        this.HandleMessageAck(id);
-                        break;
-                    }
+                    this.HandleMessageAck(id);
+                    break;
+                }
 
                 case TypingStartCommand:
-                    {
-                        this.HandleTypingStartReceived(OnUNetReceived_sender);
-                        break;
-                    }
+                {
+                    this.HandleTypingStartReceived(OnUNetReceived_sender);
+                    break;
+                }
                 case TypingStopCommand:
-                    {
-                        this.HandleTypingStopReceived(OnUNetReceived_sender);
-                        break;
-                    }
+                {
+                    this.HandleTypingStopReceived(OnUNetReceived_sender);
+                    break;
+                }
                 case PresenceOffCommand:
-                    {
-                        this.HandlePresenceOffReceived(OnUNetReceived_sender);
-                        break;
-                    }
+                {
+                    this.HandlePresenceOffReceived(OnUNetReceived_sender);
+                    break;
+                }
                 case PresenceOnCommand:
-                    {
-                        this.HandlePresenceOnReceived(OnUNetReceived_sender);
-                        break;
-                    }
+                {
+                    this.HandlePresenceOnReceived(OnUNetReceived_sender);
+                    break;
+                }
                 default:
                     // Ignore messages we don't recognise
                     break;
@@ -190,8 +206,10 @@ namespace DecentM.Chat
 
         private void HandlePresenceChange(bool newState)
         {
-            if (newState) this.HandlePresenceOnReceived(Networking.LocalPlayer.playerId);
-            else this.HandlePresenceOffReceived(Networking.LocalPlayer.playerId);
+            if (newState)
+                this.HandlePresenceOnReceived(Networking.LocalPlayer.playerId);
+            else
+                this.HandlePresenceOffReceived(Networking.LocalPlayer.playerId);
 
             this.SendCommandAll(newState ? PresenceOnCommand : PresenceOffCommand, "");
         }
@@ -218,16 +236,19 @@ namespace DecentM.Chat
 
         private void TypingStateStart()
         {
-            this.typingIndicatorTimeoutTicks = 1 / Time.fixedDeltaTime * this.typingIndicatorTimeoutSeconds;
+            this.typingIndicatorTimeoutTicks =
+                1 / Time.fixedDeltaTime * this.typingIndicatorTimeoutSeconds;
         }
 
         private void TypingStateFixedUpdate()
         {
-            if (typingState == false) return;
+            if (typingState == false)
+                return;
 
             typingTimeoutClock++;
 
-            if (typingTimeoutClock < this.typingIndicatorTimeoutTicks) return;
+            if (typingTimeoutClock < this.typingIndicatorTimeoutTicks)
+                return;
 
             this.typingState = false;
             this.typingTimeoutClock = 0;
@@ -236,7 +257,8 @@ namespace DecentM.Chat
 
         private void HandleLetterEntry(string letter)
         {
-            if (this.typingState) return;
+            if (this.typingState)
+                return;
 
             this.typingTimeoutClock = 0;
             this.typingState = true;
@@ -245,8 +267,10 @@ namespace DecentM.Chat
 
         private void HandleTypingStateChange()
         {
-            if (this.typingState) this.HandleTypingStartReceived(Networking.LocalPlayer.playerId);
-            else this.HandleTypingStopReceived(Networking.LocalPlayer.playerId);
+            if (this.typingState)
+                this.HandleTypingStartReceived(Networking.LocalPlayer.playerId);
+            else
+                this.HandleTypingStopReceived(Networking.LocalPlayer.playerId);
 
             this.SendCommandAll(this.typingState ? TypingStartCommand : TypingStopCommand, "");
         }
@@ -269,12 +293,19 @@ namespace DecentM.Chat
 
             VRCPlayerApi player = VRCPlayerApi.GetPlayerById(id);
 
-            if (player != null && player.IsValid()) name = player.displayName;
+            if (player != null && player.IsValid())
+                name = player.displayName;
 
             return name;
         }
 
-        private void HandleIncomingMessage(int packetId, string id, int channel, int senderId, string message)
+        private void HandleIncomingMessage(
+            int packetId,
+            string id,
+            int channel,
+            int senderId,
+            string message
+        )
         {
             // Add it locally
             this.channelsStore.AddMessageWithId(packetId, id, channel, senderId, message);
@@ -309,7 +340,10 @@ namespace DecentM.Chat
             this.typingTimeoutClock = 0;
             this.HandleTypingStateChange();
 
-            string id = this.channelsStore.GenerateNextIdForPlayer(channel, Networking.LocalPlayer.playerId);
+            string id = this.channelsStore.GenerateNextIdForPlayer(
+                channel,
+                Networking.LocalPlayer.playerId
+            );
 
             this.DebugLog($"{SendMessageCommand} {id} {channel} {message}");
             int packetId = this.SendCommandAll(SendMessageCommand, $"{id} {channel} {message}");
@@ -317,7 +351,13 @@ namespace DecentM.Chat
             // Add the message locally
             // TODO: Check what the consequences of multiples of the same packetId are! It will probably just use the newest message
             // with that packet ID, which is probably fine, as this usually only happens for messages that failed to send.
-            this.channelsStore.AddMessageWithId(packetId == -1 ? 0 : packetId, id, channel, Networking.LocalPlayer.playerId, message);
+            this.channelsStore.AddMessageWithId(
+                packetId == -1 ? 0 : packetId,
+                id,
+                channel,
+                Networking.LocalPlayer.playerId,
+                message
+            );
 
             // The packet id will be -1 if it failed to send
             int status = packetId == -1 ? MessageStatusFailed : MessageStatusSending;
@@ -329,12 +369,17 @@ namespace DecentM.Chat
 
         public void OnUNetSendComplete()
         {
-            this.DebugLog($"SendComplete {OnUNetSendComplete_messageId} {OnUNetSendComplete_succeed}");
+            this.DebugLog(
+                $"SendComplete {OnUNetSendComplete_messageId} {OnUNetSendComplete_succeed}"
+            );
 
             // Check if the message that belongs to this packet was sent by us
-            bool sentByLocalPlayer = this.channelsStore.IsMessageSentByLocalPlayerByPacket(OnUNetSendComplete_messageId);
+            bool sentByLocalPlayer = this.channelsStore.IsMessageSentByLocalPlayerByPacket(
+                OnUNetSendComplete_messageId
+            );
 
-            if (!sentByLocalPlayer) return;
+            if (!sentByLocalPlayer)
+                return;
 
             int status = OnUNetSendComplete_succeed ? MessageStatusSent : MessageStatusFailed;
             this.channelsStore.ChangeMessageStatusByPacket(OnUNetSendComplete_messageId, status);
@@ -342,20 +387,31 @@ namespace DecentM.Chat
 
         public override void OnPlayerLeft(VRCPlayerApi player)
         {
-            if (player == null || Networking.LocalPlayer == null || player.playerId == Networking.LocalPlayer.playerId) return;
+            if (
+                player == null
+                || Networking.LocalPlayer == null
+                || player.playerId == Networking.LocalPlayer.playerId
+            )
+                return;
 
             this.channelsStore.PurgeMessagesByPlayerId(player.playerId);
         }
 
         public override void OnPlayerJoined(VRCPlayerApi player)
         {
-            if (!Networking.LocalPlayer.isMaster || player == null || !player.IsValid()) return;
+            if (!Networking.LocalPlayer.isMaster || player == null || !player.IsValid())
+                return;
 
             ChatMessage[] messages = this.channelsStore.GetAllMessages();
 
             foreach (ChatMessage message in messages)
             {
-                this.SendCommandTarget(true, SendLateMessageCommand, player.playerId, $"{message.id} {message.channel} {message.senderId} {message.message}");
+                this.SendCommandTarget(
+                    true,
+                    SendLateMessageCommand,
+                    player.playerId,
+                    $"{message.id} {message.channel} {message.senderId} {message.message}"
+                );
             }
         }
 

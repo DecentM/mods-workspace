@@ -1,5 +1,4 @@
-﻿
-using UdonSharp;
+﻿using UdonSharp;
 using UnityEngine;
 using VRC.SDKBase;
 using VRC.Udon;
@@ -16,20 +15,24 @@ public class PlayerJoinLeaveProvider : UdonSharpBehaviour
 
     public override void OnPlayerJoined(VRCPlayerApi player)
     {
-        if (!this.toggle.isOn) return;
+        if (!this.toggle.isOn)
+            return;
 
         string displayName = "Someone";
-        if (player != null && player.IsValid()) displayName = player.displayName;
+        if (player != null && player.IsValid())
+            displayName = player.displayName;
 
         this.notifications.SendNotification(this.joinIcon, $"{displayName} joined");
     }
 
     public override void OnPlayerLeft(VRCPlayerApi player)
     {
-        if (!this.toggle.isOn) return;
+        if (!this.toggle.isOn)
+            return;
 
         string displayName = "Someone";
-        if (player != null && player.IsValid()) displayName = player.displayName;
+        if (player != null && player.IsValid())
+            displayName = player.displayName;
 
         this.notifications.SendNotification(this.leaveIcon, $"{displayName} left");
     }

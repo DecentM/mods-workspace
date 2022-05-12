@@ -1,5 +1,4 @@
-﻿
-using UdonSharp;
+﻿using UdonSharp;
 using UnityEngine;
 using VRC.SDKBase;
 
@@ -32,7 +31,12 @@ namespace DecentM
             return result;
         }
 
-        public bool IsPlayerAllowed(VRCPlayerApi player, bool masterOnly, bool isWhitelist, PlayerList playerList)
+        public bool IsPlayerAllowed(
+            VRCPlayerApi player,
+            bool masterOnly,
+            bool isWhitelist,
+            PlayerList playerList
+        )
         {
             if (player == null || !player.IsValid())
             {

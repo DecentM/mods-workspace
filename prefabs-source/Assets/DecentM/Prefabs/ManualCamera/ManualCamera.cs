@@ -1,5 +1,4 @@
-﻿
-using UdonSharp;
+﻿using UdonSharp;
 using UnityEngine;
 using VRC.SDKBase;
 using VRC.Udon;
@@ -25,7 +24,8 @@ public class ManualCamera : UdonSharpBehaviour
 
     private void LateUpdate()
     {
-        if (this.targetFps <= 0) return;
+        if (this.targetFps <= 0)
+            return;
 
         this.elapsed += Time.unscaledDeltaTime;
 

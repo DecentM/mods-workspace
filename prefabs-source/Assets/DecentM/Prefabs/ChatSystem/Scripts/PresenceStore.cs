@@ -31,7 +31,10 @@ namespace DecentM.Chat
 
             presenceObject.transform.SetParent(this.presenceRoot);
             presenceObject.name = name;
-            presenceObject.transform.SetPositionAndRotation(this.presenceTemplate.transform.position, this.presenceTemplate.transform.rotation);
+            presenceObject.transform.SetPositionAndRotation(
+                this.presenceTemplate.transform.position,
+                this.presenceTemplate.transform.rotation
+            );
             presenceObject.transform.localScale = this.presenceTemplate.transform.localScale;
 
             return presenceObject;
@@ -40,7 +43,8 @@ namespace DecentM.Chat
         private GameObject GetPresenceByPlayer(int playerId)
         {
             // Check if the requested index is in bounds
-            if (playerId < 0 || playerId >= this.store.Length) return null;
+            if (playerId < 0 || playerId >= this.store.Length)
+                return null;
 
             return this.store[playerId];
         }
@@ -53,7 +57,8 @@ namespace DecentM.Chat
         {
             GameObject existing = this.GetPresenceByPlayer(senderId);
 
-            if (existing != null) this.RemovePresenceByPlayer(senderId);
+            if (existing != null)
+                this.RemovePresenceByPlayer(senderId);
 
             GameObject presenceObject = this.CreatePresenceObject($"Presence_{senderId}");
             ChatPresence presence = presenceObject.GetComponent<ChatPresence>();
@@ -69,12 +74,14 @@ namespace DecentM.Chat
         private void RemovePresenceByPlayer(int playerId)
         {
             // If there are no messages, it means this function was called in error, we just ignore the request
-            if (this.store.Length == 0) return;
+            if (this.store.Length == 0)
+                return;
 
             GameObject presenceObject = this.GetPresenceByPlayer(playerId);
 
             // The store doesn't have a GameObject at the index, or the index was out of bounds
-            if (presenceObject == null) return;
+            if (presenceObject == null)
+                return;
 
             // If there's only one message, don't bother with shifting stuff around, just set it to
             // an empty array.
@@ -93,7 +100,8 @@ namespace DecentM.Chat
 
         public override void OnPlayerLeft(VRCPlayerApi player)
         {
-            if (player == null || !player.IsValid()) return;
+            if (player == null || !player.IsValid())
+                return;
 
             this.RemovePresenceByPlayer(player.playerId);
         }
@@ -104,7 +112,8 @@ namespace DecentM.Chat
 
         public void OnAddPresence(int playerId)
         {
-            if (playerId < 0) return;
+            if (playerId < 0)
+                return;
 
             this.AddPresence(playerId);
             this.events.OnPlayerPresent(playerId);
@@ -112,7 +121,8 @@ namespace DecentM.Chat
 
         public void OnRemovePresence(int playerId)
         {
-            if (playerId < 0) return;
+            if (playerId < 0)
+                return;
 
             this.RemovePresenceByPlayer(playerId);
             this.events.OnPlayerAway(playerId);

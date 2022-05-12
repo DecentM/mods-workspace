@@ -39,7 +39,8 @@ namespace DecentM.Chat
             result[1] = -1; // playerId
             result[2] = -1; // index
 
-            if (id == null) return result;
+            if (id == null)
+                return result;
 
             string[] parts = id.Split(MessageIdSeparator, 3);
             int.TryParse(parts[0], out channel);
@@ -55,15 +56,19 @@ namespace DecentM.Chat
 
         public bool MessageIdDataValid(int[] idData)
         {
-            if (idData == null || idData.Length != 3) return false;
+            if (idData == null || idData.Length != 3)
+                return false;
 
             int channel = idData[0];
             int playerId = idData[1];
             int index = idData[2];
 
-            if (channel < 0) return false;
-            if (playerId < 0) return false;
-            if (index < 0) return false;
+            if (channel < 0)
+                return false;
+            if (playerId < 0)
+                return false;
+            if (index < 0)
+                return false;
 
             return true;
         }
@@ -76,17 +81,20 @@ namespace DecentM.Chat
             // Per channel, this is quick because it uses a map
             foreach (GameObject channelObject in this.channelStore)
             {
-                if (channelObject == null) continue;
+                if (channelObject == null)
+                    continue;
 
                 MessageStore messageStore = channelObject.GetComponent<MessageStore>();
 
-                if (messageStore == null) continue;
+                if (messageStore == null)
+                    continue;
 
                 if (messageStore.IsMessageSentByLocalPlayerByPacket(packetId))
                 {
                     result = true;
                     break;
-                };
+                }
+                ;
             }
 
             return result;
@@ -98,7 +106,10 @@ namespace DecentM.Chat
 
             channelObject.transform.SetParent(this.messageStoreRoot);
             channelObject.name = name;
-            channelObject.transform.SetPositionAndRotation(this.messageStoreTemplate.transform.position, this.messageStoreTemplate.transform.rotation);
+            channelObject.transform.SetPositionAndRotation(
+                this.messageStoreTemplate.transform.position,
+                this.messageStoreTemplate.transform.rotation
+            );
             channelObject.transform.localScale = this.messageStoreTemplate.transform.localScale;
 
             return channelObject;
@@ -110,13 +121,16 @@ namespace DecentM.Chat
             {
                 GameObject storeObject = this.channelStore[i];
 
-                if (storeObject == null) continue;
+                if (storeObject == null)
+                    continue;
 
                 MessageStore messageStore = storeObject.GetComponent<MessageStore>();
 
-                if (messageStore == null) continue;
+                if (messageStore == null)
+                    continue;
 
-                if (messageStore.channel == id) return i;
+                if (messageStore.channel == id)
+                    return i;
             }
 
             return -1;
@@ -126,11 +140,13 @@ namespace DecentM.Chat
         {
             foreach (GameObject storeObject in this.channelStore)
             {
-                if (storeObject == null) continue;
+                if (storeObject == null)
+                    continue;
 
                 MessageStore messageStore = storeObject.GetComponent<MessageStore>();
 
-                if (messageStore.channel == id) return true;
+                if (messageStore.channel == id)
+                    return true;
             }
 
             return false;
@@ -149,17 +165,20 @@ namespace DecentM.Chat
             // of the message ID is the channel
             int[] idData = this.DeserialiseMessageId(id);
 
-            if (!this.MessageIdDataValid(idData)) return null;
+            if (!this.MessageIdDataValid(idData))
+                return null;
 
             int channel = idData[0];
 
             // If we get a change request for a channel that doesn't exist, we had an error before that we
             // need to ignore here in order to avoid crashing
-            if (!this.ChannelExists(channel)) return null;
+            if (!this.ChannelExists(channel))
+                return null;
 
             GameObject channelObject = this.GetMessageStore(channel);
 
-            if (channelObject == null) return null;
+            if (channelObject == null)
+                return null;
 
             return channelObject.GetComponent<MessageStore>();
         }
@@ -174,7 +193,8 @@ namespace DecentM.Chat
             messageStore.OnCreate(id);
 
             // Something's gone terribly wrong if messageStore doesn't exist, as it's supposed to be attached to the template
-            if (messageStore == null) return;
+            if (messageStore == null)
+                return;
 
             if (initialised)
             {
@@ -186,7 +206,7 @@ namespace DecentM.Chat
             else
             {
                 GameObject[] tmp = new GameObject[1];
-                tmp[0] = channelObject ;
+                tmp[0] = channelObject;
                 this.channelStore = tmp;
             }
 
@@ -199,15 +219,18 @@ namespace DecentM.Chat
 
         private void RemoveChannelByIndex(int index)
         {
-            if (this.channelStore == null) return;
+            if (this.channelStore == null)
+                return;
 
             GameObject channelObject = this.channelStore[index];
 
-            if (channelObject == null) return;
+            if (channelObject == null)
+                return;
 
             MessageStore messageStore = channelObject.GetComponent<MessageStore>();
 
-            if (messageStore == null) return;
+            if (messageStore == null)
+                return;
 
             // Send a notification about the deletion
             this.events.OnChannelDeleted(messageStore);
@@ -225,7 +248,13 @@ namespace DecentM.Chat
 
             GameObject[] tmp = new GameObject[this.channelStore.Length - 1];
             Array.Copy(this.channelStore, tmp, index);
-            Array.Copy(this.channelStore, index + 1, tmp, index, this.channelStore.Length - 1 - index);
+            Array.Copy(
+                this.channelStore,
+                index + 1,
+                tmp,
+                index,
+                this.channelStore.Length - 1 - index
+            );
             this.channelStore = tmp;
         }
 
@@ -233,7 +262,8 @@ namespace DecentM.Chat
         {
             int index = this.GetStoreIndexById(id);
 
-            if (index == -1) return;
+            if (index == -1)
+                return;
 
             this.RemoveChannelByIndex(index);
         }
@@ -248,7 +278,8 @@ namespace DecentM.Chat
             {
                 MessageStore messageStore = channelObject.GetComponent<MessageStore>();
 
-                if (messageStore == null) continue;
+                if (messageStore == null)
+                    continue;
 
                 ChatMessage[] storeMessages = messageStore.GetAllMessages();
 
@@ -264,31 +295,43 @@ namespace DecentM.Chat
         public void AddMessage(int packetId, int channel, int senderId, string message)
         {
             // Create the channel if it doesn't exist yet
-            if (!this.ChannelExists(channel)) this.AddChannel(channel);
+            if (!this.ChannelExists(channel))
+                this.AddChannel(channel);
 
             GameObject channelObject = this.GetMessageStore(channel);
 
-            if (channelObject == null) return;
+            if (channelObject == null)
+                return;
 
             MessageStore messageStore = channelObject.GetComponent<MessageStore>();
 
-            if (messageStore == null) return;
+            if (messageStore == null)
+                return;
 
             messageStore.AddMessageWithoutId(packetId, message, senderId);
         }
 
-        public void AddMessageWithId(int packetId, string id, int channel, int senderId, string message)
+        public void AddMessageWithId(
+            int packetId,
+            string id,
+            int channel,
+            int senderId,
+            string message
+        )
         {
             // Create the channel if it doesn't exist yet
-            if (!this.ChannelExists(channel)) this.AddChannel(channel);
+            if (!this.ChannelExists(channel))
+                this.AddChannel(channel);
 
             GameObject channelObject = this.GetMessageStore(channel);
 
-            if (channelObject == null) return;
+            if (channelObject == null)
+                return;
 
             MessageStore messageStore = channelObject.GetComponent<MessageStore>();
 
-            if (messageStore == null) return;
+            if (messageStore == null)
+                return;
 
             messageStore.AddMessageWithId(packetId, id, message, senderId);
         }
@@ -296,15 +339,18 @@ namespace DecentM.Chat
         public string GenerateNextIdForPlayer(int channel, int playerId)
         {
             // Create the channel if it doesn't exist yet
-            if (!this.ChannelExists(channel)) this.AddChannel(channel);
+            if (!this.ChannelExists(channel))
+                this.AddChannel(channel);
 
             GameObject channelObject = this.GetMessageStore(channel);
 
-            if (channelObject == null) return "";
+            if (channelObject == null)
+                return "";
 
             MessageStore messageStore = channelObject.GetComponent<MessageStore>();
 
-            if (messageStore == null) return "";
+            if (messageStore == null)
+                return "";
 
             return messageStore.GenerateNextIdForPlayer(playerId);
         }
@@ -313,11 +359,13 @@ namespace DecentM.Chat
         {
             foreach (GameObject storeObject in this.channelStore)
             {
-                if (storeObject == null) continue;
+                if (storeObject == null)
+                    continue;
 
                 MessageStore messageStore = storeObject.GetComponent<MessageStore>();
 
-                if (messageStore == null) return;
+                if (messageStore == null)
+                    return;
 
                 messageStore.PurgeByPlayerId(playerId);
             }
@@ -327,11 +375,13 @@ namespace DecentM.Chat
         {
             foreach (GameObject storeObject in this.channelStore)
             {
-                if (storeObject == null) continue;
+                if (storeObject == null)
+                    continue;
 
                 MessageStore messageStore = storeObject.GetComponent<MessageStore>();
 
-                if (messageStore == null) return;
+                if (messageStore == null)
+                    return;
 
                 // MessageStore wil ignore this request if there's no message in it with this packet ID
                 messageStore.OnMessageStatusChangeByPacket(packetId, status);
@@ -342,7 +392,8 @@ namespace DecentM.Chat
         {
             MessageStore messageStore = this.GetMessageStoreByMessageId(id);
 
-            if (messageStore == null) return;
+            if (messageStore == null)
+                return;
 
             messageStore.OnMessageStatusChangeById(id, status);
         }
@@ -351,7 +402,8 @@ namespace DecentM.Chat
         {
             MessageStore messageStore = this.GetMessageStoreByMessageId(id);
 
-            if (messageStore == null) return;
+            if (messageStore == null)
+                return;
 
             messageStore.OnMessageColourChangeById(id, colour);
         }

@@ -1,5 +1,4 @@
-﻿
-using UdonSharp;
+﻿using UdonSharp;
 using UnityEngine;
 using VRC.SDKBase;
 using VRC.Udon;
@@ -9,13 +8,17 @@ public class CustomToggle : UdonSharpBehaviour
 {
     [Tooltip("The default state of the toggle")]
     public bool defaultState = false;
+
     [Tooltip("If true, the state will be synced to everyone")]
     public bool global = false;
+
     [Space]
     [Tooltip("The UdonBehaviour to send events to")]
     public UdonBehaviour behaviour;
+
     [Tooltip("The name of the event we send when toggling off")]
     public string offEvent = "ToggleOff";
+
     [Tooltip("The name of the event we send when toggling on")]
     public string onEvent = "ToggleOn";
 
@@ -44,11 +47,17 @@ public class CustomToggle : UdonSharpBehaviour
 
         if (this.state == true)
         {
-            SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, nameof(this.ToggleOn));
+            SendCustomNetworkEvent(
+                VRC.Udon.Common.Interfaces.NetworkEventTarget.All,
+                nameof(this.ToggleOn)
+            );
         }
         else
         {
-            SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, nameof(this.ToggleOff));
+            SendCustomNetworkEvent(
+                VRC.Udon.Common.Interfaces.NetworkEventTarget.All,
+                nameof(this.ToggleOff)
+            );
         }
     }
 
@@ -86,6 +95,9 @@ public class CustomToggle : UdonSharpBehaviour
 
     private void SyncState()
     {
-        SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, this.state ? nameof(this.ToggleOn) : nameof(this.ToggleOff));
+        SendCustomNetworkEvent(
+            VRC.Udon.Common.Interfaces.NetworkEventTarget.All,
+            this.state ? nameof(this.ToggleOn) : nameof(this.ToggleOff)
+        );
     }
 }

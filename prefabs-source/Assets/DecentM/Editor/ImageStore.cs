@@ -24,24 +24,32 @@ namespace DecentM.EditorTools
 
         private static void ApplyImportSettings()
         {
-            List<string> files = Directory.GetFiles($"{EditorAssets.ImageCacheFolder}", "*.jpg", SearchOption.AllDirectories)
+            List<string> files = Directory
+                .GetFiles($"{EditorAssets.ImageCacheFolder}", "*.jpg", SearchOption.AllDirectories)
                 .ToList();
 
             for (int i = 0; i < files.Count; i++)
             {
                 string file = files[i];
-                if (string.IsNullOrEmpty(file)) continue;
+                if (string.IsNullOrEmpty(file))
+                    continue;
 
-                EditorUtility.DisplayProgressBar("Reapplying import settings...", Path.GetFileName(file), (float)i / files.Count);
+                EditorUtility.DisplayProgressBar(
+                    "Reapplying import settings...",
+                    Path.GetFileName(file),
+                    (float)i / files.Count
+                );
 
                 AssetImporter importer = AssetImporter.GetAtPath(file);
-                if (importer == null || !(importer is TextureImporter)) continue;
+                if (importer == null || !(importer is TextureImporter))
+                    continue;
 
                 TextureImporter textureImporter = (TextureImporter)importer;
 
                 // If it's imported as a sprite, we assume it's done by us so that we don't keep re-crunching already imported images.
                 // This also lets the user change the other settings without us resetting them every time.
-                if (textureImporter.textureType == TextureImporterType.Sprite) continue;
+                if (textureImporter.textureType == TextureImporterType.Sprite)
+                    continue;
 
                 textureImporter.textureType = TextureImporterType.Sprite;
                 textureImporter.mipmapEnabled = false;
@@ -63,7 +71,8 @@ namespace DecentM.EditorTools
 
         private static string GetPathFromUrl(string url)
         {
-            if (!ValidateUrl(url)) return null;
+            if (!ValidateUrl(url))
+                return null;
 
             string hash = Hash.String(url);
             return $"{EditorAssets.ImageCacheFolder}/{hash}";
@@ -71,8 +80,10 @@ namespace DecentM.EditorTools
 
         private static IEnumerator Fetch(string url)
         {
-            if (string.IsNullOrEmpty(url)) return null;
-            if (!ValidateUrl(url)) return null;
+            if (string.IsNullOrEmpty(url))
+                return null;
+            if (!ValidateUrl(url))
+                return null;
 
             string path = GetPathFromUrl(url);
 
@@ -86,8 +97,10 @@ namespace DecentM.EditorTools
             for (int i = 0; i < urls.Count; i++)
             {
                 string url = urls[i];
-                if (string.IsNullOrEmpty(url)) continue;
-                if (!ValidateUrl(url)) continue;
+                if (string.IsNullOrEmpty(url))
+                    continue;
+                if (!ValidateUrl(url))
+                    continue;
 
                 coroutines.Add(DCoroutine.Start(Fetch(url)));
             }
@@ -95,7 +108,12 @@ namespace DecentM.EditorTools
             return Parallelism.WaitForCoroutines(coroutines, OnFinish);
         }
 
-        private static DCoroutine Fetch(Queue<string> urls, int batchSize, Action OnFinish, Action<int> OnQueueSizeChange)
+        private static DCoroutine Fetch(
+            Queue<string> urls,
+            int batchSize,
+            Action OnFinish,
+            Action<int> OnQueueSizeChange
+        )
         {
             if (urls.Count == 0)
             {
@@ -111,25 +129,34 @@ namespace DecentM.EditorTools
                 OnQueueSizeChange(urls.Count);
             }
 
-            return DCoroutine.Start(FetchInParallel(batch, () => Fetch(urls, batchSize, OnFinish, OnQueueSizeChange)));
+            return DCoroutine.Start(
+                FetchInParallel(batch, () => Fetch(urls, batchSize, OnFinish, OnQueueSizeChange))
+            );
         }
 
         [PublicAPI]
         public static Sprite GetCached(string url)
         {
-            if (!ValidateUrl(url)) return null;
+            if (!ValidateUrl(url))
+                return null;
 
             try
             {
                 string hash = Hash.String(url);
                 List<string> files = Directory
-                    .GetFiles($"{EditorAssets.ImageCacheFolder}/{hash}", "*.jpg", SearchOption.TopDirectoryOnly)
+                    .GetFiles(
+                        $"{EditorAssets.ImageCacheFolder}/{hash}",
+                        "*.jpg",
+                        SearchOption.TopDirectoryOnly
+                    )
                     .ToList();
 
-                if (files.Count == 0) return null;
+                if (files.Count == 0)
+                    return null;
 
                 return AssetDatabase.LoadAssetAtPath<Sprite>(files[0]);
-            } catch
+            }
+            catch
             {
                 return null;
             }
@@ -138,7 +165,8 @@ namespace DecentM.EditorTools
         [PublicAPI]
         public static bool IsCached(string url)
         {
-            if (!ValidateUrl(url)) return false;
+            if (!ValidateUrl(url))
+                return false;
 
             Sprite texture = GetCached(url);
             return texture != null;
@@ -164,9 +192,12 @@ namespace DecentM.EditorTools
             for (int i = 0; i < urls.Length; i++)
             {
                 string url = urls[i];
-                if (string.IsNullOrEmpty(url)) continue;
-                if (!ValidateUrl(url)) continue;
-                if (IsCached(url)) continue;
+                if (string.IsNullOrEmpty(url))
+                    continue;
+                if (!ValidateUrl(url))
+                    continue;
+                if (IsCached(url))
+                    continue;
 
                 queue.Enqueue(url);
             }
@@ -206,7 +237,8 @@ namespace DecentM.EditorTools
         [PublicAPI]
         public static bool Refresh(string[] urls, Action<float> OnProgress, Action OnFinish)
         {
-            if (urls.Length == 0) return true;
+            if (urls.Length == 0)
+                return true;
             return Fetch(urls, OnProgress, OnFinish);
         }
 

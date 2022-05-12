@@ -62,24 +62,29 @@ namespace DecentM.EditorTools
     {
         private static string GetArguments(string arguments)
         {
-            return string.Join(" ", new string[]
-            {
-                $"{arguments}",
-                $"--no-check-certificate",
-                $"--skip-download",
-                $"--no-exec",
-                $"--no-overwrites",
-                $"--restrict-filenames",
-                $"--geo-bypass",
-                $"--ignore-config",
-                $"--ignore-errors"
-            });
+            return string.Join(
+                " ",
+                new string[]
+                {
+                    $"{arguments}",
+                    $"--no-check-certificate",
+                    $"--skip-download",
+                    $"--no-exec",
+                    $"--no-overwrites",
+                    $"--restrict-filenames",
+                    $"--geo-bypass",
+                    $"--ignore-config",
+                    $"--ignore-errors"
+                }
+            );
         }
 
         private static bool IsError(ProcessResult result)
         {
-            if (string.IsNullOrEmpty(result.stderr)) return false;
-            if (result.stderr.Contains("Retrying")) return false;
+            if (string.IsNullOrEmpty(result.stderr))
+                return false;
+            if (result.stderr.Contains("Retrying"))
+                return false;
 
             Debug.LogWarning(result.stderr);
             Debug.LogWarning($"yt-dlp has outputted an error, results may be incomplete.");
@@ -87,21 +92,35 @@ namespace DecentM.EditorTools
             return true;
         }
 
-        public static IEnumerator GetVideoUrlEnumerator(string url, int resolution, Action<string> OnSuccess)
+        public static IEnumerator GetVideoUrlEnumerator(
+            string url,
+            int resolution,
+            Action<string> OnSuccess
+        )
         {
             void OnFinish(ProcessResult result)
             {
-                if (IsError(result)) return;
+                if (IsError(result))
+                    return;
 
                 OnSuccess(result.stdout);
             }
 
-            return Parallelism.WaitForCallback((callback) => ProcessManager.RunProcess(
-                EditorAssets.YtDlpPath,
-                GetArguments($"-f \"mp4[height<=?{resolution}]/best[height<=?{resolution}]\" --get-url {url}"),
-                ".",
-                (result) => { callback(); OnFinish(result); }
-            ));
+            return Parallelism.WaitForCallback(
+                (callback) =>
+                    ProcessManager.RunProcess(
+                        EditorAssets.YtDlpPath,
+                        GetArguments(
+                            $"-f \"mp4[height<=?{resolution}]/best[height<=?{resolution}]\" --get-url {url}"
+                        ),
+                        ".",
+                        (result) =>
+                        {
+                            callback();
+                            OnFinish(result);
+                        }
+                    )
+            );
         }
 
         public static void GetVideoUrl(string url, int resolution, Action<string> callback)
@@ -118,100 +137,154 @@ namespace DecentM.EditorTools
         {
             void OnFinish(ProcessResult result)
             {
-                if (IsError(result)) return;
+                if (IsError(result))
+                    return;
 
                 OnSuccess(JsonUtility.FromJson<YTDLVideoJson>(result.stdout));
             }
 
-            return Parallelism.WaitForCallback((callback) => ProcessManager.RunProcess(
-                EditorAssets.YtDlpPath,
-                GetArguments($"-J {url}"),
-                ".",
-                (result) => { callback(); OnFinish(result); }
-            ));
+            return Parallelism.WaitForCallback(
+                (callback) =>
+                    ProcessManager.RunProcess(
+                        EditorAssets.YtDlpPath,
+                        GetArguments($"-J {url}"),
+                        ".",
+                        (result) =>
+                        {
+                            callback();
+                            OnFinish(result);
+                        }
+                    )
+            );
         }
 
-        public static IEnumerator GetPlaylistVideos(string url, Action<YTDLFlatPlaylistJson> OnSuccess)
+        public static IEnumerator GetPlaylistVideos(
+            string url,
+            Action<YTDLFlatPlaylistJson> OnSuccess
+        )
         {
             void OnFinish(ProcessResult result)
             {
-                if (IsError(result)) return;
+                if (IsError(result))
+                    return;
 
                 OnSuccess(JsonUtility.FromJson<YTDLFlatPlaylistJson>(result.stdout));
             }
 
-            return Parallelism.WaitForCallback((callback) => ProcessManager.RunProcess(
-                EditorAssets.YtDlpPath,
-                GetArguments($"-J --flat-playlist {url}"),
-                ".",
-                (result) => { callback(); OnFinish(result); }
-            ));
+            return Parallelism.WaitForCallback(
+                (callback) =>
+                    ProcessManager.RunProcess(
+                        EditorAssets.YtDlpPath,
+                        GetArguments($"-J --flat-playlist {url}"),
+                        ".",
+                        (result) =>
+                        {
+                            callback();
+                            OnFinish(result);
+                        }
+                    )
+            );
         }
 
         public static IEnumerator DownloadSubtitles(string url, string path, bool autoSubs)
         {
             void OnFinish(ProcessResult result)
             {
-                if (IsError(result)) return;
+                if (IsError(result))
+                    return;
             }
 
             string arguments = autoSubs
                 ? $"--write-subs --write-auto-subs --sub-format srt/vtt --sub-langs all {url}"
                 : $"--write-subs --no-write-auto-subs --sub-format srt/vtt --sub-langs all {url}";
 
-            return Parallelism.WaitForCallback((callback) => ProcessManager.RunProcess(
-                EditorAssets.YtDlpPath,
-                GetArguments(arguments),
-                path,
-                (result) => { callback(); OnFinish(result); }
-            ));
+            return Parallelism.WaitForCallback(
+                (callback) =>
+                    ProcessManager.RunProcess(
+                        EditorAssets.YtDlpPath,
+                        GetArguments(arguments),
+                        path,
+                        (result) =>
+                        {
+                            callback();
+                            OnFinish(result);
+                        }
+                    )
+            );
         }
 
-        public static IEnumerator GetMetadataWithComments(string url, Action<YTDLVideoJson> OnSuccess)
+        public static IEnumerator GetMetadataWithComments(
+            string url,
+            Action<YTDLVideoJson> OnSuccess
+        )
         {
             void OnFinish(ProcessResult result)
             {
-                if (IsError(result)) return;
+                if (IsError(result))
+                    return;
 
                 OnSuccess(JsonUtility.FromJson<YTDLVideoJson>(result.stdout));
             }
 
-            return Parallelism.WaitForCallback((callback) => ProcessManager.RunProcess(
-                EditorAssets.YtDlpPath,
-                GetArguments($"--write-comments -J {url}"),
-                ".",
-                (result) => { callback(); OnFinish(result); }
-            ));
+            return Parallelism.WaitForCallback(
+                (callback) =>
+                    ProcessManager.RunProcess(
+                        EditorAssets.YtDlpPath,
+                        GetArguments($"--write-comments -J {url}"),
+                        ".",
+                        (result) =>
+                        {
+                            callback();
+                            OnFinish(result);
+                        }
+                    )
+            );
         }
 
         public static IEnumerator DownloadMetadataWithComments(string url, string path)
         {
             void OnFinish(ProcessResult result)
             {
-                if (IsError(result)) return;
+                if (IsError(result))
+                    return;
             }
 
-            return Parallelism.WaitForCallback((callback) => ProcessManager.RunProcess(
-                EditorAssets.YtDlpPath,
-                GetArguments($"--write-comments {url}"),
-                path,
-                (result) => { callback(); OnFinish(result); }
-            ));
+            return Parallelism.WaitForCallback(
+                (callback) =>
+                    ProcessManager.RunProcess(
+                        EditorAssets.YtDlpPath,
+                        GetArguments($"--write-comments {url}"),
+                        path,
+                        (result) =>
+                        {
+                            callback();
+                            OnFinish(result);
+                        }
+                    )
+            );
         }
 
         public static IEnumerator DownloadThumbnail(string url, string path)
         {
             void OnFinish(ProcessResult result)
             {
-                if (IsError(result)) return;
+                if (IsError(result))
+                    return;
             }
 
-            return Parallelism.WaitForCallback((callback) => ProcessManager.RunProcess(
-                EditorAssets.YtDlpPath,
-                GetArguments($"--convert-thumbnails jpg --write-thumbnail {url}"),
-                path,
-                (result) => { callback(); OnFinish(result); }
-            ));
+            return Parallelism.WaitForCallback(
+                (callback) =>
+                    ProcessManager.RunProcess(
+                        EditorAssets.YtDlpPath,
+                        GetArguments($"--convert-thumbnails jpg --write-thumbnail {url}"),
+                        path,
+                        (result) =>
+                        {
+                            callback();
+                            OnFinish(result);
+                        }
+                    )
+            );
         }
     }
 }

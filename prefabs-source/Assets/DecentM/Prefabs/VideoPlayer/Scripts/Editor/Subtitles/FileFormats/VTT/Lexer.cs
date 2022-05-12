@@ -46,9 +46,12 @@ namespace DecentM.Subtitles.Vtt
                     result += text[cursor];
                     cursor++;
 
-                    if (text[cursor] == '\n' && lastCharWasNewline) break;
-                    if (text[cursor] == '\n') lastCharWasNewline = true;
-                    else lastCharWasNewline = false;
+                    if (text[cursor] == '\n' && lastCharWasNewline)
+                        break;
+                    if (text[cursor] == '\n')
+                        lastCharWasNewline = true;
+                    else
+                        lastCharWasNewline = false;
                 }
 
                 return result;
@@ -58,8 +61,10 @@ namespace DecentM.Subtitles.Vtt
             {
                 for (int i = 0; i < word.Length; i++)
                 {
-                    if (cursor + i >= text.Length) return false;
-                    if (word[i] != text[cursor + i]) return false;
+                    if (cursor + i >= text.Length)
+                        return false;
+                    if (word[i] != text[cursor + i])
+                        return false;
                 }
 
                 return true;
@@ -67,7 +72,8 @@ namespace DecentM.Subtitles.Vtt
 
             bool CheckNextCharIsNewline()
             {
-                if (cursor >= text.Length - 1) return false;
+                if (cursor >= text.Length - 1)
+                    return false;
 
                 bool nextIsCR = text[cursor + 1] == '\r';
                 return text[cursor + (nextIsCR ? 2 : 1)] == '\n';
@@ -75,7 +81,8 @@ namespace DecentM.Subtitles.Vtt
 
             bool CheckPreviousCharIsNewline()
             {
-                if (cursor == 0) return false;
+                if (cursor == 0)
+                    return false;
 
                 bool nextIsCR = text[cursor - 1] == '\r';
                 return text[cursor - (nextIsCR ? 2 : 1)] == '\n';
@@ -141,7 +148,7 @@ namespace DecentM.Subtitles.Vtt
                         AddToken(TokenType.DoubleNewline, "\n\n");
                         continue;
                     }
-                    
+
                     if (!CheckPreviousCharIsNewline())
                     {
                         AddToken(TokenType.Newline, "\n");

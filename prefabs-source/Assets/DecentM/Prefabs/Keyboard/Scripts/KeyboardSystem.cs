@@ -20,14 +20,17 @@ namespace DecentM.Keyboard
             {
                 layout.SetProgramVariable("system", this);
 
-                if (layout.layoutName == this.defaultLayout) layout.gameObject.SetActive(true);
-                else layout.gameObject.SetActive(false);
+                if (layout.layoutName == this.defaultLayout)
+                    layout.gameObject.SetActive(true);
+                else
+                    layout.gameObject.SetActive(false);
             }
         }
 
         public bool ActivateLayout(string layoutName)
         {
-            if (this.layouts == null || this.layouts.Length == 0) return false;
+            if (this.layouts == null || this.layouts.Length == 0)
+                return false;
 
             bool success = false;
 
@@ -37,7 +40,8 @@ namespace DecentM.Keyboard
                 {
                     layout.gameObject.SetActive(true);
                     success = true;
-                } else
+                }
+                else
                 {
                     layout.gameObject.SetActive(false);
                 }
@@ -48,7 +52,8 @@ namespace DecentM.Keyboard
 
         public bool DeactivateLayout(string layoutName)
         {
-            if (this.layouts == null || this.layouts.Length == 0) return false;
+            if (this.layouts == null || this.layouts.Length == 0)
+                return false;
 
             foreach (KeyboardLayout layout in this.layouts)
             {

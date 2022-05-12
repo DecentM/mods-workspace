@@ -1,5 +1,4 @@
-﻿
-using UdonSharp;
+﻿using UdonSharp;
 using UnityEngine;
 using VRC.SDKBase;
 using VRC.Udon;
@@ -38,7 +37,8 @@ namespace DecentM.Keyboard
 
         public void ResetAndStop()
         {
-            if (this.holding) return;
+            if (this.holding)
+                return;
 
             this.ResetAndStopDeferred();
             this.SendCustomEventDelayedSeconds(nameof(this.ResetAndStopDeferred), 0.1f);
@@ -46,9 +46,13 @@ namespace DecentM.Keyboard
 
         public void ResetAndStopDeferred()
         {
-            this.gameObject.transform.SetPositionAndRotation(this.resetPosition.position, this.resetPosition.rotation);
+            this.gameObject.transform.SetPositionAndRotation(
+                this.resetPosition.position,
+                this.resetPosition.rotation
+            );
 
-            if (this.rigidbody == null) return;
+            if (this.rigidbody == null)
+                return;
 
             this.rigidbody.velocity = Vector3.zero;
             this.rigidbody.angularVelocity = Vector3.zero;

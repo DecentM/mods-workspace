@@ -53,7 +53,8 @@ namespace DecentM.Metrics
 
         private void QueuePush(object[] queueItem)
         {
-            if (this.queue == null) this.queue = new object[0][];
+            if (this.queue == null)
+                this.queue = new object[0][];
 
             object[][] tmp = new object[this.queue.Length + 1][];
             Array.Copy(this.queue, 0, tmp, 0, this.queue.Length);
@@ -63,10 +64,11 @@ namespace DecentM.Metrics
 
         private object[] QueuePop()
         {
-            if (this.queue == null || this.queue.Length == 0) return null;
+            if (this.queue == null || this.queue.Length == 0)
+                return null;
 
             // Clone the first item from the queue
-            object[] result = new object[] {  this.queue[0][0], this.queue[0][1], this.queue[0][2] };
+            object[] result = new object[] { this.queue[0][0], this.queue[0][1], this.queue[0][2] };
 
             object[][] tmp = new object[this.queue.Length - 1][];
             Array.Copy(this.queue, 1, tmp, 0, this.queue.Length - 1);
@@ -77,7 +79,8 @@ namespace DecentM.Metrics
 
         private void QueueShift(object[] queueItem)
         {
-            if (this.queue == null) this.queue = new object[0][];
+            if (this.queue == null)
+                this.queue = new object[0][];
 
             object[][] tmp = new object[this.queue.Length + 1][];
             Array.Copy(this.queue, 0, tmp, 1, this.queue.Length);
@@ -87,7 +90,8 @@ namespace DecentM.Metrics
 
         private object[] GetCurrentItem()
         {
-            if (this.queue == null || this.queue.Length == 0) return null;
+            if (this.queue == null || this.queue.Length == 0)
+                return null;
             return this.queue[0];
         }
 
@@ -110,20 +114,25 @@ namespace DecentM.Metrics
 
         private void FixedUpdate()
         {
-            if (this.locked) return;
+            if (this.locked)
+                return;
 
             this.elapsed += Time.fixedUnscaledDeltaTime;
             if (this.elapsed > this.queueProcessInterval)
             {
                 this.elapsed = 0;
-                this.queueProcessInterval = UnityEngine.Random.Range(this.queueProcessIntervalMin, this.queueProcessIntervalMax);
+                this.queueProcessInterval = UnityEngine.Random.Range(
+                    this.queueProcessIntervalMin,
+                    this.queueProcessIntervalMax
+                );
                 this.ProcessQueue();
             }
         }
 
         private void ProcessQueue()
         {
-            if (this.queue == null || this.queue.Length == 0) return;
+            if (this.queue == null || this.queue.Length == 0)
+                return;
 
             this.AttemptDelivery();
         }
@@ -131,7 +140,8 @@ namespace DecentM.Metrics
         private void AttemptDelivery()
         {
             object[] currentItem = this.GetCurrentItem();
-            if (currentItem == null) return;
+            if (currentItem == null)
+                return;
 
             this.locked = true;
             VRCUrl url = (VRCUrl)currentItem[0];
@@ -179,7 +189,8 @@ namespace DecentM.Metrics
         private void HandleMetricSubmitted()
         {
             object[] currentItem = this.QueuePop();
-            if (currentItem == null) return;
+            if (currentItem == null)
+                return;
 
             this.locked = false;
             int attempts = (int)currentItem[1];
@@ -191,7 +202,8 @@ namespace DecentM.Metrics
         private void DiscardCurrentItem()
         {
             object[] currentItem = this.QueuePop();
-            if (currentItem == null) return;
+            if (currentItem == null)
+                return;
 
             this.locked = false;
             int attempts = (int)currentItem[1];
@@ -203,7 +215,8 @@ namespace DecentM.Metrics
         private void RequeueCurrentItem()
         {
             object[] currentItem = this.QueuePop();
-            if (currentItem == null) return;
+            if (currentItem == null)
+                return;
 
             this.locked = false;
             int attempts = (int)currentItem[1];
@@ -216,7 +229,8 @@ namespace DecentM.Metrics
         private void RetryCurrentItem()
         {
             object[] currentItem = this.GetCurrentItem();
-            if (currentItem == null) return;
+            if (currentItem == null)
+                return;
 
             this.locked = false;
             int attempts = (int)currentItem[1];
@@ -230,15 +244,24 @@ namespace DecentM.Metrics
             this.player.Stop();
 
             object[] currentItem = this.GetCurrentItem();
-            if (currentItem == null) return;
+            if (currentItem == null)
+                return;
 
             this.locked = false;
             int attempts = (int)currentItem[1];
 
             // Delivery failed, need to retry
 
-            if (attempts % this.requeueAttemptsLimit == 0) { this.RequeueCurrentItem(); return; }
-            if (attempts % this.discardAttemptsLimit == 0) { this.DiscardCurrentItem(); return; }
+            if (attempts % this.requeueAttemptsLimit == 0)
+            {
+                this.RequeueCurrentItem();
+                return;
+            }
+            if (attempts % this.discardAttemptsLimit == 0)
+            {
+                this.DiscardCurrentItem();
+                return;
+            }
 
             this.RetryCurrentItem();
         }

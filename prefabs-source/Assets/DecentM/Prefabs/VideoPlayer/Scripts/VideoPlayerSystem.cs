@@ -55,8 +55,10 @@ namespace DecentM.VideoPlayer
         [PublicAPI]
         public void RenderCurrentFrame(RenderTexture texture, int screenIndex)
         {
-            if (this.screens == null || this.screens.Length == 0) return;
-            if (screenIndex >= this.screens.Length || screenIndex < 0) screenIndex = 0;
+            if (this.screens == null || this.screens.Length == 0)
+                return;
+            if (screenIndex >= this.screens.Length || screenIndex < 0)
+                screenIndex = 0;
 
             ScreenHandler screen = this.screens[screenIndex];
             screen.RenderToRenderTexture(texture);
@@ -106,7 +108,8 @@ namespace DecentM.VideoPlayer
         {
             BasePlayerHandler basePlayerHandler = this.playerHandlers[index];
 
-            if (basePlayerHandler == null) return;
+            if (basePlayerHandler == null)
+                return;
 
             this.DisablePlayer(basePlayerHandler);
         }
@@ -121,7 +124,8 @@ namespace DecentM.VideoPlayer
         {
             BasePlayerHandler basePlayerHandler = this.playerHandlers[index];
 
-            if (basePlayerHandler == null) return;
+            if (basePlayerHandler == null)
+                return;
 
             this.EnablePlayer(basePlayerHandler);
         }
@@ -137,7 +141,8 @@ namespace DecentM.VideoPlayer
         [PublicAPI]
         public int NextPlayerHandler()
         {
-            if (this.playerHandlers.Length == 0) return -1;
+            if (this.playerHandlers.Length == 0)
+                return -1;
 
             int newIndex = this.currentPlayerHandlerIndex + 1;
 
@@ -146,7 +151,8 @@ namespace DecentM.VideoPlayer
                 || newIndex < 0
                 || this.currentPlayerHandlerIndex == newIndex
                 || this.playerHandlers[newIndex] == null
-            ) {
+            )
+            {
                 newIndex = 0;
             }
 
@@ -230,7 +236,8 @@ namespace DecentM.VideoPlayer
         [PublicAPI]
         public float GetBrightness()
         {
-            if (this.screens.Length == 0) return 1f;
+            if (this.screens.Length == 0)
+                return 1f;
 
             ScreenHandler screen = this.screens[0];
             return screen.GetBrightness();
@@ -239,7 +246,8 @@ namespace DecentM.VideoPlayer
         [PublicAPI]
         public bool SetBrightness(float alpha)
         {
-            if (alpha < 0 || alpha > 1) return false;
+            if (alpha < 0 || alpha > 1)
+                return false;
 
             foreach (ScreenHandler screen in this.screens)
             {
@@ -254,7 +262,8 @@ namespace DecentM.VideoPlayer
         [PublicAPI]
         public bool SetVolume(float volume)
         {
-            if (volume < 0 || volume > 1) return false;
+            if (volume < 0 || volume > 1)
+                return false;
 
             foreach (AudioSource speaker in this.speakers)
             {

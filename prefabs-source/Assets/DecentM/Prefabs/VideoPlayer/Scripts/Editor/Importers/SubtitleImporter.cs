@@ -10,7 +10,10 @@ using DecentM.Subtitles;
 
 namespace DecentM.VideoPlayer.EditorTools.Importers
 {
-    [ScriptedImporter(1, new string[] { SubtitleFormat.Srt, SubtitleFormat.Vtt, SubtitleFormat.Vsi })]
+    [ScriptedImporter(
+        1,
+        new string[] { SubtitleFormat.Srt, SubtitleFormat.Vtt, SubtitleFormat.Vsi }
+    )]
     public class SubtitleImporter : ScriptedImporter
     {
         private static Encoding GetEncoding(string filename)
@@ -23,12 +26,18 @@ namespace DecentM.VideoPlayer.EditorTools.Importers
             }
 
             // Analyze the BOM
-            if (bom[0] == 0x2b && bom[1] == 0x2f && bom[2] == 0x76) return Encoding.UTF7;
-            if (bom[0] == 0xef && bom[1] == 0xbb && bom[2] == 0xbf) return Encoding.UTF8;
-            if (bom[0] == 0xff && bom[1] == 0xfe && bom[2] == 0 && bom[3] == 0) return Encoding.UTF32; //UTF-32LE
-            if (bom[0] == 0xff && bom[1] == 0xfe) return Encoding.Unicode; //UTF-16LE
-            if (bom[0] == 0xfe && bom[1] == 0xff) return Encoding.BigEndianUnicode; //UTF-16BE
-            if (bom[0] == 0 && bom[1] == 0 && bom[2] == 0xfe && bom[3] == 0xff) return new UTF32Encoding(true, true);  //UTF-32BE
+            if (bom[0] == 0x2b && bom[1] == 0x2f && bom[2] == 0x76)
+                return Encoding.UTF7;
+            if (bom[0] == 0xef && bom[1] == 0xbb && bom[2] == 0xbf)
+                return Encoding.UTF8;
+            if (bom[0] == 0xff && bom[1] == 0xfe && bom[2] == 0 && bom[3] == 0)
+                return Encoding.UTF32; //UTF-32LE
+            if (bom[0] == 0xff && bom[1] == 0xfe)
+                return Encoding.Unicode; //UTF-16LE
+            if (bom[0] == 0xfe && bom[1] == 0xff)
+                return Encoding.BigEndianUnicode; //UTF-16BE
+            if (bom[0] == 0 && bom[1] == 0 && bom[2] == 0xfe && bom[3] == 0xff)
+                return new UTF32Encoding(true, true); //UTF-32BE
 
             // We actually have no idea what the encoding is if we reach this point, so
             // you may wish to return null instead of defaulting to ASCII
@@ -38,8 +47,20 @@ namespace DecentM.VideoPlayer.EditorTools.Importers
         private static Encoding DetectFileEncoding(string filename)
         {
             Stream fs = File.OpenRead(filename);
-            var Utf8EncodingVerifier = Encoding.GetEncoding("utf-8", new EncoderExceptionFallback(), new DecoderExceptionFallback());
-            using (var reader = new StreamReader(fs, Utf8EncodingVerifier, true, leaveOpen: true, bufferSize: 1024))
+            var Utf8EncodingVerifier = Encoding.GetEncoding(
+                "utf-8",
+                new EncoderExceptionFallback(),
+                new DecoderExceptionFallback()
+            );
+            using (
+                var reader = new StreamReader(
+                    fs,
+                    Utf8EncodingVerifier,
+                    true,
+                    leaveOpen: true,
+                    bufferSize: 1024
+                )
+            )
             {
                 string detectedEncoding;
                 try
@@ -52,7 +73,7 @@ namespace DecentM.VideoPlayer.EditorTools.Importers
                 }
                 catch
                 {
-                    // Failed to decode the file using the BOM/UT8. 
+                    // Failed to decode the file using the BOM/UT8.
                     // Assume it's local ANSI
                     detectedEncoding = "ISO-8859-1";
                 }
@@ -69,7 +90,11 @@ namespace DecentM.VideoPlayer.EditorTools.Importers
             {
                 ctx.LogImportError($"Imported file disappeared from {ctx.assetPath}");
                 TextAsset errorAsset = new TextAsset("");
-                ctx.AddObjectToAsset(Path.GetFileName(ctx.assetPath), errorAsset, MaterialIcons.GetIcon(Icon.Close));
+                ctx.AddObjectToAsset(
+                    Path.GetFileName(ctx.assetPath),
+                    errorAsset,
+                    MaterialIcons.GetIcon(Icon.Close)
+                );
                 ctx.SetMainObject(errorAsset);
                 return;
             }
@@ -79,7 +104,11 @@ namespace DecentM.VideoPlayer.EditorTools.Importers
             byte[] encodedBytes = Encoding.Convert(encoding, Encoding.UTF8, fileBytes);
 
             string source = Encoding.UTF8.GetString(encodedBytes);
-            Compiler.CompilationResult compiled = SubtitleCompiler.Compile(source, Path.GetExtension(ctx.assetPath), SubtitleFormat.Vsi);
+            Compiler.CompilationResult compiled = SubtitleCompiler.Compile(
+                source,
+                Path.GetExtension(ctx.assetPath),
+                SubtitleFormat.Vsi
+            );
             TextAsset asset = new TextAsset(compiled.output);
 
             if (compiled.errors.Count > 0)
@@ -89,10 +118,16 @@ namespace DecentM.VideoPlayer.EditorTools.Importers
                     ctx.LogImportWarning(error.value);
                 }
 
-                ctx.LogImportWarning($"{compiled.errors.Count} error(s) encountered while compiling subtitle file, see above. Continuing with possibly incomplete compilation results...");
+                ctx.LogImportWarning(
+                    $"{compiled.errors.Count} error(s) encountered while compiling subtitle file, see above. Continuing with possibly incomplete compilation results..."
+                );
             }
 
-            ctx.AddObjectToAsset(Path.GetFileName(ctx.assetPath), asset, MaterialIcons.GetIcon(Icon.SubtitlesOutline));
+            ctx.AddObjectToAsset(
+                Path.GetFileName(ctx.assetPath),
+                asset,
+                MaterialIcons.GetIcon(Icon.SubtitlesOutline)
+            );
             ctx.SetMainObject(asset);
         }
     }

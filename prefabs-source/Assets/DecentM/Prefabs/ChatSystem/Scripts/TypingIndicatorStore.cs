@@ -33,13 +33,15 @@ namespace DecentM.Chat
 
         private int GetTypingCount()
         {
-            if (this.store == null) return 0;
+            if (this.store == null)
+                return 0;
 
             int count = 0;
 
             for (int i = 0; i < this.store.Length; i++)
             {
-                if (this.store[i]) count++;
+                if (this.store[i])
+                    count++;
             }
 
             return count;
@@ -49,7 +51,8 @@ namespace DecentM.Chat
         {
             int[] result = new int[0];
 
-            if (this.store == null) return result;
+            if (this.store == null)
+                return result;
 
             for (int i = 0; i < this.store.Length; i++)
             {
@@ -73,7 +76,8 @@ namespace DecentM.Chat
             for (int i = 0; i < ids.Length; i++)
             {
                 VRCPlayerApi player = VRCPlayerApi.GetPlayerById(ids[i]);
-                if (player == null || !player.IsValid()) continue;
+                if (player == null || !player.IsValid())
+                    continue;
 
                 VRCPlayerApi[] tmp = new VRCPlayerApi[result.Length + 1];
                 Array.Copy(result, tmp, result.Length);
@@ -86,10 +90,13 @@ namespace DecentM.Chat
 
         private void SetTypingByPlayerId(int playerId, bool isTyping)
         {
-            if (this.store == null) return;
+            if (this.store == null)
+                return;
 
-            if (isTyping) this.events.OnPlayerTypingStart(playerId);
-            else this.events.OnPlayerTypingStop(playerId);
+            if (isTyping)
+                this.events.OnPlayerTypingStart(playerId);
+            else
+                this.events.OnPlayerTypingStop(playerId);
 
             this.store[playerId] = isTyping;
             this.RenderIndicator();
@@ -97,7 +104,8 @@ namespace DecentM.Chat
 
         public void OnPlayerTypingChange(int playerId, bool isTyping)
         {
-            if (playerId < 0) return;
+            if (playerId < 0)
+                return;
 
             this.SetTypingByPlayerId(playerId, isTyping);
         }
@@ -114,7 +122,8 @@ namespace DecentM.Chat
                 this.typingIndicatorImage.enabled = false;
                 this.indicatorSlot.text = message;
                 return;
-            } else
+            }
+            else
             {
                 this.typingIndicatorImage.enabled = true;
             }
@@ -127,9 +136,12 @@ namespace DecentM.Chat
                 {
                     message += $"{typingPlayers[i].displayName}";
 
-                    if (i == typingPlayers.Length - 1) message += "";
-                    else if (i == typingPlayers.Length - 2) message += ", and ";
-                    else message += ", ";
+                    if (i == typingPlayers.Length - 1)
+                        message += "";
+                    else if (i == typingPlayers.Length - 2)
+                        message += ", and ";
+                    else
+                        message += ", ";
                 }
             }
             else
@@ -140,7 +152,8 @@ namespace DecentM.Chat
             if (count == 1)
             {
                 message += " is typing...";
-            } else
+            }
+            else
             {
                 message += " are typing...";
             }
@@ -149,4 +162,3 @@ namespace DecentM.Chat
         }
     }
 }
-

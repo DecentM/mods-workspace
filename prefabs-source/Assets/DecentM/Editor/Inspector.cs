@@ -28,7 +28,13 @@ namespace DecentM.EditorTools
 
         public delegate void OnDropdownChange(object parameter);
 
-        protected void Dropdown(Rect position, string label, List<EnumerableOption> options, object current, OnDropdownChange OnChange)
+        protected void Dropdown(
+            Rect position,
+            string label,
+            List<EnumerableOption> options,
+            object current,
+            OnDropdownChange OnChange
+        )
         {
             void handleMenuItemClicked(object parameter)
             {
@@ -48,7 +54,12 @@ namespace DecentM.EditorTools
                 }
                 else
                 {
-                    menu.AddItem(new GUIContent(option.label), false, handleMenuItemClicked, option.id);
+                    menu.AddItem(
+                        new GUIContent(option.label),
+                        false,
+                        handleMenuItemClicked,
+                        option.id
+                    );
                 }
             }
 
@@ -56,7 +67,15 @@ namespace DecentM.EditorTools
             dropdownStyle.alignment = TextAnchor.MiddleRight;
             dropdownStyle.padding = new RectOffset(0, 18, 0, 0);
 
-            if (EditorGUI.DropdownButton(position, new GUIContent(activeLabel), FocusType.Keyboard, dropdownStyle)) menu.ShowAsContext();
+            if (
+                EditorGUI.DropdownButton(
+                    position,
+                    new GUIContent(activeLabel),
+                    FocusType.Keyboard,
+                    dropdownStyle
+                )
+            )
+                menu.ShowAsContext();
             EditorGUI.LabelField(position, $" {label}");
         }
 
@@ -66,7 +85,10 @@ namespace DecentM.EditorTools
             Inspector.SaveModifications(@object, serializedObject);
         }
 
-        public static void SaveModifications(UnityEngine.Object @object, SerializedObject serializedObject)
+        public static void SaveModifications(
+            UnityEngine.Object @object,
+            SerializedObject serializedObject
+        )
         {
             if (PrefabUtility.IsPartOfAnyPrefab(@object))
             {
@@ -82,24 +104,46 @@ namespace DecentM.EditorTools
             Inspector.SaveModifications(this.target, this.serializedObject);
         }
 
-        protected ReorderableList CreateReorderableList(SerializedObject serializedObject, string propertyPath)
+        protected ReorderableList CreateReorderableList(
+            SerializedObject serializedObject,
+            string propertyPath
+        )
         {
             SerializedProperty property = serializedObject.FindProperty(propertyPath);
-            ReorderableList list = new ReorderableList(serializedObject, property, true, true, true, true);
+            ReorderableList list = new ReorderableList(
+                serializedObject,
+                property,
+                true,
+                true,
+                true,
+                true
+            );
 
             list.drawElementCallback = (Rect rect, int index, bool isActive, bool isFocused) =>
             {
-                Rect testFieldRect = new Rect(rect.x, rect.y + 2, rect.width, EditorGUIUtility.singleLineHeight);
+                Rect testFieldRect = new Rect(
+                    rect.x,
+                    rect.y + 2,
+                    rect.width,
+                    EditorGUIUtility.singleLineHeight
+                );
 
-                EditorGUI.PropertyField(testFieldRect, list.serializedProperty.GetArrayElementAtIndex(index), label: new GUIContent());
+                EditorGUI.PropertyField(
+                    testFieldRect,
+                    list.serializedProperty.GetArrayElementAtIndex(index),
+                    label: new GUIContent()
+                );
             };
 
             list.drawHeaderCallback = (Rect rect) =>
             {
-                EditorGUI.LabelField(rect, new GUIContent(
-                    "Default Playlist URLs",
-                    "URLs that will play in sequence when you join the world until someone puts in a video."
-                ));
+                EditorGUI.LabelField(
+                    rect,
+                    new GUIContent(
+                        "Default Playlist URLs",
+                        "URLs that will play in sequence when you join the world until someone puts in a video."
+                    )
+                );
             };
 
             return list;
@@ -123,12 +167,13 @@ namespace DecentM.EditorTools
                     activeBackground.Apply();
                     activeBackground.wrapMode = TextureWrapMode.Repeat;
                     buttonStyle.normal.background = activeBackground;
-                    
+
                     buttonStyle.fontStyle = FontStyle.Bold;
                     buttonStyle.normal.textColor = Color.white;
                 }
 
-                if (GUILayout.Button(tab.label, buttonStyle)) clickedTab = tab.id;
+                if (GUILayout.Button(tab.label, buttonStyle))
+                    clickedTab = tab.id;
             }
 
             GUILayout.EndHorizontal();
@@ -157,28 +202,32 @@ namespace DecentM.EditorTools
 
         protected void DrawImage(Sprite image)
         {
-            if (image == null) return;
+            if (image == null)
+                return;
 
             EditorGUI.DrawPreviewTexture(image.rect, image.texture);
         }
 
         protected void DrawImage(Sprite image, Rect rect)
         {
-            if (image == null) return;
+            if (image == null)
+                return;
 
             EditorGUI.DrawPreviewTexture(rect, image.texture);
         }
 
         protected void DrawImage(Texture image, Rect rect)
         {
-            if (image == null) return;
+            if (image == null)
+                return;
 
             EditorGUI.DrawPreviewTexture(rect, image);
         }
 
         protected void DrawImage(Texture image)
         {
-            if (image == null) return;
+            if (image == null)
+                return;
 
             float imageAspectRatio = 1f * image.width / image.height;
 
@@ -284,7 +333,13 @@ namespace DecentM.EditorTools
             return pressed;
         }
 
-        protected void DrawLabel(Rect rect, string contents, int size, FontStyle fontStyle, Color color)
+        protected void DrawLabel(
+            Rect rect,
+            string contents,
+            int size,
+            FontStyle fontStyle,
+            Color color
+        )
         {
             GUIStyle style = new GUIStyle();
             style.fontSize = Mathf.CeilToInt((1 + size) * 4);
@@ -324,45 +379,80 @@ namespace DecentM.EditorTools
             for (int i = 0; i < allBehaviours.Length; i++)
             {
                 UdonBehaviour behaviour = allBehaviours[i];
-                EditorUtility.DisplayProgressBar($"Linking... ({i}/{allBehaviours.Length})", behaviour == null ? "Skipping..." : behaviour.name, (float)i / allBehaviours.Length);
+                EditorUtility.DisplayProgressBar(
+                    $"Linking... ({i}/{allBehaviours.Length})",
+                    behaviour == null ? "Skipping..." : behaviour.name,
+                    (float)i / allBehaviours.Length
+                );
 
-                if (behaviour == null) continue;
+                if (behaviour == null)
+                    continue;
 
-                IUdonProgram program = behaviour.programSource.SerializedProgramAsset.RetrieveProgram();
-                ImmutableArray<string> exportedSymbolNames = program.SymbolTable.GetExportedSymbols();
+                IUdonProgram program =
+                    behaviour.programSource.SerializedProgramAsset.RetrieveProgram();
+                ImmutableArray<string> exportedSymbolNames =
+                    program.SymbolTable.GetExportedSymbols();
 
                 foreach (string exportedSymbolName in exportedSymbolNames)
                 {
-                    if (!exportedSymbolName.Equals(name)) continue;
+                    if (!exportedSymbolName.Equals(name))
+                        continue;
 
-                    UdonBehaviour variableValue = UdonSharpEditorUtility.GetBackingUdonBehaviour(linkTarget);
+                    UdonBehaviour variableValue = UdonSharpEditorUtility.GetBackingUdonBehaviour(
+                        linkTarget
+                    );
                     Type symbolType = program.SymbolTable.GetSymbolType(exportedSymbolName);
 
-                    if (behaviour.publicVariables.TrySetVariableValue(exportedSymbolName, variableValue)) continue;
-                    if (behaviour.publicVariables.TryAddVariable(CreateUdonVariable(exportedSymbolName, variableValue, symbolType))) continue;
+                    if (
+                        behaviour.publicVariables.TrySetVariableValue(
+                            exportedSymbolName,
+                            variableValue
+                        )
+                    )
+                        continue;
+                    if (
+                        behaviour.publicVariables.TryAddVariable(
+                            CreateUdonVariable(exportedSymbolName, variableValue, symbolType)
+                        )
+                    )
+                        continue;
 
                     Debug.LogError($"Failed to set public variable '{exportedSymbolName}' value.");
                     failCount++;
                 }
 
-                if (PrefabUtility.IsPartOfPrefabInstance(behaviour)) PrefabUtility.RecordPrefabInstancePropertyModifications(behaviour);
+                if (PrefabUtility.IsPartOfPrefabInstance(behaviour))
+                    PrefabUtility.RecordPrefabInstancePropertyModifications(behaviour);
             }
 
-            if (failCount > 0) EditorUtility.DisplayDialog("Linking report", $"Failed to link {failCount} UdonBehaviour(s), check the console for details!", "OK");
+            if (failCount > 0)
+                EditorUtility.DisplayDialog(
+                    "Linking report",
+                    $"Failed to link {failCount} UdonBehaviour(s), check the console for details!",
+                    "OK"
+                );
             EditorUtility.ClearProgressBar();
         }
 
         protected object GetUdonVariable(UdonSharpBehaviour udonSharpBehaviour, string variableName)
         {
-            UdonBehaviour behaviour = UdonSharpEditorUtility.GetBackingUdonBehaviour(udonSharpBehaviour);
+            UdonBehaviour behaviour = UdonSharpEditorUtility.GetBackingUdonBehaviour(
+                udonSharpBehaviour
+            );
 
             behaviour.publicVariables.TryGetVariableValue(variableName, out object result);
             return result;
         }
 
-        protected bool SetUdonVariable(UdonSharpBehaviour udonSharpBehaviour, string variableName, object variableValue)
+        protected bool SetUdonVariable(
+            UdonSharpBehaviour udonSharpBehaviour,
+            string variableName,
+            object variableValue
+        )
         {
-            UdonBehaviour behaviour = UdonSharpEditorUtility.GetBackingUdonBehaviour(udonSharpBehaviour);
+            UdonBehaviour behaviour = UdonSharpEditorUtility.GetBackingUdonBehaviour(
+                udonSharpBehaviour
+            );
 
             return behaviour.publicVariables.TrySetVariableValue(variableName, variableValue);
         }

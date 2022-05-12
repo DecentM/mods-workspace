@@ -41,14 +41,18 @@ namespace DecentM.VideoPlayer
         [Header("Settings")]
         public string title = "";
         public string author = "";
+
         [TextArea]
         public string description = "";
+
         [Space]
         public bool looping = true;
         public bool shuffle = true;
+
         [Space]
         public PlaylistPlayerPlugin playlistPlayer;
         public TextureUpdaterPlugin textureUpdater;
+
         [HideInInspector]
         public VideoPlaylistUI ui;
 
@@ -59,34 +63,47 @@ namespace DecentM.VideoPlayer
 
         [SerializeField, HideInInspector]
         private VRCUrl[] serialisedUrls;
+
         [SerializeField, HideInInspector]
         private Sprite[] serialisedThumbnails;
+
         [SerializeField, HideInInspector]
         private string[] serialisedTitles;
+
         [SerializeField, HideInInspector]
         private string[] serialisedUploaders;
+
         [SerializeField, HideInInspector]
         private string[] serialisedPlatforms;
+
         [SerializeField, HideInInspector]
         private int[] serialisedViews;
+
         [SerializeField, HideInInspector]
         private int[] serialisedLikes;
+
         [SerializeField, HideInInspector]
         private string[] serialisedResolutions;
+
         [SerializeField, HideInInspector]
         private int[] serialisedFpses;
+
         [SerializeField, HideInInspector]
         private string[] serialisedDescriptions;
+
         [SerializeField, HideInInspector]
         private string[] serialisedDurations;
+
         [SerializeField]
         private TextAsset[] serialisedSubtitles;
+
         [SerializeField]
         private string[] serialisedSubtitleIndexes;
 
         public void OnBeforeSerialize()
         {
-            if (this.urls == null) this.urls = new object[0][];
+            if (this.urls == null)
+                this.urls = new object[0][];
 
             if (
                 this.serialisedUrls != null
@@ -102,7 +119,6 @@ namespace DecentM.VideoPlayer
                 && this.serialisedDurations != null
                 && this.serialisedSubtitles != null
                 && this.serialisedSubtitleIndexes != null
-
                 && this.serialisedUrls.Length == this.urls.Length
                 && this.serialisedThumbnails.Length == this.urls.Length
                 && this.serialisedTitles.Length == this.urls.Length
@@ -116,7 +132,8 @@ namespace DecentM.VideoPlayer
                 && this.serialisedDurations.Length == this.urls.Length
                 && this.serialisedSubtitles.Length != 0
                 && this.serialisedSubtitleIndexes.Length == this.urls.Length
-            ) return;
+            )
+                return;
 
             this.serialisedUrls = new VRCUrl[this.urls.Length];
             this.serialisedThumbnails = new Sprite[this.urls.Length];
@@ -140,7 +157,8 @@ namespace DecentM.VideoPlayer
 #endif
 
                 object[] item = this.urls[i];
-                if (item == null) continue;
+                if (item == null)
+                    continue;
 
                 VRCUrl url = (VRCUrl)item[0];
                 Sprite thumbnail = (Sprite)item[1];
@@ -173,7 +191,13 @@ namespace DecentM.VideoPlayer
                     foreach (TextAsset subtitle in subtitles)
                     {
                         TextAsset[] tmp = new TextAsset[this.serialisedSubtitles.Length + 1];
-                        Array.Copy(this.serialisedSubtitles, 0, tmp, 0, this.serialisedSubtitles.Length);
+                        Array.Copy(
+                            this.serialisedSubtitles,
+                            0,
+                            tmp,
+                            0,
+                            this.serialisedSubtitles.Length
+                        );
                         tmp[tmp.Length - 1] = subtitle;
                         this.serialisedSubtitles = tmp;
 
@@ -189,59 +213,94 @@ namespace DecentM.VideoPlayer
 
         public void OnAfterDeserialize()
         {
-            if (this.urls == null) this.urls = new object[0][];
+            if (this.urls == null)
+                this.urls = new object[0][];
 
-            if (this.serialisedUrls == null) this.serialisedUrls = new VRCUrl[0];
-            if (this.serialisedThumbnails == null) this.serialisedThumbnails = new Sprite[0];
-            if (this.serialisedTitles == null) this.serialisedTitles = new string[0];
-            if (this.serialisedUploaders == null) this.serialisedUploaders = new string[0];
-            if (this.serialisedPlatforms == null) this.serialisedPlatforms = new string[0];
-            if (this.serialisedViews == null) this.serialisedViews = new int[0];
-            if (this.serialisedLikes == null) this.serialisedLikes = new int[0];
-            if (this.serialisedResolutions == null) this.serialisedResolutions = new string[0];
-            if (this.serialisedFpses == null) this.serialisedFpses = new int[0];
-            if (this.serialisedDescriptions == null) this.serialisedDescriptions = new string[0];
-            if (this.serialisedDurations == null) this.serialisedDurations = new string[0];
-            if (this.serialisedSubtitles == null) this.serialisedSubtitles = new TextAsset[0];
+            if (this.serialisedUrls == null)
+                this.serialisedUrls = new VRCUrl[0];
+            if (this.serialisedThumbnails == null)
+                this.serialisedThumbnails = new Sprite[0];
+            if (this.serialisedTitles == null)
+                this.serialisedTitles = new string[0];
+            if (this.serialisedUploaders == null)
+                this.serialisedUploaders = new string[0];
+            if (this.serialisedPlatforms == null)
+                this.serialisedPlatforms = new string[0];
+            if (this.serialisedViews == null)
+                this.serialisedViews = new int[0];
+            if (this.serialisedLikes == null)
+                this.serialisedLikes = new int[0];
+            if (this.serialisedResolutions == null)
+                this.serialisedResolutions = new string[0];
+            if (this.serialisedFpses == null)
+                this.serialisedFpses = new int[0];
+            if (this.serialisedDescriptions == null)
+                this.serialisedDescriptions = new string[0];
+            if (this.serialisedDurations == null)
+                this.serialisedDurations = new string[0];
+            if (this.serialisedSubtitles == null)
+                this.serialisedSubtitles = new TextAsset[0];
 
-            if (this.serialisedThumbnails.Length != this.serialisedUrls.Length) this.serialisedThumbnails = new Sprite[this.serialisedUrls.Length];
-            if (this.serialisedTitles.Length != this.serialisedUrls.Length) this.serialisedTitles = new string[this.serialisedUrls.Length];
-            if (this.serialisedUploaders.Length != this.serialisedUrls.Length) this.serialisedUploaders = new string[this.serialisedUrls.Length];
-            if (this.serialisedPlatforms.Length != this.serialisedUrls.Length) this.serialisedPlatforms = new string[this.serialisedUrls.Length];
-            if (this.serialisedViews.Length != this.serialisedUrls.Length) this.serialisedViews = new int[this.serialisedUrls.Length];
-            if (this.serialisedLikes.Length != this.serialisedUrls.Length) this.serialisedLikes = new int[this.serialisedUrls.Length];
-            if (this.serialisedResolutions.Length != this.serialisedUrls.Length) this.serialisedResolutions = new string[this.serialisedUrls.Length];
-            if (this.serialisedFpses.Length != this.serialisedUrls.Length) this.serialisedFpses = new int[this.serialisedUrls.Length];
-            if (this.serialisedDescriptions.Length != this.serialisedUrls.Length) this.serialisedDescriptions = new string[this.serialisedUrls.Length];
-            if (this.serialisedDurations.Length != this.serialisedUrls.Length) this.serialisedDurations = new string[this.serialisedUrls.Length];
+            if (this.serialisedThumbnails.Length != this.serialisedUrls.Length)
+                this.serialisedThumbnails = new Sprite[this.serialisedUrls.Length];
+            if (this.serialisedTitles.Length != this.serialisedUrls.Length)
+                this.serialisedTitles = new string[this.serialisedUrls.Length];
+            if (this.serialisedUploaders.Length != this.serialisedUrls.Length)
+                this.serialisedUploaders = new string[this.serialisedUrls.Length];
+            if (this.serialisedPlatforms.Length != this.serialisedUrls.Length)
+                this.serialisedPlatforms = new string[this.serialisedUrls.Length];
+            if (this.serialisedViews.Length != this.serialisedUrls.Length)
+                this.serialisedViews = new int[this.serialisedUrls.Length];
+            if (this.serialisedLikes.Length != this.serialisedUrls.Length)
+                this.serialisedLikes = new int[this.serialisedUrls.Length];
+            if (this.serialisedResolutions.Length != this.serialisedUrls.Length)
+                this.serialisedResolutions = new string[this.serialisedUrls.Length];
+            if (this.serialisedFpses.Length != this.serialisedUrls.Length)
+                this.serialisedFpses = new int[this.serialisedUrls.Length];
+            if (this.serialisedDescriptions.Length != this.serialisedUrls.Length)
+                this.serialisedDescriptions = new string[this.serialisedUrls.Length];
+            if (this.serialisedDurations.Length != this.serialisedUrls.Length)
+                this.serialisedDurations = new string[this.serialisedUrls.Length];
 
-            if (this.serialisedSubtitleIndexes.Length != this.serialisedUrls.Length) this.serialisedSubtitleIndexes = new string[this.serialisedUrls.Length];
+            if (this.serialisedSubtitleIndexes.Length != this.serialisedUrls.Length)
+                this.serialisedSubtitleIndexes = new string[this.serialisedUrls.Length];
 
             this.urls = new object[this.serialisedUrls.Length][];
 
             for (var i = 0; i < this.serialisedUrls.Length; i++)
             {
                 VRCUrl url = this.serialisedUrls[i];
-                if (url == null) continue;
+                if (url == null)
+                    continue;
 
                 Sprite thumbnail = this.serialisedThumbnails[i];
                 string title = this.serialisedTitles == null ? "" : this.serialisedTitles[i];
-                string uploader = this.serialisedUploaders == null ? "" : this.serialisedUploaders[i];
-                string platform = this.serialisedPlatforms == null ? "" : this.serialisedPlatforms[i];
+                string uploader =
+                    this.serialisedUploaders == null ? "" : this.serialisedUploaders[i];
+                string platform =
+                    this.serialisedPlatforms == null ? "" : this.serialisedPlatforms[i];
                 int views = this.serialisedViews == null ? 0 : this.serialisedViews[i];
                 int likes = this.serialisedLikes == null ? 0 : this.serialisedLikes[i];
-                string resolution = this.serialisedResolutions == null ? "" : this.serialisedResolutions[i];
+                string resolution =
+                    this.serialisedResolutions == null ? "" : this.serialisedResolutions[i];
                 int fps = this.serialisedFpses == null ? 0 : this.serialisedFpses[i];
-                string description = this.serialisedDescriptions == null ? "" : this.serialisedDescriptions[i];
-                string duration = this.serialisedDurations == null ? "" : this.serialisedDurations[i];
-                string serialisedIndexes = this.serialisedSubtitleIndexes == null ? "" : this.serialisedSubtitleIndexes[i];
+                string description =
+                    this.serialisedDescriptions == null ? "" : this.serialisedDescriptions[i];
+                string duration =
+                    this.serialisedDurations == null ? "" : this.serialisedDurations[i];
+                string serialisedIndexes =
+                    this.serialisedSubtitleIndexes == null ? "" : this.serialisedSubtitleIndexes[i];
 
                 TextAsset[] subtitles = new TextAsset[0];
 
                 foreach (string serialisedIndex in serialisedIndexes.Split('#'))
                 {
                     int index;
-                    if (string.IsNullOrEmpty(serialisedIndex) || !int.TryParse(serialisedIndex, out index)) continue;
+                    if (
+                        string.IsNullOrEmpty(serialisedIndex)
+                        || !int.TryParse(serialisedIndex, out index)
+                    )
+                        continue;
 
                     TextAsset[] tmp = new TextAsset[subtitles.Length + 1];
                     Array.Copy(subtitles, 0, tmp, 0, subtitles.Length);
@@ -249,7 +308,21 @@ namespace DecentM.VideoPlayer
                     subtitles = tmp;
                 }
 
-                object[] item = new object[] { url, thumbnail, title, uploader, platform, views, likes, resolution, fps, description, duration, subtitles };
+                object[] item = new object[]
+                {
+                    url,
+                    thumbnail,
+                    title,
+                    uploader,
+                    platform,
+                    views,
+                    likes,
+                    resolution,
+                    fps,
+                    description,
+                    duration,
+                    subtitles
+                };
                 this.urls[i] = item;
             }
         }
@@ -262,14 +335,17 @@ namespace DecentM.VideoPlayer
 
         public object[] Next()
         {
-            if (this.urls == null || this.urls.Length == 0) return null;
+            if (this.urls == null || this.urls.Length == 0)
+                return null;
 
             this.currentIndex++;
 
             if (this.currentIndex >= urls.Length)
             {
-                if (this.looping) this.currentIndex = 0;
-                else return null;
+                if (this.looping)
+                    this.currentIndex = 0;
+                else
+                    return null;
             }
 
             return this.urls[this.currentIndex];
@@ -277,14 +353,17 @@ namespace DecentM.VideoPlayer
 
         public object[] Previous()
         {
-            if (this.urls == null || this.urls.Length == 0) return null;
+            if (this.urls == null || this.urls.Length == 0)
+                return null;
 
             this.currentIndex--;
 
             if (this.currentIndex < 0)
             {
-                if (this.looping) this.currentIndex = this.urls.Length - 1;
-                else return null;
+                if (this.looping)
+                    this.currentIndex = this.urls.Length - 1;
+                else
+                    return null;
             }
 
             return this.urls[this.currentIndex];
@@ -292,14 +371,29 @@ namespace DecentM.VideoPlayer
 
         public object[] GetCurrent()
         {
-            if (this.urls == null || this.urls.Length == 0 || this.currentIndex >= urls.Length) return null;
+            if (this.urls == null || this.urls.Length == 0 || this.currentIndex >= urls.Length)
+                return null;
 
             return this.urls[this.currentIndex];
         }
 
         public int AddUrl(VRCUrl url)
         {
-            object[] item = new object[] { url, null, "", "", "", 0, 0, "", 0, "", "", new string[][] { } };
+            object[] item = new object[]
+            {
+                url,
+                null,
+                "",
+                "",
+                "",
+                0,
+                0,
+                "",
+                0,
+                "",
+                "",
+                new string[][] { }
+            };
 
             if (this.urls != null)
             {
@@ -320,7 +414,10 @@ namespace DecentM.VideoPlayer
 
         public bool RemoveUrl(int index)
         {
-            if (this.urls == null || this.urls.Length == 0 || index < 0 || index >= this.urls.Length) return false;
+            if (
+                this.urls == null || this.urls.Length == 0 || index < 0 || index >= this.urls.Length
+            )
+                return false;
 
             object[][] tmp = new object[urls.Length - 1][];
             Array.Copy(this.urls, 0, tmp, 0, index);
@@ -333,11 +430,9 @@ namespace DecentM.VideoPlayer
         public bool Swap(int indexA, int indexB)
         {
             if (
-                indexA < 0
-                || indexB < 0
-                || indexA >= this.urls.Length
-                || indexA >= this.urls.Length
-            ) return false;
+                indexA < 0 || indexB < 0 || indexA >= this.urls.Length || indexA >= this.urls.Length
+            )
+                return false;
 
             object[][] tmp = new object[this.urls.Length][];
             Array.Copy(this.urls, tmp, this.urls.Length);
@@ -349,10 +444,12 @@ namespace DecentM.VideoPlayer
 
         public object[] GetIndex(int index)
         {
-            if (index < 0 || index >= this.urls.Length) return null;
+            if (index < 0 || index >= this.urls.Length)
+                return null;
 
             object[] item = this.urls[index];
-            if (item == null || item.Length == 0) return null;
+            if (item == null || item.Length == 0)
+                return null;
 
             return item;
         }
@@ -360,7 +457,8 @@ namespace DecentM.VideoPlayer
         public bool PlayIndex(int index)
         {
             object[] item = this.GetIndex(index);
-            if (item == null) return false;
+            if (item == null)
+                return false;
 
             this.currentIndex = index;
             this.playlistPlayer.SetCurrentPlaylist(this);
@@ -383,7 +481,8 @@ namespace DecentM.VideoPlayer
 
         private void FixedUpdate()
         {
-            if (this.searchingUrl == null || this.urls == null) return;
+            if (this.searchingUrl == null || this.urls == null)
+                return;
             if (this.searchIndex >= this.urls.Length)
             {
                 this.searchIndex = 0;
@@ -393,7 +492,8 @@ namespace DecentM.VideoPlayer
 
             object[] item = this.urls[this.searchIndex];
 
-            if (item == null) return;
+            if (item == null)
+                return;
 
             VRCUrl url = (VRCUrl)item[0];
             Sprite thumbnail = (Sprite)item[1];
@@ -411,7 +511,18 @@ namespace DecentM.VideoPlayer
             if (url.ToString() == this.searchingUrl.ToString())
             {
                 this.system.SetScreenTexture(thumbnail.texture);
-                this.events.OnMetadataChange(title, uploader, platform, views, likes, resolution, fps, description, duration, subtitles);
+                this.events.OnMetadataChange(
+                    title,
+                    uploader,
+                    platform,
+                    views,
+                    likes,
+                    resolution,
+                    fps,
+                    description,
+                    duration,
+                    subtitles
+                );
                 this.searchingUrl = null;
                 this.searchIndex = 0;
                 return;

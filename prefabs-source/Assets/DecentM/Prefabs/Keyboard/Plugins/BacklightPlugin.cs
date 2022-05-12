@@ -1,5 +1,4 @@
-﻿
-using UdonSharp;
+﻿using UdonSharp;
 using UnityEngine;
 using VRC.SDKBase;
 using VRC.Udon;
@@ -16,7 +15,8 @@ namespace DecentM.Keyboard.Plugins
         void Start()
         {
             this.events.Subscribe(this);
-            if (this.toggleActiveColour == null) this.toggleActiveColour = Color.white;
+            if (this.toggleActiveColour == null)
+                this.toggleActiveColour = Color.white;
         }
 
         private Color RandomColour()
@@ -31,7 +31,8 @@ namespace DecentM.Keyboard.Plugins
 
         private void HandleKeyPress(KeyboardKey key)
         {
-            if (key.isToggle) return;
+            if (key.isToggle)
+                return;
 
             key.ChangeBacklight(this.RandomColour());
             key.ChangeBacklightAfterSeconds(Color.black, this.fadeTime);
@@ -41,7 +42,8 @@ namespace DecentM.Keyboard.Plugins
         {
             KeyboardKey[] keysWithSameSymbol = layout.GetKeysByPrimarySymbol(symbol);
 
-            if (keysWithSameSymbol == null) return;
+            if (keysWithSameSymbol == null)
+                return;
 
             foreach (KeyboardKey key in keysWithSameSymbol)
             {
@@ -51,24 +53,38 @@ namespace DecentM.Keyboard.Plugins
 
         private string OnKeyboardEvent_name;
         private object[] OnKeyboardEvent_data;
+
         public void OnKeyboardEvent()
         {
-            if (OnKeyboardEvent_name == null || OnKeyboardEvent_data == null) return;
+            if (OnKeyboardEvent_name == null || OnKeyboardEvent_data == null)
+                return;
 
             switch (OnKeyboardEvent_name)
             {
                 case nameof(this.events.OnKeyPressDown):
-                    this.HandleKeyPress((KeyboardKey) OnKeyboardEvent_data[0]);
+                    this.HandleKeyPress((KeyboardKey)OnKeyboardEvent_data[0]);
                     break;
 
                 case nameof(this.events.OnShiftStateChange):
-                    this.HandleKeyStateChange("SHIFT", (bool) OnKeyboardEvent_data[0], (KeyboardLayout) OnKeyboardEvent_data[1]);
+                    this.HandleKeyStateChange(
+                        "SHIFT",
+                        (bool)OnKeyboardEvent_data[0],
+                        (KeyboardLayout)OnKeyboardEvent_data[1]
+                    );
                     break;
                 case nameof(this.events.OnAltGrStateChange):
-                    this.HandleKeyStateChange("ALTGR", (bool) OnKeyboardEvent_data[0], (KeyboardLayout) OnKeyboardEvent_data[1]);
+                    this.HandleKeyStateChange(
+                        "ALTGR",
+                        (bool)OnKeyboardEvent_data[0],
+                        (KeyboardLayout)OnKeyboardEvent_data[1]
+                    );
                     break;
                 case nameof(this.events.OnCtrlStateChange):
-                    this.HandleKeyStateChange("CTRL", (bool) OnKeyboardEvent_data[0], (KeyboardLayout) OnKeyboardEvent_data[1]);
+                    this.HandleKeyStateChange(
+                        "CTRL",
+                        (bool)OnKeyboardEvent_data[0],
+                        (KeyboardLayout)OnKeyboardEvent_data[1]
+                    );
                     break;
 
                 default:
@@ -80,4 +96,3 @@ namespace DecentM.Keyboard.Plugins
         }
     }
 }
-

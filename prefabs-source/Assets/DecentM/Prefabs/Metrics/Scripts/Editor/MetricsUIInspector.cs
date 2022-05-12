@@ -13,12 +13,23 @@ namespace DecentM.Metrics
             MetricsUI ui = (MetricsUI)target;
             URLStore urlStore = ui.GetComponentInChildren<URLStore>();
 
-            ui.metricsServerBaseUrl = EditorGUILayout.TextField("Metrics server base URL:", ui.metricsServerBaseUrl);
+            ui.metricsServerBaseUrl = EditorGUILayout.TextField(
+                "Metrics server base URL:",
+                ui.metricsServerBaseUrl
+            );
             ui.worldCapacity = EditorGUILayout.IntField("World capacity", ui.worldCapacity);
-            ui.instanceCapacity = EditorGUILayout.IntField("Instance capacity", ui.instanceCapacity);
+            ui.instanceCapacity = EditorGUILayout.IntField(
+                "Instance capacity",
+                ui.instanceCapacity
+            );
 
             EditorGUI.BeginDisabledGroup(true);
-            if (urlStore != null) EditorGUILayout.TextField("Currently stored URLs", urlStore.urls == null ? "<no URLs stored>" : urlStore.urls.Length.ToString());;
+            if (urlStore != null)
+                EditorGUILayout.TextField(
+                    "Currently stored URLs",
+                    urlStore.urls == null ? "<no URLs stored>" : urlStore.urls.Length.ToString()
+                );
+            ;
             EditorGUILayout.Space();
             EditorGUILayout.TextField("Built at", ui.builtAt);
             EditorGUILayout.TextField("Unity version", ui.unity);

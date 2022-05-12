@@ -1,5 +1,4 @@
-﻿
-using UdonSharp;
+﻿using UdonSharp;
 using UnityEngine;
 using VRC.SDKBase;
 using VRC.Udon;
@@ -21,7 +20,8 @@ namespace DecentM.VideoPlayer
 
         public bool RenderToRenderTexture(RenderTexture texture)
         {
-            if (this.isLocked) return false;
+            if (this.isLocked)
+                return false;
 
             this.isLocked = true;
             this.camera.enabled = false;
@@ -39,7 +39,8 @@ namespace DecentM.VideoPlayer
 
         public float GetBrightness()
         {
-            if (this.screens == null || this.screens.Length == 0) return 1f;
+            if (this.screens == null || this.screens.Length == 0)
+                return 1f;
 
             Renderer screen = this.screens[0];
             Color color = screen.material.GetColor("_Color");
@@ -83,7 +84,11 @@ namespace DecentM.VideoPlayer
         {
             foreach (Renderer screen in this.screens)
             {
-                screen.transform.localScale = new Vector3(size.x, size.y, screen.transform.localScale.z);
+                screen.transform.localScale = new Vector3(
+                    size.x,
+                    size.y,
+                    screen.transform.localScale.z
+                );
             }
         }
     }

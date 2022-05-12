@@ -10,7 +10,12 @@ namespace DecentM.EditorTools
         private int progress = 0;
         private int total = 0;
 
-        private void GetCombinationsRec(IList<IEnumerable<T>> sources, T[] chain, int index, ICollection<T[]> combinations)
+        private void GetCombinationsRec(
+            IList<IEnumerable<T>> sources,
+            T[] chain,
+            int index,
+            ICollection<T[]> combinations
+        )
         {
             foreach (var element in sources[index])
             {
@@ -18,7 +23,11 @@ namespace DecentM.EditorTools
                 if (index == sources.Count - 1)
                 {
                     this.progress++;
-                    EditorUtility.DisplayProgressBar($"Generating combinations...", $"{progress}/{this.total}", (float)progress / this.total);
+                    EditorUtility.DisplayProgressBar(
+                        $"Generating combinations...",
+                        $"{progress}/{this.total}",
+                        (float)progress / this.total
+                    );
 
                     var finalChain = new T[chain.Length];
                     chain.CopyTo(finalChain, 0);
@@ -26,7 +35,12 @@ namespace DecentM.EditorTools
                 }
                 else
                 {
-                    this.GetCombinationsRec(sources: sources, chain: chain, index: index + 1, combinations: combinations);
+                    this.GetCombinationsRec(
+                        sources: sources,
+                        chain: chain,
+                        index: index + 1,
+                        combinations: combinations
+                    );
                 }
             }
         }
@@ -40,7 +54,12 @@ namespace DecentM.EditorTools
             if (enumerables.Length > 0)
             {
                 var chain = new T[enumerables.Length];
-                this.GetCombinationsRec(sources: enumerables, chain: chain, index: 0, combinations: combinations);
+                this.GetCombinationsRec(
+                    sources: enumerables,
+                    chain: chain,
+                    index: 0,
+                    combinations: combinations
+                );
             }
 
             EditorUtility.ClearProgressBar();

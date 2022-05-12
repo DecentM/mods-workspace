@@ -10,7 +10,11 @@ namespace DecentM.Metrics
 {
     public static class MetricsUrlGenerator
     {
-        private static VRCUrl MakeUrl(MetricsUI ui, string metricName, Dictionary<string, string> metricData)
+        private static VRCUrl MakeUrl(
+            MetricsUI ui,
+            string metricName,
+            Dictionary<string, string> metricData
+        )
         {
             string query = $"?builtAt={ui.builtAt}&unity={ui.unity}&sdk={ui.sdk}";
 
@@ -19,12 +23,15 @@ namespace DecentM.Metrics
                 query += $"&{Uri.EscapeDataString(kvp.Key)}={Uri.EscapeDataString(kvp.Value)}";
             }
 
-            return new VRCUrl($"{ui.metricsServerBaseUrl}/api/v1/metrics/ingest/{metricName}{query}");
+            return new VRCUrl(
+                $"{ui.metricsServerBaseUrl}/api/v1/metrics/ingest/{metricName}{query}"
+            );
         }
 
         public static void ClearUrls(URLStore urlStore)
         {
-            if (urlStore == null) return;
+            if (urlStore == null)
+                return;
 
             urlStore.urls = new object[][] { };
             Inspector.SaveModifications(urlStore);
@@ -32,7 +39,10 @@ namespace DecentM.Metrics
 
         public static void SaveUrls(MetricsUI ui, URLStore urlStore)
         {
-            List<string> instanceIds = RandomStringGenerator.GenerateRandomStrings(ui.instanceCapacity, 4);
+            List<string> instanceIds = RandomStringGenerator.GenerateRandomStrings(
+                ui.instanceCapacity,
+                4
+            );
             UIManager.SetVersionData();
             InstancePluginManager.SetInstanceIds(instanceIds);
 
@@ -43,9 +53,12 @@ namespace DecentM.Metrics
             matrixInput.minFps = ui.minFps;
             matrixInput.maxFps = ui.maxFps;
 
-            Dictionary<Metric, List<MetricValue>> matrix = MetricsMatrix.GenerateMatrix(matrixInput);
+            Dictionary<Metric, List<MetricValue>> matrix = MetricsMatrix.GenerateMatrix(
+                matrixInput
+            );
 
-            Dictionary<Metric, List<ResolvedMetricValue[]>> namedCombinations = new Dictionary<Metric, List<ResolvedMetricValue[]>>();
+            Dictionary<Metric, List<ResolvedMetricValue[]>> namedCombinations =
+                new Dictionary<Metric, List<ResolvedMetricValue[]>>();
 
             foreach (KeyValuePair<Metric, List<MetricValue>> pair in matrix)
             {
@@ -55,14 +68,20 @@ namespace DecentM.Metrics
 
                 foreach (MetricValue value in pair.Value)
                 {
-                    List<ResolvedMetricValue> resolvedValues = ResolvedMetricValue.FromMetricValue(value);
+                    List<ResolvedMetricValue> resolvedValues = ResolvedMetricValue.FromMetricValue(
+                        value
+                    );
 
                     total *= resolvedValues.Count;
                     input.Add(resolvedValues);
                 }
 
-                CombinationsGenerator<ResolvedMetricValue> generator = new CombinationsGenerator<ResolvedMetricValue>();
-                List<ResolvedMetricValue[]> result = generator.GetCombinations(input.ToArray(), total);
+                CombinationsGenerator<ResolvedMetricValue> generator =
+                    new CombinationsGenerator<ResolvedMetricValue>();
+                List<ResolvedMetricValue[]> result = generator.GetCombinations(
+                    input.ToArray(),
+                    total
+                );
                 namedCombinations.Add(pair.Key, result);
             }
 
@@ -78,7 +97,8 @@ namespace DecentM.Metrics
 
                     foreach (ResolvedMetricValue value in resolvedValues)
                     {
-                        if (value.name != "" && value.value != "") urlParams.Add(value.name, value.value);
+                        if (value.name != "" && value.value != "")
+                            urlParams.Add(value.name, value.value);
                     }
 
                     List<object[]> vrcParams = new List<object[]>();
@@ -89,7 +109,11 @@ namespace DecentM.Metrics
                     }
 
                     object[] data = new object[] { (int)kvp.Key, vrcParams.ToArray() };
-                    object[] item = new object[] { data, MakeUrl(ui, kvp.Key.ToString(), urlParams) };
+                    object[] item = new object[]
+                    {
+                        data,
+                        MakeUrl(ui, kvp.Key.ToString(), urlParams)
+                    };
 
                     urls.Add(item);
                 }

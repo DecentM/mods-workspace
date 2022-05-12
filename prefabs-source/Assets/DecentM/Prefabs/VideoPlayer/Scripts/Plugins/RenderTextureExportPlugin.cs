@@ -21,19 +21,34 @@ namespace DecentM.VideoPlayer.Plugins
 
         private void LateUpdate()
         {
-            if (!this.running) return;
+            if (!this.running)
+                return;
 
             this.elapsed += Time.unscaledDeltaTime;
-            if (elapsed < 1 / this.fps) return;
+            if (elapsed < 1 / this.fps)
+                return;
             this.elapsed = 0;
 
             this.system.RenderCurrentFrame(this.renderTexture);
         }
 
-        protected override void OnMetadataChange(string title, string uploader, string siteName, int viewCount, int likeCount, string resolution, int fps, string description, string duration, TextAsset[] subtitles)
+        protected override void OnMetadataChange(
+            string title,
+            string uploader,
+            string siteName,
+            int viewCount,
+            int likeCount,
+            string resolution,
+            int fps,
+            string description,
+            string duration,
+            TextAsset[] subtitles
+        )
         {
-            if (fps > 0) this.fps = Mathf.Min(fps, this.targetFps);
-            else this.fps = this.targetFps;
+            if (fps > 0)
+                this.fps = Mathf.Min(fps, this.targetFps);
+            else
+                this.fps = this.targetFps;
         }
 
         protected override void OnPlaybackEnd()

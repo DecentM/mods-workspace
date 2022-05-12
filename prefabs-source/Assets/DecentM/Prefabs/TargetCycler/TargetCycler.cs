@@ -1,5 +1,4 @@
-﻿
-using UdonSharp;
+﻿using UdonSharp;
 using UnityEngine;
 using VRC.SDKBase;
 using VRC.Udon;
@@ -11,12 +10,14 @@ public class TargetCycler : UdonSharpBehaviour
     [Header("References")]
     [Tooltip("This object will be teleported to each target")]
     public GameObject link;
+
     [Tooltip("The targets that the link object will teleport between")]
     public GameObject[] targets;
 
     [Header("Settings")]
     [Tooltip("If checked, the link location will be synced on every loop")]
     public bool global;
+
     [Tooltip("Defines how often we switch between the targets, in seconds")]
     public int interval = 4;
 
@@ -36,12 +37,15 @@ public class TargetCycler : UdonSharpBehaviour
 
         GameObject target = this.targets[this.chosenIndex];
 
-        this.link.transform.SetPositionAndRotation(target.transform.position, target.transform.rotation);
+        this.link.transform.SetPositionAndRotation(
+            target.transform.position,
+            target.transform.rotation
+        );
     }
 
     private void Start()
     {
-        this.lib.scheduling.OnEverySecond((UdonBehaviour) GetComponent(typeof(UdonBehaviour)));
+        this.lib.scheduling.OnEverySecond((UdonBehaviour)GetComponent(typeof(UdonBehaviour)));
     }
 
     public void OnSecondPassed()
@@ -78,8 +82,12 @@ public class TargetCycler : UdonSharpBehaviour
         // If we're local, everyone calls their own reset function.
         if (this.global && Networking.LocalPlayer != null && Networking.LocalPlayer.isMaster)
         {
-            SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, nameof(this.Reset));
-        } else if (!this.global)
+            SendCustomNetworkEvent(
+                VRC.Udon.Common.Interfaces.NetworkEventTarget.All,
+                nameof(this.Reset)
+            );
+        }
+        else if (!this.global)
         {
             this.Reset();
         }

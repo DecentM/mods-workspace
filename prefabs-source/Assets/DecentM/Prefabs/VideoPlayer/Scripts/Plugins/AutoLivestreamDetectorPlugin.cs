@@ -15,7 +15,8 @@ namespace DecentM.VideoPlayer.Plugins
         protected override void OnLoadRequested(VRCUrl vrcUrl)
         {
             // If we're already using the AVPro player, don't do anything
-            if (this.system.currentPlayerHandler.type == VideoPlayerHandlerType.AVPro) return;
+            if (this.system.currentPlayerHandler.type == VideoPlayerHandlerType.AVPro)
+                return;
 
             string url = vrcUrl.ToString();
 

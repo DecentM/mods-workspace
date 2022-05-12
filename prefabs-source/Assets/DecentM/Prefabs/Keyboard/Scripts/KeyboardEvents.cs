@@ -53,7 +53,8 @@ namespace DecentM.Keyboard
 
         private void Start()
         {
-            if (this.subscribers == null) this.subscribers = new UdonSharpBehaviour[0];
+            if (this.subscribers == null)
+                this.subscribers = new UdonSharpBehaviour[0];
         }
 
         public int Subscribe(UdonSharpBehaviour behaviour)
@@ -79,11 +80,23 @@ namespace DecentM.Keyboard
 
         public bool Unsubscribe(int index)
         {
-            if (this.subscribers == null || this.subscribers.Length == 0 || index < 0 || index >= this.subscribers.Length) return false;
+            if (
+                this.subscribers == null
+                || this.subscribers.Length == 0
+                || index < 0
+                || index >= this.subscribers.Length
+            )
+                return false;
 
             UdonSharpBehaviour[] tmp = new UdonSharpBehaviour[subscribers.Length + 1];
             Array.Copy(this.subscribers, 0, tmp, 0, index);
-            Array.Copy(this.subscribers, index + 1, tmp, index, this.subscribers.Length - 1 - index);
+            Array.Copy(
+                this.subscribers,
+                index + 1,
+                tmp,
+                index,
+                this.subscribers.Length - 1 - index
+            );
             this.subscribers = tmp;
 
             return true;

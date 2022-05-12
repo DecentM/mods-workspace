@@ -80,10 +80,12 @@ namespace DecentM.Subtitles
             Instruction instruction = new Instruction();
 
             string[] parts = line.Split(new char[] { ' ' }, 3);
-            if (parts.Length != 3) return instruction;
+            if (parts.Length != 3)
+                return instruction;
 
             instruction.type = parts[0] == "1" ? InstructionType.RenderText : InstructionType.Clear;
-            if (!int.TryParse(parts[1], out instruction.timestamp)) instruction.timestamp = -1;
+            if (!int.TryParse(parts[1], out instruction.timestamp))
+                instruction.timestamp = -1;
             instruction.value = parts[2].Replace(NewlineDelimeter, '\n');
 
             return instruction;
@@ -102,7 +104,11 @@ namespace DecentM.Subtitles
     {
         public SubtitleScreenInstructions(SubtitleScreen screen)
         {
-            this.start = new Instruction(InstructionType.RenderText, screen.startTimestamp, screen.text);
+            this.start = new Instruction(
+                InstructionType.RenderText,
+                screen.startTimestamp,
+                screen.text
+            );
             this.end = new Instruction(InstructionType.Clear, screen.endTimestamp, "");
         }
 
@@ -176,7 +182,12 @@ namespace DecentM.Subtitles
                     text = (string)node.value;
                     index++;
 
-                    SubtitleScreen screen = new SubtitleScreen(index, timestampStart, timestampEnd, text);
+                    SubtitleScreen screen = new SubtitleScreen(
+                        index,
+                        timestampStart,
+                        timestampEnd,
+                        text
+                    );
 
                     screens.Add(screen);
                 }

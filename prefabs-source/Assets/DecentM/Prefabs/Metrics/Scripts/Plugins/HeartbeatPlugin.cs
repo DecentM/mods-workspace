@@ -24,8 +24,13 @@ namespace DecentM.Metrics.Plugins
         private void DoHeartbeat()
         {
             int fps = Mathf.FloorToInt(this.performanceGovernor.GetFps());
-            VRCUrl url = this.urlStore.GetHeartbeatUrl(Networking.LocalPlayer.isMaster, this.isVr, fps);
-            if (url == null) return;
+            VRCUrl url = this.urlStore.GetHeartbeatUrl(
+                Networking.LocalPlayer.isMaster,
+                this.isVr,
+                fps
+            );
+            if (url == null)
+                return;
 
             this.system.RecordMetric(url, Metric.Heartbeat);
         }
@@ -38,10 +43,16 @@ namespace DecentM.Metrics.Plugins
 
         private void FixedUpdate()
         {
-            if (Networking.LocalPlayer == null || !Networking.LocalPlayer.IsValid() || !this.initialised) return;
+            if (
+                Networking.LocalPlayer == null
+                || !Networking.LocalPlayer.IsValid()
+                || !this.initialised
+            )
+                return;
 
             this.elapsed += Time.fixedUnscaledDeltaTime;
-            if (this.elapsed <= this.reportingIntervalSeconds) return;
+            if (this.elapsed <= this.reportingIntervalSeconds)
+                return;
             this.elapsed = 0;
 
             this.DoHeartbeat();

@@ -16,11 +16,14 @@ namespace DecentM.Metrics
             List<MetricsUI> uis = uiCollector.CollectFromActiveScene();
 
             // Metrics not being installed isn't an error, it just means the user doesn't want to collect metrics from this scene
-            if (uis.Count == 0) return true;
+            if (uis.Count == 0)
+                return true;
 
             if (uis.Count > 1)
             {
-                Debug.LogError($"{uis.Count} metrics systems detected, you must have only a single one. Please delete extra metrics prefabs and try again.");
+                Debug.LogError(
+                    $"{uis.Count} metrics systems detected, you must have only a single one. Please delete extra metrics prefabs and try again."
+                );
                 return false;
             }
 
@@ -28,7 +31,8 @@ namespace DecentM.Metrics
 
             #region Individual plugins
 
-            ComponentCollector<IndividualTrackingPlugin> collector = new ComponentCollector<IndividualTrackingPlugin>();
+            ComponentCollector<IndividualTrackingPlugin> collector =
+                new ComponentCollector<IndividualTrackingPlugin>();
             List<IndividualTrackingPlugin> plugins = collector.CollectFromActiveScene();
 
             foreach (IndividualTrackingPlugin plugin in plugins)
@@ -46,16 +50,23 @@ namespace DecentM.Metrics
 
             #region Performance metrics
 
-            ComponentCollector<PerformanceGovernor> pgCollector = new ComponentCollector<PerformanceGovernor>();
+            ComponentCollector<PerformanceGovernor> pgCollector =
+                new ComponentCollector<PerformanceGovernor>();
             List<PerformanceGovernor> governors = pgCollector.CollectFromActiveScene();
             PerformanceGovernor governor = null;
 
-            if (governors.Count == 0) Debug.LogWarning("[DecentM.Metrics] Reporting performance metrics requires a PerformanceGovernor to be present in your scene somewhere.");
-            else governor = governors[0];
+            if (governors.Count == 0)
+                Debug.LogWarning(
+                    "[DecentM.Metrics] Reporting performance metrics requires a PerformanceGovernor to be present in your scene somewhere."
+                );
+            else
+                governor = governors[0];
 
             if (governor == null)
             {
-                Debug.LogError("[DecentM.Metrics] Internal error: Unable to find a performance governor, but the list is not empty.");
+                Debug.LogError(
+                    "[DecentM.Metrics] Internal error: Unable to find a performance governor, but the list is not empty."
+                );
                 return false;
             }
 
@@ -83,7 +94,9 @@ namespace DecentM.Metrics
 
             if (urlStore == null)
             {
-                Debug.LogError($"[DecentM.Metrics] Could not find a URLStore under {ui.name}. Please repair the prefab by resetting it, or by deleting and replacing it.");
+                Debug.LogError(
+                    $"[DecentM.Metrics] Could not find a URLStore under {ui.name}. Please repair the prefab by resetting it, or by deleting and replacing it."
+                );
                 return false;
             }
 

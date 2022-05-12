@@ -1,5 +1,4 @@
-﻿
-using UdonSharp;
+﻿using UdonSharp;
 using UnityEngine;
 using VRC.SDKBase;
 using VRC.Udon;
@@ -28,11 +27,14 @@ namespace DecentM
         // Hidden in inspector, because our custom inspector already draws a UI for these.
         // [HideInInspector]
         public int high = 60;
+
         // [HideInInspector]
         public int low = 30;
 
         [Header("Settings")]
-        [Tooltip("To prevent a race condition where high FPS from our improvements causes objects being re-enabled too soon, re-enabling a higher performance mode requires higher FPS than going downwards. The higher this value is, the less likely it is to cause the race condition. Best to leave it at default.")]
+        [Tooltip(
+            "To prevent a race condition where high FPS from our improvements causes objects being re-enabled too soon, re-enabling a higher performance mode requires higher FPS than going downwards. The higher this value is, the less likely it is to cause the race condition. Best to leave it at default."
+        )]
         public int headroom = 20;
 
         public float checkEverySeconds = 10;
@@ -108,7 +110,11 @@ namespace DecentM
 
         private void OnModeChange()
         {
-            this.BroadcastEvent(PerformanceGovernorEvent.OnPerformanceModeChange, this.currentMode, this.lastFpsAverage);
+            this.BroadcastEvent(
+                PerformanceGovernorEvent.OnPerformanceModeChange,
+                this.currentMode,
+                this.lastFpsAverage
+            );
         }
     }
 }

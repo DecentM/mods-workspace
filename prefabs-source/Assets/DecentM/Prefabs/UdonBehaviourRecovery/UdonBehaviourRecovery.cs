@@ -1,5 +1,4 @@
-﻿
-using UdonSharp;
+﻿using UdonSharp;
 using UnityEngine;
 using VRC.Udon;
 using DecentM;
@@ -32,7 +31,7 @@ public class UdonBehaviourRecovery : UdonSharpBehaviour
         this.childComponents = GetComponentsInChildren<Component>();
 
         // Subscribe to the broadcast that happens every second from the scheduler
-        this.lib.scheduling.OnEverySecond((UdonBehaviour) GetComponent(typeof(UdonBehaviour)));
+        this.lib.scheduling.OnEverySecond((UdonBehaviour)GetComponent(typeof(UdonBehaviour)));
     }
 
     public void OnSecondPassed()
@@ -92,7 +91,7 @@ public class UdonBehaviourRecovery : UdonSharpBehaviour
         }
 
         // Cast to UdonBehaviour to get access to .enabled
-        UdonBehaviour behaviour = (UdonBehaviour) component;
+        UdonBehaviour behaviour = (UdonBehaviour)component;
 
         if (!behaviour.enabled)
         {

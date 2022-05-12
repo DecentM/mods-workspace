@@ -17,7 +17,9 @@ namespace DecentM.Pubsub
         {
             if (this.pubsubHosts == null)
             {
-                Debug.LogError($"no pubsub host object is attached to {this.name}, this subscriber will not receive events");
+                Debug.LogError(
+                    $"no pubsub host object is attached to {this.name}, this subscriber will not receive events"
+                );
                 this.enabled = false;
                 return;
             }
@@ -26,7 +28,9 @@ namespace DecentM.Pubsub
 
             if (this.pubsubHosts.Length == 0)
             {
-                Debug.LogWarning($"no pubsub host object is attached to {this.name}, this subscriber will not reveive events until a host is attached");
+                Debug.LogWarning(
+                    $"no pubsub host object is attached to {this.name}, this subscriber will not reveive events until a host is attached"
+                );
             }
 
             this.SubscribeAll();
@@ -37,7 +41,8 @@ namespace DecentM.Pubsub
         {
             for (int i = 0; i < this.pubsubHosts.Length; i++)
             {
-                if (this.pubsubHosts[i] == null) continue;
+                if (this.pubsubHosts[i] == null)
+                    continue;
 
                 int subscription = this.pubsubHosts[i].Subscribe(this);
 
@@ -49,7 +54,8 @@ namespace DecentM.Pubsub
         {
             for (int i = 0; i < this.pubsubHosts.Length; i++)
             {
-                if (this.pubsubHosts[i] == null) continue;
+                if (this.pubsubHosts[i] == null)
+                    continue;
                 int subscription = this.subscriptions[i];
 
                 this.pubsubHosts[i].Unsubscribe(subscription);

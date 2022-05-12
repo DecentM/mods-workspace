@@ -1,5 +1,4 @@
-﻿
-using UdonSharp;
+﻿using UdonSharp;
 using UnityEngine;
 using VRC.SDKBase;
 using VRC.Udon;
@@ -18,7 +17,8 @@ namespace DecentM.Metrics.Plugins
 
         private bool CheckLocalPlayer()
         {
-            bool stop = Networking.LocalPlayer == null
+            bool stop =
+                Networking.LocalPlayer == null
                 || !Networking.LocalPlayer.IsValid()
                 || !Networking.LocalPlayer.isMaster;
 
@@ -27,7 +27,8 @@ namespace DecentM.Metrics.Plugins
 
         protected override void _Start()
         {
-            if (!this.CheckLocalPlayer()) return;
+            if (!this.CheckLocalPlayer())
+                return;
 
             this.instanceId = this.instanceIds[Random.Range(0, this.instanceIds.Length - 1)];
             this.RequestSerialization();
@@ -35,8 +36,12 @@ namespace DecentM.Metrics.Plugins
 
         private void DoHeartbeat()
         {
-            VRCUrl url = this.urlStore.GetInstanceUrl(this.instanceId, VRCPlayerApi.GetPlayerCount());
-            if (url == null) return;
+            VRCUrl url = this.urlStore.GetInstanceUrl(
+                this.instanceId,
+                VRCPlayerApi.GetPlayerCount()
+            );
+            if (url == null)
+                return;
 
             this.system.RecordMetric(url, Metric.Instance);
         }
@@ -54,10 +59,12 @@ namespace DecentM.Metrics.Plugins
         // Only the master runs this as we only want one report per instance
         private void FixedUpdate()
         {
-            if (!this.CheckLocalPlayer() || !this.initialised) return;
+            if (!this.CheckLocalPlayer() || !this.initialised)
+                return;
 
             this.elapsed += Time.fixedUnscaledDeltaTime;
-            if (this.elapsed <= this.reportingIntervalSeconds) return;
+            if (this.elapsed <= this.reportingIntervalSeconds)
+                return;
             this.elapsed = 0;
 
             this.DoHeartbeat();

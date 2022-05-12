@@ -32,7 +32,9 @@ namespace DecentM.Subtitles.Vsi
                         continue;
                     }
 
-                    Instruction instruction = Instruction.FromInstructionLine((string)tCurrent.value);
+                    Instruction instruction = Instruction.FromInstructionLine(
+                        (string)tCurrent.value
+                    );
                     return instruction.timestamp;
                 }
 
@@ -68,7 +70,10 @@ namespace DecentM.Subtitles.Vsi
                     nextTimestamp = instruction.timestamp + 10000;
                 }
 
-                SubtitleScreen screen = instruction.ToScreen(currentIndex, nextTimestamp - instruction.timestamp);
+                SubtitleScreen screen = instruction.ToScreen(
+                    currentIndex,
+                    nextTimestamp - instruction.timestamp
+                );
 
                 nodes.AddRange(screen.ToNodes());
 

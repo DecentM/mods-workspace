@@ -10,7 +10,8 @@ namespace DecentM.Metrics.Plugins
         private void DoReport(bool state)
         {
             VRCUrl url = this.urlStore.GetTriggerUrl(this.metricName, state);
-            if (url == null) return;
+            if (url == null)
+                return;
 
             this.system.RecordMetric(url, Metric.Trigger);
             this.reportedState = state;
@@ -36,16 +37,20 @@ namespace DecentM.Metrics.Plugins
 
         public override void OnPlayerTriggerEnter(VRCPlayerApi player)
         {
-            if (player == null || !player.IsValid() || player != Networking.LocalPlayer) return;
-            if (this.locked || this.reportedState) return;
+            if (player == null || !player.IsValid() || player != Networking.LocalPlayer)
+                return;
+            if (this.locked || this.reportedState)
+                return;
 
             this.DoReport(true);
         }
 
         public override void OnPlayerTriggerExit(VRCPlayerApi player)
         {
-            if (player == null || !player.IsValid() || player != Networking.LocalPlayer) return;
-            if (this.locked || !this.reportedState) return;
+            if (player == null || !player.IsValid() || player != Networking.LocalPlayer)
+                return;
+            if (this.locked || !this.reportedState)
+                return;
 
             this.DoReport(false);
         }

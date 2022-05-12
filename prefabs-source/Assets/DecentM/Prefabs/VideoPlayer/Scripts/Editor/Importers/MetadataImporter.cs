@@ -13,7 +13,8 @@ namespace DecentM.VideoPlayer.EditorTools.Importers
     {
         public override void OnImportAsset(AssetImportContext ctx)
         {
-            if (!ctx.assetPath.Contains(EditorAssets.VideoMetadataFolder)) return;
+            if (!ctx.assetPath.Contains(EditorAssets.VideoMetadataFolder))
+                return;
 
             if (!File.Exists(ctx.assetPath))
             {
@@ -24,7 +25,11 @@ namespace DecentM.VideoPlayer.EditorTools.Importers
             string rawMetadata = File.ReadAllText(ctx.assetPath);
             VideoMetadataAsset asset = VideoMetadataAsset.CreateInstance(rawMetadata);
 
-            ctx.AddObjectToAsset(Path.GetFileName(ctx.assetPath), asset, MaterialIcons.GetIcon(Icon.Database));
+            ctx.AddObjectToAsset(
+                Path.GetFileName(ctx.assetPath),
+                asset,
+                MaterialIcons.GetIcon(Icon.Database)
+            );
             ctx.SetMainObject(asset);
         }
     }

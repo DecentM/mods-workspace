@@ -24,10 +24,12 @@ namespace DecentM.VideoPlayer.Plugins
 
         private void FixedUpdate()
         {
-            if (!this.isInstantiating || Time.deltaTime >= 1 / 49f) return;
+            if (!this.isInstantiating || Time.deltaTime >= 1 / 49f)
+                return;
 
             elapsed += Time.fixedUnscaledDeltaTime;
-            if (elapsed <= this.instantiatingInterval) return;
+            if (elapsed <= this.instantiatingInterval)
+                return;
             elapsed = 0;
             this.instantiatingInterval = UnityEngine.Random.Range(.05f, .5f);
 
@@ -40,12 +42,14 @@ namespace DecentM.VideoPlayer.Plugins
             object[] item = playlist.urls[this.instantiatingIndex];
             this.instantiatingIndex++;
 
-            if (item == null) return;
+            if (item == null)
+                return;
 
             GameObject instance = Instantiate(this.itemRendererTemplate);
             PlaylistItemRenderer renderer = instance.GetComponent<PlaylistItemRenderer>();
 
-            if (renderer == null) return;
+            if (renderer == null)
+                return;
 
             VRCUrl url = (VRCUrl)item[0];
             Sprite thumbnail = (Sprite)item[1];
@@ -59,11 +63,27 @@ namespace DecentM.VideoPlayer.Plugins
             string description = (string)item[9];
             string duration = (string)item[10];
 
-            instance.transform.SetPositionAndRotation(this.itemRendererTemplate.transform.position, this.itemRendererTemplate.transform.rotation);
+            instance.transform.SetPositionAndRotation(
+                this.itemRendererTemplate.transform.position,
+                this.itemRendererTemplate.transform.rotation
+            );
             instance.transform.SetParent(this.itemsRoot, true);
             instance.transform.localScale = this.itemRendererTemplate.transform.localScale;
             instance.name = $"{renderer.name}_{this.instantiatingIndex - 1}";
-            renderer.SetData(this.instantiatingIndex - 1, url, thumbnail, title, uploader, platform, views, likes, resolution, fps, description, duration);
+            renderer.SetData(
+                this.instantiatingIndex - 1,
+                url,
+                thumbnail,
+                title,
+                uploader,
+                platform,
+                views,
+                likes,
+                resolution,
+                fps,
+                description,
+                duration
+            );
             instance.gameObject.SetActive(true);
 
             PlaylistItemRenderer[] tmp = new PlaylistItemRenderer[this.instances.Length + 1];

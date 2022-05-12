@@ -1,5 +1,4 @@
-﻿
-using UdonSharp;
+﻿using UdonSharp;
 using UnityEngine;
 using VRC.SDKBase;
 using VRC.Udon;
@@ -38,19 +37,22 @@ namespace DecentM.Notifications.Providers
 
         private void OnPerformanceHigh()
         {
-            if (!this.toggle.isOn) return;
+            if (!this.toggle.isOn)
+                return;
             this.notifications.SendNotification(this.iconHigh, "Performance mode changed to High");
         }
 
         private void OnPerformanceMedium()
         {
-            if (!this.toggle.isOn) return;
+            if (!this.toggle.isOn)
+                return;
             this.notifications.SendNotification(this.iconMed, "Performance mode changed to Medium");
         }
 
         private void OnPerformanceLow()
         {
-            if (!this.toggle.isOn) return;
+            if (!this.toggle.isOn)
+                return;
             this.notifications.SendNotification(this.iconLow, "Performance mode changed to Low");
         }
     }

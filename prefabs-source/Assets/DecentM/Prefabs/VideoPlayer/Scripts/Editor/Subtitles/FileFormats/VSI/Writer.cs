@@ -13,7 +13,7 @@ namespace DecentM.Subtitles.Vsi
         {
             List<SubtitleScreen> screens = SubtitleScreen.FromNodes(this.ast.nodes);
             List<Instruction> instructions = Instruction.FromScreens(screens);
-            
+
             StringBuilder sb = new StringBuilder();
 
             foreach (Instruction instruction in instructions)

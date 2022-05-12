@@ -29,11 +29,17 @@ namespace DecentM.VideoPlayer.Plugins
         private int OnUNetReceived_dataIndex;
         private int OnUNetReceived_dataLength;
         private int OnUNetReceived_id;
+
         public void OnUNetReceived()
         {
-            if (OnUNetReceived_sender == Networking.LocalPlayer.playerId) return;
+            if (OnUNetReceived_sender == Networking.LocalPlayer.playerId)
+                return;
 
-            string value = this.reader.ReadUTF8String(OnUNetReceived_dataLength, OnUNetReceived_dataBuffer, OnUNetReceived_dataIndex);
+            string value = this.reader.ReadUTF8String(
+                OnUNetReceived_dataLength,
+                OnUNetReceived_dataBuffer,
+                OnUNetReceived_dataIndex
+            );
             string command = value.Split(null, 2)[0];
             string arguments = value.Split(null, 2)[1];
 
@@ -84,7 +90,8 @@ namespace DecentM.VideoPlayer.Plugins
                 return;
             }
 
-            if (Networking.LocalPlayer.playerId == this.ownerId) return;
+            if (Networking.LocalPlayer.playerId == this.ownerId)
+                return;
 
             this.SendCommandTarget(true, VideoLoadedCommand, this.ownerId, "");
         }
@@ -93,7 +100,8 @@ namespace DecentM.VideoPlayer.Plugins
 
         protected override void OnOwnershipChanged(int previousOwnerId, VRCPlayerApi nextOwner)
         {
-            if (nextOwner == null || !nextOwner.IsValid()) return;
+            if (nextOwner == null || !nextOwner.IsValid())
+                return;
 
             this.ownerId = nextOwner.playerId;
         }
@@ -109,7 +117,8 @@ namespace DecentM.VideoPlayer.Plugins
         // Wait for at least one ack
         private void HandleVideoLoadedReceived(int senderId)
         {
-            if (Networking.LocalPlayer.playerId != this.ownerId) return;
+            if (Networking.LocalPlayer.playerId != this.ownerId)
+                return;
 
             int[] tmp = new int[this.loadedPlayers.Length + 1];
             Array.Copy(this.loadedPlayers, tmp, this.loadedPlayers.Length);
@@ -118,7 +127,10 @@ namespace DecentM.VideoPlayer.Plugins
 
             this.events.OnRemotePlayerLoaded(this.loadedPlayers);
 
-            if (this.loadedPlayers.Length >= VRCPlayerApi.GetPlayerCount() - 1 && this.autoplayOnLoad)
+            if (
+                this.loadedPlayers.Length >= VRCPlayerApi.GetPlayerCount() - 1
+                && this.autoplayOnLoad
+            )
             {
                 this.system.StartPlayback();
             }

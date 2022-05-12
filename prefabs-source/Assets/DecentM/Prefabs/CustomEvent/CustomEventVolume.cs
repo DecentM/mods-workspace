@@ -1,5 +1,4 @@
-﻿
-using UdonSharp;
+﻿using UdonSharp;
 using UnityEngine;
 using VRC.SDKBase;
 using VRC.Udon;
@@ -9,22 +8,34 @@ using DecentM;
 public class CustomEventVolume : UdonSharpBehaviour
 {
     [Header("Settings")]
-    [Tooltip("A list of GameObjects to send events to. They will receive the events at the same time.")]
+    [Tooltip(
+        "A list of GameObjects to send events to. They will receive the events at the same time."
+    )]
     public Component[] targets;
+
     [Tooltip("If true, the trigger will enable/disable targets when other players enter/exit it")]
     public bool global = false;
+
     [Tooltip("The event to send when the player enters the trigger")]
     public string enterEventName = "";
+
     [Tooltip("The event to send when the player exits the trigger")]
     public string exitEventName = "";
 
     [Header("LibDecentM")]
     [Tooltip("The LibDecentM object")]
     public LibDecentM lib;
-    [Tooltip("If checked, the list will function as a whitelist, otherwise it will function as a blacklist")]
+
+    [Tooltip(
+        "If checked, the list will function as a whitelist, otherwise it will function as a blacklist"
+    )]
     public bool isWhitelist = false;
-    [Tooltip("If checked, only the instance master can use this trigger, and the player list will be ignored")]
+
+    [Tooltip(
+        "If checked, only the instance master can use this trigger, and the player list will be ignored"
+    )]
     public bool masterOnly = false;
+
     [Tooltip("A list of players who can (or cannot) use this trigger")]
     public PlayerList playerList;
 
@@ -49,7 +60,12 @@ public class CustomEventVolume : UdonSharpBehaviour
             return;
         }
 
-        bool isAllowed = this.lib.permissions.IsPlayerAllowed(player, this.masterOnly, this.isWhitelist, this.playerList);
+        bool isAllowed = this.lib.permissions.IsPlayerAllowed(
+            player,
+            this.masterOnly,
+            this.isWhitelist,
+            this.playerList
+        );
 
         if (!isAllowed)
         {
@@ -64,7 +80,7 @@ public class CustomEventVolume : UdonSharpBehaviour
                 continue;
             }
 
-            UdonBehaviour behaviour = (UdonBehaviour) this.targets[i];
+            UdonBehaviour behaviour = (UdonBehaviour)this.targets[i];
 
             behaviour.SendCustomEvent(this.enterEventName);
         }
@@ -84,7 +100,12 @@ public class CustomEventVolume : UdonSharpBehaviour
             return;
         }
 
-        bool isAllowed = this.lib.permissions.IsPlayerAllowed(player, this.masterOnly, this.isWhitelist, this.playerList);
+        bool isAllowed = this.lib.permissions.IsPlayerAllowed(
+            player,
+            this.masterOnly,
+            this.isWhitelist,
+            this.playerList
+        );
 
         if (!isAllowed)
         {
@@ -99,7 +120,7 @@ public class CustomEventVolume : UdonSharpBehaviour
                 continue;
             }
 
-            UdonBehaviour behaviour = (UdonBehaviour) this.targets[i];
+            UdonBehaviour behaviour = (UdonBehaviour)this.targets[i];
 
             behaviour.SendCustomEvent(this.exitEventName);
         }

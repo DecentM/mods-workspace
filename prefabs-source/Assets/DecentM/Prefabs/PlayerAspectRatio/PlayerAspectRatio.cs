@@ -1,5 +1,4 @@
-﻿
-using UdonSharp;
+﻿using UdonSharp;
 using UnityEngine;
 
 [UdonBehaviourSyncMode(BehaviourSyncMode.Continuous)]
@@ -8,14 +7,17 @@ public class PlayerAspectRatio : UdonSharpBehaviour
     [Header("Settings")]
     [Tooltip("Sets the base scale of the video screen")]
     public float scale = 2f;
+
     [Tooltip("Sets the resize directional mode. 0 - centered, 1 - horizontal, 2 - vertical")]
     public int directionalMode = 0;
+
     [Tooltip("Apply this aspect ratio at startup. Example: 16:9")]
     public string defaultAspectRatio;
 
     [Header("References")]
     [Tooltip("The video screen from USharpVideo")]
     public MeshRenderer videoScreenRenderer;
+
     [Tooltip("A one by one mesh to use. This mesh will be resized with the required aspect ratio.")]
     public Mesh oneByOneMesh;
 
@@ -55,11 +57,15 @@ public class PlayerAspectRatio : UdonSharpBehaviour
             return;
         }
 
-        if (this.videoScreenRenderer.gameObject.isStatic) {
-            Debug.LogError($"[PlayerAspectRatio] The linked video screen is static! Resizing it will not work, therefore the aspect ratio cannot be changed. Exiting...");
+        if (this.videoScreenRenderer.gameObject.isStatic)
+        {
+            Debug.LogError(
+                $"[PlayerAspectRatio] The linked video screen is static! Resizing it will not work, therefore the aspect ratio cannot be changed. Exiting..."
+            );
             this.enabled = false;
             return;
-        };
+        }
+        ;
 
         MeshFilter meshFilter = this.videoScreenRenderer.GetComponent<MeshFilter>();
         meshFilter.mesh = this.oneByOneMesh;
@@ -68,7 +74,8 @@ public class PlayerAspectRatio : UdonSharpBehaviour
         if (this.defaultAspectRatio == null)
         {
             this.Resize(this.width, this.height);
-        } else
+        }
+        else
         {
             this.UpdateFromString(this.defaultAspectRatio);
         }
@@ -109,17 +116,29 @@ public class PlayerAspectRatio : UdonSharpBehaviour
                 float realW = w / (w + h) * this.scale;
                 float realH = h / (w + h) * this.scale;
 
-                this.videoScreenRenderer.transform.localScale = new Vector3(realW * this.scale, realH * this.scale, 1);
+                this.videoScreenRenderer.transform.localScale = new Vector3(
+                    realW * this.scale,
+                    realH * this.scale,
+                    1
+                );
                 break;
 
             // 1 - horizontal
             case 1:
-                this.videoScreenRenderer.transform.localScale = new Vector3(w / h * this.scale, 1 * this.scale, 1);
+                this.videoScreenRenderer.transform.localScale = new Vector3(
+                    w / h * this.scale,
+                    1 * this.scale,
+                    1
+                );
                 break;
 
             // 2 - vertical
             case 2:
-                this.videoScreenRenderer.transform.localScale = new Vector3(1 * this.scale, h / w * this.scale, 1);
+                this.videoScreenRenderer.transform.localScale = new Vector3(
+                    1 * this.scale,
+                    h / w * this.scale,
+                    1
+                );
                 break;
         }
 

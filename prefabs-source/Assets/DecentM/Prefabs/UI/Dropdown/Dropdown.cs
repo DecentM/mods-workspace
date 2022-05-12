@@ -34,7 +34,8 @@ namespace DecentM.UI
 
         public void Clear()
         {
-            if (this.instantiatedOptions == null) this.instantiatedOptions = new GameObject[0];
+            if (this.instantiatedOptions == null)
+                this.instantiatedOptions = new GameObject[0];
 
             foreach (GameObject option in this.instantiatedOptions)
             {
@@ -52,31 +53,39 @@ namespace DecentM.UI
 
         private void FixedUpdate()
         {
-            if (this.options.Length == this.instantiatedOptions.Length) return;
+            if (this.options.Length == this.instantiatedOptions.Length)
+                return;
 
             this.elapsed += Time.fixedUnscaledDeltaTime;
-            if (elapsed <= this.instantinatingDelay) return;
+            if (elapsed <= this.instantinatingDelay)
+                return;
             this.elapsed = 0;
 
             int newIndex = this.instantiatedOptions.Length;
-            if (newIndex >= this.options.Length || this.options[newIndex] == null) return;
+            if (newIndex >= this.options.Length || this.options[newIndex] == null)
+                return;
 
             this.AddOption(this.options[newIndex]);
         }
 
         private void AddOption(object[] optionKvp)
         {
-            if (this.instantiatedOptions == null) this.instantiatedOptions = new GameObject[0];
+            if (this.instantiatedOptions == null)
+                this.instantiatedOptions = new GameObject[0];
 
             GameObject instance = Instantiate(this.optionTemplate);
 
             instance.transform.SetParent(this.optionsRoot);
             instance.name = $"{optionKvp[0]}_{optionKvp[1]}";
-            instance.transform.SetPositionAndRotation(this.optionTemplate.transform.position, this.optionTemplate.transform.rotation);
+            instance.transform.SetPositionAndRotation(
+                this.optionTemplate.transform.position,
+                this.optionTemplate.transform.rotation
+            );
             instance.transform.localScale = this.optionTemplate.transform.localScale;
 
             DropdownOption option = instance.GetComponent<DropdownOption>();
-            if (option == null) return;
+            if (option == null)
+                return;
 
             option.SetData(this, optionKvp[0], (string)optionKvp[1]);
             instance.SetActive(true);

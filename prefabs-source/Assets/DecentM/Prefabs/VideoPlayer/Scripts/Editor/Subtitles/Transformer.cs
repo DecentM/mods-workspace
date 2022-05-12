@@ -33,7 +33,8 @@ namespace DecentM.Subtitles
 
         private void AddTransform(Func<Ast, Ast> transform)
         {
-            if (transforms.Contains(transform)) return;
+            if (transforms.Contains(transform))
+                return;
 
             transforms.Add(transform);
         }

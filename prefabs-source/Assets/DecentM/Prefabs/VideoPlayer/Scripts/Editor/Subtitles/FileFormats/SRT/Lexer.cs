@@ -34,8 +34,10 @@ namespace DecentM.Subtitles.Srt
             {
                 for (int i = 0; i < word.Length; i++)
                 {
-                    if (cursor + i >= text.Length) return false;
-                    if (word[i] != text[cursor + i]) return false;
+                    if (cursor + i >= text.Length)
+                        return false;
+                    if (word[i] != text[cursor + i])
+                        return false;
                 }
 
                 return true;

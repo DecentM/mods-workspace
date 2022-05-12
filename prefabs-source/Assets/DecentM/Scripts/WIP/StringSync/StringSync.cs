@@ -1,5 +1,4 @@
-﻿
-using UdonSharp;
+﻿using UdonSharp;
 using UnityEngine;
 using VRC.SDKBase;
 using VRC.Udon;
@@ -30,14 +29,18 @@ public class StringSync : UdonSharpBehaviour
     public string syncedText
     {
         get { return string.Join("", this._syncedText); }
-        set {
+        set
+        {
             int i = 0;
 
             while (i < value.Length)
             {
                 string[] newSendSource = new string[this._syncedText.Length + 1];
                 Array.Copy(this._syncedText, newSendSource, this._syncedText.Length);
-                newSendSource[newSendSource.Length - 1] = value.Substring(i, Math.Min(MaxMessageSize, value.Length - i));
+                newSendSource[newSendSource.Length - 1] = value.Substring(
+                    i,
+                    Math.Min(MaxMessageSize, value.Length - i)
+                );
                 this._syncedText = newSendSource;
 
                 i = i + MaxMessageSize;
@@ -59,7 +62,9 @@ public class StringSync : UdonSharpBehaviour
     {
         if (this.network == null)
         {
-            Debug.LogError("[StringSync] The network variable has not been set. This StringSync will not function.");
+            Debug.LogError(
+                "[StringSync] The network variable has not been set. This StringSync will not function."
+            );
             this.enabled = false;
             return;
         }
@@ -95,12 +100,14 @@ public class StringSync : UdonSharpBehaviour
     // our private variables before sending events. Just like assembly!
 
     private int OnUNetConnected_playerId;
+
     public void OnUNetConnected()
     {
         this.DebugLog($"OnUNetConnected({OnUNetConnected_playerId})");
     }
 
     private int OnUNetDisconnected_playerId;
+
     public void OnUNetDisconnected()
     {
         this.DebugLog($"OnUNetDisconnected({OnUNetDisconnected_playerId})");
@@ -121,9 +128,12 @@ public class StringSync : UdonSharpBehaviour
 
     private int OnUNetSendComplete_messageId;
     private bool OnUNetSendComplete_succeed;
+
     public void OnUNetSendComplete()
     {
-        this.DebugLog($"OnUNetSendComplete({OnUNetSendComplete_messageId}, {OnUNetSendComplete_succeed})");
+        this.DebugLog(
+            $"OnUNetSendComplete({OnUNetSendComplete_messageId}, {OnUNetSendComplete_succeed})"
+        );
 
         if (OnUNetSendComplete_messageId == this.messageLock)
         {
@@ -136,16 +146,24 @@ public class StringSync : UdonSharpBehaviour
     private int OnUNetReceived_dataIndex;
     private int OnUNetReceived_dataLength;
     private int OnUNetReceived_id;
+
     public void OnUNetReceived()
     {
-        this.DebugLog($"OnUNetReceived({OnUNetReceived_sender}, {OnUNetReceived_dataBuffer.ToString()}, {OnUNetReceived_dataIndex}, {OnUNetReceived_dataLength}, {OnUNetReceived_id})");
+        this.DebugLog(
+            $"OnUNetReceived({OnUNetReceived_sender}, {OnUNetReceived_dataBuffer.ToString()}, {OnUNetReceived_dataIndex}, {OnUNetReceived_dataLength}, {OnUNetReceived_id})"
+        );
 
-        string value = this.reader.ReadUTF8String(OnUNetReceived_dataLength, OnUNetReceived_dataBuffer, OnUNetReceived_dataIndex);
+        string value = this.reader.ReadUTF8String(
+            OnUNetReceived_dataLength,
+            OnUNetReceived_dataBuffer,
+            OnUNetReceived_dataIndex
+        );
         string command = value.Split(null, 2)[0];
         string arguments = value.Split(null, 2)[1];
 
         // Network messages are strings, where the command and its arguments are separated by a space
-        switch (command) {
+        switch (command)
+        {
             // This player requested that we (re)start syncing the string to them from the beginning
             // master receives this
             //case ClientRequestResync:
@@ -200,7 +218,10 @@ public class StringSync : UdonSharpBehaviour
 
         // OnInteract is triggered when the master presses the Sync button. That means we need to discard all sync state and
         // start over.
-        this.SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, nameof(this.RequestResync));
+        this.SendCustomNetworkEvent(
+            VRC.Udon.Common.Interfaces.NetworkEventTarget.All,
+            nameof(this.RequestResync)
+        );
     }
 
     public void RequestResync()
@@ -225,7 +246,11 @@ public class StringSync : UdonSharpBehaviour
     private int SendIndexToPlayer(int index, int player)
     {
         this.DebugLog($"SendIndexToPlayer({index}, {player})");
-        return this.SendCommandTarget(MasterSendsIndex, $"{index.ToString()} {this._syncedText[index]}", player);
+        return this.SendCommandTarget(
+            MasterSendsIndex,
+            $"{index.ToString()} {this._syncedText[index]}",
+            player
+        );
     }
 
     private int SendCommandAll(string command, string arguments)

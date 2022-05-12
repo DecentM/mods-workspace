@@ -27,7 +27,8 @@ namespace DecentM.VideoPlayer.Plugins
 
         private void PlaySound(AudioClip clip)
         {
-            if (this.system.IsPlaying()) return;
+            if (this.system.IsPlaying())
+                return;
 
             this.audioSource.PlayOneShot(clip);
         }
@@ -49,12 +50,18 @@ namespace DecentM.VideoPlayer.Plugins
 
         protected override void OnOwnershipChanged(int previousOwnerId, VRCPlayerApi nextOwner)
         {
-            if (previousOwnerId == Networking.LocalPlayer.playerId && nextOwner != Networking.LocalPlayer)
+            if (
+                previousOwnerId == Networking.LocalPlayer.playerId
+                && nextOwner != Networking.LocalPlayer
+            )
             {
                 this.PlaySound(this.ownershipLost);
             }
 
-            if (previousOwnerId != Networking.LocalPlayer.playerId && nextOwner == Networking.LocalPlayer)
+            if (
+                previousOwnerId != Networking.LocalPlayer.playerId
+                && nextOwner == Networking.LocalPlayer
+            )
             {
                 this.PlaySound(this.ownershipGained);
             }

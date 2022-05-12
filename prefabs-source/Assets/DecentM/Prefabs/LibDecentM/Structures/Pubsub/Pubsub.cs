@@ -31,11 +31,23 @@ namespace DecentM.Pubsub
 
         public bool Unsubscribe(int index)
         {
-            if (this.subscribers == null || this.subscribers.Length == 0 || index < 0 || index >= this.subscribers.Length) return false;
+            if (
+                this.subscribers == null
+                || this.subscribers.Length == 0
+                || index < 0
+                || index >= this.subscribers.Length
+            )
+                return false;
 
             PubsubSubscriber[] tmp = new PubsubSubscriber[subscribers.Length + 1];
             Array.Copy(this.subscribers, 0, tmp, 0, index);
-            Array.Copy(this.subscribers, index + 1, tmp, index, this.subscribers.Length - 1 - index);
+            Array.Copy(
+                this.subscribers,
+                index + 1,
+                tmp,
+                index,
+                this.subscribers.Length - 1 - index
+            );
             this.subscribers = tmp;
 
             return true;
@@ -62,7 +74,8 @@ namespace DecentM.Pubsub
 
         private object[] QueuePop()
         {
-            if (this.queue == null || this.queue.Length == 0) return null;
+            if (this.queue == null || this.queue.Length == 0)
+                return null;
 
             object[] result = this.queue[0];
 
@@ -75,7 +88,8 @@ namespace DecentM.Pubsub
 
         private void FixedUpdate()
         {
-            if (this.queue == null || this.queue.Length == 0) return;
+            if (this.queue == null || this.queue.Length == 0)
+                return;
 
             int processedCount = 0;
 
@@ -103,7 +117,8 @@ namespace DecentM.Pubsub
 
         protected void BroadcastEvent(object eventName, params object[] data)
         {
-            if (this.subscribers == null || this.subscribers.Length == 0) return;
+            if (this.subscribers == null || this.subscribers.Length == 0)
+                return;
 
             foreach (PubsubSubscriber subscriber in this.subscribers)
             {

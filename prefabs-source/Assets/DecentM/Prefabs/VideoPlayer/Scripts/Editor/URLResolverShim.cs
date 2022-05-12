@@ -15,29 +15,47 @@ namespace DecentM.VideoPlayer
 {
     public static class EditorURLResolverShim
     {
-
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
         static void SetupURLResolveCallback()
         {
             if (!File.Exists(EditorAssets.YtDlpPath))
             {
-                UnityEngine.Debug.LogWarning("[DecentM.VideoPlayer YTDL] Unable to find yt-dlp, URLs will not be resolved. Did you move the root folder after importing it?");
-                UnityEngine.Debug.LogWarning($"[DecentM.VideoPlayer YTDL] File missing from {EditorAssets.YtDlpPath}");
+                UnityEngine.Debug.LogWarning(
+                    "[DecentM.VideoPlayer YTDL] Unable to find yt-dlp, URLs will not be resolved. Did you move the root folder after importing it?"
+                );
+                UnityEngine.Debug.LogWarning(
+                    $"[DecentM.VideoPlayer YTDL] File missing from {EditorAssets.YtDlpPath}"
+                );
                 return;
             }
 
             VRCUnityVideoPlayer.StartResolveURLCoroutine += ResolveURLCallback;
         }
 
-        static void ResolveURLCallback(VRCUrl url, int resolution, UnityEngine.Object videoPlayer, Action<string> urlResolvedCallback, Action<VideoError> errorCallback)
+        static void ResolveURLCallback(
+            VRCUrl url,
+            int resolution,
+            UnityEngine.Object videoPlayer,
+            Action<string> urlResolvedCallback,
+            Action<VideoError> errorCallback
+        )
         {
             UnityEngine.Debug.Log($"[DecentM.VideoPlayer YTDL] Attempting to resolve URL '{url}'");
 
-            DCoroutine.Start(YTDLCommands.GetVideoUrlEnumerator(url.ToString(), resolution, (string result) =>
-            {
-                UnityEngine.Debug.Log($"[DecentM.VideoPlayer YTDL] Resolved '{url}' to '{result}'");
-                if (videoPlayer != null) urlResolvedCallback(result);
-            }));
+            DCoroutine.Start(
+                YTDLCommands.GetVideoUrlEnumerator(
+                    url.ToString(),
+                    resolution,
+                    (string result) =>
+                    {
+                        UnityEngine.Debug.Log(
+                            $"[DecentM.VideoPlayer YTDL] Resolved '{url}' to '{result}'"
+                        );
+                        if (videoPlayer != null)
+                            urlResolvedCallback(result);
+                    }
+                )
+            );
         }
     }
 }

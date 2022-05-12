@@ -27,7 +27,8 @@ namespace DecentM.EditorTools
 
         private static string GetPathFromUrl(string url)
         {
-            if (!ValidateUrl(url)) return null;
+            if (!ValidateUrl(url))
+                return null;
 
             string hash = Hash.String(url);
             return $"{EditorAssets.SubtitleCacheFolder}/{hash}";
@@ -53,9 +54,12 @@ namespace DecentM.EditorTools
             for (int i = 0; i < urls.Length; i++)
             {
                 string url = urls[i];
-                if (string.IsNullOrEmpty(url)) continue;
-                if (!ValidateUrl(url)) continue;
-                if (IsCached(url)) continue;
+                if (string.IsNullOrEmpty(url))
+                    continue;
+                if (!ValidateUrl(url))
+                    continue;
+                if (IsCached(url))
+                    continue;
 
                 queue.Enqueue(url);
             }
@@ -72,8 +76,10 @@ namespace DecentM.EditorTools
 
         private static IEnumerator Fetch(string url)
         {
-            if (string.IsNullOrEmpty(url)) return null;
-            if (!ValidateUrl(url)) return null;
+            if (string.IsNullOrEmpty(url))
+                return null;
+            if (!ValidateUrl(url))
+                return null;
 
             string path = GetPathFromUrl(url);
 
@@ -87,8 +93,10 @@ namespace DecentM.EditorTools
             for (int i = 0; i < urls.Count; i++)
             {
                 string url = urls[i];
-                if (string.IsNullOrEmpty(url)) continue;
-                if (!ValidateUrl(url)) continue;
+                if (string.IsNullOrEmpty(url))
+                    continue;
+                if (!ValidateUrl(url))
+                    continue;
 
                 coroutines.Add(DCoroutine.Start(Fetch(url)));
             }
@@ -96,7 +104,12 @@ namespace DecentM.EditorTools
             return Parallelism.WaitForCoroutines(coroutines, OnFinish);
         }
 
-        private static DCoroutine Fetch(Queue<string> urls, int batchSize, Action OnFinish, Action<int> OnQueueSizeChange)
+        private static DCoroutine Fetch(
+            Queue<string> urls,
+            int batchSize,
+            Action OnFinish,
+            Action<int> OnQueueSizeChange
+        )
         {
             if (urls.Count == 0)
             {
@@ -112,7 +125,9 @@ namespace DecentM.EditorTools
                 OnQueueSizeChange(urls.Count);
             }
 
-            return DCoroutine.Start(FetchInParallel(batch, () => Fetch(urls, batchSize, OnFinish, OnQueueSizeChange)));
+            return DCoroutine.Start(
+                FetchInParallel(batch, () => Fetch(urls, batchSize, OnFinish, OnQueueSizeChange))
+            );
         }
 
         private static bool Fetch(string[] urls, Action<float> OnProgress, Action OnFinish)
@@ -145,7 +160,8 @@ namespace DecentM.EditorTools
         [PublicAPI]
         public static bool Refresh(string[] urls, Action<float> OnProgress, Action OnFinish)
         {
-            if (urls.Length == 0) return true;
+            if (urls.Length == 0)
+                return true;
             return Fetch(urls, OnProgress, OnFinish);
         }
 
@@ -158,7 +174,8 @@ namespace DecentM.EditorTools
         [PublicAPI]
         public static TextAsset[] GetFromCache(string url)
         {
-            if (!ValidateUrl(url)) return null;
+            if (!ValidateUrl(url))
+                return null;
 
             List<TextAsset> result = new List<TextAsset>();
 
@@ -173,17 +190,20 @@ namespace DecentM.EditorTools
                     .Where(file => SubtitleFormat.IsSupported(Path.GetExtension(file)))
                     .ToList();
 
-                if (files.Count == 0) return null;
+                if (files.Count == 0)
+                    return null;
 
                 foreach (string file in files)
                 {
                     TextAsset asset = AssetDatabase.LoadAssetAtPath<TextAsset>(file);
 
-                    if (asset == null) continue;
+                    if (asset == null)
+                        continue;
 
                     result.Add(asset);
                 }
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 Debug.LogException(ex);
             }
@@ -194,7 +214,8 @@ namespace DecentM.EditorTools
         [PublicAPI]
         public static bool IsCached(string url)
         {
-            if (!ValidateUrl(url)) return false;
+            if (!ValidateUrl(url))
+                return false;
 
             TextAsset[] assets = GetFromCache(url);
 

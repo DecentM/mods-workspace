@@ -25,12 +25,14 @@ namespace DecentM.EditorTools
         }
 
         readonly IEnumerator routine;
+
         DCoroutine(IEnumerator _routine)
         {
             routine = _routine;
         }
 
         readonly Action action;
+
         DCoroutine(Action _action)
         {
             action = _action;
@@ -38,7 +40,8 @@ namespace DecentM.EditorTools
 
         void Start()
         {
-            if (runningCoroutines.Contains(this)) return;
+            if (runningCoroutines.Contains(this))
+                return;
 
             EditorApplication.update += this.Update;
             runningCoroutines.Add(this);
@@ -46,7 +49,8 @@ namespace DecentM.EditorTools
 
         public void Stop()
         {
-            if (!runningCoroutines.Contains(this)) return;
+            if (!runningCoroutines.Contains(this))
+                return;
 
             EditorApplication.update -= this.Update;
             runningCoroutines.Remove(this);
@@ -63,14 +67,17 @@ namespace DecentM.EditorTools
             {
                 try
                 {
-                    if (!routine.MoveNext()) this.Stop();
-                } catch (Exception ex)
+                    if (!routine.MoveNext())
+                        this.Stop();
+                }
+                catch (Exception ex)
                 {
                     Debug.LogException(ex);
-                    Debug.LogError("A step in this coroutine has thrown an exception, stopping coroutine. There's additional debugging information above.");
+                    Debug.LogError(
+                        "A step in this coroutine has thrown an exception, stopping coroutine. There's additional debugging information above."
+                    );
                     this.Stop();
                 }
-                
             }
             else if (action != null)
             {

@@ -1,5 +1,4 @@
-﻿
-using UdonSharp;
+﻿using UdonSharp;
 using UnityEngine;
 using VRC.SDKBase;
 using VRC.Udon;
@@ -15,7 +14,10 @@ public class TimedCustomEvent : UdonSharpBehaviour
     [Header("Settings")]
     [Tooltip("The name of the event to send / public function name to call")]
     public string eventName;
-    [Tooltip("How many times per second to send the event (min 1, max <1 / Time.fixedDeltaTime>, usually 50)")]
+
+    [Tooltip(
+        "How many times per second to send the event (min 1, max <1 / Time.fixedDeltaTime>, usually 50)"
+    )]
     public float timesPerSecond = 1;
 
     [Header("LibDecentM")]
@@ -28,7 +30,11 @@ public class TimedCustomEvent : UdonSharpBehaviour
     {
         this.clock++;
 
-        float realTimesPerSecond = Mathf.Clamp(this.timesPerSecond, 1, lib.scheduling.fixedUpdateRate);
+        float realTimesPerSecond = Mathf.Clamp(
+            this.timesPerSecond,
+            1,
+            lib.scheduling.fixedUpdateRate
+        );
 
         if (this.clock > lib.scheduling.fixedUpdateRate / realTimesPerSecond)
         {

@@ -13,7 +13,8 @@ namespace DecentM.Metrics.Plugins
         private void DoReport()
         {
             VRCUrl url = this.urlStore.GetInteractionUrl(this.metricName);
-            if (url == null) return;
+            if (url == null)
+                return;
 
             this.locked = true;
             this.system.RecordMetric(url, Metric.Interaction);
@@ -28,7 +29,8 @@ namespace DecentM.Metrics.Plugins
         public override void Interact()
         {
             // Some rate limiting so players cannot jam the queue by spamming the interaction
-            if (this.locked) return;
+            if (this.locked)
+                return;
 
             this.DoReport();
         }

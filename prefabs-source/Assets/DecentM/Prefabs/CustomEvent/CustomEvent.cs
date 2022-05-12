@@ -1,5 +1,4 @@
-﻿
-using UdonSharp;
+﻿using UdonSharp;
 using UnityEngine;
 using VRC.SDKBase;
 using VRC.Udon;
@@ -14,25 +13,40 @@ public class CustomEvent : UdonSharpBehaviour
     [Header("Settings")]
     [Tooltip("The name of the event to send / public function name to call")]
     public string eventName;
+
     [Tooltip("If true, the custom event will be sent to everyone in the room")]
     public bool global = false;
 
     [Header("LibDecentM")]
     [Tooltip("The LibDecentM object")]
     public LibDecentM lib;
-    [Tooltip("If checked, the list will function as a whitelist, otherwise it will function as a blacklist")]
+
+    [Tooltip(
+        "If checked, the list will function as a whitelist, otherwise it will function as a blacklist"
+    )]
     public bool isWhitelist = false;
-    [Tooltip("If checked, only the instance master can use this trigger, and the player list will be ignored")]
+
+    [Tooltip(
+        "If checked, only the instance master can use this trigger, and the player list will be ignored"
+    )]
     public bool masterOnly = false;
+
     [Tooltip("A list of players who can (or cannot) use this trigger")]
     public PlayerList playerList;
 
     public override void Interact()
     {
         VRCPlayerApi player = Networking.LocalPlayer;
-        bool isAllowed = this.lib.permissions.IsPlayerAllowed(player, this.masterOnly, this.isWhitelist, this.playerList);
+        bool isAllowed = this.lib.permissions.IsPlayerAllowed(
+            player,
+            this.masterOnly,
+            this.isWhitelist,
+            this.playerList
+        );
 
-        if (!isAllowed || this.eventName == null || this.targets == null || this.targets.Length == 0)
+        if (
+            !isAllowed || this.eventName == null || this.targets == null || this.targets.Length == 0
+        )
         {
             return;
         }
@@ -57,9 +71,12 @@ public class CustomEvent : UdonSharpBehaviour
                 return;
             }
 
-            UdonBehaviour behaviour = (UdonBehaviour) this.targets[i];
+            UdonBehaviour behaviour = (UdonBehaviour)this.targets[i];
 
-            behaviour.SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, this.eventName);
+            behaviour.SendCustomNetworkEvent(
+                VRC.Udon.Common.Interfaces.NetworkEventTarget.All,
+                this.eventName
+            );
         }
     }
 
@@ -73,7 +90,7 @@ public class CustomEvent : UdonSharpBehaviour
                 return;
             }
 
-            UdonBehaviour behaviour = (UdonBehaviour) this.targets[i];
+            UdonBehaviour behaviour = (UdonBehaviour)this.targets[i];
 
             behaviour.SendCustomEvent(this.eventName);
         }

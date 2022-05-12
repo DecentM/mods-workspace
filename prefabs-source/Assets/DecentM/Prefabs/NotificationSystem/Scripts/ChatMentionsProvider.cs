@@ -29,16 +29,22 @@ namespace DecentM.Notifications.Providers
 
         private void HandleMessageAdded(ChatMessage message)
         {
-            if (!this.toggle.isOn || message == null) return;
+            if (!this.toggle.isOn || message == null)
+                return;
 
             VRCPlayerApi sender = VRCPlayerApi.GetPlayerById(message.senderId);
 
-            if (sender == null || !sender.IsValid()) return;
-            if (sender == Networking.LocalPlayer) return;
+            if (sender == null || !sender.IsValid())
+                return;
+            if (sender == Networking.LocalPlayer)
+                return;
 
             if (message.message.ToLower().Contains(Networking.LocalPlayer.displayName.ToLower()))
             {
-                this.notifications.SendNotification(this.icon, $"{sender.displayName}\n{message.message}");
+                this.notifications.SendNotification(
+                    this.icon,
+                    $"{sender.displayName}\n{message.message}"
+                );
             }
         }
     }

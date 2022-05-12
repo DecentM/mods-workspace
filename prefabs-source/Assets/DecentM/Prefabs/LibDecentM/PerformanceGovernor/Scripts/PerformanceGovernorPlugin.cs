@@ -15,12 +15,12 @@ namespace DecentM.Performance.Plugins
                 #region Core
 
                 case PerformanceGovernorEvent.OnPerformanceModeChange:
-                    {
-                        PerformanceGovernorMode mode = (PerformanceGovernorMode)data[0];
-                        float fps = (float)data[1];
-                        this.OnPerformanceModeChange(mode, fps);
-                        return;
-                    }
+                {
+                    PerformanceGovernorMode mode = (PerformanceGovernorMode)data[0];
+                    float fps = (float)data[1];
+                    this.OnPerformanceModeChange(mode, fps);
+                    return;
+                }
 
                 #endregion
             }

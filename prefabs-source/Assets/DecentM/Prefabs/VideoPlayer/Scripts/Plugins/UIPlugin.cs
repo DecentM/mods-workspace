@@ -98,15 +98,18 @@ namespace DecentM.VideoPlayer.Plugins
         {
             TimeSpan t = TimeSpan.FromSeconds(timestamp);
 
-            if (t.Hours > 0) return string.Format("{0:D2}:{1:D2}:{2:D2}", t.Hours, t.Minutes, t.Seconds);
+            if (t.Hours > 0)
+                return string.Format("{0:D2}:{1:D2}:{2:D2}", t.Hours, t.Minutes, t.Seconds);
 
             return string.Format("{0:D2}:{1:D2}", t.Minutes, t.Seconds);
         }
 
         private string GetProgressIndicator(float timestamp, float duration)
         {
-            if (float.IsInfinity(timestamp)) return "Live";
-            if (float.IsInfinity(duration)) return $"{this.HumanReadableTimestamp(timestamp)} (Live)";
+            if (float.IsInfinity(timestamp))
+                return "Live";
+            if (float.IsInfinity(duration))
+                return $"{this.HumanReadableTimestamp(timestamp)} (Live)";
 
             return $"{this.HumanReadableTimestamp(timestamp)} / {this.HumanReadableTimestamp(duration)}";
         }
@@ -122,25 +125,51 @@ namespace DecentM.VideoPlayer.Plugins
 
         private bool CheckDesktopHit()
         {
-            if (Networking.LocalPlayer.IsUserInVR()) return false;
+            if (Networking.LocalPlayer.IsUserInVR())
+                return false;
 
-            VRCPlayerApi.TrackingData head = Networking.LocalPlayer.GetTrackingData(VRCPlayerApi.TrackingDataType.Head);
+            VRCPlayerApi.TrackingData head = Networking.LocalPlayer.GetTrackingData(
+                VRCPlayerApi.TrackingDataType.Head
+            );
 
-            return Physics.Raycast(head.position, head.rotation * desktopRaycastTurn * Vector3.forward, out hitInfo, this.raycastMaxDistance, this.raycastLayerMask);
+            return Physics.Raycast(
+                head.position,
+                head.rotation * desktopRaycastTurn * Vector3.forward,
+                out hitInfo,
+                this.raycastMaxDistance,
+                this.raycastLayerMask
+            );
         }
 
         private bool CheckVRHit()
         {
-            if (!Networking.LocalPlayer.IsUserInVR()) return false;
+            if (!Networking.LocalPlayer.IsUserInVR())
+                return false;
 
-            VRCPlayerApi.TrackingData rightHand = Networking.LocalPlayer.GetTrackingData(VRCPlayerApi.TrackingDataType.RightHand);
-            VRCPlayerApi.TrackingData leftHand = Networking.LocalPlayer.GetTrackingData(VRCPlayerApi.TrackingDataType.LeftHand);
+            VRCPlayerApi.TrackingData rightHand = Networking.LocalPlayer.GetTrackingData(
+                VRCPlayerApi.TrackingDataType.RightHand
+            );
+            VRCPlayerApi.TrackingData leftHand = Networking.LocalPlayer.GetTrackingData(
+                VRCPlayerApi.TrackingDataType.LeftHand
+            );
 
             RaycastHit rightHitInfo;
             RaycastHit leftHitInfo;
 
-            bool rightHit = Physics.Raycast(rightHand.position, rightHand.rotation * vrRaycastTurn * Vector3.forward, out rightHitInfo, this.raycastMaxDistance, this.raycastLayerMask);
-            bool leftHit = Physics.Raycast(leftHand.position, leftHand.rotation * vrRaycastTurn * Vector3.forward, out leftHitInfo, this.raycastMaxDistance, this.raycastLayerMask);
+            bool rightHit = Physics.Raycast(
+                rightHand.position,
+                rightHand.rotation * vrRaycastTurn * Vector3.forward,
+                out rightHitInfo,
+                this.raycastMaxDistance,
+                this.raycastLayerMask
+            );
+            bool leftHit = Physics.Raycast(
+                leftHand.position,
+                leftHand.rotation * vrRaycastTurn * Vector3.forward,
+                out leftHitInfo,
+                this.raycastMaxDistance,
+                this.raycastLayerMask
+            );
 
             if (rightHit)
             {
@@ -161,14 +190,16 @@ namespace DecentM.VideoPlayer.Plugins
 
         public override void OnPlayerTriggerEnter(VRCPlayerApi player)
         {
-            if (player != Networking.LocalPlayer) return;
+            if (player != Networking.LocalPlayer)
+                return;
 
             this.uiRunning = true;
         }
 
         public override void OnPlayerTriggerExit(VRCPlayerApi player)
         {
-            if (player != Networking.LocalPlayer) return;
+            if (player != Networking.LocalPlayer)
+                return;
 
             this.uiRunning = false;
             this.animator.SetBool("ShowControls", false);
@@ -180,14 +211,17 @@ namespace DecentM.VideoPlayer.Plugins
 
         private void RaycastActivityUpdate()
         {
-            if (object.Equals(this.hitInfo, null)) return;
-            if (object.Equals(this.lastHitInfo, null)) this.lastHitInfo = this.hitInfo;
+            if (object.Equals(this.hitInfo, null))
+                return;
+            if (object.Equals(this.lastHitInfo, null))
+                this.lastHitInfo = this.hitInfo;
 
             float distance = Vector3.Distance(this.lastHitInfo.point, this.hitInfo.point);
 
             if (distance < 0.1f)
             {
-                if (this.raycastElapsed <= this.autoHideTimeout) this.raycastElapsed += this.raycastIntervalSeconds;
+                if (this.raycastElapsed <= this.autoHideTimeout)
+                    this.raycastElapsed += this.raycastIntervalSeconds;
             }
             else
             {
@@ -205,18 +239,22 @@ namespace DecentM.VideoPlayer.Plugins
 
         private void FixedUpdate()
         {
-            if (!this.uiRunning) return;
+            if (!this.uiRunning)
+                return;
 
             this.elapsed += Time.fixedUnscaledDeltaTime;
-            if (this.elapsed < this.raycastIntervalSeconds) return;
+            if (this.elapsed < this.raycastIntervalSeconds)
+                return;
             this.elapsed = 0;
 
-            if (Networking.LocalPlayer == null || !Networking.LocalPlayer.IsValid()) return;
+            if (Networking.LocalPlayer == null || !Networking.LocalPlayer.IsValid())
+                return;
 
             bool desktopHit = this.CheckDesktopHit();
             bool vrHit = this.CheckVRHit();
 
-            bool isLookingAtUi = (desktopHit || vrHit) && hitInfo.transform.gameObject == this.raycastTarget;
+            bool isLookingAtUi =
+                (desktopHit || vrHit) && hitInfo.transform.gameObject == this.raycastTarget;
 
             if (isLookingAtUi)
             {
@@ -225,7 +263,8 @@ namespace DecentM.VideoPlayer.Plugins
             }
 
             bool shown = this.animator.GetBool("ShowControls");
-            if (!shown) return;
+            if (!shown)
+                return;
 
             this.animator.SetBool("ShowControls", false);
         }
@@ -286,7 +325,8 @@ namespace DecentM.VideoPlayer.Plugins
                 this.subtitlesToggleButtonIcon.sprite = this.subtitlesUnavailable;
                 this.subtitlesToggleButton.interactable = false;
                 this.subtitlesDropdown.button.interactable = false;
-            } else
+            }
+            else
             {
                 this.subtitlesButton.interactable = true;
                 this.subtitlesButtonImage.color = Color.white;
@@ -297,23 +337,33 @@ namespace DecentM.VideoPlayer.Plugins
                 this.subtitlesDropdown.button.interactable = this.subtitlesOn;
             }
 
-            if (!this.subtitlesOn) return;
+            if (!this.subtitlesOn)
+                return;
 
             // Automatically re-select the current language after the video was changed, so the user doesn't have to
             // look for their language every time the video changes
             foreach (string[] option in newOptions)
             {
-                if (option[0] == this.currentLanguage) this.events.OnSubtitleLanguageRequested(option[0]);
+                if (option[0] == this.currentLanguage)
+                    this.events.OnSubtitleLanguageRequested(option[0]);
             }
         }
 
-        private void RenderMetadata(string title, string uploader, string description, int viewCount, int likeCount)
+        private void RenderMetadata(
+            string title,
+            string uploader,
+            string description,
+            int viewCount,
+            int likeCount
+        )
         {
             this.titleSlot.text = title;
             this.uploaderSlot.text = uploader;
             this.descriptionSlot.text = description;
-            if (viewCount > 0) this.viewCountSlot.text = $"{viewCount} views";
-            if (likeCount > 0) this.likeCountSlot.text = $"{likeCount} likes";
+            if (viewCount > 0)
+                this.viewCountSlot.text = $"{viewCount} views";
+            if (likeCount > 0)
+                this.likeCountSlot.text = $"{likeCount} likes";
         }
 
         private void ClearMetadata()
@@ -325,7 +375,18 @@ namespace DecentM.VideoPlayer.Plugins
             this.likeCountSlot.text = "";
         }
 
-        protected override void OnMetadataChange(string title, string uploader, string siteName, int viewCount, int likeCount, string resolution, int fps, string description, string duration, TextAsset[] subtitles)
+        protected override void OnMetadataChange(
+            string title,
+            string uploader,
+            string siteName,
+            int viewCount,
+            int likeCount,
+            string resolution,
+            int fps,
+            string description,
+            string duration,
+            TextAsset[] subtitles
+        )
         {
             this.RenderMetadata(title, uploader, description, viewCount, likeCount);
         }
@@ -333,7 +394,8 @@ namespace DecentM.VideoPlayer.Plugins
         protected override void OnProgress(float timestamp, float duration)
         {
             this.status.text = this.GetProgressIndicator(timestamp, duration);
-            if (!float.IsInfinity(timestamp) && !float.IsInfinity(duration)) this.progress.SetValueWithoutNotify(Mathf.Max(timestamp / duration, 0.001f));
+            if (!float.IsInfinity(timestamp) && !float.IsInfinity(duration))
+                this.progress.SetValueWithoutNotify(Mathf.Max(timestamp / duration, 0.001f));
         }
 
         protected override void OnAutoRetry(int attempt)
@@ -396,7 +458,7 @@ namespace DecentM.VideoPlayer.Plugins
 
             // TODO Display the reason to the user (via a notification of some sort?)
             // (the status text isn't visible at this time, because the URL input field is shown)
-            this.status.text = reason; 
+            this.status.text = reason;
         }
 
         private void StoppedScreen(float duration)
@@ -483,7 +545,9 @@ namespace DecentM.VideoPlayer.Plugins
         protected override void OnLoadReady(float duration)
         {
             this.isLoading = false;
-            this.status.text = this.selfOwned ? "Loaded, press play to begin" : "Loaded, waiting for owner to start";
+            this.status.text = this.selfOwned
+                ? "Loaded, press play to begin"
+                : "Loaded, waiting for owner to start";
             this.RenderScreen(duration);
             this.animator.SetBool("Loading", false);
         }
@@ -508,8 +572,10 @@ namespace DecentM.VideoPlayer.Plugins
 
         private Sprite GetBrightnessSprite(float alpha)
         {
-            if (alpha < 1f / 3f) return this.brightnessLowIcon;
-            if (alpha < 2f / 3f) return this.brightnessMediumIcon;
+            if (alpha < 1f / 3f)
+                return this.brightnessLowIcon;
+            if (alpha < 2f / 3f)
+                return this.brightnessMediumIcon;
 
             return this.brightnessHighIcon;
         }
@@ -522,10 +588,13 @@ namespace DecentM.VideoPlayer.Plugins
 
         private Sprite GetVolumeSprite(float volume, bool muted)
         {
-            if (muted || volume == 0) return this.volumeMutedIcon;
+            if (muted || volume == 0)
+                return this.volumeMutedIcon;
 
-            if (volume < 1f / 3f) return this.volumeLowIcon;
-            if (volume < 2f / 3f) return this.volumeMediumIcon;
+            if (volume < 1f / 3f)
+                return this.volumeLowIcon;
+            if (volume < 2f / 3f)
+                return this.volumeMediumIcon;
 
             return this.volumeHighIcon;
         }
@@ -557,7 +626,8 @@ namespace DecentM.VideoPlayer.Plugins
 
         protected override void OnPlaybackStop(float timestamp)
         {
-            this.status.text = $"Paused - {this.GetProgressIndicator(timestamp, this.system.GetDuration())}";
+            this.status.text =
+                $"Paused - {this.GetProgressIndicator(timestamp, this.system.GetDuration())}";
             this.RenderScreen(this.system.GetDuration());
         }
 
@@ -583,12 +653,17 @@ namespace DecentM.VideoPlayer.Plugins
             this.subtitleSlot.text = "";
         }
 
-        protected override void OnScreenResolutionChange(ScreenHandler screen, float width, float height)
+        protected override void OnScreenResolutionChange(
+            ScreenHandler screen,
+            float width,
+            float height
+        )
         {
             if (width / height != 16f / 9f)
             {
                 this.info.text = $"{width}x{height}";
-            } else
+            }
+            else
             {
                 this.info.text = $"{height}p";
             }
@@ -598,11 +673,15 @@ namespace DecentM.VideoPlayer.Plugins
 
         protected override void OnOwnershipChanged(int previousOwnerId, VRCPlayerApi nextOwner)
         {
-            if (nextOwner == null || !nextOwner.IsValid()) return;
+            if (nextOwner == null || !nextOwner.IsValid())
+                return;
 
-            if (nextOwner != Networking.LocalPlayer) this.ownershipButton.image.sprite = this.ownershipTransferIcon;
-            else if (this.ownershipLocked) this.ownershipButton.image.sprite = this.lockIcon;
-            else this.ownershipButton.image.sprite = this.unlockIcon;
+            if (nextOwner != Networking.LocalPlayer)
+                this.ownershipButton.image.sprite = this.ownershipTransferIcon;
+            else if (this.ownershipLocked)
+                this.ownershipButton.image.sprite = this.lockIcon;
+            else
+                this.ownershipButton.image.sprite = this.unlockIcon;
 
             this.selfOwned = nextOwner == Networking.LocalPlayer;
 
@@ -616,7 +695,7 @@ namespace DecentM.VideoPlayer.Plugins
         protected override void OnOwnershipSecurityChanged(bool locked)
         {
             this.ownershipLocked = locked;
-            
+
             this.ownershipButton.image.sprite = locked ? this.lockIcon : this.unlockIcon;
         }
 
@@ -629,7 +708,8 @@ namespace DecentM.VideoPlayer.Plugins
 
             foreach (VRCPlayerApi player in allPlayers)
             {
-                if (player == null || !player.IsValid()) continue;
+                if (player == null || !player.IsValid())
+                    continue;
 
                 bool found = false;
 
@@ -662,8 +742,10 @@ namespace DecentM.VideoPlayer.Plugins
         {
             VRCPlayerApi[] unloadedPlayers = this.GetUnloadedPlayers(loadedPlayers);
 
-            if (unloadedPlayers.Length == 1) this.status.text = $"Waiting for {unloadedPlayers[0].displayName}...";
-            else this.status.text = $"Waiting for {unloadedPlayers.Length} players...";
+            if (unloadedPlayers.Length == 1)
+                this.status.text = $"Waiting for {unloadedPlayers[0].displayName}...";
+            else
+                this.status.text = $"Waiting for {unloadedPlayers.Length} players...";
         }
 
         #endregion
@@ -690,7 +772,8 @@ namespace DecentM.VideoPlayer.Plugins
             float brightness = this.system.GetBrightness();
 
             // Ignore duplicate values
-            if (this.brightnessSlider.value == brightness) return;
+            if (this.brightnessSlider.value == brightness)
+                return;
 
             this.system.SetBrightness(this.brightnessSlider.value);
         }
@@ -700,7 +783,8 @@ namespace DecentM.VideoPlayer.Plugins
             float volume = this.system.GetVolume();
 
             // Ignore duplicate values
-            if (this.volumeSlider.value == volume) return;
+            if (this.volumeSlider.value == volume)
+                return;
 
             this.system.SetVolume(this.volumeSlider.value);
         }
@@ -725,7 +809,8 @@ namespace DecentM.VideoPlayer.Plugins
             if (selfOwned)
             {
                 this.events.OnOwnershipSecurityChanged(!this.ownershipLocked);
-            } else
+            }
+            else
             {
                 this.events.OnOwnershipRequested();
             }

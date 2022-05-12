@@ -1,7 +1,7 @@
-﻿
-using UdonSharp;
+﻿using UdonSharp;
 using UnityEngine;
 using VRC.SDKBase;
+
 // using VRCAudioLink;
 
 [UdonBehaviourSyncMode(BehaviourSyncMode.Manual)]
@@ -12,38 +12,61 @@ public class AudioLinkHapticsVolume : UdonSharpBehaviour
     // public AudioLink audioLink;
 
     [Header("Haptics settings (values range from 0 to 1)")]
-    [Tooltip("How long to vibrate each note for. This should be low as the vibration command is send with every frame.")]
+    [Tooltip(
+        "How long to vibrate each note for. This should be low as the vibration command is send with every frame."
+    )]
     public float duration = .05f;
+
     [Tooltip("How intense the vibration is")]
     public float amplitude = 1f;
+
     [Tooltip("How quick the vibration motor spins inside the controller")]
     public float frequency = 1f;
+
     [Space]
     [Header("Haptics customisations")]
     [Tooltip("Defines how much influence band 0 has in the vibration intensity")]
     public float band0Amplitude = 2f;
+
     [Tooltip("Defines how much influence band 1 has in the vibration intensity")]
     public float band1Amplitude = 1.5f;
+
     [Tooltip("Defines how much influence band 2 has in the vibration intensity")]
     public float band2Amplitude = 1f;
+
     [Tooltip("Defines how much influence band 3 has in the vibration intensity")]
     public float band3Amplitude = .5f;
+
     [Space]
     [Tooltip("Defines how much influence band 0 has in the vibration speed")]
     public float band0Frequency = 1.3f;
+
     [Tooltip("Defines how much influence band 1 has in the vibration speed")]
     public float band1Frequency = 1f;
+
     [Tooltip("Defines how much influence band 2 has in the vibration speed")]
     public float band2Frequency = .7f;
+
     [Tooltip("Defines how much influence band 3 has in the vibration speed")]
     public float band3Frequency = .5f;
 
-    private void DoHaptics(VRC_Pickup.PickupHand hand, float bandValue, float threshold, float amplitude, float frequency)
+    private void DoHaptics(
+        VRC_Pickup.PickupHand hand,
+        float bandValue,
+        float threshold,
+        float amplitude,
+        float frequency
+    )
     {
         if (bandValue > threshold)
         {
             float overshoot = bandValue - threshold;
-            Networking.LocalPlayer.PlayHapticEventInHand(hand, this.duration, this.amplitude * amplitude * overshoot, this.frequency * frequency * overshoot);
+            Networking.LocalPlayer.PlayHapticEventInHand(
+                hand,
+                this.duration,
+                this.amplitude * amplitude * overshoot,
+                this.frequency * frequency * overshoot
+            );
         }
     }
 

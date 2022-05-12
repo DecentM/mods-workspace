@@ -13,7 +13,9 @@ namespace DecentM.Subtitles.Tests
 {
     public class Srt
     {
-        private static string NormalFile = File.ReadAllText($"{EditorAssets.SelfLocation}/Prefabs/VideoPlayer/Scripts/Editor/Tests/Fixtures/normal.srt");
+        private static string NormalFile = File.ReadAllText(
+            $"{EditorAssets.SelfLocation}/Prefabs/VideoPlayer/Scripts/Editor/Tests/Fixtures/normal.srt"
+        );
 
         [Test]
         public void EmptyInputProducesEmptyResult()
@@ -27,7 +29,11 @@ namespace DecentM.Subtitles.Tests
         [Test]
         public void CompilesNormalFileWithNoErrors()
         {
-            var result = SubtitleCompiler.Compile(NormalFile, SubtitleFormat.Srt, SubtitleFormat.Vsi);
+            var result = SubtitleCompiler.Compile(
+                NormalFile,
+                SubtitleFormat.Srt,
+                SubtitleFormat.Vsi
+            );
 
             Assert.IsNotEmpty(result.output);
             Assert.Zero(result.errors.Count);
@@ -57,7 +63,9 @@ namespace DecentM.Subtitles.Tests
                         break;
 
                     default:
-                        Assert.Fail($"The .srt parser shouldn't be able to produce this node kind: {node.kind}");
+                        Assert.Fail(
+                            $"The .srt parser shouldn't be able to produce this node kind: {node.kind}"
+                        );
                         break;
                 }
             }
@@ -70,7 +78,8 @@ namespace DecentM.Subtitles.Tests
 
             foreach (Node node in ast.nodes)
             {
-                if (node.kind != NodeKind.TextContents) continue;
+                if (node.kind != NodeKind.TextContents)
+                    continue;
 
                 Assert.False(((string)node.value).StartsWith("\n"));
                 Assert.False(((string)node.value).EndsWith("\n"));

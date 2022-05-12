@@ -14,7 +14,8 @@ namespace DecentM.VideoPlayer.Plugins
 
         protected override void OnScreenTextureChange()
         {
-            if (this.outputs == null || this.outputs.Length == 0) return;
+            if (this.outputs == null || this.outputs.Length == 0)
+                return;
 
             Texture videoPlayerTex = this.system.GetVideoTexture();
 

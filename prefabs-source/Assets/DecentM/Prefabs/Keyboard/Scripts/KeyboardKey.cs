@@ -45,7 +45,8 @@ namespace DecentM.Keyboard
             if (keyMesh != null)
             {
                 this.keyMaterials = keyMesh.materials;
-            } else if (keySkinnedMesh != null)
+            }
+            else if (keySkinnedMesh != null)
             {
                 this.keyMaterials = keySkinnedMesh.materials;
             }
@@ -75,9 +76,12 @@ namespace DecentM.Keyboard
             {
                 int result = 0;
 
-                if (this.primarySymbol != "") result++;
-                if (this.secondarySymbol != "") result++;
-                if (this.tertiarySymbol != "") result++;
+                if (this.primarySymbol != "")
+                    result++;
+                if (this.secondarySymbol != "")
+                    result++;
+                if (this.tertiarySymbol != "")
+                    result++;
 
                 return result;
             }
@@ -87,7 +91,8 @@ namespace DecentM.Keyboard
         {
             this.labelTarget = this.GetComponentInChildren<LabelTarget>();
 
-            if (this.hideSymbol || this.layoutTemplate == null) return;
+            if (this.hideSymbol || this.layoutTemplate == null)
+                return;
 
             this.layoutInstance = VRCInstantiate(this.layoutTemplate.gameObject);
             this.layoutInstance.name = $"KeyLayout_{this.name}_{this.primarySymbol}";
@@ -149,14 +154,16 @@ namespace DecentM.Keyboard
 
         public void ChangeBacklightFromTemp()
         {
-            if (this.tempColour == null || !this.tempChangePending) return;
+            if (this.tempColour == null || !this.tempChangePending)
+                return;
             this.ChangeBacklight(this.tempColour);
             this.tempChangePending = false;
         }
 
         public bool ChangeBacklightAfterSeconds(Color backlight, float seconds)
         {
-            if (this.tempChangePending) return false;
+            if (this.tempChangePending)
+                return false;
             this.tempChangePending = true;
             this.tempColour = backlight;
             this.SendCustomEventDelayedSeconds(nameof(ChangeBacklightFromTemp), seconds);
@@ -172,7 +179,8 @@ namespace DecentM.Keyboard
             // If we're currently colliding with something, we don't react to other
             // objects until that one leaves the trigger. We also only care about colliding
             // with a Drumstick.
-            if (drumstick == null || this.currentCollider != null) return;
+            if (drumstick == null || this.currentCollider != null)
+                return;
             this.currentCollider = other.gameObject;
 
             drumstick.PlayHapticFeedback();
@@ -183,7 +191,8 @@ namespace DecentM.Keyboard
 
         public void OnTriggerExit(Collider other)
         {
-            if (this.currentCollider != other.gameObject) return;
+            if (this.currentCollider != other.gameObject)
+                return;
 
             this.currentCollider = null;
             this.events.OnKeyPressUp(this);

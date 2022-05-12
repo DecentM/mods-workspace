@@ -1,5 +1,4 @@
-﻿
-using UdonSharp;
+﻿using UdonSharp;
 using UnityEngine;
 using VRC.SDKBase;
 using DecentM.Pubsub;
@@ -29,6 +28,7 @@ namespace DecentM
         }
 
         private int clock = 0;
+
         private void FixedUpdate()
         {
             this.clock++;
@@ -43,19 +43,29 @@ namespace DecentM
 
         private void CheckPlayer()
         {
-            VRCPlayerApi.TrackingData tracking = Networking.LocalPlayer.GetTrackingData(VRCPlayerApi.TrackingDataType.Head);
+            VRCPlayerApi.TrackingData tracking = Networking.LocalPlayer.GetTrackingData(
+                VRCPlayerApi.TrackingDataType.Head
+            );
 
             RaycastHit hit;
             Vector3 direction = this.raycastWall.position - tracking.position;
 
-            bool rayHit = Physics.Raycast(tracking.position, direction, out hit, this.maxDistance + 1, this.raycastLayer);
+            bool rayHit = Physics.Raycast(
+                tracking.position,
+                direction,
+                out hit,
+                this.maxDistance + 1,
+                this.raycastLayer
+            );
 
             if (this.lib.debugging.isDebugging)
             {
                 Debug.DrawRay(tracking.position, direction, rayHit ? Color.yellow : Color.red);
-            };
+            }
+            ;
 
-            if (!rayHit) return;
+            if (!rayHit)
+                return;
 
             this.Process(hit.distance);
         }
@@ -63,14 +73,17 @@ namespace DecentM
         private void Process(float distance)
         {
             float normalisedDistance = distance / this.maxDistance;
-            int mirrorIndex = Mathf.FloorToInt(Mathf.Clamp(normalisedDistance, 0, 1) * this.mirrors.Length);
+            int mirrorIndex = Mathf.FloorToInt(
+                Mathf.Clamp(normalisedDistance, 0, 1) * this.mirrors.Length
+            );
 
             this.EnableMirror(mirrorIndex);
         }
 
         private void EnableMirror(int index)
         {
-            if (index >= this.mirrors.Length) return;
+            if (index >= this.mirrors.Length)
+                return;
 
             this.DisableAllMirrors();
             this.mirrors[index].gameObject.SetActive(true);
@@ -105,7 +118,15 @@ namespace DecentM
                     return;
 
                 case PerformanceGovernorMode.High:
-                    this.SetMasks("Player", "MirrorReflection", "Pickup", "Default", "Walkthrough", "UI", "Environment");
+                    this.SetMasks(
+                        "Player",
+                        "MirrorReflection",
+                        "Pickup",
+                        "Default",
+                        "Walkthrough",
+                        "UI",
+                        "Environment"
+                    );
                     return;
             }
         }

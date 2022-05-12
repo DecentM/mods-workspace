@@ -9,7 +9,8 @@ public class MetricsBuildHook : IVRCSDKBuildRequestedCallback
 
     public bool OnBuildRequested(VRCSDKRequestedBuildType requestedBuildType)
     {
-        if (requestedBuildType != VRCSDKRequestedBuildType.Scene) return true;
+        if (requestedBuildType != VRCSDKRequestedBuildType.Scene)
+            return true;
 
         Scene scene = SceneManager.GetActiveScene();
 
@@ -17,7 +18,8 @@ public class MetricsBuildHook : IVRCSDKBuildRequestedCallback
         {
             MetricsUI ui = root.GetComponentInChildren<MetricsUI>();
 
-            if (ui == null) continue;
+            if (ui == null)
+                continue;
 
             URLStore urlStore = ui.GetComponentInChildren<URLStore>();
 

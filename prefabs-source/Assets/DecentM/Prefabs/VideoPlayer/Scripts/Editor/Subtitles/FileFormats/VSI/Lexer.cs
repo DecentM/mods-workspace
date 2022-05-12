@@ -32,7 +32,8 @@ namespace DecentM.Subtitles.Vsi
 
                 while (cursor < text.Length - 1)
                 {
-                    if (text[cursor] == '\n') break;
+                    if (text[cursor] == '\n')
+                        break;
 
                     result += text[cursor];
                     cursor++;

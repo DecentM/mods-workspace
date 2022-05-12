@@ -10,7 +10,8 @@ namespace DecentM.Metrics.Plugins
         private void DoReport(bool state)
         {
             VRCUrl url = this.urlStore.GetPickupUrl(this.metricName, state);
-            if (url == null) return;
+            if (url == null)
+                return;
 
             this.system.RecordMetric(url, Metric.Pickup);
             this.reportedState = state;
@@ -36,14 +37,16 @@ namespace DecentM.Metrics.Plugins
 
         public override void OnPickup()
         {
-            if (this.locked || this.reportedState) return;
+            if (this.locked || this.reportedState)
+                return;
 
             this.DoReport(true);
         }
 
         public override void OnDrop()
         {
-            if (this.locked || !this.reportedState) return;
+            if (this.locked || !this.reportedState)
+                return;
 
             this.DoReport(false);
         }

@@ -34,9 +34,7 @@ namespace DecentM.EditorTools
                     CreateNoWindow = true,
                     WorkingDirectory = workdir,
                 },
-
                 EnableRaisingEvents = true,
-
             };
 
             process.Start();
@@ -44,7 +42,12 @@ namespace DecentM.EditorTools
             return process;
         }
 
-        public static void RunProcess(string filename, string arguments, string workdir, Action<ProcessResult> OnFinished)
+        public static void RunProcess(
+            string filename,
+            string arguments,
+            string workdir,
+            Action<ProcessResult> OnFinished
+        )
         {
             StringBuilder stdout = new StringBuilder();
             StringBuilder stderr = new StringBuilder();
@@ -54,12 +57,21 @@ namespace DecentM.EditorTools
             DCoroutine.Start(Parallelism.WaitForProcess(runProcess, OnFinished));
         }
 
-        public static ProcessResult RunProcessSync(string filename, string arguments, string workdir)
+        public static ProcessResult RunProcessSync(
+            string filename,
+            string arguments,
+            string workdir
+        )
         {
             return RunProcessSync(filename, arguments, workdir, 15000);
         }
 
-        public static ProcessResult RunProcessSync(string filename, string arguments, string workdir, int timeout)
+        public static ProcessResult RunProcessSync(
+            string filename,
+            string arguments,
+            string workdir,
+            int timeout
+        )
         {
             using (Process process = new Process())
             {
@@ -78,7 +90,8 @@ namespace DecentM.EditorTools
                 using (AutoResetEvent outputWaitHandle = new AutoResetEvent(false))
                 using (AutoResetEvent errorWaitHandle = new AutoResetEvent(false))
                 {
-                    process.OutputDataReceived += (sender, e) => {
+                    process.OutputDataReceived += (sender, e) =>
+                    {
                         if (e.Data == null)
                         {
                             outputWaitHandle.Set();
@@ -107,9 +120,11 @@ namespace DecentM.EditorTools
 
                     ProcessResult result = new ProcessResult();
 
-                    if (process.WaitForExit(timeout) &&
-                        outputWaitHandle.WaitOne(timeout) &&
-                        errorWaitHandle.WaitOne(timeout))
+                    if (
+                        process.WaitForExit(timeout)
+                        && outputWaitHandle.WaitOne(timeout)
+                        && errorWaitHandle.WaitOne(timeout)
+                    )
                     {
                         result.stdout = output.ToString();
                         result.stderr = error.ToString();

@@ -23,7 +23,8 @@ namespace DecentM.VideoPlayer.Plugins
         {
             set
             {
-                if (Networking.GetOwner(this.gameObject) == Networking.LocalPlayer) return;
+                if (Networking.GetOwner(this.gameObject) == Networking.LocalPlayer)
+                    return;
 
                 float desiredProgress = value + this.latency;
 
@@ -32,9 +33,11 @@ namespace DecentM.VideoPlayer.Plugins
                 float diff = desiredProgress - localProgress;
 
                 // While paused we accept any seek input from the owner
-                if (!system.IsPlaying()) this.system.Seek(value);
+                if (!system.IsPlaying())
+                    this.system.Seek(value);
                 // If diff is positive, the local player is ahead of the remote one
-                if (diff > diffToleranceSeconds || diff < diffToleranceSeconds * -1) this.system.Seek(desiredProgress);
+                if (diff > diffToleranceSeconds || diff < diffToleranceSeconds * -1)
+                    this.system.Seek(desiredProgress);
             }
             get => _progress;
         }
@@ -46,11 +49,14 @@ namespace DecentM.VideoPlayer.Plugins
         {
             set
             {
-                if (Networking.GetOwner(this.gameObject) == Networking.LocalPlayer) return;
+                if (Networking.GetOwner(this.gameObject) == Networking.LocalPlayer)
+                    return;
 
                 _isPlaying = value;
-                if (value) this.system.StartPlayback(this.system.GetTime() + this.latency);
-                else this.system.PausePlayback();
+                if (value)
+                    this.system.StartPlayback(this.system.GetTime() + this.latency);
+                else
+                    this.system.PausePlayback();
             }
             get => _isPlaying;
         }
@@ -62,8 +68,10 @@ namespace DecentM.VideoPlayer.Plugins
         {
             set
             {
-                if (Networking.GetOwner(this.gameObject) == Networking.LocalPlayer) return;
-                if (value == null || string.IsNullOrEmpty(value.ToString())) return;
+                if (Networking.GetOwner(this.gameObject) == Networking.LocalPlayer)
+                    return;
+                if (value == null || string.IsNullOrEmpty(value.ToString()))
+                    return;
 
                 _url = value;
 
@@ -85,7 +93,8 @@ namespace DecentM.VideoPlayer.Plugins
 
         protected override void OnProgress(float timestamp, float duration)
         {
-            if (Networking.GetOwner(this.gameObject) != Networking.LocalPlayer) return;
+            if (Networking.GetOwner(this.gameObject) != Networking.LocalPlayer)
+                return;
 
             this._progress = timestamp;
             this.RequestSerialization();
@@ -93,7 +102,8 @@ namespace DecentM.VideoPlayer.Plugins
 
         protected override void OnLoadRequested(VRCUrl url)
         {
-            if (url == null) return;
+            if (url == null)
+                return;
 
             if (Networking.GetOwner(this.gameObject) != Networking.LocalPlayer)
             {
@@ -104,7 +114,8 @@ namespace DecentM.VideoPlayer.Plugins
 
         protected override void OnLoadApproved(VRCUrl url)
         {
-            if (url == null) return;
+            if (url == null)
+                return;
 
             this._url = url;
             this.RequestSerialization();
@@ -112,7 +123,8 @@ namespace DecentM.VideoPlayer.Plugins
 
         public void SyncUnload()
         {
-            if (Networking.GetOwner(this.gameObject) == Networking.LocalPlayer) return;
+            if (Networking.GetOwner(this.gameObject) == Networking.LocalPlayer)
+                return;
 
             this.system.UnloadVideo();
         }
@@ -121,9 +133,13 @@ namespace DecentM.VideoPlayer.Plugins
         {
             this.latency = 0;
 
-            if (Networking.GetOwner(this.gameObject) != Networking.LocalPlayer) return;
+            if (Networking.GetOwner(this.gameObject) != Networking.LocalPlayer)
+                return;
 
-            this.SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, nameof(this.SyncUnload));
+            this.SendCustomNetworkEvent(
+                VRC.Udon.Common.Interfaces.NetworkEventTarget.All,
+                nameof(this.SyncUnload)
+            );
 
             this._url = null;
             this._isPlaying = false;
@@ -132,7 +148,8 @@ namespace DecentM.VideoPlayer.Plugins
 
         protected override void OnPlaybackStart(float timestamp)
         {
-            if (Networking.GetOwner(this.gameObject) != Networking.LocalPlayer) return;
+            if (Networking.GetOwner(this.gameObject) != Networking.LocalPlayer)
+                return;
 
             this._isPlaying = true;
             this.RequestSerialization();
@@ -153,7 +170,8 @@ namespace DecentM.VideoPlayer.Plugins
 
         public void SyncPausedTime()
         {
-            if (Networking.GetOwner(this.gameObject) == Networking.LocalPlayer) return;
+            if (Networking.GetOwner(this.gameObject) == Networking.LocalPlayer)
+                return;
 
             // Continuously refine the latency by calculating the diff between the synced progress and the local progress
             // Next time that "play" is pressed, the stream will be offset by this amount
@@ -161,14 +179,17 @@ namespace DecentM.VideoPlayer.Plugins
             float diff = this.progress - currentTime;
             this.latency += diff;
 
-            if (this.system.IsPlaying()) this.system.PausePlayback(this.progress);
+            if (this.system.IsPlaying())
+                this.system.PausePlayback(this.progress);
         }
 
         protected override void OnLoadReady(float duration)
         {
-            if (Networking.GetOwner(this.gameObject) == Networking.LocalPlayer) return;
+            if (Networking.GetOwner(this.gameObject) == Networking.LocalPlayer)
+                return;
 
-            if (this.isPlaying) this.system.StartPlayback();
+            if (this.isPlaying)
+                this.system.StartPlayback();
         }
 
         private int currentOwnerId = 0;
@@ -176,7 +197,8 @@ namespace DecentM.VideoPlayer.Plugins
         protected override void OnVideoPlayerInit()
         {
             VRCPlayerApi owner = Networking.GetOwner(this.gameObject);
-            if (owner == null || !owner.IsValid()) return;
+            if (owner == null || !owner.IsValid())
+                return;
 
             this.currentOwnerId = owner.playerId;
             this.events.OnOwnershipChanged(this.currentOwnerId, owner);
@@ -184,7 +206,8 @@ namespace DecentM.VideoPlayer.Plugins
 
         public override void OnOwnershipTransferred(VRCPlayerApi player)
         {
-            if (player == null || !player.IsValid()) return;
+            if (player == null || !player.IsValid())
+                return;
 
             this.events.OnOwnershipChanged(this.currentOwnerId, player);
             this.currentOwnerId = player.playerId;
@@ -192,12 +215,18 @@ namespace DecentM.VideoPlayer.Plugins
 
         private bool ownershipLocked = false;
 
-        public override bool OnOwnershipRequest(VRCPlayerApi requestingPlayer, VRCPlayerApi requestedOwner)
+        public override bool OnOwnershipRequest(
+            VRCPlayerApi requestingPlayer,
+            VRCPlayerApi requestedOwner
+        )
         {
-            if (this.ownershipLocked) return false;
+            if (this.ownershipLocked)
+                return false;
 
-            if (requestingPlayer == null || !requestingPlayer.IsValid()) return false;
-            if (requestedOwner == null || !requestedOwner.IsValid()) return false;
+            if (requestingPlayer == null || !requestingPlayer.IsValid())
+                return false;
+            if (requestedOwner == null || !requestedOwner.IsValid())
+                return false;
 
             return requestingPlayer.playerId == requestedOwner.playerId;
         }

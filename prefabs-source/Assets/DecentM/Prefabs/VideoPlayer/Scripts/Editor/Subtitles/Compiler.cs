@@ -38,7 +38,9 @@ namespace DecentM.Subtitles
         {
             if (!SubtitleFormat.IsSupported(inFileType))
             {
-                throw new NotImplementedException($"File type {inFileType} is not supported. Use a different file, or convert your subtitles to a supported format: {String.Join(", ", SubtitleFormat.SupportedFormats)}");
+                throw new NotImplementedException(
+                    $"File type {inFileType} is not supported. Use a different file, or convert your subtitles to a supported format: {String.Join(", ", SubtitleFormat.SupportedFormats)}"
+                );
             }
 
             string sanitisedSource = new TextProcessor(source)
@@ -66,7 +68,10 @@ namespace DecentM.Subtitles
                     break;
             }
 
-            if (compiler == null) throw new NotImplementedException($"No compiler exists for this format: {inFileType}");
+            if (compiler == null)
+                throw new NotImplementedException(
+                    $"No compiler exists for this format: {inFileType}"
+                );
 
             return compiler.CompileIntermediate(sanitisedSource);
         }
@@ -93,20 +98,30 @@ namespace DecentM.Subtitles
                     break;
             }
 
-            if (writer == null) throw new NotImplementedException($"No writer exists for this format: {outFileType}");
+            if (writer == null)
+                throw new NotImplementedException(
+                    $"No writer exists for this format: {outFileType}"
+                );
 
             return writer.ToString();
         }
 
-        public static Compiler.CompilationResult Compile(string source, string inFileType, string outFileType)
+        public static Compiler.CompilationResult Compile(
+            string source,
+            string inFileType,
+            string outFileType
+        )
         {
             Ast result = CompileIntermediate(source, inFileType);
 
-            Transformer transformer = new Transformer()
-                .LigaturiseArabicText();
+            Transformer transformer = new Transformer().LigaturiseArabicText();
 
             List<CompilationResultError> errors = new List<CompilationResultError>();
-            errors.AddRange(result.nodes.Where(node => node.kind == NodeKind.Unknown).Select(err => new CompilationResultError(err.value.ToString())));
+            errors.AddRange(
+                result.nodes
+                    .Where(node => node.kind == NodeKind.Unknown)
+                    .Select(err => new CompilationResultError(err.value.ToString()))
+            );
 
             Ast newAst = transformer.Transform(result);
             string output = Write(newAst, outFileType);

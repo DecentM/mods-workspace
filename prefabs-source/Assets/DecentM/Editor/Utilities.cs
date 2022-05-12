@@ -14,8 +14,14 @@ namespace DecentM.EditorTools
 {
     public static class AsyncProgress
     {
-        private static readonly MethodInfo _displayProgressBar = typeof(Editor).Assembly.GetTypes().FirstOrDefault(e => e.Name == "AsyncProgressBar")?.GetMethod("Display");
-        private static readonly MethodInfo _clearProgressBar = typeof(Editor).Assembly.GetTypes().FirstOrDefault(e => e.Name == "AsyncProgressBar")?.GetMethod("Clear");
+        private static readonly MethodInfo _displayProgressBar = typeof(Editor).Assembly
+            .GetTypes()
+            .FirstOrDefault(e => e.Name == "AsyncProgressBar")
+            ?.GetMethod("Display");
+        private static readonly MethodInfo _clearProgressBar = typeof(Editor).Assembly
+            .GetTypes()
+            .FirstOrDefault(e => e.Name == "AsyncProgressBar")
+            ?.GetMethod("Clear");
 
         public static void Display(string text, float progress)
         {
@@ -53,7 +59,10 @@ namespace DecentM.EditorTools
             }
         }
 
-        public static IEnumerator WaitForProcess(System.Diagnostics.Process process, Action<ProcessResult> OnExited)
+        public static IEnumerator WaitForProcess(
+            System.Diagnostics.Process process,
+            Action<ProcessResult> OnExited
+        )
         {
             Task<string> stdoutTask = process.StandardOutput.ReadToEndAsync();
             Task<string> stderrTask = process.StandardError.ReadToEndAsync();
@@ -112,11 +121,16 @@ namespace DecentM.EditorTools
         {
             void WrappedCallback(T1 a1)
             {
-                try { Callback(a1); }
+                try
+                {
+                    Callback(a1);
+                }
                 catch (Exception e)
                 {
                     Debug.LogException(e);
-                    Debug.LogError("Error in wrapped callback, this action will not continue. There's additional debugging information above.");
+                    Debug.LogError(
+                        "Error in wrapped callback, this action will not continue. There's additional debugging information above."
+                    );
                 }
             }
 
@@ -127,11 +141,16 @@ namespace DecentM.EditorTools
         {
             void WrappedCallback(T1 a1, T2 a2)
             {
-                try { Callback(a1, a2); }
+                try
+                {
+                    Callback(a1, a2);
+                }
                 catch (Exception e)
                 {
                     Debug.LogException(e);
-                    Debug.LogError("Error in wrapped callback, this action will not continue. There's additional debugging information above.");
+                    Debug.LogError(
+                        "Error in wrapped callback, this action will not continue. There's additional debugging information above."
+                    );
                 }
             }
 
@@ -159,16 +178,22 @@ namespace DecentM.EditorTools
     {
         public static bool CreateFolder(string basePath, string name)
         {
-            if (!basePath.StartsWith("Assets/")) return false;
+            if (!basePath.StartsWith("Assets/"))
+                return false;
 
-            if (AssetDatabase.IsValidFolder($"{basePath}/{name}")) return true;
+            if (AssetDatabase.IsValidFolder($"{basePath}/{name}"))
+                return true;
             if (!AssetDatabase.IsValidFolder(basePath))
             {
                 string[] paths = basePath.Split('/');
-                CreateFolder(string.Join("/", paths.Take(paths.Length - 1)), paths[paths.Length - 1]);
+                CreateFolder(
+                    string.Join("/", paths.Take(paths.Length - 1)),
+                    paths[paths.Length - 1]
+                );
             }
 
-            if (AssetDatabase.CreateFolder(basePath, name) == "") return false;
+            if (AssetDatabase.CreateFolder(basePath, name) == "")
+                return false;
             return true;
         }
 
@@ -179,7 +204,11 @@ namespace DecentM.EditorTools
             for (int i = 0; i < input.Count; i++)
             {
                 Tuple<string, string> tuple = input[i];
-                EditorUtility.DisplayProgressBar("Creating folders...", tuple.Item2, 1f * i / input.Count);
+                EditorUtility.DisplayProgressBar(
+                    "Creating folders...",
+                    tuple.Item2,
+                    1f * i / input.Count
+                );
 
                 if (!CreateFolder(tuple.Item1, tuple.Item2))
                 {

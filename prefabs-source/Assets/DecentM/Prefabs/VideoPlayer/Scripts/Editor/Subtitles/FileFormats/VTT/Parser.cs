@@ -86,7 +86,8 @@ namespace DecentM.Subtitles.Vtt
 
                     // Special case to ignore the screen number if present, as this VTT parser just uses its
                     // index
-                    if ((cursor + 1) < tokens.Count && tokens[cursor + 1].type == TokenType.Newline) {
+                    if ((cursor + 1) < tokens.Count && tokens[cursor + 1].type == TokenType.Newline)
+                    {
                         cursor++;
                         continue;
                     }
@@ -96,7 +97,10 @@ namespace DecentM.Subtitles.Vtt
 
                     if (timestampMillis == -1)
                     {
-                        Node errorNode = new Node(NodeKind.Unknown, $"Failed to parse start timestamp: {timestamp}");
+                        Node errorNode = new Node(
+                            NodeKind.Unknown,
+                            $"Failed to parse start timestamp: {timestamp}"
+                        );
                         nodes.Add(errorNode);
 
                         // Don't change the mode, if we're expecting a start timestamp, we should go until we find one.
@@ -143,7 +147,10 @@ namespace DecentM.Subtitles.Vtt
 
                     if (timestampMillis == -1)
                     {
-                        Node errorNode = new Node(NodeKind.Unknown, $"Failed to parse end timestamp: {timestamp}");
+                        Node errorNode = new Node(
+                            NodeKind.Unknown,
+                            $"Failed to parse end timestamp: {timestamp}"
+                        );
                         nodes.Add(errorNode);
 
                         // Don't change the mode, if we're expecting a start timestamp, we should go until we find one.
@@ -182,7 +189,8 @@ namespace DecentM.Subtitles.Vtt
                     foreach (string parameter in stringParameters)
                     {
                         string[] parts = parameter.Split(':');
-                        if (parts.Length != 2) continue;
+                        if (parts.Length != 2)
+                            continue;
 
                         string name = parts[0];
                         string value = parts[1];
@@ -202,7 +210,10 @@ namespace DecentM.Subtitles.Vtt
                     int tCursor = cursor;
                     string textContents = "";
 
-                    while (tCursor < tokens.Count && tokens.ElementAt(tCursor).type != TokenType.DoubleNewline)
+                    while (
+                        tCursor < tokens.Count
+                        && tokens.ElementAt(tCursor).type != TokenType.DoubleNewline
+                    )
                     {
                         VttLexer.Token tCurrent = tokens.ElementAt(tCursor);
                         textContents = $"{textContents}{tCurrent.value}";
@@ -211,9 +222,13 @@ namespace DecentM.Subtitles.Vtt
 
                     if (textContents == "")
                     {
-                        Node unknownNode = new Node(NodeKind.Unknown, $"Cannot parse text contents in token {tCursor} because the parsed value is empty");
+                        Node unknownNode = new Node(
+                            NodeKind.Unknown,
+                            $"Cannot parse text contents in token {tCursor} because the parsed value is empty"
+                        );
                         nodes.Add(unknownNode);
-                    } else
+                    }
+                    else
                     {
                         while (textContents.EndsWith("\n"))
                         {

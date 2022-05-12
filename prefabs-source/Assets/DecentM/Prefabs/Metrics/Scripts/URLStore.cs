@@ -21,7 +21,13 @@ namespace DecentM.Metrics
 
         public void OnBeforeSerialize()
         {
-            if (this.serializedUrls != null && this.serializedUrlData != null && this.urls.Length == this.serializedUrls.Length && this.urls.Length == this.serializedUrlData.Length) return;
+            if (
+                this.serializedUrls != null
+                && this.serializedUrlData != null
+                && this.urls.Length == this.serializedUrls.Length
+                && this.urls.Length == this.serializedUrlData.Length
+            )
+                return;
 
             this.serializedUrlData = new string[this.urls.Length];
             this.serializedUrls = new VRCUrl[this.urls.Length];
@@ -34,7 +40,8 @@ namespace DecentM.Metrics
 
                 object[] item = this.urls[i];
 
-                if (item == null) continue;
+                if (item == null)
+                    continue;
 
                 object[] data = (object[])item[0];
                 VRCUrl url = (VRCUrl)item[1];
@@ -44,7 +51,8 @@ namespace DecentM.Metrics
 
                 foreach (object[] parameter in (object[][])data[1])
                 {
-                    if (parameter == null) continue;
+                    if (parameter == null)
+                        continue;
 
                     string paramName = (string)parameter[0];
                     string paramValue = (string)parameter[1];
@@ -60,7 +68,8 @@ namespace DecentM.Metrics
 
         public void OnAfterDeserialize()
         {
-            if (this.urls != null && this.serializedUrls.Length == this.urls.Length) return;
+            if (this.urls != null && this.serializedUrls.Length == this.urls.Length)
+                return;
 
             this.urls = new object[this.serializedUrls.Length][];
 
@@ -68,31 +77,39 @@ namespace DecentM.Metrics
             {
                 string data = this.serializedUrlData[i];
 
-                if (data == null) continue;
+                if (data == null)
+                    continue;
 
                 string[] dataParts = data.Split(';');
                 int metric;
                 bool metricParsed = int.TryParse(dataParts[0], out metric);
 
-                if (!metricParsed) continue;
+                if (!metricParsed)
+                    continue;
 
                 object[][] parameters = new object[dataParts.Length][];
 
                 for (int j = 1; j < dataParts.Length - 1; j++)
                 {
-                    if (j >= dataParts.Length || dataParts[j] == null) continue;
+                    if (j >= dataParts.Length || dataParts[j] == null)
+                        continue;
 
                     string[] parameterParts = dataParts[j].Split('=');
                     parameters[j - 1] = new object[] { parameterParts[0], parameterParts[1] };
                 }
 
-                object[] item = new object[] { new object[] { metric, parameters }, this.serializedUrls[i] };
+                object[] item = new object[]
+                {
+                    new object[] { metric, parameters },
+                    this.serializedUrls[i]
+                };
                 this.urls[i] = item;
             }
         }
 
         [HideInInspector]
         public VRCUrl[] serializedUrls;
+
         [HideInInspector]
         public string[] serializedUrlData;
 
@@ -104,20 +121,24 @@ namespace DecentM.Metrics
             {
                 object[] data = (object[])item[0];
                 VRCUrl url = (VRCUrl)item[1];
-                if (url == null || data == null) continue;
+                if (url == null || data == null)
+                    continue;
 
                 Metric itemMetric = (Metric)data[0];
                 object[][] itemParameters = (object[][])data[1];
 
                 // No need to scan the parameters if there aren't any, and we have a URL for the current metric
-                if (itemMetric == metric && itemParameters.Length == 0 && parameters.Length == 0) return url;
-                if (itemMetric != metric || parameters.Length != itemParameters.Length) continue;
+                if (itemMetric == metric && itemParameters.Length == 0 && parameters.Length == 0)
+                    return url;
+                if (itemMetric != metric || parameters.Length != itemParameters.Length)
+                    continue;
 
                 int matches = 0;
 
                 for (int i = 0; i < itemParameters.Length; i++)
                 {
-                    if (itemParameters[i] == null || parameters[i] == null) break;
+                    if (itemParameters[i] == null || parameters[i] == null)
+                        break;
 
                     string itemName = (string)itemParameters[i][0];
                     string itemValue = (string)itemParameters[i][1];
@@ -126,12 +147,14 @@ namespace DecentM.Metrics
                     string value = (string)parameters[i][1];
 
                     // Break out of the loop as soon as we see a single variable that doesn't match for performance
-                    if (name != itemName || value != itemValue) break;
+                    if (name != itemName || value != itemValue)
+                        break;
 
                     matches++;
                 }
 
-                if (matches >= itemParameters.Length) return url;
+                if (matches >= itemParameters.Length)
+                    return url;
             }
 
             return null;
@@ -142,16 +165,14 @@ namespace DecentM.Metrics
             // Metrics with no parameters are stripped out from the list of URLs in the editor, so
             // they exist in here as metrics with an empty parameter. Therefore, metric URLs with no parameter
             // actually have an empty parameter and so we need to insert that to be able to find it
-            return this.GetMetricUrl(metric, new object[][]
-                {
-                    new object[] { "", "" }
-                }
-            );
+            return this.GetMetricUrl(metric, new object[][] { new object[] { "", "" } });
         }
 
         public VRCUrl GetHeartbeatUrl(bool isMaster, bool isVr, int fps)
         {
-            return this.GetMetricUrl(Metric.Heartbeat, new object[][]
+            return this.GetMetricUrl(
+                Metric.Heartbeat,
+                new object[][]
                 {
                     new object[] { "isMaster", isMaster.ToString() },
                     new object[] { "isVr", isVr.ToString() },
@@ -162,7 +183,9 @@ namespace DecentM.Metrics
 
         public VRCUrl GetInstanceUrl(string instanceId, int playerCount)
         {
-            return this.GetMetricUrl(Metric.Instance, new object[][]
+            return this.GetMetricUrl(
+                Metric.Instance,
+                new object[][]
                 {
                     new object[] { "instanceId", instanceId },
                     new object[] { "playerCount", playerCount.ToString() },
@@ -177,46 +200,58 @@ namespace DecentM.Metrics
 
         public VRCUrl GetInteractionUrl(string name)
         {
-            return this.GetMetricUrl(Metric.Interaction, new object[][]
-            {
-                new object[] { "name", name },
-            });
+            return this.GetMetricUrl(
+                Metric.Interaction,
+                new object[][] { new object[] { "name", name }, }
+            );
         }
 
         public VRCUrl GetTriggerUrl(string name, bool state)
         {
-            return this.GetMetricUrl(Metric.Trigger, new object[][]
-            {
-                new object[] { "name", name },
-                new object[] { "state", state.ToString() },
-            });
+            return this.GetMetricUrl(
+                Metric.Trigger,
+                new object[][]
+                {
+                    new object[] { "name", name },
+                    new object[] { "state", state.ToString() },
+                }
+            );
         }
 
         public VRCUrl GetStationUrl(string name, bool state)
         {
-            return this.GetMetricUrl(Metric.Station, new object[][]
-            {
-                new object[] { "name", name },
-                new object[] { "state", state.ToString() },
-            });
+            return this.GetMetricUrl(
+                Metric.Station,
+                new object[][]
+                {
+                    new object[] { "name", name },
+                    new object[] { "state", state.ToString() },
+                }
+            );
         }
 
         public VRCUrl GetPickupUrl(string name, bool state)
         {
-            return this.GetMetricUrl(Metric.Pickup, new object[][]
-            {
-                new object[] { "name", name },
-                new object[] { "state", state.ToString() },
-            });
+            return this.GetMetricUrl(
+                Metric.Pickup,
+                new object[][]
+                {
+                    new object[] { "name", name },
+                    new object[] { "state", state.ToString() },
+                }
+            );
         }
 
         public VRCUrl GetPerformanceUrl(PerformanceGovernorMode mode, int fps)
         {
-            return this.GetMetricUrl(Metric.PerformanceModeChange, new object[][]
-            {
-                new object[] { "mode", mode.ToString() },
-                new object[] { "fps", fps.ToString() },
-            });
+            return this.GetMetricUrl(
+                Metric.PerformanceModeChange,
+                new object[][]
+                {
+                    new object[] { "mode", mode.ToString() },
+                    new object[] { "fps", fps.ToString() },
+                }
+            );
         }
     }
 }

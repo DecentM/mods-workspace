@@ -6,7 +6,8 @@ namespace DecentM.EditorTools
 {
     public class RandomStringGenerator
     {
-        private static string alphabet = "abcdefghijklmnopqrstuvwxyz1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        private static string alphabet =
+            "abcdefghijklmnopqrstuvwxyz1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
         public static string GenerateRandomString(int length)
         {

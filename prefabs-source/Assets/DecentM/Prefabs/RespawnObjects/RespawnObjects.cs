@@ -1,5 +1,4 @@
-﻿
-using UdonSharp;
+﻿using UdonSharp;
 using UnityEngine;
 using VRC.SDKBase;
 using DecentM;
@@ -9,22 +8,35 @@ public class RespawnObjects : UdonSharpBehaviour
 {
     [Tooltip("A list of GameObjects to respawn. They will always have the same state")]
     public GameObject[] targets;
-    [Tooltip("An object that represents each respawn location. Set it to an empty game object if you don't want to visibly mark the respawn location.")]
+
+    [Tooltip(
+        "An object that represents each respawn location. Set it to an empty game object if you don't want to visibly mark the respawn location."
+    )]
     public GameObject respawnMarker;
 
     [Header("Settings")]
     [Tooltip("If true, the trigger will enable/disable targets when other players enter/exit it")]
     public bool global = false;
-    [Tooltip("How long to wait until the markers reset after the master respawns the objects. Set it larger if the spawn locations drift after the instance master leaves.")]
+
+    [Tooltip(
+        "How long to wait until the markers reset after the master respawns the objects. Set it larger if the spawn locations drift after the instance master leaves."
+    )]
     public float respawnMarkerSetDelay = 1f;
 
     [Header("LibDecentM")]
     [Tooltip("The LibDecentM object")]
     public LibDecentM lib;
-    [Tooltip("If checked, the list will function as a whitelist, otherwise it will function as a blacklist")]
+
+    [Tooltip(
+        "If checked, the list will function as a whitelist, otherwise it will function as a blacklist"
+    )]
     public bool isWhitelist = false;
-    [Tooltip("If checked, only the instance master can use this trigger, and the player list will be ignored")]
+
+    [Tooltip(
+        "If checked, only the instance master can use this trigger, and the player list will be ignored"
+    )]
     public bool masterOnly = false;
+
     [Tooltip("A list of players who can (or cannot) use this trigger")]
     public PlayerList playerList;
 
@@ -48,7 +60,10 @@ public class RespawnObjects : UdonSharpBehaviour
             GameObject target = this.targets[i];
 
             marker.SetActive(true);
-            marker.transform.SetPositionAndRotation(target.transform.position, target.transform.rotation);
+            marker.transform.SetPositionAndRotation(
+                target.transform.position,
+                target.transform.rotation
+            );
             this.markers[i] = marker;
         }
     }
@@ -68,7 +83,12 @@ public class RespawnObjects : UdonSharpBehaviour
     public override void Interact()
     {
         VRCPlayerApi player = Networking.LocalPlayer;
-        bool isAllowed = this.lib.permissions.IsPlayerAllowed(player, this.masterOnly, this.isWhitelist, this.playerList);
+        bool isAllowed = this.lib.permissions.IsPlayerAllowed(
+            player,
+            this.masterOnly,
+            this.isWhitelist,
+            this.playerList
+        );
 
         if (!isAllowed)
         {
@@ -77,7 +97,10 @@ public class RespawnObjects : UdonSharpBehaviour
 
         if (this.global)
         {
-            SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, nameof(this.MasterRespawnTargets));
+            SendCustomNetworkEvent(
+                VRC.Udon.Common.Interfaces.NetworkEventTarget.All,
+                nameof(this.MasterRespawnTargets)
+            );
         }
         else
         {
@@ -102,7 +125,10 @@ public class RespawnObjects : UdonSharpBehaviour
             GameObject marker = this.markers[i];
             GameObject target = this.targets[i];
 
-            target.transform.SetPositionAndRotation(marker.transform.position, marker.transform.rotation);
+            target.transform.SetPositionAndRotation(
+                marker.transform.position,
+                marker.transform.rotation
+            );
         }
     }
 }

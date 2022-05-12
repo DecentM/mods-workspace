@@ -52,10 +52,12 @@ namespace DecentM.VideoPlayer.Plugins
 
         private void LateUpdate()
         {
-            if (!this.isRunning || this.camera == null) return;
+            if (!this.isRunning || this.camera == null)
+                return;
 
             this.elapsed += Time.unscaledDeltaTime;
-            if (elapsed < 1f / this.fps) return;
+            if (elapsed < 1f / this.fps)
+                return;
             elapsed = 0;
 
             camera.Render();
@@ -77,7 +79,8 @@ namespace DecentM.VideoPlayer.Plugins
             foreach (Color colour in colours)
             {
                 float vibrance = GetVibrance(colour);
-                if (vibrance > GetVibrance(result)) result = colour;
+                if (vibrance > GetVibrance(result))
+                    result = colour;
             }
 
             return result;
@@ -95,7 +98,8 @@ namespace DecentM.VideoPlayer.Plugins
             foreach (Color colour in colours)
             {
                 float brightness = GetBrightness(colour);
-                if (brightness > GetBrightness(result)) result = colour;
+                if (brightness > GetBrightness(result))
+                    result = colour;
             }
 
             return result;
@@ -103,7 +107,8 @@ namespace DecentM.VideoPlayer.Plugins
 
         public Color GetAverage(Color[] colors)
         {
-            if (colors == null || colors.Length == 0) return Color.black;
+            if (colors == null || colors.Length == 0)
+                return Color.black;
 
             Color average = new Color();
 
@@ -142,8 +147,14 @@ namespace DecentM.VideoPlayer.Plugins
             {
                 Vector2Int rawReadCoords = GetCoordsForIndex(i * skip, size.x);
 
-                float twitchX = UnityEngine.Random.Range(-1, 1) * twitchXMultiplier * this.sampleRandomisationFactor;
-                float twitchY = UnityEngine.Random.Range(-1, 1) * twitchYMultiplier * this.sampleRandomisationFactor;
+                float twitchX =
+                    UnityEngine.Random.Range(-1, 1)
+                    * twitchXMultiplier
+                    * this.sampleRandomisationFactor;
+                float twitchY =
+                    UnityEngine.Random.Range(-1, 1)
+                    * twitchYMultiplier
+                    * this.sampleRandomisationFactor;
                 Vector2Int readCoords = new Vector2Int(
                     Mathf.Max(Mathf.Min(Mathf.RoundToInt(rawReadCoords.x + twitchX), size.x), 0),
                     Mathf.Max(Mathf.Min(Mathf.RoundToInt(rawReadCoords.y + twitchY), size.y), 0)
@@ -173,20 +184,35 @@ namespace DecentM.VideoPlayer.Plugins
         }
 
         private Color average = Color.black;
+
         [PublicAPI]
-        public Color GetAverage() { return average; }
+        public Color GetAverage()
+        {
+            return average;
+        }
 
         private Color brightest = Color.black;
+
         [PublicAPI]
-        public Color GetBrightest() { return brightest; }
+        public Color GetBrightest()
+        {
+            return brightest;
+        }
 
         private Color mostVibrant = Color.black;
+
         [PublicAPI]
-        public Color GetMostVibrant() { return mostVibrant; }
+        public Color GetMostVibrant()
+        {
+            return mostVibrant;
+        }
 
         private void OnPostRender()
         {
-            Vector2Int[] samplePoints = this.GenerateSamplePoints(Mathf.Min(Mathf.Max(this.sampleSize, 1), 1000), new Vector2Int(this.camera.scaledPixelWidth, this.camera.scaledPixelHeight));
+            Vector2Int[] samplePoints = this.GenerateSamplePoints(
+                Mathf.Min(Mathf.Max(this.sampleSize, 1), 1000),
+                new Vector2Int(this.camera.scaledPixelWidth, this.camera.scaledPixelHeight)
+            );
             Color[] colours = SampleFetchTexture(samplePoints);
 
             this.UpdateValues(colours);
@@ -199,7 +225,18 @@ namespace DecentM.VideoPlayer.Plugins
             this.mostVibrant = this.GetMostVibrant(colours);
         }
 
-        protected override void OnMetadataChange(string title, string uploader, string siteName, int viewCount, int likeCount, string resolution, int fps, string description, string duration, TextAsset[] subtitles)
+        protected override void OnMetadataChange(
+            string title,
+            string uploader,
+            string siteName,
+            int viewCount,
+            int likeCount,
+            string resolution,
+            int fps,
+            string description,
+            string duration,
+            TextAsset[] subtitles
+        )
         {
             this.fps = fps <= 0 ? this.targetFps : Mathf.Min(fps, targetFps);
         }
@@ -233,4 +270,3 @@ namespace DecentM.VideoPlayer.Plugins
         }
     }
 }
-

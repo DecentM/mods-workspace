@@ -1,5 +1,4 @@
-﻿
-using UdonSharp;
+﻿using UdonSharp;
 using UnityEngine;
 using VRC.SDKBase;
 using VRC.Udon;
@@ -17,9 +16,11 @@ namespace DecentM.Chat
 
         [HideInInspector]
         public int OnReceive_senderId = -1;
+
         public void OnReceive()
         {
-            if (OnReceive_senderId == -1) return;
+            if (OnReceive_senderId == -1)
+                return;
 
             this.senderId = OnReceive_senderId;
 
@@ -31,7 +32,8 @@ namespace DecentM.Chat
             string displayName = "<unknown>";
 
             VRCPlayerApi player = VRCPlayerApi.GetPlayerById(this.senderId);
-            if (player != null && player.IsValid()) displayName = player.displayName;
+            if (player != null && player.IsValid())
+                displayName = player.displayName;
 
             this.usernameSlot.text = displayName;
         }

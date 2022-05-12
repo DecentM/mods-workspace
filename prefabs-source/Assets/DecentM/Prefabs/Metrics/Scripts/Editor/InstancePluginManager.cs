@@ -10,7 +10,8 @@ namespace DecentM.Metrics
     {
         public static void SetInstanceIds(List<string> instanceIds)
         {
-            ComponentCollector<InstancePlugin> instancePluginCollector = new ComponentCollector<InstancePlugin>();
+            ComponentCollector<InstancePlugin> instancePluginCollector =
+                new ComponentCollector<InstancePlugin>();
             List<InstancePlugin> instancePlugins = instancePluginCollector.CollectFromActiveScene();
 
             foreach (InstancePlugin instancePlugin in instancePlugins)

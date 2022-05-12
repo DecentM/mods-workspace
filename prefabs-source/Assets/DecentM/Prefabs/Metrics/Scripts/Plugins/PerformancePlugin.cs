@@ -16,7 +16,8 @@ namespace DecentM.Metrics.Plugins
         {
             int roundFps = Mathf.FloorToInt(fps);
             VRCUrl url = this.urlStore.GetPerformanceUrl(mode, roundFps);
-            if (url == null) return;
+            if (url == null)
+                return;
 
             this.system.RecordMetric(url, Metric.PerformanceModeChange);
         }

@@ -1,5 +1,4 @@
-﻿
-using UdonSharp;
+﻿using UdonSharp;
 using UnityEngine;
 using VRC.SDKBase;
 using VRC.Udon;
@@ -15,15 +14,17 @@ public class InteractDistributor : UdonSharpBehaviour
         if (this.targets == null || this.eventNames == null)
         {
             Debug.LogError("[InteractDistributor] Targets and Event Names are both required.");
-            UdonBehaviour self = (UdonBehaviour) GetComponent(typeof(UdonBehaviour));
+            UdonBehaviour self = (UdonBehaviour)GetComponent(typeof(UdonBehaviour));
             self.enabled = false;
             return;
         }
 
         if (this.targets.Length != this.eventNames.Length)
         {
-            Debug.LogError("[InteractDistributor] Targets and Event Names must have the same number of items.");
-            UdonBehaviour self = (UdonBehaviour) GetComponent(typeof(UdonBehaviour));
+            Debug.LogError(
+                "[InteractDistributor] Targets and Event Names must have the same number of items."
+            );
+            UdonBehaviour self = (UdonBehaviour)GetComponent(typeof(UdonBehaviour));
             self.enabled = false;
             return;
         }
@@ -38,7 +39,7 @@ public class InteractDistributor : UdonSharpBehaviour
                 continue;
             }
 
-            UdonBehaviour behaviour = (UdonBehaviour) targets[i];
+            UdonBehaviour behaviour = (UdonBehaviour)targets[i];
 
             behaviour.SendCustomEvent(this.eventNames[i]);
         }
