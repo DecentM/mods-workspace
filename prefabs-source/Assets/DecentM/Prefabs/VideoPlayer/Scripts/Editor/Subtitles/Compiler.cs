@@ -48,32 +48,32 @@ namespace DecentM.Subtitles
                 .ResolveHTMLEntities()
                 .GetResult();
 
-            IntermediateCompiler compiler = null;
+            Parser parser = null;
 
             switch (inFileType)
             {
                 case SubtitleFormat.Srt:
-                    compiler = new SrtCompiler();
+                    parser = new SrtParser();
                     break;
 
                 case SubtitleFormat.Vtt:
-                    compiler = new VttCompiler();
+                    parser = new VttParser();
                     break;
 
                 case SubtitleFormat.Vsi:
-                    compiler = new VsiCompiler();
+                    parser = new VsiParser();
                     break;
 
                 default:
                     break;
             }
 
-            if (compiler == null)
+            if (parser == null)
                 throw new NotImplementedException(
-                    $"No compiler exists for this format: {inFileType}"
+                    $"No parser exists for this format: {inFileType}"
                 );
 
-            return compiler.CompileIntermediate(sanitisedSource);
+            return parser.Parse(sanitisedSource);
         }
 
         public static string Write(Ast ast, string outFileType)

@@ -20,6 +20,14 @@ namespace DecentM.Subtitles.Srt
             ExpectingTextContent,
         }
 
+        public override Ast Parse(string input)
+        {
+            SrtLexer lexer = new SrtLexer();
+
+            List<SrtLexer.Token> tokens = lexer.Lex(input);
+            return this.Parse(tokens);
+        }
+
         public override Ast Parse(List<SrtLexer.Token> tokens)
         {
             List<Node> nodes = new List<Node>();

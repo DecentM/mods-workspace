@@ -39,7 +39,12 @@ namespace DecentM.Subtitles
         }
     }
 
-    public abstract class Parser<LexerType, TokenType> where LexerType : Lexer<TokenType>
+    public abstract class Parser
+    {
+        public abstract Ast Parse(string input);
+    }
+
+    public abstract class Parser<LexerType, TokenType> : Parser where LexerType : Lexer<TokenType>
     {
         protected int ParseTimestamp(string timestamp, char millisSeparator, char partsSeparator)
         {
@@ -138,10 +143,5 @@ namespace DecentM.Subtitles
         }
 
         public abstract CompilationResult Compile(string input, Transformer transformer);
-    }
-
-    public abstract class IntermediateCompiler
-    {
-        public abstract Ast CompileIntermediate(string input);
     }
 }

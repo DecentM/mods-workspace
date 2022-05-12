@@ -16,6 +16,14 @@ namespace DecentM.Subtitles.Vtt
             ExpectingTextParameters,
         }
 
+        public override Ast Parse(string input)
+        {
+            VttLexer lexer = new VttLexer();
+
+            List<VttLexer.Token> tokens = lexer.Lex(input);
+            return this.Parse(tokens);
+        }
+
         public override Ast Parse(List<VttLexer.Token> tokens)
         {
             List<Node> nodes = new List<Node>();

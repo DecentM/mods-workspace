@@ -12,6 +12,14 @@ namespace DecentM.Subtitles.Vsi
             ExpectingNewline,
         }
 
+        public override Ast Parse(string input)
+        {
+            VsiLexer lexer = new VsiLexer();
+
+            List<VsiLexer.Token> tokens = lexer.Lex(input);
+            return this.Parse(tokens);
+        }
+
         public override Ast Parse(List<VsiLexer.Token> tokens)
         {
             List<Node> nodes = new List<Node>();
