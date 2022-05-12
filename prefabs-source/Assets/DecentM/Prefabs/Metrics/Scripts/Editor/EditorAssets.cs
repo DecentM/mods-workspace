@@ -9,11 +9,11 @@ namespace DecentM.EditorTools
 {
     public static partial class EditorAssets
     {
+        public static string SelfLocation = SelfLocatorAsset.LocateSelf();
+
         private static T GetAsset<T>(params string[] location) where T : UnityEngine.Object
         {
-            string baseLocation = SelfLocatorAsset.LocateSelf();
-
-            string path = $"{baseLocation}/{string.Join("/", location)}";
+            string path = $"{SelfLocation}/{string.Join("/", location)}";
             return AssetDatabase.LoadAssetAtPath<T>(path);
         }
     }

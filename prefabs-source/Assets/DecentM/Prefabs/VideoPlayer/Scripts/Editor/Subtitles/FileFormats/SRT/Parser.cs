@@ -11,44 +11,6 @@ namespace DecentM.Subtitles.Srt
             return ast.nodes.Where(node => node.kind == NodeKind.Unknown).ToList();
         }
 
-        private int ParseTimestamp(string timestamp)
-        {
-            // timestamp format: 00:05:00,400
-            // hours:minutes:seconds,milliseconds
-            string[] parts = timestamp.Split(',');
-
-            // If the timestamp is invalid, we return zero to make the instruction runner
-            // ignore this screen.
-            if (parts.Length != 2)
-            {
-                throw new ArgumentException($"Cannot parse timestamp {timestamp}, because it cannot be split into two parts on a comma");
-            }
-
-            string time = parts[0];
-            int millis = 0;
-            int.TryParse(parts[1], out millis);
-
-            string[] timeParts = time.Split(':');
-
-            // If the timestamp is invalid, we return zero to make the instruction runner
-            // ignore this screen.
-            if (timeParts.Length != 3)
-            {
-                throw new ArgumentException($"Cannot parse timestamp {timestamp}, because it cannot be split into three parts on a colon");
-            }
-
-            int hours = 0;
-            int minutes = 0;
-            int seconds = 0;
-
-            int.TryParse(timeParts[0], out hours);
-            int.TryParse(timeParts[1], out minutes);
-            int.TryParse(timeParts[2], out seconds);
-
-            // Add values to get the value in millis
-            return millis + (seconds * 1000) + (minutes * 60 * 1000) + (hours * 60 * 60 * 1000);
-        }
-
         private enum Mode
         {
             ExpectingScreenIndex,
@@ -67,15 +29,15 @@ namespace DecentM.Subtitles.Srt
             // The first thing in an .srt should be the screen index
             Mode mode = Mode.ExpectingScreenIndex;
 
-            string ConsumeUntil(TokenType type)
+            string ConsumeUntil(params TokenType[] type)
             {
                 int tCursor = cursor;
                 SrtLexer.Token tCurrent = tokens.ElementAt(tCursor);
                 string result = "";
 
-                while (tCurrent.type != type && tCursor < tokens.Count)
+                while (!type.Contains(tCurrent.type) && tCursor < tokens.Count)
                 {
-                    result += (string)tCurrent.value;
+                    result += tCurrent.value.ToString();
                     tCursor++;
                     tCurrent = tokens.ElementAt(tCursor);
                 }
@@ -101,7 +63,7 @@ namespace DecentM.Subtitles.Srt
 
                     if (cursor < tokens.Count - 1)
                     {
-                        SrtLexer.Token next = tokens.ElementAt(cursor);
+                        SrtLexer.Token next = tokens.ElementAt(cursor + 1);
 
                         if (next.type != TokenType.Newline)
                         {
@@ -126,16 +88,16 @@ namespace DecentM.Subtitles.Srt
                         continue;
                     }
 
-                    string timestamp = ConsumeTimestamp();
+                    string timestamp = ConsumeUntil(TokenType.Space);
+                    int timestampMillis = this.ParseTimestamp(timestamp, ',', ':');
 
-                    try
+                    if (timestampMillis == -1)
                     {
-                        timestampMillis = this.ParseTimestampFromIndex(tokens, cursor);
-                    } catch (ArgumentException ex)
-                    {
-                        Node unknownNode = new Node(NodeKind.Unknown, ex.Message);
-                        nodes.Add(unknownNode);
-                        mode = Mode.ExpectingArrow;
+                        Node errorNode = new Node(NodeKind.Unknown, $"Failed to parse start timestamp: {timestamp}");
+                        nodes.Add(errorNode);
+
+                        // Don't change the mode, if we're expecting a start timestamp, we should go until we find one.
+                        cursor++;
                         continue;
                     }
 
@@ -175,17 +137,16 @@ namespace DecentM.Subtitles.Srt
                         continue;
                     }
 
-                    int timestampMillis = -1;
+                    string timestamp = ConsumeUntil(TokenType.Space, TokenType.Newline);
+                    int timestampMillis = this.ParseTimestamp(timestamp, ',', ':');
 
-                    try
+                    if (timestampMillis == -1)
                     {
-                        timestampMillis = this.ParseTimestampFromIndex(tokens, cursor);
-                    }
-                    catch (ArgumentException ex)
-                    {
-                        Node unknownNode = new Node(NodeKind.Unknown, ex.Message);
-                        nodes.Add(unknownNode);
-                        mode = Mode.ExpectingArrow;
+                        Node errorNode = new Node(NodeKind.Unknown, $"Failed to parse end timestamp: {timestamp}");
+                        nodes.Add(errorNode);
+
+                        // Don't change the mode, if we're expecting a start timestamp, we should go until we find one.
+                        cursor++;
                         continue;
                     }
 
@@ -193,8 +154,6 @@ namespace DecentM.Subtitles.Srt
                     Node node = new Node(NodeKind.TimestampEnd, timestampMillis);
                     nodes.Add(node);
 
-                    // Skip the timestamp + a space
-                    cursor = cursor + 12;
                     // Move to expecting the arrow
                     mode = Mode.ExpectingTextContent;
                     continue;
@@ -247,6 +206,11 @@ namespace DecentM.Subtitles.Srt
                         nodes.Add(unknownNode);
                     } else
                     {
+                        while (textContents.EndsWith("\n"))
+                        {
+                            textContents = textContents.Remove(textContents.Length - 1, 1);
+                        }
+
                         Node node = new Node(NodeKind.TextContents, textContents);
                         nodes.Add(node);
                     }

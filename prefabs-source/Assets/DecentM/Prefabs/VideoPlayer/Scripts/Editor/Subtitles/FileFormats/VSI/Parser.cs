@@ -17,9 +17,6 @@ namespace DecentM.Subtitles.Vsi
             List<Node> nodes = new List<Node>();
             int cursor = 0;
 
-            // Vsi starts with the first instruction immediately
-            // Mode mode = Mode.ExpectingInstructionLine;
-
             int GetNextTimestamp()
             {
                 int tCursor = cursor + 1;

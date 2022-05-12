@@ -2684,8 +2684,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5622076067985796227}
   m_HandleRect: {fileID: 5622076067985796228}
   m_Direction: 0
-  m_Value: -0.0000011737502
-  m_Size: 0.96380305
+  m_Value: 0
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -4265,6 +4265,9 @@ MonoBehaviour:
   chineseTraditionalLanguages:
   - tc
   - zh-Hant
+  - zh-HK
+  - zh-CN
+  - zh-TW
   koreanLanguages:
   - ko
   chineseSimplifiedLanguages:

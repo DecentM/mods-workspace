@@ -28,8 +28,6 @@ namespace DecentM.VideoPlayer.EditorTools.Importers
             string contents = File.ReadAllText(importer.assetPath);
             Compiler.CompilationResult compiled = SubtitleCompiler.Compile(contents, Path.GetExtension(importer.assetPath), SubtitleFormat.Vsi);
 
-            Debug.Log(contents);
-
             if (compiled.errors.Count > 0)
             {
                 EditorGUILayout.HelpBox($"{compiled.errors.Count} errors found while compiling.", MessageType.Warning);

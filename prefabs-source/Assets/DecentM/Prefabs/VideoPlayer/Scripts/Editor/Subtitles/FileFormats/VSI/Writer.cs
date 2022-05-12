@@ -18,7 +18,8 @@ namespace DecentM.Subtitles.Vsi
 
             foreach (Instruction instruction in instructions)
             {
-                sb.AppendLine(instruction.ToString());
+                sb.Append(instruction.ToString());
+                sb.Append('\n');
             }
 
             return sb.ToString();

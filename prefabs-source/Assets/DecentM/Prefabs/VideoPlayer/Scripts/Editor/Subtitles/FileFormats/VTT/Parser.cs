@@ -6,56 +6,14 @@ namespace DecentM.Subtitles.Vtt
 {
     public class VttParser : Parser<VttLexer, TokenType>
     {
-        private int ParseTimestampFromIndex(List<VttLexer.Token> tokens, int index)
+        private enum Mode
         {
-            int tCursor = index;
-            VttLexer.Token tCurrent = tokens.ElementAt(tCursor);
-            string timestamp = "";
-
-            // Keep going until we see a space or newline
-            while (
-                tCurrent.type != TokenType.Space
-                && tCurrent.type != TokenType.Newline
-            ) {
-                tCursor++;
-                tCurrent = tokens.ElementAt(tCursor);
-                timestamp = $"{timestamp}{tCurrent.value}";
-            }
-
-            // timestamp format: 00:05:00,400
-            // hours:minutes:seconds,milliseconds
-            string[] parts = timestamp.Split('.');
-
-            // If the timestamp is invalid, we return zero to make the instruction runner
-            // ignore this screen.
-            if (parts.Length != 2)
-            {
-                throw new ArgumentException($"Cannot parse timestamp {timestamp}, because it cannot be split into two parts on a full stop");
-            }
-
-            string time = parts[0];
-            int millis = 0;
-            int.TryParse(parts[1], out millis);
-
-            string[] timeParts = time.Split(':');
-
-            // If the timestamp is invalid, we return zero to make the instruction runner
-            // ignore this screen.
-            if (timeParts.Length != 3)
-            {
-                throw new ArgumentException($"Cannot parse timestamp {timestamp}, because it cannot be split into three parts on a colon");
-            }
-
-            int hours = 0;
-            int minutes = 0;
-            int seconds = 0;
-
-            int.TryParse(timeParts[0], out hours);
-            int.TryParse(timeParts[1], out minutes);
-            int.TryParse(timeParts[2], out seconds);
-
-            // Add values to get the value in millis
-            return millis + (seconds * 1000) + (minutes * 60 * 1000) + (hours * 60 * 60 * 1000);
+            ExpectingHeader,
+            ExpectingStartTimestamp,
+            ExpectingArrow,
+            ExpectingEndTimestamp,
+            ExpectingTextContent,
+            ExpectingTextParameters,
         }
 
         public override Ast Parse(List<VttLexer.Token> tokens)
@@ -63,14 +21,29 @@ namespace DecentM.Subtitles.Vtt
             List<Node> nodes = new List<Node>();
             int cursor = 0;
 
-            // Mode is just a NodeKind, to check where we currently are
+            string ConsumeUntil(params TokenType[] type)
+            {
+                int tCursor = cursor;
+                VttLexer.Token tCurrent = tokens.ElementAt(tCursor);
+                string result = "";
+
+                while (!type.Contains(tCurrent.type) && tCursor < tokens.Count)
+                {
+                    result += tCurrent.value.ToString();
+                    tCursor++;
+                    tCurrent = tokens.ElementAt(tCursor);
+                }
+
+                tCursor--;
+                cursor = tCursor;
+                return result;
+            }
+
             // The first thing in a .vtt should be the VTT header.
-            NodeKind mode = NodeKind.Header;
+            Mode mode = Mode.ExpectingHeader;
 
             while (cursor < tokens.Count)
             {
-                // Console.WriteLine($"Parsing... cursor: {cursor}, mode: {mode}");
-
                 VttLexer.Token current = tokens.ElementAt(cursor);
 
                 // Ignore notes as they're just comments
@@ -88,7 +61,7 @@ namespace DecentM.Subtitles.Vtt
                     continue;
                 }
 
-                if (mode == NodeKind.Header)
+                if (mode == Mode.ExpectingHeader)
                 {
                     if (current.type != TokenType.WEBVTTHeader)
                     {
@@ -96,13 +69,12 @@ namespace DecentM.Subtitles.Vtt
                         continue;
                     }
 
-                    mode = NodeKind.TimestampStart;
+                    mode = Mode.ExpectingStartTimestamp;
                     cursor++;
                     continue;
                 }
 
-                // If we're in the start timestamp
-                if (mode == NodeKind.TimestampStart)
+                if (mode == Mode.ExpectingStartTimestamp)
                 {
                     // Go until we see an int
                     // token type 2 == int
@@ -119,16 +91,15 @@ namespace DecentM.Subtitles.Vtt
                         continue;
                     }
 
-                    int timestampMillis = -1;
+                    string timestamp = ConsumeUntil(TokenType.Space);
+                    int timestampMillis = this.ParseTimestamp(timestamp, '.', ':');
 
-                    try
+                    if (timestampMillis == -1)
                     {
-                        timestampMillis = this.ParseTimestampFromIndex(tokens, cursor);
-                    } catch (ArgumentException ex)
-                    {
-                        Node unknownNode = new Node(NodeKind.Unknown, ex.Message);
-                        nodes.Add(unknownNode);
-                        mode = NodeKind.TimestampArrow;
+                        Node errorNode = new Node(NodeKind.Unknown, $"Failed to parse start timestamp: {timestamp}");
+                        nodes.Add(errorNode);
+
+                        // Don't change the mode, if we're expecting a start timestamp, we should go until we find one.
                         continue;
                     }
 
@@ -136,85 +107,46 @@ namespace DecentM.Subtitles.Vtt
                     Node node = new Node(NodeKind.TimestampStart, timestampMillis);
                     nodes.Add(node);
 
-                    // Skip the timestamp + a space
-                    cursor = cursor + 12;
                     // Move to expecting the arrow
-                    mode = NodeKind.TimestampArrow;
+                    mode = Mode.ExpectingArrow;
                     continue;
                 }
 
-                // Expect the arrow
-                if (mode == NodeKind.TimestampArrow)
+                if (mode == Mode.ExpectingArrow)
                 {
                     // Go until we see a hyphen
-                    if (current.type != TokenType.Hyphen)
+                    if (current.type != TokenType.Arrow)
                     {
                         cursor++;
                         continue;
                     }
 
-                    int tCursor = cursor;
-                    VttLexer.Token tCurrent = tokens.ElementAt(tCursor);
-                    string body = "";
-
-                    // Keep going until we see a space
-                    while (tCurrent.type != TokenType.Space && tCurrent.type != TokenType.Unknown)
-                    {
-                        body = $"{body}{tCurrent.value}";
-                        tCursor++;
-                        tCurrent = tokens.ElementAtOrDefault(tCursor);
-
-                        if (Object.Equals(tCurrent, default))
-                        {
-                            break;
-                        }
-                    }
-
-                    // If we saw a valid arrow, add it as a Node, then move the cursor behind it
-                    if (body == "-->")
-                    {
-                        // node kind 3 == TimestampArrow
-                        Node node = new Node(NodeKind.TimestampArrow, body);
-                        nodes.Add(node);
-
-                        cursor = tCursor;
-                    }
-                    // If we didn't, advance the cursor by one and add an unknown node
-                    else
-                    {
-                        Node unknownNode = new Node(NodeKind.Unknown, $"Cannot parse arrow: {current.value}");
-                        nodes.Add(unknownNode);
-                        cursor++;
-                    }
+                    cursor++;
 
                     // Move to expecting the second timestamp, even if we didn't see an arrow
                     // to prevent infinite loops.
-                    mode = NodeKind.TimestampEnd;
+                    mode = Mode.ExpectingEndTimestamp;
                     continue;
                 }
 
-                // Expect the end timestamp
-                if (mode == NodeKind.TimestampEnd)
+                if (mode == Mode.ExpectingEndTimestamp)
                 {
                     // Go until we see an int
-                    // token type 2 == int
                     if (current.type != TokenType.Number)
                     {
                         cursor++;
                         continue;
                     }
 
-                    int timestampMillis = -1;
+                    string timestamp = ConsumeUntil(TokenType.Newline, TokenType.Space);
+                    int timestampMillis = this.ParseTimestamp(timestamp, '.', ':');
 
-                    try
+                    if (timestampMillis == -1)
                     {
-                        timestampMillis = this.ParseTimestampFromIndex(tokens, cursor);
-                    }
-                    catch (ArgumentException ex)
-                    {
-                        Node unknownNode = new Node(NodeKind.Unknown, ex.Message);
-                        nodes.Add(unknownNode);
-                        mode = NodeKind.TimestampArrow;
+                        Node errorNode = new Node(NodeKind.Unknown, $"Failed to parse end timestamp: {timestamp}");
+                        nodes.Add(errorNode);
+
+                        // Don't change the mode, if we're expecting a start timestamp, we should go until we find one.
                         continue;
                     }
 
@@ -222,19 +154,17 @@ namespace DecentM.Subtitles.Vtt
                     Node node = new Node(NodeKind.TimestampEnd, timestampMillis);
                     nodes.Add(node);
 
-                    // Skip the timestamp + a space
-                    cursor = cursor + 12;
                     // Move to expecting the arrow
-                    mode = NodeKind.TextParameters;
+                    mode = Mode.ExpectingTextParameters;
                     continue;
                 }
 
-                if (mode == NodeKind.TextParameters)
+                if (mode == Mode.ExpectingTextParameters)
                 {
                     if (current.type == TokenType.Newline)
                     {
                         cursor++;
-                        mode = NodeKind.TextContents;
+                        mode = Mode.ExpectingTextContent;
                         continue;
                     }
 
@@ -262,12 +192,12 @@ namespace DecentM.Subtitles.Vtt
 
                     Node node = new Node(NodeKind.TextParameters, parameters);
                     nodes.Add(node);
-                    mode = NodeKind.TextContents;
+                    mode = Mode.ExpectingTextContent;
                     continue;
                 }
 
                 // Expect the text contents
-                if (mode == NodeKind.TextContents)
+                if (mode == Mode.ExpectingTextContent)
                 {
                     int tCursor = cursor;
                     string textContents = "";
@@ -291,7 +221,7 @@ namespace DecentM.Subtitles.Vtt
 
                     cursor = tCursor;
                     // Go back to expecting the next section's index
-                    mode = NodeKind.TimestampStart;
+                    mode = Mode.ExpectingStartTimestamp;
                     continue;
                 }
 

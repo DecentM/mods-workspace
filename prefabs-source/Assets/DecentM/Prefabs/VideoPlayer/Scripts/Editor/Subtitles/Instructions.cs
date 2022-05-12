@@ -136,7 +136,6 @@ namespace DecentM.Subtitles
         {
             List<Node> result = new List<Node>();
 
-            result.Add(new Node(NodeKind.ScreenIndex, this.index));
             result.Add(new Node(NodeKind.TimestampStart, this.startTimestamp));
             result.Add(new Node(NodeKind.TimestampEnd, this.endTimestamp));
             result.Add(new Node(NodeKind.TextContents, this.text));

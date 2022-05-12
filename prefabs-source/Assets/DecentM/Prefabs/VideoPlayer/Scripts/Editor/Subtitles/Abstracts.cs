@@ -41,6 +41,63 @@ namespace DecentM.Subtitles
 
     public abstract class Parser<LexerType, TokenType> where LexerType : Lexer<TokenType>
     {
+        protected int ParseTimestamp(string timestamp, char millisSeparator, char partsSeparator)
+        {
+            // timestamp format: 00:05:00,400
+            // hours:minutes:seconds,milliseconds
+            string[] parts = timestamp.Split(millisSeparator);
+
+            int millis = 0;
+            string time;
+
+            switch (parts.Length)
+            {
+                case 1:
+                    time = parts[0];
+                    break;
+
+                case 2:
+                    time = parts[0];
+                    int.TryParse(parts[1], out millis);
+                    break;
+
+                default:
+                    return -1;
+            }
+
+            string[] timeParts = time.Split(partsSeparator);
+
+            // If the timestamp is invalid, we return -1 to signal that parsing failed
+
+            int hours = 0;
+            int minutes = 0;
+            int seconds = 0;
+
+            switch (timeParts.Length)
+            {
+                case 1:
+                    int.TryParse(timeParts[0], out seconds);
+                    break;
+
+                case 2:
+                    int.TryParse(timeParts[0], out minutes);
+                    int.TryParse(timeParts[1], out seconds);
+                    break;
+
+                case 3:
+                    int.TryParse(timeParts[0], out hours);
+                    int.TryParse(timeParts[1], out minutes);
+                    int.TryParse(timeParts[2], out seconds);
+                    break;
+
+                default:
+                    return -1;
+            }
+
+            // Add values to get the value in millis
+            return millis + (seconds * 1000) + (minutes * 60 * 1000) + (hours * 60 * 60 * 1000);
+        }
+
         public abstract Ast Parse(List<Lexer<TokenType>.Token> tokens);
     }
 

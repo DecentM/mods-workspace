@@ -34,7 +34,7 @@ namespace DecentM.Subtitles
 
     public static class SubtitleCompiler
     {
-        public static Compiler.CompilationResult Compile(string source, string inFileType, string outFileType)
+        public static Ast CompileIntermediate(string source, string inFileType)
         {
             if (!SubtitleFormat.IsSupported(inFileType))
             {
@@ -68,29 +68,25 @@ namespace DecentM.Subtitles
 
             if (compiler == null) throw new NotImplementedException($"No compiler exists for this format: {inFileType}");
 
-            Transformer transformer = new Transformer()
-                .LigaturiseArabicText();
+            return compiler.CompileIntermediate(sanitisedSource);
+        }
 
-            List<CompilationResultError> errors = new List<CompilationResultError>();
-
-            Ast result = compiler.CompileIntermediate(sanitisedSource);
-            errors.AddRange(result.nodes.Where(node => node.kind == NodeKind.Unknown).Select(err => new CompilationResultError(err.value.ToString())));
-
-            Ast newAst = transformer.Transform(result);
+        public static string Write(Ast ast, string outFileType)
+        {
             Writer writer = null;
 
             switch (outFileType)
             {
                 case SubtitleFormat.Srt:
-                    writer = new SrtWriter(newAst);
+                    writer = new SrtWriter(ast);
                     break;
 
                 case SubtitleFormat.Vtt:
-                    writer = new VttWriter(newAst);
+                    writer = new VttWriter(ast);
                     break;
 
                 case SubtitleFormat.Vsi:
-                    writer = new VsiWriter(newAst);
+                    writer = new VsiWriter(ast);
                     break;
 
                 default:
@@ -99,7 +95,21 @@ namespace DecentM.Subtitles
 
             if (writer == null) throw new NotImplementedException($"No writer exists for this format: {outFileType}");
 
-            string output = writer.ToString();
+            return writer.ToString();
+        }
+
+        public static Compiler.CompilationResult Compile(string source, string inFileType, string outFileType)
+        {
+            Ast result = CompileIntermediate(source, inFileType);
+
+            Transformer transformer = new Transformer()
+                .LigaturiseArabicText();
+
+            List<CompilationResultError> errors = new List<CompilationResultError>();
+            errors.AddRange(result.nodes.Where(node => node.kind == NodeKind.Unknown).Select(err => new CompilationResultError(err.value.ToString())));
+
+            Ast newAst = transformer.Transform(result);
+            string output = Write(newAst, outFileType);
 
             return new Compiler.CompilationResult(errors, output);
         }

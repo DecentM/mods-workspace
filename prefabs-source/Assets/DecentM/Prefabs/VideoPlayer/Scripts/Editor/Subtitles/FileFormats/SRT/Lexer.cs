@@ -25,7 +25,7 @@ namespace DecentM.Subtitles.Srt
 
             void AddToken(TokenType type, object value)
             {
-                Token token = new Token(type);
+                Token token = new Token(type, value);
                 tokens.Add(token);
                 cursor++;
             }
@@ -48,6 +48,7 @@ namespace DecentM.Subtitles.Srt
                 if (current == '-' && FindWord("-->"))
                 {
                     AddToken(TokenType.Arrow, "-->");
+                    cursor += 2;
                     continue;
                 }
 

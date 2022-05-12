@@ -91,25 +91,13 @@ namespace DecentM.VideoPlayer.Plugins
             this.SetInstructions("");
         }
 
-        private object[] CreateInstruction(int type = 0, int timestamp = 0, string value = "")
-        {
-            object[] instruction = new object[3];
-
-            instruction[0] = type;
-            instruction[1] = timestamp;
-            instruction[2] = value;
-
-            return instruction;
-        }
-
         private const char NewlineDelimeter = '˟';
 
-        public void SetInstructions(string newInstructions)
+        public static object[][] ParseInstructions(string instructions)
         {
-            string[] lines = newInstructions.Split('\n');
-            this.instructions = new object[lines.Length][];
-            int lastTimestamp = 0;
-
+            string[] lines = instructions.Split('\n');
+            object[][] result = new object[lines.Length][];
+            
             for (int i = 0; i < lines.Length; i++)
             {
                 string[] parts = lines[i].Split(null, 3);
@@ -128,11 +116,21 @@ namespace DecentM.VideoPlayer.Plugins
 
                 string text = parts[2].Replace(NewlineDelimeter, '\n');
 
-                object[] instruction = this.CreateInstruction(type, timestamp, text);
+                object[] instruction = new object[3];
 
-                lastTimestamp = timestamp;
-                this.instructions[i] = instruction;
+                instruction[0] = type;
+                instruction[1] = timestamp;
+                instruction[2] = text;
+
+                result[i] = instruction;
             }
+
+            return result;
+        }
+
+        public void SetInstructions(string newInstructions)
+        {
+            this.instructions = ParseInstructions(newInstructions);
         }
 
         private float elapsed = 0;

@@ -159,10 +159,10 @@ namespace DecentM.Subtitles.DiscordBot
 
             // Nearing this size, the time it takes to compile starts going over a few seconds, so we limit to 256kb to keep performance up
             // and prevent people from stalling the bot with huge files. Subtitle files are 99% of the time are small anyway.
-            if (attachment.Size > 386000)
+            if (attachment.Size > 512000)
             {
                 await msg.AddReactionAsync(EmojiIcon.cross);
-                await msg.Channel.SendMessageAsync("This file is too large, please only send me files smaller than 386kb!");
+                await msg.Channel.SendMessageAsync("This file is too large, please only send me files smaller than 512kb!");
                 typingState.Dispose();
                 SentrySdk.CaptureTransaction(transaction);
                 return;

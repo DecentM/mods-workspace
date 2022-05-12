@@ -10,8 +10,7 @@ namespace DecentM.Subtitles.Vtt
         Unknown,
         Char,
         Number,
-        Hyphen,
-        SidewaysCaret,
+        Arrow,
         Colon,
         Comma,
         Newline,
@@ -116,17 +115,10 @@ namespace DecentM.Subtitles.Vtt
                     continue;
                 }
 
-                // Hyphens are in arrows, and text
-                if (current == '-')
+                if (current == '-' && FindWord("-->"))
                 {
-                    AddToken(TokenType.Hyphen, "-");
-                    continue;
-                }
-
-                // Sideways carets are in arrows, and text
-                if (current == '>')
-                {
-                    AddToken(TokenType.SidewaysCaret, ">");
+                    AddToken(TokenType.Arrow, "-->");
+                    cursor += 2;
                     continue;
                 }
 
