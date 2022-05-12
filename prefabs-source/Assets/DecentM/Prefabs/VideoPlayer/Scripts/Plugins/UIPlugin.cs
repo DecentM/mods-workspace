@@ -15,11 +15,11 @@ namespace DecentM.VideoPlayer.Plugins
     {
         Default,
         Japanese,
-        ChineseTraditional,
         Korean,
         ChineseSimplified,
+        ChineseHongKong,
+        ChineseTaiwan,
         Arabic,
-        Thai,
     }
 
     public sealed class UIPlugin : VideoPlayerPlugin
@@ -86,11 +86,19 @@ namespace DecentM.VideoPlayer.Plugins
         private TextMeshProUGUI subtitleSlot;
         public TextMeshProUGUI subtitleSlot_default;
         public TextMeshProUGUI subtitleSlot_japanese;
-        public TextMeshProUGUI subtitleSlot_chineseTraditional;
         public TextMeshProUGUI subtitleSlot_korean;
         public TextMeshProUGUI subtitleSlot_chineseSimplified;
+        public TextMeshProUGUI subtitleSlot_chineseTaiwan;
+        public TextMeshProUGUI subtitleSlot_chineseHongKong;
         public TextMeshProUGUI subtitleSlot_arabic;
-        public TextMeshProUGUI subtitleSlot_thai;
+
+        [Space]
+        public string[] japaneseLanguages;
+        public string[] koreanLanguages;
+        public string[] chineseSimplifiedLanguages;
+        public string[] chineseHongKongLanguages;
+        public string[] chineseTaiwanLanguages;
+        public string[] arabicLanguages;
 
         [Space]
         public Button ownershipButton;
@@ -248,10 +256,6 @@ namespace DecentM.VideoPlayer.Plugins
                     this.subtitleSlot = this.subtitleSlot_japanese;
                     return;
 
-                case SubtitleSlot.ChineseTraditional:
-                    this.subtitleSlot = this.subtitleSlot_chineseTraditional;
-                    return;
-
                 case SubtitleSlot.Korean:
                     this.subtitleSlot = this.subtitleSlot_korean;
                     return;
@@ -264,8 +268,12 @@ namespace DecentM.VideoPlayer.Plugins
                     this.subtitleSlot = this.subtitleSlot_arabic;
                     return;
 
-                case SubtitleSlot.Thai:
-                    this.subtitleSlot = this.subtitleSlot_thai;
+                case SubtitleSlot.ChineseTaiwan:
+                    this.subtitleSlot = this.subtitleSlot_chineseTaiwan;
+                    return;
+
+                case SubtitleSlot.ChineseHongKong:
+                    this.subtitleSlot = this.subtitleSlot_chineseHongKong;
                     return;
 
                 default:
@@ -317,21 +325,14 @@ namespace DecentM.VideoPlayer.Plugins
             return false;
         }
 
-        public string[] japaneseLanguages;
-        public string[] chineseTraditionalLanguages;
-        public string[] koreanLanguages;
-        public string[] chineseSimplifiedLanguages;
-        public string[] arabicLanguages;
-        public string[] thaiLanguages;
-
         private void SwitchSubtitleSlotForLanguage(string language)
         {
             if (this.LanguageIncludes(this.japaneseLanguages, language)) { this.SwitchSubtitleSlot(SubtitleSlot.Japanese); return; }
-            if (this.LanguageIncludes(this.chineseTraditionalLanguages, language)) { this.SwitchSubtitleSlot(SubtitleSlot.ChineseTraditional); return; }
             if (this.LanguageIncludes(this.koreanLanguages, language)) { this.SwitchSubtitleSlot(SubtitleSlot.Korean); return;  }
             if (this.LanguageIncludes(this.chineseSimplifiedLanguages, language)) { this.SwitchSubtitleSlot(SubtitleSlot.ChineseSimplified); return; }
             if (this.LanguageIncludes(this.arabicLanguages, language)) { this.SwitchSubtitleSlot(SubtitleSlot.Arabic); return; }
-            if (this.LanguageIncludes(this.thaiLanguages, language)) { this.SwitchSubtitleSlot(SubtitleSlot.Thai); return; }
+            if (this.LanguageIncludes(this.chineseHongKongLanguages, language)) { this.SwitchSubtitleSlot(SubtitleSlot.ChineseHongKong); return; }
+            if (this.LanguageIncludes(this.chineseTaiwanLanguages, language)) { this.SwitchSubtitleSlot(SubtitleSlot.ChineseTaiwan); return; }
 
             this.SwitchSubtitleSlot(SubtitleSlot.Default);
         }
