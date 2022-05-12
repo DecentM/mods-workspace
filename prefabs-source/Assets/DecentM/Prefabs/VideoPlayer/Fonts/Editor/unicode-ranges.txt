@@ -1,0 +1,64 @@
+==================================================
+Latin Extended plus misc stuff
+0000-007F,0080-00FF,0100-017F,0180-024F,0250-02AF,02B0-02FF,0300-036F,0370-03FF,0400-04FF,0530-058F,0590-05FF,0E00-0E7F,0E80-0EFF,0F00-0FFF,1000-109F,10A0-10FF,1800-18AF,1E00-1EFF,1F00-1FFF,2000-206F,2070-209F,20A0-20CF,20D0-20FF,2100-214F,2150-218F,2190-21FF,2200-22FF,2300-23FF,2600-26FF
+
+0x0000-0x007F	0-127	Basic Latin
+0x0080-0x00FF	128-255	Latin-1 Supplement
+0x0100-0x017F	256-383	Latin Extended-A
+0x0180-0x024F	384-591	Latin Extended-B
+0x0250-0x02AF	592-687	IPA Extensions
+0x02B0-0x02FF	688-767	Spacing Modifier Letters
+0x0300-0x036F	768-879	Combining Diacritical Marks
+0x0370-0x03FF	880-1023	Greek
+0x0400-0x04FF	1024-1279	Cyrillic
+0x0530-0x058F	1328-1423	Armenian
+0x0590-0x05FF	1424-1535	Hebrew
+0x0E00-0x0E7F	3584-3711	Thai
+0x0E80-0x0EFF	3712-3839	Lao
+0x0F00-0x0FFF	3840-4095	Tibetan
+0x1000-0x109F	4096-4255	Myanmar
+0x10A0-0x10FF	4256-4351	Georgian
+0x1800-0x18AF	6144-6319	Mongolian
+0x1E00-0x1EFF	7680-7935	Latin Extended Additional
+0x1F00-0x1FFF	7936-8191	Greek Extended
+0x2000-0x206F	8192-8303	General Punctuation
+0x2070-0x209F	8304-8351	Superscripts and Subscripts
+0x20A0-0x20CF	8352-8399	Currency Symbols
+0x20D0-0x20FF	8400-8447	Combining Marks for Symbols
+0x2100-0x214F	8448-8527	Letterlike Symbols
+0x2150-0x218F	8528-8591	Number Forms
+0x2190-0x21FF	8592-8703	Arrows
+0x2200-0x22FF	8704-8959	Mathematical Operators
+0x2300-0x23FF	8960-9215	Miscellaneous Technical
+0x2600-0x26FF	9728-9983	Miscellaneous Symbols
+
+==================================================
+Arabic
+0600-06FF,0750-077F,0870-089F,08A0-08FF,FB50-FDFF,FE70-FEFF,10E60-10E7F,1EC70-1ECBF,1ED00-1ED4F,1EE00-1EEFF
+
+Arabic (0600–06FF, 256 characters)
+Arabic Supplement (0750–077F, 48 characters)
+Arabic Extended-B (0870–089F, 41 characters)
+Arabic Extended-A (08A0–08FF, 96 characters)
+Arabic Presentation Forms-A (FB50–FDFF, 631 characters)
+Arabic Presentation Forms-B (FE70–FEFF, 141 characters)
+Rumi Numeral Symbols (10E60–10E7F, 31 characters)
+Indic Siyaq Numbers (1EC70–1ECBF, 68 characters)
+Ottoman Siyaq Numbers (1ED00–1ED4F, 61 characters)
+Arabic Mathematical Alphabetic Symbols (1EE00–1EEFF, 143 characters)
+
+==================================================
+Japanese
+3041-3096,30A0-30FF,2E80-2FD5,FF5F-FF9F,3000-303F,31F0-31FF,3220-3243,3280-337F,FF01-FF5E
+
+Hiragana, Katakana 3041-3096,30A0-30FF
+Kanji 3400-4DB5,4E00-9FCB,F900-FA6A
+Kanji Radicals 2E80-2FD5
+Katakana and punctuation half width FF5F-FF9F
+Symbols 3000-303F
+Misc 31F0-31FF,3220-3243,3280-337F
+Alphanumeric and punctuation full width FF01-FF5E
+
+==================================================
+Korean
+1100-11FF,3130-318F,A960-A97F,D7B0-D7FF
