@@ -61,7 +61,6 @@ namespace DecentM.VideoPlayer.Plugins
 
         [Space]
         public TextMeshProUGUI info;
-        public Animator loadingAnimator;
 
         [Space]
         public TextMeshProUGUI titleSlot;
@@ -83,22 +82,7 @@ namespace DecentM.VideoPlayer.Plugins
         public Image subtitlesToggleButtonIcon;
 
         [Space]
-        private TextMeshProUGUI subtitleSlot;
-        public TextMeshProUGUI subtitleSlot_default;
-        public TextMeshProUGUI subtitleSlot_japanese;
-        public TextMeshProUGUI subtitleSlot_korean;
-        public TextMeshProUGUI subtitleSlot_chineseSimplified;
-        public TextMeshProUGUI subtitleSlot_chineseTaiwan;
-        public TextMeshProUGUI subtitleSlot_chineseHongKong;
-        public TextMeshProUGUI subtitleSlot_arabic;
-
-        [Space]
-        public string[] japaneseLanguages;
-        public string[] koreanLanguages;
-        public string[] chineseSimplifiedLanguages;
-        public string[] chineseHongKongLanguages;
-        public string[] chineseTaiwanLanguages;
-        public string[] arabicLanguages;
+        public TextMeshProUGUI subtitleSlot;
 
         [Space]
         public Button ownershipButton;
@@ -246,49 +230,12 @@ namespace DecentM.VideoPlayer.Plugins
             this.animator.SetBool("ShowControls", false);
         }
 
-        private void SwitchSubtitleSlot(SubtitleSlot slot)
-        {
-            if (this.subtitleSlot != null) this.subtitleSlot.text = "";
-
-            switch (slot)
-            {
-                case SubtitleSlot.Japanese:
-                    this.subtitleSlot = this.subtitleSlot_japanese;
-                    return;
-
-                case SubtitleSlot.Korean:
-                    this.subtitleSlot = this.subtitleSlot_korean;
-                    return;
-
-                case SubtitleSlot.ChineseSimplified:
-                    this.subtitleSlot = this.subtitleSlot_chineseSimplified;
-                    return;
-
-                case SubtitleSlot.Arabic:
-                    this.subtitleSlot = this.subtitleSlot_arabic;
-                    return;
-
-                case SubtitleSlot.ChineseTaiwan:
-                    this.subtitleSlot = this.subtitleSlot_chineseTaiwan;
-                    return;
-
-                case SubtitleSlot.ChineseHongKong:
-                    this.subtitleSlot = this.subtitleSlot_chineseHongKong;
-                    return;
-
-                default:
-                    this.subtitleSlot = this.subtitleSlot_default;
-                    return;
-            }
-        }
-
         #endregion
 
         #region Outputs
 
         protected override void _Start()
         {
-            this.SwitchSubtitleSlotForLanguage(this.currentLanguage);
             this.OnSubtitleLanguageOptionsChange(new string[0][]);
         }
 
@@ -314,29 +261,6 @@ namespace DecentM.VideoPlayer.Plugins
             this.events.OnSubtitleLanguageRequested(newState ? this.currentLanguage : string.Empty);
         }
 
-        private bool LanguageIncludes(string[] array, string test)
-        {
-            foreach (string item in array)
-            {
-                if (item.ToLower() == test.ToLower()) return true;
-                if (item.ToLower().StartsWith($"{test.ToLower()}-")) return true;
-            }
-
-            return false;
-        }
-
-        private void SwitchSubtitleSlotForLanguage(string language)
-        {
-            if (this.LanguageIncludes(this.japaneseLanguages, language)) { this.SwitchSubtitleSlot(SubtitleSlot.Japanese); return; }
-            if (this.LanguageIncludes(this.koreanLanguages, language)) { this.SwitchSubtitleSlot(SubtitleSlot.Korean); return;  }
-            if (this.LanguageIncludes(this.chineseSimplifiedLanguages, language)) { this.SwitchSubtitleSlot(SubtitleSlot.ChineseSimplified); return; }
-            if (this.LanguageIncludes(this.arabicLanguages, language)) { this.SwitchSubtitleSlot(SubtitleSlot.Arabic); return; }
-            if (this.LanguageIncludes(this.chineseHongKongLanguages, language)) { this.SwitchSubtitleSlot(SubtitleSlot.ChineseHongKong); return; }
-            if (this.LanguageIncludes(this.chineseTaiwanLanguages, language)) { this.SwitchSubtitleSlot(SubtitleSlot.ChineseTaiwan); return; }
-
-            this.SwitchSubtitleSlot(SubtitleSlot.Default);
-        }
-
         protected override void OnSubtitleLanguageRequested(string language)
         {
             bool newState = !string.IsNullOrEmpty(language);
@@ -345,8 +269,6 @@ namespace DecentM.VideoPlayer.Plugins
             this.subtitlesDropdown.button.interactable = newState;
             this.subtitlesDropdown.animator.SetBool("DropdownOpen", false);
             this.subtitlesOn = newState;
-
-            this.SwitchSubtitleSlotForLanguage(language);
         }
 
         protected override void OnSubtitleLanguageOptionsChange(string[][] newOptions)
@@ -416,7 +338,7 @@ namespace DecentM.VideoPlayer.Plugins
 
         protected override void OnAutoRetry(int attempt)
         {
-            this.loadingAnimator.SetBool("Loading", true);
+            this.animator.SetBool("Loading", true);
             this.status.text = $"Retrying (attempt {attempt + 1})...";
         }
 
@@ -442,7 +364,7 @@ namespace DecentM.VideoPlayer.Plugins
 
         protected override void OnLoadApproved(VRCUrl url)
         {
-            this.loadingAnimator.SetBool("Loading", true);
+            this.animator.SetBool("Loading", true);
             this.ClearMetadata();
             this.isLoading = true;
             this.status.text = "Waiting for video player...";
@@ -452,13 +374,13 @@ namespace DecentM.VideoPlayer.Plugins
 
         protected override void OnLoadBegin()
         {
-            this.loadingAnimator.SetBool("Loading", true);
+            this.animator.SetBool("Loading", true);
             this.status.text = "Loading...";
         }
 
         protected override void OnLoadBegin(VRCUrl url)
         {
-            this.loadingAnimator.SetBool("Loading", true);
+            this.animator.SetBool("Loading", true);
             this.status.text = "Loading...";
             this.urlInput.SetUrl(url);
         }
@@ -563,7 +485,7 @@ namespace DecentM.VideoPlayer.Plugins
             this.isLoading = false;
             this.status.text = this.selfOwned ? "Loaded, press play to begin" : "Loaded, waiting for owner to start";
             this.RenderScreen(duration);
-            this.loadingAnimator.SetBool("Loading", false);
+            this.animator.SetBool("Loading", false);
         }
 
         protected override void OnLoadError(VideoError videoError)
@@ -581,7 +503,7 @@ namespace DecentM.VideoPlayer.Plugins
                 // We don't care about the rest of the errors as they're handled by the AutoRetry plugin
             }
 
-            this.loadingAnimator.SetBool("Loading", false);
+            this.animator.SetBool("Loading", false);
         }
 
         private Sprite GetBrightnessSprite(float alpha)
@@ -646,16 +568,18 @@ namespace DecentM.VideoPlayer.Plugins
             this.status.text = "Stopped";
             this.RenderScreen(this.system.GetDuration());
             this.urlInput.SetUrl(this.emptyUrl);
-            this.loadingAnimator.SetBool("Loading", false);
+            this.animator.SetBool("Loading", false);
         }
 
         protected override void OnSubtitleRender(string text)
         {
+            this.animator.SetBool("SubtitlesOn", true);
             this.subtitleSlot.text = text;
         }
 
         protected override void OnSubtitleClear()
         {
+            this.animator.SetBool("SubtitlesOn", false);
             this.subtitleSlot.text = "";
         }
 

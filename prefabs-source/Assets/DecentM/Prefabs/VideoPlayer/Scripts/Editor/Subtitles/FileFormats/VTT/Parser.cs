@@ -215,6 +215,16 @@ namespace DecentM.Subtitles.Vtt
                         nodes.Add(unknownNode);
                     } else
                     {
+                        while (textContents.EndsWith("\n"))
+                        {
+                            textContents = textContents.Remove(textContents.Length - 1, 1);
+                        }
+
+                        while (textContents.StartsWith("\n"))
+                        {
+                            textContents = textContents.Remove(0, 1);
+                        }
+
                         Node node = new Node(NodeKind.TextContents, textContents);
                         nodes.Add(node);
                     }
