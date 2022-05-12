@@ -200,8 +200,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 4dca03ccf78f4ec4681f0c2bd8214e48, type: 2}
-  m_sharedMaterial: {fileID: 7655856335448667409, guid: 4dca03ccf78f4ec4681f0c2bd8214e48,
+  m_fontAsset: {fileID: 11400000, guid: a508505a942cbf4469d20f721badb66d, type: 2}
+  m_sharedMaterial: {fileID: 8630298757512862167, guid: a508505a942cbf4469d20f721badb66d,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -530,8 +530,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 4673ce1bfcdd1aa4fbcdf7a266864116, type: 2}
-  m_sharedMaterial: {fileID: 4622846946823445551, guid: 4673ce1bfcdd1aa4fbcdf7a266864116,
+  m_fontAsset: {fileID: 11400000, guid: 903202cf8143e0d4099f84bf3457c93f, type: 2}
+  m_sharedMaterial: {fileID: 6808519287901242574, guid: 903202cf8143e0d4099f84bf3457c93f,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -7683,8 +7683,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 587fdc6ceb810e7458a7bf603c2963f7, type: 2}
-  m_sharedMaterial: {fileID: -2688266494519019529, guid: 587fdc6ceb810e7458a7bf603c2963f7,
+  m_fontAsset: {fileID: 11400000, guid: a508505a942cbf4469d20f721badb66d, type: 2}
+  m_sharedMaterial: {fileID: 8630298757512862167, guid: a508505a942cbf4469d20f721badb66d,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -7933,8 +7933,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 7cd0eedeb07435a41aa594e205218019, type: 2}
-  m_sharedMaterial: {fileID: -8216996531301771660, guid: 7cd0eedeb07435a41aa594e205218019,
+  m_fontAsset: {fileID: 11400000, guid: fa801ad42d472fd4b91d7c5659a56dc1, type: 2}
+  m_sharedMaterial: {fileID: -8683937173042778504, guid: fa801ad42d472fd4b91d7c5659a56dc1,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}

@@ -32,21 +32,161 @@ namespace DecentM.VideoPlayer.Plugins
             this.Reset();
         }
 
-        private string GetLanguageFromFilename(string filename)
+        public static string GetLanguageIdFromFilename(string filename)
         {
             string[] parts = filename.Split('.');
-
             return parts[parts.Length - 1];
+        }
+
+        public static string GetLanguageFromFilename(string filename)
+        {
+            string language = GetLanguageIdFromFilename(filename);
+            if (language.EndsWith("-ar")) language = language.Substring(0, language.Length - 3);
+            if (language.EndsWith("-en")) language = language.Substring(0, language.Length - 3);
+
+            switch (language.ToLower())
+            {
+                case "af": return "Afrikaans";
+                case "sq": return "Albanian";
+                case "ar": return "Arabic";
+                case "ar-dz": return "Arabic (Algeria)";
+                case "ar-bh": return "Arabic (Bahrain)";
+                case "ar-eg": return "Arabic (Egypt)";
+                case "ar-iq": return "Arabic (Iraq)";
+                case "ar-jo": return "Arabic (Jordan)";
+                case "ar-kw": return "Arabic (Kuwait)";
+                case "ar-lb": return "Arabic (Lebanon)";
+                case "ar-ly": return "Arabic (Libya)";
+                case "ar-ma": return "Arabic (Morocco)";
+                case "ar-om": return "Arabic (Oman)";
+                case "ar-qa": return "Arabic (Qatar)";
+                case "ar-sa": return "Arabic (Saudi Arabia)";
+                case "ar-sy": return "Arabic (Syria)";
+                case "ar-tn": return "Arabic (Tunisia)";
+                case "ar-ae": return "Arabic (U.A.E.)";
+                case "ar-ye": return "Arabic (Yemen)";
+                case "eu": return "Basque";
+                case "be": return "Belarusian";
+                case "bg": return "Bulgarian";
+                case "ca": return "Catalan";
+                case "zh": return "Chinese";
+                case "zh-hant": return "Chinese (Traditional)";
+                case "zh-hans": return "Chinese (Simplified)";
+                case "zh-hk": return "Chinese (Hong Kong)";
+                case "zh-cn": return "Chinese (PRC)";
+                case "zh-sg": return "Chinese (Singapore)";
+                case "zh-tw": return "Chinese (Taiwan)";
+                case "hr": return "Croatian";
+                case "cs": return "Czech";
+                case "da": return "Danish";
+                case "nl-be": return "Dutch (Belgium)";
+                case "nl": return "Dutch";
+                case "en": return "English";
+                case "en-au": return "English (Australia)";
+                case "en-bz": return "English (Belize)";
+                case "en-ca": return "English (Canada)";
+                case "en-ie": return "English (Ireland)";
+                case "en-jm": return "English (Jamaica)";
+                case "en-nz": return "English (New Zealand)";
+                case "en-za": return "English (South Africa)";
+                case "en-tt": return "English (Trinidad)";
+                case "en-gb": return "English (United Kingdom)";
+                case "en-us": return "English (United States)";
+                case "et": return "Estonian";
+                case "fo": return "Faeroese";
+                case "fa": return "Farsi";
+                case "fi": return "Finnish";
+                case "fr-be": return "French (Belgium)";
+                case "fr-ca": return "French (Canada)";
+                case "fr-lu": return "French (Luxembourg)";
+                case "fr": return "French";
+                case "fr-ch": return "French (Switzerland)";
+                case "gd": return "Gaelic (Scotland)";
+                case "de-at": return "German (Austria)";
+                case "de-li": return "German (Liechtenstein)";
+                case "de-lu": return "German (Luxembourg)";
+                case "de": return "German";
+                case "de-ch": return "German (Switzerland)";
+                case "el": return "Greek";
+                case "he": return "Hebrew";
+                case "hi": return "Hindi";
+                case "hu": return "Hungarian";
+                case "is": return "Icelandic";
+                case "id": return "Indonesian";
+                case "ga": return "Irish";
+                case "it": return "Italian";
+                case "it-ch": return "Italian (Switzerland)";
+                case "ja": return "Japanese";
+                case "ko": return "Korean";
+                case "ku": return "Kurdish";
+                case "lv": return "Latvian";
+                case "lt": return "Lithuanian";
+                case "mk": return "Macedonian (FYROM)";
+                case "ml": return "Malayalam";
+                case "ms": return "Malaysian";
+                case "mt": return "Maltese";
+                case "no": return "Norwegian";
+                case "nb": return "Norwegian (Bokmål)";
+                case "nn": return "Norwegian (Nynorsk)";
+                case "pl": return "Polish";
+                case "pt-br": return "Portuguese (Brazil)";
+                case "pt": return "Portuguese";
+                case "pa": return "Punjabi";
+                case "rm": return "Rhaeto-Romanic";
+                case "ro": return "Romanian";
+                case "ro-md": return "Romanian (Republic of Moldova)";
+                case "ru": return "Russian";
+                case "ru-md": return "Russian (Republic of Moldova)";
+                case "sr": return "Serbian";
+                case "sk": return "Slovak";
+                case "sl": return "Slovenian";
+                case "sb": return "Sorbian";
+                case "es-ar": return "Spanish (Argentina)";
+                case "es-bo": return "Spanish (Bolivia)";
+                case "es-cl": return "Spanish (Chile)";
+                case "es-co": return "Spanish (Colombia)";
+                case "es-cr": return "Spanish (Costa Rica)";
+                case "es-do": return "Spanish (Dominican Republic)";
+                case "es-ec": return "Spanish (Ecuador)";
+                case "es-sv": return "Spanish (El Salvador)";
+                case "es-gt": return "Spanish (Guatemala)";
+                case "es-hn": return "Spanish (Honduras)";
+                case "es-mx": return "Spanish (Mexico)";
+                case "es-ni": return "Spanish (Nicaragua)";
+                case "es-pa": return "Spanish (Panama)";
+                case "es-py": return "Spanish (Paraguay)";
+                case "es-pe": return "Spanish (Peru)";
+                case "es-pr": return "Spanish (Puerto Rico)";
+                case "es": return "Spanish";
+                case "es-uy": return "Spanish (Uruguay)";
+                case "es-ve": return "Spanish (Venezuela)";
+                case "sv": return "Swedish";
+                case "sv-fi": return "Swedish (Finland)";
+                case "th": return "Thai";
+                case "ts": return "Tsonga";
+                case "tn": return "Tswana";
+                case "tr": return "Turkish";
+                case "ua": return "Ukrainian";
+                case "ur": return "Urdu";
+                case "ve": return "Venda";
+                case "vi": return "Vietnamese";
+                case "cy": return "Welsh";
+                case "xh": return "Xhosa";
+                case "ji": return "Yiddish";
+                case "zu": return "Zulu";
+
+                default: return language;
+            }
         }
 
         protected override void OnMetadataChange(string title, string uploader, string siteName, int viewCount, int likeCount, string resolution, int fps, string description, string duration, TextAsset[] subtitles)
         {
             this.currentSubtitles = subtitles;
-            string[] langs = new string[subtitles.Length];
+            string[][] langs = new string[subtitles.Length][];
 
             for (int i = 0; i < subtitles.Length; i++)
             {
-                langs[i] = this.GetLanguageFromFilename(subtitles[i].name);
+                langs[i] = new string[] { GetLanguageIdFromFilename(subtitles[i].name), GetLanguageFromFilename(subtitles[i].name) };
             }
 
             this.events.OnSubtitleLanguageOptionsChange(langs);
@@ -67,7 +207,7 @@ namespace DecentM.VideoPlayer.Plugins
                 string filename = currentSubtitles[i].name;
                 string content = currentSubtitles[i].text;
 
-                if (language == this.GetLanguageFromFilename(filename))
+                if (language == GetLanguageIdFromFilename(filename))
                 {
                     this.SetInstructions(content);
                     this.instructionIndex = this.SearchForInstructionIndex(Mathf.FloorToInt(this.system.GetTime()));

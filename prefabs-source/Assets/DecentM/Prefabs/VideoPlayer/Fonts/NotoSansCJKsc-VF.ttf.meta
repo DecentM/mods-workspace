@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: fd0826ed515c17d41a104734c61d3ac1
+guid: 02d94019d724b714ca696c4d92384147
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -8,9 +8,9 @@ TrueTypeFontImporter:
   characterSpacing: 0
   characterPadding: 1
   includeFontData: 1
-  fontName: Noto Serif JP
+  fontName: Noto Sans CJK SC
   fontNames:
-  - Noto Serif JP
+  - Noto Sans CJK SC
   fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0

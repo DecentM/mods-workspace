@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: b085c08fd7563eb4db2b38ff1b6559f9
+guid: c229a1d1c5420d944aecb766eef954f9
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -8,9 +8,9 @@ TrueTypeFontImporter:
   characterSpacing: 0
   characterPadding: 1
   includeFontData: 1
-  fontName: Noto Serif KR
+  fontName: Noto Sans CJK TC
   fontNames:
-  - Noto Serif KR
+  - Noto Sans CJK TC
   fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0

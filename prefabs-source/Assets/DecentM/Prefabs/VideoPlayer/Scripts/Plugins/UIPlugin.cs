@@ -281,7 +281,7 @@ namespace DecentM.VideoPlayer.Plugins
         protected override void _Start()
         {
             this.SwitchSubtitleSlotForLanguage(this.currentLanguage);
-            this.OnSubtitleLanguageOptionsChange(new string[0]);
+            this.OnSubtitleLanguageOptionsChange(new string[0][]);
         }
 
         private string currentLanguage = "en";
@@ -310,8 +310,8 @@ namespace DecentM.VideoPlayer.Plugins
         {
             foreach (string item in array)
             {
-                if (item == test) return true;
-                if (item.StartsWith($"{test}-")) return true;
+                if (item.ToLower() == test.ToLower()) return true;
+                if (item.ToLower().StartsWith($"{test.ToLower()}-")) return true;
             }
 
             return false;
@@ -348,7 +348,7 @@ namespace DecentM.VideoPlayer.Plugins
             this.SwitchSubtitleSlotForLanguage(language);
         }
 
-        protected override void OnSubtitleLanguageOptionsChange(string[] newOptions)
+        protected override void OnSubtitleLanguageOptionsChange(string[][] newOptions)
         {
             this.subtitlesDropdown.SetListener(this, "OnSubtitleSelected");
             this.subtitlesDropdown.SetOptions(newOptions);
@@ -378,9 +378,9 @@ namespace DecentM.VideoPlayer.Plugins
 
             // Automatically re-select the current language after the video was changed, so the user doesn't have to
             // look for their language every time the video changes
-            foreach (string option in newOptions)
+            foreach (string[] option in newOptions)
             {
-                if (option == this.currentLanguage) this.events.OnSubtitleLanguageRequested(option);
+                if (option[0] == this.currentLanguage) this.events.OnSubtitleLanguageRequested(option[0]);
             }
         }
 
@@ -446,7 +446,7 @@ namespace DecentM.VideoPlayer.Plugins
             this.isLoading = true;
             this.status.text = "Waiting for video player...";
             this.RenderScreen(0);
-            this.OnSubtitleLanguageOptionsChange(new string[0]);
+            this.OnSubtitleLanguageOptionsChange(new string[0][]);
         }
 
         protected override void OnLoadBegin()

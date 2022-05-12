@@ -66,7 +66,7 @@ namespace DecentM.VideoPlayer.Plugins
         protected override void OnMetadataChange(string title, string uploader, string siteName, int viewCount, int likeCount, string resolution, int fps, string description, string duration, TextAsset[] subtitles) { this.Log(nameof(OnMetadataChange), viewCount.ToString(), likeCount.ToString(), fps.ToString(), duration, subtitles.Length.ToString());  }
         protected override void OnSubtitleRender(string text) { this.Log(nameof(OnSubtitleRender), $"({text.Length} long string)"); }
         protected override void OnSubtitleClear() { this.Log(nameof(OnSubtitleClear)); }
-        protected override void OnSubtitleLanguageOptionsChange(string[] newOptions) { this.Log(nameof(OnSubtitleLanguageOptionsChange), newOptions.Length.ToString()); }
+        protected override void OnSubtitleLanguageOptionsChange(string[][] newOptions) { this.Log(nameof(OnSubtitleLanguageOptionsChange), newOptions.Length.ToString()); }
         protected override void OnSubtitleLanguageRequested(string language) { this.Log(nameof(OnSubtitleLanguageRequested), language); }
     }
 }

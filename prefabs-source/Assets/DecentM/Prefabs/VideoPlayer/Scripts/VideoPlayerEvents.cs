@@ -239,7 +239,7 @@ namespace DecentM.VideoPlayer
             this.BroadcastEvent(VideoPlayerEvent.OnSubtitleClear);
         }
 
-        public void OnSubtitleLanguageOptionsChange(string[] newOptions)
+        public void OnSubtitleLanguageOptionsChange(string[][] newOptions)
         {
             this.BroadcastEvent(VideoPlayerEvent.OnSubtitleLanguageOptionsChange, newOptions);
         }

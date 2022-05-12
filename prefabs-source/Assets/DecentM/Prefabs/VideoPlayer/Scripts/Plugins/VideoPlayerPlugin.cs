@@ -50,7 +50,7 @@ namespace DecentM.VideoPlayer.Plugins
 
         protected virtual void OnSubtitleRender(string text) { }
         protected virtual void OnSubtitleClear() { }
-        protected virtual void OnSubtitleLanguageOptionsChange(string[] newOptions) { }
+        protected virtual void OnSubtitleLanguageOptionsChange(string[][] newOptions) { }
         protected virtual void OnSubtitleLanguageRequested(string language) { }
 
         protected virtual void OnMetadataChange(
@@ -305,7 +305,7 @@ namespace DecentM.VideoPlayer.Plugins
 
                 case VideoPlayerEvent.OnSubtitleLanguageOptionsChange:
                     {
-                        string[] newOptions = (string[])data;
+                        string[][] newOptions = (string[][])data;
                         this.OnSubtitleLanguageOptionsChange(newOptions);
                         return;
                     }

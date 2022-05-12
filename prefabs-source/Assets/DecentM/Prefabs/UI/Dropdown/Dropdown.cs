@@ -87,14 +87,14 @@ namespace DecentM.UI
             this.instantiatedOptions = tmp;
         }
 
-        public void SetOptions(string[] options)
+        public void SetOptions(string[][] options)
         {
             this.Clear();
             this.options = new object[options.Length][];
 
             for (int i = 0; i < options.Length; i++)
             {
-                this.options[i] = new object[] { options[i], options[i] };
+                this.options[i] = new object[] { options[i][0], options[i][1] };
             }
         }
 
