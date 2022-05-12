@@ -9,13 +9,11 @@ using DecentM.Subtitles;
 
 namespace DecentM.VideoPlayer.EditorTools.Importers
 {
-    [ScriptedImporter(1, new string[] { SubtitleFormat.Srt, SubtitleFormat.Vtt })]
-    public class SrtImporter : ScriptedImporter
+    [ScriptedImporter(1, new string[] { SubtitleFormat.Srt, SubtitleFormat.Vtt, SubtitleFormat.Vsi })]
+    public class SubtitleImporter : ScriptedImporter
     {
         public override void OnImportAsset(AssetImportContext ctx)
         {
-            if (!ctx.assetPath.Contains(EditorAssets.SubtitleCacheFolder)) return;
-
             if (!File.Exists(ctx.assetPath))
             {
                 ctx.LogImportError($"Imported file disappeared from {ctx.assetPath}");

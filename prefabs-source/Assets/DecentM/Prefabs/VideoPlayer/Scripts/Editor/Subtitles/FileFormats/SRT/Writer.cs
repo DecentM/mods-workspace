@@ -12,6 +12,7 @@ namespace DecentM.Subtitles.Srt
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
+            int index = -1;
 
             for (int i = 0; i < ast.nodes.Count; i++)
             {
@@ -22,13 +23,10 @@ namespace DecentM.Subtitles.Srt
                     continue;
                 }
 
-                if (node.kind == NodeKind.ScreenIndex)
-                {
-                    sb.Append($"{node.value}\n");
-                }
-
                 if (node.kind == NodeKind.TimestampStart)
                 {
+                    index++;
+                    sb.AppendLine(index.ToString());
                     sb.Append($"{node.value} --> ");
                 }
 

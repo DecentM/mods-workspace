@@ -11,7 +11,7 @@ namespace DecentM.Subtitles.Vsi
 
         public override string ToString()
         {
-            List<SubtitleScreen> screens = SubtitleScreen.FromAst(this.ast);
+            List<SubtitleScreen> screens = SubtitleScreen.FromNodes(this.ast.nodes);
             List<Instruction> instructions = Instruction.FromScreens(screens);
             
             StringBuilder sb = new StringBuilder();

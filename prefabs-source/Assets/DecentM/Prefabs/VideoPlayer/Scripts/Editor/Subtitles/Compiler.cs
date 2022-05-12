@@ -29,7 +29,7 @@ namespace DecentM.Subtitles
             return SupportedFormats.Any(f => f == filetype);
         }
 
-        public static string[] SupportedFormats = { Srt, Vtt };
+        public static string[] SupportedFormats = { Srt, Vtt, Vsi };
     }
 
     public static class SubtitleCompiler
@@ -56,6 +56,10 @@ namespace DecentM.Subtitles
 
                 case SubtitleFormat.Vtt:
                     compiler = new VttCompiler();
+                    break;
+
+                case SubtitleFormat.Vsi:
+                    compiler = new VsiCompiler();
                     break;
 
                 default:

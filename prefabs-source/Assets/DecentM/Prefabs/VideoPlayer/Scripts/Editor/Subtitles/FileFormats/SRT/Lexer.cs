@@ -6,15 +6,14 @@ namespace DecentM.Subtitles.Srt
 {
     public enum TokenType
     {
-        Unknown = 0,
-        Char = 1,
-        Number = 2,
-        Hyphen = 3,
-        SidewaysCaret = 4,
-        Colon = 5,
-        Comma = 6,
-        Newline = 7,
-        Space = 8,
+        Unknown,
+        Char,
+        Number,
+        Arrow,
+        Colon,
+        Comma,
+        Newline,
+        Space,
     }
 
     public class SrtLexer : Lexer<TokenType>
@@ -31,21 +30,24 @@ namespace DecentM.Subtitles.Srt
                 cursor++;
             }
 
+            bool FindWord(string word)
+            {
+                for (int i = 0; i < word.Length; i++)
+                {
+                    if (cursor + i >= text.Length) return false;
+                    if (word[i] != text[cursor + i]) return false;
+                }
+
+                return true;
+            }
+
             while (cursor < text.Length)
             {
                 char current = text[cursor];
 
-                // Hyphens are in arrows, and text
-                if (current == '-')
+                if (current == '-' && FindWord("-->"))
                 {
-                    AddToken(TokenType.Hyphen, "-");
-                    continue;
-                }
-
-                // Sideways carets are in arrows, and text
-                if (current == '>')
-                {
-                    AddToken(TokenType.SidewaysCaret, ">");
+                    AddToken(TokenType.Arrow, "-->");
                     continue;
                 }
 

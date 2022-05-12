@@ -12,6 +12,7 @@ namespace DecentM.Subtitles.Vtt
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
+            int index = -1;
 
             sb.Append("WEBVTT\n\n");
             sb.Append("NOTE\nFile written by DecentM's subtitle compiler\n\n");
@@ -27,6 +28,8 @@ namespace DecentM.Subtitles.Vtt
 
                 if (node.kind == NodeKind.TimestampStart)
                 {
+                    index++;
+                    sb.AppendLine(index.ToString());
                     sb.Append($"{node.value} --> ");
                 }
 
