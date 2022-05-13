@@ -18,7 +18,9 @@ namespace DecentM.Subtitles.DiscordBot
 
     public class Commands
     {
-        public static SlashCommandBuilder HelpCommand = new SlashCommandBuilder().WithName("help").WithDescription("Information about how to use me");
+        public static SlashCommandBuilder HelpCommand = new SlashCommandBuilder()
+            .WithName("help")
+            .WithDescription("Information about how to use me");
     }
 
     public class Program
@@ -30,20 +32,25 @@ namespace DecentM.Subtitles.DiscordBot
         public static Task Main(string[] args) => new Program().MainAsync();
 
         private DiscordSocketClient client = new DiscordSocketClient();
+
         // private Compiler compiler = new SubtitleCompiler();
         private HttpClient http = new HttpClient();
 
         public async Task MainAsync()
         {
-            using (SentrySdk.Init(o =>
-            {
-                o.Dsn = botConfig.SentryDsn;
-                // When configuring for the first time, to see what the SDK is doing:
-                o.Debug = false;
-                // Set traces_sample_rate to 1.0 to capture 100% of transactions for performance monitoring.
-                // We recommend adjusting this value in production.
-                o.TracesSampleRate = 1.0;
-            }))
+            using (
+                SentrySdk.Init(
+                    o =>
+                    {
+                        o.Dsn = botConfig.SentryDsn;
+                        // When configuring for the first time, to see what the SDK is doing:
+                        o.Debug = false;
+                        // Set traces_sample_rate to 1.0 to capture 100% of transactions for performance monitoring.
+                        // We recommend adjusting this value in production.
+                        o.TracesSampleRate = 1.0;
+                    }
+                )
+            )
             {
                 client.Log += Log;
                 client.MessageReceived += OnMessage;
@@ -82,10 +89,10 @@ namespace DecentM.Subtitles.DiscordBot
         private async Task HelpCommand(SocketSlashCommand command)
         {
             await command.RespondAsync(
-                "Send me a subtitle file by pressing the + icon in your message field! Then download my response, and paste its contents into the subtitle input field in the `Cinema In a Space Bottle` world!\n" +
-                "Tips:\n" +
-                "- You can convert subtitles to .srt format here: <https://subtitletools.com/convert-to-srt-online>\n" +
-                "- If the output I give you contains weird characters, make sure your subtitles are UTF-8 encoded: <https://subtitletools.com/convert-text-files-to-utf8-online>\n"
+                "Send me a subtitle file by pressing the + icon in your message field! Then download my response, and paste its contents into the subtitle input field in the `Cinema In a Space Bottle` world!\n"
+                    + "Tips:\n"
+                    + "- You can convert subtitles to .srt format here: <https://subtitletools.com/convert-to-srt-online>\n"
+                    + "- If the output I give you contains weird characters, make sure your subtitles are UTF-8 encoded: <https://subtitletools.com/convert-text-files-to-utf8-online>\n"
             );
         }
 
@@ -113,10 +120,15 @@ namespace DecentM.Subtitles.DiscordBot
             }
 
             // Reject messages that mention us but aren't DMs
-            if (msg.MentionedUsers.Any(u => u.Id == client.CurrentUser.Id) && msg.Channel.GetType() != typeof(SocketDMChannel))
+            if (
+                msg.MentionedUsers.Any(u => u.Id == client.CurrentUser.Id)
+                && msg.Channel.GetType() != typeof(SocketDMChannel)
+            )
             {
                 await msg.AddReactionAsync(EmojiIcon.rightArrow);
-                await msg.Channel.SendMessageAsync("Please DM me to prevent clogging this channel!");
+                await msg.Channel.SendMessageAsync(
+                    "Please DM me to prevent clogging this channel!"
+                );
                 return;
             }
 
@@ -139,7 +151,9 @@ namespace DecentM.Subtitles.DiscordBot
             if (msg.Attachments.Count == 0)
             {
                 await msg.AddReactionAsync(EmojiIcon.cross);
-                await msg.Channel.SendMessageAsync("Please send me a subtitle file! I'll parse it and send you what you need to paste in VRChat. Type `/help` for help.");
+                await msg.Channel.SendMessageAsync(
+                    "Please send me a subtitle file! I'll parse it and send you what you need to paste in VRChat. Type `/help` for help."
+                );
                 typingState.Dispose();
                 SentrySdk.CaptureTransaction(transaction);
                 return;
@@ -162,7 +176,9 @@ namespace DecentM.Subtitles.DiscordBot
             if (attachment.Size > 512000)
             {
                 await msg.AddReactionAsync(EmojiIcon.cross);
-                await msg.Channel.SendMessageAsync("This file is too large, please only send me files smaller than 512kb!");
+                await msg.Channel.SendMessageAsync(
+                    "This file is too large, please only send me files smaller than 512kb!"
+                );
                 typingState.Dispose();
                 SentrySdk.CaptureTransaction(transaction);
                 return;
@@ -172,48 +188,71 @@ namespace DecentM.Subtitles.DiscordBot
             {
                 // Download the attachment from Discord servers
                 string file = await http.GetStringAsync(attachment.Url);
-                Compiler.CompilationResult result = SubtitleCompiler.Compile(file, Path.GetExtension(attachment.Filename), SubtitleFormat.Vsi);
+                Compiler.CompilationResult result = SubtitleCompiler.Compile(
+                    file,
+                    Path.GetExtension(attachment.Filename),
+                    SubtitleFormat.Vsi
+                );
 
                 // In theory this will never happen as the output is an empty string by default
                 if (result.output == null)
                 {
-                    throw new Exception("The compilation result is null. This is an issue with me not being able to process your file.");
+                    throw new Exception(
+                        "The compilation result is null. This is an issue with me not being able to process your file."
+                    );
                 }
 
                 // Let the user know about non-fatal errors
                 if (result.errors.Count != 0)
                 {
                     await msg.AddReactionAsync(EmojiIcon.warning);
-                    await msg.Channel.SendMessageAsync($"I ran into {result.errors.Count} {(result.errors.Count == 1 ? "error" : "errors")} while processing your file. Some subtitles may be missing, or the whole file might be unusable.");
+                    await msg.Channel.SendMessageAsync(
+                        $"I ran into {result.errors.Count} {(result.errors.Count == 1 ? "error" : "errors")} while processing your file. Some subtitles may be missing, or the whole file might be unusable."
+                    );
 
-                    string errorLog = result.errors.Aggregate("", (current, error) =>
-                    {
-                        return $"{current}{(string)error.value.ReplaceLineEndings("\\n")}\n";
-                    });
+                    string errorLog = result.errors.Aggregate(
+                        "",
+                        (current, error) =>
+                        {
+                            return $"{current}{(string)error.value.ReplaceLineEndings("\\n")}\n";
+                        }
+                    );
 
                     MemoryStream errorStream = new MemoryStream(Encoding.UTF8.GetBytes(errorLog));
 
-                    await msg.Channel.SendFileAsync(errorStream, $"space-bottle-error-log_{attachment.Filename}.txt", "See this file for errors.");
+                    await msg.Channel.SendFileAsync(
+                        errorStream,
+                        $"space-bottle-error-log_{attachment.Filename}.txt",
+                        "See this file for errors."
+                    );
                 }
 
                 // If the result is empty, the file probably has an extension that doesn't match its contents
                 if (result.output.Length == 0)
                 {
-                    throw new Exception("Empty parsing result. Check the file format and its contents.");
+                    throw new Exception(
+                        "Empty parsing result. Check the file format and its contents."
+                    );
                 }
 
                 // We passed all checks, send the result to the user
                 MemoryStream stream = new MemoryStream(Encoding.UTF8.GetBytes(result.output));
 
                 await msg.AddReactionAsync(EmojiIcon.tick);
-                await msg.Channel.SendFileAsync(stream, $"{attachment.Filename}.txt", $"Download this, then paste the entire contents of this file into the input field!");
+                await msg.Channel.SendFileAsync(
+                    stream,
+                    $"{attachment.Filename}.txt",
+                    $"Download this, then paste the entire contents of this file into the input field!"
+                );
             }
             catch (Exception ex)
             {
                 SentrySdk.CaptureException(ex);
 
                 await msg.AddReactionAsync(EmojiIcon.error);
-                await msg.Channel.SendMessageAsync($"I ran into an error while transforming your file that caused me to abort. Try again with a different one.\n> {ex.Message}");
+                await msg.Channel.SendMessageAsync(
+                    $"I ran into an error while transforming your file that caused me to abort. Try again with a different one.\n> {ex.Message}"
+                );
 
                 Console.Error.WriteLine(ex.ToString());
             }

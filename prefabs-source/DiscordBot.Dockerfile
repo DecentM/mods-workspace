@@ -11,7 +11,8 @@ COPY ./DiscordBot/src/* ./
 COPY ./Assets/DecentM/Prefabs/VideoPlayer/Scripts/Editor/Subtitles/* ./
 COPY ./Assets/DecentM/Editor/TextProcessing.cs ./Assets/DecentM/Editor/ArabicLigaturesPreprocessor.cs ./
 
-RUN dotnet publish -c Release -o out
+ARG version
+RUN dotnet publish -c Release -o out /p:AssemblyVersion=${version}
 
 # Build runtime image
 FROM mcr.microsoft.com/dotnet/aspnet:6.0

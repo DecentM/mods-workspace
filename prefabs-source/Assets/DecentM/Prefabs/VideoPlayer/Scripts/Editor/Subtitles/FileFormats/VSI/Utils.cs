@@ -29,6 +29,9 @@ namespace DecentM.Subtitles
 
         public override string ToString()
         {
+            if (string.IsNullOrEmpty(this.value))
+                return $"{(int)this.type} {this.timestamp}";
+
             return $"{(int)this.type} {this.timestamp} {this.value.Replace('\n', NewlineDelimeter)}";
         }
 
