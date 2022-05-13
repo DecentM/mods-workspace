@@ -43,9 +43,7 @@ namespace DecentM.VideoPlayer
                 return 1f;
 
             Renderer screen = this.screens[0];
-            Color color = screen.material.GetColor("_Color");
-
-            return (color.r + color.g + color.b) / 3;
+            return screen.material.GetFloat("_EmissionStrength");
         }
 
         public void SetAspectRatio(float aspectRatio)
@@ -60,7 +58,7 @@ namespace DecentM.VideoPlayer
         {
             foreach (Renderer screen in this.screens)
             {
-                screen.material.SetColor("_EmissionColor", new Color(alpha, alpha, alpha));
+                screen.material.SetFloat("_EmissionStrength", alpha);
             }
         }
 
@@ -68,7 +66,7 @@ namespace DecentM.VideoPlayer
         {
             foreach (Renderer screen in this.screens)
             {
-                screen.material.SetInt("_IsAVProInput", isAVPro ? 1 : 0);
+                screen.material.SetInt("_IsAVPro", isAVPro ? 1 : 0);
             }
         }
 
@@ -76,7 +74,7 @@ namespace DecentM.VideoPlayer
         {
             foreach (Renderer screen in this.screens)
             {
-                screen.material.SetTexture("_EmissionMap", texture);
+                screen.material.SetTexture("_MainTex", texture);
             }
         }
 
