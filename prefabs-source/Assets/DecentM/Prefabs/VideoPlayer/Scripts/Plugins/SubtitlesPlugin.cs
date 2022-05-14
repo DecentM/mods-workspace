@@ -9,6 +9,7 @@ namespace DecentM.VideoPlayer.Plugins
     public class SubtitlesPlugin : VideoPlayerPlugin
     {
         public TextMeshProUGUI debugSlot;
+        public TextMeshProUGUI pregenerateSlot;
 
         private TextAsset[] currentSubtitles;
 
@@ -426,17 +427,28 @@ namespace DecentM.VideoPlayer.Plugins
         private float elapsed = 0;
         public float tickInterval = 0.1f;
 
+        private float pregenerateElapsed = 0;
+        public float pregenerateInterval = 0.05f;
+
         private void FixedUpdate()
         {
             if (!this.system.IsPlaying())
                 return;
 
             this.elapsed += Time.fixedUnscaledDeltaTime;
-            // bool seeking = this.seekDirection != 0;
+
             if (this.elapsed >= this.tickInterval)
             {
                 this.TickInstruction();
                 this.elapsed = 0;
+            }
+
+            this.pregenerateElapsed += Time.fixedUnscaledDeltaTime;
+
+            if (this.pregenerateElapsed >= this.pregenerateInterval)
+            {
+                this.PregenerateTick();
+                this.pregenerateElapsed = 0;
             }
         }
 
@@ -450,6 +462,31 @@ namespace DecentM.VideoPlayer.Plugins
 
         public int timestampSeekAccuracy = 10000;
 
+        private string pregeneratingText = "";
+        private int pregeneratingIndex = 0;
+
+        private void PregenerateFontsForInstruction(object[] instruction)
+        {
+            this.pregeneratingText = (string)instruction[2];
+            this.pregeneratingIndex = 0;
+        }
+
+        private void PregenerateTick()
+        {
+            if (string.IsNullOrEmpty(this.pregeneratingText))
+                return;
+
+            if (this.pregeneratingIndex >= this.pregeneratingText.Length)
+            {
+                this.pregeneratingText = "";
+                this.pregeneratingIndex = 0;
+                return;
+            }
+
+            this.pregenerateSlot.text = this.pregeneratingText[this.pregeneratingIndex].ToString();
+            this.pregeneratingIndex++;
+        }
+
         private object[] GetInstructionAtIndex(int index)
         {
             if (this.instructions == null || this.instructions.Length == 0)
@@ -460,6 +497,21 @@ namespace DecentM.VideoPlayer.Plugins
                 return this.instructions[this.instructions.Length - 1];
 
             return this.instructions[index];
+        }
+
+        private object[] GetNextInstructionOfType(int type, int startIndex)
+        {
+            for (int i = startIndex; i < this.instructions.Length; i++)
+            {
+                object[] instruction = this.instructions[i];
+                if (instruction == null)
+                    continue;
+
+                if ((int)instruction[0] == type)
+                    return instruction;
+            }
+
+            return null;
         }
 
         private int SearchForInstructionIndex(int targetTimestamp)
@@ -563,6 +615,12 @@ namespace DecentM.VideoPlayer.Plugins
             {
                 this.ExecuteInstruction((int)instruction[0], (string)instruction[2]);
                 this.instructionIndex++;
+
+                object[] nextWriteInstruction = GetNextInstructionOfType(1, this.instructionIndex);
+                if (nextWriteInstruction != null)
+                {
+                    this.PregenerateFontsForInstruction(nextWriteInstruction);
+                }
             }
         }
 
