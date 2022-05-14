@@ -1,11 +1,5 @@
-﻿using System;
-using UdonSharp;
-using UnityEngine;
-using VRC.SDK3.Components.Video;
+﻿using UdonSharp;
 using VRC.SDKBase;
-using VRC.Udon;
-using TMPro;
-using UNet;
 
 namespace DecentM.VideoPlayer.Plugins
 {

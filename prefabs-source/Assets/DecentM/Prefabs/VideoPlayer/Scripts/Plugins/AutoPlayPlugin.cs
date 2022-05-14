@@ -5,48 +5,49 @@ using VRC.SDK3.Components.Video;
 using VRC.SDKBase;
 using VRC.Udon;
 using TMPro;
-using UNet;
+
+using DecentM.Network;
 
 namespace DecentM.VideoPlayer.Plugins
 {
-    public class AutoPlayPlugin : VideoPlayerPlugin
+    public class AutoPlayPlugin : VideoPlayerPlugin, INetworkEventsListener
     {
         public bool autoplayOnLoad = true;
 
-        public NetworkInterface unet;
+        public NetworkInterface network;
         public ByteBufferReader reader;
         public ByteBufferWriter writer;
 
         protected override void _Start()
         {
-            this.unet.AddEventsListener(this);
+            this.network.AddEventsListener(this);
         }
+
+        public void OnInit() { }
+
+        public void OnPrepareSend() { }
+
+        public void OnConnected(int playerId) { }
+
+        public void OnDisconnected(int playerId) { }
+
+        public void OnSendComplete(int messageId, bool success) { }
 
         private const string VideoLoadedCommand = "VL";
 
-        private int OnUNetReceived_sender;
-        private byte[] OnUNetReceived_dataBuffer;
-        private int OnUNetReceived_dataIndex;
-        private int OnUNetReceived_dataLength;
-        private int OnUNetReceived_id;
-
-        public void OnUNetReceived()
+        public void OnReceived(int sender, byte[] data, int index, int length, int messageId)
         {
-            if (OnUNetReceived_sender == Networking.LocalPlayer.playerId)
+            if (sender == Networking.LocalPlayer.playerId)
                 return;
 
-            string value = this.reader.ReadUTF8String(
-                OnUNetReceived_dataLength,
-                OnUNetReceived_dataBuffer,
-                OnUNetReceived_dataIndex
-            );
+            string value = this.reader.ReadUTF8String(length, data, index);
             string command = value.Split(null, 2)[0];
             string arguments = value.Split(null, 2)[1];
 
             switch (command)
             {
                 case VideoLoadedCommand:
-                    this.HandleVideoLoadedReceived(OnUNetReceived_sender);
+                    this.HandleVideoLoadedReceived(sender);
                     break;
 
                 default:
@@ -60,7 +61,7 @@ namespace DecentM.VideoPlayer.Plugins
             int length = this.writer.GetUTF8StringSize(message);
             byte[] buffer = new byte[length + 1];
             this.writer.WriteUTF8String(message, buffer, 0);
-            return this.unet.SendAll(false, buffer, length);
+            return this.network.SendAll(false, buffer, length);
         }
 
         private int SendCommandTarget(bool sequenced, string command, int player, string arguments)
@@ -69,7 +70,7 @@ namespace DecentM.VideoPlayer.Plugins
             int length = this.writer.GetUTF8StringSize(message);
             byte[] buffer = new byte[length + 1];
             this.writer.WriteUTF8String(message, buffer, 0);
-            return this.unet.SendTarget(sequenced, buffer, length, player);
+            return this.network.SendTarget(sequenced, buffer, length, player);
         }
 
         private int SendCommandMaster(string command, string arguments)
@@ -78,7 +79,7 @@ namespace DecentM.VideoPlayer.Plugins
             int length = this.writer.GetUTF8StringSize(message);
             byte[] buffer = new byte[length + 1];
             this.writer.WriteUTF8String(message, buffer, 0);
-            return this.unet.SendMaster(false, buffer, length);
+            return this.network.SendMaster(false, buffer, length);
         }
 
         // Everyone except the owner does this, because then owner already knows when it finishes loading

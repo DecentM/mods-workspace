@@ -2,29 +2,23 @@
 using UnityEngine;
 using VRC.SDKBase;
 using VRC.Udon;
-using UNet;
+
+using DecentM.Network;
 
 namespace DecentM.Chat
 {
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
-    public class ChatSystem : UdonSharpBehaviour
+    public class ChatSystem : NetworkEventListener
     {
         public LibDecentM lib;
 
         [Space]
-        public NetworkInterface unet;
-        public ByteBufferWriter writer;
-        public ByteBufferReader reader;
-
-        [Space]
-        // public MessageStore messageStore;
         public ChannelsStore channelsStore;
         public TypingIndicatorStore typingIndicatorStore;
         public PresenceStore presenceStore;
 
-        void Start()
+        protected override void _Start()
         {
-            this.unet.AddEventsListener(this);
             this.TypingStateStart();
         }
 
@@ -98,27 +92,23 @@ namespace DecentM.Chat
         public const int MessageStatusReceived = 4;
         public const int MessageStatusReceivedAckd = 5;
 
-        private int OnUNetReceived_sender;
-        private byte[] OnUNetReceived_dataBuffer;
-        private int OnUNetReceived_dataIndex;
-        private int OnUNetReceived_dataLength;
-        private int OnUNetReceived_id;
-
-        public void OnUNetReceived()
+        public override void OnReceived(
+            int sender,
+            byte[] dataBuffer,
+            int index,
+            int length,
+            int messageId
+        )
         {
             // Ignore messages coming from ourselves
-            if (OnUNetReceived_sender == Networking.LocalPlayer.playerId)
+            if (sender == Networking.LocalPlayer.playerId)
                 return;
 
-            string value = this.reader.ReadUTF8String(
-                OnUNetReceived_dataLength,
-                OnUNetReceived_dataBuffer,
-                OnUNetReceived_dataIndex
-            );
+            string value = this.reader.ReadUTF8String(length, dataBuffer, index);
             string command = value.Split(null, 2)[0];
             string arguments = value.Split(null, 2)[1];
 
-            this.DebugLog($"OnUNetReceived: {value}");
+            this.DebugLog($"OnReceived: {value}");
 
             // Network messages are strings, where the command and its arguments are separated by a space
             switch (command)
@@ -138,13 +128,7 @@ namespace DecentM.Chat
                     if (!channelParsed)
                         break;
 
-                    this.HandleIncomingMessage(
-                        OnUNetReceived_id,
-                        id,
-                        channel,
-                        OnUNetReceived_sender,
-                        message
-                    );
+                    this.HandleIncomingMessage(messageId, id, channel, sender, message);
                     break;
                 }
                 // SendLateMessageCommand - int id, int channel, int senderId, string message
@@ -164,7 +148,7 @@ namespace DecentM.Chat
                     if (!channelParsed || !senderIdParsed)
                         break;
 
-                    this.HandleIncomingMessage(OnUNetReceived_id, id, channel, senderId, message);
+                    this.HandleIncomingMessage(messageId, id, channel, senderId, message);
                     break;
                 }
                 // AckMessageCommand: int id
@@ -178,22 +162,22 @@ namespace DecentM.Chat
 
                 case TypingStartCommand:
                 {
-                    this.HandleTypingStartReceived(OnUNetReceived_sender);
+                    this.HandleTypingStartReceived(sender);
                     break;
                 }
                 case TypingStopCommand:
                 {
-                    this.HandleTypingStopReceived(OnUNetReceived_sender);
+                    this.HandleTypingStopReceived(sender);
                     break;
                 }
                 case PresenceOffCommand:
                 {
-                    this.HandlePresenceOffReceived(OnUNetReceived_sender);
+                    this.HandlePresenceOffReceived(sender);
                     break;
                 }
                 case PresenceOnCommand:
                 {
-                    this.HandlePresenceOnReceived(OnUNetReceived_sender);
+                    this.HandlePresenceOnReceived(sender);
                     break;
                 }
                 default:
@@ -211,7 +195,7 @@ namespace DecentM.Chat
             else
                 this.HandlePresenceOffReceived(Networking.LocalPlayer.playerId);
 
-            this.SendCommandAll(newState ? PresenceOnCommand : PresenceOffCommand, "");
+            this.SendAll(false, newState ? PresenceOnCommand : PresenceOffCommand);
         }
 
         private void HandlePresenceOffReceived(int playerId)
@@ -272,7 +256,7 @@ namespace DecentM.Chat
             else
                 this.HandleTypingStopReceived(Networking.LocalPlayer.playerId);
 
-            this.SendCommandAll(this.typingState ? TypingStartCommand : TypingStopCommand, "");
+            this.SendAll(false, this.typingState ? TypingStartCommand : TypingStopCommand);
         }
 
         private void HandleTypingStartReceived(int playerId)
@@ -320,7 +304,7 @@ namespace DecentM.Chat
             // Send ack
             // Returns -1 if it failed, but we don't care since not receiving an ack will keep the message in
             // "Sent, but not ackd" status for the sender
-            int ackPacketId = this.SendCommandTarget(false, AckMessageCommand, senderId, id);
+            int ackPacketId = this.SendTarget(false, AckMessageCommand, senderId);
             int status = ackPacketId == -1 ? MessageStatusReceived : MessageStatusReceivedAckd;
 
             // Set the message's status to Received, ackd or not, depending on the outcome of the send
@@ -346,7 +330,7 @@ namespace DecentM.Chat
             );
 
             this.DebugLog($"{SendMessageCommand} {id} {channel} {message}");
-            int packetId = this.SendCommandAll(SendMessageCommand, $"{id} {channel} {message}");
+            int packetId = this.SendAll(false, $"{SendMessageCommand} {id} {channel} {message}");
 
             // Add the message locally
             // TODO: Check what the consequences of multiples of the same packetId are! It will probably just use the newest message
@@ -364,25 +348,20 @@ namespace DecentM.Chat
             this.channelsStore.ChangeMessageStatusById(id, status);
         }
 
-        private int OnUNetSendComplete_messageId;
-        private bool OnUNetSendComplete_succeed;
-
-        public void OnUNetSendComplete()
+        public override void OnSendComplete(int messageId, bool succeed)
         {
-            this.DebugLog(
-                $"SendComplete {OnUNetSendComplete_messageId} {OnUNetSendComplete_succeed}"
-            );
+            this.DebugLog($"SendComplete {messageId} {succeed}");
 
             // Check if the message that belongs to this packet was sent by us
             bool sentByLocalPlayer = this.channelsStore.IsMessageSentByLocalPlayerByPacket(
-                OnUNetSendComplete_messageId
+                messageId
             );
 
             if (!sentByLocalPlayer)
                 return;
 
-            int status = OnUNetSendComplete_succeed ? MessageStatusSent : MessageStatusFailed;
-            this.channelsStore.ChangeMessageStatusByPacket(OnUNetSendComplete_messageId, status);
+            int status = succeed ? MessageStatusSent : MessageStatusFailed;
+            this.channelsStore.ChangeMessageStatusByPacket(messageId, status);
         }
 
         public override void OnPlayerLeft(VRCPlayerApi player)
@@ -406,40 +385,12 @@ namespace DecentM.Chat
 
             foreach (ChatMessage message in messages)
             {
-                this.SendCommandTarget(
+                this.SendTarget(
                     true,
-                    SendLateMessageCommand,
-                    player.playerId,
-                    $"{message.id} {message.channel} {message.senderId} {message.message}"
+                    $"{SendLateMessageCommand} {message.id} {message.channel} {message.senderId} {message.message}",
+                    player.playerId
                 );
             }
-        }
-
-        private int SendCommandAll(string command, string arguments)
-        {
-            string message = $"{command} {arguments}";
-            int length = this.writer.GetUTF8StringSize(message);
-            byte[] buffer = new byte[length + 1];
-            this.writer.WriteUTF8String(message, buffer, 0);
-            return this.unet.SendAll(false, buffer, length);
-        }
-
-        private int SendCommandTarget(bool sequenced, string command, int player, string arguments)
-        {
-            string message = $"{command} {arguments}";
-            int length = this.writer.GetUTF8StringSize(message);
-            byte[] buffer = new byte[length + 1];
-            this.writer.WriteUTF8String(message, buffer, 0);
-            return this.unet.SendTarget(sequenced, buffer, length, player);
-        }
-
-        private int SendCommandMaster(string command, string arguments)
-        {
-            string message = $"{command} {arguments}";
-            int length = this.writer.GetUTF8StringSize(message);
-            byte[] buffer = new byte[length + 1];
-            this.writer.WriteUTF8String(message, buffer, 0);
-            return this.unet.SendMaster(false, buffer, length);
         }
     }
 }
