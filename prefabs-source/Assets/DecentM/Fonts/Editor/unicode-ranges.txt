@@ -53,6 +53,7 @@ Japanese
 
 Hiragana, Katakana 3041-3096,30A0-30FF
 Kanji 3400-4DB5,4E00-9FCB,F900-FA6A
+	Kanji main split into two: 4E00-76E5,76E6-9FCB
 Kanji Radicals 2E80-2FD5
 Katakana and punctuation half width FF5F-FF9F
 Symbols 3000-303F
