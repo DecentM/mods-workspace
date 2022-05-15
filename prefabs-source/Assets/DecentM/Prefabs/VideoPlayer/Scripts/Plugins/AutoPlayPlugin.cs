@@ -10,7 +10,7 @@ using DecentM.Network;
 
 namespace DecentM.VideoPlayer.Plugins
 {
-    public class AutoPlayPlugin : VideoPlayerPlugin, INetworkEventsListener
+    public class AutoPlayPlugin : VideoPlayerPlugin
     {
         public bool autoplayOnLoad = true;
 
@@ -20,7 +20,7 @@ namespace DecentM.VideoPlayer.Plugins
 
         protected override void _Start()
         {
-            this.network.AddEventsListener(this);
+            // this.network.AddEventsListener(this);
         }
 
         public void OnInit() { }

@@ -2,22 +2,7 @@
 
 namespace DecentM.Network
 {
-    public interface INetworkEventsListener
-    {
-        void OnInit();
-
-        void OnPrepareSend();
-
-        void OnConnected(int playerId);
-
-        void OnDisconnected(int playerId);
-
-        void OnReceived(int sender, byte[] dataBuffer, int index, int length, int messageId);
-
-        void OnSendComplete(int messageId, bool succeed);
-    }
-
-    public abstract class NetworkEventListener : UdonSharpBehaviour, INetworkEventsListener
+    public abstract class NetworkEventsListener : UdonSharpBehaviour
     {
         public NetworkInterface network;
         public ByteBufferReader reader;

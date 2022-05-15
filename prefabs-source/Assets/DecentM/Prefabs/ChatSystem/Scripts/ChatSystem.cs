@@ -8,7 +8,7 @@ using DecentM.Network;
 namespace DecentM.Chat
 {
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
-    public class ChatSystem : NetworkEventListener
+    public class ChatSystem : NetworkEventsListener
     {
         public LibDecentM lib;
 

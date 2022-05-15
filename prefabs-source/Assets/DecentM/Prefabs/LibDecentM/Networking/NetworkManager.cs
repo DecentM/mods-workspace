@@ -53,7 +53,7 @@ namespace DecentM.Network
         private Socket socket;
 
         private int eventListenersCount = 0;
-        private INetworkEventsListener[] eventListeners;
+        private NetworkEventsListener[] eventListeners;
 
         private bool hasLocal = false;
         private bool hasMaster = false;
@@ -287,7 +287,7 @@ namespace DecentM.Network
 
             for (var i = 0; i < eventListenersCount; i++)
             {
-                INetworkEventsListener listener = eventListeners[i];
+                NetworkEventsListener listener = eventListeners[i];
                 listener.OnPrepareSend();
 
                 /* if (eventListeners[i] is NetworkEventListener)
@@ -324,7 +324,7 @@ namespace DecentM.Network
                     {
                         for (var i = 0; i < eventListenersCount; i++)
                         {
-                            INetworkEventsListener listener = eventListeners[i];
+                            NetworkEventsListener listener = eventListeners[i];
                             listener.OnConnected(playerId);
                             /* if (listener is NetworkEventListener)
                                 ((NetworkEventListener)listener).OnConnected(playerId);
@@ -358,7 +358,7 @@ namespace DecentM.Network
                 int sender = connectionsOwners[connectionIndex];
                 for (var i = 0; i < eventListenersCount; i++)
                 {
-                    INetworkEventsListener listener = eventListeners[i];
+                    NetworkEventsListener listener = eventListeners[i];
                     listener.OnReceived(sender, dataBuffer, index, length, messageId);
 
                     /* if (listener is NetworkEventListener)
@@ -388,7 +388,7 @@ namespace DecentM.Network
             {
                 for (var i = 0; i < eventListenersCount; i++)
                 {
-                    INetworkEventsListener listener = eventListeners[i];
+                    NetworkEventsListener listener = eventListeners[i];
                     listener.OnSendComplete(messageId, succeed);
 
                     /* if (listener is NetworkEventListener)
@@ -403,15 +403,15 @@ namespace DecentM.Network
             }
         }
 
-        public void AddEventsListener(INetworkEventsListener listener)
+        public void AddEventsListener(NetworkEventsListener listener)
         {
             if (eventListeners == null)
             {
-                eventListeners = new INetworkEventsListener[1];
+                eventListeners = new NetworkEventsListener[1];
             }
             else if (eventListenersCount >= eventListeners.Length)
             {
-                var tmp = new NetworkEventListener[eventListenersCount * 2];
+                var tmp = new NetworkEventsListener[eventListenersCount * 2];
                 eventListeners.CopyTo(tmp, 0);
                 eventListeners = tmp;
             }
@@ -420,7 +420,7 @@ namespace DecentM.Network
             eventListenersCount++;
         }
 
-        public void RemoveEventsListener(INetworkEventsListener listener)
+        public void RemoveEventsListener(NetworkEventsListener listener)
         {
             int index = Array.IndexOf(eventListeners, listener);
             if (index >= 0)
@@ -494,7 +494,7 @@ namespace DecentM.Network
             {
                 for (var i = 0; i < eventListenersCount; i++)
                 {
-                    INetworkEventsListener listener = eventListeners[i];
+                    NetworkEventsListener listener = eventListeners[i];
                     listener.OnInit();
                     /* if (listener is NetworkEventListener)
                         ((NetworkEventListener)listener).OnInit();
@@ -512,7 +512,7 @@ namespace DecentM.Network
                     {
                         for (var j = 0; j < eventListenersCount; j++)
                         {
-                            INetworkEventsListener listener = eventListeners[j];
+                            NetworkEventsListener listener = eventListeners[j];
                             listener.OnConnected(owner);
                             /* if (listener is NetworkEventListener)
                                 ((NetworkEventListener)listener).OnConnected(owner);
@@ -539,7 +539,7 @@ namespace DecentM.Network
             {
                 for (var i = 0; i < eventListenersCount; i++)
                 {
-                    INetworkEventsListener listener = eventListeners[i];
+                    NetworkEventsListener listener = eventListeners[i];
                     listener.OnDisconnected(owner);
 
                     /* if (listener is NetworkEventListener)

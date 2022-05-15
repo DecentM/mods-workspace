@@ -21,7 +21,7 @@ MonoBehaviour:
   compiledVersion: 2
   behaviourSyncMode: 4
   hasInteractEvent: 0
-  scriptID: -5950736185640001390
+  scriptID: -6827792688243558545
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
@@ -176,7 +176,7 @@ MonoBehaviour:
       Data: 10|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
-      Data: UNet.NetworkManager, Assembly-CSharp
+      Data: DecentM.Network.NetworkManager, Assembly-CSharp
     - Name: 
       Entry: 8
       Data: 

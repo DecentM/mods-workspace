@@ -21,7 +21,7 @@ MonoBehaviour:
   compiledVersion: 2
   behaviourSyncMode: 4
   hasInteractEvent: 0
-  scriptID: 8245802167218695281
+  scriptID: -6203071471237781791
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
@@ -404,7 +404,7 @@ MonoBehaviour:
       Data: 24|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
-      Data: UNet.Connection[], Assembly-CSharp
+      Data: DecentM.Network.Connection[], Assembly-CSharp
     - Name: 
       Entry: 8
       Data: 
@@ -566,7 +566,7 @@ MonoBehaviour:
       Data: 33|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
-      Data: UNet.Socket, Assembly-CSharp
+      Data: DecentM.Network.Socket, Assembly-CSharp
     - Name: 
       Entry: 8
       Data: 
@@ -674,7 +674,7 @@ MonoBehaviour:
       Data: 39|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
-      Data: UdonSharp.UdonSharpBehaviour[], UdonSharp.Runtime
+      Data: DecentM.Network.NetworkEventsListener[], Assembly-CSharp
     - Name: 
       Entry: 8
       Data: 

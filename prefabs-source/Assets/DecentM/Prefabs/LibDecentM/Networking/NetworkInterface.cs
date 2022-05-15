@@ -22,7 +22,7 @@ namespace DecentM.Network
         /// <summary>
         /// Adds a unet event listener.
         /// </summary>
-        public void AddEventsListener(INetworkEventsListener listener)
+        public void AddEventsListener(NetworkEventsListener listener)
         {
             manager.AddEventsListener(listener);
         }
@@ -30,7 +30,7 @@ namespace DecentM.Network
         /// <summary>
         /// Removes a unet event listener.
         /// </summary>
-        public void RemoveEventsListener(INetworkEventsListener listener)
+        public void RemoveEventsListener(NetworkEventsListener listener)
         {
             manager.RemoveEventsListener(listener);
         }
