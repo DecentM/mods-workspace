@@ -8,7 +8,8 @@ namespace DecentM.Pubsub
     {
         public int batchSize = 10;
 
-        private PubsubSubscriber[] subscribers;
+        [NonSerialized]
+        public PubsubSubscriber[] subscribers;
 
         public int Subscribe(PubsubSubscriber behaviour)
         {

@@ -34,6 +34,11 @@ namespace DecentM.Network
 
         public virtual void OnSendComplete(int messageId, bool succeed) { }
 
+        protected string StringFromBuffer(int length, byte[] buffer)
+        {
+            return this.reader.ReadUTF8String(length, buffer, 0);
+        }
+
         private byte[] BufferFromString(string input)
         {
             int length = this.writer.GetUTF8StringSize(input);

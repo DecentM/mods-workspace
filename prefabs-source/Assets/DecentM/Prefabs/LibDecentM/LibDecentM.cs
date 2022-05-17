@@ -12,5 +12,6 @@ namespace DecentM
         public Scheduling scheduling;
         public Tools.ArrayTools arrayTools;
         public PerformanceGovernor performanceGovernor;
+        public UdonHashLib hash;
     }
 }
