@@ -7,20 +7,15 @@ using DecentM.VideoPlayer;
 using DecentM.VideoPlayer.Plugins;
 
 [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
-public class VideoScreenRealtimeLight : UdonSharpBehaviour
+public class VideoScreenRealtimeEmission : UdonSharpBehaviour
 {
     public ScreenAnalysisPlugin analysis;
     public VideoPlayerSystem system;
 
-    private new Light light;
+    public MeshRenderer meshRenderer;
+    public string property = "_EmissionColor";
 
     private float elapsed = 0;
-
-    private void Start()
-    {
-        this.light = GetComponent<Light>();
-        this.light.enabled = false;
-    }
 
     Color[] history = new Color[8];
 
@@ -28,7 +23,7 @@ public class VideoScreenRealtimeLight : UdonSharpBehaviour
 
     private void FixedUpdate()
     {
-        if (!this.system.IsPlaying() || this.light == null)
+        if (!this.system.IsPlaying() || this.meshRenderer == null)
             return;
 
         this.elapsed += Time.fixedUnscaledDeltaTime;
@@ -42,8 +37,8 @@ public class VideoScreenRealtimeLight : UdonSharpBehaviour
         index++;
 
         Color color = this.analysis.GetAverage(this.history) * 2;
+        color.a = 1;
 
-        this.light.enabled = color.r + color.g + color.b >= 0.15;
-        this.light.color = color;
+        this.meshRenderer.material.SetColor(this.property, color);
     }
 }
