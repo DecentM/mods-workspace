@@ -30,7 +30,7 @@ namespace DecentM.Metrics.Plugins
             if (!this.CheckLocalPlayer())
                 return;
 
-            this.instanceId = this.instanceIds[Random.Range(0, this.instanceIds.Length - 1)];
+            this.instanceId = this.instanceIds[Random.Range(0, this.instanceIds.Length)];
             this.RequestSerialization();
         }
 
@@ -40,6 +40,7 @@ namespace DecentM.Metrics.Plugins
                 this.instanceId,
                 VRCPlayerApi.GetPlayerCount()
             );
+
             if (url == null)
                 return;
 

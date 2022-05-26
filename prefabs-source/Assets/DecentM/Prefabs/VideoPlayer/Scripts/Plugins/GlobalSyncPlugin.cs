@@ -75,16 +75,6 @@ namespace DecentM.VideoPlayer.Plugins
             get => _url;
         }
 
-        /* private float CalculateServerPing()
-        {
-            DateTime localTime = Networking.GetNetworkDateTime();
-            TimeSpan serverTimeSpan = TimeSpan.FromMilliseconds(Networking.GetServerTimeInMilliseconds());
-            DateTime serverTime = new DateTime(1970, 1, 1) + serverTimeSpan;
-            TimeSpan difference = localTime - serverTime;
-
-            return difference.Milliseconds;
-        } */
-
         protected override void OnProgress(float timestamp, float duration)
         {
             if (Networking.GetOwner(this.gameObject) != Networking.LocalPlayer)

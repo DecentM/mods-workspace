@@ -85,6 +85,8 @@ namespace DecentM.EditorTools
                 return false;
             if (result.stderr.Contains("Retrying"))
                 return false;
+            if (result.stderr.Contains("URL could be a direct video link"))
+                return false;
 
             Debug.LogWarning(result.stderr);
             Debug.LogWarning($"yt-dlp has outputted an error, results may be incomplete.");

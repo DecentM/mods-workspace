@@ -1,6 +1,5 @@
 ﻿using UnityEditor;
 using UdonSharp;
-using UdonSharpEditor;
 using DecentM.EditorTools;
 
 namespace DecentM.Metrics
@@ -22,6 +21,9 @@ namespace DecentM.Metrics
                 "Instance capacity",
                 ui.instanceCapacity
             );
+
+            ui.minFps = EditorGUILayout.IntField("Minimum tracked FPS", ui.minFps);
+            ui.maxFps = EditorGUILayout.IntField("Maximum tracked FPS", ui.maxFps);
 
             EditorGUI.BeginDisabledGroup(true);
             if (urlStore != null)

@@ -13,6 +13,7 @@ namespace DecentM.Metrics.Plugins
         private void DoReport()
         {
             VRCUrl url = this.urlStore.GetInteractionUrl(this.metricName);
+
             if (url == null)
                 return;
 

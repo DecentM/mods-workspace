@@ -29,7 +29,7 @@ namespace DecentM.VideoPlayer
                 return;
             }
 
-            VRCUnityVideoPlayer.StartResolveURLCoroutine += ResolveURLCallback;
+            VRCUnityVideoPlayer.StartResolveURLCoroutine = ResolveURLCallback;
         }
 
         static void ResolveURLCallback(
@@ -51,8 +51,9 @@ namespace DecentM.VideoPlayer
                         UnityEngine.Debug.Log(
                             $"[DecentM.VideoPlayer YTDL] Resolved '{url}' to '{result}'"
                         );
+
                         if (videoPlayer != null)
-                            urlResolvedCallback(result);
+                            urlResolvedCallback(result.Replace("\n", ""));
                     }
                 )
             );

@@ -4,7 +4,7 @@ namespace DecentM.Metrics.Plugins
 {
     public class TriggerVolumePlugin : IndividualTrackingPlugin
     {
-        private bool locked = true;
+        private bool locked = false;
         private bool reportedState = false;
 
         private void DoReport(bool state)
@@ -23,11 +23,6 @@ namespace DecentM.Metrics.Plugins
                 this.locked = true;
                 this.SendCustomEventDelayedSeconds(nameof(Unlock), 5.2f);
             }
-        }
-
-        protected override void OnMetricsSystemInit()
-        {
-            this.Unlock();
         }
 
         public void Unlock()

@@ -59,6 +59,11 @@ namespace DecentM.BigSync
             this.events.OnDebugLog("_Start()");
         }
 
+        public override void OnInit()
+        {
+            this.events.OnDebugLog("OnInit()");
+        }
+
         // "SR 1" for example, where 1 is the index we're requesting to sync
         private const string SyncRequestCommand = "SR";
 
@@ -94,7 +99,10 @@ namespace DecentM.BigSync
             string message = this.StringFromBuffer(length, dataBuffer);
             string[] parts = message.Split(new char[] { ' ' }, 3);
 
-            this.events.OnDebugLog($"got a network message, separates into {parts.Length} parts");
+            this.events.OnDebugLog(
+                $"s: {sender} l: {length} dl: {dataBuffer.Length} i: {index} mid: {messageId}"
+            );
+            this.events.OnDebugLog($"message has {parts.Length} parts");
             this.events.OnDebugLog($"message: {message}");
 
             switch (parts[0])
@@ -143,6 +151,12 @@ namespace DecentM.BigSync
         [PublicAPI]
         public bool SyncString(string input)
         {
+            this.events.OnDebugLog("1");
+            this.events.OnDebugLog("2");
+            this.events.OnDebugLog("3");
+
+            return true;
+
             // Only the owner can sync strings
             if (Networking.GetOwner(this.gameObject) != Networking.LocalPlayer)
             {

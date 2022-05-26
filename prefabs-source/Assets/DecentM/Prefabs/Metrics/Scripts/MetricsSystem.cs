@@ -1,4 +1,5 @@
 ﻿using System;
+using JetBrains.Annotations;
 using UnityEngine;
 using UdonSharp;
 
@@ -18,12 +19,12 @@ namespace DecentM.Metrics
         Station,
         Interaction,
         Pickup,
-        PerformanceModeChange,
     }
 
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class MetricsSystem : UdonSharpBehaviour
     {
+        public float initialDelaySeconds = 10f;
         public int requeueAttemptsLimit = 2;
         public int discardAttemptsLimit = 6;
 
@@ -43,6 +44,7 @@ namespace DecentM.Metrics
             return this.queue;
         }
 
+        [PublicAPI]
         public void RecordMetric(VRCUrl url, Metric metric)
         {
             object[] queueItem = new object[] { url, 0, metric, };
@@ -97,7 +99,7 @@ namespace DecentM.Metrics
 
         private void Start()
         {
-            this.SendCustomEventDelayedSeconds(nameof(BroadcastInit), 10f);
+            this.SendCustomEventDelayedSeconds(nameof(BroadcastInit), this.initialDelaySeconds);
         }
 
         public void BroadcastInit()

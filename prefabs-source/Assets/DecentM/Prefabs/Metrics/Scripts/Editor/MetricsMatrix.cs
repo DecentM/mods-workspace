@@ -213,13 +213,6 @@ namespace DecentM.Metrics
             pickupValues.Add(new BoolMetricValue("state"));
             matrix.Add(Metric.Pickup, pickupValues);
 
-            List<MetricValue> performanceValues = new List<MetricValue>();
-            performanceValues.Add(
-                new IntMetricValue("mode", (int[])Enum.GetValues(typeof(PerformanceGovernorMode)))
-            );
-            performanceValues.Add(new IntRangeMetricValue("fps", input.minFps, input.maxFps));
-            matrix.Add(Metric.PerformanceModeChange, performanceValues);
-
             /*
              * Copy me to add another metric:
                 List<MetricValue> Values = new List<MetricValue>();

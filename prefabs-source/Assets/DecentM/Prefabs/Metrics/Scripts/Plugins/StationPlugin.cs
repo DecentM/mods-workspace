@@ -4,12 +4,13 @@ namespace DecentM.Metrics.Plugins
 {
     public class StationPlugin : IndividualTrackingPlugin
     {
-        private bool locked = true;
+        private bool locked = false;
         private bool reportedState = false;
 
         private void DoReport(bool state)
         {
             VRCUrl url = this.urlStore.GetStationUrl(this.metricName, state);
+
             if (url == null)
                 return;
 
@@ -23,11 +24,6 @@ namespace DecentM.Metrics.Plugins
                 this.locked = true;
                 this.SendCustomEventDelayedSeconds(nameof(Unlock), 5.2f);
             }
-        }
-
-        protected override void OnMetricsSystemInit()
-        {
-            this.Unlock();
         }
 
         public void Unlock()

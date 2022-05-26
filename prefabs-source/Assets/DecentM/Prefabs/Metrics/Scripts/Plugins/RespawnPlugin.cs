@@ -10,6 +10,7 @@ namespace DecentM.Metrics.Plugins
         public override void OnPlayerRespawn(VRCPlayerApi player)
         {
             VRCUrl url = this.urlStore.GetRespawnUrl();
+
             if (url == null)
                 return;
 

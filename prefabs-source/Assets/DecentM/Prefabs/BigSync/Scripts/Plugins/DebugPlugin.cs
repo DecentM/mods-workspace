@@ -26,7 +26,7 @@ namespace DecentM.BigSync.Plugins
 
         protected override void OnDebugLog(string message)
         {
-            this.Log(message);
+            this.Log(nameof(OnDebugLog), message);
         }
 
         protected override void OnSyncBegin(

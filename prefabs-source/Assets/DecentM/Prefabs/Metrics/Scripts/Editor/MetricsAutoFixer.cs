@@ -70,13 +70,6 @@ namespace DecentM.Metrics
                 return false;
             }
 
-            PerformancePlugin performancePlugin = ui.GetComponentInChildren<PerformancePlugin>();
-            if (performancePlugin != null)
-            {
-                performancePlugin.pubsubHosts = new Pubsub.PubsubHost[] { governor };
-                Inspector.SaveModifications(performancePlugin);
-            }
-
             HeartbeatPlugin heartbeatPlugin = ui.GetComponentInChildren<HeartbeatPlugin>();
             if (heartbeatPlugin != null)
             {

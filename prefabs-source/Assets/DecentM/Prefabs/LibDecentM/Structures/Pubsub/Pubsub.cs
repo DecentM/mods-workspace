@@ -1,5 +1,6 @@
 ﻿using System;
 using UdonSharp;
+using UnityEngine;
 
 namespace DecentM.Pubsub
 {
@@ -58,12 +59,8 @@ namespace DecentM.Pubsub
 
         private void QueuePush(object eventName, object[] data, PubsubSubscriber behaviour)
         {
-            bool initialised = this.queue != null;
-
-            if (!initialised)
-            {
+            if (this.queue == null)
                 this.queue = new object[0][];
-            }
 
             object[] queueItem = new object[] { eventName, data, behaviour };
 

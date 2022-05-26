@@ -16,11 +16,6 @@ namespace DecentM.Metrics.Plugins
 
         private bool isVr = false;
 
-        protected override void _Start()
-        {
-            this.isVr = Networking.LocalPlayer.IsUserInVR();
-        }
-
         private void DoHeartbeat()
         {
             int fps = Mathf.FloorToInt(this.performanceGovernor.GetFps());
@@ -29,6 +24,7 @@ namespace DecentM.Metrics.Plugins
                 this.isVr,
                 fps
             );
+
             if (url == null)
                 return;
 
@@ -37,6 +33,9 @@ namespace DecentM.Metrics.Plugins
 
         protected override void OnMetricsSystemInit()
         {
+            this.isVr =
+                Networking.LocalPlayer == null ? false : Networking.LocalPlayer.IsUserInVR();
+
             this.DoHeartbeat();
             this.initialised = true;
         }

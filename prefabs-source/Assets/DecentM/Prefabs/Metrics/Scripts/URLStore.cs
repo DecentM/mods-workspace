@@ -1,6 +1,7 @@
 ﻿#if UNITY_EDITOR && !COMPILER_UDONSHARP
 using UnityEditor;
 #endif
+using System;
 using UnityEngine;
 using UdonSharp;
 using VRC.SDKBase;
@@ -35,7 +36,7 @@ namespace DecentM.Metrics
             for (int i = 0; i < this.urls.Length; i++)
             {
 #if UNITY_EDITOR && !COMPILER_UDONSHARP
-                EditorUtility.DisplayProgressBar($"[DecentM.Metrics] Serializing URL combinations...", $"{i}/{this.urls.Length}", (float)i / this.urls.Length);
+                EditorUtility.DisplayProgressBar($"[DecentM.Metrics] Serialising URL combinations...", $"{i}/{this.urls.Length}", (float)i / this.urls.Length);
 #endif
 
                 object[] item = this.urls[i];
@@ -87,15 +88,16 @@ namespace DecentM.Metrics
                 if (!metricParsed)
                     continue;
 
-                object[][] parameters = new object[dataParts.Length][];
+                object[][] parameters = new object[dataParts.Length - 1][];
 
-                for (int j = 1; j < dataParts.Length - 1; j++)
+                for (int j = 1; j < dataParts.Length; j++)
                 {
-                    if (j >= dataParts.Length || dataParts[j] == null)
-                        continue;
+                    string[] parts = dataParts[j].Split('=');
 
-                    string[] parameterParts = dataParts[j].Split('=');
-                    parameters[j - 1] = new object[] { parameterParts[0], parameterParts[1] };
+                    if (parts.Length == 2)
+                        parameters[j - 1] = new object[] { parts[0], parts[1] };
+                    else
+                        parameters[j - 1] = new object[] { "", "" };
                 }
 
                 object[] item = new object[]
@@ -103,24 +105,28 @@ namespace DecentM.Metrics
                     new object[] { metric, parameters },
                     this.serializedUrls[i]
                 };
+
                 this.urls[i] = item;
             }
         }
 
-        [HideInInspector]
+        // [HideInInspector]
         public VRCUrl[] serializedUrls;
 
-        [HideInInspector]
+        // [HideInInspector]
         public string[] serializedUrlData;
 
         private VRCUrl GetMetricUrl(Metric metric, object[][] parameters)
         {
+            Debug.Log($"Getting URL for metric {metric}, with {parameters.Length} parameters");
+
             // Search through all the URLs for the one that matches
             // all parameters
             foreach (object[] item in this.urls)
             {
                 object[] data = (object[])item[0];
                 VRCUrl url = (VRCUrl)item[1];
+
                 if (url == null || data == null)
                     continue;
 
@@ -130,6 +136,7 @@ namespace DecentM.Metrics
                 // No need to scan the parameters if there aren't any, and we have a URL for the current metric
                 if (itemMetric == metric && itemParameters.Length == 0 && parameters.Length == 0)
                     return url;
+
                 if (itemMetric != metric || parameters.Length != itemParameters.Length)
                     continue;
 
@@ -138,7 +145,7 @@ namespace DecentM.Metrics
                 for (int i = 0; i < itemParameters.Length; i++)
                 {
                     if (itemParameters[i] == null || parameters[i] == null)
-                        break;
+                        continue;
 
                     string itemName = (string)itemParameters[i][0];
                     string itemValue = (string)itemParameters[i][1];
@@ -238,18 +245,6 @@ namespace DecentM.Metrics
                 {
                     new object[] { "name", name },
                     new object[] { "state", state.ToString() },
-                }
-            );
-        }
-
-        public VRCUrl GetPerformanceUrl(PerformanceGovernorMode mode, int fps)
-        {
-            return this.GetMetricUrl(
-                Metric.PerformanceModeChange,
-                new object[][]
-                {
-                    new object[] { "mode", mode.ToString() },
-                    new object[] { "fps", fps.ToString() },
                 }
             );
         }
