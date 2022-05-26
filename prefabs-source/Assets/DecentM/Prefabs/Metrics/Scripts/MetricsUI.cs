@@ -13,8 +13,11 @@ namespace DecentM.Metrics
         public string builtAt = "";
         public string sdk = "";
         public string unity = "";
+        public string sceneName = "";
 
         // Manually entered data
+        public string worldName = "";
+        public string worldAuthor = "";
         public int worldCapacity = 64;
         public int instanceCapacity = 64;
         public string metricsServerBaseUrl = "";

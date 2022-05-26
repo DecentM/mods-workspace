@@ -5,7 +5,7 @@ using UnityEngine;
 using DecentM.EditorTools;
 using DecentM.Metrics.Plugins;
 using UdonSharp;
-using UdonSharpEditor;
+using UnityEditor.SceneManagement;
 
 namespace DecentM.Metrics
 {
@@ -21,6 +21,7 @@ namespace DecentM.Metrics
                 ui.builtAt = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds().ToString();
                 ui.sdk = VRC.Tools.ClientVersion;
                 ui.unity = VRC.Tools.UnityVersion.ToString();
+                ui.sceneName = EditorSceneManager.GetActiveScene().name;
             }
         }
     }

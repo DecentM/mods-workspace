@@ -16,7 +16,13 @@ namespace DecentM.Metrics
             Dictionary<string, string> metricData
         )
         {
-            string query = $"?builtAt={ui.builtAt}&unity={ui.unity}&sdk={ui.sdk}";
+            string query =
+                $"?builtAt={ui.builtAt}"
+                + $"&unity={ui.unity}"
+                + $"&sdk={ui.sdk}"
+                + $"&sceneName={Uri.EscapeDataString(ui.sceneName)}"
+                + $"&worldName={Uri.EscapeDataString(ui.worldName)}"
+                + $"&worldAuthor={Uri.EscapeDataString(ui.worldAuthor)}";
 
             foreach (KeyValuePair<string, string> kvp in metricData)
             {

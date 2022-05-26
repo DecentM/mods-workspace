@@ -13,9 +13,11 @@ namespace DecentM.Metrics
             URLStore urlStore = ui.GetComponentInChildren<URLStore>();
 
             ui.metricsServerBaseUrl = EditorGUILayout.TextField(
-                "Metrics server base URL:",
+                "Metrics server base URL",
                 ui.metricsServerBaseUrl
             );
+            ui.worldName = EditorGUILayout.TextField("World name", ui.worldName);
+            ui.worldAuthor = EditorGUILayout.TextField("World author", ui.worldAuthor);
             ui.worldCapacity = EditorGUILayout.IntField("World capacity", ui.worldCapacity);
             ui.instanceCapacity = EditorGUILayout.IntField(
                 "Instance capacity",
@@ -36,6 +38,7 @@ namespace DecentM.Metrics
             EditorGUILayout.TextField("Built at", ui.builtAt);
             EditorGUILayout.TextField("Unity version", ui.unity);
             EditorGUILayout.TextField("SDK Version", ui.sdk);
+            EditorGUILayout.TextField("Scene name", ui.sceneName);
             EditorGUI.EndDisabledGroup();
 
             if (urlStore != null && this.Button("Clear URLs"))

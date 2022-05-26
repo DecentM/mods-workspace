@@ -16,7 +16,7 @@ export const collect = async (ip: string, name: string, tags: Record<string, str
     const userid = hasha(ip, {algorithm: 'sha256'})
 
     const tracks = Object.entries(tags).map(([key, value]) => {
-      return trackEvent(userid, 'com.decentm.vrchat.metrics.event', name, key, value)
+      return trackEvent(userid, ip, 'com.decentm.vrchat.metrics.event', name, key, value)
     })
 
     await Promise.all(tracks)

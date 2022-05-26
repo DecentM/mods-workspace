@@ -1,7 +1,8 @@
 import {config} from '../config'
 
 export const trackEvent = async (
-  cid: string,
+  uid: string,
+  uip: string,
   category: string,
   action: string,
   label: string,
@@ -14,7 +15,8 @@ export const trackEvent = async (
     tid: config.ga.tid,
     // Anonymous Client Identifier. Ideally, this should be a UUID that
     // is associated with particular user, device, or browser instance.
-    cid,
+    uid,
+    uip,
     // Event hit type.
     t: 'event',
     // Event category.
