@@ -169,7 +169,7 @@ namespace DecentM.Metrics
             List<MetricValue> interactionValues = new List<MetricValue>();
             interactionValues.Add(
                 new StringMetricValue(
-                    "name",
+                    "objectName",
                     IndividualTrackingPluginManager<InteractionsPlugin>
                         .CollectInteractionNames()
                         .ToArray()
@@ -180,7 +180,7 @@ namespace DecentM.Metrics
             List<MetricValue> triggerValues = new List<MetricValue>();
             triggerValues.Add(
                 new StringMetricValue(
-                    "name",
+                    "objectName",
                     IndividualTrackingPluginManager<TriggerVolumePlugin>
                         .CollectInteractionNames()
                         .ToArray()
@@ -192,7 +192,7 @@ namespace DecentM.Metrics
             List<MetricValue> stationValues = new List<MetricValue>();
             stationValues.Add(
                 new StringMetricValue(
-                    "name",
+                    "objectName",
                     IndividualTrackingPluginManager<StationPlugin>
                         .CollectInteractionNames()
                         .ToArray()
@@ -204,7 +204,7 @@ namespace DecentM.Metrics
             List<MetricValue> pickupValues = new List<MetricValue>();
             pickupValues.Add(
                 new StringMetricValue(
-                    "name",
+                    "objectName",
                     IndividualTrackingPluginManager<PickupPlugin>
                         .CollectInteractionNames()
                         .ToArray()

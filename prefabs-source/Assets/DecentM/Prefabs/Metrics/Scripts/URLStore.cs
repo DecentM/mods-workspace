@@ -118,8 +118,6 @@ namespace DecentM.Metrics
 
         private VRCUrl GetMetricUrl(Metric metric, object[][] parameters)
         {
-            Debug.Log($"Getting URL for metric {metric}, with {parameters.Length} parameters");
-
             // Search through all the URLs for the one that matches
             // all parameters
             foreach (object[] item in this.urls)
@@ -205,45 +203,45 @@ namespace DecentM.Metrics
             return this.GetMetricUrl(Metric.Respawn);
         }
 
-        public VRCUrl GetInteractionUrl(string name)
+        public VRCUrl GetInteractionUrl(string objectName)
         {
             return this.GetMetricUrl(
                 Metric.Interaction,
-                new object[][] { new object[] { "name", name }, }
+                new object[][] { new object[] { "objectName", objectName }, }
             );
         }
 
-        public VRCUrl GetTriggerUrl(string name, bool state)
+        public VRCUrl GetTriggerUrl(string objectName, bool state)
         {
             return this.GetMetricUrl(
                 Metric.Trigger,
                 new object[][]
                 {
-                    new object[] { "name", name },
+                    new object[] { "objectName", objectName },
                     new object[] { "state", state.ToString() },
                 }
             );
         }
 
-        public VRCUrl GetStationUrl(string name, bool state)
+        public VRCUrl GetStationUrl(string objectName, bool state)
         {
             return this.GetMetricUrl(
                 Metric.Station,
                 new object[][]
                 {
-                    new object[] { "name", name },
+                    new object[] { "objectName", objectName },
                     new object[] { "state", state.ToString() },
                 }
             );
         }
 
-        public VRCUrl GetPickupUrl(string name, bool state)
+        public VRCUrl GetPickupUrl(string objectName, bool state)
         {
             return this.GetMetricUrl(
                 Metric.Pickup,
                 new object[][]
                 {
-                    new object[] { "name", name },
+                    new object[] { "objectName", objectName },
                     new object[] { "state", state.ToString() },
                 }
             );

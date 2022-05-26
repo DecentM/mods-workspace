@@ -11,7 +11,7 @@ namespace DecentM.Metrics.Plugins
         public string[] instanceIds;
 
         [UdonSynced]
-        private string instanceId;
+        private string instanceId = "uninitialised";
 
         public int reportingIntervalSeconds = 60;
 
@@ -23,15 +23,6 @@ namespace DecentM.Metrics.Plugins
                 || !Networking.LocalPlayer.isMaster;
 
             return !stop;
-        }
-
-        protected override void _Start()
-        {
-            if (!this.CheckLocalPlayer())
-                return;
-
-            this.instanceId = this.instanceIds[Random.Range(0, this.instanceIds.Length)];
-            this.RequestSerialization();
         }
 
         private void DoHeartbeat()
@@ -47,11 +38,13 @@ namespace DecentM.Metrics.Plugins
             this.system.RecordMetric(url, Metric.Instance);
         }
 
-        private bool initialised = false;
-
         protected override void OnMetricsSystemInit()
         {
-            this.initialised = true;
+            if (!this.CheckLocalPlayer())
+                return;
+
+            this.instanceId = this.instanceIds[Random.Range(0, this.instanceIds.Length)];
+            this.RequestSerialization();
             this.DoHeartbeat();
         }
 
@@ -60,7 +53,7 @@ namespace DecentM.Metrics.Plugins
         // Only the master runs this as we only want one report per instance
         private void FixedUpdate()
         {
-            if (!this.CheckLocalPlayer() || !this.initialised)
+            if (!this.CheckLocalPlayer())
                 return;
 
             this.elapsed += Time.fixedUnscaledDeltaTime;
