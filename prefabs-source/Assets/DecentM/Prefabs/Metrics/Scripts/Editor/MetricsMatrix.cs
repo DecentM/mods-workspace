@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using DecentM.Metrics.Plugins;
+using DecentM.EditorTools;
 
 namespace DecentM.Metrics
 {
@@ -136,6 +138,24 @@ namespace DecentM.Metrics
         }
     }
 
+    public class EnumMetricValue : MetricValue
+    {
+        public EnumMetricValue(string name, dynamic type)
+        {
+            this.name = name;
+            int[] values = Enum.GetValues(type);
+
+            this.values = values.Select(v => (string)Enum.GetName(type, v)).ToArray();
+        }
+
+        private string[] values;
+
+        public override string[] GetPossibleValues()
+        {
+            return this.values;
+        }
+    }
+
     public struct MatrixInput
     {
         public List<string> instanceIds;
@@ -223,6 +243,37 @@ namespace DecentM.Metrics
                 )
             );
             matrix.Add(Metric.Custom, customValues);
+
+            List<MetricValue> videoPlayerValues = new List<MetricValue>();
+            videoPlayerValues.Add(new EnumMetricValue("event", typeof(TrackedVideoPlayerEvent)));
+            matrix.Add(Metric.VideoPlayer, videoPlayerValues);
+
+            List<MetricValue> playerListValues = new List<MetricValue>();
+            playerListValues.Add(
+                new StringMetricValue(
+                    "listName",
+                    IndividualTrackingPluginManager<PlayerlistPlugin>
+                        .CollectInteractionNames()
+                        .ToArray()
+                )
+            );
+            playerListValues.Add(new EnumMetricValue("eventName", typeof(PlayerlistMetric)));
+
+            List<string> players = new List<string>();
+
+            ComponentCollector<PlayerList> listCollector = new ComponentCollector<PlayerList>();
+            List<PlayerList> playerLists = listCollector.CollectFromActiveScene();
+
+            foreach (PlayerList list in playerLists)
+            {
+                players.AddRange(list.players);
+            }
+
+            // Add an item for when a player's name cannot be determined
+            // (for example when the list is running in blacklist mode)
+            players.Add("");
+            playerListValues.Add(new StringMetricValue("player", players.ToArray()));
+            matrix.Add(Metric.PlayerList, playerListValues);
 
             /*
              * Copy me to add another metric:

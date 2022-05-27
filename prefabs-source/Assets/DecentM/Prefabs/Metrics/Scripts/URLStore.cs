@@ -110,10 +110,10 @@ namespace DecentM.Metrics
             }
         }
 
-        // [HideInInspector]
+        //[HideInInspector]
         public VRCUrl[] serializedUrls;
 
-        // [HideInInspector]
+        //[HideInInspector]
         public string[] serializedUrlData;
 
         private VRCUrl GetMetricUrl(Metric metric, object[][] parameters)
@@ -252,6 +252,27 @@ namespace DecentM.Metrics
             return this.GetMetricUrl(
                 Metric.Custom,
                 new object[][] { new object[] { "metricName", metricName }, }
+            );
+        }
+
+        public VRCUrl GetVideoPlayerUrl(string eventName)
+        {
+            return this.GetMetricUrl(
+                Metric.VideoPlayer,
+                new object[][] { new object[] { "eventName", eventName } }
+            );
+        }
+
+        public VRCUrl GetPlayerListUrl(string listName, string eventName, string player)
+        {
+            return this.GetMetricUrl(
+                Metric.PlayerList,
+                new object[][]
+                {
+                    new object[] { "listName", listName },
+                    new object[] { "eventName", eventName },
+                    new object[] { "player", player }
+                }
             );
         }
     }

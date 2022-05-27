@@ -20,6 +20,9 @@ namespace DecentM.Metrics
         Interaction,
         Pickup,
         Custom,
+
+        VideoPlayer,
+        PlayerList,
     }
 
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
