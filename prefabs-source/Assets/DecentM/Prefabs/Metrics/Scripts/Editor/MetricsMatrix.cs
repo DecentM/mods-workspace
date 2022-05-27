@@ -213,6 +213,17 @@ namespace DecentM.Metrics
             pickupValues.Add(new BoolMetricValue("state"));
             matrix.Add(Metric.Pickup, pickupValues);
 
+            List<MetricValue> customValues = new List<MetricValue>();
+            customValues.Add(
+                new StringMetricValue(
+                    "metricName",
+                    IndividualTrackingPluginManager<CustomEventTrackingPlugin>
+                        .CollectInteractionNames()
+                        .ToArray()
+                )
+            );
+            matrix.Add(Metric.Custom, customValues);
+
             /*
              * Copy me to add another metric:
                 List<MetricValue> Values = new List<MetricValue>();

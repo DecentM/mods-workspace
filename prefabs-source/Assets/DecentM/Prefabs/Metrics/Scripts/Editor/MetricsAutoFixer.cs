@@ -101,6 +101,22 @@ namespace DecentM.Metrics
 
             #endregion
 
+            #region Custom Event Plugin
+
+            ComponentCollector<CustomEventTrackingPlugin> ctCollector =
+                new ComponentCollector<CustomEventTrackingPlugin>();
+            List<CustomEventTrackingPlugin> ctPlugins = ctCollector.CollectFromActiveScene();
+
+            foreach (CustomEventTrackingPlugin plugin in ctPlugins)
+            {
+                if (string.IsNullOrEmpty(plugin.metricName))
+                    plugin.metricName = RandomStringGenerator.GenerateRandomString(8);
+
+                Inspector.SaveModifications(plugin);
+            }
+
+            #endregion
+
             return true;
         }
     }

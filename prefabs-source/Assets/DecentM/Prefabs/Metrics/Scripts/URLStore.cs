@@ -246,5 +246,13 @@ namespace DecentM.Metrics
                 }
             );
         }
+
+        public VRCUrl GetCustomUrl(string metricName)
+        {
+            return this.GetMetricUrl(
+                Metric.Custom,
+                new object[][] { new object[] { "metricName", metricName }, }
+            );
+        }
     }
 }

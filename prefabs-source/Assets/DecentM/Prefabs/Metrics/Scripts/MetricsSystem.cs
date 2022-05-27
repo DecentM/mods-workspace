@@ -19,6 +19,7 @@ namespace DecentM.Metrics
         Station,
         Interaction,
         Pickup,
+        Custom,
     }
 
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
