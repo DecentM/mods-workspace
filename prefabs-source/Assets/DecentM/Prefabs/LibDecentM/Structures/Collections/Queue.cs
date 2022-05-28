@@ -8,21 +8,21 @@ namespace DecentM.Collections
 {
     public class Queue : Collection
     {
-        public void Enqueue(dynamic item)
+        public void Enqueue(object item)
         {
             if (this.value == null || this.value.Length == 0)
             {
-                this.value = new dynamic[] { item };
+                this.value = new object[] { item };
                 return;
             }
 
-            dynamic[] tmp = new dynamic[value.Length + 1];
+            object[] tmp = new object[value.Length + 1];
             Array.Copy(this.value, tmp, this.value.Length);
             tmp[tmp.Length - 1] = item;
             this.value = tmp;
         }
 
-        public dynamic Peek()
+        public object Peek()
         {
             if (this.value == null || this.value.Length == 0)
                 return null;
@@ -30,14 +30,14 @@ namespace DecentM.Collections
             return this.value[0];
         }
 
-        public dynamic Dequeue()
+        public object Dequeue()
         {
-            dynamic item = this.Peek();
+            object item = this.Peek();
 
             if (item == null)
                 return null;
 
-            dynamic[] tmp = new dynamic[value.Length - 1];
+            object[] tmp = new object[value.Length - 1];
             Array.Copy(this.value, 1, tmp, 0, this.value.Length - 1);
             this.value = tmp;
 

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using UdonSharp;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,13 +11,13 @@ namespace DecentM.Collections
     public abstract class Collection
 #endif
     {
-        protected dynamic[] value = new dynamic[0];
+        protected object[] value = new object[0];
 
-        public bool Contains(dynamic item)
+        public bool Contains(object item)
         {
             bool result = false;
 
-            foreach (dynamic valueItem in this.value)
+            foreach (object valueItem in this.value)
             {
                 if (valueItem == item)
                     return true;
@@ -30,19 +31,19 @@ namespace DecentM.Collections
             get { return this.value.Length; }
         }
 
-        public dynamic[] ToArray()
+        public object[] ToArray()
         {
             return this.value;
         }
 
-        public void FromArray(dynamic[] newValue)
+        public void FromArray(object[] newValue)
         {
             this.value = newValue;
         }
 
         public void Clear()
         {
-            this.value = new dynamic[0];
+            this.value = new object[0];
         }
     }
 }

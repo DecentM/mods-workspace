@@ -9,7 +9,7 @@ namespace DecentM.Collections
 {
     public class List : Collection
     {
-        public dynamic ElementAt(int index)
+        public object ElementAt(int index)
         {
             if (index < 0 || index >= this.value.Length)
                 return null;
@@ -17,18 +17,18 @@ namespace DecentM.Collections
             return this.value[index];
         }
 
-        public bool Add(dynamic item)
+        public bool Add(object item)
         {
             if (this.Contains(item))
                 return false;
 
             if (this.value == null || this.value.Length == 0)
             {
-                this.value = new dynamic[] { item };
+                this.value = new object[] { item };
                 return true;
             }
 
-            dynamic[] tmp = new dynamic[value.Length + 1];
+            object[] tmp = new object[value.Length + 1];
             Array.Copy(this.value, tmp, this.value.Length);
             tmp[tmp.Length - 1] = item;
             this.value = tmp;
@@ -36,9 +36,9 @@ namespace DecentM.Collections
             return true;
         }
 
-        public void AddRange(dynamic[] items)
+        public void AddRange(object[] items)
         {
-            foreach (dynamic item in items)
+            foreach (object item in items)
             {
                 // `Add` ignores duplicate items, this way every item will be
                 // added without duplicating any
@@ -46,12 +46,12 @@ namespace DecentM.Collections
             }
         }
 
-        public bool Insert(int index, dynamic item)
+        public bool Insert(int index, object item)
         {
             if (this.Contains(item))
                 return false;
 
-            dynamic[] tmp = new dynamic[value.Length + 1];
+            object[] tmp = new object[value.Length + 1];
             Array.Copy(this.value, 0, tmp, 0, index);
             Array.Copy(this.value, index, tmp, index + 1, this.value.Length - index);
             tmp[index] = item;
@@ -60,7 +60,7 @@ namespace DecentM.Collections
             return true;
         }
 
-        public void InsertRange(int startIndex, dynamic[] items)
+        public void InsertRange(int startIndex, object[] items)
         {
             for (int i = startIndex; i < startIndex + items.Length; i++)
             {
@@ -70,11 +70,11 @@ namespace DecentM.Collections
             }
         }
 
-        public int IndexOf(dynamic item)
+        public int IndexOf(object item)
         {
             for (int i = 0; i < this.value.Length; i++)
             {
-                dynamic valueItem = this.value[i];
+                object valueItem = this.value[i];
                 if (valueItem == item)
                     return i;
             }
@@ -87,7 +87,7 @@ namespace DecentM.Collections
             if (index < 0 || index >= this.value.Length)
                 return false;
 
-            dynamic[] tmp = new dynamic[value.Length - 1];
+            object[] tmp = new object[value.Length - 1];
             Array.Copy(this.value, tmp, index);
             Array.Copy(this.value, index + 1, tmp, index, this.value.Length - index - 1);
             this.value = tmp;
@@ -95,7 +95,7 @@ namespace DecentM.Collections
             return true;
         }
 
-        public bool Remove(dynamic item)
+        public bool Remove(object item)
         {
             int index = this.IndexOf(item);
 
@@ -110,7 +110,7 @@ namespace DecentM.Collections
             if (startIndex > endIndex)
                 return false;
 
-            dynamic[] tmp = new dynamic[this.value.Length - (endIndex - startIndex + 1)];
+            object[] tmp = new object[this.value.Length - (endIndex - startIndex + 1)];
             Array.Copy(this.value, 0, tmp, 0, startIndex);
             Array.Copy(this.value, endIndex + 1, tmp, startIndex, this.value.Length - endIndex - 1);
             this.value = tmp;
@@ -120,7 +120,7 @@ namespace DecentM.Collections
 
         public void Reverse()
         {
-            dynamic[] tmp = new dynamic[this.value.Length];
+            object[] tmp = new object[this.value.Length];
 
             for (int i = 0; i < this.value.Length; i++)
             {
