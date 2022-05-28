@@ -58,6 +58,8 @@ namespace DecentM.VideoPlayer.Plugins
 
         protected virtual void OnLoadDenied(VRCUrl url, string reason) { }
 
+        protected virtual void OnLoadRatelimitWaiting() { }
+
         protected virtual void OnAutoRetry(int attempt) { }
 
         protected virtual void OnAutoRetryLoadTimeout(int timeout) { }
@@ -190,6 +192,12 @@ namespace DecentM.VideoPlayer.Plugins
                 {
                     VideoError videoError = (VideoError)data[0];
                     this.OnLoadError(videoError);
+                    return;
+                }
+
+                case VideoPlayerEvent.OnLoadRatelimitWaiting:
+                {
+                    this.OnLoadRatelimitWaiting();
                     return;
                 }
 

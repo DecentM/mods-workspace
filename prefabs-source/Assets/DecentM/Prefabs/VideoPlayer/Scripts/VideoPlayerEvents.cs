@@ -32,6 +32,7 @@ namespace DecentM.VideoPlayer
         OnLoadRequested,
         OnLoadApproved,
         OnLoadDenied,
+        OnLoadRatelimitWaiting,
 
         OnAutoRetry,
         OnAutoRetryLoadTimeout,
@@ -144,6 +145,11 @@ namespace DecentM.VideoPlayer
         public void OnLoadError(VideoError videoError)
         {
             this.BroadcastEvent(VideoPlayerEvent.OnLoadError, videoError);
+        }
+
+        public void OnLoadRatelimitWaiting()
+        {
+            this.BroadcastEvent(VideoPlayerEvent.OnLoadRatelimitWaiting);
         }
 
         public void OnPlayerSwitch(VideoPlayerHandlerType type)

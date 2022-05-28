@@ -160,6 +160,11 @@ namespace DecentM.VideoPlayer.Plugins
             this.Log(nameof(OnLoadDenied), $"(with URL) {reason}");
         }
 
+        protected override void OnLoadRatelimitWaiting()
+        {
+            this.Log(nameof(OnLoadRatelimitWaiting));
+        }
+
         protected override void OnOwnershipChanged(int previousOwnerId, VRCPlayerApi nextOwner)
         {
             this.Log(

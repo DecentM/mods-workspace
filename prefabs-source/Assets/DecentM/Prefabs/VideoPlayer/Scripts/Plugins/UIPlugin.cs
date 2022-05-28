@@ -295,6 +295,7 @@ namespace DecentM.VideoPlayer.Plugins
         {
             bool newState = !this.subtitlesOn;
             this.ToggleSubtitles(newState);
+            this.subtitleSlot.text = "";
         }
 
         private void ToggleSubtitles(bool newState)
@@ -310,6 +311,7 @@ namespace DecentM.VideoPlayer.Plugins
             this.subtitlesDropdown.button.interactable = newState;
             this.subtitlesDropdown.animator.SetBool("DropdownOpen", false);
             this.subtitlesOn = newState;
+            this.subtitleSlot.text = "";
         }
 
         protected override void OnSubtitleLanguageOptionsChange(string[][] newOptions)
@@ -362,8 +364,10 @@ namespace DecentM.VideoPlayer.Plugins
             this.titleSlot.text = title;
             this.uploaderSlot.text = uploader;
             this.descriptionSlot.text = description;
+
             if (viewCount > 0)
                 this.viewCountSlot.text = $"{viewCount} views";
+
             if (likeCount > 0)
                 this.likeCountSlot.text = $"{likeCount} likes";
         }
@@ -395,6 +399,7 @@ namespace DecentM.VideoPlayer.Plugins
         {
             this.RenderMetadata(title, uploader, description, viewCount, likeCount);
             this.currentFps = fps;
+            this.subtitleSlot.text = "";
         }
 
         public float PreviousFrameOffset = 0.001f;
@@ -447,6 +452,11 @@ namespace DecentM.VideoPlayer.Plugins
         protected override void OnLoadRequested(VRCUrl url)
         {
             this.status.text = "Checking URL...";
+        }
+
+        protected override void OnLoadRatelimitWaiting()
+        {
+            this.status.text = "Waiting for rate limit...";
         }
 
         protected override void OnLoadApproved(VRCUrl url)
@@ -695,7 +705,6 @@ namespace DecentM.VideoPlayer.Plugins
         protected override void OnSubtitleClear()
         {
             this.animator.SetBool("SubtitlesOn", false);
-            this.subtitleSlot.text = "";
         }
 
         protected override void OnScreenResolutionChange(

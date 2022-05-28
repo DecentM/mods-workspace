@@ -55,6 +55,7 @@ namespace DecentM.VideoPlayer.Plugins
             }
             else
             {
+                this.events.OnLoadRatelimitWaiting();
                 this.ratelimit.RequestPlaybackWindow(this);
             }
         }
