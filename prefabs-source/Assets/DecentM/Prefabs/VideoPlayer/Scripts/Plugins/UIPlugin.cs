@@ -38,6 +38,8 @@ namespace DecentM.VideoPlayer.Plugins
         public Button playButton;
         public Button pauseButton;
         public Button stopButton;
+        public Button framePrevButton;
+        public Button frameNextButton;
 
         [Space]
         public TextMeshProUGUI status;
@@ -366,6 +368,8 @@ namespace DecentM.VideoPlayer.Plugins
                 this.likeCountSlot.text = $"{likeCount} likes";
         }
 
+        private float currentFps = -1;
+
         private void ClearMetadata()
         {
             this.titleSlot.text = "";
@@ -373,6 +377,7 @@ namespace DecentM.VideoPlayer.Plugins
             this.descriptionSlot.text = "";
             this.viewCountSlot.text = "DecentM.VideoPlayer";
             this.likeCountSlot.text = "";
+            this.currentFps = -1;
         }
 
         protected override void OnMetadataChange(
@@ -389,6 +394,26 @@ namespace DecentM.VideoPlayer.Plugins
         )
         {
             this.RenderMetadata(title, uploader, description, viewCount, likeCount);
+            this.currentFps = fps;
+        }
+
+        public float PreviousFrameOffset = 0.001f;
+        public float NextFrameOffset = 0.02f;
+
+        public void OnFramePrevButton()
+        {
+            if (this.currentFps <= 0)
+                return;
+
+            this.system.Seek(this.system.GetTime() - (1 / currentFps) - this.PreviousFrameOffset);
+        }
+
+        public void OnFrameNextButton()
+        {
+            if (this.currentFps <= 0)
+                return;
+
+            this.system.Seek(this.system.GetTime() + (1 / currentFps) + this.NextFrameOffset);
         }
 
         protected override void OnProgress(float timestamp, float duration)
@@ -467,6 +492,8 @@ namespace DecentM.VideoPlayer.Plugins
             this.pauseButton.interactable = false;
             this.stopButton.interactable = false;
             this.progress.interactable = this.selfOwned;
+            this.framePrevButton.interactable = false;
+            this.frameNextButton.interactable = false;
 
             this.urlInput.gameObject.SetActive(this.selfOwned);
             this.enterButton.gameObject.SetActive(this.selfOwned);
@@ -481,6 +508,8 @@ namespace DecentM.VideoPlayer.Plugins
             this.pauseButton.interactable = false;
             this.stopButton.interactable = this.selfOwned;
             this.progress.interactable = false;
+            this.framePrevButton.interactable = false;
+            this.frameNextButton.interactable = false;
 
             this.urlInput.gameObject.SetActive(false);
             this.enterButton.gameObject.SetActive(false);
@@ -495,6 +524,8 @@ namespace DecentM.VideoPlayer.Plugins
             this.pauseButton.interactable = false;
             this.stopButton.interactable = this.selfOwned;
             this.progress.interactable = this.selfOwned;
+            this.framePrevButton.interactable = this.selfOwned && this.currentFps > 0;
+            this.frameNextButton.interactable = this.selfOwned && this.currentFps > 0;
 
             this.urlInput.gameObject.SetActive(false);
             this.enterButton.gameObject.SetActive(false);
@@ -509,6 +540,8 @@ namespace DecentM.VideoPlayer.Plugins
             this.pauseButton.interactable = this.selfOwned && !float.IsInfinity(duration);
             this.stopButton.interactable = this.selfOwned;
             this.progress.interactable = this.selfOwned;
+            this.framePrevButton.interactable = false;
+            this.frameNextButton.interactable = false;
 
             this.urlInput.gameObject.SetActive(false);
             this.enterButton.gameObject.SetActive(false);

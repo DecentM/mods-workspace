@@ -14,7 +14,6 @@ namespace DecentM.VideoPlayer
         public AudioSource[] speakers;
         public ScreenHandler[] screens;
 
-        public int fps = 30;
         public bool muted = false;
         public float volume = 1.0f;
         public float brightness = 1.0f;
@@ -37,7 +36,6 @@ namespace DecentM.VideoPlayer
         {
             this.DisableAllPlayers();
             this.EnablePlayer(0);
-            this.SetFps(this.fps);
             this.SetMuted(this.muted);
             this.SetVolume(this.volume);
             this.SetBrightness(this.brightness);
@@ -68,19 +66,6 @@ namespace DecentM.VideoPlayer
         public void RenderCurrentFrame(RenderTexture texture)
         {
             this.RenderCurrentFrame(texture, 0);
-        }
-
-        [PublicAPI]
-        public int GetFps()
-        {
-            return this.fps;
-        }
-
-        [PublicAPI]
-        public void SetFps(int fps)
-        {
-            this.fps = Mathf.Clamp(fps, this.minFps, this.maxFps);
-            this.events.OnFpsChange(fps);
         }
 
         [PublicAPI]

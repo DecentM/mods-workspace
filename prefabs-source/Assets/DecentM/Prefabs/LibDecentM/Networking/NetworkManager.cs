@@ -112,6 +112,11 @@ namespace DecentM.Network
 
         public override void OnPlayerLeft(VRCPlayerApi player)
         {
+            // the leaving player is null if the local player is leaving.
+            // Don't need to bother with cleanup then, as the scene is being unloaded
+            if (player == null)
+                return;
+
             int id = player.playerId;
             int index = Array.IndexOf(connectionsOwners, id);
             if (index >= 0)
