@@ -500,6 +500,9 @@ namespace DecentM.VideoPlayer.Plugins
 
             this.status.gameObject.SetActive(false);
             this.progress.gameObject.SetActive(false);
+
+            this.subtitlesButton.gameObject.SetActive(false);
+            this.subtitlesToggleButton.gameObject.SetActive(false);
         }
 
         private void LoadingScreen(float duration)
@@ -516,6 +519,9 @@ namespace DecentM.VideoPlayer.Plugins
 
             this.status.gameObject.SetActive(true);
             this.progress.gameObject.SetActive(false);
+
+            this.subtitlesButton.gameObject.SetActive(false);
+            this.subtitlesToggleButton.gameObject.SetActive(false);
         }
 
         private void PausedScreen(float duration)
@@ -532,6 +538,9 @@ namespace DecentM.VideoPlayer.Plugins
 
             this.status.gameObject.SetActive(true);
             this.progress.gameObject.SetActive(!float.IsInfinity(duration));
+
+            this.subtitlesButton.gameObject.SetActive(true);
+            this.subtitlesToggleButton.gameObject.SetActive(true);
         }
 
         private void PlayingScreen(float duration)
@@ -548,6 +557,9 @@ namespace DecentM.VideoPlayer.Plugins
 
             this.status.gameObject.SetActive(true);
             this.progress.gameObject.SetActive(!float.IsInfinity(duration));
+
+            this.subtitlesButton.gameObject.SetActive(true);
+            this.subtitlesToggleButton.gameObject.SetActive(true);
         }
 
         private bool isLoading = false;
