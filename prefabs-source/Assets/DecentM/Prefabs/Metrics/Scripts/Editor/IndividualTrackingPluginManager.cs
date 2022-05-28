@@ -12,8 +12,7 @@ namespace DecentM.Metrics
     {
         public static List<string> CollectInteractionNames()
         {
-            ComponentCollector<PluginType> collector = new ComponentCollector<PluginType>();
-            List<PluginType> plugins = collector.CollectFromActiveScene();
+            List<PluginType> plugins = ComponentCollector<PluginType>.CollectFromActiveScene();
 
             List<string> result = new List<string>();
 

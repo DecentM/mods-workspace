@@ -245,7 +245,17 @@ namespace DecentM.Metrics
             matrix.Add(Metric.Custom, customValues);
 
             List<MetricValue> videoPlayerValues = new List<MetricValue>();
-            videoPlayerValues.Add(new EnumMetricValue("event", typeof(TrackedVideoPlayerEvent)));
+            videoPlayerValues.Add(
+                new StringMetricValue(
+                    "playerName",
+                    IndividualTrackingPluginManager<VideoPlayerTracker>
+                        .CollectInteractionNames()
+                        .ToArray()
+                )
+            );
+            videoPlayerValues.Add(
+                new EnumMetricValue("eventName", typeof(TrackedVideoPlayerEvent))
+            );
             matrix.Add(Metric.VideoPlayer, videoPlayerValues);
 
             List<MetricValue> playerListValues = new List<MetricValue>();
@@ -261,8 +271,7 @@ namespace DecentM.Metrics
 
             List<string> players = new List<string>();
 
-            ComponentCollector<PlayerList> listCollector = new ComponentCollector<PlayerList>();
-            List<PlayerList> playerLists = listCollector.CollectFromActiveScene();
+            List<PlayerList> playerLists = ComponentCollector<PlayerList>.CollectFromActiveScene();
 
             foreach (PlayerList list in playerLists)
             {

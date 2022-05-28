@@ -5,9 +5,9 @@ using UnityEngine.SceneManagement;
 
 namespace DecentM.EditorTools
 {
-    public class ComponentCollector<ComponentType>
+    public static class ComponentCollector<ComponentType>
     {
-        public List<ComponentType> CollectFromActiveScene()
+        public static List<ComponentType> CollectFromActiveScene()
         {
             List<ComponentType> result = new List<ComponentType>();
 

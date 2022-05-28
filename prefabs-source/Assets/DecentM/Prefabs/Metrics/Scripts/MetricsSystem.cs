@@ -7,6 +7,9 @@ using VRC.SDKBase;
 using VRC.SDK3.Video.Components;
 using VRC.SDK3.Components.Video;
 
+using DecentM.VideoRatelimit;
+using DecentM.Collections;
+
 namespace DecentM.Metrics
 {
     public enum Metric
@@ -28,11 +31,12 @@ namespace DecentM.Metrics
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class MetricsSystem : UdonSharpBehaviour
     {
-        public float initialDelaySeconds = 10f;
         public int requeueAttemptsLimit = 2;
         public int discardAttemptsLimit = 6;
 
+        public Queue queue;
         public MetricsEvents events;
+        public VideoRatelimitSystem ratelimit;
 
         [Space]
         public VRCUnityVideoPlayer player;
@@ -41,115 +45,81 @@ namespace DecentM.Metrics
         // 0 - VRCUrl url
         // 1 - int attempts
         // 2 - Metric metric
-        private object[][] queue;
+        // private object[][] queue;
 
         public object[][] GetQueue()
         {
-            return this.queue;
-        }
-
-        [PublicAPI]
-        public void RecordMetric(VRCUrl url, Metric metric)
-        {
-            object[] queueItem = new object[] { url, 0, metric, };
-
-            this.QueuePush(queueItem);
-            this.events.OnMetricQueued(metric);
-        }
-
-        private void QueuePush(object[] queueItem)
-        {
-            if (this.queue == null)
-                this.queue = new object[0][];
-
-            object[][] tmp = new object[this.queue.Length + 1][];
-            Array.Copy(this.queue, 0, tmp, 0, this.queue.Length);
-            tmp[tmp.Length - 1] = queueItem;
-            this.queue = tmp;
-        }
-
-        private object[] QueuePop()
-        {
-            if (this.queue == null || this.queue.Length == 0)
-                return null;
-
-            // Clone the first item from the queue
-            object[] result = new object[] { this.queue[0][0], this.queue[0][1], this.queue[0][2] };
-
-            object[][] tmp = new object[this.queue.Length - 1][];
-            Array.Copy(this.queue, 1, tmp, 0, this.queue.Length - 1);
-            this.queue = tmp;
-
-            return result;
-        }
-
-        private void QueueShift(object[] queueItem)
-        {
-            if (this.queue == null)
-                this.queue = new object[0][];
-
-            object[][] tmp = new object[this.queue.Length + 1][];
-            Array.Copy(this.queue, 0, tmp, 1, this.queue.Length);
-            tmp[0] = queueItem;
-            this.queue = tmp;
-        }
-
-        private object[] GetCurrentItem()
-        {
-            if (this.queue == null || this.queue.Length == 0)
-                return null;
-            return this.queue[0];
+            return (object[][])this.queue.ToArray();
         }
 
         private void Start()
         {
-            this.SendCustomEventDelayedSeconds(nameof(BroadcastInit), this.initialDelaySeconds);
+            if (this.ratelimit == null)
+            {
+                Debug.LogError(
+                    $"The ratelimit object isn't set on this Metrics System: {this.gameObject.name}. This object won't report any metrics."
+                );
+                this.enabled = false;
+                return;
+            }
+
+            this.SendCustomEventDelayedSeconds(nameof(BroadcastInit), 1);
         }
 
         public void BroadcastInit()
         {
             this.events.OnMetricsSystemInit();
-            this.locked = false;
         }
 
-        private bool locked = true;
-        private float elapsed = 0;
-        public float queueProcessIntervalMin = 5.2f;
-        public float queueProcessIntervalMax = 8.5f;
-        private float queueProcessInterval = 10f;
+        [PublicAPI]
+        public void RecordMetric(VRCUrl url, Metric metric)
+        {
+            if (url == null)
+            {
+                Debug.LogWarning(
+                    $"Something tried to queue a null URL by calling RecordMetric(null, {metric})"
+                );
+                return;
+            }
+
+            object[] queueItem = new object[] { url, 0, metric, };
+
+            this.queue.Enqueue(queueItem);
+            this.events.OnMetricQueued(metric);
+        }
+
+        private bool locked = false;
 
         private void FixedUpdate()
         {
             if (this.locked)
                 return;
 
-            this.elapsed += Time.fixedUnscaledDeltaTime;
-            if (this.elapsed > this.queueProcessInterval)
-            {
-                this.elapsed = 0;
-                this.queueProcessInterval = UnityEngine.Random.Range(
-                    this.queueProcessIntervalMin,
-                    this.queueProcessIntervalMax
-                );
-                this.ProcessQueue();
-            }
-        }
-
-        private void ProcessQueue()
-        {
-            if (this.queue == null || this.queue.Length == 0)
+            if (this.queue == null || this.queue.Count == 0)
                 return;
 
+            if (this.queue.Peek() == null)
+            {
+                this.queue.Dequeue();
+                return;
+            }
+
+            this.locked = true;
+            this.ratelimit.RequestPlaybackWindow(this);
+        }
+
+        public void OnPlaybackWindow()
+        {
             this.AttemptDelivery();
         }
 
         private void AttemptDelivery()
         {
-            object[] currentItem = this.GetCurrentItem();
+            object[] currentItem = (object[])this.queue.Dequeue();
+
             if (currentItem == null)
                 return;
 
-            this.locked = true;
             VRCUrl url = (VRCUrl)currentItem[0];
             int attempts = (int)currentItem[1];
             Metric metric = (Metric)currentItem[2];
@@ -158,7 +128,7 @@ namespace DecentM.Metrics
             this.events.OnMetricDeliveryAttempt(metric, attempts);
 
             currentItem = new object[] { url, attempts + 1, metric };
-            this.queue[0] = currentItem;
+            this.queue.Shift(currentItem);
         }
 
         public override void OnVideoEnd()
@@ -194,7 +164,7 @@ namespace DecentM.Metrics
 
         private void HandleMetricSubmitted()
         {
-            object[] currentItem = this.QueuePop();
+            object[] currentItem = (object[])this.queue.Dequeue();
             if (currentItem == null)
                 return;
 
@@ -207,7 +177,7 @@ namespace DecentM.Metrics
 
         private void DiscardCurrentItem()
         {
-            object[] currentItem = this.QueuePop();
+            object[] currentItem = (object[])this.queue.Dequeue();
             if (currentItem == null)
                 return;
 
@@ -220,7 +190,7 @@ namespace DecentM.Metrics
 
         private void RequeueCurrentItem()
         {
-            object[] currentItem = this.QueuePop();
+            object[] currentItem = (object[])this.queue.Dequeue();
             if (currentItem == null)
                 return;
 
@@ -228,13 +198,13 @@ namespace DecentM.Metrics
             int attempts = (int)currentItem[1];
             Metric metric = (Metric)currentItem[2];
 
-            this.QueuePush(currentItem);
+            this.queue.Enqueue(currentItem);
             this.events.OnMetricRequeued(metric, attempts);
         }
 
         private void RetryCurrentItem()
         {
-            object[] currentItem = this.GetCurrentItem();
+            object[] currentItem = (object[])this.queue.Peek();
             if (currentItem == null)
                 return;
 
@@ -249,7 +219,7 @@ namespace DecentM.Metrics
         {
             this.player.Stop();
 
-            object[] currentItem = this.GetCurrentItem();
+            object[] currentItem = (object[])this.queue.Peek();
             if (currentItem == null)
                 return;
 

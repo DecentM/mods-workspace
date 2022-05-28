@@ -43,5 +43,19 @@ namespace DecentM.Collections
 
             return item;
         }
+
+        public void Shift(object item)
+        {
+            if (this.value == null || this.value.Length == 0)
+            {
+                this.value = new object[] { item };
+                return;
+            }
+
+            object[] tmp = new object[this.value.Length + 1];
+            Array.Copy(this.value, 0, tmp, 1, this.value.Length);
+            tmp[0] = item;
+            this.value = tmp;
+        }
     }
 }

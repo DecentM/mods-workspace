@@ -13,8 +13,7 @@ namespace DecentM.Metrics
     {
         public static void SetVersionData()
         {
-            ComponentCollector<MetricsUI> collector = new ComponentCollector<MetricsUI>();
-            List<MetricsUI> uis = collector.CollectFromActiveScene();
+            List<MetricsUI> uis = ComponentCollector<MetricsUI>.CollectFromActiveScene();
 
             foreach (MetricsUI ui in uis)
             {

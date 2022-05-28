@@ -17,6 +17,18 @@ namespace DecentM.Collections.Tests
         }
 
         [Test]
+        public void Shift()
+        {
+            Queue queue = new Queue();
+
+            queue.Enqueue("a");
+            queue.Shift("b");
+
+            Assert.AreEqual(1, queue.Count);
+            Assert.AreEqual("a", queue.Peek());
+        }
+
+        [Test]
         public void Dequeue()
         {
             Queue queue = new Queue();

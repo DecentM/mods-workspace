@@ -15,8 +15,8 @@ namespace DecentM.VideoPlayer.EditorTools
     {
         private List<string> GetAllUrlsInScene()
         {
-            ComponentCollector<VideoPlaylist> collector = new ComponentCollector<VideoPlaylist>();
-            List<VideoPlaylist> playlists = collector.CollectFromActiveScene();
+            List<VideoPlaylist> playlists =
+                ComponentCollector<VideoPlaylist>.CollectFromActiveScene();
 
             List<string> urls = new List<string>();
 
@@ -34,14 +34,6 @@ namespace DecentM.VideoPlayer.EditorTools
 
         protected override bool OnPerformFixes()
         {
-            return true;
-
-            List<string> urls = this.GetAllUrlsInScene();
-
-            // bool accepted = VideoMetadataStore.Refresh(urls.ToArray());
-
-            // if (!accepted) return false;
-
             return true;
         }
 

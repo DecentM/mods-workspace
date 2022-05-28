@@ -1,19 +1,43 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor;
-using UnityEditor.SceneManagement;
+
 using DecentM.EditorTools;
 using DecentM.Metrics.Plugins;
+using DecentM.VideoRatelimit;
 
 namespace DecentM.Metrics
 {
     public class MetricsAutoFixer : AutoSceneFixer
     {
+        private void FixRatelimits()
+        {
+            List<VideoRatelimitSystem> ratelimits =
+                ComponentCollector<VideoRatelimitSystem>.CollectFromActiveScene();
+
+            if (ratelimits.Count <= 0)
+                return;
+
+            VideoRatelimitSystem ratelimit = ratelimits[0];
+
+            if (ratelimit == null)
+                return;
+
+            List<MetricsSystem> metricsSystems =
+                ComponentCollector<MetricsSystem>.CollectFromActiveScene();
+
+            foreach (MetricsSystem metricsSystem in metricsSystems)
+            {
+                metricsSystem.ratelimit = ratelimit;
+
+                Inspector.SaveModifications(metricsSystem);
+            }
+        }
+
         protected override bool OnPerformFixes()
         {
-            ComponentCollector<MetricsUI> uiCollector = new ComponentCollector<MetricsUI>();
-            List<MetricsUI> uis = uiCollector.CollectFromActiveScene();
+            this.FixRatelimits();
+
+            List<MetricsUI> uis = ComponentCollector<MetricsUI>.CollectFromActiveScene();
 
             // Metrics not being installed isn't an error, it just means the user doesn't want to collect metrics from this scene
             if (uis.Count == 0)
@@ -31,9 +55,8 @@ namespace DecentM.Metrics
 
             #region Individual plugins
 
-            ComponentCollector<IndividualTrackingPlugin> collector =
-                new ComponentCollector<IndividualTrackingPlugin>();
-            List<IndividualTrackingPlugin> plugins = collector.CollectFromActiveScene();
+            List<IndividualTrackingPlugin> plugins =
+                ComponentCollector<IndividualTrackingPlugin>.CollectFromActiveScene();
 
             foreach (IndividualTrackingPlugin plugin in plugins)
             {
@@ -50,9 +73,8 @@ namespace DecentM.Metrics
 
             #region Performance metrics
 
-            ComponentCollector<PerformanceGovernor> pgCollector =
-                new ComponentCollector<PerformanceGovernor>();
-            List<PerformanceGovernor> governors = pgCollector.CollectFromActiveScene();
+            List<PerformanceGovernor> governors =
+                ComponentCollector<PerformanceGovernor>.CollectFromActiveScene();
             PerformanceGovernor governor = null;
 
             if (governors.Count == 0)
@@ -103,9 +125,8 @@ namespace DecentM.Metrics
 
             #region Custom Event Plugin
 
-            ComponentCollector<CustomEventTrackingPlugin> ctCollector =
-                new ComponentCollector<CustomEventTrackingPlugin>();
-            List<CustomEventTrackingPlugin> ctPlugins = ctCollector.CollectFromActiveScene();
+            List<CustomEventTrackingPlugin> ctPlugins =
+                ComponentCollector<CustomEventTrackingPlugin>.CollectFromActiveScene();
 
             foreach (CustomEventTrackingPlugin plugin in ctPlugins)
             {

@@ -5,11 +5,8 @@ using UnityEngine;
 
 namespace DecentM.Collections
 {
-#if COMPILER_UDONSHARP
+    [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public abstract class Collection : UdonSharpBehaviour
-#else
-    public abstract class Collection
-#endif
     {
         protected object[] value = new object[0];
 

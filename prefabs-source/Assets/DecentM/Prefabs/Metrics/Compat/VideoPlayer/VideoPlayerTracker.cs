@@ -13,40 +13,60 @@ namespace DecentM.Metrics.Plugins
         VodLoaded,
         LiveLoaded,
         AllPlayersFailed,
+        Retry,
+        RetryAbort,
     }
 
     public class VideoPlayerTracker : IndividualTrackingPlugin
     {
-        private void TrackEnum(TrackedVideoPlayerEvent enumType)
+        private void TrackEvent(string eventName)
         {
-            VRCUrl url = this.urlStore.GetVideoPlayerUrl(nameof(enumType));
+            VRCUrl url = this.urlStore.GetVideoPlayerUrl(this.metricName, eventName);
+
+            if (url == null)
+            {
+                UnityEngine.Debug.LogWarning(
+                    $"Didn't find a URL for {this.metricName} {eventName}"
+                );
+                return;
+            }
 
             this.system.RecordMetric(url, Metric.VideoPlayer);
         }
 
         public void OnPlay()
         {
-            this.TrackEnum(TrackedVideoPlayerEvent.Play);
+            this.TrackEvent(nameof(TrackedVideoPlayerEvent.Play));
         }
 
         public void OnStop()
         {
-            this.TrackEnum(TrackedVideoPlayerEvent.Stop);
+            this.TrackEvent(nameof(TrackedVideoPlayerEvent.Stop));
         }
 
         public void OnVodLoaded()
         {
-            this.TrackEnum(TrackedVideoPlayerEvent.VodLoaded);
+            this.TrackEvent(nameof(TrackedVideoPlayerEvent.VodLoaded));
         }
 
         public void OnLiveLoaded()
         {
-            this.TrackEnum(TrackedVideoPlayerEvent.LiveLoaded);
+            this.TrackEvent(nameof(TrackedVideoPlayerEvent.LiveLoaded));
         }
 
         public void OnAllPlayersFailed()
         {
-            this.TrackEnum(TrackedVideoPlayerEvent.AllPlayersFailed);
+            this.TrackEvent(nameof(TrackedVideoPlayerEvent.AllPlayersFailed));
+        }
+
+        public void OnAutoRetry()
+        {
+            this.TrackEvent(nameof(TrackedVideoPlayerEvent.Retry));
+        }
+
+        public void OnAutoRetryAbort()
+        {
+            this.TrackEvent(nameof(TrackedVideoPlayerEvent.RetryAbort));
         }
     }
 }

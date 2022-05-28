@@ -12749,6 +12749,11 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 384273534}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &384273536 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 384273534}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &459494607
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -27572,7 +27577,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1280541792}
-  - {fileID: 384273535}
+  - {fileID: 384273536}
   - {fileID: 1316902704}
   m_Father: {fileID: 0}
   m_RootOrder: 5

@@ -1,6 +1,8 @@
 ﻿using UdonSharp;
 using UnityEngine;
 
+using DecentM.Network;
+
 namespace DecentM
 {
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
@@ -13,5 +15,6 @@ namespace DecentM
         public Tools.ArrayTools arrayTools;
         public PerformanceGovernor performanceGovernor;
         public UdonHashLib hash;
+        public NetworkInterface net;
     }
 }

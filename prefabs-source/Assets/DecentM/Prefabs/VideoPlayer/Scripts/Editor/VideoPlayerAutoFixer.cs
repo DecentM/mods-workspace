@@ -2,6 +2,7 @@
 
 using DecentM.EditorTools;
 using DecentM.VideoPlayer.Plugins;
+using DecentM.VideoRatelimit;
 
 namespace DecentM.VideoPlayer
 {
@@ -9,8 +10,10 @@ namespace DecentM.VideoPlayer
     {
         protected override bool OnPerformFixes()
         {
-            ComponentCollector<VideoPlayerUI> collector = new ComponentCollector<VideoPlayerUI>();
-            List<VideoPlayerUI> players = collector.CollectFromActiveScene();
+            this.FixRatelimits();
+
+            List<VideoPlayerUI> players =
+                ComponentCollector<VideoPlayerUI>.CollectFromActiveScene();
 
             foreach (VideoPlayerUI player in players)
             {
@@ -28,6 +31,30 @@ namespace DecentM.VideoPlayer
             }
 
             return true;
+        }
+
+        private void FixRatelimits()
+        {
+            List<VideoRatelimitSystem> ratelimits =
+                ComponentCollector<VideoRatelimitSystem>.CollectFromActiveScene();
+
+            if (ratelimits.Count <= 0)
+                return;
+
+            VideoRatelimitSystem ratelimit = ratelimits[0];
+
+            if (ratelimit == null)
+                return;
+
+            List<LoadRequestHandlerPlugin> loadHandlers =
+                ComponentCollector<LoadRequestHandlerPlugin>.CollectFromActiveScene();
+
+            foreach (LoadRequestHandlerPlugin loadHandler in loadHandlers)
+            {
+                loadHandler.ratelimit = ratelimit;
+
+                Inspector.SaveModifications(loadHandler);
+            }
         }
     }
 }

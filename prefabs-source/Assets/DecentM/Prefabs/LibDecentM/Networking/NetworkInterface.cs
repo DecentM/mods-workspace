@@ -8,6 +8,8 @@ namespace DecentM.Network
         public const int MAX_MESSAGE_SIZE = 512;
 
         public NetworkManager manager;
+        public ByteBufferReader reader;
+        public ByteBufferWriter writer;
 
         public bool IsInitComplete()
         {

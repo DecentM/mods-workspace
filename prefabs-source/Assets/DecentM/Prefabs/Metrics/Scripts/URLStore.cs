@@ -255,11 +255,15 @@ namespace DecentM.Metrics
             );
         }
 
-        public VRCUrl GetVideoPlayerUrl(string eventName)
+        public VRCUrl GetVideoPlayerUrl(string playerName, string eventName)
         {
             return this.GetMetricUrl(
                 Metric.VideoPlayer,
-                new object[][] { new object[] { "eventName", eventName } }
+                new object[][]
+                {
+                    new object[] { "playerName", playerName },
+                    new object[] { "eventName", eventName }
+                }
             );
         }
 

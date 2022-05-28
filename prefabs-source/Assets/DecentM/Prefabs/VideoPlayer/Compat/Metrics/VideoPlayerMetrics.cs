@@ -41,5 +41,15 @@ namespace DecentM.VideoPlayer.Plugins
         {
             this.tracker.OnAllPlayersFailed();
         }
+
+        protected override void OnAutoRetry(int attempt)
+        {
+            this.tracker.OnAutoRetry();
+        }
+
+        protected override void OnAutoRetryAbort()
+        {
+            this.tracker.OnAutoRetryAbort();
+        }
     }
 }
