@@ -2,14 +2,14 @@
 using UnityEngine;
 using VRC.SDKBase;
 
-// using VRCAudioLink;
+using VRCAudioLink;
 
 [UdonBehaviourSyncMode(BehaviourSyncMode.Manual)]
 public class AudioLinkHapticsVolume : UdonSharpBehaviour
 {
-    // [Header("References")]
-    // [Tooltip("The AudioLink game object in the world")]
-    // public AudioLink audioLink;
+    [Header("References")]
+    [Tooltip("The AudioLink game object in the world")]
+    public AudioLink audioLink;
 
     [Header("Haptics settings (values range from 0 to 1)")]
     [Tooltip(
@@ -70,7 +70,7 @@ public class AudioLinkHapticsVolume : UdonSharpBehaviour
         }
     }
 
-    /* private void Update()
+    private void Update()
     {
         Material alMat = this.audioLink.audioMaterial;
 
@@ -96,7 +96,7 @@ public class AudioLinkHapticsVolume : UdonSharpBehaviour
             || samples1L == null
             || samples2L == null
             || samples3L == null
-           )
+        )
         {
             return;
         }
@@ -111,14 +111,62 @@ public class AudioLinkHapticsVolume : UdonSharpBehaviour
         float band2L = samples2L[0] * this.audioLink.treble * this.audioLink.gain;
         float band3L = samples3L[0] * this.audioLink.treble * this.audioLink.gain;
 
-        this.DoHaptics(VRC_Pickup.PickupHand.Left, band0L, this.audioLink.threshold0, this.band0Amplitude, this.band0Frequency);
-        this.DoHaptics(VRC_Pickup.PickupHand.Left, band1L, this.audioLink.threshold1, this.band1Amplitude, this.band1Frequency);
-        this.DoHaptics(VRC_Pickup.PickupHand.Left, band2L, this.audioLink.threshold2, this.band2Amplitude, this.band2Frequency);
-        this.DoHaptics(VRC_Pickup.PickupHand.Left, band3L, this.audioLink.threshold3, this.band3Amplitude, this.band3Frequency);
+        this.DoHaptics(
+            VRC_Pickup.PickupHand.Left,
+            band0L,
+            this.audioLink.threshold0,
+            this.band0Amplitude,
+            this.band0Frequency
+        );
+        this.DoHaptics(
+            VRC_Pickup.PickupHand.Left,
+            band1L,
+            this.audioLink.threshold1,
+            this.band1Amplitude,
+            this.band1Frequency
+        );
+        this.DoHaptics(
+            VRC_Pickup.PickupHand.Left,
+            band2L,
+            this.audioLink.threshold2,
+            this.band2Amplitude,
+            this.band2Frequency
+        );
+        this.DoHaptics(
+            VRC_Pickup.PickupHand.Left,
+            band3L,
+            this.audioLink.threshold3,
+            this.band3Amplitude,
+            this.band3Frequency
+        );
 
-        this.DoHaptics(VRC_Pickup.PickupHand.Right, band0R, this.audioLink.threshold0, this.band0Amplitude, this.band0Frequency);
-        this.DoHaptics(VRC_Pickup.PickupHand.Right, band1R, this.audioLink.threshold1, this.band1Amplitude, this.band1Frequency);
-        this.DoHaptics(VRC_Pickup.PickupHand.Right, band2R, this.audioLink.threshold2, this.band2Amplitude, this.band2Frequency);
-        this.DoHaptics(VRC_Pickup.PickupHand.Right, band3R, this.audioLink.threshold3, this.band3Amplitude, this.band3Frequency);
-    } */
+        this.DoHaptics(
+            VRC_Pickup.PickupHand.Right,
+            band0R,
+            this.audioLink.threshold0,
+            this.band0Amplitude,
+            this.band0Frequency
+        );
+        this.DoHaptics(
+            VRC_Pickup.PickupHand.Right,
+            band1R,
+            this.audioLink.threshold1,
+            this.band1Amplitude,
+            this.band1Frequency
+        );
+        this.DoHaptics(
+            VRC_Pickup.PickupHand.Right,
+            band2R,
+            this.audioLink.threshold2,
+            this.band2Amplitude,
+            this.band2Frequency
+        );
+        this.DoHaptics(
+            VRC_Pickup.PickupHand.Right,
+            band3R,
+            this.audioLink.threshold3,
+            this.band3Amplitude,
+            this.band3Frequency
+        );
+    }
 }

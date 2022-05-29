@@ -1,3 +1,6 @@
+#ifndef AUDIOLINK_CGINC_INCLUDED
+#define AUDIOLINK_CGINC_INCLUDED
+
 // Map of where features in AudioLink are.
 #define ALPASS_DFT                      uint2(0,4)  //Size: 128, 2
 #define ALPASS_WAVEFORM                 uint2(0,6)  //Size: 128, 16
@@ -16,8 +19,11 @@
 #define ALPASS_THEME_COLOR1             uint2(1,23)
 #define ALPASS_THEME_COLOR2             uint2(2,23)
 #define ALPASS_THEME_COLOR3             uint2(3,23)
+#define ALPASS_GENERALVU_UNIX_DAYS      uint2(5,23)
+#define ALPASS_GENERALVU_UNIX_SECONDS   uint2(6,23)
+
 #define ALPASS_CCINTERNAL               uint2(12,22) //Size: 12, 2
-#define ALPASS_CCCOLORS                 uint2(24,22) //Size: 12, 1 (Note Color #0 is always black, Colors start at 1)
+#define ALPASS_CCCOLORS                 uint2(25,22) //Size: 12, 1 (Note Color #0 is always black, Colors start at 1)
 #define ALPASS_CCSTRIP                  uint2(0,24)  //Size: 128, 1
 #define ALPASS_CCLIGHTS                 uint2(0,25)  //Size: 128, 2
 #define ALPASS_AUTOCORRELATOR           uint2(0,27)  //Size: 128, 1
@@ -45,13 +51,10 @@
 #define AUDIOLINK_DELAY_COEFFICIENT_MAX 0.9
 #define AUDIOLINK_DFT_Q                 4.0
 #define AUDIOLINK_TREBLE_CORRECTION     5.0
+#define AUDIOLINK_4BAND_TARGET_RATE     90.0
 
 // ColorChord constants
 #define COLORCHORD_EMAXBIN              192
-#define COLORCHORD_IIR_DECAY_1          0.90
-#define COLORCHORD_IIR_DECAY_2          0.85
-#define COLORCHORD_CONSTANT_DECAY_1     0.01
-#define COLORCHORD_CONSTANT_DECAY_2     0.0
 #define COLORCHORD_NOTE_CLOSEST         3.0
 #define COLORCHORD_NEW_NOTE_GAIN        8.0
 #define COLORCHORD_MAX_NOTES            10
@@ -198,9 +201,67 @@ float4 AudioLinkGetAmplitudeAtFrequency(float hertz)
     return AudioLinkLerpMultiline(ALPASS_DFT + float2(note, 0));
 }
 
-// Sample the amplitude of a given semitone in an octave. Octave is in [0; 9] while note is [0; 11].
-float AudioLinkGetAmplitudeAtNote(float octave, float note)
+// Sample the amplitude of a given quartertone in an octave. Octave is in [0; 9] while quarter is [0; 23].
+float4 AudioLinkGetAmplitudeAtQuarterNote(float octave, float quarter)
 {
-    float quarter = note * 2.0;
     return AudioLinkLerpMultiline(ALPASS_DFT + float2(octave * AUDIOLINK_EXPBINS + quarter, 0));
 }
+
+// Sample the amplitude of a given semitone in an octave. Octave is in [0; 9] while note is [0; 11].
+float4 AudioLinkGetAmplitudeAtNote(float octave, float note)
+{
+    float quarter = note * 2.0;
+    return AudioLinkGetAmplitudeAtQuarterNote(octave, quarter);
+}
+
+// Sample the amplitude of a given quartertone across all octaves. Quarter is [0; 23].
+float4 AudioLinkGetAmplitudesAtQuarterNote(float quarter)
+{
+    float amplitude = 0;
+    UNITY_UNROLL
+    for (int i = 0; i < AUDIOLINK_EXPOCT; i++)
+    {
+        amplitude += AudioLinkGetAmplitudeAtQuarterNote(i,quarter);
+    }
+    return amplitude;
+}
+
+// Sample the amplitude of a given semitone across all octaves. Note is [0; 11].
+float4 AudioLinkGetAmplitudesAtNote(float note)
+{
+    float quarter = note * 2.0;
+    return AudioLinkGetAmplitudesAtQuarterNote(quarter);
+}
+
+// Get a reasonable drop-in replacement time value for _Time.y with the
+// given chronotensity index [0; 7] and AudioLink band [0; 3].
+float AudioLinkGetChronoTime(uint index, uint band)
+{
+    return (AudioLinkDecodeDataAsUInt(ALPASS_CHRONOTENSITY + uint2(index, band))) / 100000.0;
+}
+
+// Get a chronotensity value in the interval [0; 1], modulated by the speed input, 
+// with the given chronotensity index [0; 7] and AudioLink band [0; 3].
+float AudioLinkGetChronoTimeNormalized(uint index, uint band, float speed)
+{
+    return frac(AudioLinkGetChronoTime(index, band) * speed);
+}
+
+// Get a chronotensity value in the interval [0; interval], modulated by the speed input, 
+// with the given chronotensity index [0; 7] and AudioLink band [0; 3].
+float AudioLinkGetChronoTimeInterval(uint index, uint band, float speed, float interval)
+{
+    return AudioLinkGetChronoTimeNormalized(index, band, speed) * interval;
+}
+
+// Get time of day. The return value is a float4 with the values float3(hour, minute, second).
+float3 AudioLinkGetTimeOfDay()
+{
+    float value = AudioLinkDecodeDataAsSeconds(ALPASS_GENERALVU_UNIX_SECONDS);
+    float hour = floor(value / 3600.0);
+    float minute = floor(value / 60.0) % 60.0;
+    float second = value % 60.0;
+    return float3(hour, minute, second);
+}
+
+#endif
