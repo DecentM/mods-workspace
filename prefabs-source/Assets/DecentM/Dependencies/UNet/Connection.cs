@@ -3,7 +3,7 @@ using UdonSharp;
 using UnityEngine;
 using VRC.SDKBase;
 
-namespace DecentM.Network
+namespace UNet
 {
     /// <summary>
     /// It is a bridge between all clients, receives and sends data using UdonSync.

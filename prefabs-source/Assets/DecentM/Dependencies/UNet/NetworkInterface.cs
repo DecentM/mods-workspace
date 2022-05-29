@@ -1,7 +1,7 @@
 ﻿using UdonSharp;
 using VRC.SDKBase;
 
-namespace DecentM.Network
+namespace UNet
 {
     public class NetworkInterface : UdonSharpBehaviour
     {

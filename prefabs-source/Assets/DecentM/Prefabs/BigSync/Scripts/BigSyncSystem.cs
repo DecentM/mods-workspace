@@ -4,9 +4,7 @@ using UdonSharp;
 using UnityEngine;
 using VRC.SDKBase;
 using VRC.Udon;
-using DecentM.Network;
-using DecentM;
-using TMPro;
+using UNet;
 
 namespace DecentM.BigSync
 {

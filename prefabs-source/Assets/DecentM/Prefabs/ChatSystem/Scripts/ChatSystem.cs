@@ -3,7 +3,7 @@ using UnityEngine;
 using VRC.SDKBase;
 using VRC.Udon;
 
-using DecentM.Network;
+using UNet;
 
 namespace DecentM.Chat
 {

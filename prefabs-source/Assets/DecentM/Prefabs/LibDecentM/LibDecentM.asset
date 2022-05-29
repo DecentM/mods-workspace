@@ -401,7 +401,7 @@ MonoBehaviour:
       Data: 23|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
-      Data: DecentM.Network.NetworkInterface, Assembly-CSharp
+      Data: UNet.NetworkInterface, Assembly-CSharp
     - Name: 
       Entry: 8
       Data: 

@@ -2,7 +2,7 @@
 using UdonSharp;
 using UnityEngine;
 
-namespace DecentM.Network
+namespace UNet
 {
     /// <summary>
     /// Handles network messages on connection

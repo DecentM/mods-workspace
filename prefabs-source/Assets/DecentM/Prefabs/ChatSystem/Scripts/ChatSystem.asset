@@ -62,7 +62,7 @@ MonoBehaviour:
       Data: 3|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
-      Data: DecentM.Network.NetworkInterface, Assembly-CSharp
+      Data: UNet.NetworkInterface, Assembly-CSharp
     - Name: 
       Entry: 8
       Data: 
@@ -122,7 +122,7 @@ MonoBehaviour:
       Data: 7|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
-      Data: DecentM.Network.ByteBufferReader, Assembly-CSharp
+      Data: UNet.ByteBufferReader, Assembly-CSharp
     - Name: 
       Entry: 8
       Data: 
@@ -176,7 +176,7 @@ MonoBehaviour:
       Data: 10|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
-      Data: DecentM.Network.ByteBufferWriter, Assembly-CSharp
+      Data: UNet.ByteBufferWriter, Assembly-CSharp
     - Name: 
       Entry: 8
       Data: 

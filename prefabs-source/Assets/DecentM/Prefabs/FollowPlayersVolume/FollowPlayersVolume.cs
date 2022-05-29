@@ -48,7 +48,7 @@ public class FollowPlayersVolume : UdonSharpBehaviour
 
     private GameObject SpawnLinkClone()
     {
-        GameObject playerLink = VRCInstantiate(this.link);
+        GameObject playerLink = Instantiate(this.link);
         playerLink.SetActive(true);
         playerLink.transform.SetPositionAndRotation(
             this.link.transform.position,

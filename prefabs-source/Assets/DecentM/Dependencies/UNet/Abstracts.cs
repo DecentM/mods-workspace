@@ -1,6 +1,6 @@
 ﻿using UdonSharp;
 
-namespace DecentM.Network
+namespace UNet
 {
     public abstract class NetworkEventsListener : UdonSharpBehaviour
     {

@@ -6,7 +6,7 @@ using VRC.SDKBase;
 using VRC.Udon;
 using TMPro;
 
-using DecentM.Network;
+using UNet;
 
 namespace DecentM.VideoPlayer.Plugins
 {

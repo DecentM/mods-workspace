@@ -1,7 +1,7 @@
 ﻿using UdonSharp;
 using UnityEngine;
 
-using DecentM.Network;
+using UNet;
 
 namespace DecentM
 {

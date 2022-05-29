@@ -3,7 +3,7 @@ using UdonSharp;
 using UnityEngine;
 using VRC.SDKBase;
 
-namespace DecentM.Network
+namespace UNet
 {
     internal enum PacketTarget
     {
