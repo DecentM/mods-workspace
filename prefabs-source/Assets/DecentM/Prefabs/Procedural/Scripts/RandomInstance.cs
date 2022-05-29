@@ -19,14 +19,9 @@ namespace DecentM.Tools
     {
         private int seed = -1;
 
-        public bool SetSeed(int seed)
+        public void SetSeed(int seed)
         {
-            if (this.seed >= 0)
-                return false;
-
             this.seed = seed;
-
-            return true;
         }
 
         private bool initialised
