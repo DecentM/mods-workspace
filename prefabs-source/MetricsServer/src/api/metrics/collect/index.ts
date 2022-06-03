@@ -1,7 +1,7 @@
 import StatsD from 'hot-shots'
 import hasha from 'hasha'
 
-import {config} from '../config'
+import {config} from '../../../config'
 
 import {trackEvent} from './ga'
 
