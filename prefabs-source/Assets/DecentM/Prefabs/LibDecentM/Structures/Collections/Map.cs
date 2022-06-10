@@ -4,7 +4,7 @@ namespace DecentM.Collections
 {
     public class Map : Collection
     {
-        private object[] keys;
+        private object[] keys = new object[0];
 
         public bool Add(object key, object value)
         {
@@ -39,12 +39,18 @@ namespace DecentM.Collections
         {
             int index = this.IndexOf(this.keys, key);
 
+            if (index == -1)
+                return null;
+
             return this.ElementAt(this.value, index);
         }
 
         public object KeyOf(object value)
         {
             int index = this.IndexOf(this.value, value);
+
+            if (index == -1)
+                return null;
 
             return this.ElementAt(this.keys, index);
         }

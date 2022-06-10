@@ -47,13 +47,10 @@ namespace DecentM.Collections
             if (this.Contains(item))
                 return false;
 
-            object[] tmp = new object[value.Length + 1];
-            Array.Copy(this.value, 0, tmp, 0, index);
-            Array.Copy(this.value, index, tmp, index + 1, this.value.Length - index);
-            tmp[index] = item;
-            this.value = tmp;
+            int length = this.value.Length;
+            this.value = this.Insert(this.value, index, item);
 
-            return true;
+            return this.value.Length == length + 1;
         }
 
         public void InsertRange(int startIndex, object[] items)

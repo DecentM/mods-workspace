@@ -67,10 +67,7 @@ namespace DecentM.Collections
                 return;
             }
 
-            object[] tmp = new object[this.value.Length + 1];
-            Array.Copy(this.value, 0, tmp, 1, this.value.Length);
-            tmp[0] = item;
-            this.value = tmp;
+            this.value = this.Insert(this.value, 0, item);
         }
     }
 }
