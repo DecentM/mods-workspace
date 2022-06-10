@@ -14,11 +14,18 @@ type Config = {
   }
 
   api: {
+    trustProxy: boolean
     rateLimit: {
       enabled: boolean
       max: number
       window: string
+      allowList: string[]
     }
+  }
+
+  unsplash: {
+    accessKey: string
+    secretKey: string
   }
 }
 
@@ -45,10 +52,17 @@ export const config: Config = {
   },
 
   api: {
+    trustProxy: process.env.API_TRUST_PROXY === 'true',
     rateLimit: {
       enabled: process.env.API_RATE_LIMIT_ENABLED === 'true',
       max: Number.parseInt(process.env.API_RATE_LIMIT_MAX, 10),
       window: process.env.API_RATE_LIMIT_WINDOW,
+      allowList: process.env.API_RATE_LIMIT_ALLOWLIST.split(','),
     },
+  },
+
+  unsplash: {
+    accessKey: process.env.UNSPLASH_ACCESS_KEY,
+    secretKey: process.env.UNSPLASH_SECRET_KEY,
   },
 }

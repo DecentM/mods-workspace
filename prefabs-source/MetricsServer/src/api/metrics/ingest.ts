@@ -12,11 +12,11 @@ export type MetricsParamsWithValue = {
 }
 
 export const register: FastifyPluginAsync<FastifyPluginOptions> = async (instance) => {
-  instance.head('metrics/ingest/:name', async (req, res) => {
+  instance.head('/metrics/ingest/:name', async (req, res) => {
     await res.status(200).send()
   })
 
-  instance.get<{Params: MetricsParamsWithValue}>('metrics/ingest/:name', async (req, res) => {
+  instance.get<{Params: MetricsParamsWithValue}>('/metrics/ingest/:name', async (req, res) => {
     const blankVideo = await fs.promises.readFile(path.join(__dirname, '../..', 'static/blank.mp4'))
     await res.header('Content-Type', 'video/mp4').send(blankVideo)
 
