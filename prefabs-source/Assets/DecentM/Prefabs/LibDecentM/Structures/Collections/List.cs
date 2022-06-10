@@ -1,39 +1,35 @@
 ﻿using System;
-using UdonSharp;
-using UnityEngine;
-using VRC.SDKBase;
-using VRC.Udon;
-using System.Collections;
 
 namespace DecentM.Collections
 {
     public class List : Collection
     {
+        public override int Count
+        {
+            get { return this.value.Length; }
+        }
+
+        public override object[] ToArray()
+        {
+            return this.value;
+        }
+
+        public override void FromArray(object[] newValue)
+        {
+            this.value = newValue;
+        }
+
         public object ElementAt(int index)
         {
-            if (index < 0 || index >= this.value.Length)
-                return null;
-
-            return this.value[index];
+            return this.ElementAt(this.value, index);
         }
 
         public bool Add(object item)
         {
-            if (this.Contains(item))
-                return false;
+            int length = this.value.Length;
+            this.value = this.Add(this.value, item);
 
-            if (this.value == null || this.value.Length == 0)
-            {
-                this.value = new object[] { item };
-                return true;
-            }
-
-            object[] tmp = new object[value.Length + 1];
-            Array.Copy(this.value, tmp, this.value.Length);
-            tmp[tmp.Length - 1] = item;
-            this.value = tmp;
-
-            return true;
+            return this.value.Length == length + 1;
         }
 
         public void AddRange(object[] items)
@@ -70,29 +66,23 @@ namespace DecentM.Collections
             }
         }
 
+        public bool Contains(object item)
+        {
+            return this.Contains(this.value, item);
+        }
+
         public int IndexOf(object item)
         {
-            for (int i = 0; i < this.value.Length; i++)
-            {
-                object valueItem = this.value[i];
-                if (valueItem == item)
-                    return i;
-            }
-
-            return -1;
+            return this.IndexOf(this.value, item);
         }
 
         public bool RemoveAt(int index)
         {
-            if (index < 0 || index >= this.value.Length)
-                return false;
+            int length = this.value.Length;
+            this.value = this.RemoveAt(this.value, index);
 
-            object[] tmp = new object[value.Length - 1];
-            Array.Copy(this.value, tmp, index);
-            Array.Copy(this.value, index + 1, tmp, index, this.value.Length - index - 1);
-            this.value = tmp;
-
-            return true;
+            // Return success if the result array is one smaller than the previous value
+            return this.value.Length == length - 1;
         }
 
         public bool Remove(object item)

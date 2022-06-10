@@ -1,4 +1,5 @@
-﻿using UdonSharp;
+﻿using System;
+using UdonSharp;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,35 +11,61 @@ namespace DecentM.Collections
     {
         protected object[] value = new object[0];
 
-        public bool Contains(object item)
+        protected bool Contains(object[] array, object item)
         {
-            bool result = false;
+            return this.IndexOf(array, item) >= 0;
+        }
 
-            foreach (object valueItem in this.value)
+        protected int IndexOf(object[] array, object item)
+        {
+            for (int i = 0; i < array.Length; i++)
             {
-                if (valueItem == item)
-                    return true;
+                if (array[i] == item)
+                    return i;
             }
 
-            return result;
+            return -1;
         }
 
-        public int Count
+        protected object ElementAt(object[] array, int index)
         {
-            get { return this.value.Length; }
+            if (index < 0 || index >= array.Length)
+                return null;
+
+            return array[index];
         }
 
-        public object[] ToArray()
+        protected object[] RemoveAt(object[] array, int index)
         {
-            return this.value;
+            if (index < 0 || index >= array.Length)
+                return array;
+
+            object[] tmp = new object[array.Length - 1];
+            Array.Copy(array, tmp, index);
+            Array.Copy(array, index + 1, tmp, index, array.Length - index - 1);
+
+            return tmp;
         }
 
-        public void FromArray(object[] newValue)
+        protected object[] Add(object[] array, object item)
         {
-            this.value = newValue;
+            if (array == null || this.Contains(array, item))
+                return array;
+
+            object[] tmp = new object[array.Length + 1];
+            Array.Copy(array, tmp, array.Length);
+            tmp[tmp.Length - 1] = item;
+
+            return tmp;
         }
 
-        public void Clear()
+        public abstract int Count { get; }
+
+        public abstract object[] ToArray();
+
+        public abstract void FromArray(object[] newValue);
+
+        public virtual void Clear()
         {
             this.value = new object[0];
         }

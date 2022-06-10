@@ -10,7 +10,6 @@ namespace DecentM
     public sealed class AutoMirror : PerformanceGovernorPlugin
     {
         public LibDecentM lib;
-        public ActivateObjectsVolume trigger;
 
         public int updatesPerSecond = 3;
         public int maxDistance = 5;
@@ -21,9 +20,6 @@ namespace DecentM
 
         protected override void _Start()
         {
-            this.trigger.lib = this.lib;
-            this.trigger.global = false;
-
             this.DisableAllMirrors();
         }
 

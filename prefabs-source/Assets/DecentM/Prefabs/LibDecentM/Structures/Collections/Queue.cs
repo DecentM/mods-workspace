@@ -8,6 +8,21 @@ namespace DecentM.Collections
 {
     public class Queue : Collection
     {
+        public override int Count
+        {
+            get { return this.value.Length; }
+        }
+
+        public override object[] ToArray()
+        {
+            return this.value;
+        }
+
+        public override void FromArray(object[] newValue)
+        {
+            this.value = newValue;
+        }
+
         public void Enqueue(object item)
         {
             if (this.value == null || this.value.Length == 0)
