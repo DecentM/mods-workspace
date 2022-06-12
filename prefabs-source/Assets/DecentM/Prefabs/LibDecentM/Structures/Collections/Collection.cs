@@ -56,7 +56,7 @@ namespace DecentM.Collections
 
         protected object[] RemoveRange(object[] array, int startIndex, int endIndex)
         {
-            if (startIndex > endIndex)
+            if (array == null || startIndex > endIndex)
                 return array;
 
             object[] tmp = new object[array.Length - (endIndex - startIndex + 1)];
@@ -69,7 +69,7 @@ namespace DecentM.Collections
         protected object[] Add(object[] array, object item)
         {
             if (array == null)
-                return array;
+                return new object[] { item };
 
             return this.Insert(array, array.Length, item);
         }
@@ -77,7 +77,7 @@ namespace DecentM.Collections
         protected object[] Insert(object[] array, int index, object item)
         {
             if (array == null)
-                return array;
+                return new object[] { item };
 
             object[] tmp = new object[array.Length + 1];
             Array.Copy(array, 0, tmp, 0, index);

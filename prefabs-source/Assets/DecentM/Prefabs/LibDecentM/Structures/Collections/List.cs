@@ -4,21 +4,6 @@ namespace DecentM.Collections
 {
     public class List : Collection
     {
-        public override int Count
-        {
-            get { return this.value.Length; }
-        }
-
-        public override object[] ToArray()
-        {
-            return this.value;
-        }
-
-        public override void FromArray(object[] newValue)
-        {
-            this.value = newValue;
-        }
-
         public object ElementAt(int index)
         {
             return this.ElementAt(this.value, index);

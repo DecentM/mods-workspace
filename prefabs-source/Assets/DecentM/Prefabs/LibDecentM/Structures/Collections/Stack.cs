@@ -1,10 +1,13 @@
 ﻿namespace DecentM.Collections
 {
-    public class Queue : Collection
+    public class Stack : Collection
     {
-        public void Enqueue(object item)
+        public bool Push(object item)
         {
-            this.value = this.Add(this.value, item);
+            int length = this.value.Length;
+            this.value = this.Insert(this.value, 0, item);
+
+            return this.value.Length == length + 1;
         }
 
         public object Peek()
@@ -12,7 +15,7 @@
             return this.ElementAt(this.value, 0);
         }
 
-        public object Dequeue()
+        public object Pop()
         {
             object item = this.Peek();
 
@@ -22,11 +25,6 @@
             this.value = this.RemoveAt(this.value, 0);
 
             return item;
-        }
-
-        public void Shift(object item)
-        {
-            this.value = this.Insert(this.value, 0, item);
         }
     }
 }
