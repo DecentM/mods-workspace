@@ -31,10 +31,7 @@ namespace DecentM.Collections
                 return;
             }
 
-            object[] tmp = new object[value.Length + 1];
-            Array.Copy(this.value, tmp, this.value.Length);
-            tmp[tmp.Length - 1] = item;
-            this.value = tmp;
+            this.value = this.Add(this.value, item);
         }
 
         public object Peek()
@@ -52,9 +49,7 @@ namespace DecentM.Collections
             if (item == null)
                 return null;
 
-            object[] tmp = new object[value.Length - 1];
-            Array.Copy(this.value, 1, tmp, 0, this.value.Length - 1);
-            this.value = tmp;
+            this.value = this.RemoveAt(this.value, 0);
 
             return item;
         }

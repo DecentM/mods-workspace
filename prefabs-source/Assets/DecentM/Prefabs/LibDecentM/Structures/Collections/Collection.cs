@@ -22,9 +22,12 @@ namespace DecentM.Collections
 
         protected int IndexOf(object[] array, object item)
         {
+            if (array == null)
+                return -1;
+
             for (int i = 0; i < array.Length; i++)
             {
-                if (array[i] == item)
+                if (Equals(array[i], item))
                     return i;
             }
 
@@ -33,7 +36,7 @@ namespace DecentM.Collections
 
         protected object ElementAt(object[] array, int index)
         {
-            if (index < 0 || index >= array.Length)
+            if (array == null || index < 0 || index >= array.Length)
                 return null;
 
             return array[index];
@@ -41,7 +44,7 @@ namespace DecentM.Collections
 
         protected object[] RemoveAt(object[] array, int index)
         {
-            if (index < 0 || index >= array.Length)
+            if (array == null || index < 0 || index >= array.Length)
                 return array;
 
             object[] tmp = new object[array.Length - 1];
@@ -51,20 +54,31 @@ namespace DecentM.Collections
             return tmp;
         }
 
+        protected object[] RemoveRange(object[] array, int startIndex, int endIndex)
+        {
+            if (startIndex > endIndex)
+                return array;
+
+            object[] tmp = new object[array.Length - (endIndex - startIndex + 1)];
+            Array.Copy(array, 0, tmp, 0, startIndex);
+            Array.Copy(array, endIndex + 1, tmp, startIndex, array.Length - endIndex - 1);
+
+            return tmp;
+        }
+
         protected object[] Add(object[] array, object item)
         {
             if (array == null)
                 return array;
 
-            object[] tmp = new object[array.Length + 1];
-            Array.Copy(array, tmp, array.Length);
-            tmp[tmp.Length - 1] = item;
-
-            return tmp;
+            return this.Insert(array, array.Length, item);
         }
 
         protected object[] Insert(object[] array, int index, object item)
         {
+            if (array == null)
+                return array;
+
             object[] tmp = new object[array.Length + 1];
             Array.Copy(array, 0, tmp, 0, index);
             Array.Copy(array, index, tmp, index + 1, array.Length - index);
@@ -73,11 +87,25 @@ namespace DecentM.Collections
             return tmp;
         }
 
-        public abstract int Count { get; }
+        public virtual bool Contains(object item)
+        {
+            return this.Contains(this.value, item);
+        }
 
-        public abstract object[] ToArray();
+        public virtual int Count
+        {
+            get { return this.value.Length; }
+        }
 
-        public abstract void FromArray(object[] newValue);
+        public virtual object[] ToArray()
+        {
+            return this.value;
+        }
+
+        public virtual void FromArray(object[] newValue)
+        {
+            this.value = newValue;
+        }
 
         public virtual void Clear()
         {

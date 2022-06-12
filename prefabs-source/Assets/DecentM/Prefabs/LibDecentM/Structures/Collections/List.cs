@@ -26,6 +26,9 @@ namespace DecentM.Collections
 
         public bool Add(object item)
         {
+            if (this.Contains(item))
+                return false;
+
             int length = this.value.Length;
             this.value = this.Add(this.value, item);
 
@@ -63,11 +66,6 @@ namespace DecentM.Collections
             }
         }
 
-        public bool Contains(object item)
-        {
-            return this.Contains(this.value, item);
-        }
-
         public int IndexOf(object item)
         {
             return this.IndexOf(this.value, item);
@@ -97,12 +95,10 @@ namespace DecentM.Collections
             if (startIndex > endIndex)
                 return false;
 
-            object[] tmp = new object[this.value.Length - (endIndex - startIndex + 1)];
-            Array.Copy(this.value, 0, tmp, 0, startIndex);
-            Array.Copy(this.value, endIndex + 1, tmp, startIndex, this.value.Length - endIndex - 1);
-            this.value = tmp;
+            int length = this.value.Length;
+            this.value = this.RemoveRange(this.value, startIndex, endIndex);
 
-            return true;
+            return this.value.Length == length - (endIndex - startIndex);
         }
 
         public void Reverse()

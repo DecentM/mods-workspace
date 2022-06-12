@@ -4,114 +4,90 @@ namespace DecentM.Collections
 {
     public class Map : Collection
     {
-        private object[] keys = new object[0];
+        // Value structure: new object[]
+        // {
+        //      new object[] { key, value },
+        //      new object[] { key, value },
+        //      ...
+        // };
 
         public bool Add(object key, object value)
         {
             if (this.Contains(key))
                 return false;
 
-            int kLength = this.keys.Length;
-            int vLength = this.value.Length;
+            int length = this.value.Length;
+            this.value = base.Add(this.value, new object[] { key, value });
 
-            this.keys = base.Add(this.keys, key);
-            this.value = base.Add(this.value, value);
-
-            return this.keys.Length == kLength + 1 && this.value.Length == vLength + 1;
+            return this.value.Length == length + 1;
         }
 
         public bool Remove(object key)
         {
-            int index = this.IndexOf(this.keys, key);
+            int index = this.IndexOf(this.Keys, key);
+
             if (index == -1)
                 return false;
 
-            int kLength = this.keys.Length;
-            int vLength = this.value.Length;
-
-            this.keys = this.RemoveAt(this.keys, index);
+            int length = this.value.Length;
             this.value = this.RemoveAt(this.value, index);
 
-            return this.keys.Length + 1 == kLength && this.value.Length + 1 == vLength;
+            return this.value.Length == length - 1;
         }
 
         public object Get(object key)
         {
-            int index = this.IndexOf(this.keys, key);
+            int index = this.IndexOf(this.Keys, key);
 
             if (index == -1)
                 return null;
 
-            return this.ElementAt(this.value, index);
+            return this.ElementAt(this.Values, index);
         }
 
         public object KeyOf(object value)
         {
-            int index = this.IndexOf(this.value, value);
+            int index = this.IndexOf(this.Values, value);
 
             if (index == -1)
                 return null;
 
-            return this.ElementAt(this.keys, index);
+            return this.ElementAt(this.Keys, index);
         }
 
         public object[] Keys
         {
-            get { return this.keys; }
+            get
+            {
+                object[] result = new object[this.value.Length];
+
+                for (int i = 0; i < this.value.Length; i++)
+                {
+                    result[i] = ((object[])this.value[i])[0];
+                }
+
+                return result;
+            }
         }
 
         public object[] Values
         {
-            get { return this.value; }
-        }
-
-        public bool Contains(object item)
-        {
-            return this.Contains(this.keys, item);
-        }
-
-        public override void Clear()
-        {
-            this.value = new object[0];
-            this.keys = new object[0];
-        }
-
-        public override int Count
-        {
-            get { return this.keys.Length; }
-        }
-
-        public override object[] ToArray()
-        {
-            object[][] result = new object[this.keys.Length][];
-
-            for (int i = 0; i < this.keys.Length; i++)
+            get
             {
-                result[i] = new object[] { this.keys[i], this.value[i] };
-            }
+                object[] result = new object[this.value.Length];
 
-            return result;
-        }
-
-        public override void FromArray(object[] newValue)
-        {
-            this.value = new object[newValue.Length];
-            this.keys = new object[newValue.Length];
-
-            for (int i = 0; i < newValue.Length; i++)
-            {
-                object[] item = (object[])newValue[i];
-
-                if (item.Length != 2)
+                for (int i = 0; i < this.value.Length; i++)
                 {
-                    this.keys[i] = null;
-                    this.value[i] = null;
-                    continue;
+                    result[i] = ((object[])this.value[i])[1];
                 }
 
-                this.keys[i] = item[0];
-                this.value[i] = item[1];
+                return result;
             }
+        }
+
+        public override bool Contains(object key)
+        {
+            return this.Contains(this.Keys, key);
         }
     }
 }

@@ -13,6 +13,10 @@ namespace DecentM.Collections.Tests
             map.Add("b", 2);
             map.Add("c", 3);
 
+            map.Add(4, "q");
+            map.Add(5, "w");
+            map.Add(6, "e");
+
             return map;
         }
 
@@ -21,7 +25,7 @@ namespace DecentM.Collections.Tests
         {
             Map map = this.Prepare();
 
-            Assert.AreEqual(3, map.Count);
+            Assert.AreEqual(6, map.Count);
         }
 
         [Test]
@@ -31,7 +35,7 @@ namespace DecentM.Collections.Tests
 
             Assert.IsFalse(map.Add("a", 2));
 
-            Assert.AreEqual(3, map.Count);
+            Assert.AreEqual(6, map.Count);
         }
 
         [Test]
@@ -42,7 +46,7 @@ namespace DecentM.Collections.Tests
             Assert.IsTrue(map.Remove("a"));
             Assert.IsFalse(map.Remove("a"));
 
-            Assert.AreEqual(2, map.Count);
+            Assert.AreEqual(5, map.Count);
         }
 
         [Test]
@@ -51,7 +55,7 @@ namespace DecentM.Collections.Tests
             Map map = this.Prepare();
 
             Assert.AreEqual(2, map.Get("b"));
-            Assert.IsNull(map.Get("c"));
+            Assert.IsNull(map.Get("y"));
         }
 
         [Test]
@@ -59,6 +63,7 @@ namespace DecentM.Collections.Tests
         {
             Map map = this.Prepare();
 
+            Assert.AreEqual(4, map.KeyOf("q"));
             Assert.AreEqual("b", map.KeyOf(2));
             Assert.IsNull(map.KeyOf(4));
         }
