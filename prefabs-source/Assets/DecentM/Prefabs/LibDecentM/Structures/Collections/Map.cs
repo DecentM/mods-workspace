@@ -1,4 +1,4 @@
-﻿using System;
+﻿using JetBrains.Annotations;
 
 namespace DecentM.Collections
 {
@@ -11,6 +11,7 @@ namespace DecentM.Collections
         //      ...
         // };
 
+        [PublicAPI]
         public bool Add(object key, object value)
         {
             if (this.Contains(key))
@@ -22,6 +23,7 @@ namespace DecentM.Collections
             return this.value.Length == length + 1;
         }
 
+        [PublicAPI]
         public bool Remove(object key)
         {
             int index = this.IndexOf(this.Keys, key);
@@ -35,6 +37,7 @@ namespace DecentM.Collections
             return this.value.Length == length - 1;
         }
 
+        [PublicAPI]
         public object Get(object key)
         {
             int index = this.IndexOf(this.Keys, key);
@@ -45,6 +48,7 @@ namespace DecentM.Collections
             return this.ElementAt(this.Values, index);
         }
 
+        [PublicAPI]
         public object KeyOf(object value)
         {
             int index = this.IndexOf(this.Values, value);
@@ -55,6 +59,7 @@ namespace DecentM.Collections
             return this.ElementAt(this.Keys, index);
         }
 
+        [PublicAPI]
         public object[] Keys
         {
             get
@@ -70,6 +75,7 @@ namespace DecentM.Collections
             }
         }
 
+        [PublicAPI]
         public object[] Values
         {
             get
@@ -85,6 +91,7 @@ namespace DecentM.Collections
             }
         }
 
+        [PublicAPI]
         public override bool Contains(object key)
         {
             return this.Contains(this.Keys, key);

@@ -170,6 +170,8 @@ namespace DecentM.Collections.Tests
             // that should fail too
             int yId = dll.AddAfter(-1, "y");
 
+            Assert.AreEqual(-1, xId);
+            Assert.AreEqual(-1, yId);
             Assert.IsNull(dll.ElementById(xId));
             Assert.IsNull(dll.ElementById(yId));
 
@@ -211,6 +213,16 @@ namespace DecentM.Collections.Tests
 
             Assert.AreEqual("d", dll.ElementById(id));
             Assert.IsTrue(this.VerifyIntegrity(dll));
+
+            int currentId = dll.FirstId;
+
+            while (currentId >= 0)
+            {
+                int previousId = currentId;
+                currentId = dll.Next(currentId);
+                if (currentId >= 0)
+                    Assert.AreEqual(previousId + 1, currentId);
+            }
         }
     }
 }

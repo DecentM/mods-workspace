@@ -1,8 +1,6 @@
 ﻿using System;
 using UdonSharp;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using JetBrains.Annotations;
 
 namespace DecentM.Collections
 {
@@ -87,26 +85,37 @@ namespace DecentM.Collections
             return tmp;
         }
 
+        [PublicAPI]
         public virtual bool Contains(object item)
         {
             return this.Contains(this.value, item);
         }
 
+        [PublicAPI]
         public virtual int Count
         {
             get { return this.value.Length; }
         }
 
+        [PublicAPI]
         public virtual object[] ToArray()
         {
             return this.value;
         }
 
+        [PublicAPI]
         public virtual void FromArray(object[] newValue)
         {
             this.value = newValue;
         }
 
+        [PublicAPI]
+        public void FromCollection(Collection collection)
+        {
+            this.FromArray(collection.ToArray());
+        }
+
+        [PublicAPI]
         public virtual void Clear()
         {
             this.value = new object[0];

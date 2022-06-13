@@ -285,6 +285,12 @@ namespace DecentM.Collections
         }
 
         [PublicAPI]
+        public int[] AddRange(Collection collection)
+        {
+            return this.AddRange(collection.ToArray());
+        }
+
+        [PublicAPI]
         public bool Remove(int id)
         {
             int index = this.IndexById(id);
