@@ -12,6 +12,16 @@ namespace DecentM.Collections
          * new object[] { prev, id, value, next };
          */
 
+        public override object[] ToArray()
+        {
+            return this.Values;
+        }
+
+        public override void FromArray(object[] newValue)
+        {
+            this.AddRange(newValue);
+        }
+
         private int[] idIndex = new int[0];
 
         private void ReindexIds()
@@ -31,6 +41,9 @@ namespace DecentM.Collections
 
         public int IdByIndex(int index)
         {
+            if (index < 0 || index >= this.idIndex.Length)
+                return -1;
+
             return this.idIndex[index];
         }
 
@@ -55,11 +68,6 @@ namespace DecentM.Collections
         private object[] CreateItem(object prev, object value, object next)
         {
             return new object[] { prev, this.lastId++, value, next };
-        }
-
-        private object[] CreateItem(int prev, object value)
-        {
-            return new object[] { prev, this.lastId++, value, -1 };
         }
 
         private object[] CreateItem(object value)
@@ -107,8 +115,8 @@ namespace DecentM.Collections
 
         private void UpdateItemNext(int id, int next)
         {
-            object itemOrNull = this.ElementAt(this.value, this.IndexById(id));
             int index = this.IndexById(id);
+            object itemOrNull = this.ElementAt(this.value, index);
 
             if (itemOrNull == null)
                 return;
@@ -120,8 +128,8 @@ namespace DecentM.Collections
 
         private void UpdateItemPrev(int id, int prev)
         {
-            object itemOrNull = this.ElementAt(this.value, this.IndexById(id));
             int index = this.IndexById(id);
+            object itemOrNull = this.ElementAt(this.value, index);
 
             if (itemOrNull == null)
                 return;
@@ -130,7 +138,7 @@ namespace DecentM.Collections
             this.value[index] = this.CreateItem(prev, item[1], item[2], item[3]);
         }
 
-        public object[] Values
+        private object[] Values
         {
             get
             {
@@ -163,9 +171,9 @@ namespace DecentM.Collections
             return new int[] { prev, next };
         }
 
-        public int[] Boundaries(int index)
+        public int[] Boundaries(int id)
         {
-            object[] item = (object[])this.ElementAt(this.value, index);
+            object[] item = (object[])this.ElementAt(this.value, this.IndexById(id));
 
             if (item == null)
                 return new int[] { -1, -1 };
@@ -245,19 +253,14 @@ namespace DecentM.Collections
         public bool Remove(int id)
         {
             int index = this.IndexById(id);
+            int[] bounds = this.Boundaries(id);
             int length = this.value.Length;
-            object[] item = (object[])this.ElementAt(this.value, index);
-            int prev = (int)item[0];
-            int next = (int)item[3];
-
-            if (next >= 0)
-                this.UpdateItemNext(prev, next);
-            if (prev >= 0)
-                this.UpdateItemPrev(next, prev);
 
             this.value = this.RemoveAt(this.value, index);
-
             this.ReindexIds();
+
+            this.UpdateItemPrev(bounds[1], bounds[0]);
+            this.UpdateItemNext(bounds[0], bounds[1]);
 
             return this.value.Length == length - 1;
         }

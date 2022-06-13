@@ -28,9 +28,12 @@ namespace DecentM.Collections.Tests
         {
             int processed = 0;
 
-            void Traverse(int index, DLLTraversalDirection direction)
+            void Traverse(int id, DLLTraversalDirection direction)
             {
-                int[] boundaries = dll.Boundaries(index);
+                if (dll.ElementById(id) == null)
+                    return;
+
+                int[] boundaries = dll.Boundaries(id);
                 processed++;
 
                 switch (direction)
@@ -59,22 +62,24 @@ namespace DecentM.Collections.Tests
                 }
             }
 
-            Traverse(dll.FirstIndex, DLLTraversalDirection.Forward);
-            Traverse(dll.LastIndex, DLLTraversalDirection.Backward);
+            Traverse(0, DLLTraversalDirection.Forward);
+            Traverse(dll.IdByIndex(dll.LastIndex), DLLTraversalDirection.Backward);
 
-            Debug.Log(
-                $"processed: {processed} (expected: {dll.Count * 2}), count: {dll.Count}, firstIndex: {dll.FirstIndex}"
-            );
+            bool success = processed == dll.Count * 2;
 
-            return processed == dll.Count * 2;
+            if (!success)
+                this.Dump(dll);
+
+            return success;
         }
 
         private void Dump(DoubleLinkedList dll)
         {
             for (int i = 0; i < dll.Count; i++)
             {
-                object item = dll.Values[i];
-                int[] boundaries = dll.Boundaries(i);
+                int id = dll.IdByIndex(i);
+                object item = dll.ElementById(id);
+                int[] boundaries = dll.Boundaries(id);
 
                 Debug.Log(
                     $"prev: {boundaries[0]}, id: {dll.IdByIndex(i)}, item: {(string)item}, next: {boundaries[1]}"
@@ -125,7 +130,7 @@ namespace DecentM.Collections.Tests
         {
             DoubleLinkedList dll = this.Prepare();
 
-            dll.Remove(1);
+            Assert.IsTrue(dll.Remove(1));
 
             Assert.AreEqual(2, dll.Count);
         }
@@ -135,7 +140,7 @@ namespace DecentM.Collections.Tests
         {
             DoubleLinkedList dll = this.Prepare();
 
-            dll.Remove(1);
+            Assert.IsTrue(dll.Remove(1));
 
             Assert.IsTrue(this.VerifyIntegrity(dll));
         }
@@ -145,15 +150,10 @@ namespace DecentM.Collections.Tests
         {
             DoubleLinkedList dll = this.Prepare();
 
-            this.Dump(dll);
-
             int id = dll.Add("d");
-            dll.Remove(1);
-
-            Debug.Log("=================");
-            this.Dump(dll);
 
             Assert.AreEqual("d", dll.ElementById(id));
+            Assert.IsTrue(this.VerifyIntegrity(dll));
         }
     }
 }
