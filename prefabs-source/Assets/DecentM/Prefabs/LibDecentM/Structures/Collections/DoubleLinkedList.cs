@@ -9,25 +9,65 @@ namespace DecentM.Collections
     {
         /*
          * Value structure:
-         * new object[] { prev, value, next };
+         * new object[] { prev, id, value, next };
          */
+
+        private int[] idIndex = new int[0];
+
+        private void ReindexIds()
+        {
+            this.idIndex = new int[this.value.Length];
+
+            for (int i = 0; i < this.value.Length; i++)
+            {
+                object[] item = (object[])this.ElementAt(this.value, i);
+
+                if (item == null || item.Length != 4 || item[1] == null)
+                    continue;
+
+                this.idIndex[i] = (int)item[1];
+            }
+        }
+
+        public int IdByIndex(int index)
+        {
+            return this.idIndex[index];
+        }
+
+        public int IndexById(int id)
+        {
+            for (int i = 0; i < this.idIndex.Length; i++)
+            {
+                if (this.IdByIndex(i) == id)
+                    return i;
+            }
+
+            return -1;
+        }
+
+        private int lastId = 0;
+
+        private object[] CreateItem(object prev, object id, object value, object next)
+        {
+            return new object[] { prev, id, value, next };
+        }
 
         private object[] CreateItem(object prev, object value, object next)
         {
-            return new object[] { prev, value, next };
+            return new object[] { prev, this.lastId++, value, next };
         }
 
         private object[] CreateItem(int prev, object value)
         {
-            return new object[] { prev, value, -1 };
+            return new object[] { prev, this.lastId++, value, -1 };
         }
 
         private object[] CreateItem(object value)
         {
-            return new object[] { -1, value, -1 };
+            return new object[] { -1, this.lastId++, value, -1 };
         }
 
-        private int FindWithNullIndex(int nullIndex)
+        private int FindWithNegativeIndex(int nullIndex)
         {
             if (nullIndex < 0)
                 return -1;
@@ -47,76 +87,47 @@ namespace DecentM.Collections
 
         public int FirstIndex
         {
-            get { return this.FindWithNullIndex(0); }
+            get { return this.FindWithNegativeIndex(0); }
         }
 
         public int LastIndex
         {
-            get { return this.FindWithNullIndex(2); }
+            get { return this.FindWithNegativeIndex(3); }
         }
 
         public object First
         {
-            get { return this.ElementAt(this.FirstIndex); }
+            get { return this.ElementAt(this.Values, this.FirstIndex); }
         }
 
         public object Last
         {
-            get { return this.ElementAt(this.LastIndex); }
+            get { return this.ElementAt(this.Values, this.LastIndex); }
         }
 
-        public int Next(int index)
+        private void UpdateItemNext(int id, int next)
         {
-            object[] item = (object[])this.ElementAt(this.value, index);
-
-            if (item == null || item.Length != 3 || item[2] == null)
-                return -1;
-
-            return (int)item[2];
-        }
-
-        public int Prev(int index)
-        {
-            object[] item = (object[])this.ElementAt(this.value, index);
-
-            if (item == null || item.Length != 3 || item[0] == null)
-                return -1;
-
-            return (int)item[0];
-        }
-
-        private bool ValidateIndex(int index)
-        {
-            return this.value.Length > index && index >= 0;
-        }
-
-        private void UpdateItemNext(int index, int next)
-        {
-            if (!this.ValidateIndex(index))
-                return;
-
-            object itemOrNull = this.ElementAt(this.value, index);
+            object itemOrNull = this.ElementAt(this.value, this.IndexById(id));
+            int index = this.IndexById(id);
 
             if (itemOrNull == null)
                 return;
 
             object[] item = (object[])itemOrNull;
 
-            this.value[index] = this.CreateItem(item[0], item[1], next);
+            this.value[index] = this.CreateItem(item[0], item[1], item[2], next);
         }
 
-        private void UpdateItemPrev(int index, int prev)
+        private void UpdateItemPrev(int id, int prev)
         {
-            if (!this.ValidateIndex(index))
-                return;
-
-            object itemOrNull = this.ElementAt(this.value, index);
+            object itemOrNull = this.ElementAt(this.value, this.IndexById(id));
+            int index = this.IndexById(id);
 
             if (itemOrNull == null)
                 return;
 
             object[] item = (object[])itemOrNull;
-            this.value[index] = this.CreateItem(prev, item[1], item[2]);
+            this.value[index] = this.CreateItem(prev, item[1], item[2], item[3]);
         }
 
         public object[] Values
@@ -127,16 +138,16 @@ namespace DecentM.Collections
 
                 for (int i = 0; i < this.value.Length; i++)
                 {
-                    result[i] = ((object[])this.value[i])[1];
+                    result[i] = ((object[])this.value[i])[2];
                 }
 
                 return result;
             }
         }
 
-        public object ElementAt(int index)
+        public object ElementById(int id)
         {
-            return this.ElementAt(this.Values, index);
+            return this.ElementAt(this.Values, this.IndexById(id));
         }
 
         private int[] GetBoundaries(object[] item)
@@ -146,13 +157,13 @@ namespace DecentM.Collections
 
             if (item[0] != null)
                 prev = (int)item[0];
-            if (item[2] != null)
-                next = (int)item[2];
+            if (item[3] != null)
+                next = (int)item[3];
 
             return new int[] { prev, next };
         }
 
-        public int[] BoundariesForIndex(int index)
+        public int[] Boundaries(int index)
         {
             object[] item = (object[])this.ElementAt(this.value, index);
 
@@ -162,58 +173,91 @@ namespace DecentM.Collections
             return this.GetBoundaries(item);
         }
 
-        public bool Add(object item)
+        private int Add(object item, bool shouldReindex)
         {
             int lastItemIndex = this.LastIndex;
-            int length = this.value.Length;
 
             // If there's an item with no "next" property, we need to add the new item as the next one.
             // The "next" property of the current item is always null, as we're always adding the newest item.
             if (lastItemIndex >= 0)
             {
-                this.value = this.Add(this.value, this.CreateItem(lastItemIndex, item));
-                this.UpdateItemNext(lastItemIndex, this.value.Length - 1);
+                this.value = this.Add(this.value, this.CreateItem(item));
+
+                if (shouldReindex)
+                    this.ReindexIds();
+
+                this.UpdateItemPrev(
+                    this.IdByIndex(this.value.Length - 1),
+                    this.IdByIndex(lastItemIndex)
+                );
+
+                this.UpdateItemNext(lastItemIndex, this.IdByIndex(this.value.Length - 1));
             }
             // Otherwise, we're adding the first item, so we create it with no "prev" property.
             else
             {
                 this.value = this.Add(this.value, this.CreateItem(item));
+
+                if (shouldReindex)
+                    this.ReindexIds();
             }
 
-            return this.value.Length == length + 1;
+            return this.IdByIndex(this.value.Length - 1);
         }
 
-        public bool Remove(int index)
+        public int Add(object item)
         {
+            return this.Add(item, true);
+        }
+
+        public int AddAfter(int id, object item)
+        {
+            int[] bounds = this.Boundaries(id);
+
+            // add the item onto the array at the end
+            this.value = this.Add(this.value, this.CreateItem(id, item, bounds[1]));
+            this.ReindexIds();
+
+            int newId = this.IdByIndex(this.value.Length - 1);
+
+            // update the "next" property of the item specified
+            this.UpdateItemNext(id, newId);
+            // update the "prev" property of the item after the item specified
+            this.UpdateItemPrev(bounds[1], newId);
+
+            return newId;
+        }
+
+        public int[] AddRange(object[] items)
+        {
+            int[] result = new int[items.Length];
+
+            for (int i = 0; i < items.Length; i++)
+            {
+                result[i] = this.Add(items[i], false);
+            }
+
+            this.ReindexIds();
+
+            return result;
+        }
+
+        public bool Remove(int id)
+        {
+            int index = this.IndexById(id);
             int length = this.value.Length;
             object[] item = (object[])this.ElementAt(this.value, index);
             int prev = (int)item[0];
-            int next = (int)item[2];
+            int next = (int)item[3];
 
             if (next >= 0)
                 this.UpdateItemNext(prev, next);
             if (prev >= 0)
                 this.UpdateItemPrev(next, prev);
 
-            // Go through all items and adjust the prev and next values if they're after the index,
-            // to compensate for the array indexes changing after removing an item
-            for (int i = 0; i < this.value.Length; i++)
-            {
-                object[] updateItem = (object[])this.value[i];
-                if (updateItem == null)
-                    continue;
+            this.value = this.RemoveAt(this.value, index);
 
-                int updateItemPrev = (int)((object[])updateItem[i])[0];
-                int updateItemNext = (int)((object[])updateItem[i])[2];
-
-                if (updateItemPrev > index)
-                    this.UpdateItemPrev(i, updateItemPrev - 1);
-
-                if (updateItemNext > index)
-                    this.UpdateItemNext(i, updateItemNext - 1);
-            }
-
-            this.RemoveAt(this.value, index);
+            this.ReindexIds();
 
             return this.value.Length == length - 1;
         }
