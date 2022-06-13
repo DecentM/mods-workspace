@@ -120,9 +120,66 @@ namespace DecentM.Collections.Tests
         {
             DoubleLinkedList dll = this.Prepare();
 
-            dll.AddAfter(1, "x");
+            dll.AddAfter(dll.IdByIndex(1), "x");
 
             Assert.IsTrue(this.VerifyIntegrity(dll));
+        }
+
+        [Test]
+        public void AddAfter()
+        {
+            DoubleLinkedList dll = this.Prepare();
+
+            int xId = dll.AddAfter(dll.IdByIndex(1), "x");
+
+            Assert.AreEqual("x", dll.ElementById(xId));
+
+            object[] arr = dll.ToArray();
+
+            Assert.AreEqual("a", arr[0]);
+            Assert.AreEqual("b", arr[1]);
+            Assert.AreEqual("x", arr[2]);
+            Assert.AreEqual("c", arr[3]);
+        }
+
+        [Test]
+        public void AddAfter_End()
+        {
+            DoubleLinkedList dll = this.Prepare();
+
+            int xId = dll.AddAfter(dll.IdByIndex(2), "x");
+
+            Assert.AreEqual("x", dll.ElementById(xId));
+
+            object[] arr = dll.ToArray();
+
+            Assert.AreEqual("a", arr[0]);
+            Assert.AreEqual("b", arr[1]);
+            Assert.AreEqual("c", arr[2]);
+            Assert.AreEqual("x", arr[3]);
+        }
+
+        [Test]
+        public void AddAfter_Nonexist()
+        {
+            DoubleLinkedList dll = this.Prepare();
+
+            // 5 is a non-existent ID, adding after that should fail
+            int xId = dll.AddAfter(5, "x");
+            // -1 is used for returning "not found" responses, adding after
+            // that should fail too
+            int yId = dll.AddAfter(-1, "y");
+
+            Assert.IsNull(dll.ElementById(xId));
+            Assert.IsNull(dll.ElementById(yId));
+
+            object[] arr = dll.ToArray();
+
+            Assert.AreEqual("a", arr[0]);
+            Assert.AreEqual("b", arr[1]);
+            Assert.AreEqual("c", arr[2]);
+
+            Assert.AreEqual(3, arr.Length);
         }
 
         [Test]
