@@ -1,7 +1,4 @@
-﻿using UdonSharp;
-using UnityEngine;
-using VRC.SDKBase;
-using VRC.Udon;
+﻿using JetBrains.Annotations;
 
 namespace DecentM.Collections
 {
@@ -12,11 +9,13 @@ namespace DecentM.Collections
          * new object[] { prev, id, value, next };
          */
 
+        [PublicAPI]
         public override object[] ToArray()
         {
             return this.Values;
         }
 
+        [PublicAPI]
         public override void FromArray(object[] newValue)
         {
             this.AddRange(newValue);
@@ -39,6 +38,7 @@ namespace DecentM.Collections
             }
         }
 
+        [PublicAPI]
         public int IdByIndex(int index)
         {
             if (index < 0 || index >= this.idIndex.Length)
@@ -47,6 +47,7 @@ namespace DecentM.Collections
             return this.idIndex[index];
         }
 
+        [PublicAPI]
         public int IndexById(int id)
         {
             for (int i = 0; i < this.idIndex.Length; i++)
@@ -93,24 +94,28 @@ namespace DecentM.Collections
             return -1;
         }
 
-        public int FirstIndex
+        [PublicAPI]
+        public int FirstId
         {
-            get { return this.FindWithNegativeIndex(0); }
+            get { return this.IdByIndex(this.FindWithNegativeIndex(0)); }
         }
 
-        public int LastIndex
+        [PublicAPI]
+        public int LastId
         {
-            get { return this.FindWithNegativeIndex(3); }
+            get { return this.IdByIndex(this.FindWithNegativeIndex(3)); }
         }
 
+        [PublicAPI]
         public object First
         {
-            get { return this.ElementAt(this.Values, this.FirstIndex); }
+            get { return this.ElementById(this.FirstId); }
         }
 
+        [PublicAPI]
         public object Last
         {
-            get { return this.ElementAt(this.Values, this.LastIndex); }
+            get { return this.ElementById(this.LastId); }
         }
 
         private void UpdateItemNext(int id, int next)
@@ -153,6 +158,7 @@ namespace DecentM.Collections
             }
         }
 
+        [PublicAPI]
         public object ElementById(int id)
         {
             return this.ElementAt(this.Values, this.IndexById(id));
@@ -171,6 +177,7 @@ namespace DecentM.Collections
             return new int[] { prev, next };
         }
 
+        [PublicAPI]
         public int[] Boundaries(int id)
         {
             object[] item = (object[])this.ElementAt(this.value, this.IndexById(id));
@@ -183,23 +190,20 @@ namespace DecentM.Collections
 
         private int Add(object item, bool shouldReindex)
         {
-            int lastItemIndex = this.LastIndex;
+            // int lastItemIndex = this.LastIndex;
+            int lastItemId = this.LastId;
 
             // If there's an item with no "next" property, we need to add the new item as the next one.
             // The "next" property of the current item is always null, as we're always adding the newest item.
-            if (lastItemIndex >= 0)
+            if (lastItemId >= 0)
             {
                 this.value = this.Add(this.value, this.CreateItem(item));
 
                 if (shouldReindex)
                     this.ReindexIds();
 
-                this.UpdateItemPrev(
-                    this.IdByIndex(this.value.Length - 1),
-                    this.IdByIndex(lastItemIndex)
-                );
-
-                this.UpdateItemNext(lastItemIndex, this.IdByIndex(this.value.Length - 1));
+                this.UpdateItemPrev(this.IdByIndex(this.value.Length - 1), lastItemId);
+                this.UpdateItemNext(lastItemId, this.IdByIndex(this.value.Length - 1));
             }
             // Otherwise, we're adding the first item, so we create it with no "prev" property.
             else
@@ -213,11 +217,13 @@ namespace DecentM.Collections
             return this.IdByIndex(this.value.Length - 1);
         }
 
+        [PublicAPI]
         public int Add(object item)
         {
             return this.Add(item, true);
         }
 
+        [PublicAPI]
         public int AddAfter(int id, object item)
         {
             int[] bounds = this.Boundaries(id);
@@ -236,6 +242,7 @@ namespace DecentM.Collections
             return newId;
         }
 
+        [PublicAPI]
         public int[] AddRange(object[] items)
         {
             int[] result = new int[items.Length];
@@ -250,6 +257,7 @@ namespace DecentM.Collections
             return result;
         }
 
+        [PublicAPI]
         public bool Remove(int id)
         {
             int index = this.IndexById(id);

@@ -62,8 +62,8 @@ namespace DecentM.Collections.Tests
                 }
             }
 
-            Traverse(0, DLLTraversalDirection.Forward);
-            Traverse(dll.IdByIndex(dll.LastIndex), DLLTraversalDirection.Backward);
+            Traverse(dll.FirstId, DLLTraversalDirection.Forward);
+            Traverse(dll.LastId, DLLTraversalDirection.Backward);
 
             bool success = processed == dll.Count * 2;
 
