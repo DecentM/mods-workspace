@@ -1,0 +1,1128 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0.20506</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <RootNamespace></RootNamespace>
+    <ProjectGuid>{B795F4D9-8FEF-C060-356A-27F620787114}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <AssemblyName>Assembly-CSharp</AssemblyName>
+    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <BaseDirectory>.</BaseDirectory>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>Temp\Bin\Debug\Player\</OutputPath>
+    <DefineConstants>UNITY_2019_4_31;UNITY_2019_4;UNITY_2019;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_2017_1_OR_NEWER;UNITY_2017_2_OR_NEWER;UNITY_2017_3_OR_NEWER;UNITY_2017_4_OR_NEWER;UNITY_2018_1_OR_NEWER;UNITY_2018_2_OR_NEWER;UNITY_2018_3_OR_NEWER;UNITY_2018_4_OR_NEWER;UNITY_2019_1_OR_NEWER;UNITY_2019_2_OR_NEWER;UNITY_2019_3_OR_NEWER;UNITY_2019_4_OR_NEWER;PLATFORM_ARCH_64;UNITY_64;UNITY_INCLUDE_TESTS;ENABLE_AR;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_EVENT_QUEUE;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_TEXTURE_STREAMING;ENABLE_UNET;ENABLE_LZMA;ENABLE_UNITYEVENTS;ENABLE_VR;ENABLE_WEBCAM;ENABLE_UNITYWEBREQUEST;ENABLE_WWW;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_COLLAB;ENABLE_CLOUD_SERVICES_COLLAB_SOFTLOCKS;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_SERVICES_USE_WEBREQUEST;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_HUB_LICENSE;ENABLE_WEBSOCKET_CLIENT;ENABLE_DIRECTOR_AUDIO;ENABLE_DIRECTOR_TEXTURE;ENABLE_MANAGED_JOBS;ENABLE_MANAGED_TRANSFORM_JOBS;ENABLE_MANAGED_ANIMATION_JOBS;ENABLE_MANAGED_AUDIO_JOBS;INCLUDE_DYNAMIC_GI;ENABLE_MONO_BDWGC;ENABLE_SCRIPTING_GC_WBARRIERS;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;ENABLE_VIDEO;PLATFORM_STANDALONE;PLATFORM_STANDALONE_WIN;UNITY_STANDALONE_WIN;UNITY_STANDALONE;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_OUT_OF_PROCESS_CRASH_HANDLER;ENABLE_CLUSTER_SYNC;ENABLE_CLUSTERINPUT;GFXDEVICE_WAITFOREVENT_MESSAGEPUMP;ENABLE_WEBSOCKET_HOST;ENABLE_MONO;NET_4_6;ENABLE_CUSTOM_RENDER_TEXTURE;ENABLE_DIRECTOR;ENABLE_LOCALIZATION;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_TILEMAP;ENABLE_TIMELINE;ENABLE_INPUT_SYSTEM;ENABLE_LEGACY_INPUT_MANAGER;UDON;VRC_SDK_VRCSDK3;UNITY_POST_PROCESSING_STACK_V2;UDONSHARP;BAKERY_INCLUDED;AUDIOLINK;CSHARP_7_OR_LATER;CSHARP_7_3_OR_NEWER</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <NoWarn>0169</NoWarn>
+    <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>Temp\bin\Release\</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <NoWarn>0169</NoWarn>
+    <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup>
+    <NoConfig>true</NoConfig>
+    <NoStdLib>true</NoStdLib>
+    <AddAdditionalExplicitAssemblyReferences>false</AddAdditionalExplicitAssemblyReferences>
+    <ImplicitlyExpandNETStandardFacades>false</ImplicitlyExpandNETStandardFacades>
+    <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ProjectTypeGuids>{E097FAD1-6243-4DAD-9C02-E9B9EFC3FFC1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <UnityProjectGenerator>Package</UnityProjectGenerator>
+    <UnityProjectGeneratorVersion>2.0.11</UnityProjectGeneratorVersion>
+    <UnityProjectType>Game:1</UnityProjectType>
+    <UnityBuildTarget>StandaloneWindows64:19</UnityBuildTarget>
+    <UnityVersion>2019.4.31f1</UnityVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Assets\DecentM\Dependencies\AudioLink\Scenes\AudioLink_ExampleScene\Scripts\MirrorToggle.cs" />
+    <Compile Include="Assets\DecentM\Dependencies\AudioLink\Scripts\AudioLink.cs" />
+    <Compile Include="Assets\DecentM\Dependencies\AudioLink\Scripts\AudioLinkAutoConfigurator.cs" />
+    <Compile Include="Assets\DecentM\Dependencies\AudioLink\Scripts\AudioLinkController.cs" />
+    <Compile Include="Assets\DecentM\Dependencies\AudioLink\Scripts\AudioLinkMiniPlayer.cs" />
+    <Compile Include="Assets\DecentM\Dependencies\AudioLink\Scripts\AudioLinkMiniPlayerController.cs" />
+    <Compile Include="Assets\DecentM\Dependencies\AudioLink\Scripts\AudioReactiveLight.cs" />
+    <Compile Include="Assets\DecentM\Dependencies\AudioLink\Scripts\AudioReactiveObject.cs" />
+    <Compile Include="Assets\DecentM\Dependencies\AudioLink\Scripts\AudioReactiveSurface.cs" />
+    <Compile Include="Assets\DecentM\Dependencies\AudioLink\Scripts\AudioReactiveSurfaceArray.cs" />
+    <Compile Include="Assets\DecentM\Dependencies\AudioLink\Scripts\GlobalSlider.cs" />
+    <Compile Include="Assets\DecentM\Dependencies\AudioLink\Scripts\ScriptingDefineManager.cs" />
+    <Compile Include="Assets\DecentM\Dependencies\AudioLink\Scripts\StringInListDrawer.cs" />
+    <Compile Include="Assets\DecentM\Dependencies\AudioLink\Scripts\ThemeColorController.cs" />
+    <Compile Include="Assets\DecentM\Dependencies\UNet\Abstracts.cs" />
+    <Compile Include="Assets\DecentM\Dependencies\UNet\ByteBufferReader.cs" />
+    <Compile Include="Assets\DecentM\Dependencies\UNet\ByteBufferWriter.cs" />
+    <Compile Include="Assets\DecentM\Dependencies\UNet\Connection.cs" />
+    <Compile Include="Assets\DecentM\Dependencies\UNet\NetworkInterface.cs" />
+    <Compile Include="Assets\DecentM\Dependencies\UNet\NetworkManager.cs" />
+    <Compile Include="Assets\DecentM\Dependencies\UNet\Socket.cs" />
+    <Compile Include="Assets\DecentM\Dependencies\UdonHashLib\UdonSharp\UdonHashLib.cs" />
+    <Compile Include="Assets\DecentM\Prefabs\AnimatorSync\AnimatorSync.cs" />
+    <Compile Include="Assets\DecentM\Prefabs\AudioLinkHapticsVolume\AudioLinkHapticsVolume.cs" />
+    <Compile Include="Assets\DecentM\Prefabs\AutoMirror\AutoMirror.cs" />
+    <Compile Include="Assets\DecentM\Prefabs\BigSync\Scripts\BigSyncEvents.cs" />
+    <Compile Include="Assets\DecentM\Prefabs\BigSync\Scripts\BigSyncPlugin.cs" />
+    <Compile Include="Assets\DecentM\Prefabs\BigSync\Scripts\BigSyncSystem.cs" />
+    <Compile Include="Assets\DecentM\Prefabs\BigSync\Scripts\Plugins\DebugPlugin.cs" />
+    <Compile Include="Assets\DecentM\Prefabs\ChatSystem\Connectors\ConnectorGeneric.cs" />
+    <Compile Include="Assets\DecentM\Prefabs\ChatSystem\Connectors\ConnectorKeyboard.cs" />
+    <Compile Include="Assets\DecentM\Prefabs\ChatSystem\Scripts\ChannelsStore.cs" />
+    <Compile Include="Assets\DecentM\Prefabs\ChatSystem\Scripts\ChatEvents.cs" />
+    <Compile Include="Assets\DecentM\Prefabs\ChatSystem\Scripts\ChatMessage.cs" />
+    <Compile Include="Assets\DecentM\Prefabs\ChatSystem\Scripts\ChatPresence.cs" />
+    <Compile Include="Assets\DecentM\Prefabs\ChatSystem\Scripts\ChatSystem.cs" />
+    <Compile Include="Assets\DecentM\Prefabs\ChatSystem\Scripts\MessageStore.cs" />
+    <Compile Include="Assets\DecentM\Prefabs\ChatSystem\Scripts\PresenceStore.cs" />
+    <Compile Include="Assets\DecentM\Prefabs\ChatSystem\Scripts\ProfilePictureStore.cs" />
+    <Compile Include="Assets\DecentM\Prefabs\ChatSystem\Scripts\TypingIndicatorStore.cs" />
+    <Compile Include="Assets\DecentM\Prefabs\CustomEvent\CustomEvent.cs" />
+    <Compile Include="Assets\DecentM\Prefabs\CustomEvent\CustomEventVolume.cs" />
+    <Compile Include="Assets\DecentM\Prefabs\CustomEvent\InteractDistributor.cs" />
+    <Compile Include="Assets\DecentM\Prefabs\CustomEvent\TimedCustomEvent.cs" />
+    <Compile Include="Assets\DecentM\Prefabs\FollowPlayersVolume\FollowPlayersVolume.cs" />
+    <Compile Include="Assets\DecentM\Prefabs\Keyboard\Plugins\BacklightPlugin.cs" />
+    <Compile Include="Assets\DecentM\Prefabs\Keyboard\Plugins\InputFieldPlugin.cs" />
+    <Compile Include="Assets\DecentM\Prefabs\Keyboard\Plugins\KeypressSoundsPlugin.cs" />
+    <Compile Include="Assets\DecentM\Prefabs\Keyboard\Scripts\Drumstick.cs" />
+    <Compile Include="Assets\DecentM\Prefabs\Keyboard\Scripts\DrumstickHandle.cs" />
+    <Compile Include="Assets\DecentM\Prefabs\Keyboard\Scripts\KeyLayout.cs" />
+    <Compile Include="Assets\DecentM\Prefabs\Keyboard\Scripts\KeyboardEventBus.cs" />
+    <Compile Include="Assets\DecentM\Prefabs\Keyboard\Scripts\KeyboardEvents.cs" />
+    <Compile Include="Assets\DecentM\Prefabs\Keyboard\Scripts\KeyboardKey.cs" />
+    <Compile Include="Assets\DecentM\Prefabs\Keyboard\Scripts\KeyboardLayout.cs" />
+    <Compile Include="Assets\DecentM\Prefabs\Keyboard\Scripts\KeyboardSystem.cs" />
+    <Compile Include="Assets\DecentM\Prefabs\Keyboard\Scripts\LabelTarget.cs" />
+    <Compile Include="Assets\DecentM\Prefabs\Keyboard\Scripts\SymbolStorage.cs" />
+    <Compile Include="Assets\DecentM\Prefabs\LibDecentM\ArrayTools.cs" />
+    <Compile Include="Assets\DecentM\Prefabs\LibDecentM\Debugging.cs" />
+    <Compile Include="Assets\DecentM\Prefabs\LibDecentM\LibDecentM.cs" />
+    <Compile Include="Assets\DecentM\Prefabs\LibDecentM\Permissions.cs" />
+    <Compile Include="Assets\DecentM\Prefabs\LibDecentM\PlayerList.cs" />
+    <Compile Include="Assets\DecentM\Prefabs\LibDecentM\Scheduling.cs" />
+    <Compile Include="Assets\DecentM\Prefabs\LibDecentM\Structures\Collections\Collection.cs" />
+    <Compile Include="Assets\DecentM\Prefabs\LibDecentM\Structures\Collections\DoubleLinkedList.cs" />
+    <Compile Include="Assets\DecentM\Prefabs\LibDecentM\Structures\Collections\List.cs" />
+    <Compile Include="Assets\DecentM\Prefabs\LibDecentM\Structures\Collections\Map.cs" />
+    <Compile Include="Assets\DecentM\Prefabs\LibDecentM\Structures\Collections\Queue.cs" />
+    <Compile Include="Assets\DecentM\Prefabs\LibDecentM\Structures\Collections\Stack.cs" />
+    <Compile Include="Assets\DecentM\Prefabs\LibDecentM\Structures\Pubsub\Pubsub.cs" />
+    <Compile Include="Assets\DecentM\Prefabs\LibDecentM\Structures\Pubsub\PubsubSubscriber.cs" />
+    <Compile Include="Assets\DecentM\Prefabs\ManualCamera\ManualCamera.cs" />
+    <Compile Include="Assets\DecentM\Prefabs\Metrics\Compat\PlayerList\PlayerlistPlugin.cs" />
+    <Compile Include="Assets\DecentM\Prefabs\Metrics\Compat\VideoPlayer\VideoPlayerTracker.cs" />
+    <Compile Include="Assets\DecentM\Prefabs\Metrics\Scripts\MetricsEvents.cs" />
+    <Compile Include="Assets\DecentM\Prefabs\Metrics\Scripts\MetricsSystem.cs" />
+    <Compile Include="Assets\DecentM\Prefabs\Metrics\Scripts\MetricsUI.cs" />
+    <Compile Include="Assets\DecentM\Prefabs\Metrics\Scripts\Plugins\CustomEventTrackingPlugin.cs" />
+    <Compile Include="Assets\DecentM\Prefabs\Metrics\Scripts\Plugins\DebugPlugin.cs" />
+    <Compile Include="Assets\DecentM\Prefabs\Metrics\Scripts\Plugins\HeartbeatPlugin.cs" />
+    <Compile Include="Assets\DecentM\Prefabs\Metrics\Scripts\Plugins\IndividualTrackingPlugin.cs" />
+    <Compile Include="Assets\DecentM\Prefabs\Metrics\Scripts\Plugins\InstancePlugin.cs" />
+    <Compile Include="Assets\DecentM\Prefabs\Metrics\Scripts\Plugins\InteractionsPlugin.cs" />
+    <Compile Include="Assets\DecentM\Prefabs\Metrics\Scripts\Plugins\MetricsPlugin.cs" />
+    <Compile Include="Assets\DecentM\Prefabs\Metrics\Scripts\Plugins\PickupPlugin.cs" />
+    <Compile Include="Assets\DecentM\Prefabs\Metrics\Scripts\Plugins\RespawnPlugin.cs" />
+    <Compile Include="Assets\DecentM\Prefabs\Metrics\Scripts\Plugins\StationPlugin.cs" />
+    <Compile Include="Assets\DecentM\Prefabs\Metrics\Scripts\Plugins\TriggerVolumePlugin.cs" />
+    <Compile Include="Assets\DecentM\Prefabs\Metrics\Scripts\URLStore.cs" />
+    <Compile Include="Assets\DecentM\Prefabs\NotificationSystem\Scripts\ChatMentionsProvider.cs" />
+    <Compile Include="Assets\DecentM\Prefabs\NotificationSystem\Scripts\NotificationSystem.cs" />
+    <Compile Include="Assets\DecentM\Prefabs\NotificationSystem\Scripts\PerformanceLevelChangeProvider.cs" />
+    <Compile Include="Assets\DecentM\Prefabs\NotificationSystem\Scripts\PlayerJoinLeaveProvider.cs" />
+    <Compile Include="Assets\DecentM\Prefabs\PerformanceGovernor\Scripts\PerformanceGovernor.cs" />
+    <Compile Include="Assets\DecentM\Prefabs\PerformanceGovernor\Scripts\PerformanceGovernorPlugin.cs" />
+    <Compile Include="Assets\DecentM\Prefabs\Procedural\Scripts\ProceduralSystem.cs" />
+    <Compile Include="Assets\DecentM\Prefabs\Procedural\Scripts\RandomInstance.cs" />
+    <Compile Include="Assets\DecentM\Prefabs\RespawnObjects\RespawnObjects.cs" />
+    <Compile Include="Assets\DecentM\Prefabs\TargetCycler\TargetCycler.cs" />
+    <Compile Include="Assets\DecentM\Prefabs\UI\Dropdown\Dropdown.cs" />
+    <Compile Include="Assets\DecentM\Prefabs\UI\Dropdown\DropdownOption.cs" />
+    <Compile Include="Assets\DecentM\Prefabs\UdonBehaviourRecovery\Scripts\BadBehaviour.cs" />
+    <Compile Include="Assets\DecentM\Prefabs\UdonBehaviourRecovery\Scripts\UdonBehaviourRecovery.cs" />
+    <Compile Include="Assets\DecentM\Prefabs\VideoPlayer\Compat\Metrics\VideoPlayerMetrics.cs" />
+    <Compile Include="Assets\DecentM\Prefabs\VideoPlayer\Scripts\AVProPlayerHandler.cs" />
+    <Compile Include="Assets\DecentM\Prefabs\VideoPlayer\Scripts\BasePlayerHandler.cs" />
+    <Compile Include="Assets\DecentM\Prefabs\VideoPlayer\Scripts\Plugins\AutoLivestreamDetectorPlugin.cs" />
+    <Compile Include="Assets\DecentM\Prefabs\VideoPlayer\Scripts\Plugins\AutoPlayPlugin.cs" />
+    <Compile Include="Assets\DecentM\Prefabs\VideoPlayer\Scripts\Plugins\AutoRetryPlugin.cs" />
+    <Compile Include="Assets\DecentM\Prefabs\VideoPlayer\Scripts\Plugins\DebugPlugin.cs" />
+    <Compile Include="Assets\DecentM\Prefabs\VideoPlayer\Scripts\Plugins\GlobalSyncPlugin.cs" />
+    <Compile Include="Assets\DecentM\Prefabs\VideoPlayer\Scripts\Plugins\LoadRequestHandlerPlugin.cs" />
+    <Compile Include="Assets\DecentM\Prefabs\VideoPlayer\Scripts\Plugins\Playlist\PlaylistItemRenderer.cs" />
+    <Compile Include="Assets\DecentM\Prefabs\VideoPlayer\Scripts\Plugins\Playlist\PlaylistPlayerPlugin.cs" />
+    <Compile Include="Assets\DecentM\Prefabs\VideoPlayer\Scripts\Plugins\Playlist\VideoPlaylist.cs" />
+    <Compile Include="Assets\DecentM\Prefabs\VideoPlayer\Scripts\Plugins\Playlist\VideoPlaylistUI.cs" />
+    <Compile Include="Assets\DecentM\Prefabs\VideoPlayer\Scripts\Plugins\RenderTextureExportPlugin.cs" />
+    <Compile Include="Assets\DecentM\Prefabs\VideoPlayer\Scripts\Plugins\ResolutionUpdaterPlugin.cs" />
+    <Compile Include="Assets\DecentM\Prefabs\VideoPlayer\Scripts\Plugins\ScreenAnalysisPlugin.cs" />
+    <Compile Include="Assets\DecentM\Prefabs\VideoPlayer\Scripts\Plugins\SkipToTimestampPlugin.cs" />
+    <Compile Include="Assets\DecentM\Prefabs\VideoPlayer\Scripts\Plugins\SoundEffectsPlugin.cs" />
+    <Compile Include="Assets\DecentM\Prefabs\VideoPlayer\Scripts\Plugins\SubtitlesPlugin.cs" />
+    <Compile Include="Assets\DecentM\Prefabs\VideoPlayer\Scripts\Plugins\TextureReferencePlugin.cs" />
+    <Compile Include="Assets\DecentM\Prefabs\VideoPlayer\Scripts\Plugins\TextureUpdaterPlugin.cs" />
+    <Compile Include="Assets\DecentM\Prefabs\VideoPlayer\Scripts\Plugins\UIPlugin.cs" />
+    <Compile Include="Assets\DecentM\Prefabs\VideoPlayer\Scripts\Plugins\URLVerifierPlugin.cs" />
+    <Compile Include="Assets\DecentM\Prefabs\VideoPlayer\Scripts\Plugins\VideoPlayerPlugin.cs" />
+    <Compile Include="Assets\DecentM\Prefabs\VideoPlayer\Scripts\ScreenHandler.cs" />
+    <Compile Include="Assets\DecentM\Prefabs\VideoPlayer\Scripts\UnityPlayerHandler.cs" />
+    <Compile Include="Assets\DecentM\Prefabs\VideoPlayer\Scripts\VideoPlayerEvents.cs" />
+    <Compile Include="Assets\DecentM\Prefabs\VideoPlayer\Scripts\VideoPlayerSystem.cs" />
+    <Compile Include="Assets\DecentM\Prefabs\VideoPlayer\Scripts\VideoPlayerUI.cs" />
+    <Compile Include="Assets\DecentM\Prefabs\VideoRatelimit\Scripts\PlayerLoadMonitoring.cs" />
+    <Compile Include="Assets\DecentM\Prefabs\VideoRatelimit\Scripts\VideoRatelimitSystem.cs" />
+    <Compile Include="Assets\Merlin\Scripts\VRCBakeryAdapter.cs" />
+    <Compile Include="Assets\Store\EasyQuestSwitch\EQS_Data.cs" />
+    <Compile Include="Assets\Store\EasyQuestSwitch\EQS_Localization.cs" />
+    <Compile Include="Assets\Store\EasyQuestSwitch\EQS_Types\EQS_Fields.cs" />
+    <Compile Include="Assets\Store\EasyQuestSwitch\EQS_Types\Type_Animator.cs" />
+    <Compile Include="Assets\Store\EasyQuestSwitch\EQS_Types\Type_AudioSource.cs" />
+    <Compile Include="Assets\Store\EasyQuestSwitch\EQS_Types\Type_Base.cs" />
+    <Compile Include="Assets\Store\EasyQuestSwitch\EQS_Types\Type_Behaviour.cs" />
+    <Compile Include="Assets\Store\EasyQuestSwitch\EQS_Types\Type_BoxCollider.cs" />
+    <Compile Include="Assets\Store\EasyQuestSwitch\EQS_Types\Type_Camera.cs" />
+    <Compile Include="Assets\Store\EasyQuestSwitch\EQS_Types\Type_CanvasScaler.cs" />
+    <Compile Include="Assets\Store\EasyQuestSwitch\EQS_Types\Type_Collider.cs" />
+    <Compile Include="Assets\Store\EasyQuestSwitch\EQS_Types\Type_GameObject.cs" />
+    <Compile Include="Assets\Store\EasyQuestSwitch\EQS_Types\Type_Image.cs" />
+    <Compile Include="Assets\Store\EasyQuestSwitch\EQS_Types\Type_LODGroup.cs" />
+    <Compile Include="Assets\Store\EasyQuestSwitch\EQS_Types\Type_Light.cs" />
+    <Compile Include="Assets\Store\EasyQuestSwitch\EQS_Types\Type_Material.cs" />
+    <Compile Include="Assets\Store\EasyQuestSwitch\EQS_Types\Type_MeshCollider.cs" />
+    <Compile Include="Assets\Store\EasyQuestSwitch\EQS_Types\Type_MeshFilter.cs" />
+    <Compile Include="Assets\Store\EasyQuestSwitch\EQS_Types\Type_RawImage.cs" />
+    <Compile Include="Assets\Store\EasyQuestSwitch\EQS_Types\Type_ReflectionProbe.cs" />
+    <Compile Include="Assets\Store\EasyQuestSwitch\EQS_Types\Type_RenderTexture.cs" />
+    <Compile Include="Assets\Store\EasyQuestSwitch\EQS_Types\Type_Renderer.cs" />
+    <Compile Include="Assets\Store\EasyQuestSwitch\EQS_Types\Type_SkinnedMeshRenderer.cs" />
+    <Compile Include="Assets\Store\EasyQuestSwitch\EQS_Types\Type_SphereCollider.cs" />
+    <Compile Include="Assets\Store\EasyQuestSwitch\EQS_Types\Type_SpriteRenderer.cs" />
+    <Compile Include="Assets\Store\EasyQuestSwitch\EQS_Types\Type_Transform.cs" />
+    <Compile Include="Assets\Store\EasyQuestSwitch\EQS_Types\VRC\Type_VRC_MirrorReflection_SDK2.cs" />
+    <Compile Include="Assets\Store\EasyQuestSwitch\EQS_Types\VRC\Type_VRC_MirrorReflection_SDK3.cs" />
+    <Compile Include="Assets\Store\EasyQuestSwitch\EQS_Types\VRC\Type_VRC_SpatialAudioSource_SDK2.cs" />
+    <Compile Include="Assets\Store\EasyQuestSwitch\EQS_Types\VRC\Type_VRC_SpatialAudioSource_SDK3.cs" />
+    <Compile Include="Assets\Store\EffectExamples\Shared\Scripts\DecalDestroyer.cs" />
+    <Compile Include="Assets\Store\EffectExamples\Shared\Scripts\ExtinguishableFire.cs" />
+    <Compile Include="Assets\Store\EffectExamples\Shared\Scripts\GunAim.cs" />
+    <Compile Include="Assets\Store\EffectExamples\Shared\Scripts\GunShoot.cs" />
+    <Compile Include="Assets\Store\EffectExamples\Shared\Scripts\ParticleCollision.cs" />
+    <Compile Include="Assets\Store\EffectExamples\Shared\Scripts\ParticleExamples.cs" />
+    <Compile Include="Assets\Store\EffectExamples\Shared\Scripts\ParticleMenu.cs" />
+    <Compile Include="Assets\Store\EffectExamples\TutorialInfo\Scripts\Readme.cs" />
+    <Compile Include="Assets\UdonSharp\UtilityScripts\BoneFollower.cs" />
+    <Compile Include="Assets\UdonSharp\UtilityScripts\InteractToggle.cs" />
+    <Compile Include="Assets\UdonSharp\UtilityScripts\PlayerModSetter.cs" />
+    <Compile Include="Assets\UdonSharp\UtilityScripts\Synced\GlobalToggleObject.cs" />
+    <Compile Include="Assets\UdonSharp\UtilityScripts\Synced\MasterToggleObject.cs" />
+    <Compile Include="Assets\UdonSharp\UtilityScripts\TrackingDataFollower.cs" />
+    <Compile Include="Assets\UdonSharp\UtilityScripts\WorldAudioSettings.cs" />
+    <Compile Include="Assets\World\Scenes\BigSync_UdonProgramSources\BigSyncUIExample.cs" />
+    <Compile Include="Assets\World\Scenes\SampleScene_UdonProgramSources\BadActor.cs" />
+    <Compile Include="Assets\World\Scenes\SampleScene_UdonProgramSources\BadActorTrigger.cs" />
+    <Compile Include="Assets\World\Scenes\SampleScene_UdonProgramSources\BeginAdjustButton.cs" />
+    <Compile Include="Assets\World\Scenes\SampleScene_UdonProgramSources\BooleanVariableSync.cs" />
+    <Compile Include="Assets\World\Scenes\SampleScene_UdonProgramSources\CustomEventReceiver.cs" />
+    <Compile Include="Assets\World\Scenes\SampleScene_UdonProgramSources\PerformanceGovernorExampleRoot.cs" />
+    <Compile Include="Assets\World\Scenes\SampleScene_UdonProgramSources\SliderVariableSync.cs" />
+    <Compile Include="Assets\World\Scenes\SampleScene_UdonProgramSources\ToggleVariableSync.cs" />
+    <Compile Include="Assets\World\Scenes\SampleScene_UdonProgramSources\UIButtonSync.cs" />
+    <Compile Include="Assets\World\Scripts\VideoScreenRealtimeEmission.cs" />
+    <Compile Include="Assets\World\Scripts\VideoScreenRealtimeLight.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\DecentM\Dependencies\AudioLink\Shaders\AudioLink.shader" />
+    <None Include="Assets\DecentM\Dependencies\AudioLink\Shaders\Amplify\Shaders\AudioLinkAmplify_4BandFiltered.shader" />
+    <None Include="Assets\DecentM\Dependencies\AudioLink\Shaders\AudioLinkDocs_Demo6.shader" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
+    <None Include="Assets\Store\Filamented\FilamentCommonMaterial.cginc" />
+    <None Include="Assets\Store\Filamented\UnityGlobalIllumination.cginc" />
+    <None Include="Assets\Store\Filamented\UnityStandardConfig.cginc" />
+    <None Include="Assets\DecentM\Dependencies\AudioLink\Shaders\Amplify\Shaders\AudioLinkAmplify_4Band.shader" />
+    <None Include="Assets\Store\Filamented\UnityStandardShadow.cginc" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
+    <None Include="Assets\DecentM\ExampleAssets\Shaders\PlayersOnlyMirrorCutout.shader" />
+    <None Include="Assets\DecentM\Dependencies\AudioLink\Shaders\Amplify\Templates\AudioLinkAmplifyTemplate_Lit.shader" />
+    <None Include="Assets\DecentM\Dependencies\AudioLink\Shaders\Amplify\Shaders\AudioLinkAmplify_ColorChordStrip.shader" />
+    <None Include="Assets\DecentM\Dependencies\AudioLink\Shaders\Amplify\Shaders\AudioLinkAmplify_AutoCorrelator.shader" />
+    <None Include="Assets\DecentM\Dependencies\AudioLink\Shaders\Color3DText.shader" />
+    <None Include="Assets\Store\Filamented\UnityStandardCore.cginc" />
+    <None Include="Assets\Store\Filamented\StandardSpecular.shader" />
+    <None Include="Assets\DecentM\Dependencies\AudioLink\Shaders\AudioLinkDocs_Demo4.shader" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />
+    <None Include="Assets\Store\Filamented\FilamentMaterialInputs.cginc" />
+    <None Include="Assets\Store\Filamented\FilamentCommonMath.cginc" />
+    <None Include="Assets\Store\Filamented\FilamentShadingLit.cginc" />
+    <None Include="Assets\Store\Almgp_automapping_shader\shaders\props shaders\grunt_world_space_automap_lightmap.shader" />
+    <None Include="Assets\DecentM\Dependencies\AudioLink\Shaders\Amplify\Shaders\AudioLinkAmplify_FilteredVU.shader" />
+    <None Include="Assets\Store\XSVolumetrics\Shaders\Alpha_Scroll_DepthBlended.shader" />
+    <None Include="Assets\Store\Filamented\FilamentShadingCloth.cginc" />
+    <None Include="Assets\DecentM\Dependencies\AudioLink\Shaders\Amplify\Shaders\AudioLinkAmplify_BasicVU.shader" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMPro_Mobile.cginc" />
+    <None Include="Assets\DecentM\Dependencies\AudioLink\Shaders\AudioLinkTestTime.shader" />
+    <None Include="Assets\Store\Filamented\FilamentedTriplanar.shader" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF SSD.shader" />
+    <None Include="Assets\DecentM\Dependencies\AudioLink\Shaders\Amplify\Shaders\AudioLinkAmplify_FilteredVUFlat.shader" />
+    <None Include="Assets\Store\Filamented\FilamentShadingStandard.cginc" />
+    <None Include="Assets\DecentM\Dependencies\AudioLink\Shaders\AudioLinkQuickView.shader" />
+    <None Include="Assets\VRWorldToolkit\Version.txt" />
+    <None Include="Assets\DecentM\Dependencies\AudioLink\Shaders\AudioLinkDocs_Demo5.shader" />
+    <None Include="Assets\Store\Filamented\FilamentedTemplateRefraction.shader" />
+    <None Include="Assets\DecentM\Dependencies\AudioLink\Shaders\AudioReactiveSurface.shader" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface-Mobile.shader" />
+    <None Include="Assets\DecentM\Dependencies\AudioLink\Shaders\AudioLinkAutocorrView.shader" />
+    <None Include="Assets\Store\PollyPrivateers\Readme.txt" />
+    <None Include="Assets\DecentM\Dependencies\AudioLink\LICENSE.txt" />
+    <None Include="Assets\DecentM\ExampleAssets\Shaders\TransparentBackground.shader" />
+    <None Include="Assets\Store\VRWaterShader2\Shaders\VRWSShadowCaster.cginc" />
+    <None Include="Assets\Store\Varneon\WorldCreatorAssistant\version.txt" />
+    <None Include="Assets\Store\Filamented\StandardRoughness.shader" />
+    <None Include="Assets\DecentM\Dependencies\AudioLink\Shaders\AudioLinkDocs_Demo3.shader" />
+    <None Include="Assets\DecentM\Dependencies\AudioLink\Shaders\Amplify\Shaders\AudioLinkAmplify_Chronotensity.shader" />
+    <None Include="Assets\Store\Filamented\FilamentLightDirectional.cginc" />
+    <None Include="Assets\DecentM\Dependencies\AudioLink\Shaders\AudioLinkSpectrumUI.shader" />
+    <None Include="Assets\DecentM\Dependencies\AudioLink\VERSION.txt" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface.shader" />
+    <None Include="Assets\DecentM\Dependencies\AudioLink\Shaders\AudioTextureExport.shader" />
+    <None Include="Assets\TextMesh Pro\Sprites\EmojiOne Attribution.txt" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Custom-Atlas.shader" />
+    <None Include="Assets\Store\VRWaterShader2\Shaders\Standard.shader" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF.shader" />
+    <None Include="Assets\Store\Filamented\FilamentBRDF.cginc" />
+    <None Include="Assets\Store\Filamented\FilamentedTemplate.shader" />
+    <None Include="Assets\Store\Filamented\UnityStandardMeta.cginc" />
+    <None Include="Assets\DecentM\Dependencies\AudioLink\Shaders\Amplify\Templates\AudioLinkAmplifyTemplate_Unlit.shader" />
+    <None Include="Assets\Store\Filamented\Standard.shader" />
+    <None Include="Assets\Store\Free Stylized Skybox\ReadMe.txt" />
+    <None Include="Assets\Store\Filamented\UnityStandardInput.cginc" />
+    <None Include="Assets\Store\Filamented\FilamentCommonLighting.cginc" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile SSD.shader" />
+    <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
+    <None Include="Assets\DecentM\Dependencies\AudioLink\Shaders\AudioLinkExamples_ColorChordLights.shader" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMPro_Properties.cginc" />
+    <None Include="Assets\Store\Filamented\FilamentLightPunctual.cginc" />
+    <None Include="Assets\Store\XSVolumetrics\Shaders\Additive_GodRay.shader" />
+    <None Include="Assets\DecentM\Dependencies\AudioLink\Shaders\AudioLinkDocs_Demo1.shader" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMPro_Surface.cginc" />
+    <None Include="Assets\Store\VRWaterShader2\Shaders\VRWSCore.cginc" />
+    <None Include="Assets\Store\Filamented\FilamentCommonShading.cginc" />
+    <None Include="Assets\DecentM\Dependencies\AudioLink\Shaders\Amplify\Shaders\AudioLinkAmplify_Waveform.shader" />
+    <None Include="Assets\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
+    <None Include="Assets\Store\Industrial Props\ReadMe.txt" />
+    <None Include="Assets\Store\Filamented\FilamentCommonDithering.cginc" />
+    <None Include="Assets\DecentM\Dependencies\AudioLink\Shaders\AudioLinkMiniPlayerScreen.shader" />
+    <None Include="Assets\DecentM\Dependencies\AudioLink\Shaders\SmoothPixelFont.cginc" />
+    <None Include="Assets\Store\Filamented\UnityLightingCommon.cginc" />
+    <None Include="Assets\UdonSharp\UtilityScripts\ExampleUtilityTemplate.txt" />
+    <None Include="Assets\DecentM\Dependencies\AudioLink\Shaders\Amplify\Shaders\AudioLinkAmplify_ColorChordLights.shader" />
+    <None Include="Assets\Store\XSVolumetrics\Shaders\Additive_GodRay_Smoky.shader" />
+    <None Include="Assets\Store\Filamented\SharedParallaxLib.hlsl" />
+    <None Include="Assets\DecentM\Dependencies\AudioLink\Shaders\FilteredVUDebug.shader" />
+    <None Include="Assets\DecentM\Dependencies\AudioLink\Shaders\AudioLinkExamples_ColorChordStrip.shader" />
+    <None Include="Assets\DecentM\Dependencies\AudioLink\Shaders\ThemeColorGrid.shader" />
+    <None Include="Assets\Store\Filamented\SharedNormalShadowLib.hlsl" />
+    <None Include="Assets\DecentM\Dependencies\AudioLink\Shaders\AudioTextureOverlay.shader" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Masking.shader" />
+    <None Include="Assets\Store\VRWaterShader2\Shaders\VRWSTess.cginc" />
+    <None Include="Assets\Store\Varneon\WorldCreatorAssistant\LICENSE.txt" />
+    <None Include="Assets\DecentM\Dependencies\AudioLink\Shaders\AudioLinkDocs_Demo2.shader" />
+    <None Include="Assets\DecentM\Dependencies\AudioLink\Shaders\AudioLinkDocs_Demo8.shader" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF Overlay.shader" />
+    <None Include="Assets\DecentM\Dependencies\AudioLink\Shaders\AudioLink.cginc" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Mobile.shader" />
+    <None Include="Assets\Store\Filamented\FilamentCommonGraphics.cginc" />
+    <None Include="Assets\Store\Filamented\FilamentLightLTCGI.cginc" />
+    <None Include="Assets\Store\EffectExamples\Shared\Shaders\SurfaceShader_VC.shader" />
+    <None Include="Assets\TextMesh Pro\Fonts\LiberationSans - OFL.txt" />
+    <None Include="Assets\Store\Filamented\UnityStandardUtils.cginc" />
+    <None Include="Assets\Store\Filamented\FilamentLightIndirect.cginc" />
+    <None Include="Assets\Store\Filamented\UnityStandardCoreForward.cginc" />
+    <None Include="Assets\DecentM\Dependencies\AudioLink\Shaders\AudioLinkDebug.shader" />
+    <None Include="Assets\DecentM\Dependencies\AudioLink\Shaders\AudioReactiveSurface_SmoothAlpha.shader" />
+    <None Include="Assets\Store\Filamented\StandardCloth.shader" />
+    <None Include="Assets\DecentM\Dependencies\AudioLink\Shaders\AudioLinkTestLights.shader" />
+    <None Include="Assets\Store\Filamented\FilamentCommonOcclusion.cginc" />
+    <None Include="Assets\Store\Filamented\SharedFilteringLib.hlsl" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile.shader" />
+    <None Include="Assets\VRCPrefabs\Stingray\UdonCalibratingChairs\Readme.txt" />
+    <None Include="Assets\DecentM\Dependencies\AudioLink\Shaders\AudioLinkDocs_Demo7.shader" />
+    <None Include="Assets\Store\Filamented\UnityImageBasedLightingMinimal.cginc" />
+    <None Include="Assets\DecentM\Dependencies\UdonHashLib\version.txt" />
+    <None Include="Assets\DecentM\Prefabs\VideoPlayer\Shaders\VideoScreen.shader" />
+    <None Include="Assets\Store\Filamented\UnityLeftovers.cginc" />
+    <None Include="Assets\DecentM\Dependencies\AudioLink\Shaders\AudioReactiveSurface_Cutout.shader" />
+    <None Include="Assets\DecentM\Dependencies\AudioLink\Shaders\Color3DTextFade.shader" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_Sprite.shader" />
+    <None Include="Assets\DecentM\Dependencies\AudioLink\Shaders\AudioLinkDocs_Demo9.shader" />
+    <None Include="Assets\Store\Filamented\FilamentShadingParameters.cginc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="UnityEngine">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\PlaybackEngines\WindowsStandaloneSupport\Variations\mono\Managed\UnityEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.AIModule">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\PlaybackEngines\WindowsStandaloneSupport\Variations\mono\Managed\UnityEngine.AIModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ARModule">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\PlaybackEngines\WindowsStandaloneSupport\Variations\mono\Managed\UnityEngine.ARModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.AccessibilityModule">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\PlaybackEngines\WindowsStandaloneSupport\Variations\mono\Managed\UnityEngine.AccessibilityModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.AndroidJNIModule">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\PlaybackEngines\WindowsStandaloneSupport\Variations\mono\Managed\UnityEngine.AndroidJNIModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.AnimationModule">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\PlaybackEngines\WindowsStandaloneSupport\Variations\mono\Managed\UnityEngine.AnimationModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.AssetBundleModule">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\PlaybackEngines\WindowsStandaloneSupport\Variations\mono\Managed\UnityEngine.AssetBundleModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.AudioModule">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\PlaybackEngines\WindowsStandaloneSupport\Variations\mono\Managed\UnityEngine.AudioModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ClothModule">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\PlaybackEngines\WindowsStandaloneSupport\Variations\mono\Managed\UnityEngine.ClothModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ClusterInputModule">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\PlaybackEngines\WindowsStandaloneSupport\Variations\mono\Managed\UnityEngine.ClusterInputModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ClusterRendererModule">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\PlaybackEngines\WindowsStandaloneSupport\Variations\mono\Managed\UnityEngine.ClusterRendererModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\PlaybackEngines\WindowsStandaloneSupport\Variations\mono\Managed\UnityEngine.CoreModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.CrashReportingModule">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\PlaybackEngines\WindowsStandaloneSupport\Variations\mono\Managed\UnityEngine.CrashReportingModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.DSPGraphModule">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\PlaybackEngines\WindowsStandaloneSupport\Variations\mono\Managed\UnityEngine.DSPGraphModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.DirectorModule">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\PlaybackEngines\WindowsStandaloneSupport\Variations\mono\Managed\UnityEngine.DirectorModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.GameCenterModule">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\PlaybackEngines\WindowsStandaloneSupport\Variations\mono\Managed\UnityEngine.GameCenterModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.GridModule">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\PlaybackEngines\WindowsStandaloneSupport\Variations\mono\Managed\UnityEngine.GridModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.HotReloadModule">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\PlaybackEngines\WindowsStandaloneSupport\Variations\mono\Managed\UnityEngine.HotReloadModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.IMGUIModule">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\PlaybackEngines\WindowsStandaloneSupport\Variations\mono\Managed\UnityEngine.IMGUIModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ImageConversionModule">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\PlaybackEngines\WindowsStandaloneSupport\Variations\mono\Managed\UnityEngine.ImageConversionModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.InputModule">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\PlaybackEngines\WindowsStandaloneSupport\Variations\mono\Managed\UnityEngine.InputModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.InputLegacyModule">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\PlaybackEngines\WindowsStandaloneSupport\Variations\mono\Managed\UnityEngine.InputLegacyModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.JSONSerializeModule">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\PlaybackEngines\WindowsStandaloneSupport\Variations\mono\Managed\UnityEngine.JSONSerializeModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.LocalizationModule">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\PlaybackEngines\WindowsStandaloneSupport\Variations\mono\Managed\UnityEngine.LocalizationModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ParticleSystemModule">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\PlaybackEngines\WindowsStandaloneSupport\Variations\mono\Managed\UnityEngine.ParticleSystemModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.PerformanceReportingModule">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\PlaybackEngines\WindowsStandaloneSupport\Variations\mono\Managed\UnityEngine.PerformanceReportingModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.PhysicsModule">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\PlaybackEngines\WindowsStandaloneSupport\Variations\mono\Managed\UnityEngine.PhysicsModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Physics2DModule">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\PlaybackEngines\WindowsStandaloneSupport\Variations\mono\Managed\UnityEngine.Physics2DModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ProfilerModule">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\PlaybackEngines\WindowsStandaloneSupport\Variations\mono\Managed\UnityEngine.ProfilerModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ScreenCaptureModule">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\PlaybackEngines\WindowsStandaloneSupport\Variations\mono\Managed\UnityEngine.ScreenCaptureModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.SharedInternalsModule">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\PlaybackEngines\WindowsStandaloneSupport\Variations\mono\Managed\UnityEngine.SharedInternalsModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.SpriteMaskModule">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\PlaybackEngines\WindowsStandaloneSupport\Variations\mono\Managed\UnityEngine.SpriteMaskModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.SpriteShapeModule">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\PlaybackEngines\WindowsStandaloneSupport\Variations\mono\Managed\UnityEngine.SpriteShapeModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.StreamingModule">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\PlaybackEngines\WindowsStandaloneSupport\Variations\mono\Managed\UnityEngine.StreamingModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.SubstanceModule">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\PlaybackEngines\WindowsStandaloneSupport\Variations\mono\Managed\UnityEngine.SubstanceModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.SubsystemsModule">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\PlaybackEngines\WindowsStandaloneSupport\Variations\mono\Managed\UnityEngine.SubsystemsModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.TLSModule">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\PlaybackEngines\WindowsStandaloneSupport\Variations\mono\Managed\UnityEngine.TLSModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.TerrainModule">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\PlaybackEngines\WindowsStandaloneSupport\Variations\mono\Managed\UnityEngine.TerrainModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.TerrainPhysicsModule">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\PlaybackEngines\WindowsStandaloneSupport\Variations\mono\Managed\UnityEngine.TerrainPhysicsModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.TextCoreModule">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\PlaybackEngines\WindowsStandaloneSupport\Variations\mono\Managed\UnityEngine.TextCoreModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.TextRenderingModule">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\PlaybackEngines\WindowsStandaloneSupport\Variations\mono\Managed\UnityEngine.TextRenderingModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.TilemapModule">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\PlaybackEngines\WindowsStandaloneSupport\Variations\mono\Managed\UnityEngine.TilemapModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UIModule">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\PlaybackEngines\WindowsStandaloneSupport\Variations\mono\Managed\UnityEngine.UIModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UIElementsModule">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\PlaybackEngines\WindowsStandaloneSupport\Variations\mono\Managed\UnityEngine.UIElementsModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UNETModule">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\PlaybackEngines\WindowsStandaloneSupport\Variations\mono\Managed\UnityEngine.UNETModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UmbraModule">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\PlaybackEngines\WindowsStandaloneSupport\Variations\mono\Managed\UnityEngine.UmbraModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UnityAnalyticsModule">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\PlaybackEngines\WindowsStandaloneSupport\Variations\mono\Managed\UnityEngine.UnityAnalyticsModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UnityConnectModule">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\PlaybackEngines\WindowsStandaloneSupport\Variations\mono\Managed\UnityEngine.UnityConnectModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UnityTestProtocolModule">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\PlaybackEngines\WindowsStandaloneSupport\Variations\mono\Managed\UnityEngine.UnityTestProtocolModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UnityWebRequestModule">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\PlaybackEngines\WindowsStandaloneSupport\Variations\mono\Managed\UnityEngine.UnityWebRequestModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UnityWebRequestAssetBundleModule">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\PlaybackEngines\WindowsStandaloneSupport\Variations\mono\Managed\UnityEngine.UnityWebRequestAssetBundleModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UnityWebRequestAudioModule">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\PlaybackEngines\WindowsStandaloneSupport\Variations\mono\Managed\UnityEngine.UnityWebRequestAudioModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UnityWebRequestTextureModule">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\PlaybackEngines\WindowsStandaloneSupport\Variations\mono\Managed\UnityEngine.UnityWebRequestTextureModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UnityWebRequestWWWModule">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\PlaybackEngines\WindowsStandaloneSupport\Variations\mono\Managed\UnityEngine.UnityWebRequestWWWModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.VFXModule">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\PlaybackEngines\WindowsStandaloneSupport\Variations\mono\Managed\UnityEngine.VFXModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.VRModule">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\PlaybackEngines\WindowsStandaloneSupport\Variations\mono\Managed\UnityEngine.VRModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.VehiclesModule">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\PlaybackEngines\WindowsStandaloneSupport\Variations\mono\Managed\UnityEngine.VehiclesModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.VideoModule">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\PlaybackEngines\WindowsStandaloneSupport\Variations\mono\Managed\UnityEngine.VideoModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.WindModule">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\PlaybackEngines\WindowsStandaloneSupport\Variations\mono\Managed\UnityEngine.WindModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.XRModule">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\PlaybackEngines\WindowsStandaloneSupport\Variations\mono\Managed\UnityEngine.XRModule.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Timeline.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.Timeline.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.VSCode.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.VSCode.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="VRC.ClientSim.Editor">
+      <HintPath>Library\ScriptAssemblies\VRC.ClientSim.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Burst.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.Burst.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="UdonSharp.Editor">
+      <HintPath>Library\ScriptAssemblies\UdonSharp.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="AltGUI">
+      <HintPath>Library\ScriptAssemblies\AltGUI.dll</HintPath>
+    </Reference>
+    <Reference Include="Varneon.WorldCreatorAssistant">
+      <HintPath>Library\ScriptAssemblies\Varneon.WorldCreatorAssistant.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.TextMeshPro.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.TextMeshPro.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="BakeryEditorAssembly">
+      <HintPath>Library\ScriptAssemblies\BakeryEditorAssembly.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Postprocessing.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.Postprocessing.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="VRC.SDKBase.Editor">
+      <HintPath>Library\ScriptAssemblies\VRC.SDKBase.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Rider.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.Rider.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="VRC.SDKBase.Editor.ShaderStripping">
+      <HintPath>Library\ScriptAssemblies\VRC.SDKBase.Editor.ShaderStripping.dll</HintPath>
+    </Reference>
+    <Reference Include="VRC.Udon.Editor">
+      <HintPath>Library\ScriptAssemblies\VRC.Udon.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="com.unity.cinemachine.editor">
+      <HintPath>Library\ScriptAssemblies\com.unity.cinemachine.editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.VisualStudio.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.VisualStudio.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Mathematics.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.Mathematics.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="VRC.SDK3.Editor">
+      <HintPath>Library\ScriptAssemblies\VRC.SDK3.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.PlasticSCM.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.PlasticSCM.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.UI">
+      <HintPath>Library\ScriptAssemblies\UnityEditor.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Burst.Unsafe">
+      <HintPath>Library\PackageCache\com.unity.burst@1.4.11\Unity.Burst.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="clipper_library">
+      <HintPath>Library\PackageCache\com.unity.cinemachine@2.8.0\Runtime\ThirdParty\clipper_library.dll</HintPath>
+    </Reference>
+    <Reference Include="Blake2Sharp">
+      <HintPath>Library\PackageCache\com.vrchat.base@5854cdd7f1\Runtime\VRCSDK\Dependencies\librsync\Blake2Sharp.dll</HintPath>
+    </Reference>
+    <Reference Include="librsync.net">
+      <HintPath>Library\PackageCache\com.vrchat.base@5854cdd7f1\Runtime\VRCSDK\Dependencies\librsync\librsync.net.dll</HintPath>
+    </Reference>
+    <Reference Include="Collections.Pooled">
+      <HintPath>Library\PackageCache\com.vrchat.base@5854cdd7f1\Runtime\VRCSDK\Dependencies\Managed\Collections.Pooled.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Buffers">
+      <HintPath>Library\PackageCache\com.vrchat.base@5854cdd7f1\Runtime\VRCSDK\Dependencies\Managed\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Collections.Immutable">
+      <HintPath>Library\PackageCache\com.vrchat.base@5854cdd7f1\Runtime\VRCSDK\Dependencies\Managed\System.Collections.Immutable.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Memory">
+      <HintPath>Library\PackageCache\com.vrchat.base@5854cdd7f1\Runtime\VRCSDK\Dependencies\Managed\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics.Vectors">
+      <HintPath>Library\PackageCache\com.vrchat.base@5854cdd7f1\Runtime\VRCSDK\Dependencies\Managed\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe">
+      <HintPath>Library\PackageCache\com.vrchat.base@5854cdd7f1\Runtime\VRCSDK\Dependencies\Managed\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks.Extensions">
+      <HintPath>Library\PackageCache\com.vrchat.base@5854cdd7f1\Runtime\VRCSDK\Dependencies\Managed\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Collections">
+      <HintPath>Library\PackageCache\com.vrchat.base@5854cdd7f1\Runtime\VRCSDK\Dependencies\Managed\Unity.Collections.dll</HintPath>
+    </Reference>
+    <Reference Include="VRC.Dynamics">
+      <HintPath>Library\PackageCache\com.vrchat.base@5854cdd7f1\Runtime\VRCSDK\Plugins\VRC.Dynamics.dll</HintPath>
+    </Reference>
+    <Reference Include="VRC.SDK3.Dynamics.Contact">
+      <HintPath>Library\PackageCache\com.vrchat.base@5854cdd7f1\Runtime\VRCSDK\Plugins\VRC.SDK3.Dynamics.Contact.dll</HintPath>
+    </Reference>
+    <Reference Include="VRC.SDK3.Dynamics.PhysBone">
+      <HintPath>Library\PackageCache\com.vrchat.base@5854cdd7f1\Runtime\VRCSDK\Plugins\VRC.SDK3.Dynamics.PhysBone.dll</HintPath>
+    </Reference>
+    <Reference Include="VRC.Utility">
+      <HintPath>Library\PackageCache\com.vrchat.base@5854cdd7f1\Runtime\VRCSDK\Plugins\VRC.Utility.dll</HintPath>
+    </Reference>
+    <Reference Include="VRCCore-Editor">
+      <HintPath>Library\PackageCache\com.vrchat.base@5854cdd7f1\Runtime\VRCSDK\Plugins\VRCCore-Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="VRCSDKBase">
+      <HintPath>Library\PackageCache\com.vrchat.base@5854cdd7f1\Runtime\VRCSDK\Plugins\VRCSDKBase.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Text.Encoding.CodePages">
+      <HintPath>Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Runtime\Plugins\System.Text.Encoding.CodePages.dll</HintPath>
+    </Reference>
+    <Reference Include="VRC.Udon.ClientBindings">
+      <HintPath>Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\External\VRC.Udon.ClientBindings.dll</HintPath>
+    </Reference>
+    <Reference Include="VRC.Udon.Common">
+      <HintPath>Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\External\VRC.Udon.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="VRC.Udon.Security">
+      <HintPath>Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\External\VRC.Udon.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="VRC.Udon.VM">
+      <HintPath>Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\External\VRC.Udon.VM.dll</HintPath>
+    </Reference>
+    <Reference Include="VRC.Udon.VRCWrapperModules">
+      <HintPath>Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\External\VRC.Udon.VRCWrapperModules.dll</HintPath>
+    </Reference>
+    <Reference Include="VRC.Udon.Wrapper">
+      <HintPath>Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\External\VRC.Udon.Wrapper.dll</HintPath>
+    </Reference>
+    <Reference Include="VRCSDK3">
+      <HintPath>Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\VRCSDK\Plugins\VRCSDK3.dll</HintPath>
+    </Reference>
+    <Reference Include="mscorlib">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\mscorlib.dll</HintPath>
+    </Reference>
+    <Reference Include="System">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\System.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Core">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\System.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\System.Runtime.Serialization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\System.Xml.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\System.Xml.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\System.Numerics.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics.Vectors">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\System.Net.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.Compression">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\System.IO.Compression.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\Microsoft.CSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\System.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Win32.Primitives">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\Facades\Microsoft.Win32.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="netstandard">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\Facades\netstandard.dll</HintPath>
+    </Reference>
+    <Reference Include="System.AppContext">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\Facades\System.AppContext.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Collections.Concurrent">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\Facades\System.Collections.Concurrent.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Collections">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\Facades\System.Collections.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Collections.NonGeneric">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\Facades\System.Collections.NonGeneric.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Collections.Specialized">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\Facades\System.Collections.Specialized.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.Annotations">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\Facades\System.ComponentModel.Annotations.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\Facades\System.ComponentModel.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.EventBasedAsync">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\Facades\System.ComponentModel.EventBasedAsync.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.Primitives">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\Facades\System.ComponentModel.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.TypeConverter">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\Facades\System.ComponentModel.TypeConverter.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Console">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\Facades\System.Console.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.Common">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\Facades\System.Data.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Diagnostics.Contracts">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\Facades\System.Diagnostics.Contracts.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Diagnostics.Debug">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\Facades\System.Diagnostics.Debug.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Diagnostics.FileVersionInfo">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\Facades\System.Diagnostics.FileVersionInfo.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Diagnostics.Process">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\Facades\System.Diagnostics.Process.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Diagnostics.StackTrace">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\Facades\System.Diagnostics.StackTrace.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Diagnostics.TextWriterTraceListener">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\Facades\System.Diagnostics.TextWriterTraceListener.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Diagnostics.Tools">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\Facades\System.Diagnostics.Tools.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Diagnostics.TraceSource">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\Facades\System.Diagnostics.TraceSource.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Drawing.Primitives">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\Facades\System.Drawing.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Dynamic.Runtime">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\Facades\System.Dynamic.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Globalization.Calendars">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\Facades\System.Globalization.Calendars.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Globalization">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\Facades\System.Globalization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Globalization.Extensions">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\Facades\System.Globalization.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.Compression.ZipFile">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\Facades\System.IO.Compression.ZipFile.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\Facades\System.IO.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.FileSystem">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\Facades\System.IO.FileSystem.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.FileSystem.DriveInfo">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\Facades\System.IO.FileSystem.DriveInfo.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.FileSystem.Primitives">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\Facades\System.IO.FileSystem.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.FileSystem.Watcher">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\Facades\System.IO.FileSystem.Watcher.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.IsolatedStorage">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\Facades\System.IO.IsolatedStorage.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.MemoryMappedFiles">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\Facades\System.IO.MemoryMappedFiles.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.Pipes">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\Facades\System.IO.Pipes.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.UnmanagedMemoryStream">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\Facades\System.IO.UnmanagedMemoryStream.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Linq">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\Facades\System.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Linq.Expressions">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\Facades\System.Linq.Expressions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Linq.Parallel">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\Facades\System.Linq.Parallel.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Linq.Queryable">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\Facades\System.Linq.Queryable.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Rtc">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\Facades\System.Net.Http.Rtc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.NameResolution">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\Facades\System.Net.NameResolution.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.NetworkInformation">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\Facades\System.Net.NetworkInformation.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Ping">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\Facades\System.Net.Ping.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Primitives">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\Facades\System.Net.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Requests">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\Facades\System.Net.Requests.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Security">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\Facades\System.Net.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Sockets">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\Facades\System.Net.Sockets.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.WebHeaderCollection">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\Facades\System.Net.WebHeaderCollection.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.WebSockets.Client">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\Facades\System.Net.WebSockets.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.WebSockets">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\Facades\System.Net.WebSockets.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ObjectModel">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\Facades\System.ObjectModel.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reflection">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\Facades\System.Reflection.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reflection.Emit">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\Facades\System.Reflection.Emit.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reflection.Emit.ILGeneration">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\Facades\System.Reflection.Emit.ILGeneration.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reflection.Emit.Lightweight">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\Facades\System.Reflection.Emit.Lightweight.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reflection.Extensions">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\Facades\System.Reflection.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reflection.Primitives">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\Facades\System.Reflection.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Resources.Reader">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\Facades\System.Resources.Reader.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Resources.ResourceManager">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\Facades\System.Resources.ResourceManager.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Resources.Writer">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\Facades\System.Resources.Writer.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.VisualC">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\Facades\System.Runtime.CompilerServices.VisualC.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\Facades\System.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Extensions">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\Facades\System.Runtime.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Handles">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\Facades\System.Runtime.Handles.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.InteropServices">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\Facades\System.Runtime.InteropServices.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.InteropServices.RuntimeInformation">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\Facades\System.Runtime.InteropServices.RuntimeInformation.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.InteropServices.WindowsRuntime">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\Facades\System.Runtime.InteropServices.WindowsRuntime.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Numerics">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\Facades\System.Runtime.Numerics.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization.Formatters">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\Facades\System.Runtime.Serialization.Formatters.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization.Json">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\Facades\System.Runtime.Serialization.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization.Primitives">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\Facades\System.Runtime.Serialization.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization.Xml">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\Facades\System.Runtime.Serialization.Xml.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Claims">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\Facades\System.Security.Claims.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Algorithms">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\Facades\System.Security.Cryptography.Algorithms.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Csp">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\Facades\System.Security.Cryptography.Csp.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Encoding">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\Facades\System.Security.Cryptography.Encoding.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Primitives">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\Facades\System.Security.Cryptography.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.X509Certificates">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\Facades\System.Security.Cryptography.X509Certificates.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Principal">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\Facades\System.Security.Principal.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.SecureString">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\Facades\System.Security.SecureString.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ServiceModel.Duplex">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\Facades\System.ServiceModel.Duplex.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ServiceModel.Http">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\Facades\System.ServiceModel.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ServiceModel.NetTcp">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\Facades\System.ServiceModel.NetTcp.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ServiceModel.Primitives">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\Facades\System.ServiceModel.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ServiceModel.Security">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\Facades\System.ServiceModel.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Text.Encoding">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\Facades\System.Text.Encoding.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Text.Encoding.Extensions">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\Facades\System.Text.Encoding.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Text.RegularExpressions">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\Facades\System.Text.RegularExpressions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\Facades\System.Threading.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Overlapped">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\Facades\System.Threading.Overlapped.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\Facades\System.Threading.Tasks.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks.Parallel">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\Facades\System.Threading.Tasks.Parallel.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Thread">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\Facades\System.Threading.Thread.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.ThreadPool">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\Facades\System.Threading.ThreadPool.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Timer">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\Facades\System.Threading.Timer.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ValueTuple">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\Facades\System.ValueTuple.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.ReaderWriter">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\Facades\System.Xml.ReaderWriter.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.XDocument">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\Facades\System.Xml.XDocument.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.XmlDocument">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\Facades\System.Xml.XmlDocument.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.XmlSerializer">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\Facades\System.Xml.XmlSerializer.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.XPath">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\Facades\System.Xml.XPath.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.XPath.XDocument">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\Facades\System.Xml.XPath.XDocument.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityScript">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\unityscript\UnityScript.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityScript.Lang">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\unityscript\UnityScript.Lang.dll</HintPath>
+    </Reference>
+    <Reference Include="Boo.Lang">
+      <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\unityscript\Boo.Lang.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="Cinemachine.csproj">
+      <Project>{28AF7372-7F9B-B4E8-B066-C9A57AB9D51C}</Project>
+      <Name>Cinemachine</Name>
+    </ProjectReference>
+    <ProjectReference Include="VRC.Udon.Serialization.OdinSerializer.csproj">
+      <Project>{C6478EE8-2280-A906-51C4-3F7A57CBFD14}</Project>
+      <Name>VRC.Udon.Serialization.OdinSerializer</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Burst.csproj">
+      <Project>{F6AAC17F-0FAB-AD1B-5255-9F9D99D3C8CD}</Project>
+      <Name>Unity.Burst</Name>
+    </ProjectReference>
+    <ProjectReference Include="UdonSharp.Runtime.csproj">
+      <Project>{F207FDF2-FC8D-3FF8-E6B4-E7228B5BA778}</Project>
+      <Name>UdonSharp.Runtime</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.InputSystem.csproj">
+      <Project>{E39FD8A9-E5D7-7DB4-9184-84E20FD9FC1B}</Project>
+      <Name>Unity.InputSystem</Name>
+    </ProjectReference>
+    <ProjectReference Include="VRC.Udon.csproj">
+      <Project>{4A1B7C43-F455-7043-77CD-7717AFF7B0D3}</Project>
+      <Name>VRC.Udon</Name>
+    </ProjectReference>
+    <ProjectReference Include="UnityEngine.UI.csproj">
+      <Project>{0CD2AE03-5A8C-15D2-9A56-DE9F338A27BA}</Project>
+      <Name>UnityEngine.UI</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Timeline.csproj">
+      <Project>{71685982-A3E4-03BD-69E8-57000764549C}</Project>
+      <Name>Unity.Timeline</Name>
+    </ProjectReference>
+    <ProjectReference Include="BakeryRuntimeAssembly.csproj">
+      <Project>{5E74822B-1910-32AD-3498-F1619D04A768}</Project>
+      <Name>BakeryRuntimeAssembly</Name>
+    </ProjectReference>
+    <ProjectReference Include="VRC.SDK3.csproj">
+      <Project>{F21FEFFC-DE4F-CECE-6F72-E933F69D9F36}</Project>
+      <Name>VRC.SDK3</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Mathematics.csproj">
+      <Project>{DB45369E-A59B-D786-5797-CA30E80442FA}</Project>
+      <Name>Unity.Mathematics</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Postprocessing.Runtime.csproj">
+      <Project>{56FBC107-6015-1737-B069-A20784C7D848}</Project>
+      <Name>Unity.Postprocessing.Runtime</Name>
+    </ProjectReference>
+    <ProjectReference Include="VRC.SDKBase.csproj">
+      <Project>{3359449D-85F4-2EED-5F9C-F912C361EA41}</Project>
+      <Name>VRC.SDKBase</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.TextMeshPro.csproj">
+      <Project>{6D1829C3-AEC0-D815-EB82-4E4BBF459634}</Project>
+      <Name>Unity.TextMeshPro</Name>
+    </ProjectReference>
+    <ProjectReference Include="VRC.SDKBase.Editor.BuildPipeline.csproj">
+      <Project>{22F39F53-4BC5-5898-070C-24FBF6D6D733}</Project>
+      <Name>VRC.SDKBase.Editor.BuildPipeline</Name>
+    </ProjectReference>
+    <ProjectReference Include="VRC.ClientSim.csproj">
+      <Project>{34F5BC94-BA93-DFCD-1F88-34C669C76872}</Project>
+      <Name>VRC.ClientSim</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="GenerateTargetFrameworkMonikerAttribute" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
