@@ -13,12 +13,14 @@ namespace DecentM.VideoPlayer.Plugins
             // by other video players in the world unnecessarily
             if (url == null || url == "")
                 return false;
+
             if (
                 url.StartsWith("http://")
                 || url.StartsWith("https://")
                 || url.StartsWith("localhost")
             )
                 return true;
+
             if (url.Split('/').Length >= 2)
                 return true;
 
@@ -27,11 +29,10 @@ namespace DecentM.VideoPlayer.Plugins
 
         protected override void OnLoadRequested(VRCUrl url)
         {
-            if (!this.ValidateUrl(url.ToString()))
-            {
-                this.events.OnLoadDenied(url, "URL failed validation");
+            if (this.ValidateUrl(url.ToString()))
                 return;
-            }
+
+            this.events.OnLoadDenied(url, "URL failed validation");
         }
     }
 }
