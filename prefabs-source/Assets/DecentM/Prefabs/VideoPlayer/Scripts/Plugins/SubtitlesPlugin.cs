@@ -6,12 +6,43 @@ using TMPro;
 
 namespace DecentM.VideoPlayer.Plugins
 {
+    [UdonBehaviourSyncMode(BehaviourSyncMode.Manual)]
     public class SubtitlesPlugin : VideoPlayerPlugin
     {
         public TextMeshProUGUI debugSlot;
         public TextMeshProUGUI pregenerateSlot;
 
         private TextAsset[] currentSubtitles;
+
+        [UdonSynced, FieldChangeCallback(nameof(displayValue))]
+        private string _displayValue;
+
+        public string displayValue
+        {
+            get => _displayValue;
+            set
+            {
+                this._displayValue = value;
+
+                if (this.isOwner)
+                    this.RequestSerialization();
+                // If the current non-owner already has subtitles loaded, we don't do anything.
+                // This way synced subtitles won't happen when there are multiple languages and people
+                // are using different ones.
+                else if (this.instructions.Length > 0)
+                    return;
+
+                if (string.IsNullOrEmpty(value))
+                    this.events.OnSubtitleClear();
+                else
+                    this.events.OnSubtitleRender(value);
+            }
+        }
+
+        private bool isOwner
+        {
+            get { return Networking.GetOwner(this.gameObject) == Networking.LocalPlayer; }
+        }
 
         protected override void OnPlaybackStart(float timestamp)
         {
@@ -34,6 +65,8 @@ namespace DecentM.VideoPlayer.Plugins
         {
             this.Reset();
         }
+
+        #region Language handling
 
         public static string GetLanguageIdFromFilename(string filename)
         {
@@ -367,6 +400,8 @@ namespace DecentM.VideoPlayer.Plugins
             }
         }
 
+        #endregion
+
         public float subtitleOffset = 0;
 
         protected override void _Start()
@@ -462,6 +497,8 @@ namespace DecentM.VideoPlayer.Plugins
 
         public int timestampSeekAccuracy = 10000;
 
+        #region Pregenerating TMPro font assets
+
         private string pregeneratingText = "";
         private int pregeneratingIndex = 0;
 
@@ -486,6 +523,10 @@ namespace DecentM.VideoPlayer.Plugins
             this.pregenerateSlot.text = this.pregeneratingText[this.pregeneratingIndex].ToString();
             this.pregeneratingIndex++;
         }
+
+        #endregion
+
+        #region Instructions
 
         private object[] GetInstructionAtIndex(int index)
         {
@@ -535,9 +576,6 @@ namespace DecentM.VideoPlayer.Plugins
 
             return -1;
         }
-
-        // -1, 0, or 1
-        // private int seekDirection = 0;
 
         private void TickInstruction()
         {
@@ -629,13 +667,15 @@ namespace DecentM.VideoPlayer.Plugins
             switch (type)
             {
                 case 1:
-                    this.events.OnSubtitleRender(value);
+                    this.displayValue = value;
                     break;
 
                 case 2:
-                    this.events.OnSubtitleClear();
+                    this.displayValue = "";
                     break;
             }
         }
+
+        #endregion
     }
 }

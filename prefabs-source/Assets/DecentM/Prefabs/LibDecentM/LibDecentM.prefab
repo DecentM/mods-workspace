@@ -4376,6 +4376,17 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5898202144610489852}
     m_Modifications:
+    - target: {fileID: 2009811551514786169, guid: dc80b8094570646428673dd92f6f54d2,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 2009811551514786169, guid: dc80b8094570646428673dd92f6f54d2,
+        type: 3}
+    - target: {fileID: 2009811551514786169, guid: dc80b8094570646428673dd92f6f54d2,
+        type: 3}
+      propertyPath: _udonSharpBackingUdonBehaviour
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 2458395400716978561, guid: dc80b8094570646428673dd92f6f54d2,
         type: 3}
       propertyPath: m_RootOrder

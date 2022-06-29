@@ -4,12 +4,8 @@ using JetBrains.Annotations;
 
 namespace DecentM.Collections
 {
-#if COMPILER_UDONSHARP && UNITY_EDITOR
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public abstract class Collection : UdonSharpBehaviour
-#else
-    public abstract class Collection
-#endif
     {
         protected object[] value = new object[0];
 
