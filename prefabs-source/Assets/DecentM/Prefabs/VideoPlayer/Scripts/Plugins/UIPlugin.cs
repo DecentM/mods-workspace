@@ -11,17 +11,6 @@ using DecentM.UI;
 
 namespace DecentM.VideoPlayer.Plugins
 {
-    enum SubtitleSlot
-    {
-        Default,
-        Japanese,
-        Korean,
-        ChineseSimplified,
-        ChineseHongKong,
-        ChineseTaiwan,
-        Arabic,
-    }
-
     public sealed class UIPlugin : VideoPlayerPlugin
     {
         [Space]
@@ -624,7 +613,7 @@ namespace DecentM.VideoPlayer.Plugins
                     this.status.text = "Access denied";
                     break;
 
-                    // We don't care about the rest of the errors as they're handled by the AutoRetry plugin
+                // We don't care about the rest of the errors as they're handled by the AutoRetry plugin
             }
 
             this.animator.SetBool("Loading", false);
@@ -760,8 +749,14 @@ namespace DecentM.VideoPlayer.Plugins
 
         protected override void OnRemotePlayerLoaded(int loadedPlayers)
         {
-            if (unloadedPlayers.Length == 1)
-                this.status.text = VRCPlayerApi.GetPlayerCount() == 2 ? "Waiting for the other player..." : "Waiting for one last player...";
+            int players = VRCPlayerApi.GetPlayerCount();
+            int unloadedPlayers = players - loadedPlayers - 1;
+
+            if (unloadedPlayers == 1)
+                this.status.text =
+                    players == 2
+                        ? "Waiting for the other player..."
+                        : "Waiting for one last player...";
             else
                 this.status.text = $"Waiting for {unloadedPlayers} players...";
         }

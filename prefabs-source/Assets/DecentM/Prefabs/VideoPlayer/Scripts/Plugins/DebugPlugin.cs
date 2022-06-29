@@ -189,9 +189,9 @@ namespace DecentM.VideoPlayer.Plugins
             this.Log(nameof(OnScreenTextureChange));
         }
 
-        protected override void OnRemotePlayerLoaded(int[] loadedPlayers)
+        protected override void OnRemotePlayerLoaded(int loadedPlayers)
         {
-            this.Log(nameof(OnRemotePlayerLoaded), loadedPlayers.Length.ToString());
+            this.Log(nameof(OnRemotePlayerLoaded), loadedPlayers.ToString());
         }
 
         protected override void OnAutoRetryAllPlayersFailed()

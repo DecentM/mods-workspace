@@ -77,7 +77,7 @@ namespace DecentM.VideoPlayer.Plugins
             this.PlaySound(this.playbackEnded);
         }
 
-        protected override void OnRemotePlayerLoaded(int[] loadedPlayers)
+        protected override void OnRemotePlayerLoaded(int loadedPlayers)
         {
             this.PlaySound(this.remotePlayerLoaded);
         }

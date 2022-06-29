@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <LangVersion>7.3</LangVersion>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -53,66 +53,64 @@
     <UnityVersion>2019.4.31f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Analyzer Include="C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
+    <Compile Include="Library\PackageCache\com.vrchat.base@75ebae6abe\Editor\VRCSDK\Dependencies\Oculus\Spatializer\ONSPAudioSourceEditor.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.base@75ebae6abe\Editor\VRCSDK\Dependencies\VRChat\Components\ApiCacheEditor.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.base@75ebae6abe\Editor\VRCSDK\Dependencies\VRChat\Components\AutoAddSpatialAudioComponents.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.base@75ebae6abe\Editor\VRCSDK\Dependencies\VRChat\Components\EditorCoroutine.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.base@75ebae6abe\Editor\VRCSDK\Dependencies\VRChat\Components\EditorHandling.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.base@75ebae6abe\Editor\VRCSDK\Dependencies\VRChat\Components\EventHandlerEditor.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.base@75ebae6abe\Editor\VRCSDK\Dependencies\VRChat\Components\OldTriggerEditors.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.base@75ebae6abe\Editor\VRCSDK\Dependencies\VRChat\Components\VRCAvatarDescriptorEditor.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.base@75ebae6abe\Editor\VRCSDK\Dependencies\VRChat\Components\VRCObjectSpawnEditor.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.base@75ebae6abe\Editor\VRCSDK\Dependencies\VRChat\Components\VRCObjectSyncEditor.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.base@75ebae6abe\Editor\VRCSDK\Dependencies\VRChat\Components\VRCPlayerModEditorWindow.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.base@75ebae6abe\Editor\VRCSDK\Dependencies\VRChat\Components\VRCPlayerModsEditor.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.base@75ebae6abe\Editor\VRCSDK\Dependencies\VRChat\Components\VRCPlayerStationEditor.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.base@75ebae6abe\Editor\VRCSDK\Dependencies\VRChat\Components\VRCSceneDescriptorEditor.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.base@75ebae6abe\Editor\VRCSDK\Dependencies\VRChat\Components\VRC_AvatarVariationsEditor.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.base@75ebae6abe\Editor\VRCSDK\Dependencies\VRChat\Components\VRC_DataStorageEditor.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.base@75ebae6abe\Editor\VRCSDK\Dependencies\VRChat\Components\VRC_DestructibleStandardEditor.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.base@75ebae6abe\Editor\VRCSDK\Dependencies\VRChat\Components\VRC_ObjectSyncEditor.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.base@75ebae6abe\Editor\VRCSDK\Dependencies\VRChat\Components\VRC_PickupEditor.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.base@75ebae6abe\Editor\VRCSDK\Dependencies\VRChat\Components\VRC_PlayerAudioOverrideEditor.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.base@75ebae6abe\Editor\VRCSDK\Dependencies\VRChat\Components\VRC_SpatialAudioSourceEditor.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.base@75ebae6abe\Editor\VRCSDK\Dependencies\VRChat\Components\VRC_SyncVideoPlayerEditor.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.base@75ebae6abe\Editor\VRCSDK\Dependencies\VRChat\Components\VRC_SyncVideoStreamEditor.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.base@75ebae6abe\Editor\VRCSDK\Dependencies\VRChat\Components\VRC_TriggerEditor.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.base@75ebae6abe\Editor\VRCSDK\Dependencies\VRChat\Components\VRC_WebPanelEditor.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.base@75ebae6abe\Editor\VRCSDK\Dependencies\VRChat\Components\VRC_YouTubeSyncEditor.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.base@75ebae6abe\Editor\VRCSDK\Dependencies\VRChat\ControlPanel\IVRCSdkControlPanelBuilder.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.base@75ebae6abe\Editor\VRCSDK\Dependencies\VRChat\ControlPanel\VRCSdkControlPanel.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.base@75ebae6abe\Editor\VRCSDK\Dependencies\VRChat\ControlPanel\VRCSdkControlPanelAccount.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.base@75ebae6abe\Editor\VRCSDK\Dependencies\VRChat\ControlPanel\VRCSdkControlPanelAvatarBuilder.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.base@75ebae6abe\Editor\VRCSDK\Dependencies\VRChat\ControlPanel\VRCSdkControlPanelBuilder.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.base@75ebae6abe\Editor\VRCSDK\Dependencies\VRChat\ControlPanel\VRCSdkControlPanelBuilderAttribute.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.base@75ebae6abe\Editor\VRCSDK\Dependencies\VRChat\ControlPanel\VRCSdkControlPanelContent.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.base@75ebae6abe\Editor\VRCSDK\Dependencies\VRChat\ControlPanel\VRCSdkControlPanelHelp.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.base@75ebae6abe\Editor\VRCSDK\Dependencies\VRChat\ControlPanel\VRCSdkControlPanelSettings.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.base@75ebae6abe\Editor\VRCSDK\Dependencies\VRChat\ControlPanel\VRCSdkControlPanelWorldBuilder.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.base@75ebae6abe\Editor\VRCSDK\Dependencies\VRChat\CreatorCompanion\UnityWindowClient.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.base@75ebae6abe\Editor\VRCSDK\Dependencies\VRChat\CreatorCompanion\VRCSocketClient.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.base@75ebae6abe\Editor\VRCSDK\Dependencies\VRChat\EnvConfig.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.base@75ebae6abe\Editor\VRCSDK\Dependencies\VRChat\FixAnimatorControllers.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.base@75ebae6abe\Editor\VRCSDK\Dependencies\VRChat\FixConstraintUpdateOrder.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.base@75ebae6abe\Editor\VRCSDK\Dependencies\VRChat\HDRColorFixerUtility.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.base@75ebae6abe\Editor\VRCSDK\Dependencies\VRChat\SDK3Compatibility\VRCSdk3Analysis.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.base@75ebae6abe\Editor\VRCSDK\Dependencies\VRChat\SDKUpdater.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.base@75ebae6abe\Editor\VRCSDK\Dependencies\VRChat\ShaderKeywordsUtility.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.base@75ebae6abe\Editor\VRCSDK\Dependencies\VRChat\VRCCachedWebRequest.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.base@75ebae6abe\Editor\VRCSDK\Dependencies\VRChat\VRCPackageSettings.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.base@75ebae6abe\Editor\VRCSDK\Dependencies\VRChat\VRC_EditorTools.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.base@75ebae6abe\Editor\VRCSDK\Dependencies\VRChat\VRC_SdkSplashScreen.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.base@75ebae6abe\Editor\VRCSDK\Dependencies\VRChat\Validation\Performance\SDKPerformanceDisplay.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.base@75ebae6abe\Editor\VRCSDK\Sample Assets\RealtimeEmissiveGammaGUI.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Library\PackageCache\com.vrchat.base@5854cdd7f1\Editor\VRCSDK\Dependencies\Oculus\Spatializer\ONSPAudioSourceEditor.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.base@5854cdd7f1\Editor\VRCSDK\Dependencies\VRChat\Components\ApiCacheEditor.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.base@5854cdd7f1\Editor\VRCSDK\Dependencies\VRChat\Components\AutoAddSpatialAudioComponents.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.base@5854cdd7f1\Editor\VRCSDK\Dependencies\VRChat\Components\EditorCoroutine.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.base@5854cdd7f1\Editor\VRCSDK\Dependencies\VRChat\Components\EditorHandling.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.base@5854cdd7f1\Editor\VRCSDK\Dependencies\VRChat\Components\EventHandlerEditor.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.base@5854cdd7f1\Editor\VRCSDK\Dependencies\VRChat\Components\OldTriggerEditors.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.base@5854cdd7f1\Editor\VRCSDK\Dependencies\VRChat\Components\VRCAvatarDescriptorEditor.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.base@5854cdd7f1\Editor\VRCSDK\Dependencies\VRChat\Components\VRCObjectSpawnEditor.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.base@5854cdd7f1\Editor\VRCSDK\Dependencies\VRChat\Components\VRCObjectSyncEditor.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.base@5854cdd7f1\Editor\VRCSDK\Dependencies\VRChat\Components\VRCPlayerModEditorWindow.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.base@5854cdd7f1\Editor\VRCSDK\Dependencies\VRChat\Components\VRCPlayerModsEditor.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.base@5854cdd7f1\Editor\VRCSDK\Dependencies\VRChat\Components\VRCPlayerStationEditor.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.base@5854cdd7f1\Editor\VRCSDK\Dependencies\VRChat\Components\VRCSceneDescriptorEditor.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.base@5854cdd7f1\Editor\VRCSDK\Dependencies\VRChat\Components\VRC_AvatarVariationsEditor.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.base@5854cdd7f1\Editor\VRCSDK\Dependencies\VRChat\Components\VRC_DataStorageEditor.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.base@5854cdd7f1\Editor\VRCSDK\Dependencies\VRChat\Components\VRC_DestructibleStandardEditor.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.base@5854cdd7f1\Editor\VRCSDK\Dependencies\VRChat\Components\VRC_ObjectSyncEditor.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.base@5854cdd7f1\Editor\VRCSDK\Dependencies\VRChat\Components\VRC_PickupEditor.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.base@5854cdd7f1\Editor\VRCSDK\Dependencies\VRChat\Components\VRC_PlayerAudioOverrideEditor.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.base@5854cdd7f1\Editor\VRCSDK\Dependencies\VRChat\Components\VRC_SpatialAudioSourceEditor.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.base@5854cdd7f1\Editor\VRCSDK\Dependencies\VRChat\Components\VRC_SyncVideoPlayerEditor.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.base@5854cdd7f1\Editor\VRCSDK\Dependencies\VRChat\Components\VRC_SyncVideoStreamEditor.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.base@5854cdd7f1\Editor\VRCSDK\Dependencies\VRChat\Components\VRC_TriggerEditor.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.base@5854cdd7f1\Editor\VRCSDK\Dependencies\VRChat\Components\VRC_WebPanelEditor.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.base@5854cdd7f1\Editor\VRCSDK\Dependencies\VRChat\Components\VRC_YouTubeSyncEditor.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.base@5854cdd7f1\Editor\VRCSDK\Dependencies\VRChat\ControlPanel\IVRCSdkControlPanelBuilder.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.base@5854cdd7f1\Editor\VRCSDK\Dependencies\VRChat\ControlPanel\VRCSdkControlPanel.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.base@5854cdd7f1\Editor\VRCSDK\Dependencies\VRChat\ControlPanel\VRCSdkControlPanelAccount.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.base@5854cdd7f1\Editor\VRCSDK\Dependencies\VRChat\ControlPanel\VRCSdkControlPanelAvatarBuilder.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.base@5854cdd7f1\Editor\VRCSDK\Dependencies\VRChat\ControlPanel\VRCSdkControlPanelBuilder.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.base@5854cdd7f1\Editor\VRCSDK\Dependencies\VRChat\ControlPanel\VRCSdkControlPanelBuilderAttribute.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.base@5854cdd7f1\Editor\VRCSDK\Dependencies\VRChat\ControlPanel\VRCSdkControlPanelContent.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.base@5854cdd7f1\Editor\VRCSDK\Dependencies\VRChat\ControlPanel\VRCSdkControlPanelHelp.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.base@5854cdd7f1\Editor\VRCSDK\Dependencies\VRChat\ControlPanel\VRCSdkControlPanelSettings.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.base@5854cdd7f1\Editor\VRCSDK\Dependencies\VRChat\ControlPanel\VRCSdkControlPanelWorldBuilder.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.base@5854cdd7f1\Editor\VRCSDK\Dependencies\VRChat\CreatorCompanion\UnityWindowClient.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.base@5854cdd7f1\Editor\VRCSDK\Dependencies\VRChat\CreatorCompanion\VRCSocketClient.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.base@5854cdd7f1\Editor\VRCSDK\Dependencies\VRChat\EnvConfig.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.base@5854cdd7f1\Editor\VRCSDK\Dependencies\VRChat\FixAnimatorControllers.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.base@5854cdd7f1\Editor\VRCSDK\Dependencies\VRChat\FixConstraintUpdateOrder.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.base@5854cdd7f1\Editor\VRCSDK\Dependencies\VRChat\HDRColorFixerUtility.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.base@5854cdd7f1\Editor\VRCSDK\Dependencies\VRChat\SDK3Compatibility\VRCSdk3Analysis.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.base@5854cdd7f1\Editor\VRCSDK\Dependencies\VRChat\SDKUpdater.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.base@5854cdd7f1\Editor\VRCSDK\Dependencies\VRChat\ShaderKeywordsUtility.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.base@5854cdd7f1\Editor\VRCSDK\Dependencies\VRChat\VRCCachedWebRequest.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.base@5854cdd7f1\Editor\VRCSDK\Dependencies\VRChat\VRC_EditorTools.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.base@5854cdd7f1\Editor\VRCSDK\Dependencies\VRChat\VRC_SdkSplashScreen.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.base@5854cdd7f1\Editor\VRCSDK\Dependencies\VRChat\Validation\Performance\SDKPerformanceDisplay.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.base@5854cdd7f1\Editor\VRCSDK\Sample Assets\RealtimeEmissiveGammaGUI.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Library\PackageCache\com.vrchat.base@5854cdd7f1\Editor\VRCSDK\Dependencies\VRChat\CreatorCompanion\WatsonTcp.dll" />
-    <None Include="Library\PackageCache\com.vrchat.base@5854cdd7f1\Editor\VRCSDK\Plugins\VRC.SDK3.Dynamics.Contact.Editor.dll" />
-    <None Include="Library\PackageCache\com.vrchat.base@5854cdd7f1\Editor\VRCSDK\Plugins\VRC.SDK3.Dynamics.PhysBone.Editor.dll" />
-    <None Include="Library\PackageCache\com.vrchat.base@5854cdd7f1\Editor\VRCSDK\VRC.SDKBase.Editor.asmdef" />
-    <None Include="Library\PackageCache\com.vrchat.base@5854cdd7f1\Editor\VRCSDK\Dependencies\VRChat\CreatorCompanion\Newtonsoft.Json.dll" />
+    <None Include="Library\PackageCache\com.vrchat.base@75ebae6abe\Editor\VRCSDK\Dependencies\VRChat\CreatorCompanion\WatsonTcp.dll" />
+    <None Include="Library\PackageCache\com.vrchat.base@75ebae6abe\Editor\VRCSDK\Plugins\VRC.SDK3.Dynamics.Contact.Editor.dll" />
+    <None Include="Library\PackageCache\com.vrchat.base@75ebae6abe\Editor\VRCSDK\Plugins\VRC.SDK3.Dynamics.PhysBone.Editor.dll" />
+    <None Include="Library\PackageCache\com.vrchat.base@75ebae6abe\Editor\VRCSDK\VRC.SDKBase.Editor.asmdef" />
+    <None Include="Library\PackageCache\com.vrchat.base@75ebae6abe\Editor\VRCSDK\Dependencies\VRChat\CreatorCompanion\Newtonsoft.Json.dll" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
@@ -332,115 +330,115 @@
       <HintPath>Library\PackageCache\com.unity.collab-proxy@1.10.2\Lib\Editor\PlasticSCM\unityplastic.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
-      <HintPath>Library\PackageCache\com.vrchat.base@5854cdd7f1\Editor\VRCSDK\Dependencies\VRChat\CreatorCompanion\Newtonsoft.Json.dll</HintPath>
+      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Editor\VRCSDK\Dependencies\VRChat\CreatorCompanion\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="WatsonTcp">
-      <HintPath>Library\PackageCache\com.vrchat.base@5854cdd7f1\Editor\VRCSDK\Dependencies\VRChat\CreatorCompanion\WatsonTcp.dll</HintPath>
+      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Editor\VRCSDK\Dependencies\VRChat\CreatorCompanion\WatsonTcp.dll</HintPath>
     </Reference>
     <Reference Include="VRC.SDK3.Dynamics.Contact.Editor">
-      <HintPath>Library\PackageCache\com.vrchat.base@5854cdd7f1\Editor\VRCSDK\Plugins\VRC.SDK3.Dynamics.Contact.Editor.dll</HintPath>
+      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Editor\VRCSDK\Plugins\VRC.SDK3.Dynamics.Contact.Editor.dll</HintPath>
     </Reference>
     <Reference Include="VRC.SDK3.Dynamics.PhysBone.Editor">
-      <HintPath>Library\PackageCache\com.vrchat.base@5854cdd7f1\Editor\VRCSDK\Plugins\VRC.SDK3.Dynamics.PhysBone.Editor.dll</HintPath>
+      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Editor\VRCSDK\Plugins\VRC.SDK3.Dynamics.PhysBone.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Blake2Sharp">
-      <HintPath>Library\PackageCache\com.vrchat.base@5854cdd7f1\Runtime\VRCSDK\Dependencies\librsync\Blake2Sharp.dll</HintPath>
+      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Dependencies\librsync\Blake2Sharp.dll</HintPath>
     </Reference>
     <Reference Include="librsync.net">
-      <HintPath>Library\PackageCache\com.vrchat.base@5854cdd7f1\Runtime\VRCSDK\Dependencies\librsync\librsync.net.dll</HintPath>
+      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Dependencies\librsync\librsync.net.dll</HintPath>
     </Reference>
     <Reference Include="Collections.Pooled">
-      <HintPath>Library\PackageCache\com.vrchat.base@5854cdd7f1\Runtime\VRCSDK\Dependencies\Managed\Collections.Pooled.dll</HintPath>
+      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Dependencies\Managed\Collections.Pooled.dll</HintPath>
     </Reference>
     <Reference Include="System.Buffers">
-      <HintPath>Library\PackageCache\com.vrchat.base@5854cdd7f1\Runtime\VRCSDK\Dependencies\Managed\System.Buffers.dll</HintPath>
+      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Dependencies\Managed\System.Buffers.dll</HintPath>
     </Reference>
     <Reference Include="System.Collections.Immutable">
-      <HintPath>Library\PackageCache\com.vrchat.base@5854cdd7f1\Runtime\VRCSDK\Dependencies\Managed\System.Collections.Immutable.dll</HintPath>
+      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Dependencies\Managed\System.Collections.Immutable.dll</HintPath>
     </Reference>
     <Reference Include="System.Memory">
-      <HintPath>Library\PackageCache\com.vrchat.base@5854cdd7f1\Runtime\VRCSDK\Dependencies\Managed\System.Memory.dll</HintPath>
+      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Dependencies\Managed\System.Memory.dll</HintPath>
     </Reference>
     <Reference Include="System.Numerics.Vectors">
-      <HintPath>Library\PackageCache\com.vrchat.base@5854cdd7f1\Runtime\VRCSDK\Dependencies\Managed\System.Numerics.Vectors.dll</HintPath>
+      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Dependencies\Managed\System.Numerics.Vectors.dll</HintPath>
     </Reference>
     <Reference Include="System.Runtime.CompilerServices.Unsafe">
-      <HintPath>Library\PackageCache\com.vrchat.base@5854cdd7f1\Runtime\VRCSDK\Dependencies\Managed\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Dependencies\Managed\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
     <Reference Include="System.Threading.Tasks.Extensions">
-      <HintPath>Library\PackageCache\com.vrchat.base@5854cdd7f1\Runtime\VRCSDK\Dependencies\Managed\System.Threading.Tasks.Extensions.dll</HintPath>
+      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Dependencies\Managed\System.Threading.Tasks.Extensions.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.Collections">
-      <HintPath>Library\PackageCache\com.vrchat.base@5854cdd7f1\Runtime\VRCSDK\Dependencies\Managed\Unity.Collections.dll</HintPath>
+    <Reference Include="VRC.Collections">
+      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Dependencies\Managed\VRC.Collections.dll</HintPath>
     </Reference>
     <Reference Include="VRC.Dynamics">
-      <HintPath>Library\PackageCache\com.vrchat.base@5854cdd7f1\Runtime\VRCSDK\Plugins\VRC.Dynamics.dll</HintPath>
+      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Plugins\VRC.Dynamics.dll</HintPath>
     </Reference>
     <Reference Include="VRC.SDK3.Dynamics.Contact">
-      <HintPath>Library\PackageCache\com.vrchat.base@5854cdd7f1\Runtime\VRCSDK\Plugins\VRC.SDK3.Dynamics.Contact.dll</HintPath>
+      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Plugins\VRC.SDK3.Dynamics.Contact.dll</HintPath>
     </Reference>
     <Reference Include="VRC.SDK3.Dynamics.PhysBone">
-      <HintPath>Library\PackageCache\com.vrchat.base@5854cdd7f1\Runtime\VRCSDK\Plugins\VRC.SDK3.Dynamics.PhysBone.dll</HintPath>
+      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Plugins\VRC.SDK3.Dynamics.PhysBone.dll</HintPath>
     </Reference>
     <Reference Include="VRC.Utility">
-      <HintPath>Library\PackageCache\com.vrchat.base@5854cdd7f1\Runtime\VRCSDK\Plugins\VRC.Utility.dll</HintPath>
+      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Plugins\VRC.Utility.dll</HintPath>
     </Reference>
     <Reference Include="VRCCore-Editor">
-      <HintPath>Library\PackageCache\com.vrchat.base@5854cdd7f1\Runtime\VRCSDK\Plugins\VRCCore-Editor.dll</HintPath>
+      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Plugins\VRCCore-Editor.dll</HintPath>
     </Reference>
     <Reference Include="VRCSDKBase-Editor">
-      <HintPath>Library\PackageCache\com.vrchat.base@5854cdd7f1\Runtime\VRCSDK\Plugins\VRCSDKBase-Editor.dll</HintPath>
+      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Plugins\VRCSDKBase-Editor.dll</HintPath>
     </Reference>
     <Reference Include="VRCSDKBase">
-      <HintPath>Library\PackageCache\com.vrchat.base@5854cdd7f1\Runtime\VRCSDK\Plugins\VRCSDKBase.dll</HintPath>
+      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Plugins\VRCSDKBase.dll</HintPath>
     </Reference>
     <Reference Include="0Harmony">
-      <HintPath>Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Runtime\Plugins\0Harmony.dll</HintPath>
+      <HintPath>Library\PackageCache\com.vrchat.udonsharp@26d6812704\Runtime\Plugins\0Harmony.dll</HintPath>
     </Reference>
     <Reference Include="System.Text.Encoding.CodePages">
-      <HintPath>Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Runtime\Plugins\System.Text.Encoding.CodePages.dll</HintPath>
+      <HintPath>Library\PackageCache\com.vrchat.udonsharp@26d6812704\Runtime\Plugins\System.Text.Encoding.CodePages.dll</HintPath>
     </Reference>
     <Reference Include="VRC.Udon.Compiler">
-      <HintPath>Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Editor\Udon\External\VRC.Udon.Compiler.dll</HintPath>
+      <HintPath>Library\PackageCache\com.vrchat.worlds@75ebae6abe\Editor\Udon\External\VRC.Udon.Compiler.dll</HintPath>
     </Reference>
     <Reference Include="VRC.Udon.EditorBindings">
-      <HintPath>Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Editor\Udon\External\VRC.Udon.EditorBindings.dll</HintPath>
+      <HintPath>Library\PackageCache\com.vrchat.worlds@75ebae6abe\Editor\Udon\External\VRC.Udon.EditorBindings.dll</HintPath>
     </Reference>
     <Reference Include="VRC.Udon.Graph">
-      <HintPath>Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Editor\Udon\External\VRC.Udon.Graph.dll</HintPath>
+      <HintPath>Library\PackageCache\com.vrchat.worlds@75ebae6abe\Editor\Udon\External\VRC.Udon.Graph.dll</HintPath>
     </Reference>
     <Reference Include="VRC.Udon.UAssembly">
-      <HintPath>Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Editor\Udon\External\VRC.Udon.UAssembly.dll</HintPath>
+      <HintPath>Library\PackageCache\com.vrchat.worlds@75ebae6abe\Editor\Udon\External\VRC.Udon.UAssembly.dll</HintPath>
     </Reference>
     <Reference Include="VRC.Udon.VRCGraphModules">
-      <HintPath>Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Editor\Udon\External\VRC.Udon.VRCGraphModules.dll</HintPath>
+      <HintPath>Library\PackageCache\com.vrchat.worlds@75ebae6abe\Editor\Udon\External\VRC.Udon.VRCGraphModules.dll</HintPath>
     </Reference>
     <Reference Include="VRC.Udon.VRCTypeResolverModules">
-      <HintPath>Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Editor\Udon\External\VRC.Udon.VRCTypeResolverModules.dll</HintPath>
+      <HintPath>Library\PackageCache\com.vrchat.worlds@75ebae6abe\Editor\Udon\External\VRC.Udon.VRCTypeResolverModules.dll</HintPath>
     </Reference>
     <Reference Include="VRC.Udon.ClientBindings">
-      <HintPath>Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\External\VRC.Udon.ClientBindings.dll</HintPath>
+      <HintPath>Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\External\VRC.Udon.ClientBindings.dll</HintPath>
     </Reference>
     <Reference Include="VRC.Udon.Common">
-      <HintPath>Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\External\VRC.Udon.Common.dll</HintPath>
+      <HintPath>Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\External\VRC.Udon.Common.dll</HintPath>
     </Reference>
     <Reference Include="VRC.Udon.Security">
-      <HintPath>Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\External\VRC.Udon.Security.dll</HintPath>
+      <HintPath>Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\External\VRC.Udon.Security.dll</HintPath>
     </Reference>
     <Reference Include="VRC.Udon.VM">
-      <HintPath>Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\External\VRC.Udon.VM.dll</HintPath>
+      <HintPath>Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\External\VRC.Udon.VM.dll</HintPath>
     </Reference>
     <Reference Include="VRC.Udon.VRCWrapperModules">
-      <HintPath>Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\External\VRC.Udon.VRCWrapperModules.dll</HintPath>
+      <HintPath>Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\External\VRC.Udon.VRCWrapperModules.dll</HintPath>
     </Reference>
     <Reference Include="VRC.Udon.Wrapper">
-      <HintPath>Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\External\VRC.Udon.Wrapper.dll</HintPath>
+      <HintPath>Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\External\VRC.Udon.Wrapper.dll</HintPath>
     </Reference>
     <Reference Include="VRCSDK3-Editor">
-      <HintPath>Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\VRCSDK\Plugins\VRCSDK3-Editor.dll</HintPath>
+      <HintPath>Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\VRCSDK\Plugins\VRCSDK3-Editor.dll</HintPath>
     </Reference>
     <Reference Include="VRCSDK3">
-      <HintPath>Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\VRCSDK\Plugins\VRCSDK3.dll</HintPath>
+      <HintPath>Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\VRCSDK\Plugins\VRCSDK3.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework">
       <HintPath>Library\PackageCache\com.unity.ext.nunit@1.0.6\net35\unity-custom\nunit.framework.dll</HintPath>

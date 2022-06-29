@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <LangVersion>7.3</LangVersion>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -53,135 +53,132 @@
     <UnityVersion>2019.4.31f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Analyzer Include="C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\BuildUtilities\UdonSharpBuildChecks.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\BuildUtilities\UdonSharpBuildCompile.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\Compiler\AbstractPhaseContext.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\Compiler\Assembly\AssemblyInstruction.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\Compiler\Assembly\AssemblyModule.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\Compiler\Assembly\ExportAddress.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\Compiler\Assembly\JumpLabel.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\Compiler\Binder\BindContext.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\Compiler\Binder\BinderSyntaxVisitor.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\Compiler\Binder\BoundNodes\BoundAccessExpression.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\Compiler\Binder\BoundNodes\BoundArrayAccessExpression.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\Compiler\Binder\BoundNodes\BoundArrayCreationExpression.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\Compiler\Binder\BoundNodes\BoundAssignmentExpression.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\Compiler\Binder\BoundNodes\BoundBitwiseNotExpression.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\Compiler\Binder\BoundNodes\BoundBlock.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\Compiler\Binder\BoundNodes\BoundBreakStatement.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\Compiler\Binder\BoundNodes\BoundCastExpression.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\Compiler\Binder\BoundNodes\BoundCoalesceExpression.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\Compiler\Binder\BoundNodes\BoundConditionalExpression.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\Compiler\Binder\BoundNodes\BoundConstArrayCreationExpression.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\Compiler\Binder\BoundNodes\BoundContinueStatement.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\Compiler\Binder\BoundNodes\BoundDoStatement.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\Compiler\Binder\BoundNodes\BoundExpression.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\Compiler\Binder\BoundNodes\BoundExpressionStatement.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\Compiler\Binder\BoundNodes\BoundExternMethodInvocation.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\Compiler\Binder\BoundNodes\BoundFieldAccessExpression.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\Compiler\Binder\BoundNodes\BoundForEachCharStatement.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\Compiler\Binder\BoundNodes\BoundForEachChildTransformStatement.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\Compiler\Binder\BoundNodes\BoundForEachStatement.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\Compiler\Binder\BoundNodes\BoundForStatement.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\Compiler\Binder\BoundNodes\BoundIfStatement.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\Compiler\Binder\BoundNodes\BoundInterpolatedStringExpression.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\Compiler\Binder\BoundNodes\BoundInvocationExpression.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\Compiler\Binder\BoundNodes\BoundLocalDeclarationStatement.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\Compiler\Binder\BoundNodes\BoundNode.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\Compiler\Binder\BoundNodes\BoundPropertyAccessExpression.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\Compiler\Binder\BoundNodes\BoundReturnStatement.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\Compiler\Binder\BoundNodes\BoundShortCircuitOperatorExpression.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\Compiler\Binder\BoundNodes\BoundStatement.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\Compiler\Binder\BoundNodes\BoundStaticUserMethodInvocation.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\Compiler\Binder\BoundNodes\BoundStringAccessExpression.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\Compiler\Binder\BoundNodes\BoundSwitchStatement.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\Compiler\Binder\BoundNodes\BoundUdonSharpBehaviourInvocationExpression.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\Compiler\Binder\BoundNodes\BoundUserMethodInvocation.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\Compiler\Binder\BoundNodes\BoundVariableDeclarationStatement.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\Compiler\Binder\BoundNodes\BoundVariableDeclaratorStatement.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\Compiler\Binder\BoundNodes\BoundWhileStatement.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\Compiler\Binder\ConstantExpressionOptimizer.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\Compiler\Binder\ConstantValue.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\Compiler\Binder\ExternResolverExtensions.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\Compiler\Binder\Symbols\ExternBuiltinOperatorSymbol.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\Compiler\Binder\Symbols\ExternFieldSymbol.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\Compiler\Binder\Symbols\ExternMethodSymbol.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\Compiler\Binder\Symbols\ExternPropertySymbol.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\Compiler\Binder\Symbols\ExternSynthesizedMethodSymbol.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\Compiler\Binder\Symbols\ExternSynthesizedOperatorSymbol.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\Compiler\Binder\Symbols\ExternTypeSymbol.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\Compiler\Binder\Symbols\FieldSymbol.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\Compiler\Binder\Symbols\IExternSymbol.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\Compiler\Binder\Symbols\ImportedUdonSharpFieldSymbol.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\Compiler\Binder\Symbols\ImportedUdonSharpMethodSymbol.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\Compiler\Binder\Symbols\ImportedUdonSharpTypeSymbol.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\Compiler\Binder\Symbols\LocalSymbol.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\Compiler\Binder\Symbols\MethodSymbol.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\Compiler\Binder\Symbols\ParameterSymbol.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\Compiler\Binder\Symbols\PropertySymbol.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\Compiler\Binder\Symbols\Symbol.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\Compiler\Binder\Symbols\SynthesizedPropertySymbol.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\Compiler\Binder\Symbols\TypeParameterSymbol.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\Compiler\Binder\Symbols\TypeSymbol.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\Compiler\Binder\Symbols\UdonSharpBehaviourFieldSymbol.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\Compiler\Binder\Symbols\UdonSharpBehaviourMethodSymbol.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\Compiler\Binder\Symbols\UdonSharpBehaviourPropertySymbol.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\Compiler\Binder\Symbols\UdonSharpBehaviourTypeSymbol.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\Compiler\Binder\TypeSymbolFactory.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\Compiler\CompilationContext.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\Compiler\Core\CompilerException.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\Compiler\Core\NotExposedException.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\Compiler\Core\NotSupportedException.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\Compiler\Emit\EmitContext.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\Compiler\Emit\Value.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\Compiler\Emit\ValueTable.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\Compiler\Udon\CompilerUdonInterface.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\Compiler\UdonSharpClass.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\Compiler\UdonSharpClassDebugInfo.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\Compiler\UdonSharpCompilerV1.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\Compiler\UdonSharpHeapFactory.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\Compiler\UdonSharpLabelTable.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\Editors\EasyEventEditor.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\Editors\GrabNodeDefinitions.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\Editors\UdonSharpBehaviourEditor.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\Editors\UdonSharpComponentExtensions.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\Editors\UdonSharpGUI.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\Editors\UdonSharpSettings.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\Editors\UdonSharpUndo.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\Editors\UdonTypeExposureTree.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\Serialization\Formatter.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\Serialization\Formatters\UdonSharpBehaviourFormatterEmitter.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\Serialization\ProxySerializationPolicy.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\Serialization\Serializer.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\Serialization\Serializers\ArraySerializer.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\Serialization\Serializers\DefaultSerializer.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\Serialization\Serializers\JaggedArraySerializer.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\Serialization\Serializers\SystemObjectSerializer.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\Serialization\Serializers\UdonSharpBaseBehaviourSerializer.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\Serialization\Serializers\UdonSharpBehaviourSerializer.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\Serialization\Serializers\UnityObjectSerializer.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\Serialization\Serializers\UserEnumSerializer.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\Serialization\StorageInterfaces\StorageInterface.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\Serialization\StorageInterfaces\UdonHeapStorageInterface.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\Serialization\StorageInterfaces\UdonVariableStorageInterface.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\Serialization\TypeSerializationMetadata.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\UdonSharpAssemblyDefinition.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\UdonSharpAssetCompileWatcher.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\UdonSharpEditorCache.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\UdonSharpEditorManager.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\UdonSharpEditorUtility.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\UdonSharpProgramAsset.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\UdonSharpProgramAssetPostprocessor.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\UdonSharpRuntimeLogWatcher.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\UdonSharpUpgrader.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\UdonSharpUtils.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\BuildUtilities\UdonSharpBuildChecks.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\BuildUtilities\UdonSharpBuildCompile.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\Compiler\AbstractPhaseContext.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\Compiler\Assembly\AssemblyInstruction.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\Compiler\Assembly\AssemblyModule.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\Compiler\Assembly\ExportAddress.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\Compiler\Assembly\JumpLabel.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\Compiler\Binder\BindContext.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\Compiler\Binder\BinderSyntaxVisitor.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\Compiler\Binder\BoundNodes\BoundAccessExpression.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\Compiler\Binder\BoundNodes\BoundArrayAccessExpression.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\Compiler\Binder\BoundNodes\BoundArrayCreationExpression.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\Compiler\Binder\BoundNodes\BoundAssignmentExpression.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\Compiler\Binder\BoundNodes\BoundBitwiseNotExpression.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\Compiler\Binder\BoundNodes\BoundBlock.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\Compiler\Binder\BoundNodes\BoundBreakStatement.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\Compiler\Binder\BoundNodes\BoundCastExpression.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\Compiler\Binder\BoundNodes\BoundCoalesceExpression.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\Compiler\Binder\BoundNodes\BoundConditionalExpression.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\Compiler\Binder\BoundNodes\BoundConstArrayCreationExpression.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\Compiler\Binder\BoundNodes\BoundContinueStatement.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\Compiler\Binder\BoundNodes\BoundDoStatement.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\Compiler\Binder\BoundNodes\BoundExpression.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\Compiler\Binder\BoundNodes\BoundExpressionStatement.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\Compiler\Binder\BoundNodes\BoundExternMethodInvocation.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\Compiler\Binder\BoundNodes\BoundFieldAccessExpression.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\Compiler\Binder\BoundNodes\BoundForEachCharStatement.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\Compiler\Binder\BoundNodes\BoundForEachChildTransformStatement.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\Compiler\Binder\BoundNodes\BoundForEachStatement.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\Compiler\Binder\BoundNodes\BoundForStatement.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\Compiler\Binder\BoundNodes\BoundIfStatement.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\Compiler\Binder\BoundNodes\BoundInterpolatedStringExpression.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\Compiler\Binder\BoundNodes\BoundInvocationExpression.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\Compiler\Binder\BoundNodes\BoundLocalDeclarationStatement.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\Compiler\Binder\BoundNodes\BoundNode.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\Compiler\Binder\BoundNodes\BoundPropertyAccessExpression.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\Compiler\Binder\BoundNodes\BoundReturnStatement.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\Compiler\Binder\BoundNodes\BoundShortCircuitOperatorExpression.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\Compiler\Binder\BoundNodes\BoundStatement.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\Compiler\Binder\BoundNodes\BoundStaticUserMethodInvocation.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\Compiler\Binder\BoundNodes\BoundStringAccessExpression.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\Compiler\Binder\BoundNodes\BoundSwitchStatement.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\Compiler\Binder\BoundNodes\BoundUdonSharpBehaviourInvocationExpression.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\Compiler\Binder\BoundNodes\BoundUserMethodInvocation.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\Compiler\Binder\BoundNodes\BoundVariableDeclarationStatement.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\Compiler\Binder\BoundNodes\BoundVariableDeclaratorStatement.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\Compiler\Binder\BoundNodes\BoundWhileStatement.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\Compiler\Binder\ConstantExpressionOptimizer.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\Compiler\Binder\ConstantValue.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\Compiler\Binder\ExternResolverExtensions.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\Compiler\Binder\Symbols\ExternBuiltinOperatorSymbol.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\Compiler\Binder\Symbols\ExternFieldSymbol.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\Compiler\Binder\Symbols\ExternMethodSymbol.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\Compiler\Binder\Symbols\ExternPropertySymbol.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\Compiler\Binder\Symbols\ExternSynthesizedMethodSymbol.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\Compiler\Binder\Symbols\ExternSynthesizedOperatorSymbol.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\Compiler\Binder\Symbols\ExternTypeSymbol.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\Compiler\Binder\Symbols\FieldSymbol.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\Compiler\Binder\Symbols\IExternSymbol.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\Compiler\Binder\Symbols\ImportedUdonSharpFieldSymbol.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\Compiler\Binder\Symbols\ImportedUdonSharpMethodSymbol.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\Compiler\Binder\Symbols\ImportedUdonSharpTypeSymbol.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\Compiler\Binder\Symbols\LocalSymbol.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\Compiler\Binder\Symbols\MethodSymbol.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\Compiler\Binder\Symbols\ParameterSymbol.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\Compiler\Binder\Symbols\PropertySymbol.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\Compiler\Binder\Symbols\Symbol.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\Compiler\Binder\Symbols\SynthesizedPropertySymbol.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\Compiler\Binder\Symbols\TypeParameterSymbol.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\Compiler\Binder\Symbols\TypeSymbol.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\Compiler\Binder\Symbols\UdonSharpBehaviourFieldSymbol.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\Compiler\Binder\Symbols\UdonSharpBehaviourMethodSymbol.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\Compiler\Binder\Symbols\UdonSharpBehaviourPropertySymbol.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\Compiler\Binder\Symbols\UdonSharpBehaviourTypeSymbol.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\Compiler\Binder\TypeSymbolFactory.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\Compiler\CompilationContext.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\Compiler\Core\CompilerException.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\Compiler\Core\NotExposedException.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\Compiler\Core\NotSupportedException.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\Compiler\Emit\EmitContext.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\Compiler\Emit\Value.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\Compiler\Emit\ValueTable.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\Compiler\Udon\CompilerUdonInterface.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\Compiler\UdonSharpClass.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\Compiler\UdonSharpClassDebugInfo.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\Compiler\UdonSharpCompilerV1.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\Compiler\UdonSharpHeapFactory.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\Compiler\UdonSharpLabelTable.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\Editors\EasyEventEditor.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\Editors\GrabNodeDefinitions.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\Editors\UdonSharpBehaviourEditor.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\Editors\UdonSharpComponentExtensions.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\Editors\UdonSharpGUI.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\Editors\UdonSharpSettings.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\Editors\UdonSharpUndo.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\Editors\UdonTypeExposureTree.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\Serialization\Formatter.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\Serialization\Formatters\UdonSharpBehaviourFormatterEmitter.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\Serialization\ProxySerializationPolicy.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\Serialization\Serializer.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\Serialization\Serializers\ArraySerializer.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\Serialization\Serializers\DefaultSerializer.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\Serialization\Serializers\JaggedArraySerializer.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\Serialization\Serializers\SystemObjectSerializer.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\Serialization\Serializers\UdonSharpBaseBehaviourSerializer.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\Serialization\Serializers\UdonSharpBehaviourSerializer.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\Serialization\Serializers\UnityObjectSerializer.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\Serialization\Serializers\UserEnumSerializer.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\Serialization\StorageInterfaces\StorageInterface.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\Serialization\StorageInterfaces\UdonHeapStorageInterface.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\Serialization\StorageInterfaces\UdonVariableStorageInterface.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\Serialization\TypeSerializationMetadata.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\UdonSharpAssemblyDefinition.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\UdonSharpAssetCompileWatcher.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\UdonSharpEditorCache.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\UdonSharpEditorManager.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\UdonSharpEditorUtility.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\UdonSharpProgramAsset.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\UdonSharpProgramAssetPostprocessor.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\UdonSharpRuntimeLogWatcher.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\UdonSharpUpgrader.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\UdonSharpUtils.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\UdonSharp.Editor.asmdef" />
-    <None Include="Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Editor\version.txt" />
+    <None Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\UdonSharp.Editor.asmdef" />
+    <None Include="Library\PackageCache\com.vrchat.udonsharp@26d6812704\Editor\version.txt" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
@@ -380,46 +377,46 @@
       <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\PlaybackEngines\AndroidPlayer\UnityEditor.Android.Extensions.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CodeAnalysis">
-      <HintPath>Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Runtime\Plugins\Microsoft.CodeAnalysis.dll</HintPath>
+      <HintPath>Library\PackageCache\com.vrchat.udonsharp@26d6812704\Runtime\Plugins\Microsoft.CodeAnalysis.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CodeAnalysis.CSharp">
-      <HintPath>Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Runtime\Plugins\Microsoft.CodeAnalysis.CSharp.dll</HintPath>
+      <HintPath>Library\PackageCache\com.vrchat.udonsharp@26d6812704\Runtime\Plugins\Microsoft.CodeAnalysis.CSharp.dll</HintPath>
     </Reference>
     <Reference Include="VRC.Udon.Common">
-      <HintPath>Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\External\VRC.Udon.Common.dll</HintPath>
+      <HintPath>Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\External\VRC.Udon.Common.dll</HintPath>
     </Reference>
     <Reference Include="VRC.Udon.EditorBindings">
-      <HintPath>Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Editor\Udon\External\VRC.Udon.EditorBindings.dll</HintPath>
+      <HintPath>Library\PackageCache\com.vrchat.worlds@75ebae6abe\Editor\Udon\External\VRC.Udon.EditorBindings.dll</HintPath>
     </Reference>
     <Reference Include="VRC.Udon.Graph">
-      <HintPath>Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Editor\Udon\External\VRC.Udon.Graph.dll</HintPath>
+      <HintPath>Library\PackageCache\com.vrchat.worlds@75ebae6abe\Editor\Udon\External\VRC.Udon.Graph.dll</HintPath>
     </Reference>
     <Reference Include="VRC.Udon.Security">
-      <HintPath>Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\External\VRC.Udon.Security.dll</HintPath>
+      <HintPath>Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\External\VRC.Udon.Security.dll</HintPath>
     </Reference>
     <Reference Include="VRC.Udon.Compiler">
-      <HintPath>Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Editor\Udon\External\VRC.Udon.Compiler.dll</HintPath>
+      <HintPath>Library\PackageCache\com.vrchat.worlds@75ebae6abe\Editor\Udon\External\VRC.Udon.Compiler.dll</HintPath>
     </Reference>
     <Reference Include="VRC.Udon.UAssembly">
-      <HintPath>Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Editor\Udon\External\VRC.Udon.UAssembly.dll</HintPath>
+      <HintPath>Library\PackageCache\com.vrchat.worlds@75ebae6abe\Editor\Udon\External\VRC.Udon.UAssembly.dll</HintPath>
     </Reference>
     <Reference Include="VRC.Udon.ClientBindings">
-      <HintPath>Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\External\VRC.Udon.ClientBindings.dll</HintPath>
+      <HintPath>Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\External\VRC.Udon.ClientBindings.dll</HintPath>
     </Reference>
     <Reference Include="VRCSDK3">
-      <HintPath>Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\VRCSDK\Plugins\VRCSDK3.dll</HintPath>
+      <HintPath>Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\VRCSDK\Plugins\VRCSDK3.dll</HintPath>
     </Reference>
     <Reference Include="VRCSDKBase">
-      <HintPath>Library\PackageCache\com.vrchat.base@5854cdd7f1\Runtime\VRCSDK\Plugins\VRCSDKBase.dll</HintPath>
+      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Plugins\VRCSDKBase.dll</HintPath>
     </Reference>
     <Reference Include="VRCSDKBase-Editor">
-      <HintPath>Library\PackageCache\com.vrchat.base@5854cdd7f1\Runtime\VRCSDK\Plugins\VRCSDKBase-Editor.dll</HintPath>
+      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Plugins\VRCSDKBase-Editor.dll</HintPath>
     </Reference>
     <Reference Include="System.Collections.Immutable">
-      <HintPath>Library\PackageCache\com.vrchat.base@5854cdd7f1\Runtime\VRCSDK\Dependencies\Managed\System.Collections.Immutable.dll</HintPath>
+      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Dependencies\Managed\System.Collections.Immutable.dll</HintPath>
     </Reference>
     <Reference Include="0Harmony">
-      <HintPath>Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Runtime\Plugins\0Harmony.dll</HintPath>
+      <HintPath>Library\PackageCache\com.vrchat.udonsharp@26d6812704\Runtime\Plugins\0Harmony.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework">
       <HintPath>Library\PackageCache\com.unity.ext.nunit@1.0.6\net35\unity-custom\nunit.framework.dll</HintPath>

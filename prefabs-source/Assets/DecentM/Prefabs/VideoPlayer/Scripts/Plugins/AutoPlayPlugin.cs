@@ -14,10 +14,7 @@ namespace DecentM.VideoPlayer.Plugins
 
         private bool isOwner
         {
-            get
-            {
-                return Networking.GetOwner(this.gameObject) == Networking.LocalPlayer;
-            }
+            get { return Networking.GetOwner(this.gameObject) == Networking.LocalPlayer; }
         }
 
         private int receivedLoadedFrom = 0;
@@ -33,11 +30,10 @@ namespace DecentM.VideoPlayer.Plugins
             if (this.isOwner)
                 return;
 
-            /*  TODO:
-             *  pretty sure this line isn't valid, but I can't check
-             *  because the VRC definitions arent installed and I'm on a plane
-             */
-            this.SendCustomNetworkEvent(nameof(this.OnClientLoaded), NetworkEventTarget.Owner);
+            this.SendCustomNetworkEvent(
+                VRC.Udon.Common.Interfaces.NetworkEventTarget.Owner,
+                nameof(this.OnClientLoaded)
+            );
         }
 
         // Everyone except the owner does this, because then owner already knows when it finishes loading
