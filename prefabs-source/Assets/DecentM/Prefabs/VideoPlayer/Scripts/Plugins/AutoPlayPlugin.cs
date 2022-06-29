@@ -6,95 +6,56 @@ using VRC.SDKBase;
 using VRC.Udon;
 using TMPro;
 
-using UNet;
-
 namespace DecentM.VideoPlayer.Plugins
 {
     public class AutoPlayPlugin : VideoPlayerPlugin
     {
         public bool autoplayOnLoad = true;
 
-        public NetworkInterface network;
-        public ByteBufferReader reader;
-        public ByteBufferWriter writer;
-
-        protected override void _Start()
+        private bool isOwner
         {
-            // this.network.AddEventsListener(this);
-        }
-
-        public void OnInit() { }
-
-        public void OnPrepareSend() { }
-
-        public void OnConnected(int playerId) { }
-
-        public void OnDisconnected(int playerId) { }
-
-        public void OnSendComplete(int messageId, bool success) { }
-
-        private const string VideoLoadedCommand = "VL";
-
-        public void OnReceived(int sender, byte[] data, int index, int length, int messageId)
-        {
-            if (sender == Networking.LocalPlayer.playerId)
-                return;
-
-            string value = this.reader.ReadUTF8String(length, data, index);
-            string command = value.Split(null, 2)[0];
-            string arguments = value.Split(null, 2)[1];
-
-            switch (command)
+            get
             {
-                case VideoLoadedCommand:
-                    this.HandleVideoLoadedReceived(sender);
-                    break;
-
-                default:
-                    break;
+                return Networking.GetOwner(this.gameObject) == Networking.LocalPlayer;
             }
         }
 
-        private int SendCommandAll(string command, string arguments)
-        {
-            string message = $"{command} {arguments}";
-            int length = this.writer.GetUTF8StringSize(message);
-            byte[] buffer = new byte[length + 1];
-            this.writer.WriteUTF8String(message, buffer, 0);
-            return this.network.SendAll(false, buffer, length);
-        }
+        private int receivedLoadedFrom = 0;
 
-        private int SendCommandTarget(bool sequenced, string command, int player, string arguments)
-        {
-            string message = $"{command} {arguments}";
-            int length = this.writer.GetUTF8StringSize(message);
-            byte[] buffer = new byte[length + 1];
-            this.writer.WriteUTF8String(message, buffer, 0);
-            return this.network.SendTarget(sequenced, buffer, length, player);
-        }
-
-        private int SendCommandMaster(string command, string arguments)
-        {
-            string message = $"{command} {arguments}";
-            int length = this.writer.GetUTF8StringSize(message);
-            byte[] buffer = new byte[length + 1];
-            this.writer.WriteUTF8String(message, buffer, 0);
-            return this.network.SendMaster(false, buffer, length);
-        }
-
-        // Everyone except the owner does this, because then owner already knows when it finishes loading
         protected override void OnLoadReady(float duration)
         {
-            if (VRCPlayerApi.GetPlayerCount() == 1 && this.autoplayOnLoad)
+            if (VRCPlayerApi.GetPlayerCount() == 1)
             {
                 this.system.StartPlayback();
                 return;
             }
 
-            if (Networking.LocalPlayer.playerId == this.ownerId)
+            if (this.isOwner)
                 return;
 
-            this.SendCommandTarget(true, VideoLoadedCommand, this.ownerId, "");
+            /*  TODO:
+             *  pretty sure this line isn't valid, but I can't check
+             *  because the VRC definitions arent installed and I'm on a plane
+             */
+            this.SendCustomNetworkEvent(nameof(this.OnClientLoaded), NetworkEventTarget.Owner);
+        }
+
+        // Everyone except the owner does this, because then owner already knows when it finishes loading
+        public void OnClientLoaded()
+        {
+            if (!this.isOwner || !this.autoplayOnLoad)
+                return;
+
+            this.receivedLoadedFrom++;
+
+            this.events.OnRemotePlayerLoaded(this.receivedLoadedFrom);
+
+            // Everyone is loaded when this counter is above the player count
+            // (skipping one for the local player)
+            if (this.receivedLoadedFrom < VRCPlayerApi.GetPlayerCount() - 1)
+                return;
+
+            this.system.StartPlayback();
         }
 
         private int ownerId = 0;
@@ -107,34 +68,12 @@ namespace DecentM.VideoPlayer.Plugins
             this.ownerId = nextOwner.playerId;
         }
 
-        private int[] loadedPlayers = new int[0];
-
         protected override void OnLoadApproved(VRCUrl url)
         {
-            this.loadedPlayers = new int[0];
-        }
-
-        // Only the current owner runs this, because the others are sending info to the owner
-        // Wait for at least one ack
-        private void HandleVideoLoadedReceived(int senderId)
-        {
-            if (Networking.LocalPlayer.playerId != this.ownerId)
+            if (!this.isOwner || !this.autoplayOnLoad)
                 return;
 
-            int[] tmp = new int[this.loadedPlayers.Length + 1];
-            Array.Copy(this.loadedPlayers, tmp, this.loadedPlayers.Length);
-            tmp[tmp.Length - 1] = senderId;
-            this.loadedPlayers = tmp;
-
-            this.events.OnRemotePlayerLoaded(this.loadedPlayers);
-
-            if (
-                this.loadedPlayers.Length >= VRCPlayerApi.GetPlayerCount() - 1
-                && this.autoplayOnLoad
-            )
-            {
-                this.system.StartPlayback();
-            }
+            this.receivedLoadedFrom = 0;
         }
     }
 }
