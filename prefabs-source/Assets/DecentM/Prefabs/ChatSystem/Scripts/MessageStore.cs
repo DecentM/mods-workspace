@@ -9,116 +9,175 @@ using DecentM.Collections;
 
 namespace DecentM.Chat
 {
+    public enum MessageStatus
+    {
+        Unknown,
+        Created,
+        Sending,
+        Sent,
+        FailedToSend,
+        SentAcked,
+        Received,
+        ReceivedAcked,
+    }
+
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
-    public class messages : UdonSharpBehaviour
+    public class MessageStore : UdonSharpBehaviour
     {
         public ChatEvents events;
         public ChannelsStore channels;
 
         public int maxMessageCount = 150;
 
-        public List messages;
-
-        #region Message properties
+        // Map<string id, object[] message>
+        public Map messages;
 
         /*
          * Messsage structure:
          * object[]
-         * 0 - id (string)
-         * 1 - status (int)
-         * 2 - text (string)
-         * 3 - createdAt (DateTime)
-         * 4 - updatedAt (DateTime | null)
+         * 0 - status (int)
+         * 1 - text (string)
+         * 2 - createdAt (DateTime)
+         * 3 - updatedAt (DateTime | null)
          */
 
-        private string GetMessageId(object[] message)
-        {
-            return (string)message[0];
-        }
+        private static int MessageObjectLength = 4;
 
-        private int GetMessageStatus(object[] message)
+        private const int MessageStatusIndex = 0;
+        private const int MessageTextIndex = 1;
+        private const int MessageCreatedAtIndex = 2;
+        private const int MessageUpdatedAtIndex = 3;
+
+        #region Message properties
+
+        private MessageStatus GetMessageStatus(object[] message)
         {
-            return (string)message[1];
+            return (MessageStatus)message[MessageStatusIndex];
         }
 
         /* Message ID structure
          * string
-         * <packetId>_<channelId>_<senderId>_<increment>
+         * <packetId>_<channelId>_<senderId>
          */
 
-        private static string MessageIdSeparator = "_";
+        private static char MessageIdSeparator = '_';
 
-        private int GetIdPart(object[] message, int partIndex)
+        private const int IdPacketIdIndex = 0;
+        private const int IdChannelIdIndex = 1;
+        private const int IdSenderIdIndex = 2;
+
+        private int GetIdPart(string id, int partIndex)
         {
-            string id = this.GetMessageId(message);
             string[] parts = id.Split(MessageIdSeparator);
 
             if (parts.Length != 4)
                 return -1;
 
-            return parts[0];
+            string part = parts[partIndex];
+
+            int result = -1;
+            bool parsed = int.TryParse(part, out result);
+
+            if (!parsed)
+                return -1;
+
+            return result;
         }
 
-        private int GetMessagePacketId(object[] message)
+        private int GetPacketId(string id)
         {
-            return this.GetIdPart(message, 0);
+            return this.GetIdPart(id, IdPacketIdIndex);
         }
 
-        private int GetMessageChannelId(object[] message)
+        private int GetChannelId(string id)
         {
-            return this.GetIdPart(message, 1);
+            return this.GetIdPart(id, IdChannelIdIndex);
         }
 
-        private string GetMessageSenderId(object[] message)
+        private int GetSenderId(string id)
         {
-            return this.GetIdPart(message, 2);
+            return this.GetIdPart(id, IdSenderIdIndex);
         }
 
         private string GetMessageText(object[] message)
         {
-            return (string)message[2];
+            return (string)message[MessageTextIndex];
         }
 
         private string GetMessageCreatedAt(object[] message)
         {
-            return (string)message[3];
+            return (string)message[MessageCreatedAtIndex];
         }
 
         private string GetMessageUpdatedAt(object[] message)
         {
-            return (string)message[4];
+            return (string)message[MessageUpdatedAtIndex];
+        }
+
+        private object[] SetMessageStatus(MessageStatus newStatus, object[] message)
+        {
+            object[] result = new object[MessageObjectLength];
+            Array.Copy(message, result, Mathf.Min(message.Length, result.Length));
+
+            result[MessageStatusIndex] = newStatus;
+            return result;
+        }
+
+        private object[] SetMessageText(string newText, object[] message)
+        {
+            object[] result = new object[MessageObjectLength];
+            Array.Copy(message, result, Mathf.Min(message.Length, result.Length));
+
+            result[MessageTextIndex] = newText;
+            return result;
+        }
+
+        private object[] SetMessageCreatedAt(DateTime newCreatedAt, object[] message)
+        {
+            object[] result = new object[MessageObjectLength];
+            Array.Copy(message, result, Mathf.Min(message.Length, result.Length));
+
+            result[MessageCreatedAtIndex] = newCreatedAt;
+            return result;
+        }
+
+        private object[] SetMessageUpdatedAt(DateTime newUpdatedAt, object[] message)
+        {
+            object[] result = new object[MessageObjectLength];
+            Array.Copy(message, result, Mathf.Min(message.Length, result.Length));
+
+            result[MessageUpdatedAtIndex] = newUpdatedAt;
+            return result;
         }
 
         #endregion
 
-        #region Message properties
-
-        #endregion
+        #region Store Utilities
 
         public object[][] GetAllMessages()
         {
-            return this.messages.ToArray();
+            return (object[][])this.messages.Values;
         }
-
-        #region Store Utilities
 
         private void TrimMessages()
         {
             while (this.messages.Count > this.maxMessageCount)
             {
-                this.RemoveMessageByIndex(this.messages.Count - 1);
+                string lastId = (string)this.messages.Keys[this.messages.Count - 1];
+                this.messages.Remove(lastId);
+                // TODO: Continue from here
             }
         }
 
         private int GetMessageIndexById(string id)
         {
-            object[][] messages = this.messages.ToArray();
+            string[] ids = (string[])this.messages.Keys;
 
-            // Travel in reverse because it's more likely people will delete recent messages rather than old ones,
+            // Travel in reverse because it's more likely people will access recent messages rather than old ones,
             // so we will probably return quicker.
-            for (int i = messages.Length - 1; i >= 0; i--)
+            for (int i = ids.Length - 1; i >= 0; i--)
             {
-                if (this.messages[i] == id)
+                if (ids[i] == id)
                     return i;
             }
 
@@ -128,11 +187,13 @@ namespace DecentM.Chat
 
         private int GetMessageIndexByPacket(int packetId)
         {
+            string[] ids = (string[])this.messages.Keys;
+
             // Travel in reverse because it's more likely people will delete recent messages rather than old ones,
             // so we will probably return quicker.
-            for (int i = initialPacketIdMap.Length - 1; i >= 0; i--)
+            for (int i = ids.Length - 1; i >= 0; i--)
             {
-                if (this.initialPacketIdMap[i] == packetId)
+                if (this.GetPacketId(ids[i]) == packetId)
                     return i;
             }
 
@@ -140,279 +201,173 @@ namespace DecentM.Chat
             return -1;
         }
 
-        private GameObject GetMessageByIndex(int index)
+        private object[] GetMessageById(string id)
         {
-            // Check if the requested index is in bounds
-            if (index < 0 || index >= this.messages.Count)
-                return null;
-
-            return this.messages[index];
+            return (object[])this.messages.Get(id);
         }
 
-        private GameObject GetMessageById(string id)
+        private object[] GetMessageByPacket(int packetId)
         {
-            int index = this.GetMessageIndexById(id);
-            return this.GetMessageByIndex(index);
+            string[] ids = (string[])this.messages.Keys;
+
+            for (int i = 0; i < ids.Length; i++)
+            {
+                if (this.GetPacketId(ids[i]) == packetId)
+                    return (object[])this.messages.Get(ids[i]);
+            }
+
+            return null;
         }
 
-        private GameObject GetMessageByPacket(int packetId)
+        private string GetIdByPacket(int packetId)
         {
-            int index = this.GetMessageIndexByPacket(packetId);
-            return this.GetMessageByIndex(index);
+            string[] ids = (string[])this.messages.Keys;
+
+            for (int i = 0; i < ids.Length; i++)
+            {
+                if (this.GetPacketId(ids[i]) == packetId)
+                    return ids[i];
+            }
+
+            return null;
         }
 
-        private bool IsMessageSentByLocalPlayer(GameObject messageObject)
+        private bool IsMessageSentByLocalPlayer(string id)
         {
-            ChatMessage message = messageObject.GetComponent<ChatMessage>();
-
-            if (message == null)
+            if (string.IsNullOrEmpty(id))
                 return false;
 
-            int senderId = (int)message.GetProgramVariable(nameof(message.senderId));
+            int senderId = this.GetSenderId(id);
 
             return senderId == Networking.LocalPlayer.playerId;
         }
 
         public bool IsMessageSentByLocalPlayerByPacket(int packetId)
         {
-            GameObject messageObject = this.GetMessageByPacket(packetId);
+            string id = this.GetIdByPacket(packetId);
 
-            if (messageObject == null)
+            if (id == null)
                 return false;
 
-            return this.IsMessageSentByLocalPlayer(messageObject);
+            return this.IsMessageSentByLocalPlayer(id);
         }
 
-        private GameObject CreateMessageObject(string name)
+        private object[] CreateMessageObject()
         {
-            GameObject messageObject = VRCInstantiate(this.messageTemplate);
+            string id = string.Empty;
+            MessageStatus status = MessageStatus.Created;
+            string text = string.Empty;
+            DateTime createdAt = DateTime.Now;
 
-            messageObject.transform.SetParent(this.messageRoot);
-            messageObject.name = name;
-            messageObject.transform.SetPositionAndRotation(
-                this.messageTemplate.transform.position,
-                this.messageTemplate.transform.rotation
+            return new object[] { id, status, text, createdAt, null, };
+        }
+
+        public string SerialiseMessageId(int packetId, int channelId, int senderId)
+        {
+            return string.Join(
+                MessageIdSeparator.ToString(),
+                new string[] { packetId.ToString(), channelId.ToString(), senderId.ToString() }
             );
-            messageObject.transform.localScale = this.messageTemplate.transform.localScale;
-
-            return messageObject;
         }
 
-        private int GetLastIndexForPlayer(int playerId)
+        public int[] DeserialiseMessageId(string id)
         {
-            if (this.messages == null)
-                this.messages = new GameObject[0];
+            int packetId = -1;
+            int channelId = -1;
+            int senderId = -1;
 
-            // Go backwards, so that the largest index comes first
-            for (int i = this.messages.Count - 1; i >= 0; i--)
-            {
-                GameObject messageObject = this.messages[i];
-                ChatMessage message = messageObject.GetComponent<ChatMessage>();
+            int[] result = new int[4];
+            result[0] = -1; // packetId
+            result[1] = -1; // channelId
+            result[2] = -1; // senderId
 
-                // If message is null, some Udon issue occurred that removed the Message component. It's normally there and Udon code can't
-                // even remove it so we just deal with the error by ignoring this Message instance.
-                if (message == null)
-                    continue;
+            if (id == null)
+                return result;
 
-                string fullMessageId = (string)message.GetProgramVariable("id");
+            string[] parts = id.Split(new char[] { MessageIdSeparator }, 4);
+            int.TryParse(parts[0], out packetId);
+            int.TryParse(parts[1], out channelId);
+            int.TryParse(parts[2], out senderId);
 
-                if (fullMessageId == null || fullMessageId == "")
-                    continue;
+            result[0] = packetId;
+            result[1] = channelId;
+            result[2] = senderId;
 
-                int[] idData = this.channels.DeserialiseMessageId(fullMessageId);
-
-                if (!this.channels.MessageIdDataValid(idData))
-                    continue;
-
-                // Since we're going backwards, the most recent messages will come first. If we find the most recent message by the player,
-                // we found the largest one.
-                if (idData[1] == playerId)
-                    return idData[2];
-            }
-
-            // If we haven't returned by now, we haven't found any message
-            return -1;
+            return result;
         }
 
-        private int GetNextIndexForPlayer(int playerId)
+        public string GenerateNextIdForPlayer(int packetId, int channelId, int senderId)
         {
-            // The last ID is last message ID they sent, so we return the next one to get assigned
-            return this.GetLastIndexForPlayer(playerId) + 1;
-        }
-
-        public string GenerateNextIdForPlayer(int playerId)
-        {
-            // The id of a message is: "<icremental number, unique per player>_<player name>"
-            return this.channels.SerialiseMessageId(
-                this.channel,
-                this.GetNextIndexForPlayer(playerId),
-                playerId
-            );
+            return this.SerialiseMessageId(packetId, channelId, senderId);
         }
 
         #endregion
 
         #region Adding/Removing messages
 
-        private void AddMessage(int initialPacketId, string id, string messageText, int senderId)
+        public void AddMessageWithId(int packetId, string id, string messageText, int senderId)
         {
-            GameObject messageObject = this.CreateMessageObject(id);
-            ChatMessage message = messageObject.GetComponent<ChatMessage>();
+            object[] message = this.CreateMessageObject();
 
-            message.SetProgramVariable(nameof(message.OnReceive_packetId), initialPacketId);
-            message.SetProgramVariable(nameof(message.OnReceive_id), id);
-            message.SetProgramVariable(nameof(message.OnReceive_channel), this.channel);
-            message.SetProgramVariable(nameof(message.OnReceive_senderId), senderId);
-            message.SetProgramVariable(nameof(message.OnReceive_message), messageText);
-            message.SendCustomEvent(nameof(message.OnReceive));
+            message = this.SetMessageStatus(MessageStatus.Created, message);
+            message = this.SetMessageText(messageText, message);
+            message = this.SetMessageCreatedAt(DateTime.Now, message);
 
-            GameObject[] tmp = new GameObject[this.messages.Count + 1];
-            Array.Copy(this.messages, tmp, this.messages.Count);
-            tmp[tmp.Length - 1] = messageObject;
-            this.messages = tmp;
-
-            // Update the ID map to make it easy to reference messages by their ID instead of their index in the store
-            if (this.indexIdMap == null)
-                this.indexIdMap = new string[0];
-            string[] indexTmp = new string[this.indexIdMap.Length + 1];
-            Array.Copy(this.indexIdMap, indexTmp, this.indexIdMap.Length);
-            indexTmp[indexTmp.Length - 1] = id;
-            this.indexIdMap = indexTmp;
-
-            // Update the packet map so that messages can be queried by packet id
-            if (this.initialPacketIdMap == null)
-                this.initialPacketIdMap = new int[0];
-            int[] pktTmp = new int[this.initialPacketIdMap.Length + 1];
-            Array.Copy(this.initialPacketIdMap, pktTmp, this.initialPacketIdMap.Length);
-            pktTmp[pktTmp.Length - 1] = initialPacketId;
-            this.initialPacketIdMap = pktTmp;
+            this.messages.Add(id, message);
 
             // Make sure we're not going over the message limit
             this.TrimMessages();
 
-            // Activate the message object so it's visible
-            messageObject.SetActive(true);
-
             // Send an event to ChatEvents about this new message
-            this.events.OnMessageAdded(message);
+            this.events.OnMessageAdded(id, message);
         }
 
-        private void RemoveMessageByIndex(int index)
+        private void RemoveMessageById(string id)
         {
             // The id was somehow not found, ignore the request
-            if (index == -1)
+            if (string.IsNullOrEmpty(id))
                 return;
 
-            GameObject messageObject = this.GetMessageByIndex(index);
-
-            // The store doesn't have a GameObject at the index, or the index was out of bounds
-            if (messageObject == null)
-                return;
-
-            ChatMessage message = messageObject.GetComponent<ChatMessage>();
+            object[] message = (object[])this.messages.Get(id);
 
             if (message == null)
                 return;
 
             // At this point we're committed to deleting the message, so we send the event before it's
             // actually deleted so its ID can still be read
-            this.events.OnMessageDeleted(message);
-
-            // Clean up the actual object from the scene
-            messageObject.SetActive(false);
-            Destroy(messageObject);
+            this.events.OnMessageDeleted(id, message);
 
             // If there are no messages, it means this function was called in error, we just ignore the request
             if (this.messages.Count == 0)
-            {
                 return;
-            }
 
-            // If there's only one message, don't bother with shifting stuff around, just set data to
-            // an empty array.
-            if (this.messages.Count == 1)
-            {
-                this.messages = new GameObject[0];
-                this.indexIdMap = new string[0];
-                this.initialPacketIdMap = new int[0];
-                return;
-            }
-
-            // Remove the item at the index from the message store and shrink it by one
-            GameObject[] tmp = new GameObject[this.messages.Count - 1];
-            // Copy all items except the index
-            Array.Copy(this.messages, tmp, index);
-            Array.Copy(
-                this.messages,
-                index + 1,
-                tmp,
-                index,
-                this.messages.Count - 1 - index
-            );
-            this.messages = tmp;
-
-            // Update the ID map the same way
-            string[] indexTmp = new string[this.indexIdMap.Length - 1];
-            Array.Copy(this.indexIdMap, indexTmp, index);
-            Array.Copy(
-                this.indexIdMap,
-                index + 1,
-                indexTmp,
-                index,
-                this.indexIdMap.Length - 1 - index
-            );
-            this.indexIdMap = indexTmp;
-
-            // Update the packet map the same way
-            int[] pktTmp = new int[this.initialPacketIdMap.Length - 1];
-            Array.Copy(this.initialPacketIdMap, pktTmp, index);
-            Array.Copy(
-                this.initialPacketIdMap,
-                index + 1,
-                pktTmp,
-                index,
-                this.initialPacketIdMap.Length - 1 - index
-            );
-            this.initialPacketIdMap = pktTmp;
+            this.messages.Remove(message);
         }
 
-        private void RemoveMessage(string id)
-        {
-            int index = this.GetMessageIndexById(id);
-
-            this.RemoveMessageByIndex(index);
-        }
+        public List idsToRemove;
 
         private void RemoveAllPlayerMessagesByPlayerId(int playerId)
         {
-            string[] idsToRemove = new string[0];
+            this.idsToRemove.Clear();
 
             for (int i = 0; i < this.messages.Count; i++)
             {
-                GameObject messageObject = this.GetMessageByIndex(i);
+                string id = (string)this.messages.Keys[i];
 
-                if (messageObject == null)
+                if (string.IsNullOrEmpty(id))
                     continue;
 
-                ChatMessage message = messageObject.GetComponent<ChatMessage>();
-
-                if (message == null)
-                    continue;
-
-                int senderId = (int)message.GetProgramVariable(nameof(message.senderId));
+                int senderId = this.GetSenderId(id);
 
                 if (senderId != playerId)
                     continue;
 
-                string[] idsTmp = new string[idsToRemove.Length + 1];
-                Array.Copy(idsToRemove, idsTmp, idsToRemove.Length);
-                idsTmp[idsTmp.Length - 1] = (string)message.GetProgramVariable(nameof(message.id));
-                idsToRemove = idsTmp;
+                this.idsToRemove.Add(id);
             }
 
-            for (int i = 0; i < idsToRemove.Length; i++)
+            for (int i = 0; i < idsToRemove.Count; i++)
             {
-                this.RemoveMessage(idsToRemove[i]);
+                this.RemoveMessageById((string)idsToRemove.ElementAt(i));
             }
         }
 
@@ -427,34 +382,15 @@ namespace DecentM.Chat
             return true;
         }
 
-        public bool AddMessageWithId(int packetId, string id, string message, int senderId)
-        {
-            if (packetId == -1 || id == "" || message == "" || senderId < 0)
-                return false;
-
-            this.AddMessage(packetId, id, message, senderId);
-
-            return true;
-        }
-
-        public bool AddMessageWithoutId(int packetId, string message, int senderId)
+        public void AddMessageWithoutId(int packetId, string message, int senderId)
         {
             if (packetId == -1 || message == "" || senderId < 0)
-                return false;
+                return;
 
-            string id = this.GenerateNextIdForPlayer(senderId);
+            // TODO: Channels
+            string id = this.GenerateNextIdForPlayer(packetId, 0, senderId);
 
-            return this.AddMessageWithId(packetId, id, message, senderId);
-        }
-
-        public bool RemoveMessageById(string id)
-        {
-            if (id == "")
-                return false;
-
-            this.RemoveMessage(id);
-
-            return true;
+            this.AddMessageWithId(packetId, id, message, senderId);
         }
 
         #endregion
@@ -476,12 +412,12 @@ namespace DecentM.Chat
 
         private void ChangeMessageStatusById(string id, int status)
         {
-            GameObject messageObject = this.GetMessageById(id);
+            object[] messageObject = this.GetMessageById(id);
 
             if (messageObject == null)
                 return;
 
-            this.ChangeMessageStatus(messageObject, status);
+            this.SetMessageStatus(messageObject, status);
         }
 
         private void ChangeMessageStatusByPacket(int packetId, int status)
