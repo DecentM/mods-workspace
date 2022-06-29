@@ -43,7 +43,8 @@ namespace DecentM.VideoPlayer.Plugins
         // Everyone except the owner does this, because then owner already knows when it finishes loading
         public void OnClientLoaded()
         {
-            if (!this.isOwner || !this.autoplayOnLoad) return;
+            if (!this.isOwner || !this.autoplayOnLoad)
+                return;
 
             this.receivedLoadedFrom++;
 

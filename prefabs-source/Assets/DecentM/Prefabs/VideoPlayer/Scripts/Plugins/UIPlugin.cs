@@ -96,6 +96,8 @@ namespace DecentM.VideoPlayer.Plugins
         [Space]
         public VRCUrl emptyUrl;
 
+        #region Utilities
+
         private string HumanReadableTimestamp(float timestamp)
         {
             TimeSpan t = TimeSpan.FromSeconds(timestamp);
@@ -115,6 +117,8 @@ namespace DecentM.VideoPlayer.Plugins
 
             return $"{this.HumanReadableTimestamp(timestamp)} / {this.HumanReadableTimestamp(duration)}";
         }
+
+        #endregion
 
         #region Focus handling
 
@@ -754,53 +758,12 @@ namespace DecentM.VideoPlayer.Plugins
             this.ownershipButton.image.sprite = locked ? this.lockIcon : this.unlockIcon;
         }
 
-        private VRCPlayerApi[] GetUnloadedPlayers(int[] loadedPlayers)
+        protected override void OnRemotePlayerLoaded(int loadedPlayers)
         {
-            VRCPlayerApi[] allPlayers = new VRCPlayerApi[64];
-            VRCPlayerApi[] unloadedPlayers = new VRCPlayerApi[0];
-
-            VRCPlayerApi.GetPlayers(allPlayers);
-
-            foreach (VRCPlayerApi player in allPlayers)
-            {
-                if (player == null || !player.IsValid())
-                    continue;
-
-                bool found = false;
-
-                // We always consider the local player as loaded
-                if (player != Networking.LocalPlayer)
-                {
-                    foreach (int loadedPlayer in loadedPlayers)
-                    {
-                        if (loadedPlayer == player.playerId)
-                        {
-                            found = true;
-                            break;
-                        }
-                    }
-                }
-
-                if (!found)
-                {
-                    VRCPlayerApi[] tmp = new VRCPlayerApi[unloadedPlayers.Length + 1];
-                    Array.Copy(unloadedPlayers, tmp, unloadedPlayers.Length);
-                    tmp[tmp.Length - 1] = player;
-                    unloadedPlayers = tmp;
-                }
-            }
-
-            return unloadedPlayers;
-        }
-
-        protected override void OnRemotePlayerLoaded(int[] loadedPlayers)
-        {
-            VRCPlayerApi[] unloadedPlayers = this.GetUnloadedPlayers(loadedPlayers);
-
             if (unloadedPlayers.Length == 1)
-                this.status.text = $"Waiting for {unloadedPlayers[0].displayName}...";
+                this.status.text = VRCPlayerApi.GetPlayerCount() == 2 ? "Waiting for the other player..." : "Waiting for one last player...";
             else
-                this.status.text = $"Waiting for {unloadedPlayers.Length} players...";
+                this.status.text = $"Waiting for {unloadedPlayers} players...";
         }
 
         #endregion
