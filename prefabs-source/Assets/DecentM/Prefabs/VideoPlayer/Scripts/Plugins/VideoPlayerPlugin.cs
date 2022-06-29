@@ -368,9 +368,11 @@ namespace DecentM.VideoPlayer.Plugins
                 }
 
                 default:
+                {
                     break;
+                }
 
-                    #endregion
+                #endregion
             }
         }
     }
