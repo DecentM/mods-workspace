@@ -5,86 +5,120 @@ using VRC.Udon;
 using System;
 using UnityEngine.UI;
 
+using DecentM.Collections;
+
 namespace DecentM.Chat
 {
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
-    public class MessageStore : UdonSharpBehaviour
+    public class messages : UdonSharpBehaviour
     {
         public ChatEvents events;
         public ChannelsStore channels;
 
-        public GameObject messageTemplate;
-        public Transform messageRoot;
-        public Scrollbar scrollbar;
         public int maxMessageCount = 150;
 
-        public GameObject[] messageStore;
-        private string[] indexIdMap;
-        private int[] initialPacketIdMap;
-        private int lastMessageId = -1;
+        public List messages;
 
-        public int channel = -1;
+        #region Message properties
 
-        void Start()
+        /*
+         * Messsage structure:
+         * object[]
+         * 0 - id (string)
+         * 1 - status (int)
+         * 2 - text (string)
+         * 3 - createdAt (DateTime)
+         * 4 - updatedAt (DateTime | null)
+         */
+
+        private string GetMessageId(object[] message)
         {
-            this.messageTemplate.SetActive(false);
-
-            // Need to check if these are null at start, as we're instantiated and things might get set before Start
-            if (this.messageStore == null)
-                this.messageStore = new GameObject[0];
-            if (this.indexIdMap == null)
-                this.indexIdMap = new string[0];
-            if (this.initialPacketIdMap == null)
-                this.initialPacketIdMap = new int[0];
+            return (string)message[0];
         }
 
-        public ChatMessage[] GetAllMessages()
+        private int GetMessageStatus(object[] message)
         {
-            ChatMessage[] messages = new ChatMessage[0];
-
-            for (int i = 0; i < this.messageStore.Length; i++)
-            {
-                GameObject messageObject = this.messageStore[i];
-
-                if (messageObject == null)
-                    continue;
-
-                ChatMessage message = messageObject.GetComponent<ChatMessage>();
-
-                if (message == null)
-                    continue;
-
-                ChatMessage[] tmp = new ChatMessage[messages.Length + 1];
-                Array.Copy(messages, tmp, messages.Length);
-                tmp[tmp.Length - 1] = message;
-                messages = tmp;
-            }
-
-            return messages;
+            return (string)message[1];
         }
 
-        public void OnCreate(int channel)
+        /* Message ID structure
+         * string
+         * <packetId>_<channelId>_<senderId>_<increment>
+         */
+
+        private static string MessageIdSeparator = "_";
+
+        private int GetIdPart(object[] message, int partIndex)
         {
-            this.channel = channel;
+            string id = this.GetMessageId(message);
+            string[] parts = id.Split(MessageIdSeparator);
+
+            if (parts.Length != 4)
+                return -1;
+
+            return parts[0];
+        }
+
+        private int GetMessagePacketId(object[] message)
+        {
+            return this.GetIdPart(message, 0);
+        }
+
+        private int GetMessageChannelId(object[] message)
+        {
+            return this.GetIdPart(message, 1);
+        }
+
+        private string GetMessageSenderId(object[] message)
+        {
+            return this.GetIdPart(message, 2);
+        }
+
+        private string GetMessageText(object[] message)
+        {
+            return (string)message[2];
+        }
+
+        private string GetMessageCreatedAt(object[] message)
+        {
+            return (string)message[3];
+        }
+
+        private string GetMessageUpdatedAt(object[] message)
+        {
+            return (string)message[4];
+        }
+
+        #endregion
+
+        #region Message properties
+
+        #endregion
+
+        public object[][] GetAllMessages()
+        {
+            return this.messages.ToArray();
         }
 
         #region Store Utilities
 
         private void TrimMessages()
         {
-            while (this.messageStore.Length > this.maxMessageCount)
+            while (this.messages.Count > this.maxMessageCount)
             {
-                this.RemoveMessageByIndex(this.messageStore.Length - 1);
+                this.RemoveMessageByIndex(this.messages.Count - 1);
             }
         }
 
         private int GetMessageIndexById(string id)
         {
+            object[][] messages = this.messages.ToArray();
+
             // Travel in reverse because it's more likely people will delete recent messages rather than old ones,
             // so we will probably return quicker.
-            for (int i = indexIdMap.Length - 1; i >= 0; i--)
+            for (int i = messages.Length - 1; i >= 0; i--)
             {
-                if (this.indexIdMap[i] == id)
+                if (this.messages[i] == id)
                     return i;
             }
 
@@ -109,10 +143,10 @@ namespace DecentM.Chat
         private GameObject GetMessageByIndex(int index)
         {
             // Check if the requested index is in bounds
-            if (index < 0 || index >= this.messageStore.Length)
+            if (index < 0 || index >= this.messages.Count)
                 return null;
 
-            return this.messageStore[index];
+            return this.messages[index];
         }
 
         private GameObject GetMessageById(string id)
@@ -166,13 +200,13 @@ namespace DecentM.Chat
 
         private int GetLastIndexForPlayer(int playerId)
         {
-            if (this.messageStore == null)
-                this.messageStore = new GameObject[0];
+            if (this.messages == null)
+                this.messages = new GameObject[0];
 
             // Go backwards, so that the largest index comes first
-            for (int i = this.messageStore.Length - 1; i >= 0; i--)
+            for (int i = this.messages.Count - 1; i >= 0; i--)
             {
-                GameObject messageObject = this.messageStore[i];
+                GameObject messageObject = this.messages[i];
                 ChatMessage message = messageObject.GetComponent<ChatMessage>();
 
                 // If message is null, some Udon issue occurred that removed the Message component. It's normally there and Udon code can't
@@ -232,10 +266,10 @@ namespace DecentM.Chat
             message.SetProgramVariable(nameof(message.OnReceive_message), messageText);
             message.SendCustomEvent(nameof(message.OnReceive));
 
-            GameObject[] tmp = new GameObject[this.messageStore.Length + 1];
-            Array.Copy(this.messageStore, tmp, this.messageStore.Length);
+            GameObject[] tmp = new GameObject[this.messages.Count + 1];
+            Array.Copy(this.messages, tmp, this.messages.Count);
             tmp[tmp.Length - 1] = messageObject;
-            this.messageStore = tmp;
+            this.messages = tmp;
 
             // Update the ID map to make it easy to reference messages by their ID instead of their index in the store
             if (this.indexIdMap == null)
@@ -289,33 +323,33 @@ namespace DecentM.Chat
             Destroy(messageObject);
 
             // If there are no messages, it means this function was called in error, we just ignore the request
-            if (this.messageStore.Length == 0)
+            if (this.messages.Count == 0)
             {
                 return;
             }
 
             // If there's only one message, don't bother with shifting stuff around, just set data to
             // an empty array.
-            if (this.messageStore.Length == 1)
+            if (this.messages.Count == 1)
             {
-                this.messageStore = new GameObject[0];
+                this.messages = new GameObject[0];
                 this.indexIdMap = new string[0];
                 this.initialPacketIdMap = new int[0];
                 return;
             }
 
             // Remove the item at the index from the message store and shrink it by one
-            GameObject[] tmp = new GameObject[this.messageStore.Length - 1];
+            GameObject[] tmp = new GameObject[this.messages.Count - 1];
             // Copy all items except the index
-            Array.Copy(this.messageStore, tmp, index);
+            Array.Copy(this.messages, tmp, index);
             Array.Copy(
-                this.messageStore,
+                this.messages,
                 index + 1,
                 tmp,
                 index,
-                this.messageStore.Length - 1 - index
+                this.messages.Count - 1 - index
             );
-            this.messageStore = tmp;
+            this.messages = tmp;
 
             // Update the ID map the same way
             string[] indexTmp = new string[this.indexIdMap.Length - 1];
@@ -353,7 +387,7 @@ namespace DecentM.Chat
         {
             string[] idsToRemove = new string[0];
 
-            for (int i = 0; i < this.messageStore.Length; i++)
+            for (int i = 0; i < this.messages.Count; i++)
             {
                 GameObject messageObject = this.GetMessageByIndex(i);
 

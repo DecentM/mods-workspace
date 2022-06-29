@@ -5,8 +5,16 @@ using VRC.Udon;
 
 namespace DecentM.Chat.Connectors
 {
+    public interface IChatConnector
+    {
+        public ChatSystem system;
+        public void OnPlayerTyping();
+        public void OnPlayerPresent();
+        public void OnPlayerAway();
+    }
+
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
-    public class ConnectorGeneric : UdonSharpBehaviour
+    public class ConnectorGeneric : UdonSharpBehaviour, IChatConnector
     {
         public ChatSystem system;
 

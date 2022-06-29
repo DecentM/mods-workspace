@@ -27,21 +27,15 @@ namespace DecentM.Chat
     {
         #region Messages
 
-        // public string OnMessageAddedEvent = ChatEvent.ChatEvents.OnMessageAdded);
-
         public void OnMessageAdded(ChatMessage message)
         {
             this.BroadcastEvent(ChatEvent.OnMessageAdded, message);
         }
 
-        // public string OnMessageChangedEvent = ChatEvent.ChatEvents.OnMessageChanged);
-
         public void OnMessageChanged(ChatMessage message)
         {
             this.BroadcastEvent(ChatEvent.OnMessageChanged, message);
         }
-
-        // public string OnMessageDeletedEvent = ChatEvent.ChatEvents.OnMessageDeleted);
 
         public void OnMessageDeleted(ChatMessage message)
         {
@@ -52,14 +46,10 @@ namespace DecentM.Chat
 
         #region Channels
 
-        // public string OnChannelAddedEvent = ChatEvent.ChatEvents.OnChannelAdded);
-
         public void OnChannelAdded(MessageStore store)
         {
             this.BroadcastEvent(ChatEvent.OnChannelAdded, store.channel);
         }
-
-        // public string OnChannelDeletedEvent = ChatEvent.ChatEvents.OnChannelDeleted);
 
         public void OnChannelDeleted(MessageStore store)
         {
@@ -70,14 +60,10 @@ namespace DecentM.Chat
 
         #region Typing Indicators
 
-        // public string OnPlayerTypingStartEvent = ChatEvent.ChatEvents.OnPlayerTypingStart);
-
         public void OnPlayerTypingStart(int playerId)
         {
             this.BroadcastEvent(ChatEvent.OnPlayerTypingStart, playerId);
         }
-
-        // public string OnPlayerTypingStopEvent = ChatEvent.ChatEvents.OnPlayerTypingStop);
 
         public void OnPlayerTypingStop(int playerId)
         {
@@ -88,8 +74,6 @@ namespace DecentM.Chat
 
         #region Profile Pictures
 
-        // public string OnProfilePictureChangeEvent = ChatEvent.ChatEvents.OnProfilePictureChange);
-
         public void OnProfilePictureChange(int playerId)
         {
             this.BroadcastEvent(ChatEvent.OnProfilePictureChange, playerId);
@@ -99,14 +83,10 @@ namespace DecentM.Chat
 
         #region Presence
 
-        // public string OnPlayerPresentEvent = ChatEvent.ChatEvents.OnPlayerPresent);
-
         public void OnPlayerPresent(int playerId)
         {
             this.BroadcastEvent(ChatEvent.OnPlayerPresent, playerId);
         }
-
-        // public string OnPlayerAwayEvent = ChatEvent.ChatEvents.OnPlayerAway);
 
         public void OnPlayerAway(int playerId)
         {
