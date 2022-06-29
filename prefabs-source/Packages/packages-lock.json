@@ -141,7 +141,7 @@
         "com.unity.burst": "1.4.11",
         "com.unity.mathematics": "1.2.5"
       },
-      "hash": "5854cdd7f176f2fd8de15107fcfbef3c2a72c91c"
+      "hash": "75ebae6abe72ea4c38f3479ac87d9217a8f451e7"
     },
     "com.vrchat.clientsim": {
       "version": "https://github.com/vrchat-community/ClientSim.git?path=/Packages/com.vrchat.ClientSim#vcc",
@@ -151,14 +151,14 @@
         "com.unity.xr.oculus.standalone": "2.38.4",
         "com.unity.inputsystem": "1.0.2"
       },
-      "hash": "9205b40abe76b5cfb6b3dd2a35effa30ecf4ff79"
+      "hash": "ddf48efe3b93bd6ce86fd2f1c243b88f3fd42856"
     },
     "com.vrchat.udonsharp": {
       "version": "https://github.com/vrchat-community/UdonSharp.git?path=Packages/com.vrchat.UdonSharp#vcc",
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "825c8da06aa6432a8701b8d2baf600f4636e93c6"
+      "hash": "26d68127049702a597380f9be3ee228402df4dc3"
     },
     "com.vrchat.worlds": {
       "version": "https://github.com/vrchat/packages.git?path=/packages/com.vrchat.worlds#vcc",
@@ -169,7 +169,7 @@
         "com.unity.postprocessing": "3.1.1",
         "com.unity.textmeshpro": "2.1.6"
       },
-      "hash": "5854cdd7f176f2fd8de15107fcfbef3c2a72c91c"
+      "hash": "75ebae6abe72ea4c38f3479ac87d9217a8f451e7"
     },
     "com.unity.modules.ai": {
       "version": "1.0.0",
