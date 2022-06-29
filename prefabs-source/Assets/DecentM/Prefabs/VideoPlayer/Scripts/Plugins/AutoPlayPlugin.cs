@@ -24,6 +24,12 @@ namespace DecentM.VideoPlayer.Plugins
 
         protected override void OnLoadReady(float duration)
         {
+            if (VRCPlayerApi.GetPlayerCount() == 1)
+            {
+                this.system.StartPlayback();
+                return;
+            }
+
             if (this.isOwner)
                 return;
 
@@ -41,9 +47,11 @@ namespace DecentM.VideoPlayer.Plugins
 
             this.receivedLoadedFrom++;
 
+            this.events.OnRemotePlayerLoaded(this.receivedLoadedFrom);
+
             // Everyone is loaded when this counter is above the player count
             // (skipping one for the local player)
-            if (this.receivedLoadedFrom < VRCPlayerAPI.GetPlayerCount() - 1)
+            if (this.receivedLoadedFrom < VRCPlayerApi.GetPlayerCount() - 1)
                 return;
 
             this.system.StartPlayback();

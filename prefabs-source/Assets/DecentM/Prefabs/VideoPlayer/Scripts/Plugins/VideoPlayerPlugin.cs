@@ -28,7 +28,8 @@ namespace DecentM.VideoPlayer.Plugins
             ScreenHandler screen,
             float width,
             float height
-        ) { }
+        )
+        { }
 
         protected virtual void OnScreenTextureChange() { }
 
@@ -74,7 +75,7 @@ namespace DecentM.VideoPlayer.Plugins
 
         protected virtual void OnOwnershipRequested() { }
 
-        protected virtual void OnRemotePlayerLoaded(int[] loadedPlayers) { }
+        protected virtual void OnRemotePlayerLoaded(int loadedPlayers) { }
 
         protected virtual void OnSubtitleRender(string text) { }
 
@@ -95,7 +96,8 @@ namespace DecentM.VideoPlayer.Plugins
             string description,
             string duration,
             TextAsset[] subtitles
-        ) { }
+        )
+        { }
 
         public sealed override void OnPubsubEvent(object name, object[] data)
         {
@@ -104,275 +106,275 @@ namespace DecentM.VideoPlayer.Plugins
                 #region Core
 
                 case VideoPlayerEvent.OnDebugLog:
-                {
-                    string message = (string)data[0];
-                    this.OnDebugLog(message);
-                    return;
-                }
+                    {
+                        string message = (string)data[0];
+                        this.OnDebugLog(message);
+                        return;
+                    }
 
                 case VideoPlayerEvent.OnLoadRequested:
-                {
-                    VRCUrl url = (VRCUrl)data[0];
-                    this.OnLoadRequested(url);
-                    return;
-                }
+                    {
+                        VRCUrl url = (VRCUrl)data[0];
+                        this.OnLoadRequested(url);
+                        return;
+                    }
 
                 case VideoPlayerEvent.OnLoadApproved:
-                {
-                    VRCUrl url = (VRCUrl)data[0];
-                    this.OnLoadApproved(url);
-                    return;
-                }
+                    {
+                        VRCUrl url = (VRCUrl)data[0];
+                        this.OnLoadApproved(url);
+                        return;
+                    }
 
                 case VideoPlayerEvent.OnLoadDenied:
-                {
-                    VRCUrl url = (VRCUrl)data[0];
-                    string reason = (string)data[1];
-                    this.OnLoadDenied(url, reason);
-                    return;
-                }
+                    {
+                        VRCUrl url = (VRCUrl)data[0];
+                        string reason = (string)data[1];
+                        this.OnLoadDenied(url, reason);
+                        return;
+                    }
 
                 case VideoPlayerEvent.OnLoadBegin:
-                {
-                    VRCUrl url = (VRCUrl)data[0];
-                    if (url == null)
-                        this.OnLoadBegin();
-                    else
-                        this.OnLoadBegin(url);
-                    return;
-                }
+                    {
+                        VRCUrl url = (VRCUrl)data[0];
+                        if (url == null)
+                            this.OnLoadBegin();
+                        else
+                            this.OnLoadBegin(url);
+                        return;
+                    }
 
                 case VideoPlayerEvent.OnBrightnessChange:
-                {
-                    float alpha = (float)data[0];
-                    this.OnBrightnessChange(alpha);
-                    return;
-                }
+                    {
+                        float alpha = (float)data[0];
+                        this.OnBrightnessChange(alpha);
+                        return;
+                    }
 
                 case VideoPlayerEvent.OnVolumeChange:
-                {
-                    float volume = (float)data[0];
-                    bool muted = (bool)data[1];
-                    this.OnVolumeChange(volume, muted);
-                    return;
-                }
+                    {
+                        float volume = (float)data[0];
+                        bool muted = (bool)data[1];
+                        this.OnVolumeChange(volume, muted);
+                        return;
+                    }
 
                 case VideoPlayerEvent.OnMutedChange:
-                {
-                    bool muted = (bool)data[0];
-                    float volume = (float)data[1];
-                    this.OnMutedChange(muted, volume);
-                    return;
-                }
+                    {
+                        bool muted = (bool)data[0];
+                        float volume = (float)data[1];
+                        this.OnMutedChange(muted, volume);
+                        return;
+                    }
 
                 case VideoPlayerEvent.OnFpsChange:
-                {
-                    int fps = (int)data[0];
-                    this.OnFpsChange(fps);
-                    return;
-                }
+                    {
+                        int fps = (int)data[0];
+                        this.OnFpsChange(fps);
+                        return;
+                    }
 
                 case VideoPlayerEvent.OnScreenResolutionChange:
-                {
-                    ScreenHandler screen = (ScreenHandler)data[0];
-                    float width = (float)data[1];
-                    float height = (float)data[2];
-                    this.OnScreenResolutionChange(screen, width, height);
-                    return;
-                }
+                    {
+                        ScreenHandler screen = (ScreenHandler)data[0];
+                        float width = (float)data[1];
+                        float height = (float)data[2];
+                        this.OnScreenResolutionChange(screen, width, height);
+                        return;
+                    }
 
                 case VideoPlayerEvent.OnLoadReady:
-                {
-                    float duration = (float)data[0];
-                    this.OnLoadReady(duration);
-                    return;
-                }
+                    {
+                        float duration = (float)data[0];
+                        this.OnLoadReady(duration);
+                        return;
+                    }
 
                 case VideoPlayerEvent.OnLoadError:
-                {
-                    VideoError videoError = (VideoError)data[0];
-                    this.OnLoadError(videoError);
-                    return;
-                }
+                    {
+                        VideoError videoError = (VideoError)data[0];
+                        this.OnLoadError(videoError);
+                        return;
+                    }
 
                 case VideoPlayerEvent.OnLoadRatelimitWaiting:
-                {
-                    this.OnLoadRatelimitWaiting();
-                    return;
-                }
+                    {
+                        this.OnLoadRatelimitWaiting();
+                        return;
+                    }
 
                 case VideoPlayerEvent.OnUnload:
-                {
-                    this.OnUnload();
-                    return;
-                }
+                    {
+                        this.OnUnload();
+                        return;
+                    }
 
                 case VideoPlayerEvent.OnPlaybackStart:
-                {
-                    float timestamp = (float)data[0];
-                    this.OnPlaybackStart(timestamp);
-                    return;
-                }
+                    {
+                        float timestamp = (float)data[0];
+                        this.OnPlaybackStart(timestamp);
+                        return;
+                    }
 
                 case VideoPlayerEvent.OnPlaybackStop:
-                {
-                    float timestamp = (float)data[0];
-                    this.OnPlaybackStop(timestamp);
-                    return;
-                }
+                    {
+                        float timestamp = (float)data[0];
+                        this.OnPlaybackStop(timestamp);
+                        return;
+                    }
 
                 case VideoPlayerEvent.OnProgress:
-                {
-                    float timestamp = (float)data[0];
-                    float duration = (float)data[1];
-                    this.OnProgress(timestamp, duration);
-                    return;
-                }
+                    {
+                        float timestamp = (float)data[0];
+                        float duration = (float)data[1];
+                        this.OnProgress(timestamp, duration);
+                        return;
+                    }
 
                 case VideoPlayerEvent.OnPlaybackEnd:
-                {
-                    this.OnPlaybackEnd();
-                    return;
-                }
+                    {
+                        this.OnPlaybackEnd();
+                        return;
+                    }
 
                 case VideoPlayerEvent.OnVideoPlayerInit:
-                {
-                    this.OnVideoPlayerInit();
-                    return;
-                }
+                    {
+                        this.OnVideoPlayerInit();
+                        return;
+                    }
 
                 case VideoPlayerEvent.OnPlayerSwitch:
-                {
-                    VideoPlayerHandlerType type = (VideoPlayerHandlerType)data[0];
-                    this.OnPlayerSwitch(type);
-                    return;
-                }
+                    {
+                        VideoPlayerHandlerType type = (VideoPlayerHandlerType)data[0];
+                        this.OnPlayerSwitch(type);
+                        return;
+                    }
 
                 #endregion
 
                 #region Plugins
 
                 case VideoPlayerEvent.OnAutoRetry:
-                {
-                    int attempt = (int)data[0];
-                    this.OnAutoRetry(attempt);
-                    return;
-                }
+                    {
+                        int attempt = (int)data[0];
+                        this.OnAutoRetry(attempt);
+                        return;
+                    }
 
                 case VideoPlayerEvent.OnAutoRetryLoadTimeout:
-                {
-                    int timeout = (int)data[0];
-                    this.OnAutoRetryLoadTimeout(timeout);
-                    return;
-                }
+                    {
+                        int timeout = (int)data[0];
+                        this.OnAutoRetryLoadTimeout(timeout);
+                        return;
+                    }
 
                 case VideoPlayerEvent.OnAutoRetryAbort:
-                {
-                    this.OnAutoRetryAbort();
-                    return;
-                }
+                    {
+                        this.OnAutoRetryAbort();
+                        return;
+                    }
 
                 case VideoPlayerEvent.OnAutoRetryAllPlayersFailed:
-                {
-                    this.OnAutoRetryAllPlayersFailed();
-                    return;
-                }
+                    {
+                        this.OnAutoRetryAllPlayersFailed();
+                        return;
+                    }
 
                 case VideoPlayerEvent.OnOwnershipChanged:
-                {
-                    int previousOwnerId = (int)data[0];
-                    VRCPlayerApi nextOwner = (VRCPlayerApi)data[1];
-                    this.OnOwnershipChanged(previousOwnerId, nextOwner);
-                    return;
-                }
+                    {
+                        int previousOwnerId = (int)data[0];
+                        VRCPlayerApi nextOwner = (VRCPlayerApi)data[1];
+                        this.OnOwnershipChanged(previousOwnerId, nextOwner);
+                        return;
+                    }
 
                 case VideoPlayerEvent.OnOwnershipSecurityChanged:
-                {
-                    bool locked = (bool)data[0];
-                    this.OnOwnershipSecurityChanged(locked);
-                    return;
-                }
+                    {
+                        bool locked = (bool)data[0];
+                        this.OnOwnershipSecurityChanged(locked);
+                        return;
+                    }
 
                 case VideoPlayerEvent.OnOwnershipRequested:
-                {
-                    this.OnOwnershipRequested();
-                    return;
-                }
+                    {
+                        this.OnOwnershipRequested();
+                        return;
+                    }
 
                 case VideoPlayerEvent.OnScreenTextureChange:
-                {
-                    this.OnScreenTextureChange();
-                    return;
-                }
+                    {
+                        this.OnScreenTextureChange();
+                        return;
+                    }
 
                 case VideoPlayerEvent.OnRemotePlayerLoaded:
-                {
-                    int[] loadedPlayers = (int[])data[0];
-                    this.OnRemotePlayerLoaded(loadedPlayers);
-                    return;
-                }
+                    {
+                        int[] loadedPlayers = (int[])data[0];
+                        this.OnRemotePlayerLoaded(loadedPlayers);
+                        return;
+                    }
 
                 case VideoPlayerEvent.OnMetadataChange:
-                {
-                    string title = (string)data[0];
-                    string uploader = (string)data[1];
-                    string siteName = (string)data[2];
-                    int viewCount = (int)data[3];
-                    int likeCount = (int)data[4];
-                    string resolution = (string)data[5];
-                    int fps = (int)data[6];
-                    string description = (string)data[7];
-                    string duration = (string)data[8];
-                    TextAsset[] subtitles = (TextAsset[])data[9];
+                    {
+                        string title = (string)data[0];
+                        string uploader = (string)data[1];
+                        string siteName = (string)data[2];
+                        int viewCount = (int)data[3];
+                        int likeCount = (int)data[4];
+                        string resolution = (string)data[5];
+                        int fps = (int)data[6];
+                        string description = (string)data[7];
+                        string duration = (string)data[8];
+                        TextAsset[] subtitles = (TextAsset[])data[9];
 
-                    this.OnMetadataChange(
-                        title,
-                        uploader,
-                        siteName,
-                        viewCount,
-                        likeCount,
-                        resolution,
-                        fps,
-                        description,
-                        duration,
-                        subtitles
-                    );
-                    return;
-                }
+                        this.OnMetadataChange(
+                            title,
+                            uploader,
+                            siteName,
+                            viewCount,
+                            likeCount,
+                            resolution,
+                            fps,
+                            description,
+                            duration,
+                            subtitles
+                        );
+                        return;
+                    }
 
                 case VideoPlayerEvent.OnSubtitleRender:
-                {
-                    string text = (string)data[0];
-                    this.OnSubtitleRender(text);
-                    return;
-                }
+                    {
+                        string text = (string)data[0];
+                        this.OnSubtitleRender(text);
+                        return;
+                    }
 
                 case VideoPlayerEvent.OnSubtitleClear:
-                {
-                    this.OnSubtitleClear();
-                    return;
-                }
+                    {
+                        this.OnSubtitleClear();
+                        return;
+                    }
 
                 case VideoPlayerEvent.OnSubtitleLanguageOptionsChange:
-                {
-                    string[][] newOptions = (string[][])data;
-                    this.OnSubtitleLanguageOptionsChange(newOptions);
-                    return;
-                }
+                    {
+                        string[][] newOptions = (string[][])data;
+                        this.OnSubtitleLanguageOptionsChange(newOptions);
+                        return;
+                    }
 
                 case VideoPlayerEvent.OnSubtitleLanguageRequested:
-                {
-                    string language = (string)data[0];
-                    this.OnSubtitleLanguageRequested(language);
-                    return;
-                }
+                    {
+                        string language = (string)data[0];
+                        this.OnSubtitleLanguageRequested(language);
+                        return;
+                    }
 
                 default:
-                {
-                    break;
-                }
+                    {
+                        break;
+                    }
 
-                #endregion
+                    #endregion
             }
         }
     }

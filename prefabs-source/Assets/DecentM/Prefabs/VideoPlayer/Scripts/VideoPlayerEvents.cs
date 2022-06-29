@@ -201,7 +201,7 @@ namespace DecentM.VideoPlayer
             this.BroadcastEvent(VideoPlayerEvent.OnScreenTextureChange);
         }
 
-        public void OnRemotePlayerLoaded(int[] loadedPlayers)
+        public void OnRemotePlayerLoaded(int loadedPlayers)
         {
             this.BroadcastEvent(VideoPlayerEvent.OnRemotePlayerLoaded, loadedPlayers);
         }
