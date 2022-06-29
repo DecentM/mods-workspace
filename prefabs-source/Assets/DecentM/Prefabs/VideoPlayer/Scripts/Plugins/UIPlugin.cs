@@ -165,6 +165,13 @@ namespace DecentM.VideoPlayer.Plugins
                 this.raycastMaxDistance,
                 this.raycastLayerMask
             );
+
+            if (rightHit)
+            {
+                this.hitInfo = rightHitInfo;
+                return true;
+            }
+
             bool leftHit = Physics.Raycast(
                 leftHand.position,
                 leftHand.rotation * vrRaycastTurn * Vector3.forward,
@@ -172,12 +179,6 @@ namespace DecentM.VideoPlayer.Plugins
                 this.raycastMaxDistance,
                 this.raycastLayerMask
             );
-
-            if (rightHit)
-            {
-                this.hitInfo = rightHitInfo;
-                return true;
-            }
 
             if (leftHit)
             {
@@ -619,7 +620,7 @@ namespace DecentM.VideoPlayer.Plugins
                     this.status.text = "Access denied";
                     break;
 
-                // We don't care about the rest of the errors as they're handled by the AutoRetry plugin
+                    // We don't care about the rest of the errors as they're handled by the AutoRetry plugin
             }
 
             this.animator.SetBool("Loading", false);
