@@ -4,6 +4,7 @@ using VRC.SDKBase;
 using VRC.Udon;
 using System;
 using UnityEngine.UI;
+using JetBrains.Annotations;
 
 using DecentM.Collections;
 
@@ -25,7 +26,6 @@ namespace DecentM.Chat
     public class MessageStore : UdonSharpBehaviour
     {
         public ChatEvents events;
-        public ChannelsStore channels;
 
         public int maxMessageCount = 150;
 
@@ -41,7 +41,7 @@ namespace DecentM.Chat
          * 3 - updatedAt (DateTime | null)
          */
 
-        private static int MessageObjectLength = 4;
+        private const int MessageObjectLength = 4;
 
         private const int MessageStatusIndex = 0;
         private const int MessageTextIndex = 1;
@@ -60,7 +60,7 @@ namespace DecentM.Chat
          * <packetId>_<channelId>_<senderId>
          */
 
-        private static char MessageIdSeparator = '_';
+        private const char MessageIdSeparator = '_';
 
         private const int IdPacketIdIndex = 0;
         private const int IdChannelIdIndex = 1;
@@ -84,34 +84,42 @@ namespace DecentM.Chat
             return result;
         }
 
-        private int GetPacketId(string id)
+        [PublicAPI]
+        public int GetPacketId(string id)
         {
             return this.GetIdPart(id, IdPacketIdIndex);
         }
 
-        private int GetChannelId(string id)
+        [PublicAPI]
+        public int GetChannelId(string id)
         {
             return this.GetIdPart(id, IdChannelIdIndex);
         }
 
-        private int GetSenderId(string id)
+        [PublicAPI]
+        public int GetSenderId(string id)
         {
             return this.GetIdPart(id, IdSenderIdIndex);
         }
 
-        private string GetMessageText(object[] message)
+        private MessageStatus GetMessageObjectStatus(object[] message)
+        {
+            return (MessageStatus)message[MessageStatusIndex];
+        }
+
+        private string GetMessageObjectText(object[] message)
         {
             return (string)message[MessageTextIndex];
         }
 
-        private string GetMessageCreatedAt(object[] message)
+        private DateTime GetMessageObjectCreatedAt(object[] message)
         {
-            return (string)message[MessageCreatedAtIndex];
+            return (DateTime)message[MessageCreatedAtIndex];
         }
 
-        private string GetMessageUpdatedAt(object[] message)
+        private DateTime GetMessageObjectUpdatedAt(object[] message)
         {
-            return (string)message[MessageUpdatedAtIndex];
+            return (DateTime)message[MessageUpdatedAtIndex];
         }
 
         private object[] SetMessageStatus(MessageStatus newStatus, object[] message)
@@ -154,6 +162,7 @@ namespace DecentM.Chat
 
         #region Store Utilities
 
+        [PublicAPI]
         public object[][] GetAllMessages()
         {
             return (object[][])this.messages.Values;
@@ -169,44 +178,28 @@ namespace DecentM.Chat
             }
         }
 
-        private int GetMessageIndexById(string id)
+        [PublicAPI]
+        public string GetMessageId(int packetId)
         {
             string[] ids = (string[])this.messages.Keys;
 
-            // Travel in reverse because it's more likely people will access recent messages rather than old ones,
-            // so we will probably return quicker.
-            for (int i = ids.Length - 1; i >= 0; i--)
-            {
-                if (ids[i] == id)
-                    return i;
-            }
-
-            // If the id was found we won't get here. So we return -1 to show that it wasn't found.
-            return -1;
-        }
-
-        private int GetMessageIndexByPacket(int packetId)
-        {
-            string[] ids = (string[])this.messages.Keys;
-
-            // Travel in reverse because it's more likely people will delete recent messages rather than old ones,
-            // so we will probably return quicker.
-            for (int i = ids.Length - 1; i >= 0; i--)
+            for (int i = 0; i < ids.Length; i++)
             {
                 if (this.GetPacketId(ids[i]) == packetId)
-                    return i;
+                    return ids[i];
             }
 
-            // If the id was found we won't get here. So we return -1 to show that it wasn't found.
-            return -1;
+            return null;
         }
 
-        private object[] GetMessageById(string id)
+        [PublicAPI]
+        public object[] GetMessage(string messageId)
         {
-            return (object[])this.messages.Get(id);
+            return (object[])this.messages.Get(messageId);
         }
 
-        private object[] GetMessageByPacket(int packetId)
+        [PublicAPI]
+        public object[] GetMessage(int packetId)
         {
             string[] ids = (string[])this.messages.Keys;
 
@@ -242,16 +235,6 @@ namespace DecentM.Chat
             return senderId == Networking.LocalPlayer.playerId;
         }
 
-        public bool IsMessageSentByLocalPlayerByPacket(int packetId)
-        {
-            string id = this.GetIdByPacket(packetId);
-
-            if (id == null)
-                return false;
-
-            return this.IsMessageSentByLocalPlayer(id);
-        }
-
         private object[] CreateMessageObject()
         {
             string id = string.Empty;
@@ -262,6 +245,7 @@ namespace DecentM.Chat
             return new object[] { id, status, text, createdAt, null, };
         }
 
+        [PublicAPI]
         public string SerialiseMessageId(int packetId, int channelId, int senderId)
         {
             return string.Join(
@@ -270,6 +254,7 @@ namespace DecentM.Chat
             );
         }
 
+        [PublicAPI]
         public int[] DeserialiseMessageId(string id)
         {
             int packetId = -1;
@@ -284,7 +269,7 @@ namespace DecentM.Chat
             if (id == null)
                 return result;
 
-            string[] parts = id.Split(new char[] { MessageIdSeparator }, 4);
+            string[] parts = id.Split(new char[] { MessageIdSeparator }, 3);
             int.TryParse(parts[0], out packetId);
             int.TryParse(parts[1], out channelId);
             int.TryParse(parts[2], out senderId);
@@ -305,7 +290,8 @@ namespace DecentM.Chat
 
         #region Adding/Removing messages
 
-        public void AddMessageWithId(int packetId, string id, string messageText, int senderId)
+        [PublicAPI]
+        public void AddMessage(string messageId, string messageText)
         {
             object[] message = this.CreateMessageObject();
 
@@ -313,29 +299,30 @@ namespace DecentM.Chat
             message = this.SetMessageText(messageText, message);
             message = this.SetMessageCreatedAt(DateTime.Now, message);
 
-            this.messages.Add(id, message);
+            this.messages.Add(messageId, message);
 
             // Make sure we're not going over the message limit
             this.TrimMessages();
 
             // Send an event to ChatEvents about this new message
-            this.events.OnMessageAdded(id, message);
+            this.events.OnMessageAdded(messageId, message);
         }
 
-        private void RemoveMessageById(string id)
+        [PublicAPI]
+        public void RemoveMessage(string messageId)
         {
             // The id was somehow not found, ignore the request
-            if (string.IsNullOrEmpty(id))
+            if (string.IsNullOrEmpty(messageId))
                 return;
 
-            object[] message = (object[])this.messages.Get(id);
+            object[] message = (object[])this.messages.Get(messageId);
 
             if (message == null)
                 return;
 
             // At this point we're committed to deleting the message, so we send the event before it's
             // actually deleted so its ID can still be read
-            this.events.OnMessageDeleted(id, message);
+            this.events.OnMessageDeleted(messageId, message);
 
             // If there are no messages, it means this function was called in error, we just ignore the request
             if (this.messages.Count == 0)
@@ -367,10 +354,11 @@ namespace DecentM.Chat
 
             for (int i = 0; i < idsToRemove.Count; i++)
             {
-                this.RemoveMessageById((string)idsToRemove.ElementAt(i));
+                this.RemoveMessage((string)idsToRemove.ElementAt(i));
             }
         }
 
+        [PublicAPI]
         public bool PurgeByPlayerId(int playerId)
         {
             // Ignore incorrectly sent events
@@ -382,7 +370,8 @@ namespace DecentM.Chat
             return true;
         }
 
-        public void AddMessageWithoutId(int packetId, string message, int senderId)
+        [PublicAPI]
+        public void AddMessage(int packetId, string message, int senderId)
         {
             if (packetId == -1 || message == "" || senderId < 0)
                 return;
@@ -390,100 +379,151 @@ namespace DecentM.Chat
             // TODO: Channels
             string id = this.GenerateNextIdForPlayer(packetId, 0, senderId);
 
-            this.AddMessageWithId(packetId, id, message, senderId);
+            this.AddMessage(id, message);
         }
 
         #endregion
 
-        #region Update message status
+        #region Message Status
 
-        private void ChangeMessageStatus(GameObject messageObject, int status)
+        [PublicAPI]
+        public MessageStatus GetMessageStatus(string messageId)
         {
-            ChatMessage message = messageObject.GetComponent<ChatMessage>();
+            object[] message = this.GetMessage(messageId);
+
+            if (message == null)
+                return MessageStatus.Unknown;
+
+            return this.GetMessageObjectStatus(message);
+        }
+
+        [PublicAPI]
+        public void ChangeMessageStatus(string messageId, MessageStatus status)
+        {
+            object[] message = this.GetMessage(messageId);
 
             if (message == null)
                 return;
 
-            message.SetProgramVariable(nameof(message.OnStatusChange_status), status);
-            message.SendCustomEvent(nameof(message.OnStatusChange));
+            object[] newMessage = this.SetMessageStatus(status, message);
 
-            this.events.OnMessageChanged(message);
+            this.messages.Set(messageId, newMessage);
         }
 
-        private void ChangeMessageStatusById(string id, int status)
+        [PublicAPI]
+        public void ChangeMessageStatus(int packetId, MessageStatus status)
         {
-            object[] messageObject = this.GetMessageById(id);
+            string id = this.GetIdByPacket(packetId);
 
-            if (messageObject == null)
-                return;
-
-            this.SetMessageStatus(messageObject, status);
-        }
-
-        private void ChangeMessageStatusByPacket(int packetId, int status)
-        {
-            GameObject messageObject = this.GetMessageByPacket(packetId);
-
-            if (messageObject == null)
-                return;
-
-            this.ChangeMessageStatus(messageObject, status);
-        }
-
-        public bool OnMessageStatusChangeById(string id, int status)
-        {
-            // Ignore improperly called events
-            if (id == "" || status == -1)
-                return false;
-
-            this.ChangeMessageStatusById(id, status);
-
-            return true;
-        }
-
-        public void OnMessageStatusChangeByPacket(int packetId, int status)
-        {
-            // Ignore improperly called events
-            if (packetId < 0 || status < 0)
-                return;
-
-            this.ChangeMessageStatusByPacket(packetId, status);
+            this.ChangeMessageStatus(id, status);
         }
 
         #endregion
 
-        #region Update message colour
+        #region Message Text
 
-        private void ChangeMessageColour(GameObject messageObject, Color colour)
+        [PublicAPI]
+        public string GetMessageText(string messageId)
         {
-            ChatMessage message = messageObject.GetComponent<ChatMessage>();
+            object[] message = this.GetMessage(messageId);
+
+            if (message == null)
+                return string.Empty;
+
+            return this.GetMessageObjectText(message);
+        }
+
+        [PublicAPI]
+        public void ChangeMessageText(string messageId, string text)
+        {
+            object[] message = this.GetMessage(messageId);
 
             if (message == null)
                 return;
 
-            message.SetProgramVariable(nameof(message.OnColourChange_colour), colour);
-            message.SendCustomEvent(nameof(message.OnColourChange));
+            object[] newMessage = this.SetMessageText(text, message);
+
+            this.messages.Set(messageId, newMessage);
         }
 
-        private void ChangeMessageColourById(string id, Color colour)
+        [PublicAPI]
+        public void ChangeMessageText(int packetId, string text)
         {
-            GameObject messageObject = this.GetMessageById(id);
+            string id = this.GetIdByPacket(packetId);
 
-            if (messageObject == null)
+            this.ChangeMessageText(id, text);
+        }
+
+        #endregion
+
+        #region Message CreatedAt
+
+        [PublicAPI]
+        public DateTime GetMessageCreatedAt(string messageId)
+        {
+            object[] message = this.GetMessage(messageId);
+
+            if (message == null)
+                return DateTime.MinValue;
+
+            return this.GetMessageObjectCreatedAt(message);
+        }
+
+        [PublicAPI]
+        public void ChangeMessageCreatedAt(string messageId, DateTime createdAt)
+        {
+            object[] message = this.GetMessage(messageId);
+
+            if (message == null)
                 return;
 
-            this.ChangeMessageColour(messageObject, colour);
+            object[] newMessage = this.SetMessageCreatedAt(createdAt, message);
+
+            this.messages.Set(messageId, newMessage);
         }
 
-        public bool OnMessageColourChangeById(string id, Color colour)
+        [PublicAPI]
+        public void ChangeMessageCreatedAt(int packetId, DateTime createdAt)
         {
-            // Ignore improperly called events
-            if (id == "" || colour == null)
-                return false;
+            string id = this.GetIdByPacket(packetId);
 
-            this.ChangeMessageColourById(id, colour);
+            this.ChangeMessageCreatedAt(id, createdAt);
+        }
 
-            return true;
+        #endregion
+
+        #region Message UpdatedAt
+
+        [PublicAPI]
+        public DateTime GetMessageUpdatedAt(string messageId)
+        {
+            object[] message = this.GetMessage(messageId);
+
+            if (message == null)
+                return DateTime.MinValue;
+
+            return this.GetMessageObjectCreatedAt(message);
+        }
+
+        [PublicAPI]
+        public void ChangeMessageUpdatedAt(string messageId, DateTime updatedAt)
+        {
+            object[] message = this.GetMessage(messageId);
+
+            if (message == null)
+                return;
+
+            object[] newMessage = this.SetMessageCreatedAt(updatedAt, message);
+
+            this.messages.Set(messageId, newMessage);
+        }
+
+        [PublicAPI]
+        public void ChangeMessageUpdatedAt(int packetId, DateTime updatedAt)
+        {
+            string id = this.GetIdByPacket(packetId);
+
+            this.ChangeMessageUpdatedAt(id, updatedAt);
         }
 
         #endregion

@@ -27,33 +27,19 @@ namespace DecentM.Chat
     {
         #region Messages
 
-        public void OnMessageAdded(ChatMessage message)
+        public void OnMessageAdded(string id, object[] message)
         {
-            this.BroadcastEvent(ChatEvent.OnMessageAdded, message);
+            this.BroadcastEvent(ChatEvent.OnMessageAdded, id, message);
         }
 
-        public void OnMessageChanged(ChatMessage message)
+        public void OnMessageChanged(string id, object[] message)
         {
-            this.BroadcastEvent(ChatEvent.OnMessageChanged, message);
+            this.BroadcastEvent(ChatEvent.OnMessageChanged, id, message);
         }
 
-        public void OnMessageDeleted(ChatMessage message)
+        public void OnMessageDeleted(string id, object[] message)
         {
-            this.BroadcastEvent(ChatEvent.OnMessageDeleted, message.id);
-        }
-
-        #endregion
-
-        #region Channels
-
-        public void OnChannelAdded(MessageStore store)
-        {
-            this.BroadcastEvent(ChatEvent.OnChannelAdded, store.channel);
-        }
-
-        public void OnChannelDeleted(MessageStore store)
-        {
-            this.BroadcastEvent(ChatEvent.OnChannelDeleted, store.channel);
+            this.BroadcastEvent(ChatEvent.OnMessageDeleted, id, message);
         }
 
         #endregion

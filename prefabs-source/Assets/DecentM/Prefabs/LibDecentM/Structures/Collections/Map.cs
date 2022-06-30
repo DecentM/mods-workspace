@@ -24,6 +24,17 @@ namespace DecentM.Collections
         }
 
         [PublicAPI]
+        public bool Set(object key, object value)
+        {
+            this.Remove(key);
+
+            int length = this.value.Length;
+            this.value = base.Add(this.value, new object[] { key, value });
+
+            return this.value.Length == length + 1;
+        }
+
+        [PublicAPI]
         public bool Remove(object key)
         {
             int index = this.IndexOf(this.Keys, key);

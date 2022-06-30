@@ -1,8 +1,9 @@
 ﻿using UdonSharp;
-using DecentM.Pubsub;
 using UnityEngine;
 using VRC.SDKBase;
 using VRC.SDK3.Components.Video;
+
+using DecentM.Pubsub;
 
 namespace DecentM.VideoPlayer.Plugins
 {

@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32616.157
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnityEngine.UI", "UnityEngine.UI.csproj", "{0CD2AE03-5A8C-15D2-9A56-DE9F338A27BA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnityEngine.TestRunner", "UnityEngine.TestRunner.csproj", "{88880CFE-2D60-4929-E21E-0D4D7EC50B5C}"
@@ -29,7 +31,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VRC.ClientSim", "VRC.Client
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unity.Burst", "Unity.Burst.csproj", "{F6AAC17F-0FAB-AD1B-5255-9F9D99D3C8CD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BakeryRuntimeAssembly", "BakeryRuntimeAssembly.csproj", "{5E74822B-1910-32AD-3498-F1619D04A768}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BakeryRuntimeAssembly", "BakeryRuntimeAssembly.csproj", "{DF2070A4-A720-E5A3-E381-2D16F875FC19}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VRC.SDKBase", "VRC.SDKBase.csproj", "{3359449D-85F4-2EED-5F9C-F912C361EA41}"
 EndProject
@@ -39,7 +41,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UdonSharp.Lib", "UdonSharp.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VRC.SDKBase.Editor.BuildPipeline", "VRC.SDKBase.Editor.BuildPipeline.csproj", "{22F39F53-4BC5-5898-070C-24FBF6D6D733}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AltGUI", "AltGUI.csproj", "{350CEB7C-7804-6DCF-1DB9-BD3FB7FD4663}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AltGUI", "AltGUI.csproj", "{2BDF226C-4EA1-5D34-89E2-F18D3B3E5BA1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnityEditor.TestRunner", "UnityEditor.TestRunner.csproj", "{B3FAC20B-DD93-6DA7-AD70-110E45EFE454}"
 EndProject
@@ -79,49 +81,49 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unity.CollabProxy.Editor", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unity.VSCode.Editor", "Unity.VSCode.Editor.csproj", "{301223FE-E78E-FB1A-1AAD-F525F3AF6756}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Varneon.WorldCreatorAssistant", "Varneon.WorldCreatorAssistant.csproj", "{BB4064A0-0035-35DD-E512-030C5FF6D5EC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Varneon.WorldCreatorAssistant", "Varneon.WorldCreatorAssistant.csproj", "{36DBC17C-675A-FDAF-8B47-70A3AA4D9075}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VRC.ClientSim.Editor", "VRC.ClientSim.Editor.csproj", "{AA8E53EE-0439-A180-1F37-EE1F91E3E594}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unity.Mathematics.Editor", "Unity.Mathematics.Editor.csproj", "{E2A4CE3A-7518-71BD-4EA5-09394A77A29B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnityEngine.UI", "UnityEngine.UI.Player.csproj", "{A848749A-1912-FBC4-BDF8-FD330BCBAD0B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnityEngine.UI.Player", "UnityEngine.UI.Player.csproj", "{A848749A-1912-FBC4-BDF8-FD330BCBAD0B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnityEngine.TestRunner", "UnityEngine.TestRunner.Player.csproj", "{B46186EB-CADF-C49B-0B41-6867BC6CF332}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnityEngine.TestRunner.Player", "UnityEngine.TestRunner.Player.csproj", "{B46186EB-CADF-C49B-0B41-6867BC6CF332}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unity.Postprocessing.Runtime", "Unity.Postprocessing.Runtime.Player.csproj", "{5539B936-B5E4-AC52-8AB4-B757989E93CF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unity.Postprocessing.Runtime.Player", "Unity.Postprocessing.Runtime.Player.csproj", "{5539B936-B5E4-AC52-8AB4-B757989E93CF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp", "Assembly-CSharp.Player.csproj", "{B795F4D9-8FEF-C060-356A-27F620787114}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp.Player", "Assembly-CSharp.Player.csproj", "{B795F4D9-8FEF-C060-356A-27F620787114}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unity.InputSystem", "Unity.InputSystem.Player.csproj", "{5E75371E-9AB0-D463-9F83-8ABA771703DE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unity.InputSystem.Player", "Unity.InputSystem.Player.csproj", "{5E75371E-9AB0-D463-9F83-8ABA771703DE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unity.TextMeshPro", "Unity.TextMeshPro.Player.csproj", "{CA694198-8E74-74A0-BDA9-5C808CBF1CA1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unity.TextMeshPro.Player", "Unity.TextMeshPro.Player.csproj", "{CA694198-8E74-74A0-BDA9-5C808CBF1CA1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VRC.Udon.Serialization.OdinSerializer", "VRC.Udon.Serialization.OdinSerializer.Player.csproj", "{0F6C0746-B1CB-5ADE-2E5E-A18902FFC05C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VRC.Udon.Serialization.OdinSerializer.Player", "VRC.Udon.Serialization.OdinSerializer.Player.csproj", "{0F6C0746-B1CB-5ADE-2E5E-A18902FFC05C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UdonSharp.Runtime", "UdonSharp.Runtime.Player.csproj", "{206CF67B-DFA1-C8CF-C9B9-A2A8E650206C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UdonSharp.Runtime.Player", "UdonSharp.Runtime.Player.csproj", "{206CF67B-DFA1-C8CF-C9B9-A2A8E650206C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unity.Timeline", "Unity.Timeline.Player.csproj", "{C34A767F-2FED-36DA-464D-2D32B94155BE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unity.Timeline.Player", "Unity.Timeline.Player.csproj", "{C34A767F-2FED-36DA-464D-2D32B94155BE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VRC.Udon", "VRC.Udon.Player.csproj", "{F7C28E77-F075-67D8-CFA3-86ECDE6171C2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VRC.Udon.Player", "VRC.Udon.Player.csproj", "{F7C28E77-F075-67D8-CFA3-86ECDE6171C2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cinemachine", "Cinemachine.Player.csproj", "{0959F263-6BC5-3AD4-2B0C-3024778C9ECE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cinemachine.Player", "Cinemachine.Player.csproj", "{0959F263-6BC5-3AD4-2B0C-3024778C9ECE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unity.Mathematics", "Unity.Mathematics.Player.csproj", "{BD651DF1-5009-B5F6-EDF5-5305C275D593}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unity.Mathematics.Player", "Unity.Mathematics.Player.csproj", "{BD651DF1-5009-B5F6-EDF5-5305C275D593}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VRC.ClientSim", "VRC.ClientSim.Player.csproj", "{2F76A0AB-2D5D-ED78-10F7-E6B6E053CD69}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VRC.ClientSim.Player", "VRC.ClientSim.Player.csproj", "{2F76A0AB-2D5D-ED78-10F7-E6B6E053CD69}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unity.Burst", "Unity.Burst.Player.csproj", "{9FDAEBD0-7ED3-95B4-881C-43A41E58DB2D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unity.Burst.Player", "Unity.Burst.Player.csproj", "{9FDAEBD0-7ED3-95B4-881C-43A41E58DB2D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BakeryRuntimeAssembly", "BakeryRuntimeAssembly.Player.csproj", "{D86C62F3-9D0E-391D-43F4-01591A34F2F9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BakeryRuntimeAssembly.Player", "BakeryRuntimeAssembly.Player.csproj", "{D86C62F3-9D0E-391D-43F4-01591A34F2F9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VRC.SDKBase", "VRC.SDKBase.Player.csproj", "{1F39918D-99B5-186C-A1AE-36BC9F6DE168}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VRC.SDKBase.Player", "VRC.SDKBase.Player.csproj", "{1F39918D-99B5-186C-A1AE-36BC9F6DE168}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VRC.SDK3", "VRC.SDK3.Player.csproj", "{4D5DCAF4-861E-2E6A-9D32-1F65928E6E42}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VRC.SDK3.Player", "VRC.SDK3.Player.csproj", "{4D5DCAF4-861E-2E6A-9D32-1F65928E6E42}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UdonSharp.Lib", "UdonSharp.Lib.Player.csproj", "{49D45B28-AA33-89C4-65F3-B4E3D70FF69C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UdonSharp.Lib.Player", "UdonSharp.Lib.Player.csproj", "{49D45B28-AA33-89C4-65F3-B4E3D70FF69C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VRC.SDKBase.Editor.BuildPipeline", "VRC.SDKBase.Editor.BuildPipeline.Player.csproj", "{6888E103-FA98-69A7-0184-EC902818CAB2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VRC.SDKBase.Editor.BuildPipeline.Player", "VRC.SDKBase.Editor.BuildPipeline.Player.csproj", "{6888E103-FA98-69A7-0184-EC902818CAB2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -185,10 +187,10 @@ Global
 		{F6AAC17F-0FAB-AD1B-5255-9F9D99D3C8CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F6AAC17F-0FAB-AD1B-5255-9F9D99D3C8CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F6AAC17F-0FAB-AD1B-5255-9F9D99D3C8CD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5E74822B-1910-32AD-3498-F1619D04A768}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5E74822B-1910-32AD-3498-F1619D04A768}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5E74822B-1910-32AD-3498-F1619D04A768}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5E74822B-1910-32AD-3498-F1619D04A768}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DF2070A4-A720-E5A3-E381-2D16F875FC19}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF2070A4-A720-E5A3-E381-2D16F875FC19}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF2070A4-A720-E5A3-E381-2D16F875FC19}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF2070A4-A720-E5A3-E381-2D16F875FC19}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3359449D-85F4-2EED-5F9C-F912C361EA41}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3359449D-85F4-2EED-5F9C-F912C361EA41}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3359449D-85F4-2EED-5F9C-F912C361EA41}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -205,10 +207,10 @@ Global
 		{22F39F53-4BC5-5898-070C-24FBF6D6D733}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{22F39F53-4BC5-5898-070C-24FBF6D6D733}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{22F39F53-4BC5-5898-070C-24FBF6D6D733}.Release|Any CPU.Build.0 = Release|Any CPU
-		{350CEB7C-7804-6DCF-1DB9-BD3FB7FD4663}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{350CEB7C-7804-6DCF-1DB9-BD3FB7FD4663}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{350CEB7C-7804-6DCF-1DB9-BD3FB7FD4663}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{350CEB7C-7804-6DCF-1DB9-BD3FB7FD4663}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2BDF226C-4EA1-5D34-89E2-F18D3B3E5BA1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2BDF226C-4EA1-5D34-89E2-F18D3B3E5BA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2BDF226C-4EA1-5D34-89E2-F18D3B3E5BA1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2BDF226C-4EA1-5D34-89E2-F18D3B3E5BA1}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B3FAC20B-DD93-6DA7-AD70-110E45EFE454}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B3FAC20B-DD93-6DA7-AD70-110E45EFE454}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B3FAC20B-DD93-6DA7-AD70-110E45EFE454}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -285,10 +287,10 @@ Global
 		{301223FE-E78E-FB1A-1AAD-F525F3AF6756}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{301223FE-E78E-FB1A-1AAD-F525F3AF6756}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{301223FE-E78E-FB1A-1AAD-F525F3AF6756}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BB4064A0-0035-35DD-E512-030C5FF6D5EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BB4064A0-0035-35DD-E512-030C5FF6D5EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BB4064A0-0035-35DD-E512-030C5FF6D5EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BB4064A0-0035-35DD-E512-030C5FF6D5EC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{36DBC17C-675A-FDAF-8B47-70A3AA4D9075}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{36DBC17C-675A-FDAF-8B47-70A3AA4D9075}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{36DBC17C-675A-FDAF-8B47-70A3AA4D9075}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{36DBC17C-675A-FDAF-8B47-70A3AA4D9075}.Release|Any CPU.Build.0 = Release|Any CPU
 		{AA8E53EE-0439-A180-1F37-EE1F91E3E594}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{AA8E53EE-0439-A180-1F37-EE1F91E3E594}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AA8E53EE-0439-A180-1F37-EE1F91E3E594}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -376,5 +378,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {75FB0E88-155A-474E-9F8C-F7A3B041D0CE}
 	EndGlobalSection
 EndGlobal

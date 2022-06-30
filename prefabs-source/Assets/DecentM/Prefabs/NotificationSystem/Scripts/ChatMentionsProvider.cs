@@ -6,45 +6,35 @@ using UnityEngine.UI;
 using DecentM.Chat;
 using DecentM.Pubsub;
 
+using DecentM.Chat.Plugins;
+
 namespace DecentM.Notifications.Providers
 {
     [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
-    public sealed class ChatMentionsProvider : PubsubSubscriber
+    public sealed class ChatMentionsProvider : ChatPlugin
     {
         public NotificationSystem notifications;
         public Toggle toggle;
         public Sprite icon;
 
-        public override void OnPubsubEvent(object name, object[] data)
-        {
-            switch (name)
-            {
-                case ChatEvent.OnMessageAdded:
-                    this.HandleMessageAdded((ChatMessage)data[0]);
-                    break;
-                default:
-                    break;
-            }
-        }
-
-        private void HandleMessageAdded(ChatMessage message)
+        protected override void OnMessageAdded(string id, object[] message)
         {
             if (!this.toggle.isOn || message == null)
                 return;
 
-            VRCPlayerApi sender = VRCPlayerApi.GetPlayerById(message.senderId);
+            int senderId = this.system.messages.GetSenderId(id);
+            VRCPlayerApi sender = VRCPlayerApi.GetPlayerById(senderId);
 
             if (sender == null || !sender.IsValid())
                 return;
             if (sender == Networking.LocalPlayer)
                 return;
 
-            if (message.message.ToLower().Contains(Networking.LocalPlayer.displayName.ToLower()))
+            string text = this.system.messages.GetMessageText(id);
+
+            if (text.ToLower().Contains(Networking.LocalPlayer.displayName.ToLower()))
             {
-                this.notifications.SendNotification(
-                    this.icon,
-                    $"{sender.displayName}\n{message.message}"
-                );
+                this.notifications.SendNotification(this.icon, $"{sender.displayName}\n{text}");
             }
         }
     }
