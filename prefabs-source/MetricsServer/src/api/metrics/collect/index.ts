@@ -1,15 +1,40 @@
-import StatsD from 'hot-shots'
 import hasha from 'hasha'
 
+import {statsd} from '../../../statsd'
 import {config} from '../../../config'
 
 import {trackEvent} from './ga'
 
-const statsd = new StatsD(config.statsd)
+import {collectHeartbeat} from './collector/heartbeat'
+import {collectInstance} from './collector/instance'
+
+export type BaseParams = {
+  builtAt: string
+  receivedAt: string
+  sceneName: string
+  sdk: string
+  unity: string
+  worldAuthor: string
+  worldName: string
+  ip: string
+}
+
+export type Collector = (tags: Record<string, string>) => void
 
 export const collect = async (ip: string, name: string, tags: Record<string, string>) => {
   if (config.statsd.enabled) {
-    statsd.increment(name, tags)
+    switch (name.toLowerCase()) {
+      case 'heartbeat':
+        collectHeartbeat(tags)
+        break
+
+      case 'instance':
+        collectInstance(tags)
+        break
+
+      default:
+        statsd.increment(name, tags)
+    }
   }
 
   if (config.ga.enabled) {
