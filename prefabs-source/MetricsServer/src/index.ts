@@ -23,7 +23,7 @@ const main = async () => {
   await server.register(ingest, {prefix: 'api/v1'})
   await server.register(random, {prefix: 'api/v1'})
 
-  await server.listen(process.env.PORT)
+  await server.listen(process.env.PORT, process.env.HOST)
 }
 
 main().catch(log.error)
