@@ -4,6 +4,7 @@ import fs from 'node:fs'
 import path from 'node:path'
 
 import {DateTime} from 'luxon'
+import hasha from 'hasha'
 import {collect} from './collect'
 
 export type MetricsParamsWithValue = {
@@ -20,26 +21,29 @@ export const register: FastifyPluginAsync<FastifyPluginOptions> = async (instanc
   })
 
   instance.get<{Params: MetricsParamsWithValue}>('/metrics/ingest/:name', async (req, res) => {
-    await res.header('Content-Type', 'video/mp4').send(blankVideo)
+    const promises = []
 
-    if (!req.headers['user-agent'].includes('NSPlayer')) return
+    if (req.headers['user-agent'].includes('NSPlayer')) {
+      const tags: Record<string, string> = {
+        ...(req.query as Record<string, string>),
+        ipHash: await hasha.async(req.ip),
+        receivedAt: DateTime.now().toISO(),
+      }
 
-    instance.log.info(
-      {
-        name: req.params.name,
-        query: req.query,
-        ip: req.ip,
-      },
-      'metric received',
-    )
+      instance.log.debug(
+        {
+          name: req.params.name,
+          tags,
+        },
+        'metric received',
+      )
 
-    const tags: Record<string, string> = {
-      ...(req.query as Record<string, string>),
-      ip: req.ip,
-      receivedAt: DateTime.now().toISO(),
+      promises.push(collect(req.ip, req.params.name, tags))
     }
 
-    await collect(req.ip, req.params.name, tags)
+    promises.push(res.header('Content-Type', 'video/mp4').send(blankVideo))
+
+    await Promise.all(promises)
   })
 
   await Promise.resolve()
