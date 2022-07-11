@@ -10,9 +10,6 @@ namespace DecentM.Chat
         OnMessageChanged,
         OnMessageDeleted,
 
-        OnChannelAdded,
-        OnChannelDeleted,
-
         OnPlayerTypingStart,
         OnPlayerTypingStop,
 

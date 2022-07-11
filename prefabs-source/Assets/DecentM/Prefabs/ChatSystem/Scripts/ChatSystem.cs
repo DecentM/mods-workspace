@@ -17,15 +17,13 @@ namespace DecentM.Chat
         [Space]
         public MessageStore messages;
 
-        public Color debugColour;
-
         private void DebugLog(string message)
         {
             if (!this.lib.debugging.isDebugging)
                 return;
 
             int packetId = Mathf.FloorToInt(DateTimeOffset.Now.ToUnixTimeMilliseconds());
-            string messageId = this.messages.SerialiseMessageId(packetId, 0, 0);
+            string messageId = this.messages.SerialiseMessageId(packetId, 0, -1);
             this.messages.AddMessage(messageId, message);
         }
 

@@ -502,7 +502,7 @@ namespace DecentM.Chat
             if (message == null)
                 return DateTime.MinValue;
 
-            return this.GetMessageObjectCreatedAt(message);
+            return this.GetMessageObjectUpdatedAt(message);
         }
 
         [PublicAPI]

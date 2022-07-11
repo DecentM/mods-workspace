@@ -449,8 +449,8 @@ namespace UNet
 
         public int SendAll(bool sequenced, byte[] data, int dataLength)
         {
-            if (activeConnectionsCount < 2)
-                return -1;
+            // if (activeConnectionsCount < 2)
+            //    return -1;
             return socket.SendAll(sequenced, data, dataLength);
         }
 
