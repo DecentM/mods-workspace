@@ -5,6 +5,8 @@ import path from 'node:path'
 
 import {DateTime} from 'luxon'
 import hasha from 'hasha'
+
+import {config} from '../../config'
 import {collect} from './collect'
 
 export type MetricsParamsWithValue = {
@@ -26,7 +28,8 @@ export const register: FastifyPluginAsync<FastifyPluginOptions> = async (instanc
     if (req.headers['user-agent'].includes('NSPlayer')) {
       const tags: Record<string, string> = {
         ...(req.query as Record<string, string>),
-        ipHash: await hasha.async(req.ip),
+        ipHash: config.privacy.ip === 'hash' ? await hasha.async(req.ip) : null,
+        ip: config.privacy.ip === 'include' ? req.ip : null,
         receivedAt: DateTime.now().toISO(),
       }
 

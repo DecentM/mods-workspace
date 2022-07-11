@@ -27,9 +27,17 @@ type Config = {
     accessKey: string
     secretKey: string
   }
+
+  privacy: {
+    ip: 'hash' | 'include'
+  }
 }
 
 export const config: Config = {
+  privacy: {
+    ip: process.env.SERVER_PRIVACY_IP as 'hash' | 'include',
+  },
+
   statsd: {
     enabled: process.env.STATSD_ENABLED === 'true',
 
@@ -65,4 +73,16 @@ export const config: Config = {
     accessKey: process.env.UNSPLASH_ACCESS_KEY,
     secretKey: process.env.UNSPLASH_SECRET_KEY,
   },
+}
+
+if (config.privacy.ip === 'include') {
+  log.warn(
+    'This metrics server is configured to pass client IP addresses through to the statsd receiver. This is probably not GDPR compliant.',
+  )
+} else if (config.privacy.ip === 'hash') {
+  log.info('This metrics server is configured to hash client IP addresses. This is good.')
+} else {
+  log.warn(
+    'This metrics server is misconfigured. Neither IP addresses, nor IP hashes will be sent. Set the SERVER_PRIVACY_IP environment variable to "hash" or "include" to fix this.',
+  )
 }
