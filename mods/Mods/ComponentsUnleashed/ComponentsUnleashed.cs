@@ -35,7 +35,7 @@ namespace DecentM.Mods.ComponentsUnleashed
             whiteList.Add(typeof(UnityEngine.Video.VideoPlayer));
             
             // Core
-            whiteList.Add(typeof(BasePlayerHandler));
+            whiteList.Add(typeof(PlayerHandler));
             whiteList.Add(typeof(ScreenHandler));
             whiteList.Add(typeof(VideoPlayerEvents));
             whiteList.Add(typeof(VideoPlayerSystem));

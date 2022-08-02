@@ -1,0 +1,26 @@
+fileFormatVersion: 2
+guid: 74641f5b3d736df40908dccb5a97ed29
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Noto Serif CJK JP
+  fontNames:
+  - Noto Serif CJK JP
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: f3b2a5221c0e0844fb24611afb5cb59f, type: 3}
+  - {fileID: 12800000, guid: e3b43ef948609704e9130f4868cade0e, type: 3}
+  - {fileID: 12800000, guid: c160784ad0aab424a96e878199c497f2, type: 3}
+  - {fileID: 12800000, guid: 82c7afcfc4eb424408dc3e6888a96e04, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
