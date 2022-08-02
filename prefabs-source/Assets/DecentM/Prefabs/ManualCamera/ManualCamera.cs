@@ -1,10 +1,6 @@
-﻿using UdonSharp;
-using UnityEngine;
-using VRC.SDKBase;
-using VRC.Udon;
+﻿using UnityEngine;
 
-[UdonBehaviourSyncMode(BehaviourSyncMode.Manual)]
-public class ManualCamera : UdonSharpBehaviour
+public class ManualCamera : MonoBehaviour
 {
     private new Camera camera;
 

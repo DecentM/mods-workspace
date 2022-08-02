@@ -1,10 +1,8 @@
-﻿using UdonSharp;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace DecentM
 {
-    [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
-    public class Debugging : UdonSharpBehaviour
+    public class Debugging : MonoBehaviour
     {
         [Header("Settings")]
         [Tooltip("If checked, linked objects will turn debugging on")]

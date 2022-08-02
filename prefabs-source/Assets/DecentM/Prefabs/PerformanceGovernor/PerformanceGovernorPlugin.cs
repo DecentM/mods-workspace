@@ -1,4 +1,4 @@
-﻿using DecentM.Pubsub;
+﻿using DecentM.Prefabs.Pubsub;
 
 namespace DecentM.Prefabs.Performance.Plugins
 {

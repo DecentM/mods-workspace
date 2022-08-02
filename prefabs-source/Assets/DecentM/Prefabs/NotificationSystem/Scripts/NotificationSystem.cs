@@ -1,13 +1,9 @@
 ﻿using System;
-using UdonSharp;
 using UnityEngine;
-using VRC.SDKBase;
-using VRC.Udon;
 using TMPro;
 using UnityEngine.UI;
 
-[UdonBehaviourSyncMode(BehaviourSyncMode.None)]
-public class NotificationSystem : UdonSharpBehaviour
+public class NotificationSystem : MonoBehaviour
 {
     public GameObject[] overlayObjects;
     public Camera rendererCamera;

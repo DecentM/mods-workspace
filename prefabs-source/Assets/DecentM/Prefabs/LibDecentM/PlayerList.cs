@@ -1,28 +1,28 @@
-﻿using UdonSharp;
-using UnityEngine;
-using VRC.SDKBase;
+﻿using UnityEngine;
 
-namespace DecentM
+namespace DecentM.Prefabs.PlayerList
 {
-    [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
-    public class PlayerList : UdonSharpBehaviour
+    public class PlayerList : MonoBehaviour
     {
         [Header("Settings")]
         [Tooltip("A list of player names")]
         public string[] players;
 
-        public bool CheckPlayer(VRCPlayerApi player)
-        {
-            if (player == null || !player.IsValid())
-                return false;
+        /* TODO: Restore this once we have LocalPlayer
 
-            foreach (string playerName in this.players)
+            public bool CheckPlayer(VRCPlayerApi player)
             {
-                if (playerName == player.displayName)
-                    return true;
-            }
+                if (player == null || !player.IsValid())
+                    return false;
 
-            return false;
-        }
+                foreach (string playerName in this.players)
+                {
+                    if (playerName == player.displayName)
+                        return true;
+                }
+
+                return false;
+            }
+        */
     }
 }

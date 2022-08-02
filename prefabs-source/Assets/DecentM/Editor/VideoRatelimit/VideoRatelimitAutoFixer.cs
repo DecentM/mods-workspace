@@ -3,42 +3,47 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using UnityEditor.SceneManagement;
+
 using DecentM.EditorTools;
-using DecentM.Metrics.Plugins;
-using VRC.SDK3.Video.Components.Base;
+using DecentM.Prefabs.VideoRatelimit;
+using DecentM.Prefabs.VideoPlayer.Handlers;
 
 namespace DecentM.VideoRatelimit
 {
-    public class VideoRatelimitAutoFixer : AutoSceneFixer
+    public static class VideoRatelimitAutoFixer
     {
-        protected override bool OnPerformFixes()
+        [MenuItem("DecentM/VideoRatelimit/Run Autofixer")]
+        public static void OnPerformFixes()
         {
             List<VideoRatelimitSystem> ratelimits =
                 ComponentCollector<VideoRatelimitSystem>.CollectFromActiveScene();
 
             // Not being installed isn't an error, it just means the user doesn't want to rate limit video players (shrug)
             if (ratelimits.Count == 0)
-                return true;
+                return;
 
             if (ratelimits.Count > 1)
             {
-                Debug.LogError(
-                    $"{ratelimits.Count} VideoRatelimit systems detected, you must have only a single one. Please delete extra prefabs and try again."
-                );
-                return false;
+                EditorUtility.DisplayDialog("Autofixer error", $"{ratelimits.Count} VideoRatelimit systems detected, you must have only a single one. Please delete extra prefabs and try again.", "OK");
+                return;
             }
 
             VideoRatelimitSystem system = ratelimits[0];
 
             #region Auto-attach to video players
 
-            List<BaseVRCVideoPlayer> players =
-                ComponentCollector<BaseVRCVideoPlayer>.CollectFromActiveScene();
+            List<PlayerHandler> players =
+                ComponentCollector<PlayerHandler>.CollectFromActiveScene();
 
-            foreach (BaseVRCVideoPlayer player in players)
+            foreach (PlayerHandler player in players)
             {
+                PlayerLoadMonitoring existing = player.gameObject.GetComponent<PlayerLoadMonitoring>();
+
+                if (existing != null)
+                    continue;
+
                 PlayerLoadMonitoring monitoring =
-                    player.gameObject.GetOrAddComponent<PlayerLoadMonitoring>();
+                    player.gameObject.AddComponent<PlayerLoadMonitoring>();
 
                 monitoring.system = system;
 
@@ -47,8 +52,6 @@ namespace DecentM.VideoRatelimit
             }
 
             #endregion
-
-            return true;
         }
     }
 }

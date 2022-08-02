@@ -53,117 +53,6 @@
     <UnityVersion>2019.4.31f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Assets\DecentM\Prefabs\AnimatorSync\AnimatorSync.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\AudioLinkHapticsVolume\AudioLinkHapticsVolume.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\AutoMirror\AutoMirror.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\ChatSystem\Scripts\ChatEvents.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\ChatSystem\Scripts\ChatPresence.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\ChatSystem\Scripts\ChatSystem.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\ChatSystem\Scripts\MessageStore.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\ChatSystem\Scripts\Plugins\ChatKeyboardPlugin.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\ChatSystem\Scripts\Plugins\ChatPlugin.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\ChatSystem\Scripts\Plugins\DebugPlugin.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\ChatSystem\Scripts\Plugins\PresenceStore.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\ChatSystem\Scripts\Plugins\ProfilePictureStore.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\ChatSystem\Scripts\Plugins\TypingIndicatorStore.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\ChatSystem\Scripts\Plugins\UIPlugin.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\CustomEvent\CustomEvent.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\CustomEvent\CustomEventVolume.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\CustomEvent\InteractDistributor.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\CustomEvent\TimedCustomEvent.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\FollowPlayersVolume\FollowPlayersVolume.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\Keyboard\Scripts\Drumstick.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\Keyboard\Scripts\DrumstickHandle.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\Keyboard\Scripts\KeyLayout.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\Keyboard\Scripts\KeyboardEvents.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\Keyboard\Scripts\KeyboardKey.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\Keyboard\Scripts\KeyboardLayout.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\Keyboard\Scripts\KeyboardSystem.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\Keyboard\Scripts\LabelTarget.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\Keyboard\Scripts\Plugins\BacklightPlugin.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\Keyboard\Scripts\Plugins\ChatSystemPlugin.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\Keyboard\Scripts\Plugins\DebugPlugin.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\Keyboard\Scripts\Plugins\InputFieldPlugin.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\Keyboard\Scripts\Plugins\KeyboardPlugin.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\Keyboard\Scripts\Plugins\KeypressSoundsPlugin.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\Keyboard\Scripts\SymbolStorage.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\LibDecentM\ArrayTools.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\LibDecentM\Debugging.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\LibDecentM\LibDecentM.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\LibDecentM\Permissions.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\LibDecentM\PlayerList.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\LibDecentM\Scheduling.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\LibDecentM\Structures\Collections\Collection.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\LibDecentM\Structures\Collections\DoubleLinkedList.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\LibDecentM\Structures\Collections\List.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\LibDecentM\Structures\Collections\Map.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\LibDecentM\Structures\Collections\Queue.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\LibDecentM\Structures\Collections\Stack.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\LibDecentM\Structures\Pubsub\Pubsub.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\LibDecentM\Structures\Pubsub\PubsubSubscriber.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\ManualCamera\ManualCamera.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\Metrics\Compat\PlayerList\PlayerlistPlugin.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\Metrics\Compat\VideoPlayer\VideoPlayerTracker.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\Metrics\Scripts\MetricsEvents.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\Metrics\Scripts\MetricsSystem.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\Metrics\Scripts\MetricsUI.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\Metrics\Scripts\Plugins\CustomEventTrackingPlugin.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\Metrics\Scripts\Plugins\DebugPlugin.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\Metrics\Scripts\Plugins\HeartbeatPlugin.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\Metrics\Scripts\Plugins\IndividualTrackingPlugin.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\Metrics\Scripts\Plugins\InstancePlugin.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\Metrics\Scripts\Plugins\InteractionsPlugin.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\Metrics\Scripts\Plugins\MetricsPlugin.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\Metrics\Scripts\Plugins\PickupPlugin.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\Metrics\Scripts\Plugins\RespawnPlugin.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\Metrics\Scripts\Plugins\StationPlugin.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\Metrics\Scripts\Plugins\TriggerVolumePlugin.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\Metrics\Scripts\URLStore.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\NotificationSystem\Scripts\ChatMentionsProvider.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\NotificationSystem\Scripts\NotificationSystem.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\NotificationSystem\Scripts\PerformanceLevelChangeProvider.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\NotificationSystem\Scripts\PlayerJoinLeaveProvider.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\PerformanceGovernor\Scripts\PerformanceGovernor.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\PerformanceGovernor\Scripts\PerformanceGovernorPlugin.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\Procedural\Scripts\ProceduralSystem.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\Procedural\Scripts\RandomInstance.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\RespawnObjects\RespawnObjects.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\TargetCycler\TargetCycler.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\UI\Dropdown\Dropdown.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\UI\Dropdown\DropdownOption.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\UdonBehaviourRecovery\Scripts\BadBehaviour.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\UdonBehaviourRecovery\Scripts\UdonBehaviourRecovery.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\VideoPlayer\Compat\Metrics\VideoPlayerMetrics.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\VideoPlayer\Scripts\AVProPlayerHandler.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\VideoPlayer\Scripts\BasePlayerHandler.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\VideoPlayer\Scripts\Plugins\AutoLivestreamDetectorPlugin.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\VideoPlayer\Scripts\Plugins\AutoPlayPlugin.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\VideoPlayer\Scripts\Plugins\AutoRetryPlugin.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\VideoPlayer\Scripts\Plugins\DebugPlugin.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\VideoPlayer\Scripts\Plugins\GlobalSyncPlugin.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\VideoPlayer\Scripts\Plugins\LoadRequestHandlerPlugin.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\VideoPlayer\Scripts\Plugins\Playlist\PlaylistItemRenderer.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\VideoPlayer\Scripts\Plugins\Playlist\PlaylistPlayerPlugin.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\VideoPlayer\Scripts\Plugins\Playlist\VideoPlaylist.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\VideoPlayer\Scripts\Plugins\Playlist\VideoPlaylistUI.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\VideoPlayer\Scripts\Plugins\RenderTextureExportPlugin.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\VideoPlayer\Scripts\Plugins\ResolutionUpdaterPlugin.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\VideoPlayer\Scripts\Plugins\ScreenAnalysisPlugin.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\VideoPlayer\Scripts\Plugins\SkipToTimestampPlugin.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\VideoPlayer\Scripts\Plugins\SoundEffectsPlugin.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\VideoPlayer\Scripts\Plugins\SubtitlesPlugin.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\VideoPlayer\Scripts\Plugins\TextureReferencePlugin.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\VideoPlayer\Scripts\Plugins\TextureUpdaterPlugin.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\VideoPlayer\Scripts\Plugins\UIPlugin.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\VideoPlayer\Scripts\Plugins\URLVerifierPlugin.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\VideoPlayer\Scripts\Plugins\VideoPlayerPlugin.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\VideoPlayer\Scripts\ScreenHandler.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\VideoPlayer\Scripts\UnityPlayerHandler.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\VideoPlayer\Scripts\VideoPlayerEvents.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\VideoPlayer\Scripts\VideoPlayerSystem.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\VideoPlayer\Scripts\VideoPlayerUI.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\VideoRatelimit\Scripts\PlayerLoadMonitoring.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\VideoRatelimit\Scripts\VideoRatelimitSystem.cs" />
     <Compile Include="Assets\Store\EffectExamples\Shared\Scripts\DecalDestroyer.cs" />
     <Compile Include="Assets\Store\EffectExamples\Shared\Scripts\ExtinguishableFire.cs" />
     <Compile Include="Assets\Store\EffectExamples\Shared\Scripts\GunAim.cs" />
@@ -172,15 +61,6 @@
     <Compile Include="Assets\Store\EffectExamples\Shared\Scripts\ParticleExamples.cs" />
     <Compile Include="Assets\Store\EffectExamples\Shared\Scripts\ParticleMenu.cs" />
     <Compile Include="Assets\Store\EffectExamples\TutorialInfo\Scripts\Readme.cs" />
-    <Compile Include="Assets\World\Scenes\SampleScene_UdonProgramSources\BadActor.cs" />
-    <Compile Include="Assets\World\Scenes\SampleScene_UdonProgramSources\BadActorTrigger.cs" />
-    <Compile Include="Assets\World\Scenes\SampleScene_UdonProgramSources\BeginAdjustButton.cs" />
-    <Compile Include="Assets\World\Scenes\SampleScene_UdonProgramSources\BooleanVariableSync.cs" />
-    <Compile Include="Assets\World\Scenes\SampleScene_UdonProgramSources\CustomEventReceiver.cs" />
-    <Compile Include="Assets\World\Scenes\SampleScene_UdonProgramSources\PerformanceGovernorExampleRoot.cs" />
-    <Compile Include="Assets\World\Scenes\SampleScene_UdonProgramSources\SliderVariableSync.cs" />
-    <Compile Include="Assets\World\Scenes\SampleScene_UdonProgramSources\ToggleVariableSync.cs" />
-    <Compile Include="Assets\World\Scenes\SampleScene_UdonProgramSources\UIButtonSync.cs" />
     <Compile Include="Assets\World\Scripts\VideoScreenRealtimeEmission.cs" />
     <Compile Include="Assets\World\Scripts\VideoScreenRealtimeLight.cs" />
   </ItemGroup>
@@ -255,7 +135,6 @@
     <None Include="Assets\Store\Filamented\SharedFilteringLib.hlsl" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile.shader" />
     <None Include="Assets\Store\Filamented\UnityImageBasedLightingMinimal.cginc" />
-    <None Include="Assets\DecentM\Prefabs\VideoPlayer\Shaders\VideoScreen.shader" />
     <None Include="Assets\Store\Filamented\UnityLeftovers.cginc" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Sprite.shader" />
     <None Include="Assets\Store\Filamented\FilamentShadingParameters.cginc" />
@@ -827,6 +706,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="DecentM.Prefabs.csproj">
+      <Project>{134B67B3-9793-2E10-9BE1-FB8887AA624D}</Project>
+      <Name>DecentM.Prefabs</Name>
+    </ProjectReference>
     <ProjectReference Include="UnityEngine.UI.csproj">
       <Project>{0CD2AE03-5A8C-15D2-9A56-DE9F338A27BA}</Project>
       <Name>UnityEngine.UI</Name>

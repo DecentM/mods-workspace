@@ -1,6 +1,8 @@
 ﻿using UnityEditor;
 using UnityEngine;
 
+using DecentM.Prefabs.Performance;
+
 namespace DecentM
 {
     [CustomEditor(typeof(PerformanceGovernor))]

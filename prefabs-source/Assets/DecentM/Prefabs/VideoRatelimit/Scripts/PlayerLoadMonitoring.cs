@@ -1,17 +1,15 @@
-﻿using UdonSharp;
-using UnityEngine;
-using VRC.SDKBase;
-using VRC.Udon;
-using VRC.SDK3.Video.Components.Base;
+﻿using UnityEngine;
 
-namespace DecentM.VideoRatelimit
+using DecentM.Prefabs.VideoPlayer.Handlers;
+
+namespace DecentM.Prefabs.VideoRatelimit
 {
-    [UdonBehaviourSyncMode(BehaviourSyncMode.None), RequireComponent(typeof(BaseVRCVideoPlayer))]
-    public class PlayerLoadMonitoring : UdonSharpBehaviour
+    [RequireComponent(typeof(PlayerHandler))]
+    public class PlayerLoadMonitoring : MonoBehaviour
     {
         public VideoRatelimitSystem system;
 
-        public override void OnVideoReady()
+        public void OnVideoReady()
         {
             this.system.OnPlayerLoad();
         }

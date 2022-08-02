@@ -1,12 +1,10 @@
-﻿using UdonSharp;
-using UnityEngine;
-using VRC.SDKBase;
-using VRC.Udon;
+﻿using UnityEngine;
 using UnityEngine.UI;
-using DecentM.Pubsub;
-using DecentM.Performance.Plugins;
 
-namespace DecentM.Notifications.Providers
+using DecentM.Prefabs.Performance;
+using DecentM.Prefabs.Performance.Plugins;
+
+namespace DecentM.Prefabs.Notifications.Providers
 {
     public class PerformanceLevelChangeProvider : PerformanceGovernorPlugin
     {

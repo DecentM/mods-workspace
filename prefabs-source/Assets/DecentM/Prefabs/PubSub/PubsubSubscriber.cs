@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace DecentM.Pubsub
+namespace DecentM.Prefabs.Pubsub
 {
     public abstract class PubsubSubscriber : MonoBehaviour
     {

@@ -1,13 +1,9 @@
-﻿using UdonSharp;
-using UnityEngine;
-using VRC.SDKBase;
-using VRC.Udon;
+﻿using UnityEngine;
 
-using DecentM.VideoPlayer;
-using DecentM.VideoPlayer.Plugins;
+using DecentM.Prefabs.VideoPlayer;
+using DecentM.Prefabs.VideoPlayer.Plugins;
 
-[UdonBehaviourSyncMode(BehaviourSyncMode.None)]
-public class VideoScreenRealtimeLight : UdonSharpBehaviour
+public class VideoScreenRealtimeLight : MonoBehaviour
 {
     public ScreenAnalysisPlugin analysis;
     public VideoPlayerSystem system;

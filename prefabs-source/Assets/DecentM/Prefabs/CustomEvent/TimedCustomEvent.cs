@@ -1,15 +1,11 @@
-﻿using UdonSharp;
-using UnityEngine;
-using VRC.SDKBase;
-using VRC.Udon;
+﻿using UnityEngine;
 using DecentM;
 
-[UdonBehaviourSyncMode(BehaviourSyncMode.Manual)]
-public class TimedCustomEvent : UdonSharpBehaviour
+public class TimedCustomEvent : MonoBehaviour
 {
     [Header("References")]
     [Tooltip("The UdonBehaviour to send the custom event to")]
-    public UdonBehaviour target;
+    public MonoBehaviour target;
 
     [Header("Settings")]
     [Tooltip("The name of the event to send / public function name to call")]
@@ -45,6 +41,6 @@ public class TimedCustomEvent : UdonSharpBehaviour
 
     private void SendLocal()
     {
-        this.target.SendCustomEvent(this.eventName);
+        this.target.Invoke(this.eventName, 0);
     }
 }

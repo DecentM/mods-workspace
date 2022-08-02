@@ -1,17 +1,12 @@
-﻿using UdonSharp;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using VRC.SDKBase;
-using VRC.Udon;
 
-using DecentM.Collections;
-
-namespace DecentM.VideoRatelimit
+namespace DecentM.Prefabs.VideoRatelimit
 {
-    [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
-    public class VideoRatelimitSystem : UdonSharpBehaviour
+    public class VideoRatelimitSystem : MonoBehaviour
     {
         public float ratelimitSeconds = 5.2f;
-        public Queue queue;
+        public Queue<MonoBehaviour> queue;
 
         public const string PlaybackWindowEvent = "OnPlaybackWindow";
 
@@ -46,18 +41,21 @@ namespace DecentM.VideoRatelimit
             this.isWaiting = true;
         }
 
-        public void RequestPlaybackWindow(UdonSharpBehaviour behaviour)
+        public void RequestPlaybackWindow(MonoBehaviour behaviour)
         {
             this.queue.Enqueue(behaviour);
         }
 
         private void SendWindowEventToFirst()
         {
-            UdonSharpBehaviour behaviour = (UdonSharpBehaviour)this.queue.Dequeue();
+            if (this.queue.Count <= 0)
+                return;
+
+            MonoBehaviour behaviour = this.queue.Dequeue();
             if (behaviour == null)
                 return;
 
-            behaviour.SendCustomEvent(PlaybackWindowEvent);
+            behaviour.Invoke(PlaybackWindowEvent, 0);
 
             // pre-emptively start waiting, assuming that this event will cause a video to be loaded
             // if we don't do this, a delayed video load by this behaviour could cause a race

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-using DecentM.Pubsub;
+using DecentM.Prefabs.Pubsub;
 using DecentM.Prefabs.VideoPlayer.Handlers;
 
 namespace DecentM.Prefabs.VideoPlayer

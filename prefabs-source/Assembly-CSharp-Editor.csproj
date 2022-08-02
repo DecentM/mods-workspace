@@ -54,28 +54,14 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Assets\DecentM\Editor\ArabicLigaturesPreprocessor.cs" />
-    <Compile Include="Assets\DecentM\Editor\AutoSceneFixer.cs" />
     <Compile Include="Assets\DecentM\Editor\CombinationsGenerator.cs" />
     <Compile Include="Assets\DecentM\Editor\ComponentCollector.cs" />
     <Compile Include="Assets\DecentM\Editor\DCoroutine.cs" />
     <Compile Include="Assets\DecentM\Editor\EditorAssets.cs" />
     <Compile Include="Assets\DecentM\Editor\ImageStore.cs" />
     <Compile Include="Assets\DecentM\Editor\Inspector.cs" />
-    <Compile Include="Assets\DecentM\Editor\Keyboard\KeyboardEventsInspector.cs" />
-    <Compile Include="Assets\DecentM\Editor\Keyboard\KeyboardKeyInspector.cs" />
-    <Compile Include="Assets\DecentM\Editor\Keyboard\SymbolStorageInspector.cs" />
     <Compile Include="Assets\DecentM\Editor\MaterialIcons\Mappings.cs" />
     <Compile Include="Assets\DecentM\Editor\MaterialIcons\MaterialIcons.cs" />
-    <Compile Include="Assets\DecentM\Editor\Metrics\EditorAssets.cs" />
-    <Compile Include="Assets\DecentM\Editor\Metrics\IndividualTrackingPluginManager.cs" />
-    <Compile Include="Assets\DecentM\Editor\Metrics\InstancePluginManager.cs" />
-    <Compile Include="Assets\DecentM\Editor\Metrics\MetricsAutoFixer.cs" />
-    <Compile Include="Assets\DecentM\Editor\Metrics\MetricsBuildHook.cs" />
-    <Compile Include="Assets\DecentM\Editor\Metrics\MetricsMatrix.cs" />
-    <Compile Include="Assets\DecentM\Editor\Metrics\MetricsUIInspector.cs" />
-    <Compile Include="Assets\DecentM\Editor\Metrics\MetricsUrlGenerator.cs" />
-    <Compile Include="Assets\DecentM\Editor\Metrics\PluginManager.cs" />
-    <Compile Include="Assets\DecentM\Editor\Metrics\UIManager.cs" />
     <Compile Include="Assets\DecentM\Editor\PerformanceGovernor\PerformanceGovernorInspector.cs" />
     <Compile Include="Assets\DecentM\Editor\ProcessManager.cs" />
     <Compile Include="Assets\DecentM\Editor\RandomStringGenerator.cs" />

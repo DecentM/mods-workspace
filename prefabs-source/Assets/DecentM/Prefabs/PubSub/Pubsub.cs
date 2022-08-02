@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace DecentM.Pubsub
+namespace DecentM.Prefabs.Pubsub
 {
     struct QueueItem
     {

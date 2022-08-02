@@ -1,13 +1,9 @@
-﻿using UdonSharp;
-using UnityEngine;
-using VRC.SDKBase;
-using VRC.Udon;
+﻿using UnityEngine;
 using System;
 
 namespace DecentM
 {
-    [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
-    public class Scheduling : UdonSharpBehaviour
+    public class Scheduling : MonoBehaviour
     {
         [Header("Settings")]
         [Tooltip("If checked, disabled UdonBehaviours will be auto-unsubscribed from events")]
@@ -43,7 +39,7 @@ namespace DecentM
             }
         }
 
-        public void OnEverySecond(UdonBehaviour behaviour)
+        public void OnEverySecond(MonoBehaviour behaviour)
         {
             Component[] newSecondSubscribers = new Component[this.secondSubscribers.Length + 1];
             Array.Copy(this.secondSubscribers, newSecondSubscribers, this.secondSubscribers.Length);
@@ -53,7 +49,7 @@ namespace DecentM
             this.secondSubscribers = newSecondSubscribers;
         }
 
-        public void OffEverySecond(UdonBehaviour behaviour)
+        public void OffEverySecond(MonoBehaviour behaviour)
         {
             Component[] newSecondSubscribers = new Component[this.secondSubscribers.Length - 1];
 
@@ -78,11 +74,11 @@ namespace DecentM
             // Tell subscribers that a second has passed
             for (int i = 0; i < this.secondSubscribers.Length; i++)
             {
-                UdonBehaviour subscriber = (UdonBehaviour)this.secondSubscribers[i];
+                MonoBehaviour subscriber = (MonoBehaviour)this.secondSubscribers[i];
 
                 if (subscriber.enabled && subscriber.gameObject.activeSelf)
                 {
-                    subscriber.SendCustomEvent(this.OnSecondPassedEvent);
+                    subscriber.Invoke(this.OnSecondPassedEvent, 0);
                 }
                 else if (this.cleanupInactive == true)
                 {
