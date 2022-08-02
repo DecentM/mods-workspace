@@ -53,28 +53,6 @@
     <UnityVersion>2019.4.31f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Assets\DecentM\Dependencies\AudioLink\Scenes\AudioLink_ExampleScene\Scripts\MirrorToggle.cs" />
-    <Compile Include="Assets\DecentM\Dependencies\AudioLink\Scripts\AudioLink.cs" />
-    <Compile Include="Assets\DecentM\Dependencies\AudioLink\Scripts\AudioLinkAutoConfigurator.cs" />
-    <Compile Include="Assets\DecentM\Dependencies\AudioLink\Scripts\AudioLinkController.cs" />
-    <Compile Include="Assets\DecentM\Dependencies\AudioLink\Scripts\AudioLinkMiniPlayer.cs" />
-    <Compile Include="Assets\DecentM\Dependencies\AudioLink\Scripts\AudioLinkMiniPlayerController.cs" />
-    <Compile Include="Assets\DecentM\Dependencies\AudioLink\Scripts\AudioReactiveLight.cs" />
-    <Compile Include="Assets\DecentM\Dependencies\AudioLink\Scripts\AudioReactiveObject.cs" />
-    <Compile Include="Assets\DecentM\Dependencies\AudioLink\Scripts\AudioReactiveSurface.cs" />
-    <Compile Include="Assets\DecentM\Dependencies\AudioLink\Scripts\AudioReactiveSurfaceArray.cs" />
-    <Compile Include="Assets\DecentM\Dependencies\AudioLink\Scripts\GlobalSlider.cs" />
-    <Compile Include="Assets\DecentM\Dependencies\AudioLink\Scripts\ScriptingDefineManager.cs" />
-    <Compile Include="Assets\DecentM\Dependencies\AudioLink\Scripts\StringInListDrawer.cs" />
-    <Compile Include="Assets\DecentM\Dependencies\AudioLink\Scripts\ThemeColorController.cs" />
-    <Compile Include="Assets\DecentM\Dependencies\UNet\Abstracts.cs" />
-    <Compile Include="Assets\DecentM\Dependencies\UNet\ByteBufferReader.cs" />
-    <Compile Include="Assets\DecentM\Dependencies\UNet\ByteBufferWriter.cs" />
-    <Compile Include="Assets\DecentM\Dependencies\UNet\Connection.cs" />
-    <Compile Include="Assets\DecentM\Dependencies\UNet\NetworkInterface.cs" />
-    <Compile Include="Assets\DecentM\Dependencies\UNet\NetworkManager.cs" />
-    <Compile Include="Assets\DecentM\Dependencies\UNet\Socket.cs" />
-    <Compile Include="Assets\DecentM\Dependencies\UdonHashLib\UdonSharp\UdonHashLib.cs" />
     <Compile Include="Assets\DecentM\Prefabs\AnimatorSync\AnimatorSync.cs" />
     <Compile Include="Assets\DecentM\Prefabs\AudioLinkHapticsVolume\AudioLinkHapticsVolume.cs" />
     <Compile Include="Assets\DecentM\Prefabs\AutoMirror\AutoMirror.cs" />
@@ -194,13 +172,6 @@
     <Compile Include="Assets\Store\EffectExamples\Shared\Scripts\ParticleExamples.cs" />
     <Compile Include="Assets\Store\EffectExamples\Shared\Scripts\ParticleMenu.cs" />
     <Compile Include="Assets\Store\EffectExamples\TutorialInfo\Scripts\Readme.cs" />
-    <Compile Include="Assets\UdonSharp\UtilityScripts\BoneFollower.cs" />
-    <Compile Include="Assets\UdonSharp\UtilityScripts\InteractToggle.cs" />
-    <Compile Include="Assets\UdonSharp\UtilityScripts\PlayerModSetter.cs" />
-    <Compile Include="Assets\UdonSharp\UtilityScripts\Synced\GlobalToggleObject.cs" />
-    <Compile Include="Assets\UdonSharp\UtilityScripts\Synced\MasterToggleObject.cs" />
-    <Compile Include="Assets\UdonSharp\UtilityScripts\TrackingDataFollower.cs" />
-    <Compile Include="Assets\UdonSharp\UtilityScripts\WorldAudioSettings.cs" />
     <Compile Include="Assets\World\Scenes\SampleScene_UdonProgramSources\BadActor.cs" />
     <Compile Include="Assets\World\Scenes\SampleScene_UdonProgramSources\BadActorTrigger.cs" />
     <Compile Include="Assets\World\Scenes\SampleScene_UdonProgramSources\BeginAdjustButton.cs" />
@@ -214,57 +185,34 @@
     <Compile Include="Assets\World\Scripts\VideoScreenRealtimeLight.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\DecentM\Dependencies\AudioLink\Shaders\AudioLink.shader" />
-    <None Include="Assets\DecentM\Dependencies\AudioLink\Shaders\Amplify\Shaders\AudioLinkAmplify_4BandFiltered.shader" />
-    <None Include="Assets\DecentM\Dependencies\AudioLink\Shaders\AudioLinkDocs_Demo6.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
     <None Include="Assets\Store\Filamented\FilamentCommonMaterial.cginc" />
     <None Include="Assets\Store\Filamented\UnityGlobalIllumination.cginc" />
     <None Include="Assets\Store\Filamented\UnityStandardConfig.cginc" />
-    <None Include="Assets\DecentM\Dependencies\AudioLink\Shaders\Amplify\Shaders\AudioLinkAmplify_4Band.shader" />
     <None Include="Assets\Store\Filamented\UnityStandardShadow.cginc" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
     <None Include="Assets\DecentM\ExampleAssets\Shaders\PlayersOnlyMirrorCutout.shader" />
-    <None Include="Assets\DecentM\Dependencies\AudioLink\Shaders\Amplify\Templates\AudioLinkAmplifyTemplate_Lit.shader" />
-    <None Include="Assets\DecentM\Dependencies\AudioLink\Shaders\Amplify\Shaders\AudioLinkAmplify_ColorChordStrip.shader" />
-    <None Include="Assets\DecentM\Dependencies\AudioLink\Shaders\Amplify\Shaders\AudioLinkAmplify_AutoCorrelator.shader" />
-    <None Include="Assets\DecentM\Dependencies\AudioLink\Shaders\Color3DText.shader" />
     <None Include="Assets\Store\Filamented\UnityStandardCore.cginc" />
     <None Include="Assets\Store\Filamented\StandardSpecular.shader" />
-    <None Include="Assets\DecentM\Dependencies\AudioLink\Shaders\AudioLinkDocs_Demo4.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />
     <None Include="Assets\Store\Filamented\FilamentMaterialInputs.cginc" />
     <None Include="Assets\Store\Filamented\FilamentCommonMath.cginc" />
     <None Include="Assets\Store\Filamented\FilamentShadingLit.cginc" />
     <None Include="Assets\Store\Almgp_automapping_shader\shaders\props shaders\grunt_world_space_automap_lightmap.shader" />
-    <None Include="Assets\DecentM\Dependencies\AudioLink\Shaders\Amplify\Shaders\AudioLinkAmplify_FilteredVU.shader" />
     <None Include="Assets\Store\XSVolumetrics\Shaders\Alpha_Scroll_DepthBlended.shader" />
     <None Include="Assets\Store\Filamented\FilamentShadingCloth.cginc" />
-    <None Include="Assets\DecentM\Dependencies\AudioLink\Shaders\Amplify\Shaders\AudioLinkAmplify_BasicVU.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Mobile.cginc" />
-    <None Include="Assets\DecentM\Dependencies\AudioLink\Shaders\AudioLinkTestTime.shader" />
     <None Include="Assets\Store\Filamented\FilamentedTriplanar.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF SSD.shader" />
-    <None Include="Assets\DecentM\Dependencies\AudioLink\Shaders\Amplify\Shaders\AudioLinkAmplify_FilteredVUFlat.shader" />
     <None Include="Assets\Store\Filamented\FilamentShadingStandard.cginc" />
-    <None Include="Assets\DecentM\Dependencies\AudioLink\Shaders\AudioLinkQuickView.shader" />
-    <None Include="Assets\DecentM\Dependencies\AudioLink\Shaders\AudioLinkDocs_Demo5.shader" />
     <None Include="Assets\Store\Filamented\FilamentedTemplateRefraction.shader" />
-    <None Include="Assets\DecentM\Dependencies\AudioLink\Shaders\AudioReactiveSurface.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface-Mobile.shader" />
-    <None Include="Assets\DecentM\Dependencies\AudioLink\Shaders\AudioLinkAutocorrView.shader" />
     <None Include="Assets\Store\PollyPrivateers\Readme.txt" />
-    <None Include="Assets\DecentM\Dependencies\AudioLink\LICENSE.txt" />
     <None Include="Assets\DecentM\ExampleAssets\Shaders\TransparentBackground.shader" />
     <None Include="Assets\Store\VRWaterShader2\Shaders\VRWSShadowCaster.cginc" />
     <None Include="Assets\Store\Filamented\StandardRoughness.shader" />
-    <None Include="Assets\DecentM\Dependencies\AudioLink\Shaders\AudioLinkDocs_Demo3.shader" />
-    <None Include="Assets\DecentM\Dependencies\AudioLink\Shaders\Amplify\Shaders\AudioLinkAmplify_Chronotensity.shader" />
     <None Include="Assets\Store\Filamented\FilamentLightDirectional.cginc" />
-    <None Include="Assets\DecentM\Dependencies\AudioLink\Shaders\AudioLinkSpectrumUI.shader" />
-    <None Include="Assets\DecentM\Dependencies\AudioLink\VERSION.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface.shader" />
-    <None Include="Assets\DecentM\Dependencies\AudioLink\Shaders\AudioTextureExport.shader" />
     <None Include="Assets\TextMesh Pro\Sprites\EmojiOne Attribution.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Custom-Atlas.shader" />
     <None Include="Assets\Store\VRWaterShader2\Shaders\Standard.shader" />
@@ -272,43 +220,28 @@
     <None Include="Assets\Store\Filamented\FilamentBRDF.cginc" />
     <None Include="Assets\Store\Filamented\FilamentedTemplate.shader" />
     <None Include="Assets\Store\Filamented\UnityStandardMeta.cginc" />
-    <None Include="Assets\DecentM\Dependencies\AudioLink\Shaders\Amplify\Templates\AudioLinkAmplifyTemplate_Unlit.shader" />
     <None Include="Assets\Store\Filamented\Standard.shader" />
     <None Include="Assets\Store\Free Stylized Skybox\ReadMe.txt" />
     <None Include="Assets\Store\Filamented\UnityStandardInput.cginc" />
     <None Include="Assets\Store\Filamented\FilamentCommonLighting.cginc" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile SSD.shader" />
     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
-    <None Include="Assets\DecentM\Dependencies\AudioLink\Shaders\AudioLinkExamples_ColorChordLights.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Properties.cginc" />
     <None Include="Assets\Store\Filamented\FilamentLightPunctual.cginc" />
     <None Include="Assets\Store\XSVolumetrics\Shaders\Additive_GodRay.shader" />
-    <None Include="Assets\DecentM\Dependencies\AudioLink\Shaders\AudioLinkDocs_Demo1.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Surface.cginc" />
     <None Include="Assets\Store\VRWaterShader2\Shaders\VRWSCore.cginc" />
     <None Include="Assets\Store\Filamented\FilamentCommonShading.cginc" />
-    <None Include="Assets\DecentM\Dependencies\AudioLink\Shaders\Amplify\Shaders\AudioLinkAmplify_Waveform.shader" />
     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
     <None Include="Assets\Store\Industrial Props\ReadMe.txt" />
     <None Include="Assets\Store\Filamented\FilamentCommonDithering.cginc" />
-    <None Include="Assets\DecentM\Dependencies\AudioLink\Shaders\AudioLinkMiniPlayerScreen.shader" />
-    <None Include="Assets\DecentM\Dependencies\AudioLink\Shaders\SmoothPixelFont.cginc" />
     <None Include="Assets\Store\Filamented\UnityLightingCommon.cginc" />
-    <None Include="Assets\UdonSharp\UtilityScripts\ExampleUtilityTemplate.txt" />
-    <None Include="Assets\DecentM\Dependencies\AudioLink\Shaders\Amplify\Shaders\AudioLinkAmplify_ColorChordLights.shader" />
     <None Include="Assets\Store\XSVolumetrics\Shaders\Additive_GodRay_Smoky.shader" />
     <None Include="Assets\Store\Filamented\SharedParallaxLib.hlsl" />
-    <None Include="Assets\DecentM\Dependencies\AudioLink\Shaders\FilteredVUDebug.shader" />
-    <None Include="Assets\DecentM\Dependencies\AudioLink\Shaders\AudioLinkExamples_ColorChordStrip.shader" />
-    <None Include="Assets\DecentM\Dependencies\AudioLink\Shaders\ThemeColorGrid.shader" />
     <None Include="Assets\Store\Filamented\SharedNormalShadowLib.hlsl" />
-    <None Include="Assets\DecentM\Dependencies\AudioLink\Shaders\AudioTextureOverlay.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Masking.shader" />
     <None Include="Assets\Store\VRWaterShader2\Shaders\VRWSTess.cginc" />
-    <None Include="Assets\DecentM\Dependencies\AudioLink\Shaders\AudioLinkDocs_Demo2.shader" />
-    <None Include="Assets\DecentM\Dependencies\AudioLink\Shaders\AudioLinkDocs_Demo8.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF Overlay.shader" />
-    <None Include="Assets\DecentM\Dependencies\AudioLink\Shaders\AudioLink.cginc" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Mobile.shader" />
     <None Include="Assets\Store\Filamented\FilamentCommonGraphics.cginc" />
     <None Include="Assets\Store\Filamented\FilamentLightLTCGI.cginc" />
@@ -317,22 +250,14 @@
     <None Include="Assets\Store\Filamented\UnityStandardUtils.cginc" />
     <None Include="Assets\Store\Filamented\FilamentLightIndirect.cginc" />
     <None Include="Assets\Store\Filamented\UnityStandardCoreForward.cginc" />
-    <None Include="Assets\DecentM\Dependencies\AudioLink\Shaders\AudioLinkDebug.shader" />
-    <None Include="Assets\DecentM\Dependencies\AudioLink\Shaders\AudioReactiveSurface_SmoothAlpha.shader" />
     <None Include="Assets\Store\Filamented\StandardCloth.shader" />
-    <None Include="Assets\DecentM\Dependencies\AudioLink\Shaders\AudioLinkTestLights.shader" />
     <None Include="Assets\Store\Filamented\FilamentCommonOcclusion.cginc" />
     <None Include="Assets\Store\Filamented\SharedFilteringLib.hlsl" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile.shader" />
-    <None Include="Assets\DecentM\Dependencies\AudioLink\Shaders\AudioLinkDocs_Demo7.shader" />
     <None Include="Assets\Store\Filamented\UnityImageBasedLightingMinimal.cginc" />
-    <None Include="Assets\DecentM\Dependencies\UdonHashLib\version.txt" />
     <None Include="Assets\DecentM\Prefabs\VideoPlayer\Shaders\VideoScreen.shader" />
     <None Include="Assets\Store\Filamented\UnityLeftovers.cginc" />
-    <None Include="Assets\DecentM\Dependencies\AudioLink\Shaders\AudioReactiveSurface_Cutout.shader" />
-    <None Include="Assets\DecentM\Dependencies\AudioLink\Shaders\Color3DTextFade.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Sprite.shader" />
-    <None Include="Assets\DecentM\Dependencies\AudioLink\Shaders\AudioLinkDocs_Demo9.shader" />
     <None Include="Assets\Store\Filamented\FilamentShadingParameters.cginc" />
   </ItemGroup>
   <ItemGroup>
@@ -518,93 +443,6 @@
     </Reference>
     <Reference Include="UnityEditor">
       <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\Managed\UnityEditor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Burst.Unsafe">
-      <HintPath>Library\PackageCache\com.unity.burst@1.4.11\Unity.Burst.Unsafe.dll</HintPath>
-    </Reference>
-    <Reference Include="VRC.SDK3.Dynamics.PhysBone">
-      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Plugins\VRC.SDK3.Dynamics.PhysBone.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Threading.Tasks.Extensions">
-      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Dependencies\Managed\System.Threading.Tasks.Extensions.dll</HintPath>
-    </Reference>
-    <Reference Include="VRC.Udon.ClientBindings">
-      <HintPath>Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\External\VRC.Udon.ClientBindings.dll</HintPath>
-    </Reference>
-    <Reference Include="VRCSDK3-Editor">
-      <HintPath>Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\VRCSDK\Plugins\VRCSDK3-Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="VRC.Udon.VRCWrapperModules">
-      <HintPath>Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\External\VRC.Udon.VRCWrapperModules.dll</HintPath>
-    </Reference>
-    <Reference Include="VRCSDK3">
-      <HintPath>Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\VRCSDK\Plugins\VRCSDK3.dll</HintPath>
-    </Reference>
-    <Reference Include="VRC.Udon.VM">
-      <HintPath>Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\External\VRC.Udon.VM.dll</HintPath>
-    </Reference>
-    <Reference Include="librsync.net">
-      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Dependencies\librsync\librsync.net.dll</HintPath>
-    </Reference>
-    <Reference Include="VRC.Udon.Common">
-      <HintPath>Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\External\VRC.Udon.Common.dll</HintPath>
-    </Reference>
-    <Reference Include="VRC.SDK3.Dynamics.Contact">
-      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Plugins\VRC.SDK3.Dynamics.Contact.dll</HintPath>
-    </Reference>
-    <Reference Include="Collections.Pooled">
-      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Dependencies\Managed\Collections.Pooled.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Collections.Immutable">
-      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Dependencies\Managed\System.Collections.Immutable.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Numerics.Vectors">
-      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Dependencies\Managed\System.Numerics.Vectors.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Buffers">
-      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Dependencies\Managed\System.Buffers.dll</HintPath>
-    </Reference>
-    <Reference Include="VRC.Dynamics">
-      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Plugins\VRC.Dynamics.dll</HintPath>
-    </Reference>
-    <Reference Include="VRC.Udon.Wrapper">
-      <HintPath>Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\External\VRC.Udon.Wrapper.dll</HintPath>
-    </Reference>
-    <Reference Include="VRC.Udon.Security">
-      <HintPath>Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\External\VRC.Udon.Security.dll</HintPath>
-    </Reference>
-    <Reference Include="clipper_library">
-      <HintPath>Library\PackageCache\com.unity.cinemachine@2.8.0\Runtime\ThirdParty\clipper_library.dll</HintPath>
-    </Reference>
-    <Reference Include="VRC.Collections">
-      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Dependencies\Managed\VRC.Collections.dll</HintPath>
-    </Reference>
-    <Reference Include="VRCSDKBase">
-      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Plugins\VRCSDKBase.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Runtime.CompilerServices.Unsafe">
-      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Dependencies\Managed\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
-    </Reference>
-    <Reference Include="0Harmony">
-      <HintPath>Library\PackageCache\com.vrchat.udonsharp@26d6812704\Runtime\Plugins\0Harmony.dll</HintPath>
-    </Reference>
-    <Reference Include="VRCSDKBase-Editor">
-      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Plugins\VRCSDKBase-Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Blake2Sharp">
-      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Dependencies\librsync\Blake2Sharp.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Memory">
-      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Dependencies\Managed\System.Memory.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Text.Encoding.CodePages">
-      <HintPath>Library\PackageCache\com.vrchat.udonsharp@26d6812704\Runtime\Plugins\System.Text.Encoding.CodePages.dll</HintPath>
-    </Reference>
-    <Reference Include="VRCCore-Editor">
-      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Plugins\VRCCore-Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="VRC.Utility">
-      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Plugins\VRC.Utility.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib">
       <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\mscorlib.dll</HintPath>
@@ -1016,94 +854,6 @@
     <ProjectReference Include="UnityEditor.UI.csproj">
       <Project>{2D7D4349-444F-40DA-03F6-25C68B761D92}</Project>
       <Name>UnityEditor.UI</Name>
-    </ProjectReference>
-    <ProjectReference Include="Cinemachine.csproj">
-      <Project>{28AF7372-7F9B-B4E8-B066-C9A57AB9D51C}</Project>
-      <Name>Cinemachine</Name>
-    </ProjectReference>
-    <ProjectReference Include="VRC.Udon.Serialization.OdinSerializer.csproj">
-      <Project>{C6478EE8-2280-A906-51C4-3F7A57CBFD14}</Project>
-      <Name>VRC.Udon.Serialization.OdinSerializer</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.Burst.csproj">
-      <Project>{F6AAC17F-0FAB-AD1B-5255-9F9D99D3C8CD}</Project>
-      <Name>Unity.Burst</Name>
-    </ProjectReference>
-    <ProjectReference Include="VRC.ClientSim.Editor.csproj">
-      <Project>{AA8E53EE-0439-A180-1F37-EE1F91E3E594}</Project>
-      <Name>VRC.ClientSim.Editor</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.Burst.Editor.csproj">
-      <Project>{7543905A-6F4E-E8DC-88C4-EE8011F0A782}</Project>
-      <Name>Unity.Burst.Editor</Name>
-    </ProjectReference>
-    <ProjectReference Include="UdonSharp.Runtime.csproj">
-      <Project>{F207FDF2-FC8D-3FF8-E6B4-E7228B5BA778}</Project>
-      <Name>UdonSharp.Runtime</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.InputSystem.csproj">
-      <Project>{E39FD8A9-E5D7-7DB4-9184-84E20FD9FC1B}</Project>
-      <Name>Unity.InputSystem</Name>
-    </ProjectReference>
-    <ProjectReference Include="UdonSharp.Editor.csproj">
-      <Project>{896B8746-8DF7-CA03-6E24-73EEB80AA98C}</Project>
-      <Name>UdonSharp.Editor</Name>
-    </ProjectReference>
-    <ProjectReference Include="VRC.Udon.csproj">
-      <Project>{4A1B7C43-F455-7043-77CD-7717AFF7B0D3}</Project>
-      <Name>VRC.Udon</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.Postprocessing.Editor.csproj">
-      <Project>{E54D3233-9D3F-BD80-9BE4-3D10FC5B8475}</Project>
-      <Name>Unity.Postprocessing.Editor</Name>
-    </ProjectReference>
-    <ProjectReference Include="VRC.SDKBase.Editor.csproj">
-      <Project>{C35E973A-D8A4-B6F4-000E-EB248A7496C6}</Project>
-      <Name>VRC.SDKBase.Editor</Name>
-    </ProjectReference>
-    <ProjectReference Include="VRC.SDK3.csproj">
-      <Project>{F21FEFFC-DE4F-CECE-6F72-E933F69D9F36}</Project>
-      <Name>VRC.SDK3</Name>
-    </ProjectReference>
-    <ProjectReference Include="VRC.SDKBase.Editor.ShaderStripping.csproj">
-      <Project>{5CB75860-DF32-19A6-322D-6DF03B1E40A3}</Project>
-      <Name>VRC.SDKBase.Editor.ShaderStripping</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.Mathematics.csproj">
-      <Project>{DB45369E-A59B-D786-5797-CA30E80442FA}</Project>
-      <Name>Unity.Mathematics</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.Postprocessing.Runtime.csproj">
-      <Project>{56FBC107-6015-1737-B069-A20784C7D848}</Project>
-      <Name>Unity.Postprocessing.Runtime</Name>
-    </ProjectReference>
-    <ProjectReference Include="VRC.SDKBase.csproj">
-      <Project>{3359449D-85F4-2EED-5F9C-F912C361EA41}</Project>
-      <Name>VRC.SDKBase</Name>
-    </ProjectReference>
-    <ProjectReference Include="VRC.Udon.Editor.csproj">
-      <Project>{C332D50B-EE2C-AFE5-C8DD-445E2CE0568C}</Project>
-      <Name>VRC.Udon.Editor</Name>
-    </ProjectReference>
-    <ProjectReference Include="com.unity.cinemachine.editor.csproj">
-      <Project>{1315A5EC-DE69-D723-8E9C-24C13C7E8CC9}</Project>
-      <Name>com.unity.cinemachine.editor</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.Mathematics.Editor.csproj">
-      <Project>{E2A4CE3A-7518-71BD-4EA5-09394A77A29B}</Project>
-      <Name>Unity.Mathematics.Editor</Name>
-    </ProjectReference>
-    <ProjectReference Include="VRC.SDK3.Editor.csproj">
-      <Project>{0F47C03B-B237-6F08-00EC-8D5F8F4F4EDB}</Project>
-      <Name>VRC.SDK3.Editor</Name>
-    </ProjectReference>
-    <ProjectReference Include="VRC.SDKBase.Editor.BuildPipeline.csproj">
-      <Project>{22F39F53-4BC5-5898-070C-24FBF6D6D733}</Project>
-      <Name>VRC.SDKBase.Editor.BuildPipeline</Name>
-    </ProjectReference>
-    <ProjectReference Include="VRC.ClientSim.csproj">
-      <Project>{34F5BC94-BA93-DFCD-1F88-34C669C76872}</Project>
-      <Name>VRC.ClientSim</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
