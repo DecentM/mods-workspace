@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <LangVersion>7.3</LangVersion>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -53,196 +53,193 @@
     <UnityVersion>2019.4.31f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Analyzer Include="C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Config\GlobalSerializationConfig.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\DataReaderWriters\BaseDataReader.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\DataReaderWriters\BaseDataReaderWriter.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\DataReaderWriters\BaseDataWriter.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\DataReaderWriters\Binary\BinaryDataReader.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\DataReaderWriters\Binary\BinaryDataWriter.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\DataReaderWriters\Binary\BinaryEntryType.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\DataReaderWriters\IDataReader.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\DataReaderWriters\IDataWriter.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\DataReaderWriters\Json\JsonConfig.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\DataReaderWriters\Json\JsonDataReader.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\DataReaderWriters\Json\JsonDataWriter.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\DataReaderWriters\Json\JsonTextReader.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\DataReaderWriters\SerializationNodes\SerializationNode.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\DataReaderWriters\SerializationNodes\SerializationNodeDataReader.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\DataReaderWriters\SerializationNodes\SerializationNodeDataReaderWriterConfig.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\DataReaderWriters\SerializationNodes\SerializationNodeDataWriter.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\FormatterLocators\ArrayFormatterLocator.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\FormatterLocators\DelegateFormatterLocator.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\FormatterLocators\FormatterLocator.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\FormatterLocators\GenericCollectionFormatterLocator.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\FormatterLocators\IFormatterLocator.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\FormatterLocators\ISerializableFormatterLocator.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\FormatterLocators\SelfFormatterLocator.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\FormatterLocators\TypeFormatterLocator.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\Formatters\ArrayFormatter.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\Formatters\ArrayListFormatter.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\Formatters\BaseFormatter.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\Formatters\DateTimeFormatter.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\Formatters\DateTimeOffsetFormatter.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\Formatters\DelegateFormatter.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\Formatters\DerivedDictionaryFormatter.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\Formatters\DictionaryFormatter.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\Formatters\DoubleLookupDictionaryFormatter.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\Formatters\EasyBaseFormatter.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\Formatters\EmittedFormatterAttribute.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\Formatters\EmptyTypeFormatter.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\Formatters\FormatterEmitter.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\Formatters\GenericCollectionFormatter.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\Formatters\HashSetFormatter.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\Formatters\IFormatter.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\Formatters\KeyValuePairFormatter.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\Formatters\ListFormatter.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\Formatters\MethodInfoFormatter.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\Formatters\MinimalBaseFormatter.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\Formatters\MultiDimensionalArrayFormatter.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\Formatters\NullableFormatter.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\Formatters\PrimitiveArrayFormatter.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\Formatters\QueueFormatter.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\Formatters\ReflectionFormatter.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\Formatters\ReflectionOrEmittedBaseFormatter.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\Formatters\SelfFormatterFormatter.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\Formatters\SerializableFormatter.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\Formatters\StackFormatter.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\Formatters\TimeSpanFormatter.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\Formatters\TypeFormatter.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\Formatters\VersionFormatter.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\Misc\AllowDeserializeInvalidDataAttribute.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\Misc\AlwaysFormatsSelfAttribute.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\Misc\ArchitectureInfo.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\Misc\Buffer.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\Misc\CachedMemoryStream.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\Misc\CustomFormatterAttribute.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\Misc\CustomGenericFormatterAttribute.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\Misc\CustomLogger.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\Misc\CustomSerializationPolicy.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\Misc\DataFormat.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\Misc\DefaultLoggers.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\Misc\DefaultSerializationBinder.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\Misc\DeserializationContext.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\Misc\EmittedAssemblyAttribute.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\Misc\EntryType.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\Misc\ErrorHandlingPolicy.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\Misc\ExcludeDataFromInspectorAttribute.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\Misc\FormatterLocationStep.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\Misc\FormatterUtilities.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\Misc\IAskIfCanFormatTypes.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\Misc\IExternalGuidReferenceResolver.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\Misc\IExternalIndexReferenceResolver.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\Misc\IExternalStringReferenceResolver.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\Misc\ILogger.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\Misc\ISelfFormatter.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\Misc\ISerializationPolicy.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\Misc\LoggingPolicy.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\Misc\NodeInfo.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\Misc\OdinSerializeAttribute.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\Misc\PrefabModification.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\Misc\PrefabModificationType.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\Misc\PreviouslySerializedAsAttribute.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\Misc\ProperBitConverter.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\Misc\RegisterFormatterAttribute.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\Misc\RegisterFormatterLocatorAttribute.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\Misc\SerializationAbortException.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\Misc\SerializationConfig.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\Misc\SerializationContext.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\Misc\SerializationPolicies.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\Misc\SerializationUtility.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\Misc\TwoWaySerializationBinder.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\Serializers\BooleanSerializer.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\Serializers\ByteSerializer.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\Serializers\CharSerializer.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\Serializers\ComplexTypeSerializer.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\Serializers\DecimalSerializer.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\Serializers\DoubleSerializer.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\Serializers\EnumSerializer.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\Serializers\GuidSerializer.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\Serializers\Int16Serializer.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\Serializers\Int32Serializer.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\Serializers\Int64Serializer.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\Serializers\IntPtrSerializer.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\Serializers\SByteSerializer.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\Serializers\Serializer.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\Serializers\SingleSerializer.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\Serializers\StringSerializer.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\Serializers\UInt16Serializer.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\Serializers\UInt32Serializer.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\Serializers\UInt64Serializer.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Core\Serializers\UIntPtrSerializer.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Unity Integration\AOTSupportScanner.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Unity Integration\AOTSupportUtilities.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Unity Integration\DictionaryKeySupport\BaseDictionaryKeyPathProvider.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Unity Integration\DictionaryKeySupport\DictionaryKeyUtility.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Unity Integration\DictionaryKeySupport\IDictionaryKeyPathProvider.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Unity Integration\DictionaryKeySupport\RegisterDictionaryKeyPathProviderAttribute.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Unity Integration\DictionaryKeySupport\Vector2DictionaryKeyPathProvider.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Unity Integration\DictionaryKeySupport\Vector3DictionaryKeyPathProvider.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Unity Integration\DictionaryKeySupport\Vector4DictionaryKeyPathProvider.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Unity Integration\Formatters\AnimationCurveFormatter.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Unity Integration\Formatters\BoundsFormatter.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Unity Integration\Formatters\Color32Formatter.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Unity Integration\Formatters\ColorBlockFormatter.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Unity Integration\Formatters\ColorFormatter.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Unity Integration\Formatters\CoroutineFormatter.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Unity Integration\Formatters\GradientAlphaKeyFormatter.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Unity Integration\Formatters\GradientColorKeyFormatter.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Unity Integration\Formatters\GradientFormatter.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Unity Integration\Formatters\KeyframeFormatter.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Unity Integration\Formatters\LayerMaskFormatter.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Unity Integration\Formatters\QuaternionFormatter.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Unity Integration\Formatters\RectFormatter.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Unity Integration\Formatters\UnityEventFormatter.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Unity Integration\Formatters\Vector2Formatter.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Unity Integration\Formatters\Vector3Formatter.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Unity Integration\Formatters\Vector4Formatter.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Unity Integration\OdinPrefabSerializationEditorUtility.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Unity Integration\SerializedUnityObjects\IOverridesSerializationFormat.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Unity Integration\SerializedUnityObjects\IOverridesSerializationPolicy.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Unity Integration\SerializedUnityObjects\ISupportsPrefabSerialization.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Unity Integration\SerializedUnityObjects\SerializationData.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Unity Integration\SerializedUnityObjects\SerializedBehaviour.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Unity Integration\SerializedUnityObjects\SerializedComponent.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Unity Integration\SerializedUnityObjects\SerializedMonoBehaviour.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Unity Integration\SerializedUnityObjects\SerializedScriptableObject.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Unity Integration\SerializedUnityObjects\SerializedStateMachineBehaviour.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Unity Integration\SerializedUnityObjects\SerializedUnityObject.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Unity Integration\UnityReferenceResolver.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Unity Integration\UnitySerializationInitializer.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Unity Integration\UnitySerializationUtility.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Utilities\Extensions\FieldInfoExtensions.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Utilities\Extensions\GarbageFreeIterators.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Utilities\Extensions\LinqExtensions.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Utilities\Extensions\MemberInfoExtensions.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Utilities\Extensions\MethodInfoExtensions.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Utilities\Extensions\Operator.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Utilities\Extensions\PathUtilities.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Utilities\Extensions\PropertyInfoExtensions.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Utilities\Extensions\StringExtensions.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Utilities\Extensions\TypeExtensions.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Utilities\Extensions\UnityExtensions.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Utilities\Misc\AssemblyImportSettingsUtilities.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Utilities\Misc\Cache.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Utilities\Misc\DoubleLookupDictionary.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Utilities\Misc\EmitUtilities.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Utilities\Misc\FastTypeComparer.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Utilities\Misc\Flags.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Utilities\Misc\ICacheNotificationReceiver.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Utilities\Misc\ImmutableList.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Utilities\Misc\MemberAliasFieldInfo.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Utilities\Misc\MemberAliasMethodInfo.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Utilities\Misc\MemberAliasPropertyInfo.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Utilities\Misc\ReferenceEqualityComparer.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Utilities\Misc\UnityVersion.cs" />
+    <Compile Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Utilities\Misc\UnsafeUtilities.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Config\GlobalSerializationConfig.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\DataReaderWriters\BaseDataReader.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\DataReaderWriters\BaseDataReaderWriter.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\DataReaderWriters\BaseDataWriter.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\DataReaderWriters\Binary\BinaryDataReader.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\DataReaderWriters\Binary\BinaryDataWriter.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\DataReaderWriters\Binary\BinaryEntryType.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\DataReaderWriters\IDataReader.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\DataReaderWriters\IDataWriter.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\DataReaderWriters\Json\JsonConfig.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\DataReaderWriters\Json\JsonDataReader.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\DataReaderWriters\Json\JsonDataWriter.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\DataReaderWriters\Json\JsonTextReader.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\DataReaderWriters\SerializationNodes\SerializationNode.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\DataReaderWriters\SerializationNodes\SerializationNodeDataReader.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\DataReaderWriters\SerializationNodes\SerializationNodeDataReaderWriterConfig.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\DataReaderWriters\SerializationNodes\SerializationNodeDataWriter.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\FormatterLocators\ArrayFormatterLocator.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\FormatterLocators\DelegateFormatterLocator.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\FormatterLocators\FormatterLocator.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\FormatterLocators\GenericCollectionFormatterLocator.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\FormatterLocators\IFormatterLocator.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\FormatterLocators\ISerializableFormatterLocator.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\FormatterLocators\SelfFormatterLocator.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\FormatterLocators\TypeFormatterLocator.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\Formatters\ArrayFormatter.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\Formatters\ArrayListFormatter.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\Formatters\BaseFormatter.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\Formatters\DateTimeFormatter.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\Formatters\DateTimeOffsetFormatter.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\Formatters\DelegateFormatter.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\Formatters\DerivedDictionaryFormatter.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\Formatters\DictionaryFormatter.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\Formatters\DoubleLookupDictionaryFormatter.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\Formatters\EasyBaseFormatter.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\Formatters\EmittedFormatterAttribute.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\Formatters\EmptyTypeFormatter.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\Formatters\FormatterEmitter.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\Formatters\GenericCollectionFormatter.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\Formatters\HashSetFormatter.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\Formatters\IFormatter.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\Formatters\KeyValuePairFormatter.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\Formatters\ListFormatter.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\Formatters\MethodInfoFormatter.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\Formatters\MinimalBaseFormatter.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\Formatters\MultiDimensionalArrayFormatter.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\Formatters\NullableFormatter.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\Formatters\PrimitiveArrayFormatter.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\Formatters\QueueFormatter.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\Formatters\ReflectionFormatter.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\Formatters\ReflectionOrEmittedBaseFormatter.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\Formatters\SelfFormatterFormatter.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\Formatters\SerializableFormatter.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\Formatters\StackFormatter.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\Formatters\TimeSpanFormatter.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\Formatters\TypeFormatter.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\Formatters\VersionFormatter.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\Misc\AllowDeserializeInvalidDataAttribute.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\Misc\AlwaysFormatsSelfAttribute.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\Misc\ArchitectureInfo.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\Misc\Buffer.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\Misc\CachedMemoryStream.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\Misc\CustomFormatterAttribute.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\Misc\CustomGenericFormatterAttribute.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\Misc\CustomLogger.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\Misc\CustomSerializationPolicy.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\Misc\DataFormat.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\Misc\DefaultLoggers.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\Misc\DefaultSerializationBinder.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\Misc\DeserializationContext.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\Misc\EmittedAssemblyAttribute.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\Misc\EntryType.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\Misc\ErrorHandlingPolicy.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\Misc\ExcludeDataFromInspectorAttribute.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\Misc\FormatterLocationStep.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\Misc\FormatterUtilities.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\Misc\IAskIfCanFormatTypes.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\Misc\IExternalGuidReferenceResolver.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\Misc\IExternalIndexReferenceResolver.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\Misc\IExternalStringReferenceResolver.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\Misc\ILogger.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\Misc\ISelfFormatter.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\Misc\ISerializationPolicy.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\Misc\LoggingPolicy.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\Misc\NodeInfo.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\Misc\OdinSerializeAttribute.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\Misc\PrefabModification.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\Misc\PrefabModificationType.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\Misc\PreviouslySerializedAsAttribute.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\Misc\ProperBitConverter.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\Misc\RegisterFormatterAttribute.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\Misc\RegisterFormatterLocatorAttribute.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\Misc\SerializationAbortException.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\Misc\SerializationConfig.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\Misc\SerializationContext.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\Misc\SerializationPolicies.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\Misc\SerializationUtility.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\Misc\TwoWaySerializationBinder.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\Serializers\BooleanSerializer.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\Serializers\ByteSerializer.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\Serializers\CharSerializer.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\Serializers\ComplexTypeSerializer.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\Serializers\DecimalSerializer.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\Serializers\DoubleSerializer.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\Serializers\EnumSerializer.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\Serializers\GuidSerializer.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\Serializers\Int16Serializer.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\Serializers\Int32Serializer.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\Serializers\Int64Serializer.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\Serializers\IntPtrSerializer.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\Serializers\SByteSerializer.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\Serializers\Serializer.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\Serializers\SingleSerializer.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\Serializers\StringSerializer.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\Serializers\UInt16Serializer.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\Serializers\UInt32Serializer.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\Serializers\UInt64Serializer.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Core\Serializers\UIntPtrSerializer.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Unity Integration\AOTSupportScanner.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Unity Integration\AOTSupportUtilities.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Unity Integration\DictionaryKeySupport\BaseDictionaryKeyPathProvider.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Unity Integration\DictionaryKeySupport\DictionaryKeyUtility.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Unity Integration\DictionaryKeySupport\IDictionaryKeyPathProvider.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Unity Integration\DictionaryKeySupport\RegisterDictionaryKeyPathProviderAttribute.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Unity Integration\DictionaryKeySupport\Vector2DictionaryKeyPathProvider.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Unity Integration\DictionaryKeySupport\Vector3DictionaryKeyPathProvider.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Unity Integration\DictionaryKeySupport\Vector4DictionaryKeyPathProvider.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Unity Integration\Formatters\AnimationCurveFormatter.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Unity Integration\Formatters\BoundsFormatter.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Unity Integration\Formatters\Color32Formatter.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Unity Integration\Formatters\ColorBlockFormatter.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Unity Integration\Formatters\ColorFormatter.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Unity Integration\Formatters\CoroutineFormatter.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Unity Integration\Formatters\GradientAlphaKeyFormatter.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Unity Integration\Formatters\GradientColorKeyFormatter.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Unity Integration\Formatters\GradientFormatter.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Unity Integration\Formatters\KeyframeFormatter.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Unity Integration\Formatters\LayerMaskFormatter.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Unity Integration\Formatters\QuaternionFormatter.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Unity Integration\Formatters\RectFormatter.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Unity Integration\Formatters\UnityEventFormatter.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Unity Integration\Formatters\Vector2Formatter.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Unity Integration\Formatters\Vector3Formatter.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Unity Integration\Formatters\Vector4Formatter.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Unity Integration\OdinPrefabSerializationEditorUtility.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Unity Integration\SerializedUnityObjects\IOverridesSerializationFormat.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Unity Integration\SerializedUnityObjects\IOverridesSerializationPolicy.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Unity Integration\SerializedUnityObjects\ISupportsPrefabSerialization.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Unity Integration\SerializedUnityObjects\SerializationData.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Unity Integration\SerializedUnityObjects\SerializedBehaviour.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Unity Integration\SerializedUnityObjects\SerializedComponent.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Unity Integration\SerializedUnityObjects\SerializedMonoBehaviour.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Unity Integration\SerializedUnityObjects\SerializedScriptableObject.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Unity Integration\SerializedUnityObjects\SerializedStateMachineBehaviour.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Unity Integration\SerializedUnityObjects\SerializedUnityObject.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Unity Integration\UnityReferenceResolver.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Unity Integration\UnitySerializationInitializer.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Unity Integration\UnitySerializationUtility.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Utilities\Extensions\FieldInfoExtensions.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Utilities\Extensions\GarbageFreeIterators.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Utilities\Extensions\LinqExtensions.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Utilities\Extensions\MemberInfoExtensions.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Utilities\Extensions\MethodInfoExtensions.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Utilities\Extensions\Operator.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Utilities\Extensions\PathUtilities.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Utilities\Extensions\PropertyInfoExtensions.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Utilities\Extensions\StringExtensions.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Utilities\Extensions\TypeExtensions.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Utilities\Extensions\UnityExtensions.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Utilities\Misc\AssemblyImportSettingsUtilities.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Utilities\Misc\Cache.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Utilities\Misc\DoubleLookupDictionary.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Utilities\Misc\EmitUtilities.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Utilities\Misc\FastTypeComparer.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Utilities\Misc\Flags.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Utilities\Misc\ICacheNotificationReceiver.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Utilities\Misc\ImmutableList.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Utilities\Misc\MemberAliasFieldInfo.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Utilities\Misc\MemberAliasMethodInfo.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Utilities\Misc\MemberAliasPropertyInfo.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Utilities\Misc\ReferenceEqualityComparer.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Utilities\Misc\UnityVersion.cs" />
-    <Compile Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Utilities\Misc\UnsafeUtilities.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\Version.txt" />
-    <None Include="Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\Serialization\OdinSerializer\VRC.Udon.Serialization.OdinSerializer.asmdef" />
+    <None Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\Version.txt" />
+    <None Include="Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\Serialization\OdinSerializer\VRC.Udon.Serialization.OdinSerializer.asmdef" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
@@ -443,12 +440,6 @@
     <Reference Include="PackageManagerAssembly">
       <HintPath>Assets\Store\EffectExamples\Editor\PackageManagerAssembly\PackageManagerAssembly.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.Burst.Unsafe">
-      <HintPath>Library\PackageCache\com.unity.burst@1.4.11\Unity.Burst.Unsafe.dll</HintPath>
-    </Reference>
-    <Reference Include="clipper_library">
-      <HintPath>Library\PackageCache\com.unity.cinemachine@2.8.0\Runtime\ThirdParty\clipper_library.dll</HintPath>
-    </Reference>
     <Reference Include="log4netPlastic">
       <HintPath>Library\PackageCache\com.unity.collab-proxy@1.10.2\Lib\Editor\PlasticSCM\log4netPlastic.dll</HintPath>
     </Reference>
@@ -461,116 +452,122 @@
     <Reference Include="unityplastic">
       <HintPath>Library\PackageCache\com.unity.collab-proxy@1.10.2\Lib\Editor\PlasticSCM\unityplastic.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>Library\PackageCache\com.vrchat.base@5854cdd7f1\Editor\VRCSDK\Dependencies\VRChat\CreatorCompanion\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="WatsonTcp">
-      <HintPath>Library\PackageCache\com.vrchat.base@5854cdd7f1\Editor\VRCSDK\Dependencies\VRChat\CreatorCompanion\WatsonTcp.dll</HintPath>
-    </Reference>
-    <Reference Include="VRC.SDK3.Dynamics.Contact.Editor">
-      <HintPath>Library\PackageCache\com.vrchat.base@5854cdd7f1\Editor\VRCSDK\Plugins\VRC.SDK3.Dynamics.Contact.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="VRC.SDK3.Dynamics.PhysBone.Editor">
-      <HintPath>Library\PackageCache\com.vrchat.base@5854cdd7f1\Editor\VRCSDK\Plugins\VRC.SDK3.Dynamics.PhysBone.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Blake2Sharp">
-      <HintPath>Library\PackageCache\com.vrchat.base@5854cdd7f1\Runtime\VRCSDK\Dependencies\librsync\Blake2Sharp.dll</HintPath>
-    </Reference>
-    <Reference Include="librsync.net">
-      <HintPath>Library\PackageCache\com.vrchat.base@5854cdd7f1\Runtime\VRCSDK\Dependencies\librsync\librsync.net.dll</HintPath>
-    </Reference>
-    <Reference Include="Collections.Pooled">
-      <HintPath>Library\PackageCache\com.vrchat.base@5854cdd7f1\Runtime\VRCSDK\Dependencies\Managed\Collections.Pooled.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Buffers">
-      <HintPath>Library\PackageCache\com.vrchat.base@5854cdd7f1\Runtime\VRCSDK\Dependencies\Managed\System.Buffers.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Collections.Immutable">
-      <HintPath>Library\PackageCache\com.vrchat.base@5854cdd7f1\Runtime\VRCSDK\Dependencies\Managed\System.Collections.Immutable.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Memory">
-      <HintPath>Library\PackageCache\com.vrchat.base@5854cdd7f1\Runtime\VRCSDK\Dependencies\Managed\System.Memory.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Numerics.Vectors">
-      <HintPath>Library\PackageCache\com.vrchat.base@5854cdd7f1\Runtime\VRCSDK\Dependencies\Managed\System.Numerics.Vectors.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Runtime.CompilerServices.Unsafe">
-      <HintPath>Library\PackageCache\com.vrchat.base@5854cdd7f1\Runtime\VRCSDK\Dependencies\Managed\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Threading.Tasks.Extensions">
-      <HintPath>Library\PackageCache\com.vrchat.base@5854cdd7f1\Runtime\VRCSDK\Dependencies\Managed\System.Threading.Tasks.Extensions.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Collections">
-      <HintPath>Library\PackageCache\com.vrchat.base@5854cdd7f1\Runtime\VRCSDK\Dependencies\Managed\Unity.Collections.dll</HintPath>
-    </Reference>
-    <Reference Include="VRC.Dynamics">
-      <HintPath>Library\PackageCache\com.vrchat.base@5854cdd7f1\Runtime\VRCSDK\Plugins\VRC.Dynamics.dll</HintPath>
-    </Reference>
-    <Reference Include="VRC.SDK3.Dynamics.Contact">
-      <HintPath>Library\PackageCache\com.vrchat.base@5854cdd7f1\Runtime\VRCSDK\Plugins\VRC.SDK3.Dynamics.Contact.dll</HintPath>
+    <Reference Include="Unity.Burst.Unsafe">
+      <HintPath>Library\PackageCache\com.unity.burst@1.4.11\Unity.Burst.Unsafe.dll</HintPath>
     </Reference>
     <Reference Include="VRC.SDK3.Dynamics.PhysBone">
-      <HintPath>Library\PackageCache\com.vrchat.base@5854cdd7f1\Runtime\VRCSDK\Plugins\VRC.SDK3.Dynamics.PhysBone.dll</HintPath>
+      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Plugins\VRC.SDK3.Dynamics.PhysBone.dll</HintPath>
     </Reference>
-    <Reference Include="VRC.Utility">
-      <HintPath>Library\PackageCache\com.vrchat.base@5854cdd7f1\Runtime\VRCSDK\Plugins\VRC.Utility.dll</HintPath>
+    <Reference Include="WatsonTcp">
+      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Editor\VRCSDK\Dependencies\VRChat\CreatorCompanion\WatsonTcp.dll</HintPath>
     </Reference>
-    <Reference Include="VRCCore-Editor">
-      <HintPath>Library\PackageCache\com.vrchat.base@5854cdd7f1\Runtime\VRCSDK\Plugins\VRCCore-Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="VRCSDKBase-Editor">
-      <HintPath>Library\PackageCache\com.vrchat.base@5854cdd7f1\Runtime\VRCSDK\Plugins\VRCSDKBase-Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="VRCSDKBase">
-      <HintPath>Library\PackageCache\com.vrchat.base@5854cdd7f1\Runtime\VRCSDK\Plugins\VRCSDKBase.dll</HintPath>
-    </Reference>
-    <Reference Include="0Harmony">
-      <HintPath>Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Runtime\Plugins\0Harmony.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Text.Encoding.CodePages">
-      <HintPath>Library\PackageCache\com.vrchat.udonsharp@825c8da06a\Runtime\Plugins\System.Text.Encoding.CodePages.dll</HintPath>
-    </Reference>
-    <Reference Include="VRC.Udon.Compiler">
-      <HintPath>Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Editor\Udon\External\VRC.Udon.Compiler.dll</HintPath>
-    </Reference>
-    <Reference Include="VRC.Udon.EditorBindings">
-      <HintPath>Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Editor\Udon\External\VRC.Udon.EditorBindings.dll</HintPath>
-    </Reference>
-    <Reference Include="VRC.Udon.Graph">
-      <HintPath>Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Editor\Udon\External\VRC.Udon.Graph.dll</HintPath>
-    </Reference>
-    <Reference Include="VRC.Udon.UAssembly">
-      <HintPath>Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Editor\Udon\External\VRC.Udon.UAssembly.dll</HintPath>
-    </Reference>
-    <Reference Include="VRC.Udon.VRCGraphModules">
-      <HintPath>Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Editor\Udon\External\VRC.Udon.VRCGraphModules.dll</HintPath>
-    </Reference>
-    <Reference Include="VRC.Udon.VRCTypeResolverModules">
-      <HintPath>Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Editor\Udon\External\VRC.Udon.VRCTypeResolverModules.dll</HintPath>
+    <Reference Include="System.Threading.Tasks.Extensions">
+      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Dependencies\Managed\System.Threading.Tasks.Extensions.dll</HintPath>
     </Reference>
     <Reference Include="VRC.Udon.ClientBindings">
-      <HintPath>Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\External\VRC.Udon.ClientBindings.dll</HintPath>
-    </Reference>
-    <Reference Include="VRC.Udon.Common">
-      <HintPath>Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\External\VRC.Udon.Common.dll</HintPath>
-    </Reference>
-    <Reference Include="VRC.Udon.Security">
-      <HintPath>Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\External\VRC.Udon.Security.dll</HintPath>
-    </Reference>
-    <Reference Include="VRC.Udon.VM">
-      <HintPath>Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\External\VRC.Udon.VM.dll</HintPath>
-    </Reference>
-    <Reference Include="VRC.Udon.VRCWrapperModules">
-      <HintPath>Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\External\VRC.Udon.VRCWrapperModules.dll</HintPath>
-    </Reference>
-    <Reference Include="VRC.Udon.Wrapper">
-      <HintPath>Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\Udon\External\VRC.Udon.Wrapper.dll</HintPath>
+      <HintPath>Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\External\VRC.Udon.ClientBindings.dll</HintPath>
     </Reference>
     <Reference Include="VRCSDK3-Editor">
-      <HintPath>Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\VRCSDK\Plugins\VRCSDK3-Editor.dll</HintPath>
+      <HintPath>Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\VRCSDK\Plugins\VRCSDK3-Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="VRC.Udon.VRCTypeResolverModules">
+      <HintPath>Library\PackageCache\com.vrchat.worlds@75ebae6abe\Editor\Udon\External\VRC.Udon.VRCTypeResolverModules.dll</HintPath>
+    </Reference>
+    <Reference Include="VRC.Udon.VRCWrapperModules">
+      <HintPath>Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\External\VRC.Udon.VRCWrapperModules.dll</HintPath>
     </Reference>
     <Reference Include="VRCSDK3">
-      <HintPath>Library\PackageCache\com.vrchat.worlds@5854cdd7f1\Runtime\VRCSDK\Plugins\VRCSDK3.dll</HintPath>
+      <HintPath>Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\VRCSDK\Plugins\VRCSDK3.dll</HintPath>
+    </Reference>
+    <Reference Include="VRC.Udon.VM">
+      <HintPath>Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\External\VRC.Udon.VM.dll</HintPath>
+    </Reference>
+    <Reference Include="librsync.net">
+      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Dependencies\librsync\librsync.net.dll</HintPath>
+    </Reference>
+    <Reference Include="VRC.Udon.Common">
+      <HintPath>Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\External\VRC.Udon.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="VRC.SDK3.Dynamics.Contact">
+      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Plugins\VRC.SDK3.Dynamics.Contact.dll</HintPath>
+    </Reference>
+    <Reference Include="Collections.Pooled">
+      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Dependencies\Managed\Collections.Pooled.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Collections.Immutable">
+      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Dependencies\Managed\System.Collections.Immutable.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics.Vectors">
+      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Dependencies\Managed\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Buffers">
+      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Dependencies\Managed\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="VRC.Dynamics">
+      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Plugins\VRC.Dynamics.dll</HintPath>
+    </Reference>
+    <Reference Include="VRC.Udon.Wrapper">
+      <HintPath>Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\External\VRC.Udon.Wrapper.dll</HintPath>
+    </Reference>
+    <Reference Include="VRC.Udon.Compiler">
+      <HintPath>Library\PackageCache\com.vrchat.worlds@75ebae6abe\Editor\Udon\External\VRC.Udon.Compiler.dll</HintPath>
+    </Reference>
+    <Reference Include="VRC.Udon.UAssembly">
+      <HintPath>Library\PackageCache\com.vrchat.worlds@75ebae6abe\Editor\Udon\External\VRC.Udon.UAssembly.dll</HintPath>
+    </Reference>
+    <Reference Include="VRC.Udon.Security">
+      <HintPath>Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\External\VRC.Udon.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="VRC.Udon.Graph">
+      <HintPath>Library\PackageCache\com.vrchat.worlds@75ebae6abe\Editor\Udon\External\VRC.Udon.Graph.dll</HintPath>
+    </Reference>
+    <Reference Include="clipper_library">
+      <HintPath>Library\PackageCache\com.unity.cinemachine@2.8.0\Runtime\ThirdParty\clipper_library.dll</HintPath>
+    </Reference>
+    <Reference Include="VRC.Collections">
+      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Dependencies\Managed\VRC.Collections.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Editor\VRCSDK\Dependencies\VRChat\CreatorCompanion\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="VRCSDKBase">
+      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Plugins\VRCSDKBase.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe">
+      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Dependencies\Managed\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="0Harmony">
+      <HintPath>Library\PackageCache\com.vrchat.udonsharp@26d6812704\Runtime\Plugins\0Harmony.dll</HintPath>
+    </Reference>
+    <Reference Include="VRC.SDK3.Dynamics.PhysBone.Editor">
+      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Editor\VRCSDK\Plugins\VRC.SDK3.Dynamics.PhysBone.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="VRCSDKBase-Editor">
+      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Plugins\VRCSDKBase-Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="VRC.SDK3.Dynamics.Contact.Editor">
+      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Editor\VRCSDK\Plugins\VRC.SDK3.Dynamics.Contact.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="VRC.Udon.VRCGraphModules">
+      <HintPath>Library\PackageCache\com.vrchat.worlds@75ebae6abe\Editor\Udon\External\VRC.Udon.VRCGraphModules.dll</HintPath>
+    </Reference>
+    <Reference Include="VRC.Udon.EditorBindings">
+      <HintPath>Library\PackageCache\com.vrchat.worlds@75ebae6abe\Editor\Udon\External\VRC.Udon.EditorBindings.dll</HintPath>
+    </Reference>
+    <Reference Include="Blake2Sharp">
+      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Dependencies\librsync\Blake2Sharp.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Memory">
+      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Dependencies\Managed\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Text.Encoding.CodePages">
+      <HintPath>Library\PackageCache\com.vrchat.udonsharp@26d6812704\Runtime\Plugins\System.Text.Encoding.CodePages.dll</HintPath>
+    </Reference>
+    <Reference Include="VRCCore-Editor">
+      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Plugins\VRCCore-Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="VRC.Utility">
+      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Plugins\VRC.Utility.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib">
       <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\mscorlib.dll</HintPath>

@@ -267,80 +267,80 @@
     <Reference Include="Unity.Burst.Unsafe">
       <HintPath>Library\PackageCache\com.unity.burst@1.4.11\Unity.Burst.Unsafe.dll</HintPath>
     </Reference>
-    <Reference Include="clipper_library">
-      <HintPath>Library\PackageCache\com.unity.cinemachine@2.8.0\Runtime\ThirdParty\clipper_library.dll</HintPath>
-    </Reference>
-    <Reference Include="Blake2Sharp">
-      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Dependencies\librsync\Blake2Sharp.dll</HintPath>
-    </Reference>
-    <Reference Include="librsync.net">
-      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Dependencies\librsync\librsync.net.dll</HintPath>
-    </Reference>
-    <Reference Include="Collections.Pooled">
-      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Dependencies\Managed\Collections.Pooled.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Buffers">
-      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Dependencies\Managed\System.Buffers.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Collections.Immutable">
-      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Dependencies\Managed\System.Collections.Immutable.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Memory">
-      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Dependencies\Managed\System.Memory.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Numerics.Vectors">
-      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Dependencies\Managed\System.Numerics.Vectors.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Runtime.CompilerServices.Unsafe">
-      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Dependencies\Managed\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    <Reference Include="VRC.SDK3.Dynamics.PhysBone">
+      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Plugins\VRC.SDK3.Dynamics.PhysBone.dll</HintPath>
     </Reference>
     <Reference Include="System.Threading.Tasks.Extensions">
       <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Dependencies\Managed\System.Threading.Tasks.Extensions.dll</HintPath>
     </Reference>
-    <Reference Include="VRC.Collections">
-      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Dependencies\Managed\VRC.Collections.dll</HintPath>
-    </Reference>
-    <Reference Include="VRC.Dynamics">
-      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Plugins\VRC.Dynamics.dll</HintPath>
-    </Reference>
-    <Reference Include="VRC.SDK3.Dynamics.Contact">
-      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Plugins\VRC.SDK3.Dynamics.Contact.dll</HintPath>
-    </Reference>
-    <Reference Include="VRC.SDK3.Dynamics.PhysBone">
-      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Plugins\VRC.SDK3.Dynamics.PhysBone.dll</HintPath>
-    </Reference>
-    <Reference Include="VRC.Utility">
-      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Plugins\VRC.Utility.dll</HintPath>
-    </Reference>
-    <Reference Include="VRCCore-Editor">
-      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Plugins\VRCCore-Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="VRCSDKBase">
-      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Plugins\VRCSDKBase.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Text.Encoding.CodePages">
-      <HintPath>Library\PackageCache\com.vrchat.udonsharp@26d6812704\Runtime\Plugins\System.Text.Encoding.CodePages.dll</HintPath>
-    </Reference>
     <Reference Include="VRC.Udon.ClientBindings">
       <HintPath>Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\External\VRC.Udon.ClientBindings.dll</HintPath>
-    </Reference>
-    <Reference Include="VRC.Udon.Common">
-      <HintPath>Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\External\VRC.Udon.Common.dll</HintPath>
-    </Reference>
-    <Reference Include="VRC.Udon.Security">
-      <HintPath>Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\External\VRC.Udon.Security.dll</HintPath>
-    </Reference>
-    <Reference Include="VRC.Udon.VM">
-      <HintPath>Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\External\VRC.Udon.VM.dll</HintPath>
     </Reference>
     <Reference Include="VRC.Udon.VRCWrapperModules">
       <HintPath>Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\External\VRC.Udon.VRCWrapperModules.dll</HintPath>
     </Reference>
+    <Reference Include="VRCSDK3">
+      <HintPath>Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\VRCSDK\Plugins\VRCSDK3.dll</HintPath>
+    </Reference>
+    <Reference Include="VRC.Udon.VM">
+      <HintPath>Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\External\VRC.Udon.VM.dll</HintPath>
+    </Reference>
+    <Reference Include="librsync.net">
+      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Dependencies\librsync\librsync.net.dll</HintPath>
+    </Reference>
+    <Reference Include="VRC.Udon.Common">
+      <HintPath>Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\External\VRC.Udon.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="VRC.SDK3.Dynamics.Contact">
+      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Plugins\VRC.SDK3.Dynamics.Contact.dll</HintPath>
+    </Reference>
+    <Reference Include="Collections.Pooled">
+      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Dependencies\Managed\Collections.Pooled.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Collections.Immutable">
+      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Dependencies\Managed\System.Collections.Immutable.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics.Vectors">
+      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Dependencies\Managed\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Buffers">
+      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Dependencies\Managed\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="VRC.Dynamics">
+      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Plugins\VRC.Dynamics.dll</HintPath>
+    </Reference>
     <Reference Include="VRC.Udon.Wrapper">
       <HintPath>Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\External\VRC.Udon.Wrapper.dll</HintPath>
     </Reference>
-    <Reference Include="VRCSDK3">
-      <HintPath>Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\VRCSDK\Plugins\VRCSDK3.dll</HintPath>
+    <Reference Include="VRC.Udon.Security">
+      <HintPath>Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\External\VRC.Udon.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="clipper_library">
+      <HintPath>Library\PackageCache\com.unity.cinemachine@2.8.0\Runtime\ThirdParty\clipper_library.dll</HintPath>
+    </Reference>
+    <Reference Include="VRC.Collections">
+      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Dependencies\Managed\VRC.Collections.dll</HintPath>
+    </Reference>
+    <Reference Include="VRCSDKBase">
+      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Plugins\VRCSDKBase.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe">
+      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Dependencies\Managed\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="Blake2Sharp">
+      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Dependencies\librsync\Blake2Sharp.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Memory">
+      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Dependencies\Managed\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Text.Encoding.CodePages">
+      <HintPath>Library\PackageCache\com.vrchat.udonsharp@26d6812704\Runtime\Plugins\System.Text.Encoding.CodePages.dll</HintPath>
+    </Reference>
+    <Reference Include="VRCCore-Editor">
+      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Plugins\VRCCore-Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="VRC.Utility">
+      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Plugins\VRC.Utility.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib">
       <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\mscorlib.dll</HintPath>

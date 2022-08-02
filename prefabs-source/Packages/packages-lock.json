@@ -55,13 +55,6 @@
       "dependencies": {},
       "url": "https://packages.unity.com"
     },
-    "com.unity.inputsystem": {
-      "version": "1.0.2",
-      "depth": 1,
-      "source": "registry",
-      "dependencies": {},
-      "url": "https://packages.unity.com"
-    },
     "com.unity.mathematics": {
       "version": "1.2.5",
       "depth": 1,
@@ -142,23 +135,6 @@
         "com.unity.mathematics": "1.2.5"
       },
       "hash": "75ebae6abe72ea4c38f3479ac87d9217a8f451e7"
-    },
-    "com.vrchat.clientsim": {
-      "version": "https://github.com/vrchat-community/ClientSim.git?path=/Packages/com.vrchat.ClientSim#vcc",
-      "depth": 0,
-      "source": "git",
-      "dependencies": {
-        "com.unity.xr.oculus.standalone": "2.38.4",
-        "com.unity.inputsystem": "1.0.2"
-      },
-      "hash": "ddf48efe3b93bd6ce86fd2f1c243b88f3fd42856"
-    },
-    "com.vrchat.udonsharp": {
-      "version": "https://github.com/vrchat-community/UdonSharp.git?path=Packages/com.vrchat.UdonSharp#vcc",
-      "depth": 0,
-      "source": "git",
-      "dependencies": {},
-      "hash": "26d68127049702a597380f9be3ee228402df4dc3"
     },
     "com.vrchat.worlds": {
       "version": "https://github.com/vrchat/packages.git?path=/packages/com.vrchat.worlds#vcc",

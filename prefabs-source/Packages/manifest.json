@@ -11,8 +11,6 @@
     "com.unity.xr.oculus.standalone": "2.38.4",
     "com.unity.xr.openvr.standalone": "2.0.5",
     "com.vrchat.base": "https://github.com/vrchat/packages.git?path=/packages/com.vrchat.base#vcc",
-    "com.vrchat.clientsim": "https://github.com/vrchat-community/ClientSim.git?path=/Packages/com.vrchat.ClientSim#vcc",
-    "com.vrchat.udonsharp": "https://github.com/vrchat-community/UdonSharp.git?path=Packages/com.vrchat.UdonSharp#vcc",
     "com.vrchat.worlds": "https://github.com/vrchat/packages.git?path=/packages/com.vrchat.worlds#vcc",
     "com.unity.modules.ai": "1.0.0",
     "com.unity.modules.androidjni": "1.0.0",

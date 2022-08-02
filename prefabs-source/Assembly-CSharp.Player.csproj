@@ -186,37 +186,6 @@
     <Compile Include="Assets\DecentM\Prefabs\VideoPlayer\Scripts\VideoPlayerUI.cs" />
     <Compile Include="Assets\DecentM\Prefabs\VideoRatelimit\Scripts\PlayerLoadMonitoring.cs" />
     <Compile Include="Assets\DecentM\Prefabs\VideoRatelimit\Scripts\VideoRatelimitSystem.cs" />
-    <Compile Include="Assets\Merlin\Scripts\VRCBakeryAdapter.cs" />
-    <Compile Include="Assets\Store\EasyQuestSwitch\EQS_Data.cs" />
-    <Compile Include="Assets\Store\EasyQuestSwitch\EQS_Localization.cs" />
-    <Compile Include="Assets\Store\EasyQuestSwitch\EQS_Types\EQS_Fields.cs" />
-    <Compile Include="Assets\Store\EasyQuestSwitch\EQS_Types\Type_Animator.cs" />
-    <Compile Include="Assets\Store\EasyQuestSwitch\EQS_Types\Type_AudioSource.cs" />
-    <Compile Include="Assets\Store\EasyQuestSwitch\EQS_Types\Type_Base.cs" />
-    <Compile Include="Assets\Store\EasyQuestSwitch\EQS_Types\Type_Behaviour.cs" />
-    <Compile Include="Assets\Store\EasyQuestSwitch\EQS_Types\Type_BoxCollider.cs" />
-    <Compile Include="Assets\Store\EasyQuestSwitch\EQS_Types\Type_Camera.cs" />
-    <Compile Include="Assets\Store\EasyQuestSwitch\EQS_Types\Type_CanvasScaler.cs" />
-    <Compile Include="Assets\Store\EasyQuestSwitch\EQS_Types\Type_Collider.cs" />
-    <Compile Include="Assets\Store\EasyQuestSwitch\EQS_Types\Type_GameObject.cs" />
-    <Compile Include="Assets\Store\EasyQuestSwitch\EQS_Types\Type_Image.cs" />
-    <Compile Include="Assets\Store\EasyQuestSwitch\EQS_Types\Type_LODGroup.cs" />
-    <Compile Include="Assets\Store\EasyQuestSwitch\EQS_Types\Type_Light.cs" />
-    <Compile Include="Assets\Store\EasyQuestSwitch\EQS_Types\Type_Material.cs" />
-    <Compile Include="Assets\Store\EasyQuestSwitch\EQS_Types\Type_MeshCollider.cs" />
-    <Compile Include="Assets\Store\EasyQuestSwitch\EQS_Types\Type_MeshFilter.cs" />
-    <Compile Include="Assets\Store\EasyQuestSwitch\EQS_Types\Type_RawImage.cs" />
-    <Compile Include="Assets\Store\EasyQuestSwitch\EQS_Types\Type_ReflectionProbe.cs" />
-    <Compile Include="Assets\Store\EasyQuestSwitch\EQS_Types\Type_RenderTexture.cs" />
-    <Compile Include="Assets\Store\EasyQuestSwitch\EQS_Types\Type_Renderer.cs" />
-    <Compile Include="Assets\Store\EasyQuestSwitch\EQS_Types\Type_SkinnedMeshRenderer.cs" />
-    <Compile Include="Assets\Store\EasyQuestSwitch\EQS_Types\Type_SphereCollider.cs" />
-    <Compile Include="Assets\Store\EasyQuestSwitch\EQS_Types\Type_SpriteRenderer.cs" />
-    <Compile Include="Assets\Store\EasyQuestSwitch\EQS_Types\Type_Transform.cs" />
-    <Compile Include="Assets\Store\EasyQuestSwitch\EQS_Types\VRC\Type_VRC_MirrorReflection_SDK2.cs" />
-    <Compile Include="Assets\Store\EasyQuestSwitch\EQS_Types\VRC\Type_VRC_MirrorReflection_SDK3.cs" />
-    <Compile Include="Assets\Store\EasyQuestSwitch\EQS_Types\VRC\Type_VRC_SpatialAudioSource_SDK2.cs" />
-    <Compile Include="Assets\Store\EasyQuestSwitch\EQS_Types\VRC\Type_VRC_SpatialAudioSource_SDK3.cs" />
     <Compile Include="Assets\Store\EffectExamples\Shared\Scripts\DecalDestroyer.cs" />
     <Compile Include="Assets\Store\EffectExamples\Shared\Scripts\ExtinguishableFire.cs" />
     <Compile Include="Assets\Store\EffectExamples\Shared\Scripts\GunAim.cs" />
@@ -279,7 +248,6 @@
     <None Include="Assets\DecentM\Dependencies\AudioLink\Shaders\Amplify\Shaders\AudioLinkAmplify_FilteredVUFlat.shader" />
     <None Include="Assets\Store\Filamented\FilamentShadingStandard.cginc" />
     <None Include="Assets\DecentM\Dependencies\AudioLink\Shaders\AudioLinkQuickView.shader" />
-    <None Include="Assets\VRWorldToolkit\Version.txt" />
     <None Include="Assets\DecentM\Dependencies\AudioLink\Shaders\AudioLinkDocs_Demo5.shader" />
     <None Include="Assets\Store\Filamented\FilamentedTemplateRefraction.shader" />
     <None Include="Assets\DecentM\Dependencies\AudioLink\Shaders\AudioReactiveSurface.shader" />
@@ -289,7 +257,6 @@
     <None Include="Assets\DecentM\Dependencies\AudioLink\LICENSE.txt" />
     <None Include="Assets\DecentM\ExampleAssets\Shaders\TransparentBackground.shader" />
     <None Include="Assets\Store\VRWaterShader2\Shaders\VRWSShadowCaster.cginc" />
-    <None Include="Assets\Store\Varneon\WorldCreatorAssistant\version.txt" />
     <None Include="Assets\Store\Filamented\StandardRoughness.shader" />
     <None Include="Assets\DecentM\Dependencies\AudioLink\Shaders\AudioLinkDocs_Demo3.shader" />
     <None Include="Assets\DecentM\Dependencies\AudioLink\Shaders\Amplify\Shaders\AudioLinkAmplify_Chronotensity.shader" />
@@ -338,7 +305,6 @@
     <None Include="Assets\DecentM\Dependencies\AudioLink\Shaders\AudioTextureOverlay.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Masking.shader" />
     <None Include="Assets\Store\VRWaterShader2\Shaders\VRWSTess.cginc" />
-    <None Include="Assets\Store\Varneon\WorldCreatorAssistant\LICENSE.txt" />
     <None Include="Assets\DecentM\Dependencies\AudioLink\Shaders\AudioLinkDocs_Demo2.shader" />
     <None Include="Assets\DecentM\Dependencies\AudioLink\Shaders\AudioLinkDocs_Demo8.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF Overlay.shader" />
@@ -358,7 +324,6 @@
     <None Include="Assets\Store\Filamented\FilamentCommonOcclusion.cginc" />
     <None Include="Assets\Store\Filamented\SharedFilteringLib.hlsl" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile.shader" />
-    <None Include="Assets\VRCPrefabs\Stingray\UdonCalibratingChairs\Readme.txt" />
     <None Include="Assets\DecentM\Dependencies\AudioLink\Shaders\AudioLinkDocs_Demo7.shader" />
     <None Include="Assets\Store\Filamented\UnityImageBasedLightingMinimal.cginc" />
     <None Include="Assets\DecentM\Dependencies\UdonHashLib\version.txt" />
@@ -557,6 +522,27 @@
     <Reference Include="Unity.VSCode.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.VSCode.Editor.dll</HintPath>
     </Reference>
+    <Reference Include="AltGUI">
+      <HintPath>Library\ScriptAssemblies\AltGUI.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.TextMeshPro.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.TextMeshPro.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="BakeryEditorAssembly">
+      <HintPath>Library\ScriptAssemblies\BakeryEditorAssembly.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Rider.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.Rider.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.VisualStudio.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.VisualStudio.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.PlasticSCM.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.PlasticSCM.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.UI">
+      <HintPath>Library\ScriptAssemblies\UnityEditor.UI.dll</HintPath>
+    </Reference>
     <Reference Include="VRC.ClientSim.Editor">
       <HintPath>Library\ScriptAssemblies\VRC.ClientSim.Editor.dll</HintPath>
     </Reference>
@@ -566,26 +552,11 @@
     <Reference Include="UdonSharp.Editor">
       <HintPath>Library\ScriptAssemblies\UdonSharp.Editor.dll</HintPath>
     </Reference>
-    <Reference Include="AltGUI">
-      <HintPath>Library\ScriptAssemblies\AltGUI.dll</HintPath>
-    </Reference>
-    <Reference Include="Varneon.WorldCreatorAssistant">
-      <HintPath>Library\ScriptAssemblies\Varneon.WorldCreatorAssistant.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.TextMeshPro.Editor">
-      <HintPath>Library\ScriptAssemblies\Unity.TextMeshPro.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="BakeryEditorAssembly">
-      <HintPath>Library\ScriptAssemblies\BakeryEditorAssembly.dll</HintPath>
-    </Reference>
     <Reference Include="Unity.Postprocessing.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.Postprocessing.Editor.dll</HintPath>
     </Reference>
     <Reference Include="VRC.SDKBase.Editor">
       <HintPath>Library\ScriptAssemblies\VRC.SDKBase.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Rider.Editor">
-      <HintPath>Library\ScriptAssemblies\Unity.Rider.Editor.dll</HintPath>
     </Reference>
     <Reference Include="VRC.SDKBase.Editor.ShaderStripping">
       <HintPath>Library\ScriptAssemblies\VRC.SDKBase.Editor.ShaderStripping.dll</HintPath>
@@ -596,98 +567,89 @@
     <Reference Include="com.unity.cinemachine.editor">
       <HintPath>Library\ScriptAssemblies\com.unity.cinemachine.editor.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.VisualStudio.Editor">
-      <HintPath>Library\ScriptAssemblies\Unity.VisualStudio.Editor.dll</HintPath>
-    </Reference>
     <Reference Include="Unity.Mathematics.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.Mathematics.Editor.dll</HintPath>
     </Reference>
     <Reference Include="VRC.SDK3.Editor">
       <HintPath>Library\ScriptAssemblies\VRC.SDK3.Editor.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.PlasticSCM.Editor">
-      <HintPath>Library\ScriptAssemblies\Unity.PlasticSCM.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEditor.UI">
-      <HintPath>Library\ScriptAssemblies\UnityEditor.UI.dll</HintPath>
-    </Reference>
     <Reference Include="Unity.Burst.Unsafe">
       <HintPath>Library\PackageCache\com.unity.burst@1.4.11\Unity.Burst.Unsafe.dll</HintPath>
-    </Reference>
-    <Reference Include="clipper_library">
-      <HintPath>Library\PackageCache\com.unity.cinemachine@2.8.0\Runtime\ThirdParty\clipper_library.dll</HintPath>
-    </Reference>
-    <Reference Include="Blake2Sharp">
-      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Dependencies\librsync\Blake2Sharp.dll</HintPath>
-    </Reference>
-    <Reference Include="librsync.net">
-      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Dependencies\librsync\librsync.net.dll</HintPath>
-    </Reference>
-    <Reference Include="Collections.Pooled">
-      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Dependencies\Managed\Collections.Pooled.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Buffers">
-      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Dependencies\Managed\System.Buffers.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Collections.Immutable">
-      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Dependencies\Managed\System.Collections.Immutable.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Memory">
-      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Dependencies\Managed\System.Memory.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Numerics.Vectors">
-      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Dependencies\Managed\System.Numerics.Vectors.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Runtime.CompilerServices.Unsafe">
-      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Dependencies\Managed\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Threading.Tasks.Extensions">
-      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Dependencies\Managed\System.Threading.Tasks.Extensions.dll</HintPath>
-    </Reference>
-    <Reference Include="VRC.Collections">
-      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Dependencies\Managed\VRC.Collections.dll</HintPath>
-    </Reference>
-    <Reference Include="VRC.Dynamics">
-      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Plugins\VRC.Dynamics.dll</HintPath>
-    </Reference>
-    <Reference Include="VRC.SDK3.Dynamics.Contact">
-      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Plugins\VRC.SDK3.Dynamics.Contact.dll</HintPath>
     </Reference>
     <Reference Include="VRC.SDK3.Dynamics.PhysBone">
       <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Plugins\VRC.SDK3.Dynamics.PhysBone.dll</HintPath>
     </Reference>
-    <Reference Include="VRC.Utility">
-      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Plugins\VRC.Utility.dll</HintPath>
-    </Reference>
-    <Reference Include="VRCCore-Editor">
-      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Plugins\VRCCore-Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="VRCSDKBase">
-      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Plugins\VRCSDKBase.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Text.Encoding.CodePages">
-      <HintPath>Library\PackageCache\com.vrchat.udonsharp@26d6812704\Runtime\Plugins\System.Text.Encoding.CodePages.dll</HintPath>
+    <Reference Include="System.Threading.Tasks.Extensions">
+      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Dependencies\Managed\System.Threading.Tasks.Extensions.dll</HintPath>
     </Reference>
     <Reference Include="VRC.Udon.ClientBindings">
       <HintPath>Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\External\VRC.Udon.ClientBindings.dll</HintPath>
     </Reference>
-    <Reference Include="VRC.Udon.Common">
-      <HintPath>Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\External\VRC.Udon.Common.dll</HintPath>
+    <Reference Include="VRC.Udon.VRCWrapperModules">
+      <HintPath>Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\External\VRC.Udon.VRCWrapperModules.dll</HintPath>
     </Reference>
-    <Reference Include="VRC.Udon.Security">
-      <HintPath>Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\External\VRC.Udon.Security.dll</HintPath>
+    <Reference Include="VRCSDK3">
+      <HintPath>Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\VRCSDK\Plugins\VRCSDK3.dll</HintPath>
     </Reference>
     <Reference Include="VRC.Udon.VM">
       <HintPath>Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\External\VRC.Udon.VM.dll</HintPath>
     </Reference>
-    <Reference Include="VRC.Udon.VRCWrapperModules">
-      <HintPath>Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\External\VRC.Udon.VRCWrapperModules.dll</HintPath>
+    <Reference Include="librsync.net">
+      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Dependencies\librsync\librsync.net.dll</HintPath>
+    </Reference>
+    <Reference Include="VRC.Udon.Common">
+      <HintPath>Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\External\VRC.Udon.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="VRC.SDK3.Dynamics.Contact">
+      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Plugins\VRC.SDK3.Dynamics.Contact.dll</HintPath>
+    </Reference>
+    <Reference Include="Collections.Pooled">
+      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Dependencies\Managed\Collections.Pooled.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Collections.Immutable">
+      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Dependencies\Managed\System.Collections.Immutable.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics.Vectors">
+      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Dependencies\Managed\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Buffers">
+      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Dependencies\Managed\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="VRC.Dynamics">
+      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Plugins\VRC.Dynamics.dll</HintPath>
     </Reference>
     <Reference Include="VRC.Udon.Wrapper">
       <HintPath>Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\External\VRC.Udon.Wrapper.dll</HintPath>
     </Reference>
-    <Reference Include="VRCSDK3">
-      <HintPath>Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\VRCSDK\Plugins\VRCSDK3.dll</HintPath>
+    <Reference Include="VRC.Udon.Security">
+      <HintPath>Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\External\VRC.Udon.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="clipper_library">
+      <HintPath>Library\PackageCache\com.unity.cinemachine@2.8.0\Runtime\ThirdParty\clipper_library.dll</HintPath>
+    </Reference>
+    <Reference Include="VRC.Collections">
+      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Dependencies\Managed\VRC.Collections.dll</HintPath>
+    </Reference>
+    <Reference Include="VRCSDKBase">
+      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Plugins\VRCSDKBase.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe">
+      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Dependencies\Managed\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="Blake2Sharp">
+      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Dependencies\librsync\Blake2Sharp.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Memory">
+      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Dependencies\Managed\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Text.Encoding.CodePages">
+      <HintPath>Library\PackageCache\com.vrchat.udonsharp@26d6812704\Runtime\Plugins\System.Text.Encoding.CodePages.dll</HintPath>
+    </Reference>
+    <Reference Include="VRCCore-Editor">
+      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Plugins\VRCCore-Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="VRC.Utility">
+      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Plugins\VRC.Utility.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib">
       <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\mscorlib.dll</HintPath>
@@ -1048,6 +1010,22 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="UnityEngine.UI.csproj">
+      <Project>{0CD2AE03-5A8C-15D2-9A56-DE9F338A27BA}</Project>
+      <Name>UnityEngine.UI</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Timeline.csproj">
+      <Project>{71685982-A3E4-03BD-69E8-57000764549C}</Project>
+      <Name>Unity.Timeline</Name>
+    </ProjectReference>
+    <ProjectReference Include="BakeryRuntimeAssembly.csproj">
+      <Project>{5E74822B-1910-32AD-3498-F1619D04A768}</Project>
+      <Name>BakeryRuntimeAssembly</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.TextMeshPro.csproj">
+      <Project>{6D1829C3-AEC0-D815-EB82-4E4BBF459634}</Project>
+      <Name>Unity.TextMeshPro</Name>
+    </ProjectReference>
     <ProjectReference Include="Cinemachine.csproj">
       <Project>{28AF7372-7F9B-B4E8-B066-C9A57AB9D51C}</Project>
       <Name>Cinemachine</Name>
@@ -1072,18 +1050,6 @@
       <Project>{4A1B7C43-F455-7043-77CD-7717AFF7B0D3}</Project>
       <Name>VRC.Udon</Name>
     </ProjectReference>
-    <ProjectReference Include="UnityEngine.UI.csproj">
-      <Project>{0CD2AE03-5A8C-15D2-9A56-DE9F338A27BA}</Project>
-      <Name>UnityEngine.UI</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.Timeline.csproj">
-      <Project>{71685982-A3E4-03BD-69E8-57000764549C}</Project>
-      <Name>Unity.Timeline</Name>
-    </ProjectReference>
-    <ProjectReference Include="BakeryRuntimeAssembly.csproj">
-      <Project>{5E74822B-1910-32AD-3498-F1619D04A768}</Project>
-      <Name>BakeryRuntimeAssembly</Name>
-    </ProjectReference>
     <ProjectReference Include="VRC.SDK3.csproj">
       <Project>{F21FEFFC-DE4F-CECE-6F72-E933F69D9F36}</Project>
       <Name>VRC.SDK3</Name>
@@ -1099,10 +1065,6 @@
     <ProjectReference Include="VRC.SDKBase.csproj">
       <Project>{3359449D-85F4-2EED-5F9C-F912C361EA41}</Project>
       <Name>VRC.SDKBase</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.TextMeshPro.csproj">
-      <Project>{6D1829C3-AEC0-D815-EB82-4E4BBF459634}</Project>
-      <Name>Unity.TextMeshPro</Name>
     </ProjectReference>
     <ProjectReference Include="VRC.SDKBase.Editor.BuildPipeline.csproj">
       <Project>{22F39F53-4BC5-5898-070C-24FBF6D6D733}</Project>
