@@ -554,7 +554,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6605304170776005930}
-  - {fileID: 5393784348060411652}
   m_Father: {fileID: 6605304171507725384}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1351,97 +1350,6 @@ MonoBehaviour:
   - {fileID: 7170847370387494920}
   system: {fileID: 8561122911659706055}
   events: {fileID: 7170847370387494920}
---- !u!1 &8235823005234906848
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 5393784348060411652}
-  - component: {fileID: 592738996899599855}
-  - component: {fileID: 5332843626328830408}
-  m_Layer: 0
-  m_Name: CVRVideoPlayer
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &5393784348060411652
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8235823005234906848}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 6605304172213891227}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &592738996899599855
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8235823005234906848}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dd6327bf7e514821af46379fd775e356, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerId: 
-  audioPlaybackMode: 3
-  customAudioSource: {fileID: 6605304171337992003}
-  roomScaleAudioSources: []
-  playbackVolume: 1
-  syncEnabled: 0
-  localPlaybackSpeed: 1
-  playOnAwakeObject:
-    videoUrl: 
-    videoTitle: 
-    introEndInSeconds: 0
-    creditsStartInSeconds: 0
-    thumbnailUrl: 
-    isCollapsed: 0
-  ProjectionTexture: {fileID: 8400000, guid: caaa2ef9005242e4680fe12d88408fd2, type: 2}
-  interactiveUI: 0
-  autoplay: 0
-  subtitleTextComponents: []
-  entities: []
-  startedPlayback:
-    m_PersistentCalls:
-      m_Calls: []
-  finishedPlayback:
-    m_PersistentCalls:
-      m_Calls: []
-  pausedPlayback:
-    m_PersistentCalls:
-      m_Calls: []
-  setUrl:
-    m_PersistentCalls:
-      m_Calls: []
-  videoPlayerUIPosition: {fileID: 0}
---- !u!114 &5332843626328830408
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8235823005234906848}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 14a9f2866379e2a48af177124f9674f6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 592738996899599855}
-  events: {fileID: 7170847370387494920}
-  texture: {fileID: 8400000, guid: caaa2ef9005242e4680fe12d88408fd2, type: 2}
 --- !u!1 &8502740247433042057
 GameObject:
   m_ObjectHideFlags: 0
@@ -1654,15 +1562,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 702aeeb3e68812a40b690d9afbd2d5c3, type: 3}
---- !u!23 &5506587896146400139 stripped
-MeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 8680439627225952609, guid: 702aeeb3e68812a40b690d9afbd2d5c3,
-    type: 3}
-  m_PrefabInstance: {fileID: 3754956855940702954}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6638438172753291492 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7510932177016130062, guid: 702aeeb3e68812a40b690d9afbd2d5c3,
+    type: 3}
+  m_PrefabInstance: {fileID: 3754956855940702954}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &5506587896146400139 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 8680439627225952609, guid: 702aeeb3e68812a40b690d9afbd2d5c3,
     type: 3}
   m_PrefabInstance: {fileID: 3754956855940702954}
   m_PrefabAsset: {fileID: 0}

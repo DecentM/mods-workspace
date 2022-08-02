@@ -1,0 +1,15 @@
+{
+    "name": "DecentM.Prefabs.PerformanceGovernor",
+    "references": [
+        "GUID:3ee6d5ff70c59bf4ab94dd9ef0dd6cea"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -5,7 +5,7 @@ namespace DecentM.Prefabs.VideoPlayer
     public class ScreenHandler : MonoBehaviour
     {
         public Renderer[] screens;
-        private Camera camera;
+        private new Camera camera;
 
         private void Start()
         {

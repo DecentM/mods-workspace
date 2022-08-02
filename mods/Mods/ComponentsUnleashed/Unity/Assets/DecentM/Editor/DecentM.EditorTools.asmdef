@@ -1,0 +1,19 @@
+{
+    "name": "DecentM.EditorTools",
+    "references": [
+        "GUID:6055be8ebefd69e48b49212b09b47b2f",
+        "GUID:f4d8d187eee39104eb59c4c330d002b3",
+        "GUID:3ee6d5ff70c59bf4ab94dd9ef0dd6cea"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "nunit.framework.dll"
+    ],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

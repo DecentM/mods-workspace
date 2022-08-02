@@ -30,6 +30,12 @@ namespace DecentM.Mods.ComponentsUnleashed
             whiteList.Add(typeof(Prefabs.Performance.PerformanceGovernor));
 
             /*
+             * UI
+             */
+            whiteList.Add(typeof(Prefabs.UI.Dropdown));
+            whiteList.Add(typeof(Prefabs.UI.DropdownOption));
+
+            /*
              * VideoPlayer
              */
             whiteList.Add(typeof(UnityEngine.Video.VideoPlayer));

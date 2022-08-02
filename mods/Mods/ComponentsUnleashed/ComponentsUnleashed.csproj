@@ -39,6 +39,10 @@
     <Reference Include="0Harmony, Version=2.9.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\HarmonyX.2.9.0\lib\net45\0Harmony.dll</HintPath>
     </Reference>
+    <Reference Include="Assembly-CSharp, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\ChilloutVR\ChilloutVR_Data\Managed\Assembly-CSharp.dll</HintPath>
+    </Reference>
     <Reference Include="MelonLoader">
       <HintPath>..\..\chilloutvr\MelonLoader\MelonLoader.dll</HintPath>
     </Reference>
@@ -103,47 +107,30 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ComponentsUnleashed.cs" />
-    <Compile Include="Components\PerformanceGovernor\PerformanceGovernor.cs" />
-    <Compile Include="Components\PerformanceGovernor\PerformanceGovernorPlugin.cs" />
-    <Compile Include="Components\PubSub\Pubsub.cs" />
-    <Compile Include="Components\PubSub\PubsubSubscriber.cs" />
-    <Compile Include="Components\RefugeeTools.cs" />
-    <Compile Include="Components\UI\Dropdown\Dropdown.cs" />
-    <Compile Include="Components\UI\Dropdown\DropdownOption.cs" />
-    <Compile Include="Components\VideoPlayer\PlayerHandlers\CVRVideo.cs" />
-    <Compile Include="Components\VideoPlayer\PlayerHandlers\PlayerHandler.cs" />
-    <Compile Include="Components\VideoPlayer\PlayerHandlers\UnityVideo.cs" />
-    <Compile Include="Components\VideoPlayer\Plugins\AutoLivestreamDetectorPlugin.cs" />
-    <Compile Include="Components\VideoPlayer\Plugins\AutoPlayPlugin.cs" />
-    <Compile Include="Components\VideoPlayer\Plugins\AutoRetryPlugin.cs" />
-    <Compile Include="Components\VideoPlayer\Plugins\DebugPlugin.cs" />
-    <Compile Include="Components\VideoPlayer\Plugins\LoadRequestHandlerPlugin.cs" />
-    <Compile Include="Components\VideoPlayer\Plugins\Playlist\PlaylistItemRenderer.cs" />
-    <Compile Include="Components\VideoPlayer\Plugins\Playlist\PlaylistPlayerPlugin.cs" />
-    <Compile Include="Components\VideoPlayer\Plugins\RenderTextureExportPlugin.cs" />
-    <Compile Include="Components\VideoPlayer\Plugins\ResolutionUpdaterPlugin.cs" />
-    <Compile Include="Components\VideoPlayer\Plugins\ScreenAnalysisPlugin.cs" />
-    <Compile Include="Components\VideoPlayer\Plugins\SkipToTimestampPlugin.cs" />
-    <Compile Include="Components\VideoPlayer\Plugins\SoundEffectsPlugin.cs" />
-    <Compile Include="Components\VideoPlayer\Plugins\SubtitlesPlugin.cs" />
-    <Compile Include="Components\VideoPlayer\Plugins\TextureReferencePlugin.cs" />
-    <Compile Include="Components\VideoPlayer\Plugins\TextureUpdaterPlugin.cs" />
-    <Compile Include="Components\VideoPlayer\Plugins\UIPlugin.cs" />
-    <Compile Include="Components\VideoPlayer\Plugins\URLVerifierPlugin.cs" />
-    <Compile Include="Components\VideoPlayer\Plugins\VideoPlayerPlugin.cs" />
-    <Compile Include="Components\VideoPlayer\Plugins\Playlist\VideoPlaylist.cs" />
-    <Compile Include="Components\VideoPlayer\Plugins\Playlist\VideoPlaylistUI.cs" />
-    <Compile Include="Components\VideoPlayer\ScreenHandler.cs" />
-    <Compile Include="Components\VideoPlayer\VideoPlayerEvents.cs" />
-    <Compile Include="Components\VideoPlayer\VideoPlayerSystem.cs" />
-    <Compile Include="Components\VideoPlayer\VideoPlayerUI.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="Unity\DecentM.Prefabs.PerformanceGovernor.csproj">
+      <Project>{aa45217d-0372-5937-a4ee-1c264fa5c44d}</Project>
+      <Name>DecentM.Prefabs.PerformanceGovernor</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity\DecentM.Prefabs.PubSub.csproj">
+      <Project>{1c47deef-a9c5-7d73-655d-c9899755d2aa}</Project>
+      <Name>DecentM.Prefabs.PubSub</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity\DecentM.Prefabs.UI.csproj">
+      <Project>{37b466f1-81c0-0f11-ad13-42ec78554379}</Project>
+      <Name>DecentM.Prefabs.UI</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity\DecentM.Prefabs.VideoPlayer.csproj">
+      <Project>{ef950210-1054-1837-8314-2fd0ce59c263}</Project>
+      <Name>DecentM.Prefabs.VideoPlayer</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>echo F | xcopy /y /d "$(ProjectDir)$(OutDir)$(TargetFileName)" "$(SolutionDir)ChilloutVR\Mods\$(ProjectName).dll"</PostBuildEvent>
