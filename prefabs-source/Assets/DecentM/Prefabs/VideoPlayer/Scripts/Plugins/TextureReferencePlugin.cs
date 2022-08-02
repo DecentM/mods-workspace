@@ -1,9 +1,8 @@
-﻿using UdonSharp;
-using UnityEngine;
-using VRC.SDKBase;
-using VRC.Udon;
+﻿using UnityEngine;
 
-namespace DecentM.VideoPlayer.Plugins
+using DecentM.Prefabs.VideoPlayer.Handlers;
+
+namespace DecentM.Prefabs.VideoPlayer.Plugins
 {
     public class TextureReferencePlugin : VideoPlayerPlugin
     {

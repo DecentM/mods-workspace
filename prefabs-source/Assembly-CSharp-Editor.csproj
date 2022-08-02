@@ -58,10 +58,25 @@
     <Compile Include="Assets\DecentM\Editor\CombinationsGenerator.cs" />
     <Compile Include="Assets\DecentM\Editor\ComponentCollector.cs" />
     <Compile Include="Assets\DecentM\Editor\DCoroutine.cs" />
+    <Compile Include="Assets\DecentM\Editor\EditorAssets.cs" />
     <Compile Include="Assets\DecentM\Editor\ImageStore.cs" />
     <Compile Include="Assets\DecentM\Editor\Inspector.cs" />
+    <Compile Include="Assets\DecentM\Editor\Keyboard\KeyboardEventsInspector.cs" />
+    <Compile Include="Assets\DecentM\Editor\Keyboard\KeyboardKeyInspector.cs" />
+    <Compile Include="Assets\DecentM\Editor\Keyboard\SymbolStorageInspector.cs" />
     <Compile Include="Assets\DecentM\Editor\MaterialIcons\Mappings.cs" />
     <Compile Include="Assets\DecentM\Editor\MaterialIcons\MaterialIcons.cs" />
+    <Compile Include="Assets\DecentM\Editor\Metrics\EditorAssets.cs" />
+    <Compile Include="Assets\DecentM\Editor\Metrics\IndividualTrackingPluginManager.cs" />
+    <Compile Include="Assets\DecentM\Editor\Metrics\InstancePluginManager.cs" />
+    <Compile Include="Assets\DecentM\Editor\Metrics\MetricsAutoFixer.cs" />
+    <Compile Include="Assets\DecentM\Editor\Metrics\MetricsBuildHook.cs" />
+    <Compile Include="Assets\DecentM\Editor\Metrics\MetricsMatrix.cs" />
+    <Compile Include="Assets\DecentM\Editor\Metrics\MetricsUIInspector.cs" />
+    <Compile Include="Assets\DecentM\Editor\Metrics\MetricsUrlGenerator.cs" />
+    <Compile Include="Assets\DecentM\Editor\Metrics\PluginManager.cs" />
+    <Compile Include="Assets\DecentM\Editor\Metrics\UIManager.cs" />
+    <Compile Include="Assets\DecentM\Editor\PerformanceGovernor\PerformanceGovernorInspector.cs" />
     <Compile Include="Assets\DecentM\Editor\ProcessManager.cs" />
     <Compile Include="Assets\DecentM\Editor\RandomStringGenerator.cs" />
     <Compile Include="Assets\DecentM\Editor\SelfLocator\SelfLocatorAsset.cs" />
@@ -69,57 +84,36 @@
     <Compile Include="Assets\DecentM\Editor\SelfLocator\SelfLocatorInspector.cs" />
     <Compile Include="Assets\DecentM\Editor\TextProcessing.cs" />
     <Compile Include="Assets\DecentM\Editor\Utilities.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\Keyboard\Editor\KeyboardEventsInspector.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\Keyboard\Editor\KeyboardKeyInspector.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\Keyboard\Editor\SymbolStorageInspector.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\LibDecentM\Structures\Collections\Editor\Tests\DoubleLinkedListTests.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\LibDecentM\Structures\Collections\Editor\Tests\ListTests.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\LibDecentM\Structures\Collections\Editor\Tests\MapTests.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\LibDecentM\Structures\Collections\Editor\Tests\QueueTests.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\LibDecentM\Structures\Collections\Editor\Tests\StackTests.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\Metrics\Scripts\Editor\EditorAssets.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\Metrics\Scripts\Editor\IndividualTrackingPluginManager.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\Metrics\Scripts\Editor\InstancePluginManager.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\Metrics\Scripts\Editor\MetricsAutoFixer.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\Metrics\Scripts\Editor\MetricsBuildHook.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\Metrics\Scripts\Editor\MetricsMatrix.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\Metrics\Scripts\Editor\MetricsUIInspector.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\Metrics\Scripts\Editor\MetricsUrlGenerator.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\Metrics\Scripts\Editor\PluginManager.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\Metrics\Scripts\Editor\UIManager.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\PerformanceGovernor\Editor\PerformanceGovernorInspector.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\VideoPlayer\Scripts\Editor\EditorAssets.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\VideoPlayer\Scripts\Editor\Importers\MetadataImporter.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\VideoPlayer\Scripts\Editor\Importers\SubtitleImporter.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\VideoPlayer\Scripts\Editor\Importers\VideoMetadataAsset.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\VideoPlayer\Scripts\Editor\Inspectors\SubtitleImporterInspector.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\VideoPlayer\Scripts\Editor\Inspectors\VideoPlayerUIInspector.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\VideoPlayer\Scripts\Editor\Inspectors\VideoPlaylistInspector.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\VideoPlayer\Scripts\Editor\PluginManager.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\VideoPlayer\Scripts\Editor\SubtitleStore.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\VideoPlayer\Scripts\Editor\Subtitles\Abstracts.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\VideoPlayer\Scripts\Editor\Subtitles\Ast.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\VideoPlayer\Scripts\Editor\Subtitles\Compiler.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\VideoPlayer\Scripts\Editor\Subtitles\FileFormats\SRT\Lexer.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\VideoPlayer\Scripts\Editor\Subtitles\FileFormats\SRT\Parser.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\VideoPlayer\Scripts\Editor\Subtitles\FileFormats\SRT\Writer.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\VideoPlayer\Scripts\Editor\Subtitles\FileFormats\VSI\Lexer.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\VideoPlayer\Scripts\Editor\Subtitles\FileFormats\VSI\Parser.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\VideoPlayer\Scripts\Editor\Subtitles\FileFormats\VSI\Utils.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\VideoPlayer\Scripts\Editor\Subtitles\FileFormats\VSI\Writer.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\VideoPlayer\Scripts\Editor\Subtitles\FileFormats\VTT\Lexer.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\VideoPlayer\Scripts\Editor\Subtitles\FileFormats\VTT\Parser.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\VideoPlayer\Scripts\Editor\Subtitles\FileFormats\VTT\Writer.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\VideoPlayer\Scripts\Editor\Subtitles\Transformer.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\VideoPlayer\Scripts\Editor\Tests\Misc.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\VideoPlayer\Scripts\Editor\Tests\Srt.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\VideoPlayer\Scripts\Editor\Tests\Vtt.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\VideoPlayer\Scripts\Editor\URLResolverShim.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\VideoPlayer\Scripts\Editor\VideoMetadataAutoFixer.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\VideoPlayer\Scripts\Editor\VideoMetadataStore.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\VideoPlayer\Scripts\Editor\VideoPlayerAutoFixer.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\VideoPlayer\Scripts\Editor\YTDLCommands.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\VideoRatelimit\Editor\VideoRatelimitAutoFixer.cs" />
+    <Compile Include="Assets\DecentM\Editor\VideoPlayer\EditorAssets.cs" />
+    <Compile Include="Assets\DecentM\Editor\VideoPlayer\Importers\MetadataImporter.cs" />
+    <Compile Include="Assets\DecentM\Editor\VideoPlayer\Importers\SubtitleImporter.cs" />
+    <Compile Include="Assets\DecentM\Editor\VideoPlayer\Importers\VideoMetadataAsset.cs" />
+    <Compile Include="Assets\DecentM\Editor\VideoPlayer\Inspectors\SubtitleImporterInspector.cs" />
+    <Compile Include="Assets\DecentM\Editor\VideoPlayer\Inspectors\VideoPlayerUIInspector.cs" />
+    <Compile Include="Assets\DecentM\Editor\VideoPlayer\Inspectors\VideoPlaylistInspector.cs" />
+    <Compile Include="Assets\DecentM\Editor\VideoPlayer\PluginManager.cs" />
+    <Compile Include="Assets\DecentM\Editor\VideoPlayer\SubtitleStore.cs" />
+    <Compile Include="Assets\DecentM\Editor\VideoPlayer\Subtitles\Abstracts.cs" />
+    <Compile Include="Assets\DecentM\Editor\VideoPlayer\Subtitles\Ast.cs" />
+    <Compile Include="Assets\DecentM\Editor\VideoPlayer\Subtitles\Compiler.cs" />
+    <Compile Include="Assets\DecentM\Editor\VideoPlayer\Subtitles\FileFormats\SRT\Lexer.cs" />
+    <Compile Include="Assets\DecentM\Editor\VideoPlayer\Subtitles\FileFormats\SRT\Parser.cs" />
+    <Compile Include="Assets\DecentM\Editor\VideoPlayer\Subtitles\FileFormats\SRT\Writer.cs" />
+    <Compile Include="Assets\DecentM\Editor\VideoPlayer\Subtitles\FileFormats\VSI\Lexer.cs" />
+    <Compile Include="Assets\DecentM\Editor\VideoPlayer\Subtitles\FileFormats\VSI\Parser.cs" />
+    <Compile Include="Assets\DecentM\Editor\VideoPlayer\Subtitles\FileFormats\VSI\Utils.cs" />
+    <Compile Include="Assets\DecentM\Editor\VideoPlayer\Subtitles\FileFormats\VSI\Writer.cs" />
+    <Compile Include="Assets\DecentM\Editor\VideoPlayer\Subtitles\FileFormats\VTT\Lexer.cs" />
+    <Compile Include="Assets\DecentM\Editor\VideoPlayer\Subtitles\FileFormats\VTT\Parser.cs" />
+    <Compile Include="Assets\DecentM\Editor\VideoPlayer\Subtitles\FileFormats\VTT\Writer.cs" />
+    <Compile Include="Assets\DecentM\Editor\VideoPlayer\Subtitles\Tests\Misc.cs" />
+    <Compile Include="Assets\DecentM\Editor\VideoPlayer\Subtitles\Tests\Srt.cs" />
+    <Compile Include="Assets\DecentM\Editor\VideoPlayer\Subtitles\Tests\Vtt.cs" />
+    <Compile Include="Assets\DecentM\Editor\VideoPlayer\Subtitles\Transformer.cs" />
+    <Compile Include="Assets\DecentM\Editor\VideoPlayer\VideoMetadataStore.cs" />
+    <Compile Include="Assets\DecentM\Editor\VideoPlayer\VideoPlayerAutoFixer.cs" />
+    <Compile Include="Assets\DecentM\Editor\VideoPlayer\YTDLCommands.cs" />
+    <Compile Include="Assets\DecentM\Editor\VideoRatelimit\VideoRatelimitAutoFixer.cs" />
     <Compile Include="Assets\Editor\AnimationRefactor.cs" />
     <Compile Include="Assets\Editor\ReplaceWithPrefab.cs" />
     <Compile Include="Assets\Store\EffectExamples\TutorialInfo\Scripts\Editor\ReadmeEditor.cs" />
@@ -151,7 +145,7 @@
     <None Include="Assets\Editor\x64\Bakery\cudart64_90.dll" />
     <None Include="Assets\Editor\x64\Bakery\optix.6.0.0.dll" />
     <None Include="Assets\Editor\x64\Bakery\cudart32_91.dll" />
-    <None Include="Assets\DecentM\Prefabs\PerformanceGovernor\Editor\PerformanceGovernorInspector.uss" />
+    <None Include="Assets\DecentM\Editor\PerformanceGovernor\PerformanceGovernorInspector.uss" />
     <None Include="Assets\Editor\x64\Bakery\uvgbuffergen.dll" />
     <None Include="Assets\DecentM\Fonts\Editor\unicode-ranges.txt" />
     <None Include="Assets\Editor\x64\Bakery\tbbmalloc.dll" />
@@ -366,123 +360,6 @@
     </Reference>
     <Reference Include="unityplastic">
       <HintPath>Library\PackageCache\com.unity.collab-proxy@1.10.2\Lib\Editor\PlasticSCM\unityplastic.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Burst.Unsafe">
-      <HintPath>Library\PackageCache\com.unity.burst@1.4.11\Unity.Burst.Unsafe.dll</HintPath>
-    </Reference>
-    <Reference Include="VRC.SDK3.Dynamics.PhysBone">
-      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Plugins\VRC.SDK3.Dynamics.PhysBone.dll</HintPath>
-    </Reference>
-    <Reference Include="WatsonTcp">
-      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Editor\VRCSDK\Dependencies\VRChat\CreatorCompanion\WatsonTcp.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Threading.Tasks.Extensions">
-      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Dependencies\Managed\System.Threading.Tasks.Extensions.dll</HintPath>
-    </Reference>
-    <Reference Include="VRC.Udon.ClientBindings">
-      <HintPath>Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\External\VRC.Udon.ClientBindings.dll</HintPath>
-    </Reference>
-    <Reference Include="VRCSDK3-Editor">
-      <HintPath>Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\VRCSDK\Plugins\VRCSDK3-Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="VRC.Udon.VRCTypeResolverModules">
-      <HintPath>Library\PackageCache\com.vrchat.worlds@75ebae6abe\Editor\Udon\External\VRC.Udon.VRCTypeResolverModules.dll</HintPath>
-    </Reference>
-    <Reference Include="VRC.Udon.VRCWrapperModules">
-      <HintPath>Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\External\VRC.Udon.VRCWrapperModules.dll</HintPath>
-    </Reference>
-    <Reference Include="VRCSDK3">
-      <HintPath>Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\VRCSDK\Plugins\VRCSDK3.dll</HintPath>
-    </Reference>
-    <Reference Include="VRC.Udon.VM">
-      <HintPath>Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\External\VRC.Udon.VM.dll</HintPath>
-    </Reference>
-    <Reference Include="librsync.net">
-      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Dependencies\librsync\librsync.net.dll</HintPath>
-    </Reference>
-    <Reference Include="VRC.Udon.Common">
-      <HintPath>Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\External\VRC.Udon.Common.dll</HintPath>
-    </Reference>
-    <Reference Include="VRC.SDK3.Dynamics.Contact">
-      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Plugins\VRC.SDK3.Dynamics.Contact.dll</HintPath>
-    </Reference>
-    <Reference Include="Collections.Pooled">
-      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Dependencies\Managed\Collections.Pooled.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Collections.Immutable">
-      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Dependencies\Managed\System.Collections.Immutable.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Numerics.Vectors">
-      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Dependencies\Managed\System.Numerics.Vectors.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Buffers">
-      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Dependencies\Managed\System.Buffers.dll</HintPath>
-    </Reference>
-    <Reference Include="VRC.Dynamics">
-      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Plugins\VRC.Dynamics.dll</HintPath>
-    </Reference>
-    <Reference Include="VRC.Udon.Wrapper">
-      <HintPath>Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\External\VRC.Udon.Wrapper.dll</HintPath>
-    </Reference>
-    <Reference Include="VRC.Udon.Compiler">
-      <HintPath>Library\PackageCache\com.vrchat.worlds@75ebae6abe\Editor\Udon\External\VRC.Udon.Compiler.dll</HintPath>
-    </Reference>
-    <Reference Include="VRC.Udon.UAssembly">
-      <HintPath>Library\PackageCache\com.vrchat.worlds@75ebae6abe\Editor\Udon\External\VRC.Udon.UAssembly.dll</HintPath>
-    </Reference>
-    <Reference Include="VRC.Udon.Security">
-      <HintPath>Library\PackageCache\com.vrchat.worlds@75ebae6abe\Runtime\Udon\External\VRC.Udon.Security.dll</HintPath>
-    </Reference>
-    <Reference Include="VRC.Udon.Graph">
-      <HintPath>Library\PackageCache\com.vrchat.worlds@75ebae6abe\Editor\Udon\External\VRC.Udon.Graph.dll</HintPath>
-    </Reference>
-    <Reference Include="clipper_library">
-      <HintPath>Library\PackageCache\com.unity.cinemachine@2.8.0\Runtime\ThirdParty\clipper_library.dll</HintPath>
-    </Reference>
-    <Reference Include="VRC.Collections">
-      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Dependencies\Managed\VRC.Collections.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Editor\VRCSDK\Dependencies\VRChat\CreatorCompanion\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="VRCSDKBase">
-      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Plugins\VRCSDKBase.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Runtime.CompilerServices.Unsafe">
-      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Dependencies\Managed\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
-    </Reference>
-    <Reference Include="0Harmony">
-      <HintPath>Library\PackageCache\com.vrchat.udonsharp@26d6812704\Runtime\Plugins\0Harmony.dll</HintPath>
-    </Reference>
-    <Reference Include="VRC.SDK3.Dynamics.PhysBone.Editor">
-      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Editor\VRCSDK\Plugins\VRC.SDK3.Dynamics.PhysBone.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="VRCSDKBase-Editor">
-      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Plugins\VRCSDKBase-Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="VRC.SDK3.Dynamics.Contact.Editor">
-      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Editor\VRCSDK\Plugins\VRC.SDK3.Dynamics.Contact.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="VRC.Udon.VRCGraphModules">
-      <HintPath>Library\PackageCache\com.vrchat.worlds@75ebae6abe\Editor\Udon\External\VRC.Udon.VRCGraphModules.dll</HintPath>
-    </Reference>
-    <Reference Include="VRC.Udon.EditorBindings">
-      <HintPath>Library\PackageCache\com.vrchat.worlds@75ebae6abe\Editor\Udon\External\VRC.Udon.EditorBindings.dll</HintPath>
-    </Reference>
-    <Reference Include="Blake2Sharp">
-      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Dependencies\librsync\Blake2Sharp.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Memory">
-      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Dependencies\Managed\System.Memory.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Text.Encoding.CodePages">
-      <HintPath>Library\PackageCache\com.vrchat.udonsharp@26d6812704\Runtime\Plugins\System.Text.Encoding.CodePages.dll</HintPath>
-    </Reference>
-    <Reference Include="VRCCore-Editor">
-      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Plugins\VRCCore-Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="VRC.Utility">
-      <HintPath>Library\PackageCache\com.vrchat.base@75ebae6abe\Runtime\VRCSDK\Plugins\VRC.Utility.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework">
       <HintPath>Library\PackageCache\com.unity.ext.nunit@1.0.6\net35\unity-custom\nunit.framework.dll</HintPath>
@@ -862,6 +739,10 @@
       <Project>{9970E424-A796-F000-8998-CE27FFF8DA09}</Project>
       <Name>Unity.Timeline.Editor</Name>
     </ProjectReference>
+    <ProjectReference Include="DecentM.Prefabs.csproj">
+      <Project>{134B67B3-9793-2E10-9BE1-FB8887AA624D}</Project>
+      <Name>DecentM.Prefabs</Name>
+    </ProjectReference>
     <ProjectReference Include="Unity.VSCode.Editor.csproj">
       <Project>{301223FE-E78E-FB1A-1AAD-F525F3AF6756}</Project>
       <Name>Unity.VSCode.Editor</Name>
@@ -909,94 +790,6 @@
     <ProjectReference Include="UnityEditor.UI.csproj">
       <Project>{2D7D4349-444F-40DA-03F6-25C68B761D92}</Project>
       <Name>UnityEditor.UI</Name>
-    </ProjectReference>
-    <ProjectReference Include="Cinemachine.csproj">
-      <Project>{28AF7372-7F9B-B4E8-B066-C9A57AB9D51C}</Project>
-      <Name>Cinemachine</Name>
-    </ProjectReference>
-    <ProjectReference Include="VRC.Udon.Serialization.OdinSerializer.csproj">
-      <Project>{C6478EE8-2280-A906-51C4-3F7A57CBFD14}</Project>
-      <Name>VRC.Udon.Serialization.OdinSerializer</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.Burst.csproj">
-      <Project>{F6AAC17F-0FAB-AD1B-5255-9F9D99D3C8CD}</Project>
-      <Name>Unity.Burst</Name>
-    </ProjectReference>
-    <ProjectReference Include="VRC.ClientSim.Editor.csproj">
-      <Project>{AA8E53EE-0439-A180-1F37-EE1F91E3E594}</Project>
-      <Name>VRC.ClientSim.Editor</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.Burst.Editor.csproj">
-      <Project>{7543905A-6F4E-E8DC-88C4-EE8011F0A782}</Project>
-      <Name>Unity.Burst.Editor</Name>
-    </ProjectReference>
-    <ProjectReference Include="UdonSharp.Runtime.csproj">
-      <Project>{F207FDF2-FC8D-3FF8-E6B4-E7228B5BA778}</Project>
-      <Name>UdonSharp.Runtime</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.InputSystem.csproj">
-      <Project>{E39FD8A9-E5D7-7DB4-9184-84E20FD9FC1B}</Project>
-      <Name>Unity.InputSystem</Name>
-    </ProjectReference>
-    <ProjectReference Include="UdonSharp.Editor.csproj">
-      <Project>{896B8746-8DF7-CA03-6E24-73EEB80AA98C}</Project>
-      <Name>UdonSharp.Editor</Name>
-    </ProjectReference>
-    <ProjectReference Include="VRC.Udon.csproj">
-      <Project>{4A1B7C43-F455-7043-77CD-7717AFF7B0D3}</Project>
-      <Name>VRC.Udon</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.Postprocessing.Editor.csproj">
-      <Project>{E54D3233-9D3F-BD80-9BE4-3D10FC5B8475}</Project>
-      <Name>Unity.Postprocessing.Editor</Name>
-    </ProjectReference>
-    <ProjectReference Include="VRC.SDKBase.Editor.csproj">
-      <Project>{C35E973A-D8A4-B6F4-000E-EB248A7496C6}</Project>
-      <Name>VRC.SDKBase.Editor</Name>
-    </ProjectReference>
-    <ProjectReference Include="VRC.SDK3.csproj">
-      <Project>{F21FEFFC-DE4F-CECE-6F72-E933F69D9F36}</Project>
-      <Name>VRC.SDK3</Name>
-    </ProjectReference>
-    <ProjectReference Include="VRC.SDKBase.Editor.ShaderStripping.csproj">
-      <Project>{5CB75860-DF32-19A6-322D-6DF03B1E40A3}</Project>
-      <Name>VRC.SDKBase.Editor.ShaderStripping</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.Mathematics.csproj">
-      <Project>{DB45369E-A59B-D786-5797-CA30E80442FA}</Project>
-      <Name>Unity.Mathematics</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.Postprocessing.Runtime.csproj">
-      <Project>{56FBC107-6015-1737-B069-A20784C7D848}</Project>
-      <Name>Unity.Postprocessing.Runtime</Name>
-    </ProjectReference>
-    <ProjectReference Include="VRC.SDKBase.csproj">
-      <Project>{3359449D-85F4-2EED-5F9C-F912C361EA41}</Project>
-      <Name>VRC.SDKBase</Name>
-    </ProjectReference>
-    <ProjectReference Include="VRC.Udon.Editor.csproj">
-      <Project>{C332D50B-EE2C-AFE5-C8DD-445E2CE0568C}</Project>
-      <Name>VRC.Udon.Editor</Name>
-    </ProjectReference>
-    <ProjectReference Include="com.unity.cinemachine.editor.csproj">
-      <Project>{1315A5EC-DE69-D723-8E9C-24C13C7E8CC9}</Project>
-      <Name>com.unity.cinemachine.editor</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.Mathematics.Editor.csproj">
-      <Project>{E2A4CE3A-7518-71BD-4EA5-09394A77A29B}</Project>
-      <Name>Unity.Mathematics.Editor</Name>
-    </ProjectReference>
-    <ProjectReference Include="VRC.SDK3.Editor.csproj">
-      <Project>{0F47C03B-B237-6F08-00EC-8D5F8F4F4EDB}</Project>
-      <Name>VRC.SDK3.Editor</Name>
-    </ProjectReference>
-    <ProjectReference Include="VRC.SDKBase.Editor.BuildPipeline.csproj">
-      <Project>{22F39F53-4BC5-5898-070C-24FBF6D6D733}</Project>
-      <Name>VRC.SDKBase.Editor.BuildPipeline</Name>
-    </ProjectReference>
-    <ProjectReference Include="VRC.ClientSim.csproj">
-      <Project>{34F5BC94-BA93-DFCD-1F88-34C669C76872}</Project>
-      <Name>VRC.ClientSim</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

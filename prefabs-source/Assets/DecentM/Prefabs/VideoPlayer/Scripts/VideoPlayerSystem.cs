@@ -1,16 +1,33 @@
 ﻿using JetBrains.Annotations;
-using UdonSharp;
 using UnityEngine;
-using VRC.SDKBase;
-using VRC.Udon;
 
-namespace DecentM.VideoPlayer
+using DecentM.Prefabs.VideoPlayer.Handlers;
+
+namespace DecentM.Prefabs.VideoPlayer
 {
-    [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
-    public class VideoPlayerSystem : UdonSharpBehaviour
+    public enum VideoErrorType
+    {
+        Unknown,
+        HttpError,
+        Timeout,
+    }
+
+    public struct VideoError
+    {
+        public VideoError(VideoErrorType type, string message)
+        {
+            this.type = type;
+            this.message = message;
+        }
+
+        public VideoErrorType type;
+        public string message;
+    }
+
+    public class VideoPlayerSystem : MonoBehaviour
     {
         public VideoPlayerEvents events;
-        public BasePlayerHandler[] playerHandlers;
+        public PlayerHandler[] playerHandlers;
         public AudioSource[] speakers;
         public ScreenHandler[] screens;
 
@@ -22,14 +39,14 @@ namespace DecentM.VideoPlayer
 
         private int currentPlayerHandlerIndex = 0;
 
-        public BasePlayerHandler currentPlayerHandler
+        public PlayerHandler currentPlayerHandler
         {
             get { return this.playerHandlers[currentPlayerHandlerIndex]; }
         }
 
         private void Start()
         {
-            this.SendCustomEventDelayedSeconds(nameof(BroadcastInit), 0.1f);
+            Invoke(nameof(BroadcastInit), 0.1f);
         }
 
         public void BroadcastInit()
@@ -83,41 +100,41 @@ namespace DecentM.VideoPlayer
             }
         }
 
-        private void DisablePlayer(BasePlayerHandler player)
+        private void DisablePlayer(PlayerHandler player)
         {
-            player.UnloadVideo();
+            player.Unload();
             player.gameObject.SetActive(false);
         }
 
         private void DisablePlayer(int index)
         {
-            BasePlayerHandler basePlayerHandler = this.playerHandlers[index];
+            PlayerHandler PlayerHandler = this.playerHandlers[index];
 
-            if (basePlayerHandler == null)
+            if (PlayerHandler == null)
                 return;
 
-            this.DisablePlayer(basePlayerHandler);
+            this.DisablePlayer(PlayerHandler);
         }
 
-        private void EnablePlayer(BasePlayerHandler player)
+        private void EnablePlayer(PlayerHandler player)
         {
             player.gameObject.SetActive(true);
-            player.UnloadVideo();
+            player.Unload();
         }
 
         private void EnablePlayer(int index)
         {
-            BasePlayerHandler basePlayerHandler = this.playerHandlers[index];
+            PlayerHandler PlayerHandler = this.playerHandlers[index];
 
-            if (basePlayerHandler == null)
+            if (PlayerHandler == null)
                 return;
 
-            this.EnablePlayer(basePlayerHandler);
+            this.EnablePlayer(PlayerHandler);
         }
 
         private void DisableAllPlayers()
         {
-            foreach (BasePlayerHandler player in playerHandlers)
+            foreach (PlayerHandler player in playerHandlers)
             {
                 this.DisablePlayer(player);
             }
@@ -152,68 +169,68 @@ namespace DecentM.VideoPlayer
         [PublicAPI]
         public bool IsPlaying()
         {
-            return this.currentPlayerHandler.IsPlaying();
+            return this.currentPlayerHandler.IsPlaying;
         }
 
         [PublicAPI]
         public void StartPlayback()
         {
-            this.currentPlayerHandler.StartPlayback();
+            this.currentPlayerHandler.Play();
         }
 
         [PublicAPI]
         public void StartPlayback(float timestamp)
         {
-            this.currentPlayerHandler.StartPlayback(timestamp);
+            this.currentPlayerHandler.Play(timestamp);
         }
 
         [PublicAPI]
         public void Seek(float timestamp)
         {
-            this.currentPlayerHandler.Seek(timestamp);
+            this.currentPlayerHandler.SetTime(timestamp);
             this.events.OnProgress(timestamp, this.GetDuration());
         }
 
         [PublicAPI]
         public void PausePlayback(float timestamp)
         {
-            this.currentPlayerHandler.PausePlayback();
-            this.currentPlayerHandler.Seek(timestamp);
+            this.currentPlayerHandler.Pause();
+            this.currentPlayerHandler.SetTime(timestamp);
             this.events.OnPlaybackStop(timestamp);
         }
 
         [PublicAPI]
         public void PausePlayback()
         {
-            this.currentPlayerHandler.PausePlayback();
+            this.currentPlayerHandler.Pause();
             this.events.OnPlaybackStop(this.currentPlayerHandler.GetTime());
         }
 
-        private VRCUrl currentUrl;
+        private string currentUrl;
 
         [PublicAPI]
-        public void RequestVideo(VRCUrl url)
+        public void RequestVideo(string url)
         {
             this.events.OnLoadRequested(url);
         }
 
-        public void LoadVideo(VRCUrl url)
+        public void LoadVideo(string url)
         {
             this.currentUrl = url;
-            this.currentPlayerHandler.LoadVideo(url);
+            this.currentPlayerHandler.LoadURL(url);
         }
 
         [PublicAPI]
-        public void UnloadVideo()
+        public void Unload()
         {
             this.currentUrl = null;
-            this.currentPlayerHandler.UnloadVideo();
+            this.currentPlayerHandler.Unload();
             this.events.OnUnload();
             this.Seek(0);
         }
 
         [PublicAPI]
-        public VRCUrl GetCurrentUrl()
+        public string GetCurrentUrl()
         {
             return this.currentUrl;
         }

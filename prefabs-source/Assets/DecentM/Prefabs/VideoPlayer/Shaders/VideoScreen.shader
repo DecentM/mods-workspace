@@ -7,7 +7,7 @@
         [Toggle(_)]_IsAVPro("Is AVPro", Int) = 0
         _EmissionStrength("Emission Strength", Float) = 1
         _BackgroundColour("Background Colour", Color) = (0, 0, 0, 1)
-        [Toggle(_)]_EnableAntialisaing("Enable Antialiasing", Int) = 1
+        [Toggle(_)]_EnableAntialisaing("Enable Letterbox Antialiasing", Int) = 1
         _AVProContrastOffset("AVPro Contrast Offset", Float) = 2.2
     }
     SubShader

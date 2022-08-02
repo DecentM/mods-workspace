@@ -4,12 +4,7 @@ using JetBrains.Annotations;
 
 using UnityEngine;
 
-using VRC.SDKBase;
-using VRC.Udon;
-
-using UdonSharp;
-
-namespace DecentM.VideoPlayer.Plugins
+namespace DecentM.Prefabs.VideoPlayer.Plugins
 {
     public class ScreenAnalysisPlugin : VideoPlayerPlugin
     {
@@ -25,7 +20,7 @@ namespace DecentM.VideoPlayer.Plugins
         private float elapsed = 0;
         private float fps = 0;
 
-        private new Camera camera;
+        private Camera camera;
 
         protected override void _Start()
         {
@@ -247,7 +242,7 @@ namespace DecentM.VideoPlayer.Plugins
             this.Reset();
         }
 
-        protected override void OnLoadApproved(VRCUrl url)
+        protected override void OnLoadApproved(string url)
         {
             this.isRunning = false;
             this.Reset();

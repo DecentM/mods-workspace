@@ -1,13 +1,9 @@
-﻿using UdonSharp;
-using UnityEngine;
-using VRC.SDKBase;
-using VRC.Udon;
+﻿using UnityEngine;
 using TMPro;
 
-namespace DecentM.UI
+namespace DecentM.Prefabs.UI
 {
-    [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
-    public class DropdownOption : UdonSharpBehaviour
+    public class DropdownOption : MonoBehaviour
     {
         public TextMeshProUGUI labelSlot;
 

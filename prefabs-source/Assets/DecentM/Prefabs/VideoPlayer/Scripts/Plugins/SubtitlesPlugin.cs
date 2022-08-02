@@ -1,12 +1,8 @@
-﻿using UdonSharp;
-using UnityEngine;
-using VRC.SDKBase;
-using VRC.Udon;
+﻿using UnityEngine;
 using TMPro;
 
-namespace DecentM.VideoPlayer.Plugins
+namespace DecentM.Prefabs.VideoPlayer.Plugins
 {
-    [UdonBehaviourSyncMode(BehaviourSyncMode.Manual)]
     public class SubtitlesPlugin : VideoPlayerPlugin
     {
         public TextMeshProUGUI debugSlot;
@@ -14,7 +10,8 @@ namespace DecentM.VideoPlayer.Plugins
 
         private TextAsset[] currentSubtitles;
 
-        [UdonSynced, FieldChangeCallback(nameof(displayValue))]
+        // TODO: Refactor after we have variable syncing working
+        // [UdonSynced, FieldChangeCallback(nameof(displayValue))]
         private string _displayValue;
 
         public string displayValue
@@ -24,13 +21,15 @@ namespace DecentM.VideoPlayer.Plugins
             {
                 this._displayValue = value;
 
-                if (this.isOwner)
-                    this.RequestSerialization();
+                // TODO: Restore after we have ownership working
+                // if (this.isOwner)
+                //    this.RequestSerialization();
+
                 // If the current non-owner already has subtitles loaded, we don't do anything.
                 // This way synced subtitles won't happen when there are multiple languages and people
                 // are using different ones.
-                else if (this.instructions.Length > 0)
-                    return;
+                // else if (this.instructions.Length > 0)
+                //    return;
 
                 if (string.IsNullOrEmpty(value))
                     this.events.OnSubtitleClear();
@@ -39,10 +38,13 @@ namespace DecentM.VideoPlayer.Plugins
             }
         }
 
+        /* TODO: Restore after we have ownership working
+
         private bool isOwner
         {
             get { return Networking.GetOwner(this.gameObject) == Networking.LocalPlayer; }
         }
+        */
 
         protected override void OnPlaybackStart(float timestamp)
         {
@@ -61,7 +63,7 @@ namespace DecentM.VideoPlayer.Plugins
             this.Reset();
         }
 
-        protected override void OnLoadApproved(VRCUrl url)
+        protected override void OnLoadApproved(string url)
         {
             this.Reset();
         }

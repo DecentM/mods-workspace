@@ -1,18 +1,9 @@
 ﻿using System;
-using UdonSharp;
 using UnityEngine;
-using VRC.SDKBase;
-using VRC.Udon;
-
-#if UNITY_EDITOR && !COMPILER_UDONSHARP
 using UnityEditor;
-#endif
 
-using DecentM.VideoPlayer.Plugins;
-
-namespace DecentM.VideoPlayer
+namespace DecentM.Prefabs.VideoPlayer.Plugins
 {
-    [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public class VideoPlaylist : VideoPlayerPlugin, ISerializationCallbackReceiver
     {
         /*
@@ -56,13 +47,18 @@ namespace DecentM.VideoPlayer
         [HideInInspector]
         public VideoPlaylistUI ui;
 
+        public void SetUI(VideoPlaylistUI ui)
+        {
+            this.ui = ui;
+        }
+
         [HideInInspector]
         public object[][] urls;
 
         #region Serialisation
 
         [SerializeField, HideInInspector]
-        private VRCUrl[] serialisedUrls;
+        private string[] serialisedUrls;
 
         [SerializeField, HideInInspector]
         private Sprite[] serialisedThumbnails;
@@ -135,7 +131,7 @@ namespace DecentM.VideoPlayer
             )
                 return;
 
-            this.serialisedUrls = new VRCUrl[this.urls.Length];
+            this.serialisedUrls = new string[this.urls.Length];
             this.serialisedThumbnails = new Sprite[this.urls.Length];
             this.serialisedTitles = new string[this.urls.Length];
             this.serialisedUploaders = new string[this.urls.Length];
@@ -160,7 +156,7 @@ namespace DecentM.VideoPlayer
                 if (item == null)
                     continue;
 
-                VRCUrl url = (VRCUrl)item[0];
+                string url = (string)item[0];
                 Sprite thumbnail = (Sprite)item[1];
                 string title = (string)item[2];
                 string uploader = (string)item[3];
@@ -183,7 +179,7 @@ namespace DecentM.VideoPlayer
                 this.serialisedResolutions[i] = resolution == null ? "" : resolution;
                 this.serialisedFpses[i] = fps;
                 this.serialisedDescriptions[i] = description == null ? "" : description;
-                this.serialisedDurations[i] = duration == null ? "" : duration;
+                this.serialisedDurations[i] = duration ?? "";
                 this.serialisedSubtitleIndexes[i] = "";
 
                 if (subtitles != null)
@@ -217,7 +213,7 @@ namespace DecentM.VideoPlayer
                 this.urls = new object[0][];
 
             if (this.serialisedUrls == null)
-                this.serialisedUrls = new VRCUrl[0];
+                this.serialisedUrls = new string[0];
             if (this.serialisedThumbnails == null)
                 this.serialisedThumbnails = new Sprite[0];
             if (this.serialisedTitles == null)
@@ -269,7 +265,7 @@ namespace DecentM.VideoPlayer
 
             for (var i = 0; i < this.serialisedUrls.Length; i++)
             {
-                VRCUrl url = this.serialisedUrls[i];
+                string url = this.serialisedUrls[i];
                 if (url == null)
                     continue;
 
@@ -377,7 +373,7 @@ namespace DecentM.VideoPlayer
             return this.urls[this.currentIndex];
         }
 
-        public int AddUrl(VRCUrl url)
+        public int AddUrl(string url)
         {
             object[] item = new object[]
             {
@@ -471,9 +467,9 @@ namespace DecentM.VideoPlayer
         #region Autoupdate
 
         private int searchIndex = 0;
-        private VRCUrl searchingUrl;
+        private string searchingUrl;
 
-        protected override void OnLoadApproved(VRCUrl url)
+        protected override void OnLoadApproved(string url)
         {
             this.searchIndex = 0;
             this.searchingUrl = url;
@@ -495,7 +491,7 @@ namespace DecentM.VideoPlayer
             if (item == null)
                 return;
 
-            VRCUrl url = (VRCUrl)item[0];
+            string url = (string)item[0];
             Sprite thumbnail = (Sprite)item[1];
             string title = (string)item[2];
             string uploader = (string)item[3];

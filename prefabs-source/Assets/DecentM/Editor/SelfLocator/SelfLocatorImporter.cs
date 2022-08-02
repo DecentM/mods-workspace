@@ -4,7 +4,6 @@ using UnityEditor.Experimental.AssetImporters;
 using System.IO;
 
 using DecentM.Icons;
-using DecentM.Subtitles;
 
 namespace DecentM.EditorTools.SelfLocator
 {

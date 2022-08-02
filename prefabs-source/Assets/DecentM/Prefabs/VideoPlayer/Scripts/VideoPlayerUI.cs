@@ -1,12 +1,8 @@
-﻿using UdonSharp;
-using UnityEngine;
-using VRC.SDKBase;
-using VRC.Udon;
+﻿using UnityEngine;
 
-namespace DecentM.VideoPlayer
+namespace DecentM.Prefabs.VideoPlayer
 {
-    [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
-    public class VideoPlayerUI : UdonSharpBehaviour
+    public class VideoPlayerUI : MonoBehaviour
     {
         public bool hasDefaultPlaylist = false;
         public string[] defaultPlaylist = new string[0];

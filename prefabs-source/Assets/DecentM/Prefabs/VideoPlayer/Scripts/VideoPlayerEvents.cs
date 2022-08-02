@@ -1,11 +1,9 @@
-﻿using UdonSharp;
-using UnityEngine;
-using VRC.SDKBase;
-using VRC.Udon;
-using VRC.SDK3.Components.Video;
-using DecentM.Pubsub;
+﻿using UnityEngine;
 
-namespace DecentM.VideoPlayer
+using DecentM.Pubsub;
+using DecentM.Prefabs.VideoPlayer.Handlers;
+
+namespace DecentM.Prefabs.VideoPlayer
 {
     public enum VideoPlayerEvent
     {
@@ -52,7 +50,6 @@ namespace DecentM.VideoPlayer
         OnSubtitleClear,
     }
 
-    [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public sealed class VideoPlayerEvents : PubsubHost
     {
         #region Core
@@ -112,22 +109,22 @@ namespace DecentM.VideoPlayer
             this.BroadcastEvent(VideoPlayerEvent.OnPlaybackEnd);
         }
 
-        public void OnLoadBegin(VRCUrl url)
+        public void OnLoadBegin(string url)
         {
             this.BroadcastEvent(VideoPlayerEvent.OnLoadBegin, url);
         }
 
-        public void OnLoadRequested(VRCUrl url)
+        public void OnLoadRequested(string url)
         {
             this.BroadcastEvent(VideoPlayerEvent.OnLoadRequested, url);
         }
 
-        public void OnLoadApproved(VRCUrl url)
+        public void OnLoadApproved(string url)
         {
             this.BroadcastEvent(VideoPlayerEvent.OnLoadApproved, url);
         }
 
-        public void OnLoadDenied(VRCUrl url, string reason)
+        public void OnLoadDenied(string url, string reason)
         {
             this.BroadcastEvent(VideoPlayerEvent.OnLoadDenied, url, reason);
         }
@@ -142,9 +139,9 @@ namespace DecentM.VideoPlayer
             this.BroadcastEvent(VideoPlayerEvent.OnUnload);
         }
 
-        public void OnLoadError(VideoError videoError)
+        public void OnLoadError(VideoError error)
         {
-            this.BroadcastEvent(VideoPlayerEvent.OnLoadError, videoError);
+            this.BroadcastEvent(VideoPlayerEvent.OnLoadError, error);
         }
 
         public void OnLoadRatelimitWaiting()
@@ -179,21 +176,6 @@ namespace DecentM.VideoPlayer
         public void OnAutoRetryAllPlayersFailed()
         {
             this.BroadcastEvent(VideoPlayerEvent.OnAutoRetryAllPlayersFailed);
-        }
-
-        public void OnOwnershipChanged(int previousOwnerId, VRCPlayerApi nextOwner)
-        {
-            this.BroadcastEvent(VideoPlayerEvent.OnOwnershipChanged, previousOwnerId, nextOwner);
-        }
-
-        public void OnOwnershipSecurityChanged(bool locked)
-        {
-            this.BroadcastEvent(VideoPlayerEvent.OnOwnershipSecurityChanged, locked);
-        }
-
-        public void OnOwnershipRequested()
-        {
-            this.BroadcastEvent(VideoPlayerEvent.OnOwnershipRequested);
         }
 
         public void OnScreenTextureChange()

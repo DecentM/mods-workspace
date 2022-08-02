@@ -1,15 +1,12 @@
 ﻿using System;
-using UdonSharp;
 using UnityEngine;
-using VRC.SDK3.Components;
-using VRC.SDK3.Components.Video;
-using VRC.SDKBase;
-using VRC.Udon;
 using TMPro;
-using UnityEngine.UI;
-using DecentM.UI;
 
-namespace DecentM.VideoPlayer.Plugins
+using UnityEngine.UI;
+
+using DecentM.Prefabs.VideoPlayer.Handlers;
+
+namespace DecentM.Prefabs.VideoPlayer.Plugins
 {
     public sealed class UIPlugin : VideoPlayerPlugin
     {
@@ -32,7 +29,7 @@ namespace DecentM.VideoPlayer.Plugins
 
         [Space]
         public TextMeshProUGUI status;
-        public VRCUrlInputField urlInput;
+        public InputField urlInput;
         public Button enterButton;
 
         [Space]
@@ -75,16 +72,6 @@ namespace DecentM.VideoPlayer.Plugins
         [Space]
         public TextMeshProUGUI subtitleSlot;
 
-        [Space]
-        public Button ownershipButton;
-        public TextMeshProUGUI ownershipLabel;
-        public Sprite lockIcon;
-        public Sprite unlockIcon;
-        public Sprite ownershipTransferIcon;
-
-        [Space]
-        public VRCUrl emptyUrl;
-
         #region Utilities
 
         private string HumanReadableTimestamp(float timestamp)
@@ -120,71 +107,86 @@ namespace DecentM.VideoPlayer.Plugins
 
         private bool CheckDesktopHit()
         {
-            if (Networking.LocalPlayer.IsUserInVR())
-                return false;
+            return false;
 
-            VRCPlayerApi.TrackingData head = Networking.LocalPlayer.GetTrackingData(
-                VRCPlayerApi.TrackingDataType.Head
-            );
+            /* TODO: Restore once we have a tracking API working
 
-            return Physics.Raycast(
-                head.position,
-                head.rotation * desktopRaycastTurn * Vector3.forward,
-                out hitInfo,
-                this.raycastMaxDistance,
-                this.raycastLayerMask
-            );
+                if (RefugeeTools.IsUserInVR(RefugeeTools.LocalPlayer))
+                    return false;
+
+                TrackingData head = RefugeeTools.GetTrackingData(
+                    RefugeeTools.LocalPlayer,
+                    TrackingDataType.Head
+                );
+
+                return Physics.Raycast(
+                    head.position,
+                    head.rotation * desktopRaycastTurn * Vector3.forward,
+                    out hitInfo,
+                    this.raycastMaxDistance,
+                    this.raycastLayerMask
+                );
+            */
         }
 
         private bool CheckVRHit()
         {
-            if (!Networking.LocalPlayer.IsUserInVR())
-                return false;
-
-            VRCPlayerApi.TrackingData rightHand = Networking.LocalPlayer.GetTrackingData(
-                VRCPlayerApi.TrackingDataType.RightHand
-            );
-            VRCPlayerApi.TrackingData leftHand = Networking.LocalPlayer.GetTrackingData(
-                VRCPlayerApi.TrackingDataType.LeftHand
-            );
-
-            RaycastHit rightHitInfo;
-            RaycastHit leftHitInfo;
-
-            bool rightHit = Physics.Raycast(
-                rightHand.position,
-                rightHand.rotation * vrRaycastTurn * Vector3.forward,
-                out rightHitInfo,
-                this.raycastMaxDistance,
-                this.raycastLayerMask
-            );
-
-            if (rightHit)
-            {
-                this.hitInfo = rightHitInfo;
-                return true;
-            }
-
-            bool leftHit = Physics.Raycast(
-                leftHand.position,
-                leftHand.rotation * vrRaycastTurn * Vector3.forward,
-                out leftHitInfo,
-                this.raycastMaxDistance,
-                this.raycastLayerMask
-            );
-
-            if (leftHit)
-            {
-                this.hitInfo = leftHitInfo;
-                return true;
-            }
-
             return false;
+
+            /* TODO: Restore once we have a tracking API working
+
+                if (!RefugeeTools.IsUserInVR(RefugeeTools.LocalPlayer))
+                    return false;
+
+                TrackingData rightHand = RefugeeTools.GetTrackingData(
+                    RefugeeTools.LocalPlayer,
+                    TrackingDataType.RightHand
+                );
+                TrackingData leftHand = RefugeeTools.GetTrackingData(
+                    RefugeeTools.LocalPlayer,
+                    TrackingDataType.LeftHand
+                );
+
+                RaycastHit rightHitInfo;
+                RaycastHit leftHitInfo;
+
+                bool rightHit = Physics.Raycast(
+                    rightHand.position,
+                    rightHand.rotation * vrRaycastTurn * Vector3.forward,
+                    out rightHitInfo,
+                    this.raycastMaxDistance,
+                    this.raycastLayerMask
+                );
+
+                if (rightHit)
+                {
+                    this.hitInfo = rightHitInfo;
+                    return true;
+                }
+
+                bool leftHit = Physics.Raycast(
+                    leftHand.position,
+                    leftHand.rotation * vrRaycastTurn * Vector3.forward,
+                    out leftHitInfo,
+                    this.raycastMaxDistance,
+                    this.raycastLayerMask
+                );
+
+                if (leftHit)
+                {
+                    this.hitInfo = leftHitInfo;
+                    return true;
+                }
+
+                return false;
+            */
         }
 
         private bool uiRunning = false;
 
-        public override void OnPlayerTriggerEnter(VRCPlayerApi player)
+        /* TODO: Restore this once we have triggers working with CVRPlayerEntity
+
+        public override void OnPlayerTriggerEnter(CVRPlayerEntity player)
         {
             if (player != Networking.LocalPlayer)
                 return;
@@ -192,7 +194,7 @@ namespace DecentM.VideoPlayer.Plugins
             this.uiRunning = true;
         }
 
-        public override void OnPlayerTriggerExit(VRCPlayerApi player)
+        public override void OnPlayerTriggerExit(CVRPlayerEntity player)
         {
             if (player != Networking.LocalPlayer)
                 return;
@@ -200,6 +202,7 @@ namespace DecentM.VideoPlayer.Plugins
             this.uiRunning = false;
             this.animator.SetBool("ShowControls", false);
         }
+        */
 
         public float raycastElapsed = 0;
         public float autoHideTimeout = 5f;
@@ -243,8 +246,11 @@ namespace DecentM.VideoPlayer.Plugins
                 return;
             this.elapsed = 0;
 
-            if (Networking.LocalPlayer == null || !Networking.LocalPlayer.IsValid())
-                return;
+            /* TODO: Restore once we have working RefugeeTools
+
+                if (!RefugeeTools.PlayerIsValid(RefugeeTools.LocalPlayer))
+                    return;
+            */
 
             bool desktopHit = this.CheckDesktopHit();
             bool vrHit = this.CheckVRHit();
@@ -443,7 +449,7 @@ namespace DecentM.VideoPlayer.Plugins
             this.status.text = $"Load timeout after {timeout} seconds, retrying...";
         }
 
-        protected override void OnLoadRequested(VRCUrl url)
+        protected override void OnLoadRequested(string url)
         {
             this.status.text = "Checking URL...";
         }
@@ -453,7 +459,7 @@ namespace DecentM.VideoPlayer.Plugins
             this.status.text = "Waiting for rate limit...";
         }
 
-        protected override void OnLoadApproved(VRCUrl url)
+        protected override void OnLoadApproved(string url)
         {
             this.animator.SetBool("Loading", true);
             this.ClearMetadata();
@@ -469,11 +475,11 @@ namespace DecentM.VideoPlayer.Plugins
             this.status.text = "Loading...";
         }
 
-        protected override void OnLoadBegin(VRCUrl url)
+        protected override void OnLoadBegin(string url)
         {
             this.animator.SetBool("Loading", true);
             this.status.text = "Loading...";
-            this.urlInput.SetUrl(url);
+            this.urlInput.SetTextWithoutNotify(url);
         }
 
         protected override void OnVideoPlayerInit()
@@ -481,14 +487,17 @@ namespace DecentM.VideoPlayer.Plugins
             this.RenderScreen(0);
         }
 
-        protected override void OnLoadDenied(VRCUrl url, string reason)
+        protected override void OnLoadDenied(string url, string reason)
         {
-            this.urlInput.SetUrl(this.emptyUrl);
+            this.urlInput.SetTextWithoutNotify(string.Empty);
 
             // TODO Display the reason to the user (via a notification of some sort?)
             // (the status text isn't visible at this time, because the URL input field is shown)
             this.status.text = reason;
         }
+
+        // TODO: Remove after we have ownerships working
+        private bool selfOwned = true;
 
         private void StoppedScreen(float duration)
         {
@@ -603,19 +612,7 @@ namespace DecentM.VideoPlayer.Plugins
 
         protected override void OnLoadError(VideoError videoError)
         {
-            switch (videoError)
-            {
-                case VideoError.InvalidURL:
-                    this.status.text = "Invalid URL";
-                    break;
-
-                case VideoError.AccessDenied:
-                    this.status.text = "Access denied";
-                    break;
-
-                // We don't care about the rest of the errors as they're handled by the AutoRetry plugin
-            }
-
+            this.status.text = videoError.message;
             this.animator.SetBool("Loading", false);
         }
 
@@ -686,7 +683,7 @@ namespace DecentM.VideoPlayer.Plugins
             this.isLoading = false;
             this.status.text = "Stopped";
             this.RenderScreen(this.system.GetDuration());
-            this.urlInput.SetUrl(this.emptyUrl);
+            this.urlInput.SetTextWithoutNotify(string.Empty);
             this.animator.SetBool("Loading", false);
         }
 
@@ -717,39 +714,13 @@ namespace DecentM.VideoPlayer.Plugins
             }
         }
 
-        private bool selfOwned = true;
-
-        protected override void OnOwnershipChanged(int previousOwnerId, VRCPlayerApi nextOwner)
-        {
-            if (nextOwner == null || !nextOwner.IsValid())
-                return;
-
-            if (nextOwner != Networking.LocalPlayer)
-                this.ownershipButton.image.sprite = this.ownershipTransferIcon;
-            else if (this.ownershipLocked)
-                this.ownershipButton.image.sprite = this.lockIcon;
-            else
-                this.ownershipButton.image.sprite = this.unlockIcon;
-
-            this.selfOwned = nextOwner == Networking.LocalPlayer;
-
-            this.ownershipLabel.text = nextOwner.displayName;
-
-            this.RenderScreen(this.system.GetDuration());
-        }
-
-        private bool ownershipLocked = false;
-
-        protected override void OnOwnershipSecurityChanged(bool locked)
-        {
-            this.ownershipLocked = locked;
-
-            this.ownershipButton.image.sprite = locked ? this.lockIcon : this.unlockIcon;
-        }
-
         protected override void OnRemotePlayerLoaded(int loadedPlayers)
         {
-            int players = VRCPlayerApi.GetPlayerCount();
+            // TODO: Restore once we have working RefugeeTools
+            // int players = RefugeeTools.GetPlayerCount();
+
+            // Assume only one player in world
+            int players = 1;
             int unloadedPlayers = players - loadedPlayers - 1;
 
             if (unloadedPlayers == 1)
@@ -777,7 +748,7 @@ namespace DecentM.VideoPlayer.Plugins
 
         public void OnStopButton()
         {
-            this.system.UnloadVideo();
+            this.system.Unload();
         }
 
         public void OnBrightnessSlider()
@@ -814,19 +785,7 @@ namespace DecentM.VideoPlayer.Plugins
 
         public void OnUrlInput()
         {
-            this.system.RequestVideo(this.urlInput.GetUrl());
-        }
-
-        public void OnOwnershipButton()
-        {
-            if (selfOwned)
-            {
-                this.events.OnOwnershipSecurityChanged(!this.ownershipLocked);
-            }
-            else
-            {
-                this.events.OnOwnershipRequested();
-            }
+            this.system.RequestVideo(this.urlInput.text);
         }
 
         #endregion

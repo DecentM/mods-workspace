@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 
-namespace DecentM.VideoPlayer.Plugins
+using DecentM.Prefabs.VideoPlayer.Handlers;
+
+namespace DecentM.Prefabs.VideoPlayer.Plugins
 {
     public sealed class TextureUpdaterPlugin : VideoPlayerPlugin
     {

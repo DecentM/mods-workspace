@@ -1,13 +1,10 @@
-﻿using UdonSharp;
-using UnityEngine;
-using VRC.SDKBase;
-using VRC.SDK3.Components.Video;
+﻿using UnityEngine;
 
 using DecentM.Pubsub;
+using DecentM.Prefabs.VideoPlayer.Handlers;
 
-namespace DecentM.VideoPlayer.Plugins
+namespace DecentM.Prefabs.VideoPlayer.Plugins
 {
-    [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
     public abstract class VideoPlayerPlugin : PubsubSubscriber
     {
         public VideoPlayerSystem system;
@@ -43,21 +40,21 @@ namespace DecentM.VideoPlayer.Plugins
 
         protected virtual void OnProgress(float timestamp, float duration) { }
 
-        protected virtual void OnLoadBegin(VRCUrl url) { }
+        protected virtual void OnLoadBegin(string url) { }
 
         protected virtual void OnLoadBegin() { }
 
         protected virtual void OnLoadReady(float duration) { }
 
-        protected virtual void OnLoadError(VideoError videoError) { }
+        protected virtual void OnLoadError(VideoError error) { }
 
         protected virtual void OnUnload() { }
 
-        protected virtual void OnLoadRequested(VRCUrl url) { }
+        protected virtual void OnLoadRequested(string url) { }
 
-        protected virtual void OnLoadApproved(VRCUrl url) { }
+        protected virtual void OnLoadApproved(string url) { }
 
-        protected virtual void OnLoadDenied(VRCUrl url, string reason) { }
+        protected virtual void OnLoadDenied(string url, string reason) { }
 
         protected virtual void OnLoadRatelimitWaiting() { }
 
@@ -68,12 +65,6 @@ namespace DecentM.VideoPlayer.Plugins
         protected virtual void OnAutoRetryAbort() { }
 
         protected virtual void OnAutoRetryAllPlayersFailed() { }
-
-        protected virtual void OnOwnershipChanged(int previousOwnerId, VRCPlayerApi nextOwner) { }
-
-        protected virtual void OnOwnershipSecurityChanged(bool locked) { }
-
-        protected virtual void OnOwnershipRequested() { }
 
         protected virtual void OnRemotePlayerLoaded(int loadedPlayers) { }
 
@@ -113,21 +104,21 @@ namespace DecentM.VideoPlayer.Plugins
 
                 case VideoPlayerEvent.OnLoadRequested:
                 {
-                    VRCUrl url = (VRCUrl)data[0];
+                    string url = (string)data[0];
                     this.OnLoadRequested(url);
                     return;
                 }
 
                 case VideoPlayerEvent.OnLoadApproved:
                 {
-                    VRCUrl url = (VRCUrl)data[0];
+                    string url = (string)data[0];
                     this.OnLoadApproved(url);
                     return;
                 }
 
                 case VideoPlayerEvent.OnLoadDenied:
                 {
-                    VRCUrl url = (VRCUrl)data[0];
+                    string url = (string)data[0];
                     string reason = (string)data[1];
                     this.OnLoadDenied(url, reason);
                     return;
@@ -135,7 +126,7 @@ namespace DecentM.VideoPlayer.Plugins
 
                 case VideoPlayerEvent.OnLoadBegin:
                 {
-                    VRCUrl url = (VRCUrl)data[0];
+                    string url = (string)data[0];
                     if (url == null)
                         this.OnLoadBegin();
                     else
@@ -191,8 +182,8 @@ namespace DecentM.VideoPlayer.Plugins
 
                 case VideoPlayerEvent.OnLoadError:
                 {
-                    VideoError videoError = (VideoError)data[0];
-                    this.OnLoadError(videoError);
+                    VideoError error = (VideoError)data[0];
+                    this.OnLoadError(error);
                     return;
                 }
 
@@ -276,27 +267,6 @@ namespace DecentM.VideoPlayer.Plugins
                 case VideoPlayerEvent.OnAutoRetryAllPlayersFailed:
                 {
                     this.OnAutoRetryAllPlayersFailed();
-                    return;
-                }
-
-                case VideoPlayerEvent.OnOwnershipChanged:
-                {
-                    int previousOwnerId = (int)data[0];
-                    VRCPlayerApi nextOwner = (VRCPlayerApi)data[1];
-                    this.OnOwnershipChanged(previousOwnerId, nextOwner);
-                    return;
-                }
-
-                case VideoPlayerEvent.OnOwnershipSecurityChanged:
-                {
-                    bool locked = (bool)data[0];
-                    this.OnOwnershipSecurityChanged(locked);
-                    return;
-                }
-
-                case VideoPlayerEvent.OnOwnershipRequested:
-                {
-                    this.OnOwnershipRequested();
                     return;
                 }
 

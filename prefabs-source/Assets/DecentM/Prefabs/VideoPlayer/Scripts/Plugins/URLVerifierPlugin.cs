@@ -1,9 +1,6 @@
-﻿using UdonSharp;
-using UnityEngine;
-using VRC.SDKBase;
-using VRC.Udon;
+﻿using UnityEngine;
 
-namespace DecentM.VideoPlayer.Plugins
+namespace DecentM.Prefabs.VideoPlayer.Plugins
 {
     public class URLVerifierPlugin : VideoPlayerPlugin
     {
@@ -27,7 +24,7 @@ namespace DecentM.VideoPlayer.Plugins
             return false;
         }
 
-        protected override void OnLoadRequested(VRCUrl url)
+        protected override void OnLoadRequested(string url)
         {
             if (this.ValidateUrl(url.ToString()))
                 return;

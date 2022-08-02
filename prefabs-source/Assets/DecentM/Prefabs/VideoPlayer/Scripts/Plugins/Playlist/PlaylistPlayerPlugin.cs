@@ -1,10 +1,6 @@
-﻿using UdonSharp;
-using UnityEngine;
-using VRC.SDK3.Components.Video;
-using VRC.SDKBase;
-using VRC.Udon;
+﻿using UnityEngine;
 
-namespace DecentM.VideoPlayer.Plugins
+namespace DecentM.Prefabs.VideoPlayer.Plugins
 {
     public class PlaylistPlayerPlugin : VideoPlayerPlugin
     {
@@ -47,7 +43,7 @@ namespace DecentM.VideoPlayer.Plugins
             if (item == null)
                 return;
 
-            VRCUrl url = (VRCUrl)item[0];
+            string url = (string)item[0];
 
             this.system.RequestVideo(url);
         }

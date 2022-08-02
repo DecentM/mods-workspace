@@ -1,12 +1,8 @@
-﻿using UdonSharp;
-using UnityEngine;
-using VRC.SDKBase;
-using VRC.Udon;
+﻿using UnityEngine;
 
-namespace DecentM.VideoPlayer
+namespace DecentM.Prefabs.VideoPlayer
 {
-    [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
-    public class ScreenHandler : UdonSharpBehaviour
+    public class ScreenHandler : MonoBehaviour
     {
         public Renderer[] screens;
         private new Camera camera;

@@ -1,13 +1,11 @@
 ﻿using System;
-using UdonSharp;
 using UnityEngine;
-using VRC.SDKBase;
-using VRC.Udon;
 
-namespace DecentM.VideoPlayer.Plugins
+using UnityEngine.UI;
+
+namespace DecentM.Prefabs.VideoPlayer.Plugins
 {
-    [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
-    public class VideoPlaylistUI : UdonSharpBehaviour
+    public class VideoPlaylistUI : MonoBehaviour
     {
         public Transform itemsRoot;
         public GameObject itemRendererTemplate;
@@ -51,7 +49,7 @@ namespace DecentM.VideoPlayer.Plugins
             if (renderer == null)
                 return;
 
-            VRCUrl url = (VRCUrl)item[0];
+            string url = (string)item[0];
             Sprite thumbnail = (Sprite)item[1];
             string title = (string)item[2];
             string uploader = (string)item[3];
@@ -94,7 +92,7 @@ namespace DecentM.VideoPlayer.Plugins
 
         void Start()
         {
-            this.playlist.SetProgramVariable(nameof(this.playlist.ui), this);
+            this.playlist.SetUI(this);
             this.canvas = GetComponent<Canvas>();
             this.instances = new PlaylistItemRenderer[playlist.urls.Length];
             this.itemRendererTemplate.SetActive(false);

@@ -1,12 +1,10 @@
 ﻿using System;
-using UdonSharp;
 using UnityEngine;
-using VRC.SDK3.Components.Video;
-using VRC.SDKBase;
-using VRC.Udon;
 using TMPro;
 
-namespace DecentM.VideoPlayer.Plugins
+using DecentM.Prefabs.VideoPlayer.Handlers;
+
+namespace DecentM.Prefabs.VideoPlayer.Plugins
 {
     public class DebugPlugin : VideoPlayerPlugin
     {
@@ -16,6 +14,8 @@ namespace DecentM.VideoPlayer.Plugins
 
         public void Log(params string[] messages)
         {
+            Debug.Log($"[VideoPlayer] Debug: {String.Join(" ", messages)}");
+
             string[] tmp = new string[logs.Length];
             Array.Copy(logs, 1, tmp, 0, this.logs.Length - 1);
             tmp[tmp.Length - 1] = String.Join(" ", messages);
@@ -66,7 +66,7 @@ namespace DecentM.VideoPlayer.Plugins
             this.Log(nameof(OnLoadBegin));
         }
 
-        protected override void OnLoadBegin(VRCUrl url)
+        protected override void OnLoadBegin(string url)
         {
             this.Log(nameof(OnLoadBegin), "(with URL)");
         }
@@ -145,17 +145,17 @@ namespace DecentM.VideoPlayer.Plugins
             );
         }
 
-        protected override void OnLoadRequested(VRCUrl url)
+        protected override void OnLoadRequested(string url)
         {
             this.Log(nameof(OnLoadRequested), "(with URL)");
         }
 
-        protected override void OnLoadApproved(VRCUrl url)
+        protected override void OnLoadApproved(string url)
         {
             this.Log(nameof(OnLoadApproved), "(with URL)");
         }
 
-        protected override void OnLoadDenied(VRCUrl url, string reason)
+        protected override void OnLoadDenied(string url, string reason)
         {
             this.Log(nameof(OnLoadDenied), $"(with URL) {reason}");
         }
@@ -163,25 +163,6 @@ namespace DecentM.VideoPlayer.Plugins
         protected override void OnLoadRatelimitWaiting()
         {
             this.Log(nameof(OnLoadRatelimitWaiting));
-        }
-
-        protected override void OnOwnershipChanged(int previousOwnerId, VRCPlayerApi nextOwner)
-        {
-            this.Log(
-                nameof(OnOwnershipChanged),
-                previousOwnerId.ToString(),
-                nextOwner.playerId.ToString()
-            );
-        }
-
-        protected override void OnOwnershipRequested()
-        {
-            this.Log(nameof(OnOwnershipRequested));
-        }
-
-        protected override void OnOwnershipSecurityChanged(bool locked)
-        {
-            this.Log(nameof(OnOwnershipSecurityChanged), locked.ToString());
         }
 
         protected override void OnScreenTextureChange()

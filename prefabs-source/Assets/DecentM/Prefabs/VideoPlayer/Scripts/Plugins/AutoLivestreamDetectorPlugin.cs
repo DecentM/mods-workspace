@@ -1,24 +1,23 @@
 ﻿using System;
-using UdonSharp;
 using UnityEngine;
-using VRC.SDK3.Components.Video;
-using VRC.SDKBase;
-using VRC.Udon;
 using TMPro;
 
-namespace DecentM.VideoPlayer.Plugins
+using DecentM.Prefabs.VideoPlayer.Handlers;
+
+namespace DecentM.Prefabs.VideoPlayer.Plugins
 {
     public class AutoLivestreamDetectorPlugin : VideoPlayerPlugin
     {
         public string[] knownLivestreamHosts;
 
-        protected override void OnLoadRequested(VRCUrl vrcUrl)
+        protected override void OnLoadRequested(string url)
         {
-            // If we're already using the AVPro player, don't do anything
-            if (this.system.currentPlayerHandler.type == VideoPlayerHandlerType.AVPro)
-                return;
+            // TODO: Take the guard out once we're capable of playing livestreams
+            return;
 
-            string url = vrcUrl.ToString();
+            // If we're already using the AVPro player, don't do anything
+            if (this.system.currentPlayerHandler.type != VideoPlayerHandlerType.Unity)
+                return;
 
             // Switch to the next player if we know that the url trying to be played is a livestream URL
             // This will cause another OnLoadRequested, creating a loop that stops when we're using an AVPro player
@@ -26,10 +25,10 @@ namespace DecentM.VideoPlayer.Plugins
             {
                 if (url.Contains(host))
                 {
-                    this.events.OnLoadDenied(vrcUrl, "Switching to livestream mode");
-                    this.system.UnloadVideo();
+                    this.events.OnLoadDenied(url, "Switching to livestream mode");
+                    this.system.Unload();
                     this.system.NextPlayerHandler();
-                    this.system.RequestVideo(vrcUrl);
+                    this.system.RequestVideo(url);
                     break;
                 }
             }

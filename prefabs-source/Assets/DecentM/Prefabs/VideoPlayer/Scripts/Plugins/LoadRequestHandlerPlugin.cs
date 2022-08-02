@@ -1,35 +1,32 @@
 ﻿using System;
-using UdonSharp;
 using UnityEngine;
-using VRC.SDK3.Components.Video;
-using VRC.SDKBase;
-using VRC.Udon;
 using TMPro;
 
-using DecentM.VideoRatelimit;
+// TODO: Import this after it's been ported
+// using DecentM.VideoRatelimit;
 
-namespace DecentM.VideoPlayer.Plugins
+namespace DecentM.Prefabs.VideoPlayer.Plugins
 {
     public class LoadRequestHandlerPlugin : VideoPlayerPlugin
     {
-        public VideoRatelimitSystem ratelimit;
+        // public VideoRatelimitSystem ratelimit;
 
-        private VRCUrl approvalPending;
+        private string approvalPending;
         public float approvalTimeout = 0.3f;
 
-        protected override void OnLoadRequested(VRCUrl vrcUrl)
+        protected override void OnLoadRequested(string vrcUrl)
         {
             if (this.approvalPending != null)
                 return;
 
             this.denials = 0;
             this.approvalPending = vrcUrl;
-            this.SendCustomEventDelayedSeconds(nameof(CheckForDenials), this.approvalTimeout);
+            Invoke(nameof(CheckForDenials), this.approvalTimeout);
         }
 
         private int denials = 0;
 
-        protected override void OnLoadDenied(VRCUrl url, string reason)
+        protected override void OnLoadDenied(string url, string reason)
         {
             if (this.approvalPending == null || url != this.approvalPending)
                 return;
@@ -47,17 +44,18 @@ namespace DecentM.VideoPlayer.Plugins
 
             this.denials = 0;
 
-            if (this.ratelimit == null)
-            {
+            // TODO: Restore after VideoRatelimit has been ported
+            // if (this.ratelimit == null)
+            // {
                 this.events.OnLoadApproved(this.approvalPending);
                 this.system.LoadVideo(this.approvalPending);
                 this.approvalPending = null;
-            }
+            /* }
             else
             {
                 this.events.OnLoadRatelimitWaiting();
                 this.ratelimit.RequestPlaybackWindow(this);
-            }
+            } */
         }
 
         public void OnPlaybackWindow()

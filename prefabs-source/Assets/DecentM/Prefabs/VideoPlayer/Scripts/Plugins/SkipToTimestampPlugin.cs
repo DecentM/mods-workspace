@@ -1,12 +1,8 @@
 ﻿using System;
-using UdonSharp;
 using UnityEngine;
-using VRC.SDK3.Components.Video;
-using VRC.SDKBase;
-using VRC.Udon;
 using TMPro;
 
-namespace DecentM.VideoPlayer.Plugins
+namespace DecentM.Prefabs.VideoPlayer.Plugins
 {
     public sealed class SkipToTimestampPlugin : VideoPlayerPlugin
     {
@@ -60,7 +56,7 @@ namespace DecentM.VideoPlayer.Plugins
 
         protected override void OnLoadReady(float duration)
         {
-            VRCUrl url = this.system.GetCurrentUrl();
+            string url = this.system.GetCurrentUrl();
 
             if (url == null)
                 return;

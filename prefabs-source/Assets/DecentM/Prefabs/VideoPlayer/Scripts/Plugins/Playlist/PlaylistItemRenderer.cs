@@ -1,19 +1,15 @@
-﻿using UdonSharp;
-using UnityEngine;
-using VRC.SDKBase;
-using VRC.Udon;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-namespace DecentM.VideoPlayer.Plugins
+namespace DecentM.Prefabs.VideoPlayer.Plugins
 {
-    [UdonBehaviourSyncMode(BehaviourSyncMode.None)]
-    public class PlaylistItemRenderer : UdonSharpBehaviour
+    public class PlaylistItemRenderer : MonoBehaviour
     {
         public VideoPlaylist playlist;
 
         public int index;
-        public VRCUrl url;
+        public string url;
         public Image thumbnailSlot;
         public TextMeshProUGUI titleSlot;
         public TextMeshProUGUI durationSlot;
@@ -24,7 +20,7 @@ namespace DecentM.VideoPlayer.Plugins
 
         public void SetData(
             int index,
-            VRCUrl url,
+            string url,
             Sprite thumbnail,
             string title,
             string uploader,

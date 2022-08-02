@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Immutable;
+﻿using System.Reflection;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using UnityEditorInternal;
-using VRC.Udon;
-using VRC.Udon.Common;
-using VRC.Udon.Common.Interfaces;
-using UdonSharpEditor;
-using UdonSharp;
 
 namespace DecentM.EditorTools
 {
@@ -365,20 +359,14 @@ namespace DecentM.EditorTools
             this.DrawLabel(rect, contents, size, style, Color.white);
         }
 
-        private IUdonVariable CreateUdonVariable(string symbolName, object value, System.Type type)
+        protected void LinkAllWithName(GameObject root, string name, MonoBehaviour linkTarget)
         {
-            Type udonVariableType = typeof(UdonVariable<>).MakeGenericType(type);
-            return (IUdonVariable)Activator.CreateInstance(udonVariableType, symbolName, value);
-        }
-
-        protected void LinkAllWithName(GameObject root, string name, UdonSharpBehaviour linkTarget)
-        {
-            UdonBehaviour[] allBehaviours = root.GetComponentsInChildren<UdonBehaviour>();
+            MonoBehaviour[] allBehaviours = root.GetComponentsInChildren<MonoBehaviour>();
             int failCount = 0;
 
             for (int i = 0; i < allBehaviours.Length; i++)
             {
-                UdonBehaviour behaviour = allBehaviours[i];
+                MonoBehaviour behaviour = allBehaviours[i];
                 EditorUtility.DisplayProgressBar(
                     $"Linking... ({i}/{allBehaviours.Length})",
                     behaviour == null ? "Skipping..." : behaviour.name,
@@ -388,38 +376,9 @@ namespace DecentM.EditorTools
                 if (behaviour == null)
                     continue;
 
-                IUdonProgram program =
-                    behaviour.programSource.SerializedProgramAsset.RetrieveProgram();
-                ImmutableArray<string> exportedSymbolNames =
-                    program.SymbolTable.GetExportedSymbols();
-
-                foreach (string exportedSymbolName in exportedSymbolNames)
-                {
-                    if (!exportedSymbolName.Equals(name))
-                        continue;
-
-                    UdonBehaviour variableValue = UdonSharpEditorUtility.GetBackingUdonBehaviour(
-                        linkTarget
-                    );
-                    Type symbolType = program.SymbolTable.GetSymbolType(exportedSymbolName);
-
-                    if (
-                        behaviour.publicVariables.TrySetVariableValue(
-                            exportedSymbolName,
-                            variableValue
-                        )
-                    )
-                        continue;
-                    if (
-                        behaviour.publicVariables.TryAddVariable(
-                            CreateUdonVariable(exportedSymbolName, variableValue, symbolType)
-                        )
-                    )
-                        continue;
-
-                    Debug.LogError($"Failed to set public variable '{exportedSymbolName}' value.");
-                    failCount++;
-                }
+                // Set the value using Reflection, as it might be private
+                FieldInfo prop = behaviour.GetType().GetField(name, BindingFlags.NonPublic | BindingFlags.Instance);
+                prop.SetValue(behaviour, root);
 
                 if (PrefabUtility.IsPartOfPrefabInstance(behaviour))
                     PrefabUtility.RecordPrefabInstancePropertyModifications(behaviour);
@@ -432,29 +391,6 @@ namespace DecentM.EditorTools
                     "OK"
                 );
             EditorUtility.ClearProgressBar();
-        }
-
-        protected object GetUdonVariable(UdonSharpBehaviour udonSharpBehaviour, string variableName)
-        {
-            UdonBehaviour behaviour = UdonSharpEditorUtility.GetBackingUdonBehaviour(
-                udonSharpBehaviour
-            );
-
-            behaviour.publicVariables.TryGetVariableValue(variableName, out object result);
-            return result;
-        }
-
-        protected bool SetUdonVariable(
-            UdonSharpBehaviour udonSharpBehaviour,
-            string variableName,
-            object variableValue
-        )
-        {
-            UdonBehaviour behaviour = UdonSharpEditorUtility.GetBackingUdonBehaviour(
-                udonSharpBehaviour
-            );
-
-            return behaviour.publicVariables.TrySetVariableValue(variableName, variableValue);
         }
     }
 }

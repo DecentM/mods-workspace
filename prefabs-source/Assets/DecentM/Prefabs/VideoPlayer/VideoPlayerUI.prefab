@@ -779,9 +779,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7103627231200349783}
-        m_MethodName: SendCustomEvent
-        m_Mode: 5
+      - m_Target: {fileID: 5550847064194288894}
+        m_MethodName: OnFrameNextButton
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -1340,9 +1340,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7103627231200349783}
-        m_MethodName: SendCustomEvent
-        m_Mode: 5
+      - m_Target: {fileID: 5550847064194288894}
+        m_MethodName: OnFramePrevButton
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -2129,9 +2129,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5622076069718880281}
-        m_MethodName: SendCustomEvent
-        m_Mode: 5
+      - m_Target: {fileID: 8456571796046107678}
+        m_MethodName: OnButtonClick
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -2178,9 +2178,8 @@ GameObject:
   - component: {fileID: 5622076069115218934}
   - component: {fileID: 5622076069115218935}
   - component: {fileID: 5622076069115218931}
-  - component: {fileID: 5622076069115218929}
-  - component: {fileID: 5622076069115218930}
   - component: {fileID: 5622076069115218933}
+  - component: {fileID: 4539075469190061962}
   m_Layer: 0
   m_Name: OptionTemplate
   m_TagString: Untagged
@@ -2304,9 +2303,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5622076069115218930}
-        m_MethodName: SendCustomEvent
-        m_Mode: 5
+      - m_Target: {fileID: 4539075469190061962}
+        m_MethodName: OnClick
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -2315,55 +2314,6 @@ MonoBehaviour:
           m_StringArgument: OnClick
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &5622076069115218929
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5622076069115218937}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cad10517cb4d38f429f1fb11e3704a5d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  serializationData:
-    SerializedFormat: 2
-    SerializedBytes: 
-    ReferencedUnityObjects: []
-    SerializedBytesString: 
-    Prefab: {fileID: 0}
-    PrefabModificationsReferencedUnityObjects: []
-    PrefabModifications: []
-    SerializationNodes: []
-  _udonSharpBackingUdonBehaviour: {fileID: 5622076069115218930}
-  labelSlot: {fileID: 5622076068536206131}
---- !u!114 &5622076069115218930
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5622076069115218937}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 45115577ef41a5b4ca741ed302693907, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  interactTextPlacement: {fileID: 0}
-  interactText: Use
-  interactTextGO: {fileID: 0}
-  proximity: 2
-  SynchronizePosition: 0
-  AllowCollisionOwnershipTransfer: 0
-  Reliable: 0
-  _syncMethod: 1
-  serializedProgramAsset: {fileID: 11400000, guid: ae94d24f84f00804c8e5302ce298b019,
-    type: 2}
-  programSource: {fileID: 11400000, guid: 175f11bbed39945488a328aebf37dcf3, type: 2}
-  serializedPublicVariablesBytesString: Ai8AAAAAATIAAABWAFIAQwAuAFUAZABvAG4ALgBDAG8AbQBtAG8AbgAuAFUAZABvAG4AVgBhAHIAaQBhAGIAbABlAFQAYQBiAGwAZQAsACAAVgBSAEMALgBVAGQAbwBuAC4AQwBvAG0AbQBvAG4AAAAAAAYBAAAAAAAAACcBBAAAAHQAeQBwAGUAAWgAAABTAHkAcwB0AGUAbQAuAEMAbwBsAGwAZQBjAHQAaQBvAG4AcwAuAEcAZQBuAGUAcgBpAGMALgBMAGkAcwB0AGAAMQBbAFsAVgBSAEMALgBVAGQAbwBuAC4AQwBvAG0AbQBvAG4ALgBJAG4AdABlAHIAZgBhAGMAZQBzAC4ASQBVAGQAbwBuAFYAYQByAGkAYQBiAGwAZQAsACAAVgBSAEMALgBVAGQAbwBuAC4AQwBvAG0AbQBvAG4AXQBdACwAIABtAHMAYwBvAHIAbABpAGIAAQEJAAAAVgBhAHIAaQBhAGIAbABlAHMALwEAAAABaAAAAFMAeQBzAHQAZQBtAC4AQwBvAGwAbABlAGMAdABpAG8AbgBzAC4ARwBlAG4AZQByAGkAYwAuAEwAaQBzAHQAYAAxAFsAWwBWAFIAQwAuAFUAZABvAG4ALgBDAG8AbQBtAG8AbgAuAEkAbgB0AGUAcgBmAGEAYwBlAHMALgBJAFUAZABvAG4AVgBhAHIAaQBhAGIAbABlACwAIABWAFIAQwAuAFUAZABvAG4ALgBDAG8AbQBtAG8AbgBdAF0ALAAgAG0AcwBjAG8AcgBsAGkAYgABAAAABgEAAAAAAAAAAi8CAAAAAUkAAABWAFIAQwAuAFUAZABvAG4ALgBDAG8AbQBtAG8AbgAuAFUAZABvAG4AVgBhAHIAaQBhAGIAbABlAGAAMQBbAFsAUwB5AHMAdABlAG0ALgBJAG4AdAAzADIALAAgAG0AcwBjAG8AcgBsAGkAYgBdAF0ALAAgAFYAUgBDAC4AVQBkAG8AbgAuAEMAbwBtAG0AbwBuAAIAAAAGAgAAAAAAAAAnAQQAAAB0AHkAcABlAAEXAAAAUwB5AHMAdABlAG0ALgBTAHQAcgBpAG4AZwAsACAAbQBzAGMAbwByAGwAaQBiACcBCgAAAFMAeQBtAGIAbwBsAE4AYQBtAGUAAR8AAABfAF8AXwBVAGQAbwBuAFMAaABhAHIAcABCAGUAaABhAHYAaQBvAHUAcgBWAGUAcgBzAGkAbwBuAF8AXwBfACcBBAAAAHQAeQBwAGUAARYAAABTAHkAcwB0AGUAbQAuAEkAbgB0ADMAMgAsACAAbQBzAGMAbwByAGwAaQBiABcBBQAAAFYAYQBsAHUAZQACAAAABwUHBQcF
-  publicVariablesUnityEngineObjects: []
-  publicVariablesSerializationDataFormat: 0
 --- !u!114 &5622076069115218933
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2393,6 +2343,19 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &4539075469190061962
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5622076069115218937}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ca9ec41c27cec044beb6d8528fee01c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  labelSlot: {fileID: 5622076068536206131}
 --- !u!1 &5622076069122153695
 GameObject:
   m_ObjectHideFlags: 0
@@ -2935,10 +2898,9 @@ GameObject:
   m_Component:
   - component: {fileID: 5622076069718880286}
   - component: {fileID: 5622076069718880282}
-  - component: {fileID: 5622076069718880280}
-  - component: {fileID: 5622076069718880281}
   - component: {fileID: 5622076069718880279}
   - component: {fileID: 34758365250824415}
+  - component: {fileID: 8456571796046107678}
   m_Layer: 0
   m_Name: Dropdown
   m_TagString: Untagged
@@ -2976,58 +2938,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5622076069718880287}
   m_CullTransparentMesh: 0
---- !u!114 &5622076069718880280
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5622076069718880287}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8fa4eae9760e0ee4595655dd1abffdfb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  serializationData:
-    SerializedFormat: 2
-    SerializedBytes: 
-    ReferencedUnityObjects: []
-    SerializedBytesString: 
-    Prefab: {fileID: 0}
-    PrefabModificationsReferencedUnityObjects: []
-    PrefabModifications: []
-    SerializationNodes: []
-  _udonSharpBackingUdonBehaviour: {fileID: 5622076069718880281}
-  optionTemplate: {fileID: 5622076069115218937}
-  optionsRoot: {fileID: 5622076069600687885}
-  animator: {fileID: 5622076069718880279}
-  button: {fileID: 5622076068918971001}
---- !u!114 &5622076069718880281
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5622076069718880287}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 45115577ef41a5b4ca741ed302693907, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  interactTextPlacement: {fileID: 0}
-  interactText: Use
-  interactTextGO: {fileID: 0}
-  proximity: 2
-  SynchronizePosition: 0
-  AllowCollisionOwnershipTransfer: 0
-  Reliable: 0
-  _syncMethod: 1
-  serializedProgramAsset: {fileID: 11400000, guid: dd2d53a9bec028d4fa267155942ff188,
-    type: 2}
-  programSource: {fileID: 11400000, guid: 893bba3b60f319442840bc3edaff676e, type: 2}
-  serializedPublicVariablesBytesString: Ai8AAAAAATIAAABWAFIAQwAuAFUAZABvAG4ALgBDAG8AbQBtAG8AbgAuAFUAZABvAG4AVgBhAHIAaQBhAGIAbABlAFQAYQBiAGwAZQAsACAAVgBSAEMALgBVAGQAbwBuAC4AQwBvAG0AbQBvAG4AAAAAAAYBAAAAAAAAACcBBAAAAHQAeQBwAGUAAWgAAABTAHkAcwB0AGUAbQAuAEMAbwBsAGwAZQBjAHQAaQBvAG4AcwAuAEcAZQBuAGUAcgBpAGMALgBMAGkAcwB0AGAAMQBbAFsAVgBSAEMALgBVAGQAbwBuAC4AQwBvAG0AbQBvAG4ALgBJAG4AdABlAHIAZgBhAGMAZQBzAC4ASQBVAGQAbwBuAFYAYQByAGkAYQBiAGwAZQAsACAAVgBSAEMALgBVAGQAbwBuAC4AQwBvAG0AbQBvAG4AXQBdACwAIABtAHMAYwBvAHIAbABpAGIAAQEJAAAAVgBhAHIAaQBhAGIAbABlAHMALwEAAAABaAAAAFMAeQBzAHQAZQBtAC4AQwBvAGwAbABlAGMAdABpAG8AbgBzAC4ARwBlAG4AZQByAGkAYwAuAEwAaQBzAHQAYAAxAFsAWwBWAFIAQwAuAFUAZABvAG4ALgBDAG8AbQBtAG8AbgAuAEkAbgB0AGUAcgBmAGEAYwBlAHMALgBJAFUAZABvAG4AVgBhAHIAaQBhAGIAbABlACwAIABWAFIAQwAuAFUAZABvAG4ALgBDAG8AbQBtAG8AbgBdAF0ALAAgAG0AcwBjAG8AcgBsAGkAYgABAAAABgEAAAAAAAAAAi8CAAAAAUkAAABWAFIAQwAuAFUAZABvAG4ALgBDAG8AbQBtAG8AbgAuAFUAZABvAG4AVgBhAHIAaQBhAGIAbABlAGAAMQBbAFsAUwB5AHMAdABlAG0ALgBJAG4AdAAzADIALAAgAG0AcwBjAG8AcgBsAGkAYgBdAF0ALAAgAFYAUgBDAC4AVQBkAG8AbgAuAEMAbwBtAG0AbwBuAAIAAAAGAgAAAAAAAAAnAQQAAAB0AHkAcABlAAEXAAAAUwB5AHMAdABlAG0ALgBTAHQAcgBpAG4AZwAsACAAbQBzAGMAbwByAGwAaQBiACcBCgAAAFMAeQBtAGIAbwBsAE4AYQBtAGUAAR8AAABfAF8AXwBVAGQAbwBuAFMAaABhAHIAcABCAGUAaABhAHYAaQBvAHUAcgBWAGUAcgBzAGkAbwBuAF8AXwBfACcBBAAAAHQAeQBwAGUAARYAAABTAHkAcwB0AGUAbQAuAEkAbgB0ADMAMgAsACAAbQBzAGMAbwByAGwAaQBiABcBBQAAAFYAYQBsAHUAZQACAAAABwUHBQcF
-  publicVariablesUnityEngineObjects: []
-  publicVariablesSerializationDataFormat: 0
 --- !u!95 &5622076069718880279
 Animator:
   serializedVersion: 3
@@ -3072,6 +2982,22 @@ MonoBehaviour:
   m_ChildControlHeight: 0
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
+--- !u!114 &8456571796046107678
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5622076069718880287}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2c315424d0ef2245b4bc35a0bb3423d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  optionTemplate: {fileID: 5622076069115218937}
+  optionsRoot: {fileID: 5622076069600687885}
+  animator: {fileID: 5622076069718880279}
+  button: {fileID: 5622076068918971001}
 --- !u!1 &5622076069721274805
 GameObject:
   m_ObjectHideFlags: 0
@@ -3375,9 +3301,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7103627231200349783}
-        m_MethodName: SendCustomEvent
-        m_Mode: 5
+      - m_Target: {fileID: 5550847064194288894}
+        m_MethodName: OnToggleSubtitles
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -3612,9 +3538,9 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7103627231200349783}
-        m_MethodName: SendCustomEvent
-        m_Mode: 5
+      - m_Target: {fileID: 5550847064194288894}
+        m_MethodName: OnVolumeSlider
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -3777,9 +3703,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7103627231200349783}
-        m_MethodName: SendCustomEvent
-        m_Mode: 5
+      - m_Target: {fileID: 5550847064194288894}
+        m_MethodName: OnPauseButton
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -3951,9 +3877,9 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7103627231200349783}
-        m_MethodName: SendCustomEvent
-        m_Mode: 5
+      - m_Target: {fileID: 5550847064194288894}
+        m_MethodName: OnBrightnessSlider
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -3971,10 +3897,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7103627231200349782}
-  - component: {fileID: 7103627231200349780}
-  - component: {fileID: 7103627231200349783}
   - component: {fileID: 5540372497575482806}
   - component: {fileID: 8785134002794354285}
+  - component: {fileID: 5550847064194288894}
   m_Layer: 0
   m_Name: VideoPlayerUI
   m_TagString: Untagged
@@ -3999,118 +3924,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7103627231200349780
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7103627231200349777}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 10711b5d5b2fc9a4cb7711d35c7adb26, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  serializationData:
-    SerializedFormat: 2
-    SerializedBytes: 
-    ReferencedUnityObjects: []
-    SerializedBytesString: 
-    Prefab: {fileID: 0}
-    PrefabModificationsReferencedUnityObjects: []
-    PrefabModifications: []
-    SerializationNodes: []
-  _udonSharpBackingUdonBehaviour: {fileID: 7103627231200349783}
-  pubsubHosts:
-  - {fileID: 0}
-  system: {fileID: 0}
-  events: {fileID: 0}
-  raycastLayerMask:
-    serializedVersion: 2
-    m_Bits: 1
-  raycastIntervalSeconds: 0.33333334
-  raycastMaxDistance: 10
-  animator: {fileID: 8785134002794354285}
-  raycastTarget: {fileID: 7103627232423027381}
-  progress: {fileID: 7103627233076163223}
-  playButton: {fileID: 7103627232012524928}
-  pauseButton: {fileID: 7103627231151382096}
-  stopButton: {fileID: 7103627232322770563}
-  framePrevButton: {fileID: 8623889208127904230}
-  frameNextButton: {fileID: 6789806549552014908}
-  status: {fileID: 7103627233187520396}
-  urlInput: {fileID: 7103627232702059707}
-  enterButton: {fileID: 7103627232838906795}
-  brightnessImage: {fileID: 7103627231567804836}
-  brightnessSlider: {fileID: 7103627231172918215}
-  volumeImage: {fileID: 7103627231403171104}
-  volumeSlider: {fileID: 7103627231134946267}
-  volumeMutedIcon: {fileID: 21300000, guid: ec4c3115d40ad5449912c3e0833cbcc9, type: 3}
-  volumeLowIcon: {fileID: 21300000, guid: 4644dd6d0d2cde643a22410d86e8ea62, type: 3}
-  volumeMediumIcon: {fileID: 21300000, guid: aea6e21b1a5499c4491ecf8bac5d7614, type: 3}
-  volumeHighIcon: {fileID: 21300000, guid: 495646b99e8090740aa8a0553b6817c9, type: 3}
-  brightnessLowIcon: {fileID: 21300000, guid: efe1ed4dad32e00429926465d0097844, type: 3}
-  brightnessMediumIcon: {fileID: 21300000, guid: 2f1dc4e57490028488de7423d55f8c87,
-    type: 3}
-  brightnessHighIcon: {fileID: 21300000, guid: 058aa19afbf4c514b97174294434f4f9, type: 3}
-  info: {fileID: 7103627232141525992}
-  titleSlot: {fileID: 8025914939843658910}
-  uploaderSlot: {fileID: 6583025588790585004}
-  descriptionSlot: {fileID: 8949269767719462482}
-  viewCountSlot: {fileID: 2327926440461417449}
-  likeCountSlot: {fileID: 5229183942199171838}
-  subtitlesDropdown: {fileID: 5622076069718880280}
-  subtitlesButton: {fileID: 5622076068918971001}
-  subtitlesButtonImage: {fileID: 5622076068918971000}
-  subtitlesButtonIcon: {fileID: 5622076069135622461}
-  subtitlesButtonLabel: {fileID: 5622076069386221951}
-  subtitlesAvailable: {fileID: 21300000, guid: 914f01abbd4f686409845f6216504732, type: 3}
-  subtitlesUnavailable: {fileID: 21300000, guid: 39c885bf6d8ae6345a3b6bc4d613202e,
-    type: 3}
-  subtitlesToggleButton: {fileID: 3417049636789692130}
-  subtitlesToggleButtonImage: {fileID: 2575534681744989029}
-  subtitlesToggleButtonIcon: {fileID: 165887216765806959}
-  subtitleSlot: {fileID: 7582964055750434230}
-  ownershipButton: {fileID: 7103627232051205148}
-  ownershipLabel: {fileID: 7103627231834028563}
-  lockIcon: {fileID: 21300000, guid: ed5256293c354184a9efc36a2db8964a, type: 3}
-  unlockIcon: {fileID: 21300000, guid: 8162a39b5b23604419dee68d6edf97cb, type: 3}
-  ownershipTransferIcon: {fileID: 21300000, guid: a127b30f05ff629479a26afa5a1c9b5d,
-    type: 3}
-  emptyUrl:
-    url: 
-  desktopRaycastTurn: {x: 0, y: 0, z: 0, w: 1}
-  vrRaycastTurn: {x: 0, y: 0.34202012, z: 0, w: 0.9396926}
-  raycastElapsed: 0
-  autoHideTimeout: 5
-  PreviousFrameOffset: 0.001
-  NextFrameOffset: 0.02
---- !u!114 &7103627231200349783
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7103627231200349777}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 45115577ef41a5b4ca741ed302693907, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  interactTextPlacement: {fileID: 0}
-  interactText: Use
-  interactTextGO: {fileID: 0}
-  proximity: 2
-  SynchronizePosition: 0
-  AllowCollisionOwnershipTransfer: 0
-  Reliable: 0
-  _syncMethod: 1
-  serializedProgramAsset: {fileID: 11400000, guid: 9e1e7c40f5f4ae9418480c7c59ba2ca9,
-    type: 2}
-  programSource: {fileID: 11400000, guid: 11282af650e980f4d9e4eb86df52aa4e, type: 2}
-  serializedPublicVariablesBytesString: Ai8AAAAAATIAAABWAFIAQwAuAFUAZABvAG4ALgBDAG8AbQBtAG8AbgAuAFUAZABvAG4AVgBhAHIAaQBhAGIAbABlAFQAYQBiAGwAZQAsACAAVgBSAEMALgBVAGQAbwBuAC4AQwBvAG0AbQBvAG4AAAAAAAYBAAAAAAAAACcBBAAAAHQAeQBwAGUAAWgAAABTAHkAcwB0AGUAbQAuAEMAbwBsAGwAZQBjAHQAaQBvAG4AcwAuAEcAZQBuAGUAcgBpAGMALgBMAGkAcwB0AGAAMQBbAFsAVgBSAEMALgBVAGQAbwBuAC4AQwBvAG0AbQBvAG4ALgBJAG4AdABlAHIAZgBhAGMAZQBzAC4ASQBVAGQAbwBuAFYAYQByAGkAYQBiAGwAZQAsACAAVgBSAEMALgBVAGQAbwBuAC4AQwBvAG0AbQBvAG4AXQBdACwAIABtAHMAYwBvAHIAbABpAGIAAQEJAAAAVgBhAHIAaQBhAGIAbABlAHMALwEAAAABaAAAAFMAeQBzAHQAZQBtAC4AQwBvAGwAbABlAGMAdABpAG8AbgBzAC4ARwBlAG4AZQByAGkAYwAuAEwAaQBzAHQAYAAxAFsAWwBWAFIAQwAuAFUAZABvAG4ALgBDAG8AbQBtAG8AbgAuAEkAbgB0AGUAcgBmAGEAYwBlAHMALgBJAFUAZABvAG4AVgBhAHIAaQBhAGIAbABlACwAIABWAFIAQwAuAFUAZABvAG4ALgBDAG8AbQBtAG8AbgBdAF0ALAAgAG0AcwBjAG8AcgBsAGkAYgABAAAABgEAAAAAAAAAAi8CAAAAAUkAAABWAFIAQwAuAFUAZABvAG4ALgBDAG8AbQBtAG8AbgAuAFUAZABvAG4AVgBhAHIAaQBhAGIAbABlAGAAMQBbAFsAUwB5AHMAdABlAG0ALgBJAG4AdAAzADIALAAgAG0AcwBjAG8AcgBsAGkAYgBdAF0ALAAgAFYAUgBDAC4AVQBkAG8AbgAuAEMAbwBtAG0AbwBuAAIAAAAGAgAAAAAAAAAnAQQAAAB0AHkAcABlAAEXAAAAUwB5AHMAdABlAG0ALgBTAHQAcgBpAG4AZwAsACAAbQBzAGMAbwByAGwAaQBiACcBCgAAAFMAeQBtAGIAbwBsAE4AYQBtAGUAAR8AAABfAF8AXwBVAGQAbwBuAFMAaABhAHIAcABCAGUAaABhAHYAaQBvAHUAcgBWAGUAcgBzAGkAbwBuAF8AXwBfACcBBAAAAHQAeQBwAGUAARYAAABTAHkAcwB0AGUAbQAuAEkAbgB0ADMAMgAsACAAbQBzAGMAbwByAGwAaQBiABcBBQAAAFYAYQBsAHUAZQACAAAABwUHBQcF
-  publicVariablesUnityEngineObjects: []
-  publicVariablesSerializationDataFormat: 0
 --- !u!65 &5540372497575482806
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4143,6 +3956,73 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &5550847064194288894
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7103627231200349777}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a5f3e49e281619429d54b76c1f424b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pubsubHosts: []
+  system: {fileID: 0}
+  events: {fileID: 0}
+  raycastLayerMask:
+    serializedVersion: 2
+    m_Bits: 1
+  raycastIntervalSeconds: 0.333333
+  raycastMaxDistance: 10
+  animator: {fileID: 8785134002794354285}
+  raycastTarget: {fileID: 7103627232423027381}
+  progress: {fileID: 7103627233076163223}
+  playButton: {fileID: 7103627232012524928}
+  pauseButton: {fileID: 7103627231151382096}
+  stopButton: {fileID: 7103627232322770563}
+  framePrevButton: {fileID: 8623889208127904230}
+  frameNextButton: {fileID: 6789806549552014908}
+  status: {fileID: 7103627233187520396}
+  urlInput: {fileID: 5571624606570016517}
+  enterButton: {fileID: 7103627232838906795}
+  brightnessImage: {fileID: 7103627231567804836}
+  brightnessSlider: {fileID: 7103627231172918215}
+  volumeImage: {fileID: 7103627231403171104}
+  volumeSlider: {fileID: 7103627231134946267}
+  volumeMutedIcon: {fileID: 21300000, guid: ec4c3115d40ad5449912c3e0833cbcc9, type: 3}
+  volumeLowIcon: {fileID: 21300000, guid: 4644dd6d0d2cde643a22410d86e8ea62, type: 3}
+  volumeMediumIcon: {fileID: 21300000, guid: aea6e21b1a5499c4491ecf8bac5d7614, type: 3}
+  volumeHighIcon: {fileID: 21300000, guid: 495646b99e8090740aa8a0553b6817c9, type: 3}
+  brightnessLowIcon: {fileID: 21300000, guid: efe1ed4dad32e00429926465d0097844, type: 3}
+  brightnessMediumIcon: {fileID: 21300000, guid: 2f1dc4e57490028488de7423d55f8c87,
+    type: 3}
+  brightnessHighIcon: {fileID: 21300000, guid: 058aa19afbf4c514b97174294434f4f9, type: 3}
+  info: {fileID: 7103627232141525992}
+  titleSlot: {fileID: 8025914939843658910}
+  uploaderSlot: {fileID: 6583025588790585004}
+  descriptionSlot: {fileID: 8949269767719462482}
+  viewCountSlot: {fileID: 2327926440461417449}
+  likeCountSlot: {fileID: 5229183942199171838}
+  subtitlesDropdown: {fileID: 8456571796046107678}
+  subtitlesButton: {fileID: 5622076068918971001}
+  subtitlesButtonImage: {fileID: 5622076068918971000}
+  subtitlesButtonIcon: {fileID: 5622076069135622461}
+  subtitlesButtonLabel: {fileID: 5622076069386221951}
+  subtitlesAvailable: {fileID: 21300000, guid: 914f01abbd4f686409845f6216504732, type: 3}
+  subtitlesUnavailable: {fileID: 21300000, guid: 39c885bf6d8ae6345a3b6bc4d613202e,
+    type: 3}
+  subtitlesToggleButton: {fileID: 3417049636789692130}
+  subtitlesToggleButtonImage: {fileID: 2575534681744989029}
+  subtitlesToggleButtonIcon: {fileID: 165887216765806959}
+  subtitleSlot: {fileID: 7582964055750434230}
+  desktopRaycastTurn: {x: 0, y: 0, z: 0, w: 1}
+  vrRaycastTurn: {x: 0, y: 0, z: 0, w: 1}
+  raycastElapsed: 0
+  autoHideTimeout: 5
+  PreviousFrameOffset: 0.001
+  NextFrameOffset: 0.02
 --- !u!1 &7103627231202556995
 GameObject:
   m_ObjectHideFlags: 0
@@ -4445,7 +4325,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7103627231200349783}
+      - m_Target: {fileID: 0}
         m_MethodName: SendCustomEvent
         m_Mode: 5
         m_Arguments:
@@ -5201,9 +5081,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7103627231200349783}
-        m_MethodName: SendCustomEvent
-        m_Mode: 5
+      - m_Target: {fileID: 5550847064194288894}
+        m_MethodName: OnPlayButton
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -5330,7 +5210,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7103627231200349783}
+      - m_Target: {fileID: 0}
         m_MethodName: SendCustomEvent
         m_Mode: 5
         m_Arguments:
@@ -5666,9 +5546,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7103627231200349783}
-        m_MethodName: SendCustomEvent
-        m_Mode: 5
+      - m_Target: {fileID: 5550847064194288894}
+        m_MethodName: OnStopButton
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -5767,7 +5647,6 @@ GameObject:
   - component: {fileID: 7103627232423027406}
   - component: {fileID: 7103627232423027401}
   - component: {fileID: 7103627232423027400}
-  - component: {fileID: 7103627232423027403}
   - component: {fileID: 7103627232423027407}
   - component: {fileID: 7103627232423027405}
   - component: {fileID: 7103627232423027404}
@@ -5861,18 +5740,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &7103627232423027403
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7103627232423027381}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1533785930, guid: 661092b4961be7145bfbe56e1e62337b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &7103627232423027407
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6095,7 +5962,7 @@ GameObject:
   - component: {fileID: 7103627232702059706}
   - component: {fileID: 7103627232702059705}
   - component: {fileID: 7103627232702059704}
-  - component: {fileID: 7103627232702059707}
+  - component: {fileID: 5571624606570016517}
   m_Layer: 0
   m_Name: InputField
   m_TagString: Untagged
@@ -6161,7 +6028,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &7103627232702059707
+--- !u!114 &5571624606570016517
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -6170,11 +6037,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 7103627232702059685}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -547739040, guid: 661092b4961be7145bfbe56e1e62337b, type: 3}
+  m_Script: {fileID: 11500000, guid: d199490a83bb2b844b9695cbf13b01ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 0
+    m_Mode: 3
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
@@ -6214,15 +6081,15 @@ MonoBehaviour:
   m_OnEndEdit:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7103627231200349783}
-        m_MethodName: SendCustomEvent
-        m_Mode: 5
+      - m_Target: {fileID: 5550847064194288894}
+        m_MethodName: OnUrlInput
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: OnUrlInput
+          m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
   m_OnValueChanged:
@@ -6639,9 +6506,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7103627231200349783}
-        m_MethodName: SendCustomEvent
-        m_Mode: 5
+      - m_Target: {fileID: 5550847064194288894}
+        m_MethodName: OnUrlInput
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -6951,9 +6818,9 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7103627231200349783}
-        m_MethodName: SendCustomEvent
-        m_Mode: 5
+      - m_Target: {fileID: 5550847064194288894}
+        m_MethodName: OnProgressSlider
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -7254,7 +7121,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: Waiting for initialisation...
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 0}
+  m_fontAsset: {fileID: 11400000, guid: 12740723e58fff8438eae41f33abedbb, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: 2880c6ad814cd6a45b3e9cd712d6c983, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
