@@ -28,7 +28,7 @@ jobs:
         username: ${{ secrets.STEAM_USER }}
         password: ${{ secrets.STEAM_PASSWORD }}
         gameid: 661130
-        folder: ChilloutVR
+        folder: chilloutvr
 
     - name: Bootstrap CI
       run: tools/bootstrap_ci.ps1

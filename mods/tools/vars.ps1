@@ -2,7 +2,7 @@ $env:7ZIP_URL = "https://www.7-zip.org/a/7zr.exe"
 $env:7ZIP_FOLDER = "7-Zip"
 
 $env:STEAM_GAME_ID = 661130
-$env:STEAM_GAME_FOLDER = "ChilloutVR"
+$env:STEAM_GAME_FOLDER = "chilloutvr"
 
 $env:MELONLOADER_REPO = "LavaGang/MelonLoader"
 $env:MELONLOADER_FOLDER = "MelonLoader"
