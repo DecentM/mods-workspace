@@ -13356,7 +13356,7 @@ MonoBehaviour:
   implicitGroups: []
   implicitGroupedObjects: []
   bounds: []
-  hasEmissive: 
+  hasEmissive: []
   uvBuffOffsets: 
   uvBuffLengths: 
   uvSrcBuff: []
@@ -13368,10 +13368,10 @@ MonoBehaviour:
   lmGroupMinLOD: 
   lmGroupLODMatrix: 
   serverGetFileList: []
-  lightmapHasColor: 
-  lightmapHasMask: 
-  lightmapHasDir: 
-  lightmapHasRNM: 
+  lightmapHasColor: []
+  lightmapHasMask: []
+  lightmapHasDir: []
+  lightmapHasRNM: []
   modifiedAssetPathList: []
   modifiedAssets: []
   maps: []
@@ -15518,7 +15518,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 986ad1011412f57488727ac3d20b87f3, type: 2}
+  - {fileID: 2100000, guid: c4c6f471c3566994c84767a678df9b02, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

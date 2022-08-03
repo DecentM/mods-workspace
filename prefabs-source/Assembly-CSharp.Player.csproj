@@ -53,91 +53,37 @@
     <UnityVersion>2019.4.31f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Assets\Store\EffectExamples\Shared\Scripts\DecalDestroyer.cs" />
-    <Compile Include="Assets\Store\EffectExamples\Shared\Scripts\ExtinguishableFire.cs" />
-    <Compile Include="Assets\Store\EffectExamples\Shared\Scripts\GunAim.cs" />
-    <Compile Include="Assets\Store\EffectExamples\Shared\Scripts\GunShoot.cs" />
-    <Compile Include="Assets\Store\EffectExamples\Shared\Scripts\ParticleCollision.cs" />
-    <Compile Include="Assets\Store\EffectExamples\Shared\Scripts\ParticleExamples.cs" />
-    <Compile Include="Assets\Store\EffectExamples\Shared\Scripts\ParticleMenu.cs" />
-    <Compile Include="Assets\Store\EffectExamples\TutorialInfo\Scripts\Readme.cs" />
     <Compile Include="Assets\World\Scripts\VideoScreenRealtimeEmission.cs" />
     <Compile Include="Assets\World\Scripts\VideoScreenRealtimeLight.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
-    <None Include="Assets\Store\Filamented\FilamentCommonMaterial.cginc" />
-    <None Include="Assets\Store\Filamented\UnityGlobalIllumination.cginc" />
-    <None Include="Assets\Store\Filamented\UnityStandardConfig.cginc" />
-    <None Include="Assets\Store\Filamented\UnityStandardShadow.cginc" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
+    <None Include="Assets\Store\Standard Assets\Effects\Projectors\Shaders\ProjectorLight.shader" />
     <None Include="Assets\DecentM\ExampleAssets\Shaders\PlayersOnlyMirrorCutout.shader" />
-    <None Include="Assets\Store\Filamented\UnityStandardCore.cginc" />
-    <None Include="Assets\Store\Filamented\StandardSpecular.shader" />
+    <None Include="Assets\Store\Standard Assets\Effects\Projectors\Shaders\ProjectorMultiply.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />
-    <None Include="Assets\Store\Filamented\FilamentMaterialInputs.cginc" />
-    <None Include="Assets\Store\Filamented\FilamentCommonMath.cginc" />
-    <None Include="Assets\Store\Filamented\FilamentShadingLit.cginc" />
-    <None Include="Assets\Store\Almgp_automapping_shader\shaders\props shaders\grunt_world_space_automap_lightmap.shader" />
-    <None Include="Assets\Store\XSVolumetrics\Shaders\Alpha_Scroll_DepthBlended.shader" />
-    <None Include="Assets\Store\Filamented\FilamentShadingCloth.cginc" />
+    <None Include="Assets\Store\Standard Assets\Effects\Projectors\Guidelines.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Mobile.cginc" />
-    <None Include="Assets\Store\Filamented\FilamentedTriplanar.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF SSD.shader" />
-    <None Include="Assets\Store\Filamented\FilamentShadingStandard.cginc" />
-    <None Include="Assets\Store\Filamented\FilamentedTemplateRefraction.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface-Mobile.shader" />
-    <None Include="Assets\Store\PollyPrivateers\Readme.txt" />
     <None Include="Assets\DecentM\ExampleAssets\Shaders\TransparentBackground.shader" />
-    <None Include="Assets\Store\VRWaterShader2\Shaders\VRWSShadowCaster.cginc" />
-    <None Include="Assets\Store\Filamented\StandardRoughness.shader" />
-    <None Include="Assets\Store\Filamented\FilamentLightDirectional.cginc" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface.shader" />
     <None Include="Assets\TextMesh Pro\Sprites\EmojiOne Attribution.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Custom-Atlas.shader" />
-    <None Include="Assets\Store\VRWaterShader2\Shaders\Standard.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF.shader" />
-    <None Include="Assets\Store\Filamented\FilamentBRDF.cginc" />
-    <None Include="Assets\Store\Filamented\FilamentedTemplate.shader" />
-    <None Include="Assets\Store\Filamented\UnityStandardMeta.cginc" />
-    <None Include="Assets\Store\Filamented\Standard.shader" />
     <None Include="Assets\Store\Free Stylized Skybox\ReadMe.txt" />
-    <None Include="Assets\Store\Filamented\UnityStandardInput.cginc" />
-    <None Include="Assets\Store\Filamented\FilamentCommonLighting.cginc" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile SSD.shader" />
     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Properties.cginc" />
-    <None Include="Assets\Store\Filamented\FilamentLightPunctual.cginc" />
-    <None Include="Assets\Store\XSVolumetrics\Shaders\Additive_GodRay.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Surface.cginc" />
-    <None Include="Assets\Store\VRWaterShader2\Shaders\VRWSCore.cginc" />
-    <None Include="Assets\Store\Filamented\FilamentCommonShading.cginc" />
     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
-    <None Include="Assets\Store\Industrial Props\ReadMe.txt" />
-    <None Include="Assets\Store\Filamented\FilamentCommonDithering.cginc" />
-    <None Include="Assets\Store\Filamented\UnityLightingCommon.cginc" />
-    <None Include="Assets\Store\XSVolumetrics\Shaders\Additive_GodRay_Smoky.shader" />
-    <None Include="Assets\Store\Filamented\SharedParallaxLib.hlsl" />
-    <None Include="Assets\Store\Filamented\SharedNormalShadowLib.hlsl" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Masking.shader" />
-    <None Include="Assets\Store\VRWaterShader2\Shaders\VRWSTess.cginc" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF Overlay.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Mobile.shader" />
-    <None Include="Assets\Store\Filamented\FilamentCommonGraphics.cginc" />
-    <None Include="Assets\Store\Filamented\FilamentLightLTCGI.cginc" />
-    <None Include="Assets\Store\EffectExamples\Shared\Shaders\SurfaceShader_VC.shader" />
     <None Include="Assets\TextMesh Pro\Fonts\LiberationSans - OFL.txt" />
-    <None Include="Assets\Store\Filamented\UnityStandardUtils.cginc" />
-    <None Include="Assets\Store\Filamented\FilamentLightIndirect.cginc" />
-    <None Include="Assets\Store\Filamented\UnityStandardCoreForward.cginc" />
-    <None Include="Assets\Store\Filamented\StandardCloth.shader" />
-    <None Include="Assets\Store\Filamented\FilamentCommonOcclusion.cginc" />
-    <None Include="Assets\Store\Filamented\SharedFilteringLib.hlsl" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile.shader" />
-    <None Include="Assets\Store\Filamented\UnityImageBasedLightingMinimal.cginc" />
-    <None Include="Assets\Store\Filamented\UnityLeftovers.cginc" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Sprite.shader" />
-    <None Include="Assets\Store\Filamented\FilamentShadingParameters.cginc" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
@@ -326,14 +272,8 @@
     <Reference Include="Unity.VSCode.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.VSCode.Editor.dll</HintPath>
     </Reference>
-    <Reference Include="AltGUI">
-      <HintPath>Library\ScriptAssemblies\AltGUI.dll</HintPath>
-    </Reference>
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.TextMeshPro.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="BakeryEditorAssembly">
-      <HintPath>Library\ScriptAssemblies\BakeryEditorAssembly.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Rider.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.Rider.Editor.dll</HintPath>
@@ -717,10 +657,6 @@
     <ProjectReference Include="Unity.Timeline.csproj">
       <Project>{71685982-A3E4-03BD-69E8-57000764549C}</Project>
       <Name>Unity.Timeline</Name>
-    </ProjectReference>
-    <ProjectReference Include="BakeryRuntimeAssembly.csproj">
-      <Project>{5E74822B-1910-32AD-3498-F1619D04A768}</Project>
-      <Name>BakeryRuntimeAssembly</Name>
     </ProjectReference>
     <ProjectReference Include="Unity.TextMeshPro.csproj">
       <Project>{6D1829C3-AEC0-D815-EB82-4E4BBF459634}</Project>
