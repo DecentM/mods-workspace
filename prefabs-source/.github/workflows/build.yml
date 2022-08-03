@@ -36,6 +36,12 @@ jobs:
           UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
 
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: build/StandaloneWindows64/StandaloneWindows64_Data/Managed/DecentM.Prefabs.dll
+
       - uses: actions/upload-artifact@v2
         with:
           name: Build
