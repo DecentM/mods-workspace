@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace DecentM
+namespace DecentM.Prefabs
 {
     public class LibDecentM : MonoBehaviour
     {

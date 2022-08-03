@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System;
 
-namespace DecentM
+namespace DecentM.Prefabs
 {
     public class Scheduling : MonoBehaviour
     {

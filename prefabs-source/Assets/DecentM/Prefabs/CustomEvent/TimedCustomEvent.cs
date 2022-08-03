@@ -1,46 +1,49 @@
 ﻿using UnityEngine;
 using DecentM;
 
-public class TimedCustomEvent : MonoBehaviour
+namespace DecentM.Prefabs
 {
-    [Header("References")]
-    [Tooltip("The UdonBehaviour to send the custom event to")]
-    public MonoBehaviour target;
-
-    [Header("Settings")]
-    [Tooltip("The name of the event to send / public function name to call")]
-    public string eventName;
-
-    [Tooltip(
-        "How many times per second to send the event (min 1, max <1 / Time.fixedDeltaTime>, usually 50)"
-    )]
-    public float timesPerSecond = 1;
-
-    [Header("LibDecentM")]
-    [Tooltip("The LibDecentM object")]
-    public LibDecentM lib;
-
-    private int clock = 0;
-
-    private void FixedUpdate()
+    public class TimedCustomEvent : MonoBehaviour
     {
-        this.clock++;
+        [Header("References")]
+        [Tooltip("The UdonBehaviour to send the custom event to")]
+        public MonoBehaviour target;
 
-        float realTimesPerSecond = Mathf.Clamp(
-            this.timesPerSecond,
-            1,
-            lib.scheduling.fixedUpdateRate
-        );
+        [Header("Settings")]
+        [Tooltip("The name of the event to send / public function name to call")]
+        public string eventName;
 
-        if (this.clock > lib.scheduling.fixedUpdateRate / realTimesPerSecond)
+        [Tooltip(
+            "How many times per second to send the event (min 1, max <1 / Time.fixedDeltaTime>, usually 50)"
+        )]
+        public float timesPerSecond = 1;
+
+        [Header("LibDecentM")]
+        [Tooltip("The LibDecentM object")]
+        public LibDecentM lib;
+
+        private int clock = 0;
+
+        private void FixedUpdate()
         {
-            this.clock = 0;
-            this.SendLocal();
-        }
-    }
+            this.clock++;
 
-    private void SendLocal()
-    {
-        this.target.Invoke(this.eventName, 0);
+            float realTimesPerSecond = Mathf.Clamp(
+                this.timesPerSecond,
+                1,
+                lib.scheduling.fixedUpdateRate
+            );
+
+            if (this.clock > lib.scheduling.fixedUpdateRate / realTimesPerSecond)
+            {
+                this.clock = 0;
+                this.SendLocal();
+            }
+        }
+
+        private void SendLocal()
+        {
+            this.target.Invoke(this.eventName, 0);
+        }
     }
 }
