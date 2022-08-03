@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 3971437795964817206}
   - component: {fileID: 3971437795964817201}
   - component: {fileID: 3971437795964817200}
-  - component: {fileID: 3971437795964817207}
   m_Layer: 0
   m_Name: ScreenAnalysis
   m_TagString: Untagged
@@ -88,16 +87,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07ab87166cefed34d805ff4f5258f68f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  serializationData:
-    SerializedFormat: 2
-    SerializedBytes: 
-    ReferencedUnityObjects: []
-    SerializedBytesString: 
-    Prefab: {fileID: 0}
-    PrefabModificationsReferencedUnityObjects: []
-    PrefabModifications: []
-    SerializationNodes: []
-  _udonSharpBackingUdonBehaviour: {fileID: 3971437795964817207}
   pubsubHosts:
   - {fileID: 0}
   system: {fileID: 0}
@@ -106,45 +95,4 @@ MonoBehaviour:
   historyLengthSeconds: 0.33333
   sampleSize: 30
   sampleRandomisationFactor: 1
-  applyTextures: 0
   fetchTexture: {fileID: 2800000, guid: b7e8c2ab9fb8b294ea521f22bec448d6, type: 3}
-  sampleVisualisationTexture: {fileID: 2800000, guid: 5ccb9f6bce540f44db81aba6492bb3d3,
-    type: 3}
-  averageColourHistoryTexture: {fileID: 2800000, guid: d33536f8d04f9044aa62ac6ea64e8840,
-    type: 3}
-  smoothedAverageColourHistoryTexture: {fileID: 2800000, guid: 1b5e8503e66a0934cbcd7a47e176688d,
-    type: 3}
-  mostVibrantColourHistoryTexture: {fileID: 2800000, guid: d90cc5309349cd24f9b4d4ec53172b34,
-    type: 3}
-  smoothedMostVibrantColourHistoryTexture: {fileID: 2800000, guid: e533856222edfdf428bfd25ed4ae2a11,
-    type: 3}
-  brightestColourHistoryTexture: {fileID: 2800000, guid: ca46922b35975d94aaa5d733ad215425,
-    type: 3}
-  smoothedBrightestColourHistoryTexture: {fileID: 2800000, guid: e41f10a74062f2f4fbf28d314ab23a66,
-    type: 3}
---- !u!114 &3971437795964817207
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3971437795964817205}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 45115577ef41a5b4ca741ed302693907, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  interactTextPlacement: {fileID: 0}
-  interactText: Use
-  interactTextGO: {fileID: 0}
-  proximity: 2
-  SynchronizePosition: 0
-  AllowCollisionOwnershipTransfer: 0
-  Reliable: 0
-  _syncMethod: 1
-  serializedProgramAsset: {fileID: 11400000, guid: 3ae2e5ee989f3bc489e174f634b2a1d2,
-    type: 2}
-  programSource: {fileID: 11400000, guid: f9584a04371dd5348a901293eb11a20b, type: 2}
-  serializedPublicVariablesBytesString: Ai8AAAAAATIAAABWAFIAQwAuAFUAZABvAG4ALgBDAG8AbQBtAG8AbgAuAFUAZABvAG4AVgBhAHIAaQBhAGIAbABlAFQAYQBiAGwAZQAsACAAVgBSAEMALgBVAGQAbwBuAC4AQwBvAG0AbQBvAG4AAAAAAAYBAAAAAAAAACcBBAAAAHQAeQBwAGUAAWgAAABTAHkAcwB0AGUAbQAuAEMAbwBsAGwAZQBjAHQAaQBvAG4AcwAuAEcAZQBuAGUAcgBpAGMALgBMAGkAcwB0AGAAMQBbAFsAVgBSAEMALgBVAGQAbwBuAC4AQwBvAG0AbQBvAG4ALgBJAG4AdABlAHIAZgBhAGMAZQBzAC4ASQBVAGQAbwBuAFYAYQByAGkAYQBiAGwAZQAsACAAVgBSAEMALgBVAGQAbwBuAC4AQwBvAG0AbQBvAG4AXQBdACwAIABtAHMAYwBvAHIAbABpAGIAAQEJAAAAVgBhAHIAaQBhAGIAbABlAHMALwEAAAABaAAAAFMAeQBzAHQAZQBtAC4AQwBvAGwAbABlAGMAdABpAG8AbgBzAC4ARwBlAG4AZQByAGkAYwAuAEwAaQBzAHQAYAAxAFsAWwBWAFIAQwAuAFUAZABvAG4ALgBDAG8AbQBtAG8AbgAuAEkAbgB0AGUAcgBmAGEAYwBlAHMALgBJAFUAZABvAG4AVgBhAHIAaQBhAGIAbABlACwAIABWAFIAQwAuAFUAZABvAG4ALgBDAG8AbQBtAG8AbgBdAF0ALAAgAG0AcwBjAG8AcgBsAGkAYgABAAAABgEAAAAAAAAAAi8CAAAAAUkAAABWAFIAQwAuAFUAZABvAG4ALgBDAG8AbQBtAG8AbgAuAFUAZABvAG4AVgBhAHIAaQBhAGIAbABlAGAAMQBbAFsAUwB5AHMAdABlAG0ALgBJAG4AdAAzADIALAAgAG0AcwBjAG8AcgBsAGkAYgBdAF0ALAAgAFYAUgBDAC4AVQBkAG8AbgAuAEMAbwBtAG0AbwBuAAIAAAAGAgAAAAAAAAAnAQQAAAB0AHkAcABlAAEXAAAAUwB5AHMAdABlAG0ALgBTAHQAcgBpAG4AZwAsACAAbQBzAGMAbwByAGwAaQBiACcBCgAAAFMAeQBtAGIAbwBsAE4AYQBtAGUAAR8AAABfAF8AXwBVAGQAbwBuAFMAaABhAHIAcABCAGUAaABhAHYAaQBvAHUAcgBWAGUAcgBzAGkAbwBuAF8AXwBfACcBBAAAAHQAeQBwAGUAARYAAABTAHkAcwB0AGUAbQAuAEkAbgB0ADMAMgAsACAAbQBzAGMAbwByAGwAaQBiABcBBQAAAFYAYQBsAHUAZQACAAAABwUHBQcF
-  publicVariablesUnityEngineObjects: []
-  publicVariablesSerializationDataFormat: 0

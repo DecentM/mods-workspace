@@ -310,9 +310,6 @@
  <Reference Include="UnityEditor.Android.Extensions">
  <HintPath>D:/UnityEditors/2019.4.31f1/Editor/Data/PlaybackEngines/AndroidPlayer/UnityEditor.Android.Extensions.dll</HintPath>
  </Reference>
- <Reference Include="PackageManagerAssembly">
- <HintPath>D:/UnityProjects/ChilloutVR/World Prefabs/Assets/Store/EffectExamples/Editor/PackageManagerAssembly/PackageManagerAssembly.dll</HintPath>
- </Reference>
  <Reference Include="log4netPlastic">
  <HintPath>D:/UnityProjects/ChilloutVR/World Prefabs/Library/PackageCache/com.unity.collab-proxy@1.10.2/Lib/Editor/PlasticSCM/log4netPlastic.dll</HintPath>
  </Reference>
