@@ -17,7 +17,7 @@ $env:MONO_FOLDER = "Mono"
 $env:NUGET_URL = "https://dist.nuget.org/win-x86-commandline/latest/nuget.exe"
 $env:NUGET_FOLDER = "NuGet"
 
-$env:PREFABS_VERSION = "v1.0.1"
+$env:PREFABS_VERSION = "v1.0.2"
 $env:PREFABS_FILENAME = "DecentM.Prefabs.dll"
 $env:PREFABS_REPO = "DecentM/world-prefabs"
 $env:PREFABS_URL = "https://github.com/$env:PREFABS_REPO/releases/download/$env:PREFABS_VERSION/$env:PREFABS_FILENAME"
