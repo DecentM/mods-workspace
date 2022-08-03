@@ -22,17 +22,6 @@ jobs:
     - name: Restore NuGet packages
       run: nuget restore
 
-    - name: Setup MelonLoader
-      run: tools/bootstrap/melonloader.ps1
-      shell: pwsh
-      env:
-        MELONLOADER_VERSION: v0.5.4
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-    - name: Setup Prefabs
-      run: tools/bootstrap/prefabs.ps1
-      shell: pwsh
-
     - name: Setup ChilloutVR
       uses: DecentM/setup-steam-game-windows@v1.0.0
       with:
@@ -41,9 +30,11 @@ jobs:
         gameid: 661130
         folder: ChilloutVR
 
-    - name: Mod the game
-      run: tools/bootstrap/mod-game.ps1
+    - name: Bootstrap CI
+      run: tools/bootstrap_ci.ps1
       shell: pwsh
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Build
       run: dotnet build --no-restore -c Release

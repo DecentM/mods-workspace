@@ -25,3 +25,10 @@ $env:PREFABS_FOLDER = "DecentM.Prefabs"
 
 $env:STEAMCMD_URL = "https://steamcdn-a.akamaihd.net/client/installer/steamcmd.zip"
 $env:STEAMCMD_FOLDER = "SteamCMD"
+
+# We can't prompt for anything in the CI, but that should have set STEAM_USER and STEAM_PASSWORD already
+if (!($env:CI -eq "true")) {
+    $c = $host.ui.PromptForCredential("Steam Credentials", "Log into a Steam account that owns game $env:STEAM_GAME_ID, to install into $env:STEAM_GAME_FOLDER.", "", "")
+    $env:STEAM_USER = $c.UserName
+    $env:STEAM_PASSWORD = (New-Object PSCredential "user", $c.Password).GetNetworkCredential().Password
+}

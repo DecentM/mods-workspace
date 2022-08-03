@@ -1,4 +1,3 @@
-$version = $env:PREFABS_VERSION
 $filename = $env:PREFABS_FILENAME
 $url = $env:PREFABS_URL
 $folder = $env:PREFABS_FOLDER

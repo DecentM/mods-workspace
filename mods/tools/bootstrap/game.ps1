@@ -19,7 +19,11 @@ Write-Output "Installing ChilloutVR..."
     +login $env:STEAM_USER "$env:STEAM_PASSWORD" `
     +app_update $gameid validate `
     +quit `
-    || & { "SteamCMD exited with exit code $global:LASTEXITCODE, but we don't care about it."; $global:LASTEXITCODE = 0 }
+    || & {
+        if ($global:LASTEXITCODE -eq 7) {
+            "SteamCMD exited with exit code $global:LASTEXITCODE, but we don't care about it."; $global:LASTEXITCODE = 0
+        }
+     }
 
 Write-Output "Done."
 
