@@ -1,0 +1,30 @@
+name: build
+
+on:
+  push:
+    branches: [ "master" ]
+    tags:
+      - "v*.*.*"
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build:
+
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Restore dotnet packages
+        run: dotnet restore
+
+      - name: Restore NuGet packages
+        run: nuget restore
+
+      - name: Build Unity
+        uses: game-ci/unity-builder@v2.0.4
+
+      - name: Inspect
+        run: pwd; ls -l
+        shell: pwsh
