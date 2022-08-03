@@ -37,13 +37,16 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="0Harmony">
-      <HintPath>..\..\..\Mods\MelonLoader\MelonLoader.x64\MelonLoader\0Harmony.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\melonloader\MelonLoader.x64\MelonLoader\0Harmony.dll</HintPath>
     </Reference>
     <Reference Include="Assembly-CSharp">
-      <HintPath>..\..\..\Mods\chilloutvr\ChilloutVR_Data\Managed\Assembly-CSharp.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\chilloutvr\ChilloutVR_Data\Managed\Assembly-CSharp.dll</HintPath>
     </Reference>
     <Reference Include="MelonLoader">
-      <HintPath>..\..\..\Mods\MelonLoader\MelonLoader.x64\MelonLoader\MelonLoader.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\melonloader\MelonLoader.x64\MelonLoader\MelonLoader.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -53,7 +56,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
-    <Reference Include="UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="UnityEngine.CoreModule">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\chilloutvr\ChilloutVR_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
     </Reference>
@@ -69,6 +72,6 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>echo F | xcopy /y /d "$(ProjectDir)$(OutDir)$(TargetFileName)" "$(SolutionDir)ChilloutVR\Mods\$(ProjectName).dll"</PostBuildEvent>
+    <PostBuildEvent>echo F | xcopy /y /d "$(ProjectDir)$(OutDir)$(TargetFileName)" "$(SolutionDir)chilloutvr\Mods\$(ProjectName).dll"</PostBuildEvent>
   </PropertyGroup>
 </Project>

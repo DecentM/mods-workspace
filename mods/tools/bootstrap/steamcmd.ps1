@@ -2,7 +2,7 @@ $url = $env:STEAMCMD_URL
 $folder = $env:STEAMCMD_FOLDER
 
 if (Test-Path -Path $folder) {
-    return "Skipping SteamCMD install as it's already installed. Run '\tools\clean.ps1' to clear the current installation!";
+    return "Skipping $folder install as it's already installed. Run '\tools\clean.ps1' to clear the current installation!";
 }
 
 Write-Output "Installing $folder..."

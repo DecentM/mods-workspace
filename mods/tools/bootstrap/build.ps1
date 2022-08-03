@@ -1,4 +1,4 @@
 dotnet restore
-.\NuGet\nuget.exe restore
+.\nuget\nuget.exe restore
 
 dotnet build --no-restore

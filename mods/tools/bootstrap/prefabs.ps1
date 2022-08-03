@@ -3,7 +3,7 @@ $url = $env:PREFABS_URL
 $folder = $env:PREFABS_FOLDER
 
 if (Test-Path -Path $folder) {
-    return "Skipping DecentM.Prefabs install as it's already installed. Run '\tools\clean.ps1' to clear the current installation!";
+    return "Skipping $folder install as it's already installed. Run '\tools\clean.ps1' to clear the current installation!";
 }
 
 Write-Output "Installing $folder..."

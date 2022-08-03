@@ -36,21 +36,21 @@
     <RunPostBuildEvent>OnOutputUpdated</RunPostBuildEvent>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="0Harmony, Version=2.9.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="0Harmony">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Mods\MelonLoader\MelonLoader.x64\MelonLoader\0Harmony.dll</HintPath>
+      <HintPath>..\..\melonloader\MelonLoader.x64\MelonLoader\0Harmony.dll</HintPath>
     </Reference>
-    <Reference Include="Assembly-CSharp, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Assembly-CSharp">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Mods\chilloutvr\ChilloutVR_Data\Managed\Assembly-CSharp.dll</HintPath>
+      <HintPath>..\..\chilloutvr\ChilloutVR_Data\Managed\Assembly-CSharp.dll</HintPath>
     </Reference>
-    <Reference Include="DecentM.Prefabs, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="DecentM.Prefabs">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Mods\DecentM.Prefabs\DecentM.Prefabs.dll</HintPath>
+      <HintPath>..\..\prefabs\DecentM.Prefabs.dll</HintPath>
     </Reference>
-    <Reference Include="MelonLoader, Version=0.5.4.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="MelonLoader">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Mods\MelonLoader\MelonLoader.x64\MelonLoader\MelonLoader.dll</HintPath>
+      <HintPath>..\..\melonloader\MelonLoader.x64\MelonLoader\MelonLoader.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -61,22 +61,22 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
-    <Reference Include="Unity.TextMeshPro, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Unity.TextMeshPro">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\chilloutvr\ChilloutVR_Data\Managed\Unity.TextMeshPro.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.AnimationModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="UnityEngine.AnimationModule">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\chilloutvr\ChilloutVR_Data\Managed\UnityEngine.AnimationModule.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.AudioModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="UnityEngine.AudioModule">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\chilloutvr\ChilloutVR_Data\Managed\UnityEngine.AudioModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.CoreModule">
       <HintPath>..\..\chilloutvr\ChilloutVR_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.PhysicsModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="UnityEngine.PhysicsModule">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\chilloutvr\ChilloutVR_Data\Managed\UnityEngine.PhysicsModule.dll</HintPath>
     </Reference>
@@ -84,11 +84,11 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\chilloutvr\ChilloutVR_Data\Managed\UnityEngine.UI.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.UIModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="UnityEngine.UIModule">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\chilloutvr\ChilloutVR_Data\Managed\UnityEngine.UIModule.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.VideoModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="UnityEngine.VideoModule">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\chilloutvr\ChilloutVR_Data\Managed\UnityEngine.VideoModule.dll</HintPath>
     </Reference>
@@ -102,6 +102,6 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>echo F | xcopy /y /d "$(ProjectDir)$(OutDir)$(TargetFileName)" "$(SolutionDir)ChilloutVR\Mods\$(ProjectName).dll"</PostBuildEvent>
+    <PostBuildEvent>echo F | xcopy /y /d "$(ProjectDir)$(OutDir)$(TargetFileName)" "$(SolutionDir)chilloutvr\Mods\$(ProjectName).dll"</PostBuildEvent>
   </PropertyGroup>
 </Project>

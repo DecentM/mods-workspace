@@ -37,17 +37,17 @@
     <RunPostBuildEvent>OnOutputUpdated</RunPostBuildEvent>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="0Harmony, Version=2.9.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="0Harmony">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Mods\MelonLoader\MelonLoader.x64\MelonLoader\0Harmony.dll</HintPath>
+      <HintPath>..\..\melonloader\MelonLoader.x64\MelonLoader\0Harmony.dll</HintPath>
     </Reference>
-    <Reference Include="Assembly-CSharp-firstpass, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Assembly-CSharp-firstpass">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Mods\chilloutvr\ChilloutVR_Data\Managed\Assembly-CSharp-firstpass.dll</HintPath>
+      <HintPath>..\..\chilloutvr\ChilloutVR_Data\Managed\Assembly-CSharp-firstpass.dll</HintPath>
     </Reference>
-    <Reference Include="MelonLoader, Version=0.5.4.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="MelonLoader">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Mods\MelonLoader\MelonLoader.x64\MelonLoader\MelonLoader.dll</HintPath>
+      <HintPath>..\..\melonloader\MelonLoader.x64\MelonLoader\MelonLoader.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -69,6 +69,6 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>echo F | xcopy /y /d "$(ProjectDir)$(OutDir)$(TargetFileName)" "$(SolutionDir)ChilloutVR\Mods\$(ProjectName).dll"</PostBuildEvent>
+    <PostBuildEvent>echo F | xcopy /y /d "$(ProjectDir)$(OutDir)$(TargetFileName)" "$(SolutionDir)chilloutvr\Mods\$(ProjectName).dll"</PostBuildEvent>
   </PropertyGroup>
 </Project>
