@@ -4,7 +4,7 @@ using UnityEngine;
 
 using DecentM.EditorTools;
 
-namespace DecentM.VideoPlayer.EditorTools.Importers
+namespace DecentM.Prefabs.VideoPlayer.EditorTools.Importers
 {
     public sealed class VideoMetadataAsset : ScriptableObject
     {

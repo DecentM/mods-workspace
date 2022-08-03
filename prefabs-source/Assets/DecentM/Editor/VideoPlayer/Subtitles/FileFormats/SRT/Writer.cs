@@ -4,7 +4,7 @@ using System;
 using System.Linq;
 using System.Text;
 
-namespace DecentM.Subtitles.Srt
+namespace DecentM.Prefabs.Subtitles.Srt
 {
     public class SrtWriter : Writer
     {

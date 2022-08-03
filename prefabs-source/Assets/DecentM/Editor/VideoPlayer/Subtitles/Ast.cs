@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace DecentM.Subtitles
+namespace DecentM.Prefabs.Subtitles
 {
     public enum NodeKind
     {

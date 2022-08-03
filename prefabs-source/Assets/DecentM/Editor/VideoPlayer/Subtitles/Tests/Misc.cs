@@ -6,10 +6,9 @@ using UnityEngine.TestTools;
 using System.IO;
 using System.Linq;
 
-using DecentM.TextProcessing;
 using DecentM.EditorTools;
 
-namespace DecentM.Subtitles.Tests
+namespace DecentM.Prefabs.Subtitles.Tests
 {
     public class Misc
     {

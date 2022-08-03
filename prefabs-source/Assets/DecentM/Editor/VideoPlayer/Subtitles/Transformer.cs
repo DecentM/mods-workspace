@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using DecentM.TextProcessing;
+using DecentM.EditorTools;
 
-namespace DecentM.Subtitles
+namespace DecentM.Prefabs.Subtitles
 {
     public sealed class Transformer
     {

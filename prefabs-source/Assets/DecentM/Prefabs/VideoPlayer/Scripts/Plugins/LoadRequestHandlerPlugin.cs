@@ -2,14 +2,13 @@
 using UnityEngine;
 using TMPro;
 
-// TODO: Import this after it's been ported
-// using DecentM.VideoRatelimit;
+using DecentM.Prefabs.VideoRatelimit;
 
 namespace DecentM.Prefabs.VideoPlayer.Plugins
 {
     public class LoadRequestHandlerPlugin : VideoPlayerPlugin
     {
-        // public VideoRatelimitSystem ratelimit;
+        public VideoRatelimitSystem ratelimit;
 
         private string approvalPending;
         public float approvalTimeout = 0.3f;
@@ -44,18 +43,17 @@ namespace DecentM.Prefabs.VideoPlayer.Plugins
 
             this.denials = 0;
 
-            // TODO: Restore after VideoRatelimit has been ported
-            // if (this.ratelimit == null)
-            // {
+            if (this.ratelimit == null)
+            {
                 this.events.OnLoadApproved(this.approvalPending);
                 this.system.LoadVideo(this.approvalPending);
                 this.approvalPending = null;
-            /* }
+            }
             else
             {
                 this.events.OnLoadRatelimitWaiting();
                 this.ratelimit.RequestPlaybackWindow(this);
-            } */
+            }
         }
 
         public void OnPlaybackWindow()

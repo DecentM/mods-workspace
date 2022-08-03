@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System;
 
-namespace DecentM.Subtitles.Vtt
+namespace DecentM.Prefabs.Subtitles.Vtt
 {
     public enum TokenType
     {

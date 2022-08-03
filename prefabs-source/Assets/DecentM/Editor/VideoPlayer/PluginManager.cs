@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DecentM.EditorTools;
 
-namespace DecentM.Prefabs.VideoPlayer
+namespace DecentM.Prefabs.VideoPlayer.EditorTools
 {
     public struct PluginRequirements
     {

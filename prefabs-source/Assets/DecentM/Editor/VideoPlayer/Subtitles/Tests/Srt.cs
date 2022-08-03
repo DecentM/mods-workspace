@@ -9,7 +9,7 @@ using System.Linq;
 using DecentM.Prefabs.VideoPlayer.Plugins;
 using DecentM.EditorTools;
 
-namespace DecentM.Subtitles.Tests
+namespace DecentM.Prefabs.Subtitles.Tests
 {
     public class Srt
     {

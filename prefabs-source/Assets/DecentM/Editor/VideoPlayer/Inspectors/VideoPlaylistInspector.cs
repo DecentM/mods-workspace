@@ -1,15 +1,13 @@
 ﻿using System;
-using UnityEditor;
-using UnityEditorInternal;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using DecentM.EditorTools;
 using System.Linq;
-using System.Threading;
 
+using UnityEditor;
+using UnityEngine;
+
+using DecentM.EditorTools;
 using DecentM.Icons;
-using DecentM.VideoPlayer.EditorTools.Importers;
+using DecentM.Prefabs.VideoPlayer.EditorTools;
 using DecentM.Prefabs.VideoPlayer.Plugins;
 
 namespace DecentM.Prefabs.VideoPlayer

@@ -2,13 +2,13 @@
 using System.Linq;
 using System.Collections.Generic;
 
-using DecentM.TextProcessing;
+using DecentM.EditorTools;
 
-using DecentM.Subtitles.Vsi;
-using DecentM.Subtitles.Srt;
-using DecentM.Subtitles.Vtt;
+using DecentM.Prefabs.Subtitles.Vsi;
+using DecentM.Prefabs.Subtitles.Srt;
+using DecentM.Prefabs.Subtitles.Vtt;
 
-namespace DecentM.Subtitles
+namespace DecentM.Prefabs.Subtitles
 {
     public static class SubtitleFormat
     {

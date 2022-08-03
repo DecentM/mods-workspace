@@ -4,7 +4,7 @@ using System;
 using System.Linq;
 using System.Text;
 
-namespace DecentM.Subtitles.Vtt
+namespace DecentM.Prefabs.Subtitles.Vtt
 {
     public class VttWriter : Writer
     {

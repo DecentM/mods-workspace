@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System;
 using System.Linq;
 
-namespace DecentM.Subtitles
+namespace DecentM.Prefabs.Subtitles.Vsi
 {
     public enum InstructionType
     {

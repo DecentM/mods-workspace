@@ -6,7 +6,7 @@ using System.IO;
 using DecentM.EditorTools;
 using DecentM.Icons;
 
-namespace DecentM.VideoPlayer.EditorTools.Importers
+namespace DecentM.Prefabs.VideoPlayer.EditorTools.Importers
 {
     [ScriptedImporter(1, ".ytdl-json")]
     public class MetadataImporter : ScriptedImporter

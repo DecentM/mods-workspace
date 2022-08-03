@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace DecentM.Subtitles.Vsi
+namespace DecentM.Prefabs.Subtitles.Vsi
 {
     public class VsiParser : Parser<VsiLexer, TokenType>
     {

@@ -1,14 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using System.Collections.Generic;
 using UnityEditor;
-using UnityEditor.SceneManagement;
 
 using DecentM.EditorTools;
-using DecentM.Prefabs.VideoRatelimit;
 using DecentM.Prefabs.VideoPlayer.Handlers;
 
-namespace DecentM.VideoRatelimit
+namespace DecentM.Prefabs.VideoRatelimit.EditorTools
 {
     public static class VideoRatelimitAutoFixer
     {

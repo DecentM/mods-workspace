@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Linq;
-using System.Net;
 using System.IO;
 using System.Text;
 using System.Collections;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Threading;
 
 using JetBrains.Annotations;
 
@@ -14,9 +10,9 @@ using UnityEngine;
 using UnityEditor;
 
 using DecentM.EditorTools;
-using DecentM.VideoPlayer.EditorTools.Importers;
+using DecentM.Prefabs.VideoPlayer.EditorTools.Importers;
 
-namespace DecentM.Prefabs.VideoPlayer
+namespace DecentM.Prefabs.VideoPlayer.EditorTools
 {
     public struct VideoMetadata
     {

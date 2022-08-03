@@ -5,18 +5,18 @@ using UnityEditor;
 
 using DecentM.EditorTools;
 using DecentM.Prefabs.VideoPlayer.Plugins;
-// using DecentM.VideoRatelimit;
+using DecentM.Prefabs.VideoRatelimit;
 
-namespace DecentM.Prefabs.VideoPlayer
+namespace DecentM.Prefabs.VideoPlayer.EditorTools
 {
     public static class VideoPlayerAutoFixer
     {
         [MenuItem("DecentM/VideoPlayer/Run Autofixer")]
-        static bool OnPerformFixes()
+        public static bool OnPerformFixes()
         {
             Debug.Log("Autofixer running...");
 
-            // this.FixRatelimits();
+            FixRatelimits();
 
             List<VideoPlayerUI> players =
                 ComponentCollector<VideoPlayerUI>.CollectFromActiveScene();
@@ -39,7 +39,7 @@ namespace DecentM.Prefabs.VideoPlayer
             return true;
         }
 
-        /* private void FixRatelimits()
+        private static void FixRatelimits()
         {
             List<VideoRatelimitSystem> ratelimits =
                 ComponentCollector<VideoRatelimitSystem>.CollectFromActiveScene();
@@ -61,6 +61,6 @@ namespace DecentM.Prefabs.VideoPlayer
 
                 Inspector.SaveModifications(loadHandler);
             }
-        } */
+        }
     }
 }

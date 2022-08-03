@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace DecentM.Subtitles.Srt
+namespace DecentM.Prefabs.Subtitles.Srt
 {
     public class SrtParser : Parser<SrtLexer, TokenType>
     {

@@ -1,13 +1,11 @@
 ﻿using System.IO;
 using UnityEditor;
 using UnityEditor.Experimental.AssetImporters;
-using UnityEditor.SceneManagement;
 using UnityEngine;
 
-using DecentM.Icons;
-using DecentM.Subtitles;
+using DecentM.Prefabs.Subtitles;
 
-namespace DecentM.VideoPlayer.EditorTools.Importers
+namespace DecentM.Prefabs.VideoPlayer.EditorTools.Importers
 {
     [CustomEditor(typeof(SubtitleImporter))]
     public class SubtitleImporterInspector : ScriptedImporterEditor

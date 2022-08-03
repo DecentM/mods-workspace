@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace DecentM.Subtitles.Vsi
+namespace DecentM.Prefabs.Subtitles.Vsi
 {
     public class VsiWriter : Writer
     {

@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using DecentM.TextProcessing;
 
-namespace DecentM.Subtitles
+namespace DecentM.Prefabs.Subtitles
 {
     public abstract class Lexer<TokenType>
     {

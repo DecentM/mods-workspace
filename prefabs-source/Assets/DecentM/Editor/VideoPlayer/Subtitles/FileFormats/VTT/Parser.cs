@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace DecentM.Subtitles.Vtt
+namespace DecentM.Prefabs.Subtitles.Vtt
 {
     public class VttParser : Parser<VttLexer, TokenType>
     {
