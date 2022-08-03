@@ -29,6 +29,10 @@ jobs:
         MELONLOADER_VERSION: v0.5.4
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+    - name: Setup Prefabs
+      run: tools/bootstrap/prefabs.ps1
+      shell: pwsh
+
     - name: Setup ChilloutVR
       uses: DecentM/setup-steam-game-windows@v1.0.0
       with:

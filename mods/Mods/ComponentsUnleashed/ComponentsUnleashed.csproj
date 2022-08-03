@@ -43,6 +43,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\ChilloutVR\ChilloutVR_Data\Managed\Assembly-CSharp.dll</HintPath>
     </Reference>
+    <Reference Include="DecentM.Prefabs, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\DecentM.Prefabs\DecentM.Prefabs.dll</HintPath>
+    </Reference>
     <Reference Include="MelonLoader">
       <HintPath>..\..\chilloutvr\MelonLoader\MelonLoader.dll</HintPath>
     </Reference>
@@ -112,24 +116,6 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="Unity\DecentM.Prefabs.PerformanceGovernor.csproj">
-      <Project>{aa45217d-0372-5937-a4ee-1c264fa5c44d}</Project>
-      <Name>DecentM.Prefabs.PerformanceGovernor</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity\DecentM.Prefabs.PubSub.csproj">
-      <Project>{1c47deef-a9c5-7d73-655d-c9899755d2aa}</Project>
-      <Name>DecentM.Prefabs.PubSub</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity\DecentM.Prefabs.UI.csproj">
-      <Project>{37b466f1-81c0-0f11-ad13-42ec78554379}</Project>
-      <Name>DecentM.Prefabs.UI</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity\DecentM.Prefabs.VideoPlayer.csproj">
-      <Project>{ef950210-1054-1837-8314-2fd0ce59c263}</Project>
-      <Name>DecentM.Prefabs.VideoPlayer</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
