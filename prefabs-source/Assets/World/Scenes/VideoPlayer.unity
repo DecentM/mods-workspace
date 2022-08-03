@@ -133,18 +133,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45115577ef41a5b4ca741ed302693907, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &211627199 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7128736243534412143, guid: 214e040e268500f4c8301b1d1793fe09,
-    type: 3}
-  m_PrefabInstance: {fileID: 7128736244913798709}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 29c9ff72a83606e4197ddd23555bf96b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &229775184
 GameObject:
   m_ObjectHideFlags: 0
@@ -1281,18 +1269,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8d7870c52edcb2409de75686d72e03c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &320558094 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6605304172379286785, guid: 214e040e268500f4c8301b1d1793fe09,
-    type: 3}
-  m_PrefabInstance: {fileID: 7128736244913798709}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d4922287c83c2e74da453796f92ddbff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &326215661 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 747025978920853932, guid: 1386817a567beee44954052a612e063f,
@@ -1316,7 +1292,7 @@ PrefabInstance:
         type: 3}
       propertyPath: playlist
       value: 
-      objectReference: {fileID: 637730757}
+      objectReference: {fileID: 0}
     - target: {fileID: 4203432201675659705, guid: 702786f89f80fd54f8fa10278fa1367e,
         type: 3}
       propertyPath: serializationData.Prefab
@@ -1593,7 +1569,7 @@ PrefabInstance:
         type: 3}
       propertyPath: playlist
       value: 
-      objectReference: {fileID: 637730757}
+      objectReference: {fileID: 0}
     - target: {fileID: 4203432202812835171, guid: 702786f89f80fd54f8fa10278fa1367e,
         type: 3}
       propertyPath: serializationData.Prefab
@@ -2129,12 +2105,12 @@ PrefabInstance:
         type: 3}
       propertyPath: events
       value: 
-      objectReference: {fileID: 320558094}
+      objectReference: {fileID: 0}
     - target: {fileID: 4296987169323767003, guid: 06a97775b63086544909e7a1cf9d322c,
         type: 3}
       propertyPath: system
       value: 
-      objectReference: {fileID: 1666212260}
+      objectReference: {fileID: 0}
     - target: {fileID: 4296987169323767003, guid: 06a97775b63086544909e7a1cf9d322c,
         type: 3}
       propertyPath: description
@@ -2144,12 +2120,12 @@ PrefabInstance:
         type: 3}
       propertyPath: playlistPlayer
       value: 
-      objectReference: {fileID: 1063240050}
+      objectReference: {fileID: 0}
     - target: {fileID: 4296987169323767003, guid: 06a97775b63086544909e7a1cf9d322c,
         type: 3}
       propertyPath: textureUpdater
       value: 
-      objectReference: {fileID: 211627199}
+      objectReference: {fileID: 0}
     - target: {fileID: 4296987169323767003, guid: 06a97775b63086544909e7a1cf9d322c,
         type: 3}
       propertyPath: pubsubHosts.Array.size
@@ -2159,7 +2135,7 @@ PrefabInstance:
         type: 3}
       propertyPath: pubsubHosts.Array.data[0]
       value: 
-      objectReference: {fileID: 320558094}
+      objectReference: {fileID: 0}
     - target: {fileID: 4296987169323767003, guid: 06a97775b63086544909e7a1cf9d322c,
         type: 3}
       propertyPath: serialisedUrls.Array.size
@@ -11456,7 +11432,7 @@ PrefabInstance:
     - target: {fileID: 4296987169323767013, guid: 06a97775b63086544909e7a1cf9d322c,
         type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 4296987169323767013, guid: 06a97775b63086544909e7a1cf9d322c,
         type: 3}
@@ -11521,18 +11497,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 637730755}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &637730757 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4296987169323767003, guid: 06a97775b63086544909e7a1cf9d322c,
-    type: 3}
-  m_PrefabInstance: {fileID: 637730755}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 45809037ef9e8694d92209a4af594d9d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -12294,12 +12258,12 @@ PrefabInstance:
         type: 3}
       propertyPath: events
       value: 
-      objectReference: {fileID: 320558094}
+      objectReference: {fileID: 0}
     - target: {fileID: 7103627231200349780, guid: f11a728db487e45469810356a9fcee74,
         type: 3}
       propertyPath: system
       value: 
-      objectReference: {fileID: 1666212260}
+      objectReference: {fileID: 0}
     - target: {fileID: 7103627231200349780, guid: f11a728db487e45469810356a9fcee74,
         type: 3}
       propertyPath: m_Enabled
@@ -12315,16 +12279,16 @@ PrefabInstance:
         type: 3}
       propertyPath: pubsubHosts.Array.data[0]
       value: 
-      objectReference: {fileID: 320558094}
+      objectReference: {fileID: 0}
     - target: {fileID: 7103627231200349780, guid: f11a728db487e45469810356a9fcee74,
         type: 3}
       propertyPath: pubsubHosts.Array.data[1]
       value: 
-      objectReference: {fileID: 320558094}
+      objectReference: {fileID: 0}
     - target: {fileID: 7103627231200349782, guid: f11a728db487e45469810356a9fcee74,
         type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7103627231200349782, guid: f11a728db487e45469810356a9fcee74,
         type: 3}
@@ -12564,7 +12528,7 @@ PrefabInstance:
     - target: {fileID: 7103627232390458225, guid: f11a728db487e45469810356a9fcee74,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7103627232423027402, guid: f11a728db487e45469810356a9fcee74,
         type: 3}
@@ -12714,7 +12678,7 @@ PrefabInstance:
     - target: {fileID: 7103627233166683430, guid: f11a728db487e45469810356a9fcee74,
         type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7103627233226253899, guid: f11a728db487e45469810356a9fcee74,
         type: 3}
@@ -13046,18 +13010,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1063240050 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7128736245201164480, guid: 214e040e268500f4c8301b1d1793fe09,
-    type: 3}
-  m_PrefabInstance: {fileID: 7128736244913798709}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: af370aac4b99df44d9b1c74e06b590e6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1089584282 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5917044030426315912, guid: 1386817a567beee44954052a612e063f,
@@ -13076,20 +13028,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45115577ef41a5b4ca741ed302693907, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactTextPlacement: {fileID: 0}
-  interactText: Use
-  interactTextGO: {fileID: 0}
-  proximity: 2
-  SynchronizePosition: 0
-  AllowCollisionOwnershipTransfer: 0
-  Reliable: 0
-  _syncMethod: 1
-  serializedProgramAsset: {fileID: 11400000, guid: 66332061546ab6e42b016b832c660898,
-    type: 2}
-  programSource: {fileID: 11400000, guid: 89463deebdc38c248b635e0161b490c3, type: 2}
-  serializedPublicVariablesBytesString: Ai8AAAAAATIAAABWAFIAQwAuAFUAZABvAG4ALgBDAG8AbQBtAG8AbgAuAFUAZABvAG4AVgBhAHIAaQBhAGIAbABlAFQAYQBiAGwAZQAsACAAVgBSAEMALgBVAGQAbwBuAC4AQwBvAG0AbQBvAG4AAAAAAAYBAAAAAAAAACcBBAAAAHQAeQBwAGUAAWgAAABTAHkAcwB0AGUAbQAuAEMAbwBsAGwAZQBjAHQAaQBvAG4AcwAuAEcAZQBuAGUAcgBpAGMALgBMAGkAcwB0AGAAMQBbAFsAVgBSAEMALgBVAGQAbwBuAC4AQwBvAG0AbQBvAG4ALgBJAG4AdABlAHIAZgBhAGMAZQBzAC4ASQBVAGQAbwBuAFYAYQByAGkAYQBiAGwAZQAsACAAVgBSAEMALgBVAGQAbwBuAC4AQwBvAG0AbQBvAG4AXQBdACwAIABtAHMAYwBvAHIAbABpAGIAAQEJAAAAVgBhAHIAaQBhAGIAbABlAHMALwEAAAABaAAAAFMAeQBzAHQAZQBtAC4AQwBvAGwAbABlAGMAdABpAG8AbgBzAC4ARwBlAG4AZQByAGkAYwAuAEwAaQBzAHQAYAAxAFsAWwBWAFIAQwAuAFUAZABvAG4ALgBDAG8AbQBtAG8AbgAuAEkAbgB0AGUAcgBmAGEAYwBlAHMALgBJAFUAZABvAG4AVgBhAHIAaQBhAGIAbABlACwAIABWAFIAQwAuAFUAZABvAG4ALgBDAG8AbQBtAG8AbgBdAF0ALAAgAG0AcwBjAG8AcgBsAGkAYgABAAAABgEAAAAAAAAAAi8CAAAAAUkAAABWAFIAQwAuAFUAZABvAG4ALgBDAG8AbQBtAG8AbgAuAFUAZABvAG4AVgBhAHIAaQBhAGIAbABlAGAAMQBbAFsAUwB5AHMAdABlAG0ALgBJAG4AdAAzADIALAAgAG0AcwBjAG8AcgBsAGkAYgBdAF0ALAAgAFYAUgBDAC4AVQBkAG8AbgAuAEMAbwBtAG0AbwBuAAIAAAAGAgAAAAAAAAAnAQQAAAB0AHkAcABlAAEXAAAAUwB5AHMAdABlAG0ALgBTAHQAcgBpAG4AZwAsACAAbQBzAGMAbwByAGwAaQBiACcBCgAAAFMAeQBtAGIAbwBsAE4AYQBtAGUAAR8AAABfAF8AXwBVAGQAbwBuAFMAaABhAHIAcABCAGUAaABhAHYAaQBvAHUAcgBWAGUAcgBzAGkAbwBuAF8AXwBfACcBBAAAAHQAeQBwAGUAARYAAABTAHkAcwB0AGUAbQAuAEkAbgB0ADMAMgAsACAAbQBzAGMAbwByAGwAaQBiABcBBQAAAFYAYQBsAHUAZQACAAAABwUHBQcF
-  publicVariablesUnityEngineObjects: []
-  publicVariablesSerializationDataFormat: 0
 --- !u!1 &1108977520
 GameObject:
   m_ObjectHideFlags: 0
@@ -13588,18 +13526,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1642747588}
   m_CullTransparentMesh: 0
---- !u!114 &1666212260 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6605304171436077072, guid: 214e040e268500f4c8301b1d1793fe09,
-    type: 3}
-  m_PrefabInstance: {fileID: 7128736244913798709}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 16c8ecc935b8cdb4da364232ebb83ebc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1968077663
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14755,7 +14681,7 @@ PrefabInstance:
     - target: {fileID: 6605304171507725384, guid: 214e040e268500f4c8301b1d1793fe09,
         type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 6605304171507725384, guid: 214e040e268500f4c8301b1d1793fe09,
         type: 3}
@@ -15544,41 +15470,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 214e040e268500f4c8301b1d1793fe09, type: 3}
---- !u!1 &7128736244913798710 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6605304170921272114, guid: 214e040e268500f4c8301b1d1793fe09,
-    type: 3}
-  m_PrefabInstance: {fileID: 7128736244913798709}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &7128736244913798711 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6605304170776005933, guid: 214e040e268500f4c8301b1d1793fe09,
     type: 3}
   m_PrefabInstance: {fileID: 7128736244913798709}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &7128736244913798712
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7128736244913798710}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9abd296376c1cd14498462695a700d94, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  serializationData:
-    SerializedFormat: 2
-    SerializedBytes: 
-    ReferencedUnityObjects: []
-    SerializedBytesString: 
-    Prefab: {fileID: 0}
-    PrefabModificationsReferencedUnityObjects: []
-    PrefabModifications: []
-    SerializationNodes: []
-  _udonSharpBackingUdonBehaviour: {fileID: 7128736244913798715}
-  system: {fileID: 277879982}
 --- !u!114 &7128736244913798713
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15591,43 +15488,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9abd296376c1cd14498462695a700d94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  serializationData:
-    SerializedFormat: 2
-    SerializedBytes: 
-    ReferencedUnityObjects: []
-    SerializedBytesString: 
-    Prefab: {fileID: 0}
-    PrefabModificationsReferencedUnityObjects: []
-    PrefabModifications: []
-    SerializationNodes: []
-  _udonSharpBackingUdonBehaviour: {fileID: 7128736244913798723}
   system: {fileID: 277879982}
---- !u!114 &7128736244913798715
-MonoBehaviour:
-  m_ObjectHideFlags: 2
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7128736244913798710}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 45115577ef41a5b4ca741ed302693907, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  interactTextPlacement: {fileID: 0}
-  interactText: Use
-  interactTextGO: {fileID: 0}
-  proximity: 2
-  SynchronizePosition: 0
-  AllowCollisionOwnershipTransfer: 0
-  Reliable: 0
-  _syncMethod: 1
-  serializedProgramAsset: {fileID: 11400000, guid: ade09a883f2d1d045b8ade25a6e51376,
-    type: 2}
-  programSource: {fileID: 11400000, guid: 6f70bbf461a09fb4299c49390247ea8f, type: 2}
-  serializedPublicVariablesBytesString: Ai8AAAAAATIAAABWAFIAQwAuAFUAZABvAG4ALgBDAG8AbQBtAG8AbgAuAFUAZABvAG4AVgBhAHIAaQBhAGIAbABlAFQAYQBiAGwAZQAsACAAVgBSAEMALgBVAGQAbwBuAC4AQwBvAG0AbQBvAG4AAAAAAAYBAAAAAAAAACcBBAAAAHQAeQBwAGUAAWgAAABTAHkAcwB0AGUAbQAuAEMAbwBsAGwAZQBjAHQAaQBvAG4AcwAuAEcAZQBuAGUAcgBpAGMALgBMAGkAcwB0AGAAMQBbAFsAVgBSAEMALgBVAGQAbwBuAC4AQwBvAG0AbQBvAG4ALgBJAG4AdABlAHIAZgBhAGMAZQBzAC4ASQBVAGQAbwBuAFYAYQByAGkAYQBiAGwAZQAsACAAVgBSAEMALgBVAGQAbwBuAC4AQwBvAG0AbQBvAG4AXQBdACwAIABtAHMAYwBvAHIAbABpAGIAAQEJAAAAVgBhAHIAaQBhAGIAbABlAHMALwEAAAABaAAAAFMAeQBzAHQAZQBtAC4AQwBvAGwAbABlAGMAdABpAG8AbgBzAC4ARwBlAG4AZQByAGkAYwAuAEwAaQBzAHQAYAAxAFsAWwBWAFIAQwAuAFUAZABvAG4ALgBDAG8AbQBtAG8AbgAuAEkAbgB0AGUAcgBmAGEAYwBlAHMALgBJAFUAZABvAG4AVgBhAHIAaQBhAGIAbABlACwAIABWAFIAQwAuAFUAZABvAG4ALgBDAG8AbQBtAG8AbgBdAF0ALAAgAG0AcwBjAG8AcgBsAGkAYgABAAAABgEAAAAAAAAAAi8CAAAAAUkAAABWAFIAQwAuAFUAZABvAG4ALgBDAG8AbQBtAG8AbgAuAFUAZABvAG4AVgBhAHIAaQBhAGIAbABlAGAAMQBbAFsAUwB5AHMAdABlAG0ALgBJAG4AdAAzADIALAAgAG0AcwBjAG8AcgBsAGkAYgBdAF0ALAAgAFYAUgBDAC4AVQBkAG8AbgAuAEMAbwBtAG0AbwBuAAIAAAAGAgAAAAAAAAAnAQQAAAB0AHkAcABlAAEXAAAAUwB5AHMAdABlAG0ALgBTAHQAcgBpAG4AZwAsACAAbQBzAGMAbwByAGwAaQBiACcBCgAAAFMAeQBtAGIAbwBsAE4AYQBtAGUAAR8AAABfAF8AXwBVAGQAbwBuAFMAaABhAHIAcABCAGUAaABhAHYAaQBvAHUAcgBWAGUAcgBzAGkAbwBuAF8AXwBfACcBBAAAAHQAeQBwAGUAARYAAABTAHkAcwB0AGUAbQAuAEkAbgB0ADMAMgAsACAAbQBzAGMAbwByAGwAaQBiABcBBQAAAFYAYQBsAHUAZQACAAAABwUHBQcF
-  publicVariablesUnityEngineObjects: []
-  publicVariablesSerializationDataFormat: 0
 --- !u!114 &7128736244913798723
 MonoBehaviour:
   m_ObjectHideFlags: 2
@@ -15640,20 +15501,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45115577ef41a5b4ca741ed302693907, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactTextPlacement: {fileID: 0}
-  interactText: Use
-  interactTextGO: {fileID: 0}
-  proximity: 2
-  SynchronizePosition: 0
-  AllowCollisionOwnershipTransfer: 0
-  Reliable: 0
-  _syncMethod: 1
-  serializedProgramAsset: {fileID: 11400000, guid: ade09a883f2d1d045b8ade25a6e51376,
-    type: 2}
-  programSource: {fileID: 11400000, guid: 6f70bbf461a09fb4299c49390247ea8f, type: 2}
-  serializedPublicVariablesBytesString: Ai8AAAAAATIAAABWAFIAQwAuAFUAZABvAG4ALgBDAG8AbQBtAG8AbgAuAFUAZABvAG4AVgBhAHIAaQBhAGIAbABlAFQAYQBiAGwAZQAsACAAVgBSAEMALgBVAGQAbwBuAC4AQwBvAG0AbQBvAG4AAAAAAAYBAAAAAAAAACcBBAAAAHQAeQBwAGUAAWgAAABTAHkAcwB0AGUAbQAuAEMAbwBsAGwAZQBjAHQAaQBvAG4AcwAuAEcAZQBuAGUAcgBpAGMALgBMAGkAcwB0AGAAMQBbAFsAVgBSAEMALgBVAGQAbwBuAC4AQwBvAG0AbQBvAG4ALgBJAG4AdABlAHIAZgBhAGMAZQBzAC4ASQBVAGQAbwBuAFYAYQByAGkAYQBiAGwAZQAsACAAVgBSAEMALgBVAGQAbwBuAC4AQwBvAG0AbQBvAG4AXQBdACwAIABtAHMAYwBvAHIAbABpAGIAAQEJAAAAVgBhAHIAaQBhAGIAbABlAHMALwEAAAABaAAAAFMAeQBzAHQAZQBtAC4AQwBvAGwAbABlAGMAdABpAG8AbgBzAC4ARwBlAG4AZQByAGkAYwAuAEwAaQBzAHQAYAAxAFsAWwBWAFIAQwAuAFUAZABvAG4ALgBDAG8AbQBtAG8AbgAuAEkAbgB0AGUAcgBmAGEAYwBlAHMALgBJAFUAZABvAG4AVgBhAHIAaQBhAGIAbABlACwAIABWAFIAQwAuAFUAZABvAG4ALgBDAG8AbQBtAG8AbgBdAF0ALAAgAG0AcwBjAG8AcgBsAGkAYgABAAAABgEAAAAAAAAAAi8CAAAAAUkAAABWAFIAQwAuAFUAZABvAG4ALgBDAG8AbQBtAG8AbgAuAFUAZABvAG4AVgBhAHIAaQBhAGIAbABlAGAAMQBbAFsAUwB5AHMAdABlAG0ALgBJAG4AdAAzADIALAAgAG0AcwBjAG8AcgBsAGkAYgBdAF0ALAAgAFYAUgBDAC4AVQBkAG8AbgAuAEMAbwBtAG0AbwBuAAIAAAAGAgAAAAAAAAAnAQQAAAB0AHkAcABlAAEXAAAAUwB5AHMAdABlAG0ALgBTAHQAcgBpAG4AZwAsACAAbQBzAGMAbwByAGwAaQBiACcBCgAAAFMAeQBtAGIAbwBsAE4AYQBtAGUAAR8AAABfAF8AXwBVAGQAbwBuAFMAaABhAHIAcABCAGUAaABhAHYAaQBvAHUAcgBWAGUAcgBzAGkAbwBuAF8AXwBfACcBBAAAAHQAeQBwAGUAARYAAABTAHkAcwB0AGUAbQAuAEkAbgB0ADMAMgAsACAAbQBzAGMAbwByAGwAaQBiABcBBQAAAFYAYQBsAHUAZQACAAAABwUHBQcF
-  publicVariablesUnityEngineObjects: []
-  publicVariablesSerializationDataFormat: 0
 --- !u!1 &7825679727544173353
 GameObject:
   m_ObjectHideFlags: 0
