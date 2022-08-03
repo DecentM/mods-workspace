@@ -1,4 +1,4 @@
-$delfolders = ".\bin .\ChilloutVR .\MelonLoader .\SteamCMD .\NuGet .\7-Zip"
+$delfolders = ".\bin .\ChilloutVR .\MelonLoader .\SteamCMD .\NuGet .\7-Zip .\DecentM.Prefabs"
 
 Write-Output "Recursively deleting: $delfolders"
 Remove-Item -Force -Recurse $delfolders

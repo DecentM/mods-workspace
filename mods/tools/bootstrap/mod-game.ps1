@@ -1,8 +1,9 @@
-$folder = "ChilloutVR"
+$folder = $env:STEAM_GAME_FOLDER
+$melonfolder = $env:MELONLOADER_FOLDER
 
 Write-Output "Installing Melonloader into ChilloutVR..."
 
-Copy-Item -Force -Recurse .\MelonLoader\MelonLoader.x64\* .\ChilloutVR\
+Copy-Item -Force -Recurse .\$melonfolder\MelonLoader.x64\* .\$folder\
 # Copy-Item -Force .\MelonLoader\MelonLoader.x64\version.dll .\ChilloutVR\version.dll
 if (!(Test-Path -Path $folder)) {
     Write-Output "Mods folder doesn't exist, creating..."

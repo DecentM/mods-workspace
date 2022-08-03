@@ -1,19 +1,16 @@
 return "7-Zip should be installed system-wide. 7zr cannot extract the Unity Installer. Skipping...";
 
-$url = "https://www.7-zip.org/a/7zr.exe"
-$folder = "7-Zip"
-
-if (Test-Path -Path $folder) {
+if (Test-Path -Path $env:7ZIP_FOLDER) {
     return "Skipping 7-Zip install as it's already installed. Run '\tools\clean.ps1' to clear the current installation!";
 }
 
 Write-Output "Installing 7-Zip..."
 
-mkdir -p $folder
+mkdir -p $env:7ZIP_FOLDER
 $pastlocation = Get-Location
-Set-Location $folder
+Set-Location $env:7ZIP_FOLDER
 
-Invoke-WebRequest $url -OutFile "7z.exe"
+Invoke-WebRequest $env:7ZIP_URL -OutFile "7z.exe"
 # .\7zip-setup.exe /S /D=".\7-Zip"
 
 Set-Location $pastlocation

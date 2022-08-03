@@ -1,5 +1,5 @@
-$gameid = 661130
-$folder = "ChilloutVR"
+$gameid = $env:STEAM_GAME_ID
+$folder = $env:STEAM_GAME_FOLDER
 
 if ($null -eq $env:STEAM_USER) {
     Write-Output "The STEAM_USER environment variable is not set. Cannot download the game."

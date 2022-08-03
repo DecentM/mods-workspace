@@ -1,11 +1,11 @@
-$url = "https://steamcdn-a.akamaihd.net/client/installer/steamcmd.zip"
-$folder = "SteamCMD"
+$url = $env:STEAMCMD_URL
+$folder = $env:STEAMCMD_FOLDER
 
 if (Test-Path -Path $folder) {
     return "Skipping SteamCMD install as it's already installed. Run '\tools\clean.ps1' to clear the current installation!";
 }
 
-Write-Output "Installing SteamCMD..."
+Write-Output "Installing $folder..."
 
 mkdir -p $folder
 $pastlocation = Get-Location

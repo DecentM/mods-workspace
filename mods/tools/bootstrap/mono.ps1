@@ -1,6 +1,6 @@
-$unitysetup = "UnitySetup64-2019.4.28f1.exe"
-$url = "https://download.unity3d.com/download_unity/1381962e9d08/Windows64EditorInstaller/$unitysetup"
-$folder = "Mono"
+$unitysetup = $env:UNITYSETUP_FILENAME
+$url = $env:UNITYSETUP_URL
+$folder = $env:MONO_FOLDER
 
 Write-Output "Installing Mono..."
 
@@ -22,7 +22,7 @@ if (Test-Path -Path "MonoExtract") {
     Remove-Item -Force -Recurse .\MonoExtract
 }
 
-$monopath = "Editor\Data\PlaybackEngines\windowsstandalonesupport\Variations\win64_development_mono"
+$monopath = $env:UNITYSETUP_MONO_PATH
 
 7z x "$unitysetup" "$monopath" -oMonoExtract
 
