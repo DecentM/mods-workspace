@@ -6,7 +6,7 @@ namespace DecentM.Prefabs.VideoRatelimit
     public class VideoRatelimitSystem : MonoBehaviour
     {
         public float ratelimitSeconds = 5.2f;
-        public Queue<MonoBehaviour> queue;
+        public Queue<MonoBehaviour> queue = new Queue<MonoBehaviour>();
 
         public const string PlaybackWindowEvent = "OnPlaybackWindow";
 

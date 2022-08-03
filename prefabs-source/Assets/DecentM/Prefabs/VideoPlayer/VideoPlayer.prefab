@@ -44,11 +44,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bb8c4b00e3b547449de9ab3a8507f81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pubsubHosts: []
-  system: {fileID: 0}
-  events: {fileID: 0}
+  pubsubHosts:
+  - {fileID: 7170847370387494920}
+  system: {fileID: 8561122911659706055}
+  events: {fileID: 7170847370387494920}
   debugSlot: {fileID: 0}
-  pregenerateSlot: {fileID: 0}
+  pregenerateSlot: {fileID: 9183065759377562788}
   subtitleOffset: 0
   tickInterval: 0.1
   pregenerateInterval: 0.05
@@ -223,10 +224,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 747df1318de85884581cbc911614aa34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  audioSource: {fileID: 0}
-  screen: {fileID: 0}
-  events: {fileID: 0}
+  player: {fileID: 1590890494972739937}
+  audioSource: {fileID: 6605304171337992003}
+  screen: {fileID: 7128736245404155829}
+  events: {fileID: 7170847370387494920}
 --- !u!328 &1590890494972739937
 VideoPlayer:
   m_ObjectHideFlags: 0
@@ -259,7 +260,7 @@ VideoPlayer:
   m_PlayOnAwake: 0
   m_SkipOnDrop: 1
   m_Looping: 0
-  m_WaitForFirstFrame: 1
+  m_WaitForFirstFrame: 0
   m_FrameReadyEventEnabled: 0
 --- !u!1 &6605304171337992004
 GameObject:
@@ -431,10 +432,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16c8ecc935b8cdb4da364232ebb83ebc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  events: {fileID: 0}
-  playerHandlers: []
-  speakers: []
-  screens: []
+  events: {fileID: 7170847370387494920}
+  playerHandlers:
+  - {fileID: 8005333954194002365}
+  speakers:
+  - {fileID: 6605304171337992003}
+  screens:
+  - {fileID: 4541659384344661936}
   muted: 0
   volume: 1
   brightness: 1
@@ -641,10 +645,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29c9ff72a83606e4197ddd23555bf96b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pubsubHosts: []
-  system: {fileID: 0}
-  events: {fileID: 0}
-  idleTexture: {fileID: 0}
+  pubsubHosts:
+  - {fileID: 7170847370387494920}
+  system: {fileID: 8561122911659706055}
+  events: {fileID: 7170847370387494920}
+  idleTexture: {fileID: 2800000, guid: 863acd2753267484f80d1b5d0e1c9622, type: 3}
 --- !u!1 &7128736243806589911
 GameObject:
   m_ObjectHideFlags: 0
@@ -688,9 +693,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcb094283cb99db4f827a68a12df9be9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pubsubHosts: []
-  system: {fileID: 0}
-  events: {fileID: 0}
+  pubsubHosts:
+  - {fileID: 7170847370387494920}
+  system: {fileID: 8561122911659706055}
+  events: {fileID: 7170847370387494920}
   dynamicResolution: 0
   defaultResolution: {x: 1920, y: 1080}
 --- !u!1 &7128736244015735628
@@ -736,10 +742,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9cc4c70ebd434f442b9c79f4c232eb85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pubsubHosts: []
-  system: {fileID: 0}
-  events: {fileID: 0}
-  autoplayOnLoad: 1
+  pubsubHosts:
+  - {fileID: 7170847370387494920}
+  system: {fileID: 8561122911659706055}
+  events: {fileID: 7170847370387494920}
+  autoplayOnLoad: 0
 --- !u!1 &7128736244372558399
 GameObject:
   m_ObjectHideFlags: 0
@@ -783,16 +790,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8b94d24dae26ff489ab564c2b91f219, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pubsubHosts: []
-  system: {fileID: 0}
-  events: {fileID: 0}
-  audioSource: {fileID: 0}
-  autoRetry: {fileID: 0}
-  autoRetryAbort: {fileID: 0}
-  loadReady: {fileID: 0}
-  playbackEnded: {fileID: 0}
-  remotePlayerLoaded: {fileID: 0}
-  videoUnloaded: {fileID: 0}
+  pubsubHosts:
+  - {fileID: 7170847370387494920}
+  system: {fileID: 8561122911659706055}
+  events: {fileID: 7170847370387494920}
+  audioSource: {fileID: 6605304171337992003}
+  autoRetry: {fileID: 8300000, guid: 80d62820e67960e46b147aadf9bb00a9, type: 3}
+  autoRetryAbort: {fileID: 8300000, guid: ae99c9689d90f0944bdd862e93d4776e, type: 3}
+  loadReady: {fileID: 8300000, guid: 0c769037cc6da6e41a95c900fdb861d5, type: 3}
+  playbackEnded: {fileID: 8300000, guid: 25364c67297d5114db06b1ea6c447e48, type: 3}
+  remotePlayerLoaded: {fileID: 8300000, guid: fd9e675015db9ea41b47e35ba89a0c5b, type: 3}
+  videoUnloaded: {fileID: 8300000, guid: 94a6186320acf27408415009e219a58c, type: 3}
 --- !u!1 &7128736244989185834
 GameObject:
   m_ObjectHideFlags: 0
@@ -836,9 +844,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26a4c17948cd5384ea5b18e17d37152b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pubsubHosts: []
-  system: {fileID: 0}
-  events: {fileID: 0}
+  pubsubHosts:
+  - {fileID: 7170847370387494920}
+  system: {fileID: 8561122911659706055}
+  events: {fileID: 7170847370387494920}
   gui: {fileID: 0}
 --- !u!1 &7128736245044325568
 GameObject:
@@ -925,9 +934,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af370aac4b99df44d9b1c74e06b590e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pubsubHosts: []
-  system: {fileID: 0}
-  events: {fileID: 0}
+  pubsubHosts:
+  - {fileID: 7170847370387494920}
+  system: {fileID: 8561122911659706055}
+  events: {fileID: 7170847370387494920}
   playlist: {fileID: 0}
 --- !u!1 &7128736245243614912
 GameObject:
@@ -972,11 +982,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a21ac493acb95f40b9696eddeaa931a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pubsubHosts: []
-  system: {fileID: 0}
-  events: {fileID: 0}
+  pubsubHosts:
+  - {fileID: 7170847370387494920}
+  system: {fileID: 8561122911659706055}
+  events: {fileID: 7170847370387494920}
   failureCeiling: 3
-  abortAfterAllPlayersFailed: 1
+  abortAfterAllPlayersFailed: 0
   videoLoadTimeout: 10
 --- !u!1 &7128736245322755145
 GameObject:
@@ -1021,9 +1032,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e27b1d37344fad340b03c450db5a1c7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pubsubHosts: []
-  system: {fileID: 0}
-  events: {fileID: 0}
+  pubsubHosts:
+  - {fileID: 7170847370387494920}
+  system: {fileID: 8561122911659706055}
+  events: {fileID: 7170847370387494920}
 --- !u!1 &7128736245374082910
 GameObject:
   m_ObjectHideFlags: 0
@@ -1067,10 +1079,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cca6b5f74f2afff43996be23e3cabc3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pubsubHosts: []
-  system: {fileID: 0}
-  events: {fileID: 0}
-  knownLivestreamHosts: []
+  pubsubHosts:
+  - {fileID: 7170847370387494920}
+  system: {fileID: 8561122911659706055}
+  events: {fileID: 7170847370387494920}
+  knownLivestreamHosts:
+  - twitch.tv
+  - vrcdn.live
 --- !u!1 &7128736245404155722
 GameObject:
   m_ObjectHideFlags: 0
@@ -1238,7 +1253,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37f1baacd54290d4abd1ecd18b591975, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  screens: []
+  screens:
+  - {fileID: 5506587896146400139}
 --- !u!1 &7515980162261445732
 GameObject:
   m_ObjectHideFlags: 0
@@ -1282,9 +1298,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65965cace53204145b22e584664e2922, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pubsubHosts: []
-  system: {fileID: 0}
-  events: {fileID: 0}
+  pubsubHosts:
+  - {fileID: 7170847370387494920}
+  system: {fileID: 8561122911659706055}
+  events: {fileID: 7170847370387494920}
   ratelimit: {fileID: 0}
   approvalTimeout: 0.3
 --- !u!1 &7838139578676082785
@@ -1330,9 +1347,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50410623bc887ca43a682b52c8e8b2bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pubsubHosts: []
-  system: {fileID: 0}
-  events: {fileID: 0}
+  pubsubHosts:
+  - {fileID: 7170847370387494920}
+  system: {fileID: 8561122911659706055}
+  events: {fileID: 7170847370387494920}
 --- !u!1 &8502740247433042057
 GameObject:
   m_ObjectHideFlags: 0
@@ -1548,6 +1566,12 @@ PrefabInstance:
 --- !u!4 &6638438172753291492 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7510932177016130062, guid: 702aeeb3e68812a40b690d9afbd2d5c3,
+    type: 3}
+  m_PrefabInstance: {fileID: 3754956855940702954}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &5506587896146400139 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 8680439627225952609, guid: 702aeeb3e68812a40b690d9afbd2d5c3,
     type: 3}
   m_PrefabInstance: {fileID: 3754956855940702954}
   m_PrefabAsset: {fileID: 0}

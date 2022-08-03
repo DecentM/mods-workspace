@@ -2352,7 +2352,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5622076069115218937}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ca9ec41c27cec044beb6d8528fee01c, type: 3}
+  m_Script: {fileID: 11500000, guid: cad10517cb4d38f429f1fb11e3704a5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   labelSlot: {fileID: 5622076068536206131}
@@ -2991,7 +2991,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5622076069718880287}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b2c315424d0ef2245b4bc35a0bb3423d, type: 3}
+  m_Script: {fileID: 11500000, guid: 8fa4eae9760e0ee4595655dd1abffdfb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   optionTemplate: {fileID: 5622076069115218937}
@@ -3965,7 +3965,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7103627231200349777}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3a5f3e49e281619429d54b76c1f424b8, type: 3}
+  m_Script: {fileID: 11500000, guid: 10711b5d5b2fc9a4cb7711d35c7adb26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   pubsubHosts: []
@@ -3974,8 +3974,8 @@ MonoBehaviour:
   raycastLayerMask:
     serializedVersion: 2
     m_Bits: 1
-  raycastIntervalSeconds: 0.333333
-  raycastMaxDistance: 10
+  raycastIntervalSeconds: 0.33333
+  raycastMaxDistance: 2
   animator: {fileID: 8785134002794354285}
   raycastTarget: {fileID: 7103627232423027381}
   progress: {fileID: 7103627233076163223}
