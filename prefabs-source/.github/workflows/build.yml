@@ -16,6 +16,13 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - uses: actions/cache@v2
+        with:
+          path: Library
+          key: Library-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
+          restore-keys: |
+            Library-
+
       - name: Restore dotnet packages
         run: dotnet restore "World Prefabs.sln"
 
@@ -29,6 +36,7 @@ jobs:
           UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
 
-      - name: Inspect
-        run: pwd; ls -l
-        shell: pwsh
+      - uses: actions/upload-artifact@v2
+        with:
+          name: Build
+          path: build
