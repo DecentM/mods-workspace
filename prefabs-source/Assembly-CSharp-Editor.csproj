@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <LangVersion>7.3</LangVersion>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -53,9 +53,6 @@
     <UnityVersion>2019.4.31f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Analyzer Include="C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Assets\DecentM\Editor\ArabicLigaturesPreprocessor.cs" />
     <Compile Include="Assets\DecentM\Editor\CombinationsGenerator.cs" />
     <Compile Include="Assets\DecentM\Editor\ComponentCollector.cs" />
@@ -105,6 +102,7 @@
     <Compile Include="Assets\DecentM\Editor\VideoRatelimit\VideoRatelimitAutoFixer.cs" />
     <Compile Include="Assets\Editor\AnimationRefactor.cs" />
     <Compile Include="Assets\Editor\ReplaceWithPrefab.cs" />
+    <Compile Include="Assets\VLCUnity\Editor\Build.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\DecentM\Editor\MaterialIcons\LICENSE.txt" />
@@ -318,6 +316,21 @@
     </Reference>
     <Reference Include="unityplastic">
       <HintPath>Library\PackageCache\com.unity.collab-proxy@1.10.2\Lib\Editor\PlasticSCM\unityplastic.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Buffers">
+      <HintPath>Assets\VLCUnity\Plugins\Android\armeabi-v7a\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="LibVLCSharp">
+      <HintPath>Assets\VLCUnity\Plugins\Android\armeabi-v7a\LibVLCSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics.Vectors">
+      <HintPath>Assets\VLCUnity\Plugins\Android\armeabi-v7a\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Memory">
+      <HintPath>Assets\VLCUnity\Plugins\Android\armeabi-v7a\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe">
+      <HintPath>Assets\VLCUnity\Plugins\Android\armeabi-v7a\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework">
       <HintPath>Library\PackageCache\com.unity.ext.nunit@1.0.6\net35\unity-custom\nunit.framework.dll</HintPath>
