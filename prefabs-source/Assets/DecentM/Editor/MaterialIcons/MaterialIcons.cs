@@ -4,8 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-using DecentM.Shared.SelfLocator;
-using DecentM.Shared;
+using DecentM.EditorTools.SelfLocator;
 
 namespace DecentM.Icons
 {

@@ -100,13 +100,19 @@ namespace DecentM.Shared.YTdlp
             return true;
         }
 
+#if UNITY_EDITOR
+        private static string YtDlpPath = $"{Application.dataPath}/DecentM/Shared/YTdlp/yt-dlp.exe";
+#else
+        private static string YtDlpPath = $"{Application.dataPath}/UserLibs/yt-dlp.exe";
+#endif
+
         private static void YTdlp(
             string arguments,
             Action<string> callback
         )
         {
             ProcessManager.RunProcess(
-                AssetPaths.YtDlpPath,
+                YtDlpPath,
                 GetArguments(arguments),
                 ".",
                 (ProcessResult result) => {
@@ -119,9 +125,9 @@ namespace DecentM.Shared.YTdlp
             );
         }
 
-        #endregion
+#endregion
 
-        #region Methods
+#region Methods
 
         public static void GetVideoUrl(string url, Vector2Int resolution, Action<string> callback)
         {
@@ -168,6 +174,6 @@ namespace DecentM.Shared.YTdlp
             YTdlp($"--convert-thumbnails jpg --write-thumbnail {url}", OnFinish);
         }
 
-        #endregion
+#endregion
     }
 }

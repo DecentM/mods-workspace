@@ -7,7 +7,6 @@ using System.IO;
 using System.Linq;
 
 using DecentM.EditorTools;
-using DecentM.Shared;
 
 namespace DecentM.Prefabs.Subtitles.Tests
 {

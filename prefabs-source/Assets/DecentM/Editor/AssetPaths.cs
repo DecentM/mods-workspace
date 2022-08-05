@@ -3,9 +3,9 @@ using UnityEditor;
 
 using System.IO;
 
-using DecentM.Shared.SelfLocator;
+using DecentM.EditorTools.SelfLocator;
 
-namespace DecentM.Shared
+namespace DecentM.EditorTools
 {
     public static class AssetPaths
     {
@@ -27,19 +27,6 @@ namespace DecentM.Shared
         public static Sprite FallbackVideoThumbnail
         {
             get { return GetAsset<Sprite>(VideoTexturesPath, "thumbnail-missing.psd"); }
-        }
-
-        public static string YtDlpPath
-        {
-            get
-            {
-                return string.Join(
-                    "/",
-                    Directory.GetCurrentDirectory(),
-                    SelfLocatorAsset.LocateSelf(),
-                    "Shared/YTdlp/yt-dlp.exe"
-                );
-            }
         }
 
         public static string VideoMetadataFolder

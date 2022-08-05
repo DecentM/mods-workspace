@@ -24,6 +24,7 @@ namespace DecentM.Prefabs.VideoPlayer.Handlers
         {
             this._fetchBlock = new MaterialPropertyBlock();
 
+            this.player.mediaPlayer.Playing += this.HandlePlay;
             this.player.mediaPlayer.Paused += this.HandlePause;
             this.player.mediaPlayer.Stopped += this.HandleStopped;
             this.player.TextureChanged += this.HandleTextureChanged;
@@ -48,6 +49,14 @@ namespace DecentM.Prefabs.VideoPlayer.Handlers
 
         private void HandlePause(object sender, object args)
         {
+            this.OnVideoPause();
+        }
+
+        private void HandlePlay(object sender, object args)
+        {
+            if (textureChangeSent == false)
+                return;
+
             this.OnVideoPause();
         }
 
@@ -100,6 +109,7 @@ namespace DecentM.Prefabs.VideoPlayer.Handlers
 
         public override void SetTime(float time)
         {
+            // this.player.mediaPlayer.SeekTo(new TimeSpan(0, 0, 0, Mathf.FloorToInt(time)));
             this.player.SetTime((long)time * 1000);
         }
 

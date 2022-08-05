@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEditor.Experimental.AssetImporters;
 using System.IO;
 
-namespace DecentM.Shared.SelfLocator
+namespace DecentM.EditorTools.SelfLocator
 {
     [ScriptedImporter(1, SelfLocatorAsset.SelfLocatorId)]
     public class SelfLocatorImporter : ScriptedImporter
