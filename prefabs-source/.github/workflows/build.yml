@@ -14,9 +14,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v2
 
-      - uses: actions/cache@v2
+      - name: Cache
+        uses: actions/cache@v2
         with:
           path: Library
           key: Library-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
@@ -29,14 +31,14 @@ jobs:
       - name: Restore NuGet packages
         run: nuget restore "World Prefabs.sln"
 
-      - name: Build Unity
+      - name: Create Unity build
         uses: game-ci/unity-builder@v2.0.4
         env:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
           UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
 
-      - name: Copy files to destination dir
+      - name: Copy files to destination
         shell: bash
         run: |
           set -e
@@ -45,9 +47,9 @@ jobs:
           mkdir -p ./dll-build
           DIR=build/StandaloneWindows64/StandaloneWindows64_Data
 
-          cp -a $DIR/Plugins/ $DIR/Managed/DecentM.*.dll $DIR/Managed/LibVLCSharp.dll ./dll-build/
+          cp -a $DIR/Plugins/x86_64/* $DIR/Managed/LibVLCSharp.dll $DIR/Managed/DecentM.*.dll ./dll-build/UserLibs
 
-      - name: "Create zip"
+      - name: Create zip
         uses: vimtor/action-zip@v1
         with:
           files: dll-build/
@@ -59,12 +61,24 @@ jobs:
         with:
           files: DecentM.Components.zip
 
-      - uses: actions/upload-artifact@v2
+      - name: Upload Unity build
+        uses: actions/upload-artifact@v2
         with:
           name: UnityBuild
           path: build
 
-      - uses: actions/upload-artifact@v2
+      - name: Upload built DLLs
+        uses: actions/upload-artifact@v2
         with:
           name: DLLs
           path: dll-build
+
+      - name: Trigger Mods build workflow
+        shell: bash
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -e
+          set +x
+
+          gh workflow run -R DecentM/cvr-mods build -f prefabs_action=$GITHUB_ACTION -f artifact_name=DLLs
