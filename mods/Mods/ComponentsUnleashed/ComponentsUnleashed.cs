@@ -57,7 +57,6 @@ namespace DecentM.Mods.ComponentsUnleashed
             whiteList.Add(typeof(VideoPlayerUI));
 
             // Plugins
-            whiteList.Add(typeof(AutoLivestreamDetectorPlugin));
             whiteList.Add(typeof(AutoPlayPlugin));
             whiteList.Add(typeof(AutoRetryPlugin));
             whiteList.Add(typeof(DebugPlugin));

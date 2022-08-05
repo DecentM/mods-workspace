@@ -44,9 +44,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\chilloutvr\ChilloutVR_Data\Managed\Assembly-CSharp.dll</HintPath>
     </Reference>
-    <Reference Include="DecentM.Prefabs">
+    <Reference Include="DecentM.Prefabs, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\prefabs\DecentM.Prefabs.dll</HintPath>
+      <HintPath>..\..\prefabs\UserLibs\DecentM.Prefabs.dll</HintPath>
     </Reference>
     <Reference Include="MelonLoader">
       <SpecificVersion>False</SpecificVersion>
