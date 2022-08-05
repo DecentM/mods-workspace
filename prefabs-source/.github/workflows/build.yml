@@ -25,12 +25,6 @@ jobs:
           restore-keys: |
             Library-
 
-      - name: Restore dotnet packages
-        run: dotnet restore "World Prefabs.sln"
-
-      - name: Restore NuGet packages
-        run: nuget restore "World Prefabs.sln"
-
       - name: Create Unity build
         uses: game-ci/unity-builder@v2.0.4
         env:
@@ -81,4 +75,4 @@ jobs:
           set -e
           set +x
 
-          gh workflow run build.yml -R DecentM/cvr-mods -r $GITHUB_REF_NAME -f prefabs_action=$GITHUB_ACTION -f artifact_name=DLLs
+          gh workflow run build.yml -R DecentM/cvr-mods -r $GITHUB_REF_NAME -f prefabs_run_id=$GITHUB_RUN_ID -f artifact_name=DLLs
