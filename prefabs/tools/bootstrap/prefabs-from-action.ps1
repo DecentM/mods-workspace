@@ -12,5 +12,7 @@ Write-Output "Installing $folder..."
 mkdir -p $folder
 
 gh run download -R $repo $runid -n $artifact -D $folder
+Move-Item -Force $folder\UserLibs .\Assets\
+Remove-Item -Force -Recurse $folder
 
 Write-Output "Done."

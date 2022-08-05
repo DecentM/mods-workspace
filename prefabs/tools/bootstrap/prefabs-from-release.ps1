@@ -13,5 +13,7 @@ mkdir -p $folder
 Invoke-WebRequest $url -OutFile "$folder/$filename"
 Expand-Archive -LiteralPath "$folder/$filename" -DestinationPath "$folder"
 Remove-Item -Force "$folder/$filename"
+Move-Item -Force $folder\UserLibs .\Assets\
+Remove-Item -Force -Recurse $folder
 
 Write-Output "Done."

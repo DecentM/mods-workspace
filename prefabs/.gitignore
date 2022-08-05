@@ -656,6 +656,3 @@ crashlytics-build.properties
 
 *.blend?
 *.blend?.meta
-
-/Assets/UserLibs
-/Assets/UserLibs.meta

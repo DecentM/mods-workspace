@@ -1,0 +1,45 @@
+name: update-user-libs
+
+on:
+  workflow_dispatch:
+    inputs:
+      prefabs_run_id:
+        type: string
+        description: The id of the run to download dlls from
+        required: true
+
+      artifact_name:
+        type: string
+        description: The name of artifact to download and extract DLLs from
+        required: true
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Download artifacts from Prefabs action
+        run: tools/vars.ps1; tools/bootstrap/prefabs-from-action.ps1
+        shell: pwsh
+        if: github.event_name == 'workflow_dispatch'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PREFABS_ARTIFACT_NAME: ${{ github.event.inputs.artifact_name }}
+          PREFABS_RUN_ID: ${{ github.event.inputs.prefabs_run_id }}
+
+      - name: Download artifacts from Prefabs release
+        run: tools/vars.ps1; tools/bootstrap/prefabs-from-release.ps1
+        shell: pwsh
+        if: github.event_name != 'workflow_dispatch'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Commit the update
+        uses: stefanzweifel/git-auto-commit-action@v4
+        if: steps.auto-commit-action.outputs.changes_detected == 'true'
+        with:
+          commit_message: "chore: update UserLibs from run ${{ github.event.inputs.prefabs_run_id }}"
