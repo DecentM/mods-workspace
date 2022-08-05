@@ -1,6 +1,7 @@
 ﻿using UnityEditor;
 
 using DecentM.EditorTools;
+using DecentM.Shared;
 using DecentM.Prefabs.VideoPlayer.Plugins;
 
 namespace DecentM.Prefabs.VideoPlayer
@@ -12,7 +13,7 @@ namespace DecentM.Prefabs.VideoPlayer
         {
             VideoPlayerUI ui = (VideoPlayerUI)target;
 
-            this.DrawImage(EditorAssets.VideoPlayerBanner);
+            this.DrawImage(AssetPaths.VideoPlayerBanner);
 
             AutoPlayPlugin autoPlay = ui.GetComponentInChildren<AutoPlayPlugin>();
             if (autoPlay != null)

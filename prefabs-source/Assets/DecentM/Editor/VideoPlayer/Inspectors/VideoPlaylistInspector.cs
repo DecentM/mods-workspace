@@ -6,9 +6,9 @@ using UnityEditor;
 using UnityEngine;
 
 using DecentM.Shared;
+using DecentM.Shared.YTdlp;
 using DecentM.EditorTools;
 using DecentM.Icons;
-using DecentM.Prefabs.VideoPlayer.EditorTools;
 using DecentM.Prefabs.VideoPlayer.Plugins;
 
 namespace DecentM.Prefabs.VideoPlayer
@@ -43,22 +43,6 @@ namespace DecentM.Prefabs.VideoPlayer
                 new Vector2(toolbarRectInner.width / toolbarButtons, toolbarRectInner.height),
                 new Vector4(toolbarRectInner.width / toolbarButtons * toolbarButtonCount, 0)
             );
-            EditorGUI.BeginDisabledGroup(playlist.urls.Length == 0);
-            if (this.ToolbarButton(refreshAllButton, "Refresh all"))
-            {
-                if (
-                    EditorUtility.DisplayDialog(
-                        "Confirm metadata refresh",
-                        $"Are you sure you want to refresh metadata (thumbnail, like count, view count, etc.) for all videos on this playlist?",
-                        "Refresh",
-                        "Cancel"
-                    )
-                )
-                {
-                    this.RefreshAll();
-                }
-            }
-            EditorGUI.EndDisabledGroup();
 
             toolbarButtonCount++;
 
@@ -266,7 +250,7 @@ namespace DecentM.Prefabs.VideoPlayer
                 }
                 else
                 {
-                    this.DrawImage(EditorAssets.FallbackVideoThumbnail, thumbnailRectInner);
+                    this.DrawImage(AssetPaths.FallbackVideoThumbnail, thumbnailRectInner);
                 }
 
                 Rect textRectOuter = this.GetRectInside(
@@ -395,16 +379,6 @@ namespace DecentM.Prefabs.VideoPlayer
                         buttonPadding
                     )
                 );
-                if (this.Button(refreshButton, MaterialIcons.GetIcon(Icon.Refresh)))
-                {
-                    VideoMetadataStore.Refresh(
-                        url.ToString(),
-                        (progress) => { },
-                        this.BakeMetadata
-                    );
-                }
-
-                buttonCount++;
 
                 Rect removeButton = this.GetRectInside(
                     actionButtonsRectInner,
@@ -497,41 +471,6 @@ namespace DecentM.Prefabs.VideoPlayer
             );
         }
 
-        private void RefreshAll()
-        {
-            GUI.FocusControl(null);
-            VideoPlaylist playlist = (VideoPlaylist)target;
-            string[] urls = playlist.urls.Select(url => url[0].ToString()).ToArray();
-
-            void OnProgress(string name, float progress)
-            {
-                AsyncProgress.Display($"Refreshing {name}...", progress);
-            }
-
-            void OnFinish()
-            {
-                AsyncProgress.Clear();
-                this.BakeMetadata();
-            }
-
-            void RefreshSubtitleStore() =>
-                SubtitleStore.Refresh(urls, (value) => OnProgress("subtitles", value), OnFinish);
-            void RefreshImageStore() =>
-                ImageStore.Refresh(
-                    urls,
-                    (value) => OnProgress("thumbnails", value),
-                    RefreshSubtitleStore
-                );
-            void RefreshMetadataStore() =>
-                VideoMetadataStore.Refresh(
-                    urls,
-                    (value) => OnProgress("metadata", value),
-                    RefreshImageStore
-                );
-
-            RefreshMetadataStore();
-        }
-
         private void Clear()
         {
             GUI.FocusControl(null);
@@ -601,7 +540,7 @@ namespace DecentM.Prefabs.VideoPlayer
         {
             return this.CreateNewItem(
                 "",
-                EditorAssets.FallbackVideoThumbnail,
+                AssetPaths.FallbackVideoThumbnail,
                 "",
                 "",
                 "",
@@ -619,7 +558,7 @@ namespace DecentM.Prefabs.VideoPlayer
         {
             return this.CreateNewItem(
                 url,
-                EditorAssets.FallbackVideoThumbnail,
+                AssetPaths.FallbackVideoThumbnail,
                 "",
                 "",
                 "",
@@ -705,23 +644,8 @@ namespace DecentM.Prefabs.VideoPlayer
                 if (url == null)
                     continue;
 
-                VideoMetadata videoMetadata = VideoMetadataStore.GetCached(url.ToString());
-
                 object[] newItem = this.CreateNewItem(
-                    url,
-                    videoMetadata.thumbnail == null
-                      ? EditorAssets.FallbackVideoThumbnail
-                      : videoMetadata.thumbnail,
-                    videoMetadata.title,
-                    videoMetadata.uploader,
-                    videoMetadata.siteName,
-                    videoMetadata.viewCount,
-                    videoMetadata.likeCount,
-                    videoMetadata.resolution,
-                    videoMetadata.fps,
-                    videoMetadata.description,
-                    videoMetadata.duration,
-                    videoMetadata.subtitles
+                    url
                 );
 
                 playlist.urls[i] = newItem;

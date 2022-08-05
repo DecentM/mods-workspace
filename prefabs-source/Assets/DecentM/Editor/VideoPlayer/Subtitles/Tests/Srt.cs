@@ -7,14 +7,14 @@ using System.IO;
 using System.Linq;
 
 using DecentM.Prefabs.VideoPlayer.Plugins;
-using DecentM.EditorTools;
+using DecentM.Shared;
 
 namespace DecentM.Prefabs.Subtitles.Tests
 {
     public class Srt
     {
         private static string NormalFile = File.ReadAllText(
-            $"{EditorAssets.SelfLocation}/Prefabs/VideoPlayer/Scripts/Editor/Tests/Fixtures/normal.srt"
+            $"{AssetPaths.SelfLocation}/Prefabs/VideoPlayer/Scripts/Editor/Tests/Fixtures/normal.srt"
         );
 
         [Test]

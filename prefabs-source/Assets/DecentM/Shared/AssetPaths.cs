@@ -1,16 +1,24 @@
-﻿using System.IO;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEditor;
 
-using DecentM.EditorTools.SelfLocator;
+using System.IO;
 
-namespace DecentM.EditorTools
+using DecentM.Shared.SelfLocator;
+
+namespace DecentM.Shared
 {
-    public static partial class EditorAssets
+    public static class AssetPaths
     {
+        public static string SelfLocation = SelfLocatorAsset.LocateSelf();
+
         private const string VideoTexturesPath = "Prefabs/VideoPlayer/Textures/Editor";
         private const string VideoScriptsPath = "Prefabs/VideoPlayer/Scripts/Editor";
+
+        private static T GetAsset<T>(params string[] location) where T : UnityEngine.Object
+        {
+            string path = $"{SelfLocation}/{string.Join("/", location)}";
+            return AssetDatabase.LoadAssetAtPath<T>(path);
+        }
 
         public static Texture2D VideoPlayerBanner
         {

@@ -3,9 +3,7 @@ using System.Collections;
 
 using UnityEngine;
 
-using DecentM.Shared;
-
-namespace DecentM.EditorTools
+namespace DecentM.Shared.YTdlp
 {
     [Serializable]
     public struct YTDLVideoJsonComment
@@ -113,7 +111,7 @@ namespace DecentM.EditorTools
             return Parallelism.WaitForCallback(
                 (callback) =>
                     ProcessManager.RunProcess(
-                        EditorAssets.YtDlpPath,
+                        AssetPaths.YtDlpPath,
                         GetArguments(
                             $"-f \"mp4[height<=?{resolution}]/best[height<=?{resolution}]\" --get-url {url}"
                         ),
@@ -130,7 +128,7 @@ namespace DecentM.EditorTools
         public static void GetVideoUrl(string url, int resolution, Action<string> callback)
         {
             ProcessManager.RunProcess(
-                EditorAssets.YtDlpPath,
+                AssetPaths.YtDlpPath,
                 $"--no-check-certificate -f \"mp4[height<=?{resolution}]/best[height<=?{resolution}]\" --get-url {url}",
                 ".",
                 (ProcessResult result) => callback(result.stdout)
@@ -150,7 +148,7 @@ namespace DecentM.EditorTools
             return Parallelism.WaitForCallback(
                 (callback) =>
                     ProcessManager.RunProcess(
-                        EditorAssets.YtDlpPath,
+                        AssetPaths.YtDlpPath,
                         GetArguments($"-J {url}"),
                         ".",
                         (result) =>
@@ -178,7 +176,7 @@ namespace DecentM.EditorTools
             return Parallelism.WaitForCallback(
                 (callback) =>
                     ProcessManager.RunProcess(
-                        EditorAssets.YtDlpPath,
+                        AssetPaths.YtDlpPath,
                         GetArguments($"-J --flat-playlist {url}"),
                         ".",
                         (result) =>
@@ -190,7 +188,7 @@ namespace DecentM.EditorTools
             );
         }
 
-        public static IEnumerator DownloadSubtitles(string url, string path, bool autoSubs)
+        public static IEnumerator DownloadSubtitles(string url, string path, bool autoSubs = false)
         {
             void OnFinish(ProcessResult result)
             {
@@ -205,7 +203,7 @@ namespace DecentM.EditorTools
             return Parallelism.WaitForCallback(
                 (callback) =>
                     ProcessManager.RunProcess(
-                        EditorAssets.YtDlpPath,
+                        AssetPaths.YtDlpPath,
                         GetArguments(arguments),
                         path,
                         (result) =>
@@ -233,7 +231,7 @@ namespace DecentM.EditorTools
             return Parallelism.WaitForCallback(
                 (callback) =>
                     ProcessManager.RunProcess(
-                        EditorAssets.YtDlpPath,
+                        AssetPaths.YtDlpPath,
                         GetArguments($"--write-comments -J {url}"),
                         ".",
                         (result) =>
@@ -256,7 +254,7 @@ namespace DecentM.EditorTools
             return Parallelism.WaitForCallback(
                 (callback) =>
                     ProcessManager.RunProcess(
-                        EditorAssets.YtDlpPath,
+                        AssetPaths.YtDlpPath,
                         GetArguments($"--write-comments {url}"),
                         path,
                         (result) =>
@@ -279,7 +277,7 @@ namespace DecentM.EditorTools
             return Parallelism.WaitForCallback(
                 (callback) =>
                     ProcessManager.RunProcess(
-                        EditorAssets.YtDlpPath,
+                        AssetPaths.YtDlpPath,
                         GetArguments($"--convert-thumbnails jpg --write-thumbnail {url}"),
                         path,
                         (result) =>
