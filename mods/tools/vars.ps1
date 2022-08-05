@@ -17,11 +17,13 @@ $env:MONO_FOLDER = "mono"
 $env:NUGET_URL = "https://dist.nuget.org/win-x86-commandline/latest/nuget.exe"
 $env:NUGET_FOLDER = "nuget"
 
-$env:PREFABS_VERSION = "v1.0.2"
-$env:PREFABS_FILENAME = "DecentM.Prefabs.dll"
 $env:PREFABS_REPO = "DecentM/world-prefabs"
-$env:PREFABS_URL = "https://github.com/$env:PREFABS_REPO/releases/download/$env:PREFABS_VERSION/$env:PREFABS_FILENAME"
 $env:PREFABS_FOLDER = "prefabs"
+#PREFABS_ARTIFACT_NAME
+#PREFABS_RUN_ID
+
+$env:PREFABS_VERSION = "v1.0.2"
+$env:PREFABS_URL = "https://github.com/$env:PREFABS_REPO/releases/download/$env:PREFABS_VERSION/DecentM.Components.zip"
 
 $env:STEAMCMD_URL = "https://steamcdn-a.akamaihd.net/client/installer/steamcmd.zip"
 $env:STEAMCMD_FOLDER = "steamcmd"

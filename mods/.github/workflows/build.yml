@@ -5,8 +5,21 @@ on:
     branches: [ "master" ]
     tags:
       - "v*.*.*"
+
   pull_request:
     branches: [ "master" ]
+
+  workflow_dispatch:
+    inputs:
+      prefabs_action:
+        type: string
+        description: The name of the action to download dlls from
+        required: true
+
+      artifact_name:
+        type: string
+        description: The name of artifact to download and extract DLLs from
+        required: true
 
 jobs:
   build:
@@ -35,6 +48,19 @@ jobs:
       shell: pwsh
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Download artifacts from Prefabs action
+      run: tools/vars.ps1; tools/bootstrap/prefabs-from-action.ps1
+      shell: pwsh
+      if: github.event_name == 'workflow_dispatch'
+      env:
+        PREFABS_ARTIFACT_NAME: ${{ github.event.inputs.artifact_name }}
+        PREFABS_RUN_ID: ${{ github.event.inputs.prefabs_action }}
+
+    - name: Download artifacts from Prefabs release
+      run: tools/vars.ps1; tools/bootstrap/prefabs-from-release.ps1
+      shell: pwsh
+      if: github.event_name != 'workflow_dispatch'
 
     - name: Build
       run: dotnet build --no-restore -c Release

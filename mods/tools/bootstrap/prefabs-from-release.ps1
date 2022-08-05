@@ -1,6 +1,5 @@
-$filename = $env:PREFABS_FILENAME
-$url = $env:PREFABS_URL
 $folder = $env:PREFABS_FOLDER
+$url = $env:PREFABS_URL
 
 if (Test-Path -Path $folder) {
     return "Skipping $folder install as it's already installed. Run '\tools\clean.ps1' to clear the current installation!";
@@ -9,11 +8,7 @@ if (Test-Path -Path $folder) {
 Write-Output "Installing $folder..."
 
 mkdir -p $folder
-$pastlocation = Get-Location
-Set-Location $folder
 
-Invoke-WebRequest $url -OutFile "$filename"
-
-Set-Location $pastlocation
+Invoke-WebRequest $url -OutFile $folder/
 
 Write-Output "Done."
