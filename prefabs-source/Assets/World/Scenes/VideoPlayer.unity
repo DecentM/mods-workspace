@@ -11690,7 +11690,7 @@ PrefabInstance:
     - target: {fileID: 4296987169323767014, guid: 06a97775b63086544909e7a1cf9d322c,
         type: 3}
       propertyPath: m_Name
-      value: LEMMiNO
+      value: Test Playlist
       objectReference: {fileID: 0}
     - target: {fileID: 7908459928813519374, guid: 06a97775b63086544909e7a1cf9d322c,
         type: 3}
