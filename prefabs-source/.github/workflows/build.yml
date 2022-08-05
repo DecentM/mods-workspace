@@ -36,10 +36,21 @@ jobs:
           UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
 
+      - name: Copy files to destination dir
+        shell: bash
+        run: |
+          set -e
+          set +x
+
+          mkdir -p ./dll-build
+          DIR=build/StandaloneWindows64/StandaloneWindows64_Data
+
+          cp -a $DIR/Plugins/ $DIR/Managed/DecentM.*.dll $DIR/Managed/LibVLCSharp.dll ./dll-build/
+
       - name: "Create zip"
         uses: vimtor/action-zip@v1
         with:
-          files: build/StandaloneWindows64/StandaloneWindows64_Data/Plugins/ build/StandaloneWindows64/StandaloneWindows64_Data/Managed/DecentM.*.dll build/StandaloneWindows64/StandaloneWindows64_Data/Managed/LibVLCSharp.dll
+          files: dll-build/
           dest: DecentM.Components.zip
 
       - name: Release
@@ -50,5 +61,5 @@ jobs:
 
       - uses: actions/upload-artifact@v2
         with:
-          name: UnityBuild.zip
+          name: UnityBuild
           path: build
