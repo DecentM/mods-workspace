@@ -686,17 +686,17 @@
     <Reference Include="UnityEditor.UI">
       <HintPath>Library\ScriptAssemblies\UnityEditor.UI.dll</HintPath>
     </Reference>
-    <Reference Include="System.Buffers">
-      <HintPath>Assets\VLCUnity\Plugins\Android\armeabi-v7a\System.Buffers.dll</HintPath>
-    </Reference>
     <Reference Include="LibVLCSharp">
       <HintPath>Assets\VLCUnity\Plugins\Android\armeabi-v7a\LibVLCSharp.dll</HintPath>
     </Reference>
-    <Reference Include="System.Numerics.Vectors">
-      <HintPath>Assets\VLCUnity\Plugins\Android\armeabi-v7a\System.Numerics.Vectors.dll</HintPath>
+    <Reference Include="System.Buffers">
+      <HintPath>Assets\VLCUnity\Plugins\Android\armeabi-v7a\System.Buffers.dll</HintPath>
     </Reference>
     <Reference Include="System.Memory">
       <HintPath>Assets\VLCUnity\Plugins\Android\armeabi-v7a\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics.Vectors">
+      <HintPath>Assets\VLCUnity\Plugins\Android\armeabi-v7a\System.Numerics.Vectors.dll</HintPath>
     </Reference>
     <Reference Include="System.Runtime.CompilerServices.Unsafe">
       <HintPath>Assets\VLCUnity\Plugins\Android\armeabi-v7a\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
@@ -1071,6 +1071,14 @@
     <ProjectReference Include="Unity.Timeline.csproj">
       <Project>{71685982-A3E4-03BD-69E8-57000764549C}</Project>
       <Name>Unity.Timeline</Name>
+    </ProjectReference>
+    <ProjectReference Include="DecentM.CustomComponents.csproj">
+      <Project>{24B7096D-7429-BEA3-F197-99AD2C17A38E}</Project>
+      <Name>DecentM.CustomComponents</Name>
+    </ProjectReference>
+    <ProjectReference Include="DecentM.Shared.csproj">
+      <Project>{A9801F8F-6410-6D99-6C47-01FFB317FFC7}</Project>
+      <Name>DecentM.Shared</Name>
     </ProjectReference>
     <ProjectReference Include="Unity.TextMeshPro.csproj">
       <Project>{6D1829C3-AEC0-D815-EB82-4E4BBF459634}</Project>

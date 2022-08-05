@@ -104,6 +104,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\DecentM\Editor\MaterialIcons\LICENSE.txt" />
+    <None Include="Assets\NuGet\Editor\NugetForUnity.dll" />
     <None Include="Assets\DecentM\Editor\PerformanceGovernor\PerformanceGovernorInspector.uss" />
     <None Include="Assets\DecentM\Fonts\Editor\unicode-ranges.txt" />
   </ItemGroup>
@@ -329,6 +330,9 @@
     </Reference>
     <Reference Include="unityplastic">
       <HintPath>Library\PackageCache\com.unity.collab-proxy@1.10.2\Lib\Editor\PlasticSCM\unityplastic.dll</HintPath>
+    </Reference>
+    <Reference Include="NugetForUnity">
+      <HintPath>Assets\NuGet\Editor\NugetForUnity.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework">
       <HintPath>Library\PackageCache\com.unity.ext.nunit@1.0.6\net35\unity-custom\nunit.framework.dll</HintPath>
@@ -736,6 +740,10 @@
       <Project>{24B7096D-7429-BEA3-F197-99AD2C17A38E}</Project>
       <Name>DecentM.CustomComponents</Name>
     </ProjectReference>
+    <ProjectReference Include="DecentM.Shared.csproj">
+      <Project>{A9801F8F-6410-6D99-6C47-01FFB317FFC7}</Project>
+      <Name>DecentM.Shared</Name>
+    </ProjectReference>
     <ProjectReference Include="Unity.VisualStudio.Editor.csproj">
       <Project>{8EC7DFF6-8CC9-FE97-2FF7-C53D1AD2B34F}</Project>
       <Name>Unity.VisualStudio.Editor</Name>
@@ -751,10 +759,6 @@
     <ProjectReference Include="UnityEditor.UI.csproj">
       <Project>{2D7D4349-444F-40DA-03F6-25C68B761D92}</Project>
       <Name>UnityEditor.UI</Name>
-    </ProjectReference>
-    <ProjectReference Include="DecentM.Shared.csproj">
-      <Project>{A9801F8F-6410-6D99-6C47-01FFB317FFC7}</Project>
-      <Name>DecentM.Shared</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

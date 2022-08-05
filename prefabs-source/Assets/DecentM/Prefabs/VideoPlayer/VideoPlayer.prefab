@@ -224,9 +224,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e80829f80d1e439428f93ed078aa10e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  events: {fileID: 7170847370387494920}
   player: {fileID: 3929789651563298468}
   screen: {fileID: 7128736245404155829}
-  events: {fileID: 7170847370387494920}
 --- !u!114 &3929789651563298468
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -831,6 +831,7 @@ MonoBehaviour:
   system: {fileID: 8561122911659706055}
   events: {fileID: 7170847370387494920}
   gui: {fileID: 0}
+  logToConsole: 0
 --- !u!1 &7128736245044325568
 GameObject:
   m_ObjectHideFlags: 0
