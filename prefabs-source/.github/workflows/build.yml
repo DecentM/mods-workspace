@@ -91,3 +91,16 @@ jobs:
           set +x
 
           gh workflow run build.yml -R DecentM/cvr-mods -r $GITHUB_REF_NAME -f prefabs_run_id=$GITHUB_RUN_ID -f artifact_name=DLLs
+
+      - name: Trigger Prefabs build workflow
+        shell: bash
+        # When an actual release happens, it's triggered by the git push, so
+        # we don't do that here
+        if: ${{ !startsWith(github.ref, 'refs/tags/') }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.WORKFLOW_PAT }}
+        run: |
+          set -e
+          set +x
+
+          gh workflow run build.yml -R DecentM/world-prefabs -r $GITHUB_REF_NAME -f prefabs_run_id=$GITHUB_RUN_ID -f artifact_name=DLLs
