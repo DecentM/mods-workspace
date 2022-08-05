@@ -122,6 +122,8 @@ namespace DecentM.Prefabs.VideoPlayer.Handlers
         {
             string newUrl = url;
 
+            Debug.Log($"[DecentM.VideoPlayer] Resolving url for playback: {url}");
+
             yield return Parallelism.WaitForCallback((callback) =>
             {
                 YTdlpCommands.GetVideoUrl(url, new Vector2Int(1920, 1080), (string resolved) =>
@@ -130,6 +132,8 @@ namespace DecentM.Prefabs.VideoPlayer.Handlers
                     callback();
                 });
             });
+
+            Debug.Log($"[DecentM.VideoPlayer] Resolved to: {newUrl}");
 
             Media media = new Media(LibVLCSingleton.GetInstance(), new Uri(newUrl));
 

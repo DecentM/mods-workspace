@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <LangVersion>latest</LangVersion>
+    <LangVersion>7.3</LangVersion>
   </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -9,7 +9,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{B795F4D9-8FEF-C060-356A-27F620787114}</ProjectGuid>
+    <ProjectGuid>{8CFF180F-60BE-1221-A342-5E0BA075E8C0}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
@@ -52,6 +52,9 @@
     <UnityBuildTarget>StandaloneWindows64:19</UnityBuildTarget>
     <UnityVersion>2019.4.31f1</UnityVersion>
   </PropertyGroup>
+  <ItemGroup>
+    <Analyzer Include="C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
+  </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\VLCUnity\Demos\Scripts\VLCMinimalPlayback.cs" />
     <Compile Include="Assets\VLCUnity\Demos\Scripts\VLCPlayerExample.cs" />
@@ -1061,27 +1064,27 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="DecentM.Prefabs.csproj">
-      <Project>{134B67B3-9793-2E10-9BE1-FB8887AA624D}</Project>
+      <Project>{039C0BE6-D9E8-C932-2B53-250A4878D702}</Project>
       <Name>DecentM.Prefabs</Name>
     </ProjectReference>
     <ProjectReference Include="UnityEngine.UI.csproj">
-      <Project>{0CD2AE03-5A8C-15D2-9A56-DE9F338A27BA}</Project>
+      <Project>{E1DEBCED-4232-A72C-ACB8-6AF9EF956709}</Project>
       <Name>UnityEngine.UI</Name>
     </ProjectReference>
     <ProjectReference Include="Unity.Timeline.csproj">
-      <Project>{71685982-A3E4-03BD-69E8-57000764549C}</Project>
+      <Project>{D10F1DFF-56EE-C93D-90D3-5DAC36CA9D3F}</Project>
       <Name>Unity.Timeline</Name>
     </ProjectReference>
     <ProjectReference Include="DecentM.CustomComponents.csproj">
-      <Project>{24B7096D-7429-BEA3-F197-99AD2C17A38E}</Project>
+      <Project>{A09343B0-4EC6-5CD7-2A14-DA6AD7F71194}</Project>
       <Name>DecentM.CustomComponents</Name>
     </ProjectReference>
     <ProjectReference Include="DecentM.Shared.csproj">
-      <Project>{A9801F8F-6410-6D99-6C47-01FFB317FFC7}</Project>
+      <Project>{EDDD5906-5483-179C-D239-FB7B6BB1BF9A}</Project>
       <Name>DecentM.Shared</Name>
     </ProjectReference>
     <ProjectReference Include="Unity.TextMeshPro.csproj">
-      <Project>{6D1829C3-AEC0-D815-EB82-4E4BBF459634}</Project>
+      <Project>{9EFD49C9-876D-41F8-7230-E8717E6F1589}</Project>
       <Name>Unity.TextMeshPro</Name>
     </ProjectReference>
   </ItemGroup>
