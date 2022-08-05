@@ -63,3 +63,8 @@ jobs:
         with:
           name: UnityBuild
           path: build
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: DLLs
+          path: dll-build
