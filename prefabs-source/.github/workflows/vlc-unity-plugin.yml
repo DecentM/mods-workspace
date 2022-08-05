@@ -37,6 +37,7 @@ jobs:
       - name: Build VLC-Unity
         shell: bash
         run: |
+          mkdir -p nightlies
           wget https://artifacts.videolan.org/vlc/nightly-win64/20220804-0423/vlc-4.0.0-dev-win64-debug-2d8beeb2.7z -O ./nightlies/vlc-4.0.0-dev-win64.7z
           7z x ./nightlies/vlc-4.0.0-dev-win64.7z -o./build
           rm -f ./nightlies/vlc-4.0.0-dev-win64.7z
