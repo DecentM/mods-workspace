@@ -2034,7 +2034,7 @@ PrefabInstance:
     - target: {fileID: 594346736959940025, guid: 5da21c6fcd698e244a10554a7581a10b,
         type: 3}
       propertyPath: serialisedUrls.Array.data[0]
-      value: https://www.youtube.com/watch?v=Y7t5B69G0Dw
+      value: http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4
       objectReference: {fileID: 0}
     - target: {fileID: 594346736959940025, guid: 5da21c6fcd698e244a10554a7581a10b,
         type: 3}
