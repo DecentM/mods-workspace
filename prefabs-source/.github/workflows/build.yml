@@ -81,4 +81,6 @@ jobs:
           set -e
           set +x
 
-          gh workflow run -R DecentM/cvr-mods build -f prefabs_action=$GITHUB_ACTION -f artifact_name=DLLs
+          gh workflow run build.yml -R DecentM/cvr-mods -f prefabs_action=$GITHUB_ACTION -f artifact_name=DLLs
+          # REPO=DecentM/cvr-mods
+          # curl -XPOST -u "${{ secrets.PAT_USERNAME }}:${{ secrets.PAT_TOKEN }}" -H "Accept: application/vnd.github.everest-preview+json" -H "Content-Type: application/json" https://api.github.com/repos/$REPO/dispatches --data '{"prefabs_action": "$GITHUB_ACTION", "artifact_name": "DLLs"}'
