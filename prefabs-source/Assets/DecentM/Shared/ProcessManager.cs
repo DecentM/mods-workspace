@@ -52,7 +52,11 @@ namespace DecentM.Shared
             StringBuilder stdout = new StringBuilder();
             StringBuilder stderr = new StringBuilder();
 
-#if !UNITY_EDITOR
+            Process runProcess = StartProcess(filename, arguments, workdir);
+
+#if UNITY_EDITOR
+            DCoroutine.Start(Parallelism.WaitForProcess(runProcess, OnFinished));
+#else
             runProcess.Exited += new EventHandler((object sender, System.EventArgs e) =>
             {
                 ProcessResult result = new ProcessResult();
@@ -62,12 +66,6 @@ namespace DecentM.Shared
 
                 OnFinished(result);
             });
-#endif
-
-            Process runProcess = StartProcess(filename, arguments, workdir);
-
-#if UNITY_EDITOR
-            DCoroutine.Start(Parallelism.WaitForProcess(runProcess, OnFinished));
 #endif
         }
 
