@@ -1,7 +1,9 @@
 {
     "name": "DecentM.Prefabs",
     "references": [
-        "GUID:6055be8ebefd69e48b49212b09b47b2f"
+        "GUID:6055be8ebefd69e48b49212b09b47b2f",
+        "GUID:f42f2e0b3ecb96f4bb875dd821611917",
+        "GUID:22291c8b6b3497a46b4a31a80494e68d"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

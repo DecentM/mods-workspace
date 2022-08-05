@@ -9,12 +9,14 @@ namespace DecentM.Prefabs.VideoPlayer.Plugins
     public class DebugPlugin : VideoPlayerPlugin
     {
         public TextMeshProUGUI gui;
+        public bool logToConsole = false;
 
         string[] logs = new string[40];
 
         public void Log(params string[] messages)
         {
-            Debug.Log($"[VideoPlayer] Debug: {String.Join(" ", messages)}");
+            if (this.logToConsole)
+                Debug.Log($"[VideoPlayer] Debug: {String.Join(" ", messages)}");
 
             string[] tmp = new string[logs.Length];
             Array.Copy(logs, 1, tmp, 0, this.logs.Length - 1);

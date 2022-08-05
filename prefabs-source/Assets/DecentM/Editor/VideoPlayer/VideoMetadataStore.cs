@@ -10,6 +10,7 @@ using UnityEngine;
 using UnityEditor;
 
 using DecentM.EditorTools;
+using DecentM.Shared;
 using DecentM.Prefabs.VideoPlayer.EditorTools.Importers;
 
 namespace DecentM.Prefabs.VideoPlayer.EditorTools

@@ -48,6 +48,9 @@ namespace DecentM.Mods.CustomComponents.VideoPlayer
 
         void Update()
         {
+            if (!this.IsPlaying)
+                return;
+
             //Get size every frame
             uint height = 0;
             uint width = 0;
@@ -70,14 +73,31 @@ namespace DecentM.Mods.CustomComponents.VideoPlayer
                     //Copy the vlc texture into the output texture, flipped over
                     var flip = new Vector2(flipTextureX ? -1 : 1, flipTextureY ? -1 : 1);
                     Graphics.Blit(_vlcTexture, texture, flip, Vector2.zero); //If you wanted to do post processing outside of VLC you could use a shader here.
+                    this.TextureChanged(this, null);
                 }
             }
+        }
+
+        public event EventHandler TextureChanged;
+
+        public Texture2D GetTexture()
+        {
+            return this._vlcTexture;
         }
         #endregion
 
 
         //Public functions that expose VLC MediaPlayer functions in a Unity-friendly way. You may want to add more of these.
         #region vlc
+        public void Open(Media media)
+        {
+            if (mediaPlayer.Media != null)
+                mediaPlayer.Media.Dispose();
+
+            mediaPlayer.Media = media;
+            Play();
+        }
+
         public void Open(string path)
         {
             if (mediaPlayer.Media != null)
@@ -86,6 +106,16 @@ namespace DecentM.Mods.CustomComponents.VideoPlayer
             var trimmedPath = path.Trim(new char[] { '"' }); //Windows likes to copy paths with quotes but Uri does not like to open them
             mediaPlayer.Media = new Media(libvlc, new Uri(trimmedPath));
             Play();
+        }
+
+        public void Close()
+        {
+            Stop();
+
+            if (mediaPlayer.Media != null)
+                mediaPlayer.Media.Dispose();
+
+            mediaPlayer.Media = null;
         }
 
         public void Play()

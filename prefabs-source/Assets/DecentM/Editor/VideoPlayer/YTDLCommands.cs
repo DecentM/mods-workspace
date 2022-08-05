@@ -3,6 +3,8 @@ using System.Collections;
 
 using UnityEngine;
 
+using DecentM.Shared;
+
 namespace DecentM.EditorTools
 {
     [Serializable]

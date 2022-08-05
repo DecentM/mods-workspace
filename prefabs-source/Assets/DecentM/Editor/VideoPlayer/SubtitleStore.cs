@@ -11,6 +11,7 @@ using UnityEditor;
 
 using DecentM.Prefabs.Subtitles;
 using DecentM.EditorTools;
+using DecentM.Shared;
 
 namespace DecentM.Prefabs.VideoPlayer.EditorTools
 {

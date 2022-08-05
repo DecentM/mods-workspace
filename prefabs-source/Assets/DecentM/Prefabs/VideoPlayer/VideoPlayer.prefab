@@ -188,10 +188,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6605304170776005930}
-  - component: {fileID: 8005333954194002365}
-  - component: {fileID: 1590890494972739937}
+  - component: {fileID: 7784957825608933582}
+  - component: {fileID: 3929789651563298468}
   m_Layer: 0
-  m_Name: UnityPlayer1440
+  m_Name: VLCPlayer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -212,7 +212,7 @@ Transform:
   m_Father: {fileID: 6605304172213891227}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8005333954194002365
+--- !u!114 &7784957825608933582
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -221,47 +221,29 @@ MonoBehaviour:
   m_GameObject: {fileID: 6605304170776005933}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 747df1318de85884581cbc911614aa34, type: 3}
+  m_Script: {fileID: 11500000, guid: e80829f80d1e439428f93ed078aa10e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 1590890494972739937}
-  audioSource: {fileID: 6605304171337992003}
+  player: {fileID: 3929789651563298468}
   screen: {fileID: 7128736245404155829}
   events: {fileID: 7170847370387494920}
---- !u!328 &1590890494972739937
-VideoPlayer:
+--- !u!114 &3929789651563298468
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6605304170776005933}
   m_Enabled: 1
-  m_VideoClip: {fileID: 0}
-  m_TargetCameraAlpha: 1
-  m_TargetCamera3DLayout: 0
-  m_TargetCamera: {fileID: 0}
-  m_TargetTexture: {fileID: 0}
-  m_TimeReference: 0
-  m_TargetMaterialRenderer: {fileID: 7128736245404155829}
-  m_TargetMaterialProperty: _MainTex
-  m_RenderMode: 3
-  m_AspectRatio: 2
-  m_DataSource: 1
-  m_PlaybackSpeed: 1
-  m_AudioOutputMode: 1
-  m_TargetAudioSources:
-  - {fileID: 0}
-  m_DirectAudioVolumes:
-  - 1
-  m_Url: 
-  m_EnabledAudioTracks: 01
-  m_DirectAudioMutes: 00
-  m_ControlledAudioTrackCount: 1
-  m_PlayOnAwake: 0
-  m_SkipOnDrop: 1
-  m_Looping: 0
-  m_WaitForFirstFrame: 0
-  m_FrameReadyEventEnabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a52aa1bff29eaa4ba0f33323d5e3c69, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  screen: {fileID: 7128736245404155829}
+  canvasScreen: {fileID: 0}
+  texture: {fileID: 0}
+  flipTextureX: 1
+  flipTextureY: 1
 --- !u!1 &6605304171337992004
 GameObject:
   m_ObjectHideFlags: 0
@@ -434,7 +416,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   events: {fileID: 7170847370387494920}
   playerHandlers:
-  - {fileID: 8005333954194002365}
+  - {fileID: 7784957825608933582}
   speakers:
   - {fileID: 6605304171337992003}
   screens:

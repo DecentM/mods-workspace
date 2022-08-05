@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 using UnityEngine;
 
-namespace DecentM.EditorTools
+namespace DecentM.Shared
 {
+#if UNITY_EDITOR
     public class DCoroutine
     {
         private static List<DCoroutine> runningCoroutines = new List<DCoroutine>();
@@ -90,4 +94,5 @@ namespace DecentM.EditorTools
             }
         }
     }
+#endif
 }

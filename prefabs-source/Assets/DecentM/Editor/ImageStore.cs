@@ -13,6 +13,8 @@ using JetBrains.Annotations;
 using UnityEngine;
 using UnityEditor;
 
+using DecentM.Shared;
+
 namespace DecentM.EditorTools
 {
     public class ImageStore

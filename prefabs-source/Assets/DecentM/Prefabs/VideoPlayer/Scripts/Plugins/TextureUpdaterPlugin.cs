@@ -12,6 +12,9 @@ namespace DecentM.Prefabs.VideoPlayer.Plugins
         {
             Texture videoTexture = this.system.GetVideoTexture();
 
+            if (videoTexture == null)
+                return;
+
             this.SetTexture(videoTexture);
         }
 
@@ -45,9 +48,6 @@ namespace DecentM.Prefabs.VideoPlayer.Plugins
 
         protected override void OnPlayerSwitch(VideoPlayerHandlerType type)
         {
-            Texture videoTexture = this.system.GetVideoTexture();
-
-            this.SetTexture(videoTexture);
             this.SetAVPro(type == VideoPlayerHandlerType.AVPro);
         }
 

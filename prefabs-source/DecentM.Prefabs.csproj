@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <LangVersion>7.3</LangVersion>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -53,9 +53,6 @@
     <UnityVersion>2019.4.31f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Analyzer Include="C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Assets\DecentM\Prefabs\CustomEvent\TimedCustomEvent.cs" />
     <Compile Include="Assets\DecentM\Prefabs\LibDecentM\Debugging.cs" />
     <Compile Include="Assets\DecentM\Prefabs\LibDecentM\LibDecentM.cs" />
@@ -72,6 +69,7 @@
     <Compile Include="Assets\DecentM\Prefabs\UI\Dropdown\DropdownOption.cs" />
     <Compile Include="Assets\DecentM\Prefabs\VideoPlayer\Scripts\PlayerHandlers\PlayerHandler.cs" />
     <Compile Include="Assets\DecentM\Prefabs\VideoPlayer\Scripts\PlayerHandlers\UnityVideo.cs" />
+    <Compile Include="Assets\DecentM\Prefabs\VideoPlayer\Scripts\PlayerHandlers\VLCVideo.cs" />
     <Compile Include="Assets\DecentM\Prefabs\VideoPlayer\Scripts\Plugins\AutoLivestreamDetectorPlugin.cs" />
     <Compile Include="Assets\DecentM\Prefabs\VideoPlayer\Scripts\Plugins\AutoPlayPlugin.cs" />
     <Compile Include="Assets\DecentM\Prefabs\VideoPlayer\Scripts\Plugins\AutoRetryPlugin.cs" />
@@ -298,6 +296,21 @@
     </Reference>
     <Reference Include="UnityEditor.Android.Extensions">
       <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\PlaybackEngines\AndroidPlayer\UnityEditor.Android.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="LibVLCSharp">
+      <HintPath>Assets\VLCUnity\Plugins\Android\armeabi-v7a\LibVLCSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Buffers">
+      <HintPath>Assets\VLCUnity\Plugins\Android\armeabi-v7a\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Memory">
+      <HintPath>Assets\VLCUnity\Plugins\Android\armeabi-v7a\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics.Vectors">
+      <HintPath>Assets\VLCUnity\Plugins\Android\armeabi-v7a\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe">
+      <HintPath>Assets\VLCUnity\Plugins\Android\armeabi-v7a\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
     <Reference Include="log4netPlastic">
       <HintPath>Library\PackageCache\com.unity.collab-proxy@1.10.2\Lib\Editor\PlasticSCM\log4netPlastic.dll</HintPath>
@@ -673,6 +686,14 @@
     <ProjectReference Include="Unity.TextMeshPro.csproj">
       <Project>{6D1829C3-AEC0-D815-EB82-4E4BBF459634}</Project>
       <Name>Unity.TextMeshPro</Name>
+    </ProjectReference>
+    <ProjectReference Include="DecentM.CustomComponents.csproj">
+      <Project>{24B7096D-7429-BEA3-F197-99AD2C17A38E}</Project>
+      <Name>DecentM.CustomComponents</Name>
+    </ProjectReference>
+    <ProjectReference Include="DecentM.Shared.csproj">
+      <Project>{A9801F8F-6410-6D99-6C47-01FFB317FFC7}</Project>
+      <Name>DecentM.Shared</Name>
     </ProjectReference>
     <ProjectReference Include="UnityEditor.UI.csproj">
       <Project>{2D7D4349-444F-40DA-03F6-25C68B761D92}</Project>

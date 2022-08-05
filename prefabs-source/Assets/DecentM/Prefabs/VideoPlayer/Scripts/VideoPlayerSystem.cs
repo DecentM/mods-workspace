@@ -14,7 +14,7 @@ namespace DecentM.Prefabs.VideoPlayer
 
     public struct VideoError
     {
-        public VideoError(VideoErrorType type, string message)
+        public VideoError(VideoErrorType type, string message = null)
         {
             this.type = type;
             this.message = message;

@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.Text;
 using System.Threading;
 
-namespace DecentM.EditorTools
+namespace DecentM.Shared
 {
     public struct ProcessResult
     {
@@ -52,9 +52,23 @@ namespace DecentM.EditorTools
             StringBuilder stdout = new StringBuilder();
             StringBuilder stderr = new StringBuilder();
 
+#if !UNITY_EDITOR
+            runProcess.Exited += new EventHandler((object sender, System.EventArgs e) =>
+            {
+                ProcessResult result = new ProcessResult();
+
+                result.stdout = stdout.ToString();
+                result.stderr = stderr.ToString();
+
+                OnFinished(result);
+            });
+#endif
+
             Process runProcess = StartProcess(filename, arguments, workdir);
 
+#if UNITY_EDITOR
             DCoroutine.Start(Parallelism.WaitForProcess(runProcess, OnFinished));
+#endif
         }
 
         public static ProcessResult RunProcessSync(

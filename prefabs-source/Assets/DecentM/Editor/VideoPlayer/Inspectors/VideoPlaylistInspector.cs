@@ -5,6 +5,7 @@ using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
+using DecentM.Shared;
 using DecentM.EditorTools;
 using DecentM.Icons;
 using DecentM.Prefabs.VideoPlayer.EditorTools;
