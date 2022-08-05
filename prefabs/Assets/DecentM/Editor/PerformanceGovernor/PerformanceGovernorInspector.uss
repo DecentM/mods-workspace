@@ -1,0 +1,24 @@
+﻿.unity-box{
+    height: 30;
+    flex-grow: 1;
+    flex-basis: 7;
+    justify-content: center;
+}
+
+.unity-box > Label{
+    -unity-text-align: middle-center;
+    overflow: hidden;
+    font-size: 8;
+}
+
+.unity-box:hover{
+    -unity-background-image-tint-color: #eeeeff;
+}   
+
+.unity-box.separator{
+    flex-grow: 0;
+    flex-basis: 7;
+    margin: 0 -3;
+    cursor: split-resize-left-right;
+    background-image: none;
+}
