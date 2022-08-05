@@ -44,7 +44,7 @@ jobs:
           set -e
           set +x
 
-          mkdir -p ./dll-build
+          mkdir -p ./dll-build/UserLibs
           DIR=build/StandaloneWindows64/StandaloneWindows64_Data
 
           cp -a $DIR/Plugins/x86_64/* $DIR/Managed/LibVLCSharp.dll $DIR/Managed/DecentM.*.dll ./dll-build/UserLibs
