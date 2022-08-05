@@ -91,6 +91,7 @@
     <Compile Include="Assets\DecentM\Editor\VideoPlayer\Subtitles\Transformer.cs" />
     <Compile Include="Assets\DecentM\Editor\VideoPlayer\VideoPlayerAutoFixer.cs" />
     <Compile Include="Assets\DecentM\Editor\VideoRatelimit\VideoRatelimitAutoFixer.cs" />
+    <Compile Include="Assets\Editor\PackageExporter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\DecentM\Editor\MaterialIcons\LICENSE.txt" />
@@ -281,6 +282,9 @@
     <Reference Include="UnityEditor">
       <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\Managed\UnityEditor.dll</HintPath>
     </Reference>
+    <Reference Include="Assembly-CSharp">
+      <HintPath>Library\ScriptAssemblies\Assembly-CSharp.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEditor.VR">
       <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\UnityExtensions\Unity\UnityVR\Editor\UnityEditor.VR.dll</HintPath>
     </Reference>
@@ -293,6 +297,30 @@
     <Reference Include="UnityEditor.Android.Extensions">
       <HintPath>D:\UnityEditors\2019.4.31f1\Editor\Data\PlaybackEngines\AndroidPlayer\UnityEditor.Android.Extensions.dll</HintPath>
     </Reference>
+    <Reference Include="NugetForUnity">
+      <HintPath>Assets\NuGet\Editor\NugetForUnity.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Buffers">
+      <HintPath>Assets\Packages\System.Buffers.4.5.1\lib\netstandard2.0\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Memory">
+      <HintPath>Assets\Packages\System.Memory.4.5.5\lib\netstandard2.0\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe">
+      <HintPath>Assets\Packages\System.Runtime.CompilerServices.Unsafe.4.5.3\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="DecentM.CustomComponents">
+      <HintPath>Assets\UserLibs\DecentM.CustomComponents.dll</HintPath>
+    </Reference>
+    <Reference Include="DecentM.Prefabs">
+      <HintPath>Assets\UserLibs\DecentM.Prefabs.dll</HintPath>
+    </Reference>
+    <Reference Include="DecentM.Shared">
+      <HintPath>Assets\UserLibs\DecentM.Shared.dll</HintPath>
+    </Reference>
+    <Reference Include="LibVLCSharp">
+      <HintPath>Assets\UserLibs\LibVLCSharp.dll</HintPath>
+    </Reference>
     <Reference Include="log4netPlastic">
       <HintPath>Library\PackageCache\com.unity.collab-proxy@1.10.2\Lib\Editor\PlasticSCM\log4netPlastic.dll</HintPath>
     </Reference>
@@ -304,30 +332,6 @@
     </Reference>
     <Reference Include="unityplastic">
       <HintPath>Library\PackageCache\com.unity.collab-proxy@1.10.2\Lib\Editor\PlasticSCM\unityplastic.dll</HintPath>
-    </Reference>
-    <Reference Include="DecentM.CustomComponents">
-      <HintPath>Assets\Plugins\x86_64\DecentM\DecentM.CustomComponents.dll</HintPath>
-    </Reference>
-    <Reference Include="DecentM.Prefabs">
-      <HintPath>Assets\Plugins\x86_64\DecentM\DecentM.Prefabs.dll</HintPath>
-    </Reference>
-    <Reference Include="LibVLCSharp">
-      <HintPath>Assets\Plugins\x86_64\DecentM\LibVLCSharp.dll</HintPath>
-    </Reference>
-    <Reference Include="DecentM.Shared">
-      <HintPath>Assets\Plugins\x86_64\DecentM\DecentM.Shared.dll</HintPath>
-    </Reference>
-    <Reference Include="NugetForUnity">
-      <HintPath>Assets\NuGet\Editor\NugetForUnity.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Buffers">
-      <HintPath>Assets\Packages\System.Buffers.4.5.1\lib\netstandard2.0\System.Buffers.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Runtime.CompilerServices.Unsafe">
-      <HintPath>Assets\Packages\System.Runtime.CompilerServices.Unsafe.4.5.3\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Memory">
-      <HintPath>Assets\Packages\System.Memory.4.5.5\lib\netstandard2.0\System.Memory.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework">
       <HintPath>Library\PackageCache\com.unity.ext.nunit@1.0.6\net35\unity-custom\nunit.framework.dll</HintPath>
