@@ -17,7 +17,7 @@ $env:MONO_FOLDER = "mono"
 $env:NUGET_URL = "https://dist.nuget.org/win-x86-commandline/latest/nuget.exe"
 $env:NUGET_FOLDER = "nuget"
 
-$env:PREFABS_REPO = "DecentM/world-prefabs"
+$env:PREFABS_REPO = "DecentM/world-prefabs-source"
 $env:PREFABS_FOLDER = "prefabs"
 # PREFABS_ARTIFACT_NAME - Set from CI as env variable
 # PREFABS_RUN_ID - Set from CI as env variable
