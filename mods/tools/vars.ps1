@@ -19,11 +19,12 @@ $env:NUGET_FOLDER = "nuget"
 
 $env:PREFABS_REPO = "DecentM/world-prefabs"
 $env:PREFABS_FOLDER = "prefabs"
-#PREFABS_ARTIFACT_NAME
-#PREFABS_RUN_ID
+# PREFABS_ARTIFACT_NAME - Set from CI as env variable
+# PREFABS_RUN_ID - Set from CI as env variable
 
-$env:PREFABS_VERSION = "v1.0.2"
-$env:PREFABS_URL = "https://github.com/$env:PREFABS_REPO/releases/download/$env:PREFABS_VERSION/DecentM.Components.zip"
+$env:PREFABS_VERSION = "v1.0.3"
+$env:PREFABS_FILENAME = "DecentM.Components.zip"
+$env:PREFABS_URL = "https://github.com/$env:PREFABS_REPO/releases/download/$env:PREFABS_VERSION/$env:PREFABS_FILENAME"
 
 $env:STEAMCMD_URL = "https://steamcdn-a.akamaihd.net/client/installer/steamcmd.zip"
 $env:STEAMCMD_FOLDER = "steamcmd"
