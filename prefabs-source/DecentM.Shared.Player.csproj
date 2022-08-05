@@ -60,7 +60,7 @@
     <Compile Include="Assets\DecentM\Shared\SelfLocator\SelfLocatorAsset.cs" />
     <Compile Include="Assets\DecentM\Shared\SelfLocator\SelfLocatorImporter.cs" />
     <Compile Include="Assets\DecentM\Shared\SelfLocator\SelfLocatorInspector.cs" />
-    <Compile Include="Assets\DecentM\Shared\YTDlp\YTDLCommands.cs" />
+    <Compile Include="Assets\DecentM\Shared\YTdlp\YTdlpCommands.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\DecentM\Shared\DecentM.Shared.asmdef" />

@@ -466,9 +466,7 @@ namespace DecentM.Prefabs.VideoPlayer
         private void ImportPlaylist()
         {
             GUI.FocusControl(null);
-            DCoroutine.Start(
-                YTDLCommands.GetPlaylistVideos(this.importPlaylistUrl, this.ImportPlaylistCallback)
-            );
+            YTdlpCommands.GetPlaylistVideos(this.importPlaylistUrl, this.ImportPlaylistCallback);
         }
 
         private void Clear()

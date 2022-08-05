@@ -6,6 +6,7 @@ using UnityEngine;
 using LibVLCSharp;
 
 using DecentM.Shared;
+using DecentM.Shared.YTdlp;
 using DecentM.Mods.CustomComponents.VideoPlayer;
 
 namespace DecentM.Prefabs.VideoPlayer.Handlers
@@ -69,11 +70,13 @@ namespace DecentM.Prefabs.VideoPlayer.Handlers
 
         private void HandleMediaChanged(object sender, object args)
         {
+            this.textureChangeSent = false;
             this.OnVideoReady();
         }
 
         private void HandleError(object sender, object args)
         {
+            this.textureChangeSent = false;
             this.OnVideoError();
         }
 
@@ -107,7 +110,18 @@ namespace DecentM.Prefabs.VideoPlayer.Handlers
 
         private IEnumerator LoadURLCoroutine(string url)
         {
-            Media media = new Media(LibVLCSingleton.GetInstance(), new Uri(url));
+            string newUrl = url;
+
+            yield return Parallelism.WaitForCallback((callback) =>
+            {
+                YTdlpCommands.GetVideoUrl(url, new Vector2Int(1920, 1080), (string resolved) =>
+                {
+                    newUrl = resolved;
+                    callback();
+                });
+            });
+
+            Media media = new Media(LibVLCSingleton.GetInstance(), new Uri(newUrl));
 
             Task parseStatusTask = Task.Run(async () => await media.ParseAsync(MediaParseOptions.ParseNetwork));
 
@@ -118,9 +132,9 @@ namespace DecentM.Prefabs.VideoPlayer.Handlers
                     this.events.OnLoadError(new VideoError(VideoErrorType.Unknown));
                     return;
                 }
-
-                this.player.Open(media);
             });
+
+            this.player.Open(media);
         }
 
         public override void Pause()

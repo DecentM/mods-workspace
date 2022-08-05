@@ -606,6 +606,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="DecentM.Shared.csproj">
+      <Project>{A9801F8F-6410-6D99-6C47-01FFB317FFC7}</Project>
+      <Name>DecentM.Shared</Name>
+    </ProjectReference>
     <ProjectReference Include="UnityEngine.UI.csproj">
       <Project>{0CD2AE03-5A8C-15D2-9A56-DE9F338A27BA}</Project>
       <Name>UnityEngine.UI</Name>

@@ -70,7 +70,6 @@
     <Compile Include="Assets\DecentM\Prefabs\VideoPlayer\Scripts\PlayerHandlers\PlayerHandler.cs" />
     <Compile Include="Assets\DecentM\Prefabs\VideoPlayer\Scripts\PlayerHandlers\UnityVideo.cs" />
     <Compile Include="Assets\DecentM\Prefabs\VideoPlayer\Scripts\PlayerHandlers\VLCVideo.cs" />
-    <Compile Include="Assets\DecentM\Prefabs\VideoPlayer\Scripts\Plugins\AutoLivestreamDetectorPlugin.cs" />
     <Compile Include="Assets\DecentM\Prefabs\VideoPlayer\Scripts\Plugins\AutoPlayPlugin.cs" />
     <Compile Include="Assets\DecentM\Prefabs\VideoPlayer\Scripts\Plugins\AutoRetryPlugin.cs" />
     <Compile Include="Assets\DecentM\Prefabs\VideoPlayer\Scripts\Plugins\DebugPlugin.cs" />

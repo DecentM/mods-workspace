@@ -37,8 +37,7 @@ namespace DecentM.Shared
                     "/",
                     Directory.GetCurrentDirectory(),
                     SelfLocatorAsset.LocateSelf(),
-                    VideoScriptsPath,
-                    "Bin/yt-dlp.exe"
+                    "Shared/YTdlp/yt-dlp.exe"
                 );
             }
         }

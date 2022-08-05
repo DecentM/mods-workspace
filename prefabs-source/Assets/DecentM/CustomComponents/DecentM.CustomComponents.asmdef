@@ -1,6 +1,8 @@
 {
     "name": "DecentM.CustomComponents",
-    "references": [],
+    "references": [
+        "GUID:22291c8b6b3497a46b4a31a80494e68d"
+    ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
