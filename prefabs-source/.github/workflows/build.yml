@@ -32,15 +32,27 @@ jobs:
           UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
 
+      - name: Get yt-dlp
+        shell: bash
+        env:
+          YT_DLP_VERSION: "2022.07.18"
+          YT_DLP_FILE: "yt-dlp.exe"
+        run: |
+          set -e
+          set +x
+
+          mkdir -p ./dll-build/UserLibs
+
+          YT_DLP_URL=https://github.com/yt-dlp/yt-dlp/releases/download/$YT_DLP_VERSION/$YT_DLP_FILE
+          wget $YT_DLP_URL -O ./dll-build/UserLibs/$YT_DLP_FILE
+
       - name: Copy files to destination
         shell: bash
         run: |
           set -e
           set +x
 
-          mkdir -p ./dll-build/UserLibs
           DIR=build/StandaloneWindows64/StandaloneWindows64_Data
-
           cp -a $DIR/Plugins/x86_64/* $DIR/Managed/LibVLCSharp.dll $DIR/Managed/DecentM.*.dll ./dll-build/UserLibs
 
       - name: Create zip
