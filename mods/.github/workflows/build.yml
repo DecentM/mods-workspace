@@ -11,9 +11,9 @@ on:
 
   workflow_dispatch:
     inputs:
-      prefabs_action:
+      prefabs_run_id:
         type: string
-        description: The name of the action to download dlls from
+        description: The id of the run to download dlls from
         required: true
 
       artifact_name:
@@ -29,11 +29,27 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: Restore dotnet packages
-      run: dotnet restore
+    - name: Download artifacts from Prefabs action
+      run: tools/vars.ps1; tools/bootstrap/prefabs-from-action.ps1
+      shell: pwsh
+      if: github.event_name == 'workflow_dispatch'
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        PREFABS_ARTIFACT_NAME: ${{ github.event.inputs.artifact_name }}
+        PREFABS_RUN_ID: ${{ github.event.inputs.prefabs_run_id }}
 
-    - name: Restore NuGet packages
-      run: nuget restore
+    - name: Download artifacts from Prefabs release
+      run: tools/vars.ps1; tools/bootstrap/prefabs-from-release.ps1
+      shell: pwsh
+      if: github.event_name != 'workflow_dispatch'
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Bootstrap CI
+      run: tools/bootstrap_ci.ps1
+      shell: pwsh
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Setup ChilloutVR
       uses: DecentM/setup-steam-game-windows@v1.0.0
@@ -42,28 +58,6 @@ jobs:
         password: ${{ secrets.STEAM_PASSWORD }}
         gameid: 661130
         folder: chilloutvr
-
-    - name: Bootstrap CI
-      run: tools/bootstrap_ci.ps1
-      shell: pwsh
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-    - name: Download artifacts from Prefabs action
-      run: tools/vars.ps1; tools/bootstrap/prefabs-from-action.ps1
-      shell: pwsh
-      if: github.event_name == 'workflow_dispatch'
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        PREFABS_ARTIFACT_NAME: ${{ github.event.inputs.artifact_name }}
-        PREFABS_RUN_ID: ${{ github.event.inputs.prefabs_action }}
-
-    - name: Download artifacts from Prefabs release
-      run: tools/vars.ps1; tools/bootstrap/prefabs-from-release.ps1
-      shell: pwsh
-      if: github.event_name != 'workflow_dispatch'
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Build
       run: dotnet build --no-restore -c Release
