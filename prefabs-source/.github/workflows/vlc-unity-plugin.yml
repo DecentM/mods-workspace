@@ -8,8 +8,6 @@ jobs:
     name: Build LibVLCSharp
 
     runs-on: ubuntu-latest
-    container:
-      image: registry.videolan.org/vlc-debian-unstable:20210803114245
 
     steps:
       - name: Build LibVLCSharp
@@ -26,16 +24,9 @@ jobs:
           git checkout -f master
           dotnet publish src/LibVLCSharp/LibVLCSharp.csproj /p:UNITY=true -c Release
 
-  unity-plugin:
-    name: Build Unity plugin
-
-    runs-on: ubuntu-latest
-    container:
-      image: registry.videolan.org/vlc-debian-llvm-mingw:20220705072259
-
-    steps:
       - name: Build VLC-Unity
         shell: bash
+
         run: |
           mkdir -p nightlies
           wget https://artifacts.videolan.org/vlc/nightly-win64/20220804-0423/vlc-4.0.0-dev-win64-debug-2d8beeb2.7z -O ./nightlies/vlc-4.0.0-dev-win64.7z
