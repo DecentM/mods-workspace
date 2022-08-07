@@ -8,6 +8,5 @@
 .\tools\bootstrap\game.ps1
 .\tools\bootstrap\prefabs-from-release.ps1
 .\tools\bootstrap\mod-game.ps1
-.\tools\bootstrap\build.ps1
 
 .\tools\post_bootstrap.ps1
