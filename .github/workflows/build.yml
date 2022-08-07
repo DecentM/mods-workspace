@@ -156,7 +156,7 @@ jobs:
       id: cache-game-files
       uses: actions/cache@v2
       with:
-        path: chilloutvr
+        path: mods/chilloutvr
         key: cvr-${{ steps.game-info.outputs.hash }}
         restore-keys: |
           cvr-
