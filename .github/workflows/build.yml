@@ -82,6 +82,9 @@ jobs:
   build-prefabs-source:
     runs-on: ubuntu-latest
 
+    needs:
+      - update-yt-dlp
+
     defaults:
       run:
         shell: bash
@@ -141,6 +144,10 @@ jobs:
   build-mods:
     runs-on: ubuntu-latest
 
+    needs:
+      - build-prefabs-source
+      - update-game
+
     defaults:
       run:
         shell: pwsh
@@ -198,6 +205,9 @@ jobs:
 
   build-prefabs:
     runs-on: ubuntu-latest
+
+    needs:
+      - build-prefabs-source
 
     defaults:
       run:
