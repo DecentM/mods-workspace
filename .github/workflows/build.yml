@@ -61,7 +61,6 @@ jobs:
             yt-dlp-
 
       - name: Get yt-dlp
-        if: steps.cache-yt-dlp.outputs.cache-hit != 'true'
         env:
           YT_DLP_VERSION: "2022.07.18"
           YT_DLP_FILE: "yt-dlp.exe"
@@ -102,6 +101,9 @@ jobs:
 
       - name: Create Unity build
         uses: game-ci/unity-builder@v2.0.4
+        with:
+          projectPath: prefabs-source
+          unityVersion: 2019.4.31f1
         env:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
           UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
@@ -227,6 +229,7 @@ jobs:
       - name: Create Unity build
         uses: game-ci/unity-builder@v2.0.4
         with:
+          projectPath: prefabs
           unityVersion: 2019.4.31f1
           buildMethod: PackageExporter.ExportPackage
           allowDirtyBuild: true
