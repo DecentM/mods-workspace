@@ -1,0 +1,237 @@
+name: build
+
+on:
+  push:
+    branches: [ "master" ]
+    tags:
+      - "v*.*.*"
+
+  pull_request:
+    branches: [ "master" ]
+
+  workflow_dispatch:
+    inputs:
+      prefabs_run_id:
+        type: string
+        description: The id of the run to download dlls from
+        required: true
+
+      artifact_name:
+        type: string
+        description: The name of artifact to download and extract DLLs from
+        required: true
+
+jobs:
+  update-game:
+    runs-on: windows-latest
+
+    defaults:
+      run:
+        shell: pwsh
+        working-directory: mods
+
+    steps:
+      - name: Cache game files
+        id: cache-game-files
+        uses: actions/cache@v2
+        with:
+          path: chilloutvr
+          key: cvr-${{ hashFiles('chilloutvr/**') }}
+          restore-keys: |
+            cvr-
+
+      - name: Setup ChilloutVR
+        uses: DecentM/setup-steam-game-windows@v1.0.0
+        with:
+          username: ${{ secrets.STEAM_USER }}
+          password: ${{ secrets.STEAM_PASSWORD }}
+          gameid: 661130
+          folder: chilloutvr
+
+  update-yt-dlp:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        shell: bash
+        working-directory: prefabs-source
+
+    steps:
+      - name: Cache yt-dlp
+        id: cache-yt-dlp
+        uses: actions/cache@v2
+        with:
+          path: ./dll-build/UserLibs/yt-dlp.exe
+          key: yt-dlp-${{ hashFiles('./dll-build/UserLibs/yt-dlp.exe') }}
+          restore-keys: |
+            yt-dlp-
+
+      - name: Get yt-dlp
+        if: steps.cache-yt-dlp.outputs.cache-hit != 'true'
+        env:
+          YT_DLP_VERSION: "2022.07.18"
+          YT_DLP_FILE: "yt-dlp.exe"
+        run: |
+          set -e
+          set +x
+
+          mkdir -p ./dll-build/UserLibs
+
+          YT_DLP_URL=https://github.com/yt-dlp/yt-dlp/releases/download/$YT_DLP_VERSION/$YT_DLP_FILE
+          wget $YT_DLP_URL -O ./dll-build/UserLibs/$YT_DLP_FILE
+
+  build-prefabs-source:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        shell: bash
+        working-directory: prefabs-source
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Cache
+        uses: actions/cache@v2
+        with:
+          path: Library
+          key: Library-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
+          restore-keys: |
+            Library-
+
+      - name: Create Unity build
+        uses: game-ci/unity-builder@v2.0.4
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+
+      - name: Copy files to destination
+        run: |
+          set -e
+          set +x
+
+          DIR=build/StandaloneWindows64/StandaloneWindows64_Data
+          cp -a $DIR/Plugins/x86_64/* $DIR/Managed/LibVLCSharp.dll $DIR/Managed/DecentM.*.dll ./dll-build/UserLibs
+
+      - name: Create zip
+        uses: vimtor/action-zip@v1
+        with:
+          files: dll-build/
+          dest: DecentM.Components.zip
+
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        if: ${{ startsWith(github.ref, 'refs/tags/') }}
+        with:
+          files: DecentM.Components.zip
+
+      - name: Upload Unity build
+        uses: actions/upload-artifact@v2
+        with:
+          name: UnityBuild
+          path: build
+
+      - name: Upload built DLLs
+        uses: actions/upload-artifact@v2
+        with:
+          name: DLLs
+          path: dll-build
+
+  build-mods:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        shell: pwsh
+        working-directory: mods
+
+    steps:
+    - uses: actions/checkout@v2
+
+#    - name: Download artifacts from Prefabs action
+#      run: tools/vars.ps1; tools/bootstrap/prefabs-from-action.ps1
+#      if: github.event_name == 'workflow_dispatch'
+#      env:
+#        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#        PREFABS_ARTIFACT_NAME: ${{ github.event.inputs.artifact_name }}
+#        PREFABS_RUN_ID: ${{ github.event.inputs.prefabs_run_id }}
+#
+#    - name: Download artifacts from Prefabs release
+#      run: tools/vars.ps1; tools/bootstrap/prefabs-from-release.ps1
+#      if: github.event_name != 'workflow_dispatch'
+#      env:
+#        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Bootstrap CI
+      run: tools/bootstrap_ci.ps1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Build
+      run: dotnet build --no-restore -c Release
+
+    - name: Copy built mods to output
+      run: tools/create_output.ps1
+
+    - name: Upload outputs
+      uses: actions/upload-artifact@v2
+      with:
+        name: DecentM.Mods
+        path: output
+
+    - name: Create zip
+      uses: vimtor/action-zip@v1
+      with:
+        files: output/
+        dest: DecentM.Mods.zip
+
+    - name: Release
+      uses: softprops/action-gh-release@v1
+      if: startsWith(github.ref, 'refs/tags/')
+      with:
+        files: DecentM.Mods.zip
+
+  build-prefabs:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        shell: bash
+        working-directory: prefabs
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Cache
+        uses: actions/cache@v2
+        with:
+          path: Library
+          key: Library-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
+          restore-keys: |
+            Library-
+
+      - name: Create Unity build
+        uses: game-ci/unity-builder@v2.0.4
+        with:
+          unityVersion: 2019.4.31f1
+          buildMethod: PackageExporter.ExportPackage
+          allowDirtyBuild: true
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        if: ${{ startsWith(github.ref, 'refs/tags/') }}
+        with:
+          files: ./output/DecentM.Prefabs.unitypackage
+
+      - name: Upload built unitypackage
+        uses: actions/upload-artifact@v2
+        with:
+          name: Unitypackage
+          path: ./output/DecentM.Prefabs.unitypackage
