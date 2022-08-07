@@ -74,23 +74,36 @@ jobs:
           files: prefabs-source/dll-build/
           dest: DecentM.Components.zip
 
-      - name: Release
-        uses: softprops/action-gh-release@v1
-        if: ${{ startsWith(github.ref, 'refs/tags/') }}
-        with:
-          files: DecentM.Components.zip
-
       - name: Upload built DLLs
         uses: actions/upload-artifact@v2
         with:
           name: DecentM.Prefabs.Raw
           path: prefabs-source/dll-build
 
-  build-prefabs:
+  update-prefabs:
     runs-on: ubuntu-latest
 
     needs:
       - build-prefabs-source
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - uses: actions/download-artifact@v2
+        with:
+          name: DecentM.Prefabs.Raw
+          path: prefabs/Assets
+
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: "chore(prefabs): update prefabs dlls from GitHub Actions"
+
+  build-prefabs:
+    runs-on: ubuntu-latest
+
+    needs:
+      - update-prefabs
 
     defaults:
       run:
@@ -208,21 +221,18 @@ jobs:
 
       - uses: actions/download-artifact@v2
         with:
-          name: DecentM.Prefabs.Raw
-
-      - uses: actions/download-artifact@v2
-        with:
           name: Unitypackage
 
       - uses: actions/download-artifact@v2
         with:
           name: DecentM.Mods
+          path: build/Mods
 
       - name: Create mods zip
         uses: vimtor/action-zip@v1
         with:
           files: |
-            mods/output/
+            build/Mods
             UserLibs
           dest: DecentM.Mods.zip
 
