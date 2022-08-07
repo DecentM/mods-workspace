@@ -24,12 +24,16 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Fetch game update info
+        run: |
+          Invoke-WebRequest https://api.steamcmd.net/v1/info/661130 -OutFile info.json
+
       - name: Cache game files
         id: cache-game-files
         uses: actions/cache@v2
         with:
           path: chilloutvr
-          key: cvr-${{ hashFiles('chilloutvr/**') }}
+          key: cvr-${{ hashFiles('./info.json') }}
           restore-keys: |
             cvr-
 
@@ -41,46 +45,11 @@ jobs:
           gameid: 661130
           folder: chilloutvr
 
-  update-yt-dlp:
-    runs-on: ubuntu-latest
-
-    defaults:
-      run:
-        shell: bash
-
-    steps:
-      - uses: actions/checkout@v2
-
-      - name: Cache yt-dlp
-        id: cache-yt-dlp
-        uses: actions/cache@v2
-        with:
-          path: ./dll-build/UserLibs/yt-dlp.exe
-          key: yt-dlp-${{ hashFiles('./dll-build/UserLibs/yt-dlp.exe') }}
-          restore-keys: |
-            yt-dlp-
-
-      - name: Get yt-dlp
-        env:
-          YT_DLP_VERSION: "2022.07.18"
-          YT_DLP_FILE: "yt-dlp.exe"
-        run: |
-          set -e
-          set +x
-
-          mkdir -p ./dll-build/UserLibs
-
-          YT_DLP_URL=https://github.com/yt-dlp/yt-dlp/releases/download/$YT_DLP_VERSION/$YT_DLP_FILE
-          wget $YT_DLP_URL -O ./dll-build/UserLibs/$YT_DLP_FILE
-
 ########################
 #       Building       #
 ########################
   build-prefabs-source:
     runs-on: ubuntu-latest
-
-    needs:
-      - update-yt-dlp
 
     defaults:
       run:
@@ -90,6 +59,22 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+
+      - name: Get yt-dlp
+        env:
+          YT_DLP_VERSION: "2022.07.18"
+          YT_DLP_FILE: "yt-dlp.exe"
+        run: |
+          set -e
+          set +x
+
+          mkdir -p ./yt-dlp
+
+          YT_DLP_URL=https://github.com/yt-dlp/yt-dlp/releases/download/$YT_DLP_VERSION/$YT_DLP_FILE
+          wget $YT_DLP_URL -O ./yt-dlp/$YT_DLP_FILE
+
+          mkdir -p ./dll-build/UserLibs
+          cp ./yt-dlp/$YT_DLP_FILE ./dll-build/UserLibs/
 
       - name: Cache
         uses: actions/cache@v2
@@ -114,6 +99,7 @@ jobs:
           set -e
           set +x
 
+          mkdir -p ./dll-build/UserLibs
           DIR=build/StandaloneWindows64/StandaloneWindows64_Data
           cp -a $DIR/Plugins/x86_64/* $DIR/Managed/LibVLCSharp.dll $DIR/Managed/DecentM.*.dll ./dll-build/UserLibs
 
@@ -155,7 +141,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-
 
     - uses: actions/download-artifact@v2
       with:
