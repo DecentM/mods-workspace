@@ -76,10 +76,10 @@ jobs:
       - name: Cache
         uses: actions/cache@v2
         with:
-          path: Library
-          key: Library-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
+          path: prefabs-source/Library
+          key: prefabs-source-Library-${{ hashFiles('prefabs-source/Assets/**', 'prefabs-source/Packages/**', 'prefabs-source/ProjectSettings/**') }}
           restore-keys: |
-            Library-
+            prefabs-source-Library-
 
       - name: Create Unity build
         uses: game-ci/unity-builder@v2.0.4
@@ -105,7 +105,7 @@ jobs:
       - name: Create zip
         uses: vimtor/action-zip@v1
         with:
-          files: dll-build/
+          files: prefabs-source/dll-build/
           dest: DecentM.Components.zip
 
       - name: Release
@@ -118,16 +118,16 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: UnityBuild
-          path: build
+          path: prefabs-source/build
 
       - name: Upload built DLLs
         uses: actions/upload-artifact@v2
         with:
           name: DLLs
-          path: dll-build
+          path: prefabs-source/dll-build
 
   build-mods:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     needs:
       - build-prefabs-source
@@ -173,12 +173,12 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: DecentM.Mods
-        path: output
+        path: mods/output
 
     - name: Create zip
       uses: vimtor/action-zip@v1
       with:
-        files: output/
+        files: mods/output/
         dest: DecentM.Mods.zip
 
     - name: Release
@@ -205,10 +205,10 @@ jobs:
       - name: Cache
         uses: actions/cache@v2
         with:
-          path: Library
-          key: Library-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
+          path: prefabs/Library
+          key: prefabs-Library-${{ hashFiles('prefabs/Assets/**', 'prefabs/Packages/**', 'prefabs/ProjectSettings/**') }}
           restore-keys: |
-            Library-
+            prefabs-Library-
 
       - name: Create Unity build
         uses: game-ci/unity-builder@v2.0.4
@@ -227,10 +227,10 @@ jobs:
         uses: softprops/action-gh-release@v1
         if: ${{ startsWith(github.ref, 'refs/tags/') }}
         with:
-          files: ./output/DecentM.Prefabs.unitypackage
+          files: prefabs/output/DecentM.Prefabs.unitypackage
 
       - name: Upload built unitypackage
         uses: actions/upload-artifact@v2
         with:
           name: Unitypackage
-          path: ./output/DecentM.Prefabs.unitypackage
+          path: prefabs/output/DecentM.Prefabs.unitypackage
