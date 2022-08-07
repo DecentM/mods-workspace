@@ -21,12 +21,17 @@ jobs:
       run:
         shell: pwsh
 
+    outputs:
+      gamehash: ${{ steps.game-info.outputs.info }}
+
     steps:
       - uses: actions/checkout@v2
 
       - name: Fetch game update info
+        id: game-info
         run: |
           Invoke-WebRequest https://api.steamcmd.net/v1/info/661130 -OutFile info.json
+          echo "::set-output name=info::${{ hashFiles('./info.json') }}"
 
       - name: Cache game files
         id: cache-game-files
@@ -135,6 +140,13 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+
+    - name: Restore game files from cache
+      id: restore-game-files
+      uses: actions/cache@v2
+      with:
+        path: mods/chilloutvr
+        key: cvr-${{ needs.update-game.outputs.gamehash }}
 
     - uses: actions/download-artifact@v2
       with:
