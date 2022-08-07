@@ -86,6 +86,8 @@ jobs:
     needs:
       - build-prefabs-source
 
+    if: ${{ !startsWith(github.ref, 'refs/tags/') }}
+
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -104,6 +106,8 @@ jobs:
 
     needs:
       - update-prefabs
+
+    if: ${{ always() }}
 
     defaults:
       run:
