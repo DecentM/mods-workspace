@@ -1,0 +1,85 @@
+name: build
+
+on:
+  push:
+    branches: [ "master" ]
+    tags:
+      - "v*.*.*"
+
+  pull_request:
+    branches: [ "master" ]
+
+  workflow_dispatch:
+    inputs:
+      prefabs_run_id:
+        type: string
+        description: The id of the run to download dlls from
+        required: true
+
+      artifact_name:
+        type: string
+        description: The name of artifact to download and extract DLLs from
+        required: true
+
+jobs:
+  build:
+
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Download artifacts from Prefabs action
+      run: tools/vars.ps1; tools/bootstrap/prefabs-from-action.ps1
+      shell: pwsh
+      if: github.event_name == 'workflow_dispatch'
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        PREFABS_ARTIFACT_NAME: ${{ github.event.inputs.artifact_name }}
+        PREFABS_RUN_ID: ${{ github.event.inputs.prefabs_run_id }}
+
+    - name: Download artifacts from Prefabs release
+      run: tools/vars.ps1; tools/bootstrap/prefabs-from-release.ps1
+      shell: pwsh
+      if: github.event_name != 'workflow_dispatch'
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Bootstrap CI
+      run: tools/bootstrap_ci.ps1
+      shell: pwsh
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Setup ChilloutVR
+      uses: DecentM/setup-steam-game-windows@v1.0.0
+      with:
+        username: ${{ secrets.STEAM_USER }}
+        password: ${{ secrets.STEAM_PASSWORD }}
+        gameid: 661130
+        folder: chilloutvr
+
+    - name: Build
+      run: dotnet build --no-restore -c Release
+
+    - name: Copy built mods to output
+      shell: pwsh
+      run: tools/create_output.ps1
+
+    - name: Upload outputs
+      uses: actions/upload-artifact@v2
+      with:
+        name: DecentM.Mods
+        path: output
+
+    - name: Create zip
+      uses: vimtor/action-zip@v1
+      with:
+        files: output/
+        dest: DecentM.Mods.zip
+
+    - name: Release
+      uses: softprops/action-gh-release@v1
+      if: startsWith(github.ref, 'refs/tags/')
+      with:
+        files: DecentM.Mods.zip

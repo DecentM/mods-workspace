@@ -1,0 +1,67 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32616.157
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NoSteamRestart", "Mods\NoSteamRestart\NoSteamRestart.csproj", "{6E0FF123-F41B-4C4F-A091-D46CDFA5554B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ComponentsUnleashed", "Mods\ComponentsUnleashed\ComponentsUnleashed.csproj", "{0F1CF609-85EC-4C72-B079-E9AEBB5A7796}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DecryptBundles", "Mods\DecryptBundles\DecryptBundles.csproj", "{87B605D0-4D9D-4696-9DF0-7BD8A127369D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{27684518-4E24-4F8F-853A-544655EF33FA}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\build.yml = .github\workflows\build.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{B61E2FC7-FC83-4917-9C07-2BB0E3E6558F}"
+	ProjectSection(SolutionItems) = preProject
+		tools\bootstrap_all.ps1 = tools\bootstrap_all.ps1
+		tools\bootstrap_requirements.ps1 = tools\bootstrap_requirements.ps1
+		tools\clean.ps1 = tools\clean.ps1
+		vars.ps1 = vars.ps1
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "bootstrap", "bootstrap", "{7881DCD7-C4DE-490B-A6E9-8F7E99A1EB16}"
+	ProjectSection(SolutionItems) = preProject
+		tools\bootstrap\7zip.ps1 = tools\bootstrap\7zip.ps1
+		tools\bootstrap\build.ps1 = tools\bootstrap\build.ps1
+		tools\bootstrap\game.ps1 = tools\bootstrap\game.ps1
+		tools\bootstrap\melonloader.ps1 = tools\bootstrap\melonloader.ps1
+		tools\bootstrap\mod-game.ps1 = tools\bootstrap\mod-game.ps1
+		tools\bootstrap\mono.ps1 = tools\bootstrap\mono.ps1
+		tools\bootstrap\nuget.ps1 = tools\bootstrap\nuget.ps1
+		tools\bootstrap\prefabs.ps1 = tools\bootstrap\prefabs.ps1
+		tools\bootstrap\steamcmd.ps1 = tools\bootstrap\steamcmd.ps1
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6E0FF123-F41B-4C4F-A091-D46CDFA5554B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E0FF123-F41B-4C4F-A091-D46CDFA5554B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6E0FF123-F41B-4C4F-A091-D46CDFA5554B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6E0FF123-F41B-4C4F-A091-D46CDFA5554B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0F1CF609-85EC-4C72-B079-E9AEBB5A7796}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F1CF609-85EC-4C72-B079-E9AEBB5A7796}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F1CF609-85EC-4C72-B079-E9AEBB5A7796}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F1CF609-85EC-4C72-B079-E9AEBB5A7796}.Release|Any CPU.Build.0 = Release|Any CPU
+		{87B605D0-4D9D-4696-9DF0-7BD8A127369D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{87B605D0-4D9D-4696-9DF0-7BD8A127369D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{87B605D0-4D9D-4696-9DF0-7BD8A127369D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{87B605D0-4D9D-4696-9DF0-7BD8A127369D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B61E2FC7-FC83-4917-9C07-2BB0E3E6558F} = {27684518-4E24-4F8F-853A-544655EF33FA}
+		{7881DCD7-C4DE-490B-A6E9-8F7E99A1EB16} = {B61E2FC7-FC83-4917-9C07-2BB0E3E6558F}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8BD6DDD9-6687-476A-9189-22689083AC79}
+	EndGlobalSection
+EndGlobal
