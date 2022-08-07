@@ -9,19 +9,11 @@ on:
   pull_request:
     branches: [ "master" ]
 
-  workflow_dispatch:
-    inputs:
-      prefabs_run_id:
-        type: string
-        description: The id of the run to download dlls from
-        required: true
-
-      artifact_name:
-        type: string
-        description: The name of artifact to download and extract DLLs from
-        required: true
-
 jobs:
+
+########################
+# Caching dependencies #
+########################
   update-game:
     runs-on: windows-latest
 
@@ -31,6 +23,8 @@ jobs:
         working-directory: mods
 
     steps:
+      - uses: actions/checkout@v2
+
       - name: Cache game files
         id: cache-game-files
         uses: actions/cache@v2
@@ -57,6 +51,8 @@ jobs:
         working-directory: prefabs-source
 
     steps:
+      - uses: actions/checkout@v2
+
       - name: Cache yt-dlp
         id: cache-yt-dlp
         uses: actions/cache@v2
@@ -80,6 +76,9 @@ jobs:
           YT_DLP_URL=https://github.com/yt-dlp/yt-dlp/releases/download/$YT_DLP_VERSION/$YT_DLP_FILE
           wget $YT_DLP_URL -O ./dll-build/UserLibs/$YT_DLP_FILE
 
+########################
+#       Building       #
+########################
   build-prefabs-source:
     runs-on: ubuntu-latest
 
@@ -150,6 +149,10 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
+
+    - uses: actions/download-artifact@v2
+      with:
+        name: DLLs
 #    - name: Download artifacts from Prefabs action
 #      run: tools/vars.ps1; tools/bootstrap/prefabs-from-action.ps1
 #      if: github.event_name == 'workflow_dispatch'
