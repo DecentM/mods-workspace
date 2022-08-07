@@ -37,7 +37,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="0Harmony">
-      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\melonloader\MelonLoader.x64\MelonLoader\0Harmony.dll</HintPath>
     </Reference>
     <Reference Include="Assembly-CSharp">

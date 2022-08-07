@@ -32,7 +32,7 @@ jobs:
         run: |
           Invoke-WebRequest https://api.steamcmd.net/v1/info/661130 -OutFile info.json
           $hashinfo = Get-FileHash info.json
-          Write-Output "::set-output name=hash::$hashinfo.hash"
+          Write-Output "::set-output name=hash::$($hashinfo.hash)"
 
       - name: Cache game files
         id: cache-game-files
@@ -158,12 +158,6 @@ jobs:
       run: tools/bootstrap_ci.ps1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-    - name: NuGet restore
-      run: nuget restore
-
-    - name: dotnet restore
-      run: dotnet restore
 
     - name: Build
       run: dotnet build --no-restore -c Release
