@@ -225,23 +225,29 @@ jobs:
       - uses: actions/download-artifact@v2
         with:
           name: Unitypackage
+          path: build-package
 
       - uses: actions/download-artifact@v2
         with:
           name: DecentM.Mods
-          path: build/Mods
+          path: build-mods
+
+      - uses: actions/download-artifact@v2
+        with:
+          name: DecentM.Prefabs.Raw
+          path: build-prefabs
 
       - name: Create mods zip
         uses: vimtor/action-zip@v1
         with:
           files: |
-            build/Mods
-            UserLibs
+            build-mods
+            build-prefabs
           dest: DecentM.Mods.zip
 
-      - name: Release mods
+      - name: Create release
         uses: softprops/action-gh-release@v1
         with:
           files: |
-            prefabs/output/DecentM.Prefabs.unitypackage
+            build-package/*
             DecentM.Mods.zip
