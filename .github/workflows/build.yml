@@ -243,18 +243,24 @@ jobs:
           name: DecentM.Prefabs.Raw
           path: build-prefabs
 
-      - name: List directory contents
+      - name: Create mods zip structure
         run: |
-          ls -la
+          mkdir -p mods-zip/Mods
+          cp -a build-mods/* mods-zip/Mods/
+          cp -a build-prefabs/UserLibs mods-zip/
 
       - name: Create mods zip
         uses: vimtor/action-zip@v1
         if: ${{ startsWith(github.ref, 'refs/tags/') }}
         with:
-          files: |
-            build-mods
-            build-prefabs
+          files: mods-zip/*
           dest: DecentM.Mods.zip
+
+      - name: Upload outputs
+        uses: actions/upload-artifact@v2
+        with:
+          name: Release
+          path: DecentM.Mods.zip
 
       - name: Create release
         uses: softprops/action-gh-release@v1
