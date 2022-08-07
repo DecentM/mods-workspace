@@ -1,0 +1,106 @@
+name: build_prefabs_source
+
+on:
+  push:
+    branches: [ "master" ]
+    tags:
+      - "v*.*.*"
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Cache
+        uses: actions/cache@v2
+        with:
+          path: Library
+          key: Library-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
+          restore-keys: |
+            Library-
+
+      - name: Create Unity build
+        uses: game-ci/unity-builder@v2.0.4
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+
+      - name: Get yt-dlp
+        shell: bash
+        env:
+          YT_DLP_VERSION: "2022.07.18"
+          YT_DLP_FILE: "yt-dlp.exe"
+        run: |
+          set -e
+          set +x
+
+          mkdir -p ./dll-build/UserLibs
+
+          YT_DLP_URL=https://github.com/yt-dlp/yt-dlp/releases/download/$YT_DLP_VERSION/$YT_DLP_FILE
+          wget $YT_DLP_URL -O ./dll-build/UserLibs/$YT_DLP_FILE
+
+      - name: Copy files to destination
+        shell: bash
+        run: |
+          set -e
+          set +x
+
+          DIR=build/StandaloneWindows64/StandaloneWindows64_Data
+          cp -a $DIR/Plugins/x86_64/* $DIR/Managed/LibVLCSharp.dll $DIR/Managed/DecentM.*.dll ./dll-build/UserLibs
+
+      - name: Create zip
+        uses: vimtor/action-zip@v1
+        with:
+          files: dll-build/
+          dest: DecentM.Components.zip
+
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        if: ${{ startsWith(github.ref, 'refs/tags/') }}
+        with:
+          files: DecentM.Components.zip
+
+      - name: Upload Unity build
+        uses: actions/upload-artifact@v2
+        with:
+          name: UnityBuild
+          path: build
+
+      - name: Upload built DLLs
+        uses: actions/upload-artifact@v2
+        with:
+          name: DLLs
+          path: dll-build
+
+      - name: Trigger Mods build workflow
+        shell: bash
+        # When an actual release happens, it's triggered by the git push, so
+        # we don't do that here
+        if: ${{ !startsWith(github.ref, 'refs/tags/') }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.WORKFLOW_PAT }}
+        run: |
+          set -e
+          set +x
+
+          gh workflow run build.yml -R DecentM/cvr-mods -r $GITHUB_REF_NAME -f prefabs_run_id=$GITHUB_RUN_ID -f artifact_name=DLLs
+
+      - name: Trigger Prefabs update workflow
+        shell: bash
+        # When an actual release happens, it's triggered by the git push, so
+        # we don't do that here
+        if: ${{ !startsWith(github.ref, 'refs/tags/') }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.WORKFLOW_PAT }}
+        run: |
+          set -e
+          set +x
+
+          gh workflow run update-user-libs.yml -R DecentM/world-prefabs -r $GITHUB_REF_NAME -f prefabs_run_id=$GITHUB_RUN_ID -f artifact_name=DLLs

@@ -1,5 +1,11 @@
 {
 	"folders": [
+        {
+			"path": ".github"
+		},
+        {
+			"path": "tools"
+		},
 		{
 			"path": "mods"
 		},
