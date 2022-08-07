@@ -114,16 +114,10 @@ jobs:
         with:
           files: DecentM.Components.zip
 
-      - name: Upload Unity build
-        uses: actions/upload-artifact@v2
-        with:
-          name: UnityBuild
-          path: prefabs-source/build
-
       - name: Upload built DLLs
         uses: actions/upload-artifact@v2
         with:
-          name: DLLs
+          name: DecentM.Prefabs.Raw
           path: prefabs-source/dll-build
 
   build-mods:
@@ -143,20 +137,7 @@ jobs:
 
     - uses: actions/download-artifact@v2
       with:
-        name: DLLs
-#    - name: Download artifacts from Prefabs action
-#      run: tools/vars.ps1; tools/bootstrap/prefabs-from-action.ps1
-#      if: github.event_name == 'workflow_dispatch'
-#      env:
-#        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#        PREFABS_ARTIFACT_NAME: ${{ github.event.inputs.artifact_name }}
-#        PREFABS_RUN_ID: ${{ github.event.inputs.prefabs_run_id }}
-#
-#    - name: Download artifacts from Prefabs release
-#      run: tools/vars.ps1; tools/bootstrap/prefabs-from-release.ps1
-#      if: github.event_name != 'workflow_dispatch'
-#      env:
-#        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        name: DecentM.Prefabs.Raw
 
     - name: Bootstrap CI
       run: tools/bootstrap_ci.ps1
@@ -167,7 +148,10 @@ jobs:
       run: dotnet build --no-restore -c Release
 
     - name: Copy built mods to output
-      run: tools/create_output.ps1
+      run: |
+        mkdir -p .\output\Mods
+        Copy-Item -Force -Recurse .\chilloutvr\Mods\*.dll .\output\Mods\
+        Copy-Item -Force -Recurse .\prefabs\* .\output
 
     - name: Upload outputs
       uses: actions/upload-artifact@v2
