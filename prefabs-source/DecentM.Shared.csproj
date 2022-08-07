@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <LangVersion>7.3</LangVersion>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -9,7 +9,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{EDDD5906-5483-179C-D239-FB7B6BB1BF9A}</ProjectGuid>
+    <ProjectGuid>{A7E85C1F-A9E4-55E8-7EDD-60E613E9A990}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>DecentM.Shared</AssemblyName>
@@ -53,13 +53,10 @@
     <UnityVersion>2019.4.31f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Analyzer Include="C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Assets\DecentM\Shared\DCoroutine.cs" />
     <Compile Include="Assets\DecentM\Shared\Paralellism.cs" />
     <Compile Include="Assets\DecentM\Shared\ProcessManager.cs" />
-    <Compile Include="Assets\DecentM\Shared\YTdlp\YTdlpCommands.cs" />
+    <Compile Include="Assets\DecentM\Shared\YTDlp\YTdlpCommands.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\DecentM\Shared\DecentM.Shared.asmdef" />
@@ -650,11 +647,11 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="UnityEditor.UI.csproj">
-      <Project>{7A0AA70F-808C-30D6-E882-D80E358836BD}</Project>
+      <Project>{5A11B1BB-6D68-E455-5F22-1D060BBBA668}</Project>
       <Name>UnityEditor.UI</Name>
     </ProjectReference>
     <ProjectReference Include="UnityEngine.UI.csproj">
-      <Project>{E1DEBCED-4232-A72C-ACB8-6AF9EF956709}</Project>
+      <Project>{B4E07E46-C393-8689-0BA1-0169D7CE4312}</Project>
       <Name>UnityEngine.UI</Name>
     </ProjectReference>
   </ItemGroup>

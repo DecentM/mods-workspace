@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <LangVersion>7.3</LangVersion>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -9,7 +9,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{534FC40F-904E-7EF3-06E2-4162EEF1CA03}</ProjectGuid>
+    <ProjectGuid>{0757F366-F0AC-1934-60B2-5BBBDCD39871}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Unity.TextMeshPro.Editor</AssemblyName>
@@ -52,9 +52,6 @@
     <UnityBuildTarget>StandaloneWindows64:19</UnityBuildTarget>
     <UnityVersion>2019.4.31f1</UnityVersion>
   </PropertyGroup>
-  <ItemGroup>
-    <Analyzer Include="C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
-  </ItemGroup>
   <ItemGroup>
     <Compile Include="Library\PackageCache\com.unity.textmeshpro@2.1.6\Scripts\Editor\DropdownOptionListDrawer.cs" />
     <Compile Include="Library\PackageCache\com.unity.textmeshpro@2.1.6\Scripts\Editor\GlyphInfoDrawer.cs" />
@@ -697,23 +694,23 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Unity.TextMeshPro.csproj">
-      <Project>{9EFD49C9-876D-41F8-7230-E8717E6F1589}</Project>
+      <Project>{D871AABA-BA2C-A9ED-971A-9000ED02F660}</Project>
       <Name>Unity.TextMeshPro</Name>
     </ProjectReference>
     <ProjectReference Include="UnityEditor.UI.csproj">
-      <Project>{7A0AA70F-808C-30D6-E882-D80E358836BD}</Project>
+      <Project>{5A11B1BB-6D68-E455-5F22-1D060BBBA668}</Project>
       <Name>UnityEditor.UI</Name>
     </ProjectReference>
     <ProjectReference Include="UnityEngine.UI.csproj">
-      <Project>{E1DEBCED-4232-A72C-ACB8-6AF9EF956709}</Project>
+      <Project>{B4E07E46-C393-8689-0BA1-0169D7CE4312}</Project>
       <Name>UnityEngine.UI</Name>
     </ProjectReference>
     <ProjectReference Include="UnityEditor.TestRunner.csproj">
-      <Project>{7844A1FA-C288-4402-BB3E-CA227390B1BE}</Project>
+      <Project>{B2F25B52-B6B6-743D-91AE-D3055CB649F6}</Project>
       <Name>UnityEditor.TestRunner</Name>
     </ProjectReference>
     <ProjectReference Include="UnityEngine.TestRunner.csproj">
-      <Project>{8A385DD4-EAB4-8E59-C867-3BD8096DE417}</Project>
+      <Project>{E1B7BF1B-152E-DEB5-A010-ECF9F2089F30}</Project>
       <Name>UnityEngine.TestRunner</Name>
     </ProjectReference>
   </ItemGroup>
