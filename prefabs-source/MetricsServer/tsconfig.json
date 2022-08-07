@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "outDir": "build",
+
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "esModuleInterop": true,
+    "inlineSourceMap": true,
+    "resolveJsonModule": true,
+
+    "jsx": "preserve",
+    "target": "ES2019",
+    "module": "CommonJS",
+    "moduleResolution": "node",
+
+    "baseUrl": ".",
+  }
+}

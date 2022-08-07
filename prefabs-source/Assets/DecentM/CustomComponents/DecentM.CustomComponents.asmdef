@@ -1,0 +1,17 @@
+{
+    "name": "DecentM.CustomComponents",
+    "references": [
+        "GUID:22291c8b6b3497a46b4a31a80494e68d"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "LibVLCSharp.dll"
+    ],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
