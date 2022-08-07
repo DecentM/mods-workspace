@@ -168,12 +168,12 @@ jobs:
         username: ${{ secrets.STEAM_USER }}
         password: ${{ secrets.STEAM_PASSWORD }}
         gameid: 661130
-        folder: chilloutvr
+        folder: mods/chilloutvr
 
     - uses: actions/download-artifact@v2
       with:
         name: DecentM.Prefabs.Raw
-        path: prefabs
+        path: mods/prefabs
 
     - name: Bootstrap CI
       run: tools/bootstrap_ci.ps1
