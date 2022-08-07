@@ -85,6 +85,7 @@ jobs:
         uses: game-ci/unity-builder@v2.0.4
         with:
           projectPath: prefabs-source
+          buildsPath: prefabs-source/build
           unityVersion: 2019.4.31f1
           allowDirtyBuild: true
         env:
@@ -213,6 +214,7 @@ jobs:
         uses: game-ci/unity-builder@v2.0.4
         with:
           projectPath: prefabs
+          buildsPath: prefabs/build
           unityVersion: 2019.4.31f1
           buildMethod: PackageExporter.ExportPackage
           allowDirtyBuild: true
