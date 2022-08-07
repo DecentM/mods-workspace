@@ -13,7 +13,7 @@ if ($null -eq $env:STEAM_PASSWORD) {
 
 Write-Output "Installing ChilloutVR..."
 
-.\steamcmd\steamcmd\steamcmd.exe `
+steamcmd `
     +@sSteamCmdForcePlatformType windows `
     +force_install_dir ../../$folder `
     +login $env:STEAM_USER "$env:STEAM_PASSWORD" `

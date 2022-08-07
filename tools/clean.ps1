@@ -1,4 +1,4 @@
-$delfolders = ".\bin", ".\chilloutvr", ".\melonloader", ".\steamcmd", ".\nuget", ".\prefabs"
+$delfolders = ".\bin", ".\chilloutvr", ".\melonloader", ".\steamcmd", ".\nuget"
 
 foreach ($delfolder in $delfolders) {
     if (Test-Path -Path $delfolder) {
