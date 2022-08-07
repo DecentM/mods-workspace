@@ -26,28 +26,30 @@ jobs:
 
     runs-on: windows-latest
 
+    defaults:
+      run:
+        shell: pwsh
+        working-directory: mods
+
     steps:
     - uses: actions/checkout@v2
 
-    - name: Download artifacts from Prefabs action
-      run: tools/vars.ps1; tools/bootstrap/prefabs-from-action.ps1
-      shell: pwsh
-      if: github.event_name == 'workflow_dispatch'
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        PREFABS_ARTIFACT_NAME: ${{ github.event.inputs.artifact_name }}
-        PREFABS_RUN_ID: ${{ github.event.inputs.prefabs_run_id }}
-
-    - name: Download artifacts from Prefabs release
-      run: tools/vars.ps1; tools/bootstrap/prefabs-from-release.ps1
-      shell: pwsh
-      if: github.event_name != 'workflow_dispatch'
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#    - name: Download artifacts from Prefabs action
+#      run: tools/vars.ps1; tools/bootstrap/prefabs-from-action.ps1
+#      if: github.event_name == 'workflow_dispatch'
+#      env:
+#        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#        PREFABS_ARTIFACT_NAME: ${{ github.event.inputs.artifact_name }}
+#        PREFABS_RUN_ID: ${{ github.event.inputs.prefabs_run_id }}
+#
+#    - name: Download artifacts from Prefabs release
+#      run: tools/vars.ps1; tools/bootstrap/prefabs-from-release.ps1
+#      if: github.event_name != 'workflow_dispatch'
+#      env:
+#        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Bootstrap CI
       run: tools/bootstrap_ci.ps1
-      shell: pwsh
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -63,7 +65,6 @@ jobs:
       run: dotnet build --no-restore -c Release
 
     - name: Copy built mods to output
-      shell: pwsh
       run: tools/create_output.ps1
 
     - name: Upload outputs
