@@ -32,7 +32,7 @@ jobs:
           YT_DLP_FILE: "yt-dlp.exe"
         run: |
           set -e
-          set +x
+          set -x
 
           mkdir -p ./dll-build/UserLibs
 
@@ -53,7 +53,6 @@ jobs:
           projectPath: prefabs-source
           buildsPath: prefabs-source/build
           unityVersion: 2019.4.31f1
-          allowDirtyBuild: true
         env:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
           UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
@@ -62,7 +61,7 @@ jobs:
       - name: Copy files to destination
         run: |
           set -e
-          set +x
+          set -x
 
           mkdir -p ./dll-build/UserLibs
           DIR=build/StandaloneWindows64/StandaloneWindows64_Data
@@ -77,7 +76,7 @@ jobs:
       - name: Upload built DLLs
         uses: actions/upload-artifact@v2
         with:
-          name: DecentM.Prefabs.Raw
+          name: DecentM.UserLibs
           path: prefabs-source/dll-build
 
   update-prefabs:
@@ -94,7 +93,7 @@ jobs:
       - uses: actions/download-artifact@v2
         if: ${{ !startsWith(github.ref, 'refs/tags/') }}
         with:
-          name: DecentM.Prefabs.Raw
+          name: DecentM.UserLibs
           path: prefabs/Assets
 
       - name: Verify Changed files
@@ -140,7 +139,6 @@ jobs:
           buildsPath: prefabs/build
           unityVersion: 2019.4.31f1
           buildMethod: PackageExporter.ExportPackage
-          allowDirtyBuild: true
         env:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
           UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
@@ -196,7 +194,7 @@ jobs:
 
     - uses: actions/download-artifact@v2
       with:
-        name: DecentM.Prefabs.Raw
+        name: DecentM.UserLibs
         path: mods/prefabs
 
     - name: Bootstrap CI
@@ -240,18 +238,14 @@ jobs:
 
       - uses: actions/download-artifact@v2
         with:
-          name: DecentM.Prefabs.Raw
+          name: DecentM.UserLibs
           path: build-prefabs
 
       - name: Create mods zip structure
         run: |
-          find build-package build-mods build-prefabs
-
           mkdir -p mods-zip/Mods
           cp -a build-mods/* mods-zip/Mods/
           cp -a build-prefabs/UserLibs mods-zip/
-
-          find mods-zip/
 
       - name: Create mods zip
         uses: vimtor/action-zip@v1
