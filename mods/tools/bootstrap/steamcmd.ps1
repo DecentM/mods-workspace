@@ -16,8 +16,8 @@ Set-Location $folder
 Invoke-WebRequest $url -OutFile steamcmd.zip
 Expand-Archive -LiteralPath steamcmd.zip -DestinationPath .
 
-Set-Location $pastlocation
+$env:PATH = "$env:PATH;$(Get-Location)"
 
-$env:PATH = "$env:PATH;.\$folder\"
+Set-Location $pastlocation
 
 Write-Output "Done."

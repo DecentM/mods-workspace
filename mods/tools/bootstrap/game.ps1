@@ -15,7 +15,7 @@ Write-Output "Installing ChilloutVR..."
 
 steamcmd `
     +@sSteamCmdForcePlatformType windows `
-    +force_install_dir ../../$folder `
+    +force_install_dir ../$folder `
     +login $env:STEAM_USER "$env:STEAM_PASSWORD" `
     +app_update $gameid validate `
     +quit `
