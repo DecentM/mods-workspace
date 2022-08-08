@@ -53,6 +53,8 @@
     <UnityVersion>2019.4.31f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Assets\DecentM\CustomComponents\Components\StatsD\Demo\DemoStatsDSender.cs" />
+    <Compile Include="Assets\DecentM\CustomComponents\Components\StatsD\StatsDClient.cs" />
     <Compile Include="Assets\DecentM\CustomComponents\Components\VLCPlayer\Scripts\Demo\VLCPlayerDemo.cs" />
     <Compile Include="Assets\DecentM\CustomComponents\Components\VLCPlayer\Scripts\LibVLCInstance.cs" />
     <Compile Include="Assets\DecentM\CustomComponents\Components\VLCPlayer\Scripts\VLCPlayer.cs" />

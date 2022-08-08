@@ -90,26 +90,6 @@ namespace DecentM.Shared
 
             OnFinish();
         }
-#else
-        public static IEnumerator WaitForCoroutines(List<Coroutine> coroutines, Action OnFinish)
-        {
-            List<Coroutine> finishedCoroutines = new List<Coroutine>();
-
-            while (finishedCoroutines.Count < coroutines.Count)
-            {
-                foreach (Coroutine coroutine in coroutines)
-                {
-                    if (!finishedCoroutines.Contains(coroutine))
-                    {
-                        finishedCoroutines.Add(coroutine);
-                    }
-                }
-
-                yield return new WaitForSeconds(0.25f);
-            }
-
-            OnFinish();
-        }
 #endif
 
         public static Action<T1> WrapCallback<T1>(Action<T1> Callback)

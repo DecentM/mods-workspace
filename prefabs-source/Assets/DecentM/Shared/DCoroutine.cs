@@ -9,7 +9,6 @@ using UnityEngine;
 
 namespace DecentM.Shared
 {
-#if UNITY_EDITOR
     public class DCoroutine
     {
         private static List<DCoroutine> runningCoroutines = new List<DCoroutine>();
@@ -47,7 +46,10 @@ namespace DecentM.Shared
             if (runningCoroutines.Contains(this))
                 return;
 
+#if UNITY_EDITOR
             EditorApplication.update += this.Update;
+#endif
+            
             runningCoroutines.Add(this);
         }
 
@@ -56,7 +58,10 @@ namespace DecentM.Shared
             if (!runningCoroutines.Contains(this))
                 return;
 
+#if UNITY_EDITOR
             EditorApplication.update -= this.Update;
+#endif
+
             runningCoroutines.Remove(this);
         }
 
@@ -94,5 +99,4 @@ namespace DecentM.Shared
             }
         }
     }
-#endif
 }
