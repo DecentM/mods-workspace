@@ -45,7 +45,7 @@
     </Reference>
     <Reference Include="DecentM.Prefabs, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\prefabs\UserLibs\DecentM.Prefabs.dll</HintPath>
+      <HintPath>..\..\..\prefabs\Assets\UserLibs\DecentM.Prefabs.dll</HintPath>
     </Reference>
     <Reference Include="MelonLoader">
       <SpecificVersion>False</SpecificVersion>
