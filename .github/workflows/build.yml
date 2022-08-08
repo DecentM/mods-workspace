@@ -251,12 +251,12 @@ jobs:
           cp -a build-mods/* mods-zip/Mods/
           cp -a build-prefabs/UserLibs mods-zip/
 
-          find mods-zip
+          find mods-zip/
 
       - name: Create mods zip
         uses: vimtor/action-zip@v1
         with:
-          files: mods-zip/*
+          files: mods-zip
           dest: DecentM.Mods.zip
 
       - name: Upload outputs
