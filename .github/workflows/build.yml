@@ -251,7 +251,6 @@ jobs:
 
       - name: Create mods zip
         uses: vimtor/action-zip@v1
-        if: ${{ startsWith(github.ref, 'refs/tags/') }}
         with:
           files: mods-zip/*
           dest: DecentM.Mods.zip
