@@ -245,9 +245,13 @@ jobs:
 
       - name: Create mods zip structure
         run: |
+          find build-package build-mods build-prefabs
+
           mkdir -p mods-zip/Mods
           cp -a build-mods/* mods-zip/Mods/
           cp -a build-prefabs/UserLibs mods-zip/
+
+          find mods-zip
 
       - name: Create mods zip
         uses: vimtor/action-zip@v1
