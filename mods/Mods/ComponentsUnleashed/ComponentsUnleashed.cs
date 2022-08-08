@@ -6,6 +6,12 @@ using HarmonyLib;
 
 using ABI_RC.Core;
 
+using UnityEngine;
+using UnityEngine.Tilemaps;
+using UnityEngine.Rendering;
+using UnityEngine.Playables;
+using UnityEngine.AI;
+
 using DecentM.Prefabs;
 using DecentM.Prefabs.Pubsub;
 using DecentM.Prefabs.Performance;
@@ -22,10 +28,78 @@ namespace DecentM.Mods.ComponentsUnleashed
 {
     public class Mod : MelonMod
     {
+        public override void OnApplicationStart()
+        {
+            LoggerInstance.Msg("Patching NetworkManager...");
+            HarmonyLib.Harmony.CreateAndPatchAll(typeof(NetworkManagerPatches));
+        }
+
         public override void OnApplicationLateStart()
         {
             LoggerInstance.Msg("Extending component whitelist...");
             HashSet<Type> whiteList = (HashSet<Type>)Traverse.Create<CVRTools>().Field("componentWhiteList").GetValue();
+
+            /*
+             * Unity stuff
+             */
+            whiteList.Add(typeof(WindZone));
+
+            whiteList.Add(typeof(Tilemap));
+            whiteList.Add(typeof(TilemapRenderer));
+
+            whiteList.Add(typeof(Terrain));
+            whiteList.Add(typeof(Tree));
+
+            whiteList.Add(typeof(Grid));
+            whiteList.Add(typeof(GridLayout));
+
+            whiteList.Add(typeof(AudioSource));
+            whiteList.Add(typeof(AudioReverbZone));
+            whiteList.Add(typeof(AudioLowPassFilter));
+            whiteList.Add(typeof(AudioHighPassFilter));
+            whiteList.Add(typeof(AudioDistortionFilter));
+            whiteList.Add(typeof(AudioEchoFilter));
+            whiteList.Add(typeof(AudioChorusFilter));
+            whiteList.Add(typeof(AudioReverbFilter));
+
+            whiteList.Add(typeof(PlayableDirector));
+            whiteList.Add(typeof(TerrainCollider));
+            whiteList.Add(typeof(Canvas));
+            whiteList.Add(typeof(CanvasGroup));
+            whiteList.Add(typeof(CanvasRenderer));
+            whiteList.Add(typeof(NavMeshAgent));
+            whiteList.Add(typeof(NavMeshObstacle));
+            whiteList.Add(typeof(OffMeshLink));
+            whiteList.Add(typeof(Joint));
+            whiteList.Add(typeof(CharacterJoint));
+            whiteList.Add(typeof(ConstantForce));
+
+            whiteList.Add(typeof(MeshCollider));
+            whiteList.Add(typeof(CapsuleCollider));
+
+            whiteList.Add(typeof(ParticleSystem));
+            whiteList.Add(typeof(ParticleSystemRenderer));
+
+            whiteList.Add(typeof(BillboardRenderer));
+            whiteList.Add(typeof(Camera));
+            whiteList.Add(typeof(FlareLayer));
+
+            whiteList.Add(typeof(Light));
+            whiteList.Add(typeof(LightProbeGroup));
+
+            whiteList.Add(typeof(LODGroup));
+
+            whiteList.Add(typeof(ReflectionProbe));
+            whiteList.Add(typeof(SpriteRenderer));
+            whiteList.Add(typeof(SortingGroup));
+            whiteList.Add(typeof(Projector));
+            whiteList.Add(typeof(OcclusionPortal));
+            whiteList.Add(typeof(OcclusionArea));
+            whiteList.Add(typeof(LensFlare));
+            whiteList.Add(typeof(Skybox));
+
+            // TODO: Add more components from UnityEngine.VehiclesModule?
+            whiteList.Add(typeof(WheelCollider));
 
             /*
              * PubSub
